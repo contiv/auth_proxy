@@ -10,7 +10,7 @@ $ git clone https://github.com/contiv/contiv-ui.git
 ```
 $ git clone https://github.com/netplugin/netplugin.git
 $ export GOPATH="<Your gopath>"
-cd netplugin
+$ cd netplugin
 ```
 
 Modify Vagrantfile to forward guest port 80 to some other port say 9080:
