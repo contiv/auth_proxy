@@ -9,39 +9,41 @@ describe('contiv.networkpolicies module', function () {
 
     beforeEach(module('contiv.networkpolicies'));
 
+    var policyListData = [
+        {
+            "key": "default:middleware_net_policy",
+            "policyName": "middleware_net_policy",
+            "tenantName": "default",
+            "link-sets": {},
+            "links": {
+                "Tenant": {
+                    "type": "tenant",
+                    "key": "default"
+                }
+            }
+        },
+        {
+            "key": "default:db_net_policy",
+            "policyName": "db_net_policy",
+            "tenantName": "default",
+            "link-sets": {},
+            "links": {
+                "Tenant": {
+                    "type": "tenant",
+                    "key": "default"
+                }
+            }
+        }
+    ];
+
     describe('isolationpolicylistctrl', function () {
 
         var $httpBackend;
-        var policyListData = [
-            {
-                "key": "default:middleware_net_policy",
-                "policyName": "middleware_net_policy",
-                "tenantName": "default",
-                "link-sets": {},
-                "links": {
-                    "Tenant": {
-                        "type": "tenant",
-                        "key": "default"
-                    }
-                }
-            },
-            {
-                "key": "default:db_net_policy",
-                "policyName": "db_net_policy",
-                "tenantName": "default",
-                "link-sets": {},
-                "links": {
-                    "Tenant": {
-                        "type": "tenant",
-                        "key": "default"
-                    }
-                }
-            }
-        ];
+
 
         beforeEach(inject(function (_$httpBackend_) {
             $httpBackend = _$httpBackend_;
-            $httpBackend.when('GET', 'http://localhost:9999/api/policys/').respond(policyListData);
+            $httpBackend.when('GET', '/api/policys/').respond(policyListData);
         }));
 
         afterEach(function () {
@@ -61,7 +63,7 @@ describe('contiv.networkpolicies module', function () {
         });
         it('IsolationPolicyListCtrl should do a GET on /api/policys/ REST API', function () {
             $controller('IsolationPolicyListCtrl');
-            $httpBackend.expectGET('http://localhost:9999/api/policys/');
+            $httpBackend.expectGET('/api/policys/');
             $httpBackend.flush();
         });
 

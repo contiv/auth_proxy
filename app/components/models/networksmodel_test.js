@@ -47,7 +47,7 @@ describe('contiv.models.networks module', function () {
         beforeEach(inject(function (_NetworksModel_, _$httpBackend_) {
             NetworksModel = _NetworksModel_;
             $httpBackend = _$httpBackend_;
-            $httpBackend.when('GET', 'http://localhost:9999/api/networks/').respond(networkListData);
+            $httpBackend.when('GET', '/api/networks/').respond(networkListData);
         }));
 
         afterEach(function () {
@@ -61,19 +61,19 @@ describe('contiv.models.networks module', function () {
         });
 
         it('get() should do a GET on /api/networks/ REST API', function () {
-            $httpBackend.expectGET('http://localhost:9999/api/networks/');
+            $httpBackend.expectGET('/api/networks/');
             NetworksModel.get();
             $httpBackend.flush();
         });
 
         it('create() should do a POST on /api/networks REST API', function () {
-            $httpBackend.expectPOST('http://localhost:9999/api/networks/' + newNetworkData.key + '/').respond(201, '');
+            $httpBackend.expectPOST('/api/networks/' + newNetworkData.key + '/').respond(201, '');
             NetworksModel.create(newNetworkData);
             $httpBackend.flush();
         });
 
         it('delete() should do a DELETE on /api/networks REST API', function () {
-            $httpBackend.expectDELETE('http://localhost:9999/api/networks/' + networkListData[0].key + '/').respond(201, '');
+            $httpBackend.expectDELETE('/api/networks/' + networkListData[0].key + '/').respond(201, '');
             NetworksModel.delete(networkListData[0]);
             $httpBackend.flush();
         });
