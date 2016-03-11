@@ -1,0 +1,24 @@
+<form class="ui form" role="form" ng-submit="networkCreateCtrl.createNetwork(newNetwork)" novalidate>
+    <div class="field">
+        <label for="newNetworkName">Network name</label>
+        <input type="text" id="newNetworkName" ng-model="networkCreateCtrl.newNetwork.networkName" placeholder="Enter name">
+    </div>
+    <div class="field">
+        <label for="newNetworkEncapsulation">Encapsulation</label>
+        <input type="text" id="newNetworkEncapsulation" ng-model="networkCreateCtrl.newNetwork.encap" placeholder="Enter encapsulation">
+    </div>
+    <div class="field">
+        <label for="newNetworkSubnet">Subnet</label>
+        <input type="text" id="newNetworkSubnet" ng-model="networkCreateCtrl.newNetwork.subnet" placeholder="Enter subnet">
+    </div>
+    <div class="field">
+        <label for="newNetworkGateway">Gateway</label>
+        <input type="text" id="newNetworkGateway" ng-model="networkCreateCtrl.newNetwork.gateway" placeholder="Enter gateway">
+    </div>
+
+    <button type="button" class="negative ui button" ng-click="networkCreateCtrl.cancelCreating()">Cancel</button>
+    <button type="submit" class="ui blue button">
+        Create
+    </button>
+
+</form>

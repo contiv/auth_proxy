@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" ng-app="contivApp" class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Contiv Admin Console</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+    <link rel="stylesheet" href="app.css">
+    <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+    <link rel="stylesheet" href="bower_components/semantic/dist/semantic.css">
+</head>
+<body>
+
+<div id="sidebar" class="ui visible left vertical sidebar icon labeled menu">
+    <a class="item" href="#/networks">
+        <i class="dashboard blue icon"></i>
+        Dashboard
+    </a>
+    <a class="item" href="#/networks">
+        <i class="cubes blue icon"></i>
+        Application Groups
+    </a>
+    <a class="item" ui-sref="contiv.policies.isolation()">
+        <i class="protect outline blue icon"></i>
+        Network Policies
+    </a>
+    <a class="item" href="#/networks">
+        <i class="protect blue icon"></i>
+        Storage Policies
+    </a>
+    <a class="item" href="#/networks">
+        <i class="sitemap blue icon"></i>
+        Networks
+    </a>
+    <a class="item" href="#/volumes">
+        <i class="disk outline blue icon"></i>
+        Volumes
+    </a>
+</div>
+
+
+<div class="ui fluid container" style="margin-left:80px">
+    <div class="ui top attached blue inverted menu">
+        <h1 class="header" style="margin:auto">Contiv Admin Console</h1>
+    </div>
+    <div ui-view="networks" style="margin-left:180px;margin-top:30px"></div>
+    <div ui-view="policies" style="margin-left:180px;margin-top:30px"></div>
+
+</div>
+
+
+
+<!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
+
+
+<!-- In production use:
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+-->
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/semantic/dist/semantic.js"></script>
+<script src="bower_components/lodash/dist/lodash.js"></script>
+<script src="app.js"></script>
+<script src="components/models/networksmodel.js"></script>
+<script src="components/models/collection.js"></script>
+<script src="networks/networklistctrl.js"></script>
+<script src="networks/networkdetailsctrl.js"></script>
+<script src="networks/networkcreatectrl.js"></script>
+<script src="components/models/policiesmodel.js"></script>
+<script src="components/models/rulesmodel.js"></script>
+<script src="network_policies/networkpoliciestabsctrl.js"></script>
+<script src="network_policies/isolationpolicylistctrl.js"></script>
+<script src="network_policies/isolationpolicydetailsctrl.js"></script>
+<script src="network_policies/isolationpolicycreatectrl.js"></script>
+<script src="components/version/version.js"></script>
+<script src="components/version/version-directive.js"></script>
+<script src="components/version/interpolate-filter.js"></script>
+</body>
+</html>

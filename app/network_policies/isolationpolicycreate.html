@@ -1,0 +1,10 @@
+<form class="ui form" role="form" ng-submit="isolationPolicyCreateCtrl.createPolicy(newPolicy)" novalidate>
+    <div class="field">
+        <label for="newPolicyName">Policy name</label>
+        <input type="text" id="newPolicyName" ng-model="isolationPolicyCreateCtrl.newPolicy.policyName" placeholder="Enter name">
+    </div>
+    <button type="button" class="negative ui button" ng-click="isolationPolicyCreateCtrl.cancelCreating()">Cancel</button>
+    <button type="submit" class="ui blue button">
+        Create
+    </button>
+</form>
