@@ -1,0 +1,185 @@
+<div class="ui nine column grid">
+    <div class="three wide column">
+        <a ui-sref="contiv.policies.isolation()">
+            <i class="arrow left icon"></i>
+            Policy details
+        </a>
+    </div>
+
+    <div ng-switch="isolationPolicyDetailsCtrl.mode" class="six wide column">
+        <div id="delete-policy-modal" class="ui small modal">
+            <div class="header">Remove Policy: {{isolationPolicyDetailsCtrl.policy.policyName}}</div>
+            <div class="content">
+                <p>Are you sure you want to remove this policy?</p>
+            </div>
+            <div class="actions">
+                <div class="ui negative button">No</div>
+                <div class="ui positive blue button" ng-click="isolationPolicyDetailsCtrl.deletePolicy()">
+                    Yes
+                </div>
+            </div>
+        </div>
+        <button ng-switch-when="edit" class="ui blue disabled button"
+                ui-sref="contiv.policies.isolation.edit({key:isolationPolicyDetailsCtrl.policy.key})">
+            <i class="edit icon"></i>
+            Edit
+        </button>
+        <button ng-switch-when="details" class="ui blue button"
+                ui-sref="contiv.policies.isolation.edit({key:isolationPolicyDetailsCtrl.policy.key})">
+            <i class="edit icon"></i>
+            Edit
+        </button>
+        <button class="ui red button" onclick="$('#delete-policy-modal').modal('show')">
+            <i class="trash icon"></i>
+            Remove
+        </button>
+    </div>
+</div>
+
+
+<h4 class="ui header">Incoming rules</h4>
+<table class="ui very basic unstackable table" style="margin-top: 40px">
+    <thead>
+    <tr>
+        <th>Rule ID</th>
+        <th>Priority</th>
+        <th>Action</th>
+        <th>From group</th>
+        <th>From network</th>
+        <th>From IP address</th>
+        <th>Protocol</th>
+        <th>Port</th>
+    </tr>
+    </thead>
+
+    <tbody ng-switch="isolationPolicyDetailsCtrl.mode">
+    <tr ng-switch-when="edit">
+        <td>
+            <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newIncomingRule.ruleId"></div>
+        </td>
+        <td>
+            <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newIncomingRule.priority"
+                                         type="number"></div>
+        </td>
+        <td>
+            <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newIncomingRule.action"></div>
+        </td>
+        <td>
+            <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newIncomingRule.fromGroup"></div>
+        </td>
+        <td>
+            <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newIncomingRule.fromNetwork">
+            </div>
+        </td>
+        <td>
+            <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newIncomingRule.fromIPAddress">
+            </div>
+        </td>
+        <td>
+            <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newIncomingRule.protocol"></div>
+        </td>
+        <td>
+            <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newIncomingRule.port"
+                                         type="number"></div>
+        </td>
+        <td>
+            <button class="ui blue icon button" ng-click="isolationPolicyDetailsCtrl.addIncomingRule()">
+                <i class="add icon"></i>
+            </button>
+        </td>
+    </tr>
+    <tr ng-repeat="rule in isolationPolicyDetailsCtrl.incomingRules">
+        <td>{{rule.ruleId}}</td>
+        <td>{{rule.priority}}</td>
+        <td>{{rule.action}}</td>
+        <td>{{rule.fromGroup}}</td>
+        <td>{{rule.fromNetwork}}</td>
+        <td>{{rule.fromIPAddress}}</td>
+        <td>{{rule.protocol}}</td>
+        <td>{{rule.port}}</td>
+        <td ng-switch-when="edit">
+            <button class="ui red icon button" ng-click="isolationPolicyDetailsCtrl.deleteIncomingRule(rule.key)">
+                <i class="delete icon"></i>
+            </button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h4 class="ui header" style="margin-top: 40px">Outgoing rules</h4>
+<table class="ui very basic unstackable table" style="margin-top: 40px">
+    <thead>
+    <tr>
+        <th>Rule ID</th>
+        <th>Priority</th>
+        <th>Action</th>
+        <th>To group</th>
+        <th>To network</th>
+        <th>To IP address</th>
+        <th>Protocol</th>
+        <th>Port</th>
+    </tr>
+    </thead>
+
+    <tbody ng-switch="isolationPolicyDetailsCtrl.mode">
+    <tr ng-switch-when="edit">
+
+        <td>
+            <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newOutgoingRule.ruleId"></div>
+        </td>
+        <td>
+            <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newOutgoingRule.priority"
+                                         type="number"></div>
+        </td>
+        <td>
+            <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newOutgoingRule.action"></div>
+        </td>
+        <td>
+            <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newOutgoingRule.fromGroup"></div>
+        </td>
+        <td>
+            <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newOutgoingRule.fromNetwork">
+            </div>
+        </td>
+        <td>
+            <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newOutgoingRule.fromIPAddress">
+            </div>
+        </td>
+        <td>
+            <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newOutgoingRule.protocol"></div>
+        </td>
+        <td>
+            <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newOutgoingRule.port"
+                                         type="number"></div>
+        </td>
+
+        <td>
+            <button class="ui blue icon button" ng-click="isolationPolicyDetailsCtrl.addOutgoingRule()">
+                <i class="add icon"></i>
+            </button>
+        </td>
+
+    </tr>
+    <tr ng-repeat="rule in isolationPolicyDetailsCtrl.outgoingRules">
+        <td>{{rule.ruleId}}</td>
+        <td>{{rule.priority}}</td>
+        <td>{{rule.action}}</td>
+        <td>{{rule.toGroup}}</td>
+        <td>{{rule.toNetwork}}</td>
+        <td>{{rule.toIPAddress}}</td>
+        <td>{{rule.protocol}}</td>
+        <td>{{rule.port}}</td>
+        <td ng-switch-when="edit">
+            <button class="ui red icon button" ng-click="isolationPolicyDetailsCtrl.deleteOutgoingRule(rule.key)">
+                <i class="delete icon"></i>
+            </button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div ng-switch="isolationPolicyDetailsCtrl.mode">
+    <button ng-switch-when="edit" type="button" class="ui blue button"
+            ng-click="isolationPolicyDetailsCtrl.doneEditing()">
+        Done
+    </button>
+</div>

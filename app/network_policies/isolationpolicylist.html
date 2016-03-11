@@ -1,0 +1,27 @@
+<div ui-view>
+    <div class="ui nine column grid">
+        <div class="three wide column">
+            <h4 class="ui header">Policies</h4>
+        </div>
+
+        <div class="six wide column">
+            <button class="ui teal button" ui-sref="contiv.policies.isolation.create">
+                <i class="add icon"></i>
+                Create policy
+            </button>
+        </div>
+    </div>
+    <table class="ui very basic unstackable table" style="margin-top: 40px">
+        <thead>
+        <tr>
+            <th> Policy name</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="policy in isolationPolicyListCtrl.policies">
+            <td><a ui-sref="contiv.policies.isolation.details({key:policy.key})">{{policy.policyName}}</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
