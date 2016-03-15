@@ -4,6 +4,8 @@
 // Declare app level module which depends on views, and components
 angular.module('contivApp', [
         'ui.router',
+        'contiv.dashboard',
+        'contiv.applicationgroups',
         'contiv.networks',
         'contiv.networkpolicies'
     ])

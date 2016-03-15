@@ -5,7 +5,7 @@
 
 describe('contiv.models.networks module', function () {
 
-    beforeEach(module('contiv.models.networks'));
+    beforeEach(module('contiv.models'));
 
     describe('networks model', function () {
 

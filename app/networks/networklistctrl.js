@@ -1,8 +1,8 @@
-angular.module('contiv.networks', ['contiv.models.networks'])
+angular.module('contiv.networks', ['contiv.models'])
     .config(function ($stateProvider) {
         $stateProvider
             .state('contiv.networks', {
-                url: '/',
+                url: '/networks',
                 views: {
                     //target the ui-view named 'networks' in ROOT state (contiv)
                     'networks@': {

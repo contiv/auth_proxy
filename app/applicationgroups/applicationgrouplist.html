@@ -1,0 +1,31 @@
+<div ui-view class="ui container">
+    <div class="ui nine column grid">
+        <div class="three wide column">
+            <h4 class="ui header">Application Groups</h4>
+        </div>
+
+        <div class="six wide column">
+            <button class="ui teal button" ui-sref="contiv.applicationgroups.create">
+                <i class="add icon"></i>
+                Create application group
+            </button>
+        </div>
+    </div>
+    <table class="ui very basic unstackable table" style="margin-top: 40px">
+        <thead>
+        <tr>
+            <th>Application group name</th>
+            <th>Network</th>
+            <th>Policies</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="group in applicationGroupListCtrl.groups">
+            <td><a ui-sref="contiv.applicationgroups..details({key:group.key})">{{group.groupName}}</a></td>
+            <td>{{group.networkName}}</td>
+            <td>{{group.policies | limitTo:6}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

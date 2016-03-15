@@ -32,7 +32,7 @@ angular.module('contiv.networkpolicies')
 
         function resetForm() {
             isolationPolicyCreateCtrl.newPolicy = {
-                policytName: '',
+                policyName: '',
                 tenantName: 'default'//TODO: Remove hardcoded tenant.
             };
         }

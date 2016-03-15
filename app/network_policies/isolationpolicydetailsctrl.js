@@ -93,17 +93,10 @@ angular.module('contiv.networkpolicies')
         }
 
         /**
-         * Generate key for rule
-         */
-        function generateKey(rule) {
-            return rule.tenantName + ':' + rule.policyName + ':' + rule.ruleId;
-        }
-
-        /**
          * Rule is saved to server
          */
         function addIncomingRule() {
-            isolationPolicyDetailsCtrl.newIncomingRule.key = generateKey(isolationPolicyDetailsCtrl.newIncomingRule);
+            isolationPolicyDetailsCtrl.newIncomingRule.key = RulesModel.generateKey(isolationPolicyDetailsCtrl.newIncomingRule);
             RulesModel.create(isolationPolicyDetailsCtrl.newIncomingRule).then(function (result) {
                 isolationPolicyDetailsCtrl.incomingRules.push(result);
                 resetNewIncomingRule();
@@ -114,7 +107,7 @@ angular.module('contiv.networkpolicies')
          * Rule is saved to server
          */
         function addOutgoingRule() {
-            isolationPolicyDetailsCtrl.newOutgoingRule.key = generateKey(isolationPolicyDetailsCtrl.newOutgoingRule);
+            isolationPolicyDetailsCtrl.newOutgoingRule.key = RulesModel.generateKey(isolationPolicyDetailsCtrl.newOutgoingRule);
             RulesModel.create(isolationPolicyDetailsCtrl.newOutgoingRule).then(function (result) {
                 isolationPolicyDetailsCtrl.outgoingRules.push(result);
                 resetNewOutgoingRule();
@@ -146,18 +139,12 @@ angular.module('contiv.networkpolicies')
         PoliciesModel.getModelByKey($stateParams.key)
             .then(function (policy) {
                 isolationPolicyDetailsCtrl.policy = policy;
-                RulesModel.get().then(function (result) {
-                    isolationPolicyDetailsCtrl.incomingRules = _.filter(result, {
-                        'policyName': policy.policyName,
-                        'direction': 'in',
-                        'tenantName': 'default'
-                    });
-                    isolationPolicyDetailsCtrl.outgoingRules = _.filter(result, {
-                        'policyName': policy.policyName,
-                        'direction': 'out',
-                        'tenantName': 'default'
-                    });
+                RulesModel.getIncomingRules(policy.policyName, 'default').then(function (result) {
+                    isolationPolicyDetailsCtrl.incomingRules = result;
                     resetNewIncomingRule();
+                });
+                RulesModel.getOutgoingRules(policy.policyName, 'default').then(function (result) {
+                    isolationPolicyDetailsCtrl.outgoingRules = result;
                     resetNewOutgoingRule();
                 });
             });

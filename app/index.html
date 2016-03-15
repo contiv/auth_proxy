@@ -22,11 +22,11 @@
 <body>
 
 <div id="sidebar" class="ui visible left vertical sidebar icon labeled menu">
-    <a class="item" href="#/networks">
+    <a class="item" ui-sref="contiv.dashboard()">
         <i class="dashboard blue icon"></i>
         Dashboard
     </a>
-    <a class="item" href="#/networks">
+    <a class="item" ui-sref="contiv.applicationgroups()">
         <i class="cubes blue icon"></i>
         Application Groups
     </a>
@@ -52,7 +52,9 @@
     <div class="ui top attached blue inverted menu">
         <h1 class="header" style="margin:auto">Contiv Admin Console</h1>
     </div>
+    <div ui-view="dashboard" style="margin-left:180px;margin-top:30px"></div>
     <div ui-view="networks" style="margin-left:180px;margin-top:30px"></div>
+    <div ui-view="applicationgroups" style="margin-left:180px;margin-top:30px"></div>
     <div ui-view="policies" style="margin-left:180px;margin-top:30px"></div>
 </div>
 
@@ -73,8 +75,13 @@
 <script src="bower_components/semantic/dist/semantic.js"></script>
 <script src="bower_components/lodash/dist/lodash.js"></script>
 <script src="app.js"></script>
-<script src="components/models/networksmodel.js"></script>
 <script src="components/models/collection.js"></script>
+<script src="dashboard/dashboardctrl.js"></script>
+<script src="components/models/registermodelsmodule.js"></script>
+<script src="components/models/applicationgroupsmodel.js"></script>
+<script src="applicationgroups/applicationgrouplistctrl.js"></script>
+<script src="applicationgroups/applicationgroupcreatectrl.js"></script>
+<script src="components/models/networksmodel.js"></script>
 <script src="networks/networklistctrl.js"></script>
 <script src="networks/networkdetailsctrl.js"></script>
 <script src="networks/networkcreatectrl.js"></script>
