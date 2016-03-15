@@ -1,4 +1,4 @@
-angular.module('contiv.models.policies', [])
+angular.module('contiv.models')
     .factory('PoliciesModel', ['$http', '$q', function ($http, $q) {
         var URLS = {
             POST: '/api/policys/',

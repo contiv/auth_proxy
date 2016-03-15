@@ -11,11 +11,14 @@ module.exports = function (config) {
             'app/bower_components/semantic/dist/semantic.js',
             'app/bower_components/lodash/dist/lodash.js',
             'app/bower_components/angular-mocks/angular-mocks.js',
+            'app/components/models/registermodelsmodule.js',
             'app/components/**/*.js',
             'app/networks/networklistctrl.js',//Needed because jasmine is unable to locate the contiv.networks module which is defined here
             'app/networks/**/*.js',
             'app/network_policies/networkpoliciestabsctrl.js',
-            'app/network_policies/**/*.js'
+            'app/network_policies/**/*.js',
+            'app/applicationgroups/applicationgrouplistctrl.js',
+            'app/applicationgroups/**/*.js'
         ],
 
         autoWatch: true,

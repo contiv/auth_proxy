@@ -1,7 +1,7 @@
 /**
  * Created by vjain3 on 3/9/16.
  */
-angular.module('contiv.networkpolicies', ['contiv.models.policies', 'contiv.models.rules'])
+angular.module('contiv.networkpolicies', ['contiv.models'])
     .config(function ($stateProvider) {
         $stateProvider
             .state('contiv.policies', {
@@ -17,7 +17,4 @@ angular.module('contiv.networkpolicies', ['contiv.models.policies', 'contiv.mode
         ;
     })
     .controller('NetworkPoliciesTabsCtrl', ['$state', function ($state) {
-        var networkPoliciesTabsCtrl = this;
-        //$state.go('contiv.policies.isolation');
-
     }]);

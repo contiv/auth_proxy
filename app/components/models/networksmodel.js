@@ -1,4 +1,4 @@
-angular.module('contiv.models.networks', [])
+angular.module('contiv.models')
     .factory('NetworksModel', ['$http', '$q', function ($http, $q) {
         var URLS = {
             POST: '/api/networks/',
