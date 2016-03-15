@@ -5,7 +5,7 @@ angular.module('contiv.dashboard', [])
     .config(function ($stateProvider) {
         $stateProvider
             .state('contiv.dashboard', {
-                url: '/dashboard',
+                url: '/',
                 views: {
                     //target the ui-view named 'networks' in ROOT state (contiv)
                     'dashboard@': {
