@@ -1,0 +1,171 @@
+<div class="ui nine column grid">
+    <div class="three wide column">
+        <a ui-sref="contiv.applicationgroups()">
+            <i class="arrow left icon"></i>
+            Application group details
+        </a>
+    </div>
+
+    <div class="six wide column">
+        <div id="delete-group-modal" class="ui small modal">
+            <div class="header">Remove Application Group: {{applicationGroupDetailsCtrl.applicationGroup.groupName}}
+            </div>
+            <div class="content">
+                <p>Are you sure you want to remove this application group?</p>
+            </div>
+            <div class="actions">
+                <div class="ui negative button">No</div>
+                <div class="ui positive button" ng-click="applicationGroupDetailsCtrl.deleteApplicationGroup()">
+                    Yes
+                </div>
+            </div>
+        </div>
+        <button class="ui red button" onclick="$('#delete-group-modal').modal('show')">
+            <i class="trash icon"></i>
+            Remove
+        </button>
+    </div>
+</div>
+
+<h4 class="ui header">Basic Settings</h4>
+<table class="ui very basic selectable table">
+    <tbody>
+    <tr>
+        <td class="three wide column">Name</td>
+        <td>{{applicationGroupDetailsCtrl.applicationGroup.groupName}}</td>
+    </tr>
+    <tr>
+        <td class="three wide column">Network</td>
+        <td>{{applicationGroupDetailsCtrl.applicationGroup.networkName}}</td>
+    </tr>
+    </tbody>
+</table>
+
+
+<div class="ui section divider" style="margin-top: 30px"></div>
+<div class="ui sixteen column grid">
+    <div class="fifteen wide column">
+        <h4 class="ui header">Labels</h4>
+    </div>
+    <div class="one wide column">
+        <i class="add icon"></i>
+    </div>
+</div>
+
+
+<div class="ui section divider"></div>
+<div class="ui sixteen column grid"
+     ng-click="applicationGroupDetailsCtrl.isolationPoliciesVisible = !applicationGroupDetailsCtrl.isolationPoliciesVisible">
+    <div class="fifteen wide column">
+        <h4 class="ui header">Isolation Policies</h4>
+    </div>
+    <div class="one wide column">
+        <i ng-if="applicationGroupDetailsCtrl.isolationPoliciesVisible" class="minus icon"></i>
+        <i ng-if="!applicationGroupDetailsCtrl.isolationPoliciesVisible" class="add icon"></i>
+    </div>
+</div>
+
+<div ng-show="applicationGroupDetailsCtrl.isolationPoliciesVisible">
+    <table class="ui very basic unstackable table">
+        <tbody>
+        <tr ng-repeat="policy in applicationGroupDetailsCtrl.applicationGroup.policies">
+            <td>{{policy}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <h5 class="ui header">Incoming rules</h5>
+    <table class="ui very basic unstackable table" style="margin-top: 40px">
+        <thead>
+        <tr>
+            <th>Rule ID</th>
+            <th>Priority</th>
+            <th>Action</th>
+            <th>From group</th>
+            <th>From network</th>
+            <th>From IP address</th>
+            <th>Protocol</th>
+            <th>Port</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="rule in applicationGroupDetailsCtrl.incomingRules">
+            <td>{{rule.ruleId}}</td>
+            <td>{{rule.priority}}</td>
+            <td>{{rule.action}}</td>
+            <td>{{rule.fromGroup}}</td>
+            <td>{{rule.fromNetwork}}</td>
+            <td>{{rule.fromIPAddress}}</td>
+            <td>{{rule.protocol}}</td>
+            <td>{{rule.port}}</td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <h5 class="ui header" style="margin-top: 40px">Outgoing rules</h5>
+    <table class="ui very basic unstackable table" style="margin-top: 40px">
+        <thead>
+        <tr>
+            <th>Rule ID</th>
+            <th>Priority</th>
+            <th>Action</th>
+            <th>To group</th>
+            <th>To network</th>
+            <th>To IP address</th>
+            <th>Protocol</th>
+            <th>Port</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="rule in applicationGroupDetailsCtrl.outgoingRules">
+            <td>{{rule.ruleId}}</td>
+            <td>{{rule.priority}}</td>
+            <td>{{rule.action}}</td>
+            <td>{{rule.toGroup}}</td>
+            <td>{{rule.toNetwork}}</td>
+            <td>{{rule.toIPAddress}}</td>
+            <td>{{rule.protocol}}</td>
+            <td>{{rule.port}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="ui section divider"></div>
+
+<div class="ui sixteen column grid">
+    <div class="fifteen wide column">
+        <h4 class="ui header">Prioritization Policies</h4>
+    </div>
+    <div class="one wide column">
+        <i class="add icon"></i>
+    </div>
+</div>
+
+
+<div class="ui section divider"></div>
+
+<div class="ui sixteen column grid">
+    <div class="fifteen wide column">
+        <h4 class="ui header">Bandwidth Policies</h4>
+    </div>
+    <div class="one wide column">
+        <i class="add icon"></i>
+    </div>
+</div>
+
+
+<div class="ui section divider"></div>
+
+<div class="ui sixteen column grid">
+    <div class="fifteen wide column">
+        <h4 class="ui header">Redirection Policies</h4>
+    </div>
+    <div class="one wide column">
+        <i class="add icon"></i>
+    </div>
+</div>
+
+

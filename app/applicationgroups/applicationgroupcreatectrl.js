@@ -33,6 +33,9 @@ angular.module('contiv.applicationgroups')
             applicationGroupCreateCtrl.incomingRules = [];
             applicationGroupCreateCtrl.outgoingRules = [];
 
+            applicationGroupCreateCtrl.isolationPoliciesVisible = false;
+
+
             function returnToApplicationGroup() {
                 $state.go('contiv.applicationgroups');
             }
