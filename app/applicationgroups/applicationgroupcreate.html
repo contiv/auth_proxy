@@ -27,108 +27,112 @@
 
     <div class="ui section divider"></div>
     <div class="field">
-        <div class="ui sixteen column grid">
+        <div class="ui sixteen column grid"
+             ng-click="applicationGroupCreateCtrl.isolationPoliciesVisible = !applicationGroupCreateCtrl.isolationPoliciesVisible">
             <div class="fifteen wide column">
                 <h4 class="ui header">Isolation Policies</h4>
             </div>
             <div class="one wide column">
-                <i class="minus icon"></i>
+                <i ng-if="applicationGroupCreateCtrl.isolationPoliciesVisible" class="minus icon"></i>
+                <i ng-if="!applicationGroupCreateCtrl.isolationPoliciesVisible" class="add icon"></i>
             </div>
         </div>
+        <div ng-show="applicationGroupCreateCtrl.isolationPoliciesVisible">
+            <table class="ui very basic unstackable table">
+                <tbody>
+                <tr>
+                    <td>
+                        <div class="ui left icon input">
+                            <input type="text" ng-model="isolationPolicySearchText.policyName"
+                                   placeholder="Filter by policy name">
+                            <i class="search icon"></i>
+                        </div>
+                    </td>
+                    <td>
+                        <select class="ui dropdown" ng-model="applicationGroupCreateCtrl.selectedPolicy"
+                                ng-options="policy.policyName for policy in applicationGroupCreateCtrl.isolationPolicies | filter:isolationPolicySearchText">
+                        </select>
+                    </td>
+                    <td>
+                        <button type="button" class="ui blue icon button"
+                                ng-click="applicationGroupCreateCtrl.addIsolationPolicy()">
+                            <i class="add icon"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr ng-repeat="policy in applicationGroupCreateCtrl.newApplicationGroup.policies">
+                    <td>{{policy}}</td>
+                    <td>
+                        <button type="button" class="ui red icon button"
+                                ng-click="applicationGroupCreateCtrl.removeIsolationPolicy(policy)">
+                            <i class="delete icon"></i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <h5 class="ui header">Incoming rules</h5>
+            <table class="ui very basic unstackable table" style="margin-top: 40px">
+                <thead>
+                <tr>
+                    <th>Rule ID</th>
+                    <th>Priority</th>
+                    <th>Action</th>
+                    <th>From group</th>
+                    <th>From network</th>
+                    <th>From IP address</th>
+                    <th>Protocol</th>
+                    <th>Port</th>
+                </tr>
+                </thead>
 
-        <table class="ui very basic unstackable table">
-            <tbody>
-            <tr>
-                <td>
-                    <div class="ui left icon input">
-                        <input type="text" ng-model="isolationPolicySearchText.policyName"
-                               placeholder="Filter by policy name">
-                        <i class="search icon"></i>
-                    </div>
-                </td>
-                <td>
-                    <select class="ui dropdown" ng-model="applicationGroupCreateCtrl.selectedPolicy"
-                            ng-options="policy.policyName for policy in applicationGroupCreateCtrl.isolationPolicies | filter:isolationPolicySearchText">
-                    </select>
-                </td>
-                <td>
-                    <button type="button" class="ui blue icon button"
-                            ng-click="applicationGroupCreateCtrl.addIsolationPolicy()">
-                        <i class="add icon"></i>
-                    </button>
-                </td>
-            </tr>
-            <tr ng-repeat="policy in applicationGroupCreateCtrl.newApplicationGroup.policies">
-                <td>{{policy}}</td>
-                <td>
-                    <button type="button" class="ui red icon button" ng-click="applicationGroupCreateCtrl.removeIsolationPolicy(policy)">
-                        <i class="delete icon"></i>
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <h5 class="ui header">Incoming rules</h5>
-        <table class="ui very basic unstackable table" style="margin-top: 40px">
-            <thead>
-            <tr>
-                <th>Rule ID</th>
-                <th>Priority</th>
-                <th>Action</th>
-                <th>From group</th>
-                <th>From network</th>
-                <th>From IP address</th>
-                <th>Protocol</th>
-                <th>Port</th>
-            </tr>
-            </thead>
+                <tbody>
+                <tr ng-repeat="rule in applicationGroupCreateCtrl.incomingRules">
+                    <td>{{rule.ruleId}}</td>
+                    <td>{{rule.priority}}</td>
+                    <td>{{rule.action}}</td>
+                    <td>{{rule.fromGroup}}</td>
+                    <td>{{rule.fromNetwork}}</td>
+                    <td>{{rule.fromIPAddress}}</td>
+                    <td>{{rule.protocol}}</td>
+                    <td>{{rule.port}}</td>
+                </tr>
 
-            <tbody>
-            <tr ng-repeat="rule in applicationGroupCreateCtrl.incomingRules">
-                <td>{{rule.ruleId}}</td>
-                <td>{{rule.priority}}</td>
-                <td>{{rule.action}}</td>
-                <td>{{rule.fromGroup}}</td>
-                <td>{{rule.fromNetwork}}</td>
-                <td>{{rule.fromIPAddress}}</td>
-                <td>{{rule.protocol}}</td>
-                <td>{{rule.port}}</td>
-            </tr>
+                </tbody>
+            </table>
 
-            </tbody>
-        </table>
+            <h5 class="ui header" style="margin-top: 40px">Outgoing rules</h5>
+            <table class="ui very basic unstackable table" style="margin-top: 40px">
+                <thead>
+                <tr>
+                    <th>Rule ID</th>
+                    <th>Priority</th>
+                    <th>Action</th>
+                    <th>To group</th>
+                    <th>To network</th>
+                    <th>To IP address</th>
+                    <th>Protocol</th>
+                    <th>Port</th>
+                </tr>
+                </thead>
 
-        <h5 class="ui header" style="margin-top: 40px">Outgoing rules</h5>
-        <table class="ui very basic unstackable table" style="margin-top: 40px">
-            <thead>
-            <tr>
-                <th>Rule ID</th>
-                <th>Priority</th>
-                <th>Action</th>
-                <th>To group</th>
-                <th>To network</th>
-                <th>To IP address</th>
-                <th>Protocol</th>
-                <th>Port</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            <tr ng-repeat="rule in applicationGroupCreateCtrl.outgoingRules">
-                <td>{{rule.ruleId}}</td>
-                <td>{{rule.priority}}</td>
-                <td>{{rule.action}}</td>
-                <td>{{rule.toGroup}}</td>
-                <td>{{rule.toNetwork}}</td>
-                <td>{{rule.toIPAddress}}</td>
-                <td>{{rule.protocol}}</td>
-                <td>{{rule.port}}</td>
-            </tr>
-            </tbody>
-        </table>
+                <tbody>
+                <tr ng-repeat="rule in applicationGroupCreateCtrl.outgoingRules">
+                    <td>{{rule.ruleId}}</td>
+                    <td>{{rule.priority}}</td>
+                    <td>{{rule.action}}</td>
+                    <td>{{rule.toGroup}}</td>
+                    <td>{{rule.toNetwork}}</td>
+                    <td>{{rule.toIPAddress}}</td>
+                    <td>{{rule.protocol}}</td>
+                    <td>{{rule.port}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <div class="ui section divider" style="margin-top: 60px"></div>
+    <div class="ui section divider"></div>
     <div class="field">
         <div class="ui sixteen column grid">
             <div class="fifteen wide column">
@@ -164,10 +168,10 @@
         </div>
     </div>
     <div style="margin-top: 40px">
-    <button type="button" class="negative ui button" ng-click="applicationGroupCreateCtrl.cancelCreating()">Cancel
-    </button>
-    <button type="submit" class="ui blue button">
-        Create
-    </button>
+        <button type="button" class="negative ui button" ng-click="applicationGroupCreateCtrl.cancelCreating()">Cancel
+        </button>
+        <button type="submit" class="ui blue button">
+            Create
+        </button>
     </div>
 </form>

@@ -22,9 +22,9 @@
 
         <tbody>
         <tr ng-repeat="group in applicationGroupListCtrl.groups">
-            <td><a ui-sref="contiv.applicationgroups..details({key:group.key})">{{group.groupName}}</a></td>
+            <td><a ui-sref="contiv.applicationgroups.details({key:group.key})">{{group.groupName}}</a></td>
             <td>{{group.networkName}}</td>
-            <td>{{group.policies | limitTo:6}}</td>
+            <td>{{group.policies.join(", ")}}</td>
         </tr>
         </tbody>
     </table>

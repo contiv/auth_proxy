@@ -53,40 +53,19 @@
 
 <div class="ui section divider"></div>
 
-<h4 class="ui header" style="margin-top: 40px">Groups</h4>
-<div class="ui nine column grid">
-    <div class="three wide column">
-        <button class="ui green button">
-            <i class="add icon"></i>
-            Create group
-        </button>
-    </div>
+<h4 class="ui header" style="margin-top: 40px">Application Groups</h4>
 
-    <div class="six wide column">
-        <button class="ui red button">
-            <i class="trash icon"></i>
-            Remove
-        </button>
-    </div>
-</div>
 <div style="margin-top: 20px">
     <table class="ui very basic unstackable table">
         <thead>
         <tr>
-            <th>
-                <input type="checkbox">
-            </th>
             <th> Group name</th>
             <th> Policies</th>
         </tr>
         </thead>
         <tbody>
-        <tr md-row ng-repeat="group in networkDetailsCtrl.network.groups">
-            <!--<td><a ui-sref="contiv.networks.details({networkName:network.NetworkName})">{{network.NetworkName}}</a></td>-->
-            <td>
-                <input type="checkbox">
-            </td>
-            <td class="three wide column"><a href="#">{{group.groupName}}</a></td>
+        <tr ng-repeat="group in networkDetailsCtrl.applicationGroups">
+            <td class="three wide column"><a ui-sref="contiv.applicationgroups.details({key:group.key})">{{group.groupName}}</a></td>
             <td>{{group.policies.join(", ")}}</td>
         </tr>
         </tbody>

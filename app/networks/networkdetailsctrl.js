@@ -7,7 +7,7 @@ angular.module('contiv.networks')
                 templateUrl: 'networks/networkdetails.html'
             });
     })
-    .controller('NetworkDetailsCtrl', ['$state', '$stateParams', 'NetworksModel', function ($state, $stateParams, NetworksModel) {
+    .controller('NetworkDetailsCtrl', ['$state', '$stateParams', 'NetworksModel', 'ApplicationGroupsModel', function ($state, $stateParams, NetworksModel, ApplicationGroupsModel) {
         var networkDetailsCtrl = this;
 
         function returnToNetworks() {
@@ -19,9 +19,21 @@ angular.module('contiv.networks')
             returnToNetworks();
         }
 
+        /**
+         * Get application groups belonging to a network
+         */
+        function getApplicationGroups() {
+            ApplicationGroupsModel.get().then(function (result) {
+                networkDetailsCtrl.applicationGroups = _.filter(result, {
+                    'networkName' : networkDetailsCtrl.network.networkName
+                });
+            });
+        }
+
         NetworksModel.getModelByKey($stateParams.key)
             .then(function (network) {
                 networkDetailsCtrl.network = network;
+                getApplicationGroups();
             });
 
         networkDetailsCtrl.deleteNetwork = deleteNetwork;
