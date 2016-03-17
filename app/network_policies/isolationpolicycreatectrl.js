@@ -24,7 +24,7 @@ angular.module('contiv.networkpolicies')
 
         function createPolicy() {
             isolationPolicyCreateCtrl.newPolicy.key =
-                isolationPolicyCreateCtrl.newPolicy.tenantName + ':' + isolationPolicyCreateCtrl.newPolicy.policyName;
+                PoliciesModel.generateKey(isolationPolicyCreateCtrl.newPolicy);
             PoliciesModel.create(isolationPolicyCreateCtrl.newPolicy).then(function (result) {
                 returnToPolicies();
             });

@@ -4,9 +4,9 @@
 angular.module('contiv.models')
     .factory('RulesModel', ['$http', '$q', function ($http, $q) {
         var URLS = {
-            POST: '/api/rules/',
-            DELETE: '/api/rules/',
-            GET: '/api/rules/'
+            POST: ContivGlobals.RULES_ENDPOINT,
+            DELETE: ContivGlobals.RULES_ENDPOINT,
+            GET: ContivGlobals.RULES_ENDPOINT
         };
         var rulesmodel = new Collection($http, $q, URLS);
 

@@ -65,6 +65,23 @@ function Collection($http, $q, URLS) {
         return deferred.promise;
     };
 
+    collection.save = function (model) {
+        var deferred = $q.defer();
+        var url = URLS.PUT + model.key + '/';
+        $http.put(url, model)
+            .then(function successCallback(response) {
+                models = models || [];
+                _.remove(models, function (n) {
+                    return n.key == model.key;
+                });
+                models.push(extract(response));
+                deferred.resolve(extract(response));
+            }, function errorCallback(response) {
+                deferred.reject(extract(response));
+            });
+        return deferred.promise;
+    };
+
     collection.delete = function (model) {
         var url = URLS.DELETE + model.key + '/';
         $http.delete(url)

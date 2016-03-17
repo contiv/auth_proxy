@@ -1,9 +1,9 @@
-<form class="ui form" role="form" ng-submit="applicationGroupCreateCtrl.createApplicationGroup(newApplicationGroup)"
+<form class="ui form" role="form" ng-submit="applicationGroupCreateCtrl.createApplicationGroup(applicationGroup)"
       novalidate>
     <div class="field">
         <label for="newApplicationGroupName">Application group name</label>
         <input type="text" id="newApplicationGroupName"
-               ng-model="applicationGroupCreateCtrl.newApplicationGroup.groupName" placeholder="Enter name">
+               ng-model="applicationGroupCreateCtrl.applicationGroup.groupName" placeholder="Enter name">
     </div>
     <div class="field">
         <label for="newApplicationGroupNetwork">Network</label>
@@ -60,7 +60,7 @@
                         </button>
                     </td>
                 </tr>
-                <tr ng-repeat="policy in applicationGroupCreateCtrl.newApplicationGroup.policies">
+                <tr ng-repeat="policy in applicationGroupCreateCtrl.applicationGroup.policies">
                     <td>{{policy}}</td>
                     <td>
                         <button type="button" class="ui red icon button"
