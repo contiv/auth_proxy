@@ -43,7 +43,7 @@ describe('contiv.networkpolicies module', function () {
 
         beforeEach(inject(function (_$httpBackend_) {
             $httpBackend = _$httpBackend_;
-            $httpBackend.when('GET', '/api/policys/').respond(policyListData);
+            $httpBackend.when('GET', ContivGlobals.POLICIES_ENDPOINT).respond(policyListData);
         }));
 
         afterEach(function () {
@@ -63,7 +63,7 @@ describe('contiv.networkpolicies module', function () {
         });
         it('IsolationPolicyListCtrl should do a GET on /api/policys/ REST API', function () {
             $controller('IsolationPolicyListCtrl');
-            $httpBackend.expectGET('/api/policys/');
+            $httpBackend.expectGET(ContivGlobals.POLICIES_ENDPOINT);
             $httpBackend.flush();
         });
 

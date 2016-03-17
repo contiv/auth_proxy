@@ -6,7 +6,7 @@
         </a>
     </div>
 
-    <div class="six wide column">
+    <div ng-switch="applicationGroupDetailsCtrl.mode" class="six wide column">
         <div id="delete-group-modal" class="ui small modal">
             <div class="header">Remove Application Group: {{applicationGroupDetailsCtrl.applicationGroup.groupName}}
             </div>
@@ -20,6 +20,16 @@
                 </div>
             </div>
         </div>
+        <button ng-switch-when="edit" class="ui blue disabled button"
+                ui-sref="contiv.applicationgroups.edit({key:applicationGroupDetailsCtrl.applicationGroup.key})">
+            <i class="edit icon"></i>
+            Edit
+        </button>
+        <button ng-switch-when="details" class="ui blue button"
+                ui-sref="contiv.applicationgroups.edit({key:applicationGroupDetailsCtrl.applicationGroup.key})">
+            <i class="edit icon"></i>
+            Edit
+        </button>
         <button class="ui red button" onclick="$('#delete-group-modal').modal('show')">
             <i class="trash icon"></i>
             Remove
@@ -66,13 +76,49 @@
 </div>
 
 <div ng-show="applicationGroupDetailsCtrl.isolationPoliciesVisible">
-    <table class="ui very basic unstackable table">
-        <tbody>
-        <tr ng-repeat="policy in applicationGroupDetailsCtrl.applicationGroup.policies">
-            <td>{{policy}}</td>
-        </tr>
-        </tbody>
-    </table>
+    <div ng-switch="applicationGroupDetailsCtrl.mode">
+        <table ng-switch-when="edit" class="ui very basic unstackable table">
+            <tbody>
+            <tr>
+                <td>
+                    <div class="ui left icon input">
+                        <input type="text" ng-model="isolationPolicySearchText.policyName"
+                               placeholder="Filter by policy name">
+                        <i class="search icon"></i>
+                    </div>
+                </td>
+                <td>
+                    <select class="ui dropdown" ng-model="applicationGroupDetailsCtrl.selectedPolicy"
+                            ng-options="policy.policyName for policy in applicationGroupDetailsCtrl.isolationPolicies | filter:isolationPolicySearchText">
+                    </select>
+                </td>
+                <td>
+                    <button type="button" class="ui blue icon button"
+                            ng-click="applicationGroupDetailsCtrl.addIsolationPolicy()">
+                        <i class="add icon"></i>
+                    </button>
+                </td>
+            </tr>
+            <tr ng-repeat="policy in applicationGroupDetailsCtrl.applicationGroup.policies">
+                <td>{{policy}}</td>
+                <td>
+                    <button type="button" class="ui red icon button"
+                            ng-click="applicationGroupDetailsCtrl.removeIsolationPolicy(policy)">
+                        <i class="delete icon"></i>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table ng-switch-when="details" class="ui very basic unstackable table">
+            <tbody>
+            <tr ng-repeat="policy in applicationGroupDetailsCtrl.applicationGroup.policies">
+                <td>{{policy}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
     <h5 class="ui header">Incoming rules</h5>
     <table class="ui very basic unstackable table" style="margin-top: 40px">
         <thead>
@@ -166,6 +212,16 @@
     <div class="one wide column">
         <i class="add icon"></i>
     </div>
+</div>
+
+<div ng-switch="applicationGroupDetailsCtrl.mode" style="margin-top: 40px">
+    <button ng-switch-when="edit" type="button" class="negative ui button"
+            ng-click="applicationGroupDetailsCtrl.cancelEditing()">Cancel
+    </button>
+    <button ng-switch-when="edit" type="button" class="ui blue button"
+            ng-click="applicationGroupDetailsCtrl.saveApplicationGroup()">
+        Save
+    </button>
 </div>
 
 

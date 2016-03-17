@@ -29,7 +29,7 @@ describe('contiv.networks module', function () {
 
         beforeEach(inject(function (_$httpBackend_) {
             $httpBackend = _$httpBackend_;
-            $httpBackend.when('GET', '/api/networks/').respond(networkListData);
+            $httpBackend.when('GET', ContivGlobals.NETWORKS_ENDPOINT).respond(networkListData);
         }));
 
         afterEach(function () {
@@ -49,7 +49,7 @@ describe('contiv.networks module', function () {
         });
         it('NetworkListCtrl should do a GET on /api/networks/ REST API', function () {
             $controller('NetworksListCtrl');
-            $httpBackend.expectGET('/api/networks/');
+            $httpBackend.expectGET(ContivGlobals.NETWORKS_ENDPOINT);
             $httpBackend.flush();
         });
 

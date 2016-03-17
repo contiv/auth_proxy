@@ -1,9 +1,20 @@
 angular.module('contiv.models')
     .factory('PoliciesModel', ['$http', '$q', function ($http, $q) {
         var URLS = {
-            POST: '/api/policys/',
-            DELETE: '/api/policys/',
-            GET: '/api/policys/'
+            POST: ContivGlobals.POLICIES_ENDPOINT,
+            DELETE: ContivGlobals.POLICIES_ENDPOINT,
+            GET: ContivGlobals.POLICIES_ENDPOINT
         };
-        return new Collection($http, $q, URLS);
+        var policiesmodel = new Collection($http, $q, URLS);
+
+        /**
+         * Generate policy key to save policy on server
+         * @param policy
+         * @returns {string}
+         */
+        policiesmodel.generateKey = function (policy) {
+            return policy.tenantName + ':' + policy.policyName;
+        };
+
+        return policiesmodel;
     }]);

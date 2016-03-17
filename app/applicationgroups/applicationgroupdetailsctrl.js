@@ -9,19 +9,56 @@ angular.module('contiv.applicationgroups')
                 controller: 'ApplicationGroupDetailsCtrl as applicationGroupDetailsCtrl',
                 templateUrl: 'applicationgroups/applicationgroupdetails.html'
             })
+            .state('contiv.applicationgroups.edit', {
+                url: '/edit/:key',
+                controller: 'ApplicationGroupDetailsCtrl as applicationGroupDetailsCtrl',
+                templateUrl: 'applicationgroups/applicationgroupdetails.html'
+            })
         ;
     })
     .controller('ApplicationGroupDetailsCtrl', [
         '$state',
         '$stateParams',
         'ApplicationGroupsModel',
+        'PoliciesModel',
         'RulesModel',
-        function ($state, $stateParams, ApplicationGroupsModel, RulesModel) {
+        'ApplicationGroupService',
+        function ($state, $stateParams, ApplicationGroupsModel, PoliciesModel, RulesModel, ApplicationGroupService) {
             var applicationGroupDetailsCtrl = this;
+            applicationGroupDetailsCtrl.isolationPolicies = [];
+            applicationGroupDetailsCtrl.applicationGroup = {};
+            applicationGroupDetailsCtrl.selectedNetwork = {};
+            applicationGroupDetailsCtrl.selectedPolicy = {};
+            applicationGroupDetailsCtrl.selectedPolicies = [];
+
+            //To display incoming and outgoing rules for selected policies
+            applicationGroupDetailsCtrl.incomingRules = [];
+            applicationGroupDetailsCtrl.outgoingRules = [];
+
+
             applicationGroupDetailsCtrl.isolationPoliciesVisible = false;
 
+            /**
+             * To show edit or details screen based on the route
+             */
+            function setMode() {
+                if ($state.is('contiv.applicationgroups.edit')) {
+                    applicationGroupDetailsCtrl.mode = 'edit';
+                } else {
+                    applicationGroupDetailsCtrl.mode = 'details';
+                }
+            }
+            
             function returnToApplicationGroup() {
                 $state.go('contiv.applicationgroups');
+            }
+
+            function returnToApplicationGroupDetails() {
+                $state.go('contiv.applicationgroups.details', {'key': applicationGroupDetailsCtrl.applicationGroup.key});
+            }
+
+            function cancelEditing() {
+                returnToApplicationGroupDetails();
             }
 
             function getRules() {
@@ -31,11 +68,11 @@ angular.module('contiv.applicationgroups')
                         //To display rules of selected policies
                         RulesModel.getIncomingRules(policy, 'default')
                             .then(function (rules) {
-                                applicationGroupDetailsCtrl.incomingRules = rules;
+                                Array.prototype.push.apply(applicationGroupDetailsCtrl.incomingRules, rules);
                             });
                         RulesModel.getOutgoingRules(policy, 'default')
                             .then(function (rules) {
-                                applicationGroupDetailsCtrl.outgoingRules = rules;
+                                Array.prototype.push.apply(applicationGroupDetailsCtrl.outgoingRules, rules);
                             });
                     });
                 }
@@ -46,12 +83,51 @@ angular.module('contiv.applicationgroups')
                 returnToApplicationGroup();
             }
 
+            /**
+             * Get policies for the given tenant.
+             */
+            function getIsolationPolicies() {
+                PoliciesModel.get().then(function (result) {
+                    applicationGroupDetailsCtrl.isolationPolicies = _.filter(result, {
+                        'tenantName': 'default'//TODO: Remove hardcoded tenant.
+                    })
+                });
+            }
+
+            /**
+             * Add policy to new application group
+             */
+            function addIsolationPolicy() {
+                ApplicationGroupService.addIsolationPolicy(applicationGroupDetailsCtrl);
+            }
+
+            /**
+             * Remove policy from new application group
+             */
+            function removeIsolationPolicy(policyName) {
+                ApplicationGroupService.removeIsolationPolicy(applicationGroupDetailsCtrl, policyName);
+            }
+
+            function saveApplicationGroup() {
+                ApplicationGroupsModel.save(applicationGroupDetailsCtrl.applicationGroup).then(function (result) {
+                    returnToApplicationGroupDetails();
+                });
+            }
+
             ApplicationGroupsModel.getModelByKey($stateParams.key)
                 .then(function (group) {
                     applicationGroupDetailsCtrl.applicationGroup = group;
                     getRules();
                 });
 
+            getIsolationPolicies();
+
+            applicationGroupDetailsCtrl.saveApplicationGroup = saveApplicationGroup;
+            applicationGroupDetailsCtrl.cancelEditing = cancelEditing;
+            applicationGroupDetailsCtrl.addIsolationPolicy = addIsolationPolicy;
+            applicationGroupDetailsCtrl.removeIsolationPolicy = removeIsolationPolicy;
             applicationGroupDetailsCtrl.deleteApplicationGroup = deleteApplicationGroup;
+            
+            setMode();
 
         }]);
