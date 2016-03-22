@@ -51,49 +51,58 @@
     <table class="ui very basic unstackable table" style="margin-top: 40px">
         <thead>
         <tr>
-            <th>Rule ID</th>
-            <th>Priority</th>
-            <th>Action</th>
-            <th>From group</th>
-            <th>From network</th>
-            <th>From IP address</th>
-            <th>Protocol</th>
-            <th>Port</th>
+            <th class="one wide">Priority</th>
+            <th class="two wide">Action</th>
+            <th class="three wide">From group</th>
+            <th class="three wide">From network</th>
+            <th class="three wide">From IP address</th>
+            <th class="two wide">Protocol</th>
+            <th class="two wide">Port</th>
         </tr>
         </thead>
 
         <tbody ng-switch="isolationPolicyDetailsCtrl.mode">
         <tr ng-switch-when="edit">
             <td>
-                <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newIncomingRule.ruleId"></div>
-            </td>
-            <td>
                 <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newIncomingRule.priority"
                                              type="number"></div>
             </td>
             <td>
-                <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newIncomingRule.action"></div>
+                <select class="ui dropdown" ng-model="isolationPolicyDetailsCtrl.newIncomingRule.action">
+                    <option value="allow">allow</option>
+                    <option value="deny">deny</option>
+                </select>
             </td>
             <td>
-                <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newIncomingRule.fromGroup">
-                </div>
+                <select class="ui dropdown" ng-model="isolationPolicyDetailsCtrl.newIncomingSelectedApplicationGroup"
+                        ng-options="group.groupName for group in isolationPolicyDetailsCtrl.applicationGroups"
+                        ng-change="isolationPolicyDetailsCtrl.onChangeIncomingApplicationGroupSelection()">
+                    <option value="">none</option>
+                </select>
             </td>
             <td>
-                <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newIncomingRule.fromNetwork">
-                </div>
+                <select class="ui dropdown" ng-model="isolationPolicyDetailsCtrl.newIncomingRule.fromNetwork"
+                        ng-options="network.networkName as network.networkName for network in isolationPolicyDetailsCtrl.networks"
+                        ng-disabled="isolationPolicyDetailsCtrl.disableIncomingNetworkSelection">
+                    <option value="">none</option>
+                </select>
             </td>
             <td>
                 <div class="ui input"><input name=""
-                                             ng-model="isolationPolicyDetailsCtrl.newIncomingRule.fromIPAddress">
+                                             ng-model="isolationPolicyDetailsCtrl.newIncomingRule.fromIPAddress"
+                                             placeholder="0.0.0.0/0">
                 </div>
             </td>
             <td>
-                <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newIncomingRule.protocol">
-                </div>
+                <select class="ui dropdown" ng-model="isolationPolicyDetailsCtrl.newIncomingRule.protocol">
+                    <option value="tcp">tcp</option>
+                    <option value="udp">udp</option>
+                    <option value="icmp">icmp</option>
+                </select>
             </td>
             <td>
                 <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newIncomingRule.port"
-                                             type="number"></div>
+                                             type="number" placeholder="0-65535"></div>
             </td>
             <td>
                 <button class="ui blue icon button" ng-click="isolationPolicyDetailsCtrl.addIncomingRule()">
@@ -102,10 +111,9 @@
             </td>
         </tr>
         <tr ng-repeat="rule in isolationPolicyDetailsCtrl.incomingRules">
-            <td>{{rule.ruleId}}</td>
             <td>{{rule.priority}}</td>
             <td>{{rule.action}}</td>
-            <td>{{rule.fromGroup}}</td>
+            <td>{{rule.fromEndpointGroup}}</td>
             <td>{{rule.fromNetwork}}</td>
             <td>{{rule.fromIPAddress}}</td>
             <td>{{rule.protocol}}</td>
@@ -123,14 +131,13 @@
     <table class="ui very basic unstackable table" style="margin-top: 40px">
         <thead>
         <tr>
-            <th>Rule ID</th>
-            <th>Priority</th>
-            <th>Action</th>
-            <th>To group</th>
-            <th>To network</th>
-            <th>To IP address</th>
-            <th>Protocol</th>
-            <th>Port</th>
+            <th class="one wide">Priority</th>
+            <th class="two wide">Action</th>
+            <th class="three wide">To group</th>
+            <th class="three wide">To network</th>
+            <th class="three wide">To IP address</th>
+            <th class="two wide">Protocol</th>
+            <th class="two wide">Port</th>
         </tr>
         </thead>
 
@@ -138,35 +145,45 @@
         <tr ng-switch-when="edit">
 
             <td>
-                <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newOutgoingRule.ruleId"></div>
-            </td>
-            <td>
                 <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newOutgoingRule.priority"
                                              type="number"></div>
             </td>
             <td>
-                <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newOutgoingRule.action"></div>
+                <select class="ui dropdown" ng-model="isolationPolicyDetailsCtrl.newOutgoingRule.action">
+                    <option value="allow">allow</option>
+                    <option value="deny">deny</option>
+                </select>
             </td>
             <td>
-                <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newOutgoingRule.fromGroup">
-                </div>
+                <select class="ui dropdown" ng-model="isolationPolicyDetailsCtrl.newOutgoingSelectedApplicationGroup"
+                        ng-options="group.groupName for group in isolationPolicyDetailsCtrl.applicationGroups"
+                        ng-change="isolationPolicyDetailsCtrl.onChangeOutgoingApplicationGroupSelection()">
+                    <option value="">none</option>
+                </select>
             </td>
             <td>
-                <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newOutgoingRule.fromNetwork">
-                </div>
+                <select class="ui dropdown" ng-model="isolationPolicyDetailsCtrl.newOutgoingRule.toNetwork"
+                        ng-options="network.networkName as network.networkName for network in isolationPolicyDetailsCtrl.networks"
+                        ng-disabled="isolationPolicyDetailsCtrl.disableOutgoingNetworkSelection">
+                    <option value="">none</option>
+                </select>
             </td>
             <td>
                 <div class="ui input"><input name=""
-                                             ng-model="isolationPolicyDetailsCtrl.newOutgoingRule.fromIPAddress">
+                                             ng-model="isolationPolicyDetailsCtrl.newOutgoingRule.toIPAddress"
+                                             placeholder="0.0.0.0/0">
                 </div>
             </td>
             <td>
-                <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newOutgoingRule.protocol">
-                </div>
+                <select class="ui dropdown" ng-model="isolationPolicyDetailsCtrl.newOutgoingRule.protocol">
+                    <option value="tcp">tcp</option>
+                    <option value="udp">udp</option>
+                    <option value="icmp">icmp</option>
+                </select>
             </td>
             <td>
                 <div class="ui input"><input name="" ng-model="isolationPolicyDetailsCtrl.newOutgoingRule.port"
-                                             type="number"></div>
+                                             type="number" placeholder="0-65535"></div>
             </td>
 
             <td>
@@ -177,10 +194,9 @@
 
         </tr>
         <tr ng-repeat="rule in isolationPolicyDetailsCtrl.outgoingRules">
-            <td>{{rule.ruleId}}</td>
             <td>{{rule.priority}}</td>
             <td>{{rule.action}}</td>
-            <td>{{rule.toGroup}}</td>
+            <td>{{rule.toEndpointGroup}}</td>
             <td>{{rule.toNetwork}}</td>
             <td>{{rule.toIPAddress}}</td>
             <td>{{rule.protocol}}</td>
