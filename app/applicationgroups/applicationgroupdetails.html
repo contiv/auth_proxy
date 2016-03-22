@@ -137,7 +137,7 @@
         <tr ng-repeat="rule in applicationGroupDetailsCtrl.incomingRules">
             <td>{{rule.priority}}</td>
             <td>{{rule.action}}</td>
-            <td>{{rule.fromGroup}}</td>
+            <td>{{rule.fromEndpointGroup}}</td>
             <td>{{rule.fromNetwork}}</td>
             <td>{{rule.fromIPAddress}}</td>
             <td>{{rule.protocol}}</td>
@@ -165,7 +165,7 @@
         <tr ng-repeat="rule in applicationGroupDetailsCtrl.outgoingRules">
             <td>{{rule.priority}}</td>
             <td>{{rule.action}}</td>
-            <td>{{rule.toGroup}}</td>
+            <td>{{rule.toEndpointGroup}}</td>
             <td>{{rule.toNetwork}}</td>
             <td>{{rule.toIPAddress}}</td>
             <td>{{rule.protocol}}</td>
