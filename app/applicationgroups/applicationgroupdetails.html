@@ -123,7 +123,6 @@
     <table class="ui very basic unstackable table" style="margin-top: 40px">
         <thead>
         <tr>
-            <th>Rule ID</th>
             <th>Priority</th>
             <th>Action</th>
             <th>From group</th>
@@ -136,7 +135,6 @@
 
         <tbody>
         <tr ng-repeat="rule in applicationGroupDetailsCtrl.incomingRules">
-            <td>{{rule.ruleId}}</td>
             <td>{{rule.priority}}</td>
             <td>{{rule.action}}</td>
             <td>{{rule.fromGroup}}</td>
@@ -153,7 +151,6 @@
     <table class="ui very basic unstackable table" style="margin-top: 40px">
         <thead>
         <tr>
-            <th>Rule ID</th>
             <th>Priority</th>
             <th>Action</th>
             <th>To group</th>
@@ -166,7 +163,6 @@
 
         <tbody>
         <tr ng-repeat="rule in applicationGroupDetailsCtrl.outgoingRules">
-            <td>{{rule.ruleId}}</td>
             <td>{{rule.priority}}</td>
             <td>{{rule.action}}</td>
             <td>{{rule.toGroup}}</td>

@@ -5,11 +5,14 @@
     </div>
     <div class="field">
         <label for="newNetworkEncapsulation">Encapsulation</label>
-        <input type="text" id="newNetworkEncapsulation" ng-model="networkCreateCtrl.newNetwork.encap" placeholder="Enter encapsulation">
+        <select id="newNetworkEncapsulation" class="ui dropdown" ng-model="networkCreateCtrl.newNetwork.encap">
+            <option value="vxlan">vxlan</option>
+            <option value="vlan">vlan</option>
+        </select>
     </div>
     <div class="field">
         <label for="newNetworkSubnet">Subnet</label>
-        <input type="text" id="newNetworkSubnet" ng-model="networkCreateCtrl.newNetwork.subnet" placeholder="Enter subnet">
+        <input type="text" id="newNetworkSubnet" ng-model="networkCreateCtrl.newNetwork.subnet" placeholder="CIDR notation, for example: 20.1.1.0/24">
     </div>
     <div class="field">
         <label for="newNetworkGateway">Gateway</label>

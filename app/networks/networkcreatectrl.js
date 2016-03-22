@@ -42,11 +42,10 @@ angular.module('contiv.networks')
         function resetForm() {
             networkCreateCtrl.newNetwork = {
                 networkName: '',
-                encap: '',
+                encap: 'vxlan',
                 subnet: '',
                 gateway: '',
                 tenantName: 'default'//TODO: Remove hardcoded tenant.
-                //groups: []
             };
         }
 
