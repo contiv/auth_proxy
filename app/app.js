@@ -7,7 +7,9 @@ angular.module('contivApp', [
         'contiv.dashboard',
         'contiv.applicationgroups',
         'contiv.networks',
-        'contiv.networkpolicies'
+        'contiv.networkpolicies',
+        'contiv.volumes',
+        'contiv.nodes'
     ])
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider

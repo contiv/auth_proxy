@@ -23,11 +23,13 @@ angular.module('contiv.networkpolicies')
         }
 
         function createPolicy() {
-            isolationPolicyCreateCtrl.newPolicy.key =
-                PoliciesModel.generateKey(isolationPolicyCreateCtrl.newPolicy);
-            PoliciesModel.create(isolationPolicyCreateCtrl.newPolicy).then(function (result) {
-                returnToPolicies();
-            });
+            if (isolationPolicyCreateCtrl.form.$valid) {
+                isolationPolicyCreateCtrl.newPolicy.key =
+                    PoliciesModel.generateKey(isolationPolicyCreateCtrl.newPolicy);
+                PoliciesModel.create(isolationPolicyCreateCtrl.newPolicy).then(function (result) {
+                    returnToPolicies();
+                });
+            }
         }
 
         function resetForm() {

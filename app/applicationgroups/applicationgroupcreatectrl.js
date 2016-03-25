@@ -82,14 +82,18 @@ angular.module('contiv.applicationgroups')
             }
 
             function createApplicationGroup() {
-                applicationGroupCreateCtrl.applicationGroup.networkName =
-                    applicationGroupCreateCtrl.selectedNetwork.networkName;
-                applicationGroupCreateCtrl.applicationGroup.key =
-                    ApplicationGroupsModel.generateKey(applicationGroupCreateCtrl.applicationGroup);
+                //form controller is injected by the html template
+                //checking if all validations have passed
+                if (applicationGroupCreateCtrl.form.$valid) {
+                    applicationGroupCreateCtrl.applicationGroup.networkName =
+                        applicationGroupCreateCtrl.selectedNetwork.networkName;
+                    applicationGroupCreateCtrl.applicationGroup.key =
+                        ApplicationGroupsModel.generateKey(applicationGroupCreateCtrl.applicationGroup);
 
-                ApplicationGroupsModel.create(applicationGroupCreateCtrl.applicationGroup).then(function (result) {
-                    returnToApplicationGroup();
-                });
+                    ApplicationGroupsModel.create(applicationGroupCreateCtrl.applicationGroup).then(function (result) {
+                        returnToApplicationGroup();
+                    });
+                }
             }
 
             function resetForm() {

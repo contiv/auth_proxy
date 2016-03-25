@@ -38,13 +38,17 @@
         <i class="protect blue icon"></i>
         Storage Policies
     </a>
-    <a class="item" href="#/networks">
+    <a class="item" ui-sref="contiv.networks()">
         <i class="sitemap blue icon"></i>
         Networks
     </a>
-    <a class="item" href="#/">
+    <a class="item" ui-sref="contiv.volumes()">
         <i class="disk outline blue icon"></i>
         Volumes
+    </a>
+    <a class="item" ui-sref="contiv.nodes()">
+        <i class="server blue icon"></i>
+        Nodes
     </a>
 </div>
 
@@ -56,6 +60,8 @@
     <div ui-view="networks" style="margin-left:180px;margin-top:30px"></div>
     <div ui-view="applicationgroups" style="margin-left:180px;margin-top:30px"></div>
     <div ui-view="policies" style="margin-left:180px;margin-top:30px"></div>
+    <div ui-view="volumes" style="margin-left:180px;margin-top:30px"></div>
+    <div ui-view="nodes" style="margin-left:180px;margin-top:30px"></div>
 </div>
 
 
@@ -93,5 +99,9 @@
 <script src="network_policies/isolationpolicylistctrl.js"></script>
 <script src="network_policies/isolationpolicydetailsctrl.js"></script>
 <script src="network_policies/isolationpolicycreatectrl.js"></script>
+<script src="components/models/volumesmodel.js"></script>
+<script src="volumes/volumelistctrl.js"></script>
+<script src="components/models/nodesmodel.js"></script>
+<script src="nodes/nodelistctrl.js"></script>
 </body>
 </html>
