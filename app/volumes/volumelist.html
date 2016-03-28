@@ -15,16 +15,13 @@
         <thead>
         <tr>
             <th>Name</th>
-            <th>Policy</th>
             <th>In use on host</th>
         </tr>
         </thead>
 
         <tbody>
         <tr ng-repeat="volume in volumeListCtrl.volumes">
-            <td><a ui-sref="contiv.volumes.details({key:volume.key})">{{volume.name}}</a></td>
-            <td>{{volume.name}}</td>
-            <td>{{volume.tenant}}</td>
+            <td><a ui-sref="contiv.volumes.details({key:volume.Name})">{{volume.Name}}</a></td>
             <td></td>
         </tr>
         </tbody>

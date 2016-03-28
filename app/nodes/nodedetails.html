@@ -1,0 +1,59 @@
+<div class="ui nine column grid">
+    <div class="three wide column">
+        <a ui-sref="contiv.nodes()">
+            <i class="arrow left icon"></i>
+            Node details
+        </a>
+    </div>
+
+    <div class="six wide column">
+        <div id="decommission-node-modal" class="ui small modal">
+            <div class="header">Decommission Node: {{nodeDetailsCtrl.node.key}}
+            </div>
+            <div class="content">
+                <p>Are you sure you want to decommission this node?</p>
+            </div>
+            <div class="actions">
+                <div class="ui negative button">No</div>
+                <div class="ui positive button" ng-click="nodeDetailsCtrl.decommisionNode()">
+                    Yes
+                </div>
+            </div>
+        </div>
+        <button ng-if="nodeDetailsCtrl.commissioned" class="ui blue button"
+                onclick="$('#decommission-node-modal').modal('show')">
+            <i class="remove icon"></i>
+            Decommission
+        </button>
+        <button ng-if="!nodeDetailsCtrl.commissioned" class="ui blue button"
+
+                ui-sref="contiv.nodes.commission({key:nodeDetailsCtrl.node.key})">
+            <i class="checkmark icon"></i>
+            Commission
+        </button>
+
+        <button class="ui blue button">
+            <i class="refresh icon"></i>
+            Upgrade
+        </button>
+    </div>
+</div>
+<div class="ui secondary pointing menu">
+    <div class="ui container">
+        <a class="blue item" ui-sref="contiv.nodes.details.info({key:nodeDetailsCtrl.node.key})" ui-sref-active="active">
+            <i class="sidebar icon"></i>
+            DETAILS
+        </a>
+        <a class="blue item" ui-sref="contiv.nodes.details.logs({key:nodeDetailsCtrl.node.key})" ui-sref-active="active">
+            <i class="file text outline icon"></i>
+            LOGS
+        </a>
+        <a class="blue item" ui-sref="contiv.nodes.details.stats({key:nodeDetailsCtrl.node.key})" ui-sref-active="active">
+            <i class="area chart icon"></i>
+            STATS
+        </a>
+
+    </div>
+</div>
+
+<div ui-view style="margin-top:30px"></div>

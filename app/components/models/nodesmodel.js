@@ -32,7 +32,7 @@ function NodesCollection($http, $q) {
     }
 
     nodescollection.get = function () {
-        return (models) ? $q.when(models) : $http.get(ContivGlobals.NODES_ENDPOINT).then(cache);
+        return (models) ? $q.when(models) : $http.get(ContivGlobals.NODES_LIST_ENDPOINT).then(cache);
     };
 
     nodescollection.getModelByKey = function (key) {
@@ -47,7 +47,7 @@ function NodesCollection($http, $q) {
         if (models) {
             deferred.resolve(findModel());
         } else {
-            collection.get()
+            nodescollection.get()
                 .then(function () {
                     deferred.resolve(findModel());
                 });
@@ -56,4 +56,26 @@ function NodesCollection($http, $q) {
         return deferred.promise;
     };
 
+    /**
+     *
+     * @param key
+     * @param extraVars JSON object of extra ansible and environment variables to be passed while commissioning a node
+     * {
+     * "env":{"http_proxy":"http://proxy.esl.cisco.com:8080", "https_proxy":"http://proxy.esl.cisco.com:8080"},
+     * "control_interface": "eth1", "service_vip": "192.168.2.252", "validate_certs": "false", "netplugin_if" : "eth2"
+     * }
+     * @returns {*}
+     */
+    nodescollection.commission = function (key, extraVars) {
+        var deferred = $q.defer();
+        var queryString = encodeURIComponent('extra-vars=' + JSON.stringify(extraVars));
+        var url = ContivGlobals.NODES_COMMISSION_ENDPOINT + key + '?' + queryString;
+        $http.post(url)
+            .then(function successCallback(response) {
+                deferred.resolve();
+            }, function errorCallback(response) {
+                deferred.reject(response);
+            });
+        return deferred.promise;
+    };
 }
