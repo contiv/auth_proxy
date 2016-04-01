@@ -3,9 +3,9 @@
  */
 angular.module('contiv.models', []);
 var ContivGlobals = (function () {
-    var NETMASTER = 'http://localhost:9999';
-    var CLUSTER = 'http://contiv150.insieme.local:9876';
-    var VOLMASTER = 'http://contiv150.insieme.local:9005';
+    var NETMASTER = '';
+    var CLUSTER = '';
+    var VOLMASTER = '';
     return {
         //REST endpoints for NETMASTER
         'NETWORKS_ENDPOINT': NETMASTER + '/api/networks/',
