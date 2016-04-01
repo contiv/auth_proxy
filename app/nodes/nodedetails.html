@@ -15,7 +15,20 @@
             </div>
             <div class="actions">
                 <div class="ui negative button">No</div>
-                <div class="ui positive button" ng-click="nodeDetailsCtrl.decommisionNode()">
+                <div class="ui positive button" ng-click="nodeDetailsCtrl.decommissionNode()">
+                    Yes
+                </div>
+            </div>
+        </div>
+        <div id="upgrade-node-modal" class="ui small modal">
+            <div class="header">Upgrade Node: {{nodeDetailsCtrl.node.key}}
+            </div>
+            <div class="content">
+                <p>Are you sure you want to upgrade this node?</p>
+            </div>
+            <div class="actions">
+                <div class="ui negative button">No</div>
+                <div class="ui positive button" ng-click="nodeDetailsCtrl.upgradeNode()">
                     Yes
                 </div>
             </div>
@@ -32,7 +45,7 @@
             Commission
         </button>
 
-        <button class="ui blue button">
+        <button class="ui blue button" onclick="$('#upgrade-node-modal').modal('show')">
             <i class="refresh icon"></i>
             Upgrade
         </button>

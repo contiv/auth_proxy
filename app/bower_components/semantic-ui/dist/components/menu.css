@@ -1316,8 +1316,8 @@ Floated Menu / Item
 }
 .ui.menu .blue.active.item,
 .ui.blue.menu .active.item {
-  border-color: #2185D0 !important;
-  color: #2185D0 !important;
+  border-color: #049fd9 !important;
+  color: #049fd9 !important;
 }
 .ui.menu .violet.active.item,
 .ui.violet.menu .active.item {
@@ -1540,7 +1540,7 @@ Floated Menu / Item
 /* Blue */
 .ui.inverted.menu .blue.active.item,
 .ui.inverted.blue.menu {
-  background-color: #2185D0;
+  background-color: #049fd9;
 }
 .ui.inverted.blue.menu .item:before {
   background-color: rgba(34, 36, 38, 0.1);
@@ -1971,9 +1971,58 @@ Floated Menu / Item
 
 
 /*******************************
-         Theme Overrides
+         Cisco Menu Overrides
 *******************************/
 
+
+/*--------------
+    Icon Only
+---------------*/
+
+
+/* Vertical Menu */
+.ui.vertical.icon.menu {
+  display: inline-block;
+  width: auto;
+  background-color: #049fd9;
+}
+
+/* Item */
+.ui.icon.menu .item {
+  height: auto;
+  text-align: center;
+  color: #1B1C1D;
+}
+
+/* Icon */
+.ui.icon.menu .item > .icon:not(.dropdown) {
+  margin: 0;
+  opacity: 1;
+}
+
+/*--------------
+      Hover
+---------------*/
+
+.ui.link.menu .item:hover,
+.ui.menu .dropdown.item:hover,
+.ui.menu .link.item:hover,
+.ui.menu a.item:hover {
+  cursor: pointer;
+  background: #64bbe3;
+  color: rgba(0, 0, 0, 0.95);
+}
+
+/*--------------
+     Pressed
+---------------*/
+
+.ui.link.menu .item:active,
+.ui.menu .link.item:active,
+.ui.menu a.item:active {
+  background: rgba(0, 0, 0, 0.03);
+  color: rgba(0, 0, 0, 0.95);
+}
 
 
 /*******************************

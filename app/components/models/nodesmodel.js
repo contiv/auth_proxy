@@ -68,9 +68,13 @@ function NodesCollection($http, $q) {
      */
     nodescollection.commission = function (key, extraVars) {
         var deferred = $q.defer();
-        var queryString = encodeURIComponent('extra-vars=' + JSON.stringify(extraVars));
+        var queryString = encodeURIComponent('extra_vars=' + JSON.stringify(extraVars));
         var url = ContivGlobals.NODES_COMMISSION_ENDPOINT + key + '?' + queryString;
-        $http.post(url)
+        $http.post(url, {}, {
+                'headers': {
+                    'Content-Type': 'application/json'
+                }
+            })
             .then(function successCallback(response) {
                 deferred.resolve();
             }, function errorCallback(response) {
@@ -78,4 +82,36 @@ function NodesCollection($http, $q) {
             });
         return deferred.promise;
     };
+
+    nodescollection.decommission = function (key) {
+        var deferred = $q.defer();
+        var url = ContivGlobals.NODES_DECOMMISSION_ENDPOINT + key;
+        $http.post(url, {}, {
+                'headers': {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(function successCallback(response) {
+                deferred.resolve();
+            }, function errorCallback(response) {
+                deferred.reject(response);
+            });
+        return deferred.promise;
+    };
+
+    nodescollection.upgrade = function (key) {
+        var deferred = $q.defer();
+        var url = ContivGlobals.NODES_MAINTENANCE_ENDPOINT + key;
+        $http.post(url, {}, {
+                'headers': {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(function successCallback(response) {
+                deferred.resolve();
+            }, function errorCallback(response) {
+                deferred.reject(response);
+            });
+        return deferred.promise;
+    }
 }

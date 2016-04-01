@@ -23,38 +23,40 @@
 
 <div id="sidebar" class="ui visible left vertical sidebar icon labeled menu">
     <a class="item" ui-sref="contiv.dashboard()">
-        <i class="dashboard blue icon"></i>
+        <i class="sidebar_dashboard icon"></i>
         Dashboard
     </a>
     <a class="item" ui-sref="contiv.applicationgroups()">
-        <i class="cubes blue icon"></i>
+        <i class="sidebar_appgroup icon"></i>
         Application Groups
     </a>
     <a class="item" ui-sref="contiv.policies.isolation()">
-        <i class="protect outline blue icon"></i>
+        <i class="sidebar_networkpolicies icon"></i>
         Network Policies
     </a>
     <a class="item" href="#/">
-        <i class="protect blue icon"></i>
+        <i class="sidebar_storagepolicies icon"></i>
         Storage Policies
     </a>
     <a class="item" ui-sref="contiv.networks()">
-        <i class="sitemap blue icon"></i>
+        <i class="sidebar_networks icon"></i>
         Networks
     </a>
     <a class="item" ui-sref="contiv.volumes()">
-        <i class="disk outline blue icon"></i>
+        <i class="sidebar_volumes icon"></i>
         Volumes
     </a>
     <a class="item" ui-sref="contiv.nodes()">
-        <i class="server blue icon"></i>
+        <i class="server icon"></i>
         Nodes
     </a>
 </div>
 
 <div class="page header">
-    <div class="ui top attached blue inverted menu">
-        <h1 class="header" style="margin:auto">Contiv Admin Console</h1>
+    <div class="ui top attached menu">
+        <h1 class="header" style="margin-left:200px; margin-right:auto;">
+            <img class="ui image" src="images/ciscoUCP.svg" height="26" width="300">
+        </h1>
     </div>
     <div ui-view="dashboard" style="margin-left:180px;margin-top:30px"></div>
     <div ui-view="networks" style="margin-left:180px;margin-top:30px"></div>

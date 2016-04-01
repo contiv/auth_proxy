@@ -28,10 +28,25 @@ angular.module('contiv.nodes')
     })
     .controller('NodeDetailsCtrl', ['$state', '$stateParams', 'NodesModel', function ($state, $stateParams, NodesModel) {
         var nodeDetailsCtrl = this;
+
+        function decommissionNode() {
+            NodesModel.decommission($stateParams.key).then(function (result) {
+                nodeDetailsCtrl.commissioned = false;
+            });
+        }
+
+        function upgradeNode() {
+            NodesModel.upgrade($stateParams.key).then(function (result) {
+            });
+        }
+        //TODO Initialize this from node information
         nodeDetailsCtrl.commissioned = false;
 
         NodesModel.getModelByKey($stateParams.key)
             .then(function (node) {
                 nodeDetailsCtrl.node = node;
             });
+
+        nodeDetailsCtrl.decommissionNode = decommissionNode;
+        nodeDetailsCtrl.upgradeNode = upgradeNode;
     }]);
