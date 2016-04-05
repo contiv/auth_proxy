@@ -1,155 +1,167 @@
-<form class="ui form" name="nodeCommissionCtrl.form" role="form" ng-submit="nodeCommissionCtrl.commission()"
-      novalidate>
-    <div class="field">
-        <div ng-show="nodeCommissionCtrl.form.$submitted">
-            <div ng-hide="nodeCommissionCtrl.form.$valid" class="ui negative message">
-                <ul class="list">
-                    <li ng-show="nodeCommissionCtrl.form.controlInterface.$error.required">
-                        Please enter control interface
-                    </li>
-                    <li ng-show="nodeCommissionCtrl.form.serviceVIP.$error.required">
-                        Please enter virtual IP address for cluster services
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="field">
-        <label for="controlInterface">Control interface</label>
-        <input type="text" id="controlInterface" name="controlInterface"
-               ng-model="nodeCommissionCtrl.control_interface"
-               placeholder="Enter control interface" required>
-    </div>
-    <div class="field">
-        <label for="serviceVIP">Virtual IP address for cluster services</label>
-        <input type="text" id="serviceVIP" name="serviceVIP"
-               ng-model="nodeCommissionCtrl.service_vip"
-               placeholder="Enter virtual IP address" required>
-    </div>
-    <div class="field">
-        <label for="scheduler">Scheduler</label>
-        <select id="scheduler" class="ui dropdown"
-                name="scheduler"
-                ng-model="nodeCommissionCtrl.scheduler_provider">
-            <option value="">-- Please select scheduler --</option>
-            <option value="">Swarm</option>
-        </select>
-    </div>
+<div ng-switch="nodeCommissionCtrl.mode">
+    <form class="ui form" name="nodeCommissionCtrl.form" role="form"
+          ng-submit="nodeCommissionCtrl.mode == 'commission' ? nodeCommissionCtrl.commission():nodeCommissionCtrl.discover()"
+          novalidate>
 
-    <div class="ui section divider"></div>
-    <div class="field">
-        <div class="ui sixteen column grid"
-             ng-click="nodeCommissionCtrl.ansibleVariablesVisible = !nodeCommissionCtrl.ansibleVariablesVisible">
-            <div class="fifteen wide column">
-                <h4 class="ui header">Ansible Variables</h4>
-            </div>
-            <div class="one wide column">
-                <i ng-if="nodeCommissionCtrl.ansibleVariablesVisible" class="minus icon"></i>
-                <i ng-if="!nodeCommissionCtrl.ansibleVariablesVisible" class="add icon"></i>
+        <div class="field">
+            <div ng-show="nodeCommissionCtrl.form.$submitted">
+                <div ng-hide="nodeCommissionCtrl.form.$valid" class="ui negative message">
+                    <ul class="list">
+                        <li ng-show="nodeCommissionCtrl.form.controlInterface.$error.required">
+                            Please enter control interface
+                        </li>
+                        <li ng-show="nodeCommissionCtrl.form.serviceVIP.$error.required">
+                            Please enter virtual IP address for cluster services
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-        <div ng-show="nodeCommissionCtrl.ansibleVariablesVisible">
-            <table class="ui very basic unstackable table">
-                <thead>
-                <th>Name</th>
-                <th>Value</th>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>
-                        <div class="ui input">
-                            <input type="text" ng-model="nodeCommissionCtrl.newAnsibleVariable.name"
-                                   placeholder="">
-                        </div>
-                    </td>
-                    <td>
-                        <div class="ui input">
-                            <input type="text" ng-model="nodeCommissionCtrl.newAnsibleVariable.value"
-                                   placeholder="">
-                        </div>
-                    </td>
-                    <td>
-                        <button type="button" class="ui blue icon button"
-                                ng-click="nodeCommissionCtrl.addAnsibleVariable()">
-                            <i class="add icon"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr ng-repeat="ansibleVariable in nodeCommissionCtrl.ansibleVariables">
-                    <td>{{ansibleVariable.name}}</td>
-                    <td>{{ansibleVariable.value}}</td>
-                    <td>
-                        <button type="button" class="ui red icon button"
-                                ng-click="nodeCommissionCtrl.removeAnsibleVariable(ansibleVariable)">
-                            <i class="delete icon"></i>
-                        </button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+        <div class="field">
+            <label for="controlInterface">Control interface</label>
+            <input type="text" id="controlInterface" name="controlInterface"
+                   ng-model="nodeCommissionCtrl.control_interface"
+                   placeholder="Enter control interface" required>
         </div>
-    </div>
+        <div class="field">
+            <label for="serviceVIP">Virtual IP address for cluster services</label>
+            <input type="text" id="serviceVIP" name="serviceVIP"
+                   ng-model="nodeCommissionCtrl.service_vip"
+                   placeholder="Enter virtual IP address" required>
+        </div>
+        <div ng-switch-when="commission" class="field">
+            <label for="scheduler">Scheduler</label>
+            <select id="scheduler" class="ui dropdown"
+                    name="scheduler"
+                    ng-model="nodeCommissionCtrl.scheduler_provider">
+                <option value="">-- Please select scheduler --</option>
+                <option value="">Swarm</option>
+            </select>
+        </div>
 
-    <div class="ui section divider"></div>
-    <div class="field">
-        <div class="ui sixteen column grid"
-             ng-click="nodeCommissionCtrl.envVariablesVisible = !nodeCommissionCtrl.envVariablesVisible">
-            <div class="fifteen wide column">
-                <h4 class="ui header">Environment</h4>
+        <div class="ui section divider"></div>
+        <div class="field">
+            <div class="ui sixteen column grid"
+                 ng-click="nodeCommissionCtrl.ansibleVariablesVisible = !nodeCommissionCtrl.ansibleVariablesVisible">
+                <div class="fifteen wide column">
+                    <h4 class="ui header">Ansible Variables</h4>
+                </div>
+                <div class="one wide column">
+                    <i ng-if="nodeCommissionCtrl.ansibleVariablesVisible" class="minus icon"></i>
+                    <i ng-if="!nodeCommissionCtrl.ansibleVariablesVisible" class="add icon"></i>
+                </div>
             </div>
-            <div class="one wide column">
-                <i ng-if="nodeCommissionCtrl.envVariablesVisible" class="minus icon"></i>
-                <i ng-if="!nodeCommissionCtrl.envVariablesVisible" class="add icon"></i>
+            <div ng-show="nodeCommissionCtrl.ansibleVariablesVisible">
+                <table class="ui very basic unstackable table">
+                    <thead>
+                    <th>Name</th>
+                    <th>Value</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div class="ui input">
+                                <input type="text" ng-model="nodeCommissionCtrl.newAnsibleVariable.name"
+                                       placeholder="">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="ui input">
+                                <input type="text" ng-model="nodeCommissionCtrl.newAnsibleVariable.value"
+                                       placeholder="">
+                            </div>
+                        </td>
+                        <td>
+                            <button type="button" class="ui blue icon button"
+                                    ng-click="nodeCommissionCtrl.addAnsibleVariable()">
+                                <i class="add icon"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="ansibleVariable in nodeCommissionCtrl.ansibleVariables">
+                        <td>{{ansibleVariable.name}}</td>
+                        <td>{{ansibleVariable.value}}</td>
+                        <td>
+                            <button type="button" class="ui red icon button"
+                                    ng-click="nodeCommissionCtrl.removeAnsibleVariable(ansibleVariable)">
+                                <i class="delete icon"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div ng-show="nodeCommissionCtrl.envVariablesVisible">
-            <table class="ui very basic unstackable table">
-                <thead>
-                <th>Name</th>
-                <th>Value</th>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>
-                        <div class="ui input">
-                            <input type="text" ng-model="nodeCommissionCtrl.newEnvVariable.name"
-                                   placeholder="">
-                        </div>
-                    </td>
-                    <td>
-                        <div class="ui input">
-                            <input type="text" ng-model="nodeCommissionCtrl.newEnvVariable.value"
-                                   placeholder="">
-                        </div>
-                    </td>
-                    <td>
-                        <button type="button" class="ui blue icon button"
-                                ng-click="nodeCommissionCtrl.addEnvVariable()">
-                            <i class="add icon"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr ng-repeat="envVariable in nodeCommissionCtrl.envVariables">
-                    <td>{{envVariable.name}}</td>
-                    <td>{{envVariable.value}}</td>
-                    <td>
-                        <button type="button" class="ui red icon button"
-                                ng-click="nodeCommissionCtrl.removeEnvVariable(envVariable)">
-                            <i class="delete icon"></i>
-                        </button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
 
-    <div style="margin-top: 40px">
-        <button type="button" class="negative ui button" ng-click="nodeCommissionCtrl.cancelCommissioningNode()">
-            Cancel
-        </button>
-        <button type="submit" class="ui blue button">
-            Commission
-        </button>
-    </div>
-</form>
+        <div class="ui section divider"></div>
+        <div class="field">
+            <div class="ui sixteen column grid"
+                 ng-click="nodeCommissionCtrl.envVariablesVisible = !nodeCommissionCtrl.envVariablesVisible">
+                <div class="fifteen wide column">
+                    <h4 class="ui header">Environment</h4>
+                </div>
+                <div class="one wide column">
+                    <i ng-if="nodeCommissionCtrl.envVariablesVisible" class="minus icon"></i>
+                    <i ng-if="!nodeCommissionCtrl.envVariablesVisible" class="add icon"></i>
+                </div>
+            </div>
+            <div ng-show="nodeCommissionCtrl.envVariablesVisible">
+                <table class="ui very basic unstackable table">
+                    <thead>
+                    <th>Name</th>
+                    <th>Value</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div class="ui input">
+                                <input type="text" ng-model="nodeCommissionCtrl.newEnvVariable.name"
+                                       placeholder="">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="ui input">
+                                <input type="text" ng-model="nodeCommissionCtrl.newEnvVariable.value"
+                                       placeholder="">
+                            </div>
+                        </td>
+                        <td>
+                            <button type="button" class="ui blue icon button"
+                                    ng-click="nodeCommissionCtrl.addEnvVariable()">
+                                <i class="add icon"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="envVariable in nodeCommissionCtrl.envVariables">
+                        <td>{{envVariable.name}}</td>
+                        <td>{{envVariable.value}}</td>
+                        <td>
+                            <button type="button" class="ui red icon button"
+                                    ng-click="nodeCommissionCtrl.removeEnvVariable(envVariable)">
+                                <i class="delete icon"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div style="margin-top: 40px">
+            <button ng-switch-when="commission" type="button" class="negative ui button"
+                    ng-click="nodeCommissionCtrl.cancelCommissioningNode()">
+                Cancel
+            </button>
+            <button ng-switch-when="commission" type="submit" class="ui blue button">
+                Commission
+            </button>
+            <button ng-switch-when="discover" type="button" class="negative ui button"
+                    ng-click="nodeCommissionCtrl.cancelDiscoveringNode()">
+                Cancel
+            </button>
+            <button ng-switch-when="discover" type="submit" class="ui blue button">
+                Discover
+            </button>
+        </div>
+    </form>
+</div>

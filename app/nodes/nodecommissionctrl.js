@@ -9,17 +9,41 @@ angular.module('contiv.nodes')
                 controller: 'NodeCommissionCtrl as nodeCommissionCtrl',
                 templateUrl: 'nodes/nodecommission.html'
             })
+            .state('contiv.nodes.discover', {
+                url: '/discover',
+                controller: 'NodeCommissionCtrl as nodeCommissionCtrl',
+                templateUrl: 'nodes/nodecommission.html'
+            })
         ;
     })
     .controller('NodeCommissionCtrl', ['$state', '$stateParams', 'NodesModel', function ($state, $stateParams, NodesModel) {
         var nodeCommissionCtrl = this;
 
+        /**
+         * To show commission or discover screen based on the route
+         */
+        function setMode() {
+            if ($state.is('contiv.nodes.commission')) {
+                nodeCommissionCtrl.mode = 'commission';
+            } else {
+                nodeCommissionCtrl.mode = 'discover';
+            }
+        }
+
         function returnToNodeDetails() {
             $state.go('contiv.nodes.details.info', {'key': $stateParams.key});
         }
 
+        function returnToNodes() {
+            $state.go('contiv.nodes');
+        }
+
         function cancelCommissioningNode() {
             returnToNodeDetails();
+        }
+
+        function cancelDiscoveringNode() {
+            returnToNodes();
         }
 
         function addAnsibleVariable() {
@@ -44,12 +68,14 @@ angular.module('contiv.nodes')
             });
         }
 
-        function commission() {
+        function createExtraVars() {
             var extraVars = {};
             //TODO Intialize from global settings
             extraVars['control_interface'] = nodeCommissionCtrl.control_interface;
-            extraVars['service_vip'] = nodeCommissionCtrl.service_vip;
-            extraVars['scheduler_provider'] = nodeCommissionCtrl.scheduler_provider;
+            if (nodeCommissionCtrl.mode == 'commission') {
+                extraVars['service_vip'] = nodeCommissionCtrl.service_vip;
+                extraVars['scheduler_provider'] = nodeCommissionCtrl.scheduler_provider;
+            }
 
             //Add ansible variables to extraVars
             nodeCommissionCtrl.ansibleVariables.forEach(function (item) {
@@ -61,10 +87,23 @@ angular.module('contiv.nodes')
                 envVars[item.name] = item.value;
             });
             extraVars['env'] = envVars;
+            return extraVars;
+        }
 
-            NodesModel.commission($stateParams.key, extraVars).then(function (result) {
-                returnToNodeDetails();
-            });
+        function commission() {
+            if (nodeCommissionCtrl.form.$valid) {
+                var extraVars = createExtraVars();
+                NodesModel.commission($stateParams.key, extraVars).then(function (result) {
+                    returnToNodeDetails();
+                });
+            }
+        }
+
+        function discover() {
+            if (nodeCommissionCtrl.form.$valid) {
+                var extraVars = createExtraVars();
+                NodesModel.discover(nodeCommissionCtrl.service_vip, extraVars);
+            }
         }
 
         function resetNewAnsibleVariable() {
@@ -90,7 +129,10 @@ angular.module('contiv.nodes')
         nodeCommissionCtrl.removeEnvVariable = removeEnvVariable;
         nodeCommissionCtrl.cancelCommissioningNode = cancelCommissioningNode;
         nodeCommissionCtrl.commission = commission;
+        nodeCommissionCtrl.discover = discover;
+        nodeCommissionCtrl.cancelDiscoveringNode = cancelDiscoveringNode;
 
+        setMode();
         resetNewAnsibleVariable();
         resetNewEnvironmentVariable();
 

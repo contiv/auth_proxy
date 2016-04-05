@@ -113,5 +113,32 @@ function NodesCollection($http, $q) {
                 deferred.reject(response);
             });
         return deferred.promise;
-    }
+    };
+
+    /**
+     *
+     * @param ip
+     * @param extraVars JSON object of extra ansible and environment variables to be passed while discovering a node
+     * {
+     * "env":{"http_proxy":"http://proxy.esl.cisco.com:8080", "https_proxy":"http://proxy.esl.cisco.com:8080"},
+     * "control_interface": "eth1", "service_vip": "192.168.2.252", "cluster-name": "contiv", "node-label" : "node1"
+     * }
+     * @returns {*}
+     */
+    nodescollection.discover = function (ip, extraVars) {
+        var deferred = $q.defer();
+        var queryString = encodeURIComponent('extra_vars=' + JSON.stringify(extraVars));
+        var url = ContivGlobals.NODES_DISCOVER_ENDPOINT + ip + '?' + queryString;
+        $http.post(url, {}, {
+                'headers': {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(function successCallback(response) {
+                deferred.resolve();
+            }, function errorCallback(response) {
+                deferred.reject(response);
+            });
+        return deferred.promise;
+    };
 }

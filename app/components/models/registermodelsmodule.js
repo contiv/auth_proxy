@@ -18,6 +18,7 @@ var ContivGlobals = (function () {
 
         //REST endpoints for CLUSTER
         'NODES_LIST_ENDPOINT': CLUSTER + '/info/nodes',
+        'NODES_DISCOVER_ENDPOINT': CLUSTER + '/discover/node/',
         'NODES_COMMISSION_ENDPOINT': CLUSTER + '/commission/node/',
         'NODES_DECOMMISSION_ENDPOINT': CLUSTER + '/decommission/node/',
         'NODES_MAINTENANCE_ENDPOINT': CLUSTER + '/maintenance/node/',
