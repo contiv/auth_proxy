@@ -642,6 +642,9 @@ i.icons .inverted.corner.icon {
 .icon.sidebar_networks:before {
   content: "\e903";
 }
+.icon.sidebar_nodes:before {
+  content: "\e938";
+}
 .icon.sidebar_storagepolicies:before {
   content: "\e904";
 }

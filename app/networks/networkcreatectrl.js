@@ -2,13 +2,6 @@
  * Created by vjain3 on 2/19/16.
  */
 angular.module('contiv.networks')
-/* Temporary Config to get around CORS issue during POST. */
-    .config(function ($httpProvider) {
-        $httpProvider.defaults.headers.common = {};
-        $httpProvider.defaults.headers.post = {};
-        $httpProvider.defaults.headers.put = {};
-        $httpProvider.defaults.headers.patch = {};
-    })
     .config(function ($stateProvider) {
         $stateProvider
             .state('contiv.networks.create', {
