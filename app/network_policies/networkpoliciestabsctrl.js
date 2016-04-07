@@ -14,6 +14,21 @@ angular.module('contiv.networkpolicies', ['contiv.models'])
                     }
                 }
             })
+            .state('contiv.policies.prioritization', {
+                url: '/prioritization',
+                controller: 'NetworkPoliciesTabsCtrl as networkPoliciesTabsCtrl',
+                templateUrl: 'network_policies/prioritizationpolicylist.html'
+            })
+            .state('contiv.policies.bandwidth', {
+                url: '/bandwidth',
+                controller: 'NetworkPoliciesTabsCtrl as networkPoliciesTabsCtrl',
+                templateUrl: 'network_policies/bandwidthpolicylist.html'
+            })
+            .state('contiv.policies.redirection', {
+                url: '/redirection',
+                controller: 'NetworkPoliciesTabsCtrl as networkPoliciesTabsCtrl',
+                templateUrl: 'network_policies/redirectionpolicylist.html'
+            })
         ;
     })
     .controller('NetworkPoliciesTabsCtrl', ['$state', function ($state) {

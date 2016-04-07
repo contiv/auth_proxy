@@ -2,13 +2,6 @@
  * Created by vjain3 on 2/19/16.
  */
 angular.module('contiv.networks')
-/* Temporary Config to get around CORS issue during POST. */
-    .config(function ($httpProvider) {
-        $httpProvider.defaults.headers.common = {};
-        $httpProvider.defaults.headers.post = {};
-        $httpProvider.defaults.headers.put = {};
-        $httpProvider.defaults.headers.patch = {};
-    })
     .config(function ($stateProvider) {
         $stateProvider
             .state('contiv.networks.create', {
@@ -21,6 +14,7 @@ angular.module('contiv.networks')
     })
     .controller('NetworkCreateCtrl', ['$state', '$stateParams', 'NetworksModel', function ($state, $stateParams, NetworksModel) {
         var networkCreateCtrl = this;
+        networkCreateCtrl.cidrPattern = ContivGlobals.CIDR_REGEX;
 
         function returnToNetworks() {
             $state.go('contiv.networks');
@@ -31,22 +25,25 @@ angular.module('contiv.networks')
         }
 
         function createNetwork() {
-            networkCreateCtrl.newNetwork.key =
-                networkCreateCtrl.newNetwork.tenantName + ':' + networkCreateCtrl.newNetwork.networkName;
-            NetworksModel.create(networkCreateCtrl.newNetwork).then(function (result) {
-                returnToNetworks();
-            });
+            //form controller is injected by the html template
+            //checking if all validations have passed
+            if (networkCreateCtrl.form.$valid) {
+                networkCreateCtrl.newNetwork.key =
+                    networkCreateCtrl.newNetwork.tenantName + ':' + networkCreateCtrl.newNetwork.networkName;
+                NetworksModel.create(networkCreateCtrl.newNetwork).then(function (result) {
+                    returnToNetworks();
+                });
+            }
 
         }
 
         function resetForm() {
             networkCreateCtrl.newNetwork = {
                 networkName: '',
-                encap: '',
+                encap: 'vxlan',
                 subnet: '',
                 gateway: '',
                 tenantName: 'default'//TODO: Remove hardcoded tenant.
-                //groups: []
             };
         }
 

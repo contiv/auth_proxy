@@ -1,15 +1,28 @@
-<form class="ui form" role="form" ng-submit="applicationGroupCreateCtrl.createApplicationGroup(applicationGroup)"
+<form class="ui form" name="applicationGroupCreateCtrl.form" role="form" ng-submit="applicationGroupCreateCtrl.createApplicationGroup(applicationGroup)"
       novalidate>
     <div class="field">
+        <div ng-show="applicationGroupCreateCtrl.form.$submitted">
+            <div ng-hide="applicationGroupCreateCtrl.form.$valid" class="ui negative message">
+                <ul class="list">
+                    <li ng-show="applicationGroupCreateCtrl.form.newApplicationGroupName.$error.required">Please enter application group name</li>
+                    <li ng-show="applicationGroupCreateCtrl.form.newApplicationGroupNetwork.$error.required">Please select network</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="field">
         <label for="newApplicationGroupName">Application group name</label>
-        <input type="text" id="newApplicationGroupName"
-               ng-model="applicationGroupCreateCtrl.applicationGroup.groupName" placeholder="Enter name">
+        <input type="text" id="newApplicationGroupName" name="newApplicationGroupName"
+               ng-model="applicationGroupCreateCtrl.applicationGroup.groupName" placeholder="Enter name" required>
     </div>
     <div class="field">
         <label for="newApplicationGroupNetwork">Network</label>
         <select id="newApplicationGroupNetwork" class="ui dropdown"
+                name="newApplicationGroupNetwork"
                 ng-model="applicationGroupCreateCtrl.selectedNetwork"
-                ng-options="network.networkName for network in applicationGroupCreateCtrl.networks">
+                ng-options="network.networkName for network in applicationGroupCreateCtrl.networks"
+                required>
+            <option value="">-- Please select network --</option>
         </select>
     </div>
 
@@ -75,7 +88,6 @@
             <table class="ui very basic unstackable table" style="margin-top: 40px">
                 <thead>
                 <tr>
-                    <th>Rule ID</th>
                     <th>Priority</th>
                     <th>Action</th>
                     <th>From group</th>
@@ -88,7 +100,6 @@
 
                 <tbody>
                 <tr ng-repeat="rule in applicationGroupCreateCtrl.incomingRules">
-                    <td>{{rule.ruleId}}</td>
                     <td>{{rule.priority}}</td>
                     <td>{{rule.action}}</td>
                     <td>{{rule.fromGroup}}</td>
@@ -105,7 +116,6 @@
             <table class="ui very basic unstackable table" style="margin-top: 40px">
                 <thead>
                 <tr>
-                    <th>Rule ID</th>
                     <th>Priority</th>
                     <th>Action</th>
                     <th>To group</th>
@@ -118,7 +128,6 @@
 
                 <tbody>
                 <tr ng-repeat="rule in applicationGroupCreateCtrl.outgoingRules">
-                    <td>{{rule.ruleId}}</td>
                     <td>{{rule.priority}}</td>
                     <td>{{rule.action}}</td>
                     <td>{{rule.toGroup}}</td>

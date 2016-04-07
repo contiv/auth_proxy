@@ -1,9 +1,24 @@
-<form class="ui form" role="form" ng-submit="isolationPolicyCreateCtrl.createPolicy(newPolicy)" novalidate>
+<form class="ui form" name="isolationPolicyCreateCtrl.form" role="form"
+      ng-submit="isolationPolicyCreateCtrl.createPolicy(newPolicy)" novalidate>
+    <div class="field">
+        <div ng-show="isolationPolicyCreateCtrl.form.$submitted">
+            <div ng-hide="isolationPolicyCreateCtrl.form.$valid" class="ui negative message">
+                <ul class="list">
+                    <li ng-show="isolationPolicyCreateCtrl.form.newPolicyName.$error.required">
+                        Please enter policy name
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
     <div class="field">
         <label for="newPolicyName">Policy name</label>
-        <input type="text" id="newPolicyName" ng-model="isolationPolicyCreateCtrl.newPolicy.policyName" placeholder="Enter name">
+        <input type="text" id="newPolicyName" name="newPolicyName"
+               ng-model="isolationPolicyCreateCtrl.newPolicy.policyName" placeholder="Enter name" required>
     </div>
-    <button type="button" class="negative ui button" ng-click="isolationPolicyCreateCtrl.cancelCreating()">Cancel</button>
+    <button type="button" class="negative ui button" ng-click="isolationPolicyCreateCtrl.cancelCreating()">
+        Cancel
+    </button>
     <button type="submit" class="ui blue button">
         Create
     </button>

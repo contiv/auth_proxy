@@ -1,0 +1,175 @@
+/*******************************
+         Cisco Icons
+*******************************/
+
+.icon.check:before {
+    content: "\e92c";
+}
+.icon.add:before {
+    content: "\e928";
+}
+.icon.area.chart:before {
+    content: "\e929";
+}
+.icon.arrow.left:before {
+    content: "\e92a";
+}
+.icon.arrow.right:before {
+    content: "\e92b";
+}
+.icon.checkmark:before {
+    content: "\e92d";
+}
+.icon.collapse:before {
+    content: "\e92e";
+}
+.icon.delete:before {
+    content: "\e92f";
+}
+.icon.edit:before {
+    content: "\e930";
+}
+.icon.expand:before {
+    content: "\e931";
+}
+.icon.file.text:before {
+    content: "\e932";
+}
+.icon.minus:before {
+    content: "\e933";
+}
+.icon.refresh:before {
+    content: "\e934";
+}
+.icon.search:before {
+    content: "\e935";
+}
+.icon.sidebar:before {
+    content: "\e936";
+}
+.icon.trash:before {
+    content: "\e937";
+}
+.icon.faultsummary_critical:before {
+    content: "\e918";
+}
+.icon.faultsummary_major:before {
+    content: "\e919";
+}
+.icon.faultsummary_minor:before {
+    content: "\e91a";
+}
+.icon.faultsummary_notification:before {
+    content: "\e91b";
+}
+.icon.faultsummary_warning:before {
+    content: "\e91c";
+}
+.icon.global_account:before {
+    content: "\e91d";
+}
+.icon.global_bootserver:before {
+    content: "\e91e";
+}
+.icon.global_help:before {
+    content: "\e91f";
+}
+.icon.global_logout:before {
+    content: "\e920";
+}
+.icon.global_notification:before {
+    content: "\e921";
+}
+.icon.global_quickpick:before {
+    content: "\e922";
+}
+.icon.global_reset:before {
+    content: "\e923";
+}
+.icon.global_search:before {
+    content: "\e924";
+}
+.icon.global_settings:before {
+    content: "\e925";
+}
+.icon.global_shutdownserver:before {
+    content: "\e926";
+}
+.icon.global_tools:before {
+    content: "\e927";
+}
+.icon.toolbar_advancedfilter:before {
+    content: "\e906";
+}
+.icon.toolbar_back:before {
+    content: "\e907";
+}
+.icon.toolbar_backuplogs:before {
+    content: "\e908";
+}
+.icon.toolbar_clearalllogs:before {
+    content: "\e909";
+}
+.icon.toolbar_close:before {
+    content: "\e90a";
+}
+.icon.toolbar_collapseall:before {
+    content: "\e90b";
+}
+.icon.toolbar_delete:before {
+    content: "\e90c";
+}
+.icon.toolbar_edit:before {
+    content: "\e90d";
+}
+.icon.toolbar_expandall:before {
+    content: "\e90e";
+}
+.icon.toolbar_export:before {
+    content: "\e90f";
+}
+.icon.toolbar_filter:before {
+    content: "\e910";
+}
+.icon.toolbar_hide:before {
+    content: "\e911";
+}
+.icon.toolbar_info:before {
+    content: "\e912";
+}
+.icon.toolbar_next:before {
+    content: "\e913";
+}
+.icon.toolbar_print:before {
+    content: "\e914";
+}
+.icon.toolbar_refreshnow:before {
+    content: "\e915";
+}
+.icon.toolbar_settings:before {
+    content: "\e916";
+}
+.icon.toolbar_show:before {
+    content: "\e917";
+}
+.icon.sidebar_appgroup:before {
+    content: "\e900";
+}
+.icon.sidebar_dashboard:before {
+    content: "\e901";
+}
+.icon.sidebar_networkpolicies:before {
+    content: "\e902";
+}
+.icon.sidebar_networks:before {
+    content: "\e903";
+}
+.icon.sidebar_nodes:before {
+    content: "\e938";
+}
+.icon.sidebar_storagepolicies:before {
+    content: "\e904";
+}
+.icon.sidebar_volumes:before {
+    content: "\e905";
+}

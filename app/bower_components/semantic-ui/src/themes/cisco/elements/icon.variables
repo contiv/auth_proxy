@@ -1,0 +1,6 @@
+/*******************************
+    User Variable Overrides
+*******************************/
+@fontPath: '../../themes/cisco/assets/fonts';
+@fontName: 'cisco-ucp';
+@fallbackSRC: '';

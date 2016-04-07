@@ -1,0 +1,29 @@
+<div ui-view class="ui container">
+    <div class="ui nine column grid">
+        <div class="three wide column">
+            <h4 class="ui header">Volumes</h4>
+        </div>
+
+        <div class="six wide column">
+            <button class="ui teal button" ui-sref="contiv.volumes.create">
+                <i class="add icon"></i>
+                Create volume
+            </button>
+        </div>
+    </div>
+    <table class="ui very basic unstackable table" style="margin-top: 40px">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>In use on host</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="volume in volumeListCtrl.volumes">
+            <td><a ui-sref="contiv.volumes.details({key:volume.Name})">{{volume.Name}}</a></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

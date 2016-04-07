@@ -48,7 +48,7 @@ angular.module('contiv.applicationgroups')
                     applicationGroupDetailsCtrl.mode = 'details';
                 }
             }
-            
+
             function returnToApplicationGroup() {
                 $state.go('contiv.applicationgroups');
             }
@@ -62,20 +62,18 @@ angular.module('contiv.applicationgroups')
             }
 
             function getRules() {
-                //Application Groups might not have any policies associated with them
-                if (applicationGroupDetailsCtrl.applicationGroup.policies !== undefined) {
-                    applicationGroupDetailsCtrl.applicationGroup.policies.forEach(function (policy) {
-                        //To display rules of selected policies
-                        RulesModel.getIncomingRules(policy, 'default')
-                            .then(function (rules) {
-                                Array.prototype.push.apply(applicationGroupDetailsCtrl.incomingRules, rules);
-                            });
-                        RulesModel.getOutgoingRules(policy, 'default')
-                            .then(function (rules) {
-                                Array.prototype.push.apply(applicationGroupDetailsCtrl.outgoingRules, rules);
-                            });
-                    });
-                }
+                applicationGroupDetailsCtrl.applicationGroup.policies.forEach(function (policy) {
+                    //To display rules of selected policies
+                    RulesModel.getIncomingRules(policy, 'default')
+                        .then(function (rules) {
+                            Array.prototype.push.apply(applicationGroupDetailsCtrl.incomingRules, rules);
+                        });
+                    RulesModel.getOutgoingRules(policy, 'default')
+                        .then(function (rules) {
+                            Array.prototype.push.apply(applicationGroupDetailsCtrl.outgoingRules, rules);
+                        });
+                });
+
             }
 
             function deleteApplicationGroup() {
@@ -117,6 +115,10 @@ angular.module('contiv.applicationgroups')
             ApplicationGroupsModel.getModelByKey($stateParams.key)
                 .then(function (group) {
                     applicationGroupDetailsCtrl.applicationGroup = group;
+                    //Application Groups might not have any policies associated with them so define an empty array
+                    if (applicationGroupDetailsCtrl.applicationGroup.policies === undefined) {
+                        applicationGroupDetailsCtrl.applicationGroup.policies = [];
+                    }
                     getRules();
                 });
 
@@ -127,7 +129,7 @@ angular.module('contiv.applicationgroups')
             applicationGroupDetailsCtrl.addIsolationPolicy = addIsolationPolicy;
             applicationGroupDetailsCtrl.removeIsolationPolicy = removeIsolationPolicy;
             applicationGroupDetailsCtrl.deleteApplicationGroup = deleteApplicationGroup;
-            
+
             setMode();
 
         }]);
