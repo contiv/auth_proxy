@@ -3,13 +3,6 @@
  */
 angular.module('contiv.models')
     .factory('NodesModel', ['$http', '$q', function ($http, $q) {
-        var URLS = {
-            POST: ContivGlobals.CLUSTER_ENDPOINT,
-            PUT: ContivGlobals.CLUSTER_ENDPOINT,
-            DELETE: ContivGlobals.CLUSTER_ENDPOINT,
-            GET: ContivGlobals.NODES_ENDPOINT
-        };
-
         var nodesmodel = new NodesCollection($http, $q);
         return nodesmodel;
     }]);

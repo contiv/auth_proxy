@@ -3,15 +3,7 @@
  */
 angular.module('contiv.models')
     .factory('VolumesModel', ['$http', '$q', function ($http, $q) {
-        var URLS = {
-            POST: ContivGlobals.VOLUMES_ENDPOINT,
-            PUT: ContivGlobals.VOLUMES_ENDPOINT,
-            DELETE: ContivGlobals.VOLUMES_ENDPOINT,
-            GET: ContivGlobals.VOLUMES_ENDPOINT
-        };
-
-        var volumesmodel = new VolumesCollection($http, $q, URLS);
-
+        var volumesmodel = new VolumesCollection($http, $q);
         return volumesmodel;
     }]);
 
