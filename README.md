@@ -43,4 +43,4 @@ $ cd $GOPATH/contiv-ui
 $ docker build -t contiv-ui-nginx .
 $ docker run --net=host --name contiv-ui -d contiv-ui-nginx
 ```
-#### Step 4: Access UI using http://<hostname>/
+#### Step 4: Access UI using http://\<hostname\>/
