@@ -18,7 +18,9 @@ module.exports = function (config) {
             'app/network_policies/networkpoliciestabsctrl.js',
             'app/network_policies/**/*.js',
             'app/applicationgroups/applicationgrouplistctrl.js',
-            'app/applicationgroups/**/*.js'
+            'app/applicationgroups/**/*.js',
+            'app/nodes/nodelistctrl.js',
+            'app/nodes/**/*.js'
         ],
 
         autoWatch: true,

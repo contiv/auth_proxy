@@ -15,10 +15,26 @@ angular.module('contiv.nodes', ['contiv.models'])
             })
         ;
     })
-    .controller('NodeListCtrl', ['NodesModel', function (NodesModel) {
+    .controller('NodeListCtrl', ['$scope', '$interval', 'NodesModel', function ($scope, $interval, NodesModel) {
         var nodeListCtrl = this;
-        NodesModel.get()
-            .then(function (result) {
-                nodeListCtrl.nodes = result;
-            });
+
+        function getNodes(reload) {
+            NodesModel.get(reload)
+                .then(function (result) {
+                    nodeListCtrl.nodes = result;
+                });
+        }
+
+        //Load from cache for quick display initially
+        getNodes(false);
+
+        var promise = $interval(function () {
+            getNodes(true);
+        }, 5000);
+
+        //stop polling when user moves away from the page
+        $scope.$on('$destroy', function () {
+            $interval.cancel(promise);
+        });
+
     }]);

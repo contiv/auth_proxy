@@ -46,7 +46,19 @@ angular.module('contiv.nodes')
             returnToNodes();
         }
 
+        /**
+         * Compare if two variables (ansible or environment) have same name
+         * @param val1
+         * @param val2
+         * @returns {boolean}
+         */
+        function compareVariable(val1, val2) {
+            return val1.name == val2.name;
+        }
+
         function addAnsibleVariable() {
+            //Removes existing variable with the same name first if it exists.
+            _.pullAllWith(nodeCommissionCtrl.ansibleVariables, [nodeCommissionCtrl.newAnsibleVariable], compareVariable);
             nodeCommissionCtrl.ansibleVariables.push(nodeCommissionCtrl.newAnsibleVariable);
             resetNewAnsibleVariable();
         }
@@ -58,6 +70,8 @@ angular.module('contiv.nodes')
         }
 
         function addEnvVariable() {
+            //Removes existing variable with the same name first if it exists.
+            _.pullAllWith(nodeCommissionCtrl.envVariables, [nodeCommissionCtrl.newEnvVariable], compareVariable);
             nodeCommissionCtrl.envVariables.push(nodeCommissionCtrl.newEnvVariable);
             resetNewEnvironmentVariable();
         }
@@ -69,31 +83,23 @@ angular.module('contiv.nodes')
         }
 
         function createExtraVars() {
-            var extraVars = {};
-            //TODO Intialize from global settings
-            extraVars['control_interface'] = nodeCommissionCtrl.control_interface;
-            if (nodeCommissionCtrl.mode == 'commission') {
-                extraVars['service_vip'] = nodeCommissionCtrl.service_vip;
-                extraVars['scheduler_provider'] = nodeCommissionCtrl.scheduler_provider;
-            }
-
             //Add ansible variables to extraVars
             nodeCommissionCtrl.ansibleVariables.forEach(function (item) {
-                extraVars[item.name] = item.value
+                nodeCommissionCtrl.extraVars[item.name] = item.value
             });
-            //Add environment variables to extraVar
+            //Add environment variables to extraVars
             var envVars = {};
             nodeCommissionCtrl.envVariables.forEach(function (item) {
                 envVars[item.name] = item.value;
             });
-            extraVars['env'] = envVars;
-            return extraVars;
+            nodeCommissionCtrl.extraVars['env'] = envVars;
         }
 
         function commission() {
             if (nodeCommissionCtrl.form.$valid) {
-                var extraVars = createExtraVars();
-                NodesModel.commission($stateParams.key, extraVars).then(function (result) {
+                cleanupExtraVars();
+                createExtraVars();
+                NodesModel.commission($stateParams.key, nodeCommissionCtrl.extraVars).then(function (result) {
                     returnToNodeDetails();
                 });
             }
@@ -101,8 +107,10 @@ angular.module('contiv.nodes')
 
         function discover() {
             if (nodeCommissionCtrl.form.$valid) {
-                var extraVars = createExtraVars();
-                NodesModel.discover(nodeCommissionCtrl.service_vip, extraVars);
+                createExtraVars();
+                NodesModel.discover(nodeCommissionCtrl.nodeIPAddr, nodeCommissionCtrl.extraVars).then(function (result) {
+                    returnToNodes();
+                });
             }
         }
 
@@ -120,8 +128,33 @@ angular.module('contiv.nodes')
             };
         }
 
+        /**
+         * Cleanup ansible variables for network mode and scheduler. ng-if removes it from the view (DOM) but not from
+         * the model.
+         */
+        function cleanupExtraVars() {
+            //Cleanup for network mode
+            if (nodeCommissionCtrl.extraVars['contiv_network_mode'] == 'aci') {
+                delete nodeCommissionCtrl.extraVars['fwd_mode'];
+            } else {
+                delete nodeCommissionCtrl.extraVars['apic_url'];
+                delete nodeCommissionCtrl.extraVars['apic_username'];
+                delete nodeCommissionCtrl.extraVars['apic_password'];
+                delete nodeCommissionCtrl.extraVars['apic_leaf_nodes'];
+                delete nodeCommissionCtrl.extraVars['apic_phys_domain'];
+                delete nodeCommissionCtrl.extraVars['apic_epg_bridge_domain'];
+                delete nodeCommissionCtrl.extraVars['apic_contracts_unrestricted_mode'];
+            }
+            //Cleanup for scheduler
+            if (nodeCommissionCtrl.extraVars['scheduler_provider'] == 'native-swarm') {
+                delete nodeCommissionCtrl.extraVars['ucp_bootstrap_node_name'];
+            }
+        }
+
+        nodeCommissionCtrl.extraVars = {}; //TODO Intialize from global settings
         nodeCommissionCtrl.ansibleVariables = [];
         nodeCommissionCtrl.envVariables = [];
+        nodeCommissionCtrl.nodeIPAddr=''; //IP address of node to discover
 
         nodeCommissionCtrl.addAnsibleVariable = addAnsibleVariable;
         nodeCommissionCtrl.removeAnsibleVariable = removeAnsibleVariable;

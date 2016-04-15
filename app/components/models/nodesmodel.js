@@ -24,11 +24,14 @@ function NodesCollection($http, $q) {
         return models;
     }
 
-    nodescollection.get = function () {
-        return (models) ? $q.when(models) : $http.get(ContivGlobals.NODES_LIST_ENDPOINT).then(cache);
+    nodescollection.get = function (reload) {
+        if (reload === undefined) reload = false;
+        return (!reload && models) ? $q.when(models) : $http.get(ContivGlobals.NODES_LIST_ENDPOINT).then(cache);
     };
 
-    nodescollection.getModelByKey = function (key) {
+    nodescollection.getModelByKey = function (key, reload) {
+        if (reload === undefined) reload = false;
+
         var deferred = $q.defer();
 
         function findModel() {
@@ -37,10 +40,10 @@ function NodesCollection($http, $q) {
             })
         }
 
-        if (models) {
+        if (!reload && models) {
             deferred.resolve(findModel());
         } else {
-            nodescollection.get()
+            nodescollection.get(reload)
                 .then(function () {
                     deferred.resolve(findModel());
                 });
@@ -61,7 +64,7 @@ function NodesCollection($http, $q) {
      */
     nodescollection.commission = function (key, extraVars) {
         var deferred = $q.defer();
-        var queryString = encodeURIComponent('extra_vars=' + JSON.stringify(extraVars));
+        var queryString = 'extra_vars=' + JSON.stringify(extraVars);
         var url = ContivGlobals.NODES_COMMISSION_ENDPOINT + key + '?' + queryString;
         $http.post(url, {}, {
                 'headers': {
@@ -69,6 +72,7 @@ function NodesCollection($http, $q) {
                 }
             })
             .then(function successCallback(response) {
+                //Server doesn't return any json in response
                 deferred.resolve();
             }, function errorCallback(response) {
                 deferred.reject(response);
@@ -120,7 +124,7 @@ function NodesCollection($http, $q) {
      */
     nodescollection.discover = function (ip, extraVars) {
         var deferred = $q.defer();
-        var queryString = encodeURIComponent('extra_vars=' + JSON.stringify(extraVars));
+        var queryString = 'extra_vars=' + JSON.stringify(extraVars);
         var url = ContivGlobals.NODES_DISCOVER_ENDPOINT + ip + '?' + queryString;
         $http.post(url, {}, {
                 'headers': {

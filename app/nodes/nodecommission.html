@@ -10,8 +10,36 @@
                         <li ng-show="nodeCommissionCtrl.form.controlInterface.$error.required">
                             Please enter control interface
                         </li>
+
+                        <!--Node discovery related validation -->
+                        <li ng-show="nodeCommissionCtrl.form.ipAddr.$error.required">
+                            Please enter IP address for node
+                        </li>
+
+                        <!--Node commissioning related validation -->
                         <li ng-show="nodeCommissionCtrl.form.serviceVIP.$error.required">
                             Please enter virtual IP address for cluster services
+                        </li>
+                        <li ng-show="nodeCommissionCtrl.form.dataInterface.$error.required">
+                            Please enter data interface
+                        </li>
+
+                        <li ng-show="nodeCommissionCtrl.form.ucpBootstrapNodeName.$error.required">
+                            Please enter node name
+                        </li>
+
+                        <!-- APIC settings validation, part of commissioning node -->
+                        <li ng-show="nodeCommissionCtrl.form.apicURL.$error.required">
+                            Please enter URL for APIC
+                        </li>
+                        <li ng-show="nodeCommissionCtrl.form.apicUserName.$error.required">
+                            Please enter user name for APIC
+                        </li>
+                        <li ng-show="nodeCommissionCtrl.form.apicPassword.$error.required">
+                            Please enter password for APIC
+                        </li>
+                        <li ng-show="nodeCommissionCtrl.form.apicLeafNodes.$error.required">
+                            Please enter leaf nodes for APIC
                         </li>
                     </ul>
                 </div>
@@ -20,23 +48,133 @@
         <div class="field">
             <label for="controlInterface">Control interface</label>
             <input type="text" id="controlInterface" name="controlInterface"
-                   ng-model="nodeCommissionCtrl.control_interface"
+                   ng-model="nodeCommissionCtrl.extraVars['control_interface']"
                    placeholder="Enter control interface" required>
         </div>
-        <div class="field">
-            <label for="serviceVIP">Virtual IP address for cluster services</label>
-            <input type="text" id="serviceVIP" name="serviceVIP"
-                   ng-model="nodeCommissionCtrl.service_vip"
-                   placeholder="Enter virtual IP address" required>
+        <div ng-switch-when="discover" class="field">
+            <label for="clusterName">Cluster name</label>
+            <input type="text" id="clusterName" name="clusterName"
+                   ng-model="nodeCommissionCtrl.extraVars['cluster_name']"
+                   placeholder="Enter cluster name">
         </div>
-        <div ng-switch-when="commission" class="field">
-            <label for="scheduler">Scheduler</label>
-            <select id="scheduler" class="ui dropdown"
-                    name="scheduler"
-                    ng-model="nodeCommissionCtrl.scheduler_provider">
-                <option value="">-- Please select scheduler --</option>
-                <option value="">Swarm</option>
-            </select>
+        <div ng-switch-when="discover" class="field">
+            <label for="ipAddr">IP Address</label>
+            <input type="text" id="ipAddr" name="ipAddr"
+                   ng-model="nodeCommissionCtrl.nodeIPAddr"
+                   placeholder="Enter IP address" required>
+        </div>
+        <div ng-switch-when="commission">
+            <div class="field">
+                <label for="dataInterface">Data interface</label>
+                <input type="text" id="dataInterface" name="dataInterface"
+                       ng-model="nodeCommissionCtrl.extraVars['netplugin_if']"
+                       placeholder="Enter data interface" required>
+            </div>
+            <div class="field">
+                <label for="serviceVIP">Virtual IP address for cluster services</label>
+                <input type="text" id="serviceVIP" name="serviceVIP"
+                       ng-model="nodeCommissionCtrl.extraVars['service_vip']"
+                       placeholder="Enter virtual IP address" required>
+            </div>
+            <div class="field">
+                <label for="scheduler">Scheduler</label>
+                <select id="scheduler" class="ui dropdown"
+                        name="scheduler"
+                        ng-model="nodeCommissionCtrl.extraVars['scheduler_provider']">
+                    <option value="">-- Please select scheduler --</option>
+                    <option value="native-swarm">Swarm</option>
+                    <option value="ucp-swarm">UCP Swarm</option>
+                </select>
+            </div>
+            <div ng-if="nodeCommissionCtrl.extraVars['scheduler_provider'] == 'ucp-swarm'" class="field">
+                <label for="ucpBootstrapNodeName">Node name</label>
+                <input type="text" id="ucpBootstrapNodeName" name="ucpBootstrapNodeName"
+                       ng-model="nodeCommissionCtrl.extraVars['ucp_bootstrap_node_name']"
+                       placeholder="Enter node name" required>
+
+            </div>
+            <div class="ui section divider"></div>
+            <div class="field">
+                <div class="ui sixteen column grid"
+                     ng-click="nodeCommissionCtrl.networkModeVisible = !nodeCommissionCtrl.networkModeVisible">
+                    <div class="fifteen wide column">
+                        <h4 class="ui header">Network Mode</h4>
+                    </div>
+                    <div class="one wide column">
+                        <i ng-if="nodeCommissionCtrl.networkModeVisible" class="minus icon"></i>
+                        <i ng-if="!nodeCommissionCtrl.networkModeVisible" class="add icon"></i>
+                    </div>
+                </div>
+                <div ng-show="nodeCommissionCtrl.networkModeVisible">
+                    <div class="field" style="margin-top: 10px">
+                        <label>
+                            <input type="radio" class="ui radio checkbox"
+                                   ng-model="nodeCommissionCtrl.extraVars['contiv_network_mode']" value="standalone">
+                            Standalone
+                        </label>
+                        <label>
+                            <input type="radio" class="ui radio checkbox"
+                                   ng-model="nodeCommissionCtrl.extraVars['contiv_network_mode']" value="aci">
+                            ACI
+                        </label>
+                    </div>
+                    <div ng-if="nodeCommissionCtrl.extraVars['contiv_network_mode'] == 'standalone'" class="field">
+                        <label for="forwardingMode">Forwarding mode</label>
+                        <select id="forwardingMode" class="ui dropdown"
+                                ng-model="nodeCommissionCtrl.extraVars['fwd_mode']">
+                            <option value="">-- Please select --</option>
+                            <option value="bridge">Bridge</option>
+                            <option value="routing">Routing</option>
+                        </select>
+                    </div>
+                    <div ng-if="nodeCommissionCtrl.extraVars['contiv_network_mode'] == 'aci'">
+                        <div class="field">
+                            <label for="apicURL">URL</label>
+                            <input type="text" id="apicURL" name="apicURL"
+                                   ng-model="nodeCommissionCtrl.extraVars['apic_url']"
+                                   placeholder="Enter URL" required>
+                        </div>
+                        <div class="field">
+                            <label for="apicUserName">User name</label>
+                            <input type="text" id="apicUserName" name="apicUserName"
+                                   ng-model="nodeCommissionCtrl.extraVars['apic_username']"
+                                   placeholder="Enter user name" required>
+                        </div>
+                        <div class="field">
+                            <label for="apicPassword">Password</label>
+                            <input type="password" id="apicPassword" name="apicPassword"
+                                   ng-model="nodeCommissionCtrl.extraVars['apic_password']"
+                                   placeholder="Enter password" required>
+                        </div>
+                        <div class="field">
+                            <label for="apicLeafNodes">Leaf nodes</label>
+                            <input type="text" id="apicLeafNodes" name="apicLeafNodes"
+                                   ng-model="nodeCommissionCtrl.extraVars['apic_leaf_nodes']"
+                                   placeholder="Enter full path of leaf nodes, comma separated" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="apicPhysicalDomain">Physical domain</label>
+                            <input type="text" id="apicPhysicalDomain" name="apicPhysicalDomain"
+                                   ng-model="nodeCommissionCtrl.extraVars['apic_phys_domain']"
+                                   placeholder="Enter physical domain name">
+                        </div>
+                        <div class="field">
+                            <label for="apicBridgeDomain">Bridge domain</label>
+                            <input type="text" id="apicBridgeDomain" name="apicBridgeDomain"
+                                   ng-model="nodeCommissionCtrl.extraVars['apic_epg_bridge_domain']"
+                                   placeholder="Enter bridge domain name">
+                        </div>
+                        <div class="field">
+                            <label>
+                                <input type="checkbox" name="apicContractsUnrestrictedMode" tabindex="0"
+                                       ng-model="nodeCommissionCtrl.extraVars['apic_contracts_unrestricted_mode']">
+                                Allow unrestricted communication between EPGs
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="ui section divider"></div>
@@ -52,7 +190,7 @@
                 </div>
             </div>
             <div ng-show="nodeCommissionCtrl.ansibleVariablesVisible">
-                <table class="ui very basic unstackable table">
+                <table class="ui very basic unstackable table" style="margin-top: 10px">
                     <thead>
                     <th>Name</th>
                     <th>Value</th>
@@ -106,7 +244,7 @@
                 </div>
             </div>
             <div ng-show="nodeCommissionCtrl.envVariablesVisible">
-                <table class="ui very basic unstackable table">
+                <table class="ui very basic unstackable table" style="margin-top: 10px">
                     <thead>
                     <th>Name</th>
                     <th>Value</th>

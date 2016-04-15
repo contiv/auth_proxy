@@ -15,7 +15,7 @@
             </div>
             <div class="actions">
                 <div class="ui negative button">No</div>
-                <div class="ui positive button" ng-click="nodeDetailsCtrl.decommissionNode()">
+                <div class="ui positive button" ng-click="nodeDetailsCtrl.decommission()">
                     Yes
                 </div>
             </div>
@@ -28,24 +28,45 @@
             </div>
             <div class="actions">
                 <div class="ui negative button">No</div>
-                <div class="ui positive button" ng-click="nodeDetailsCtrl.upgradeNode()">
+                <div class="ui positive button" ng-click="nodeDetailsCtrl.upgrade()">
                     Yes
                 </div>
             </div>
         </div>
-        <button ng-if="nodeDetailsCtrl.commissioned" class="ui blue button"
+
+        <button ng-if="!nodeDetailsCtrl.showCommissionButton && nodeDetailsCtrl.commissionButtonEnabled"
+                class="ui blue button"
                 onclick="$('#decommission-node-modal').modal('show')">
             <i class="remove icon"></i>
             Decommission
         </button>
-        <button ng-if="!nodeDetailsCtrl.commissioned" class="ui blue button"
+        <button ng-if="!nodeDetailsCtrl.showCommissionButton && !nodeDetailsCtrl.commissionButtonEnabled"
+                class="ui blue disabled button"
+                onclick="$('#decommission-node-modal').modal('show')">
+            <i class="remove icon"></i>
+            Decommission
+        </button>
 
+        <button ng-if="nodeDetailsCtrl.showCommissionButton && nodeDetailsCtrl.commissionButtonEnabled"
+                class="ui blue button"
+                ui-sref="contiv.nodes.commission({key:nodeDetailsCtrl.node.key})">
+            <i class="checkmark icon"></i>
+            Commission
+        </button>
+        <button ng-if="nodeDetailsCtrl.showCommissionButton && !nodeDetailsCtrl.commissionButtonEnabled"
+                class="ui blue disabled button"
                 ui-sref="contiv.nodes.commission({key:nodeDetailsCtrl.node.key})">
             <i class="checkmark icon"></i>
             Commission
         </button>
 
-        <button class="ui blue button" onclick="$('#upgrade-node-modal').modal('show')">
+        <button ng-if="nodeDetailsCtrl.upgradeButtonEnabled"
+                class="ui blue button" onclick="$('#upgrade-node-modal').modal('show')">
+            <i class="refresh icon"></i>
+            Upgrade
+        </button>
+        <button ng-if="!nodeDetailsCtrl.upgradeButtonEnabled"
+                class="ui blue disabled button" onclick="$('#upgrade-node-modal').modal('show')">
             <i class="refresh icon"></i>
             Upgrade
         </button>
