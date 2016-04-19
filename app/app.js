@@ -8,6 +8,7 @@ angular.module('contivApp', [
         'contiv.applicationgroups',
         'contiv.networks',
         'contiv.networkpolicies',
+        'contiv.storagepolicies',
         'contiv.volumes',
         'contiv.nodes'
     ])

@@ -1,12 +1,13 @@
-<div class="ui nine column grid">
-    <div class="three wide column">
+<div class="ui sixteen column grid">
+    <div class="one wide column">
         <a ui-sref="contiv.policies.isolation()">
             <i class="arrow left icon"></i>
-            Policy details
         </a>
     </div>
-
-    <div ng-switch="isolationPolicyDetailsCtrl.mode" class="six wide column">
+    <div class="left floated ten wide column">
+        <div class="content" style="font-size: 24px">Network Policies (Details)</div>
+    </div>
+    <div ng-switch="isolationPolicyDetailsCtrl.mode" class="right floated five wide column">
         <div id="delete-policy-modal" class="ui small modal">
             <div class="header">Remove Policy: {{isolationPolicyDetailsCtrl.policy.policyName}}</div>
             <div class="content">
@@ -19,17 +20,17 @@
                 </div>
             </div>
         </div>
-        <button ng-switch-when="edit" class="ui blue disabled button"
+        <button ng-switch-when="edit" class="ui disabled button"
                 ui-sref="contiv.policies.isolation.edit({key:isolationPolicyDetailsCtrl.policy.key})">
             <i class="edit icon"></i>
             Edit
         </button>
-        <button ng-switch-when="details" class="ui blue button"
+        <button ng-switch-when="details" class="ui basic button"
                 ui-sref="contiv.policies.isolation.edit({key:isolationPolicyDetailsCtrl.policy.key})">
             <i class="edit icon"></i>
             Edit
         </button>
-        <button class="ui red button" onclick="$('#delete-policy-modal').modal('show')">
+        <button class="ui basic button" onclick="$('#delete-policy-modal').modal('show')">
             <i class="trash icon"></i>
             Remove
         </button>
@@ -105,8 +106,8 @@
                                              type="number" placeholder="0-65535"></div>
             </td>
             <td>
-                <button class="ui blue icon button" ng-click="isolationPolicyDetailsCtrl.addIncomingRule()">
-                    <i class="add icon"></i>
+                <button class="ui icon button" ng-click="isolationPolicyDetailsCtrl.addIncomingRule()">
+                    <i class="blue add icon"></i>
                 </button>
             </td>
         </tr>
@@ -119,8 +120,8 @@
             <td>{{rule.protocol}}</td>
             <td>{{rule.port}}</td>
             <td ng-switch-when="edit">
-                <button class="ui red icon button" ng-click="isolationPolicyDetailsCtrl.deleteIncomingRule(rule.key)">
-                    <i class="delete icon"></i>
+                <button class="ui icon button" ng-click="isolationPolicyDetailsCtrl.deleteIncomingRule(rule.key)">
+                    <i class="trash icon"></i>
                 </button>
             </td>
         </tr>
@@ -187,8 +188,8 @@
             </td>
 
             <td>
-                <button class="ui blue icon button" ng-click="isolationPolicyDetailsCtrl.addOutgoingRule()">
-                    <i class="add icon"></i>
+                <button class="ui icon button" ng-click="isolationPolicyDetailsCtrl.addOutgoingRule()">
+                    <i class="blue add icon"></i>
                 </button>
             </td>
 
@@ -202,8 +203,8 @@
             <td>{{rule.protocol}}</td>
             <td>{{rule.port}}</td>
             <td ng-switch-when="edit">
-                <button class="ui red icon button" ng-click="isolationPolicyDetailsCtrl.deleteOutgoingRule(rule.key)">
-                    <i class="delete icon"></i>
+                <button class="ui icon button" ng-click="isolationPolicyDetailsCtrl.deleteOutgoingRule(rule.key)">
+                    <i class="trash icon"></i>
                 </button>
             </td>
         </tr>

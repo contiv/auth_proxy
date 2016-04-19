@@ -1,12 +1,13 @@
-<div class="ui nine column grid">
-    <div class="three wide column">
-        <a href="#/networks">
+<div class="ui sixteen column grid">
+    <div class="one wide column">
+        <a ui-sref="contiv.networks()">
             <i class="arrow left icon"></i>
-            Network details
         </a>
     </div>
-
-    <div class="six wide column">
+    <div class="left floated twelve wide column">
+        <div class="content" style="font-size: 24px">Networks (Details)</div>
+    </div>
+    <div class="right floated three wide column">
         <div id="delete-network-modal" class="ui small modal">
             <div class="header">Remove Network: {{networkDetailsCtrl.network.networkName}}</div>
             <div class="content">
@@ -19,7 +20,7 @@
                 </div>
             </div>
         </div>
-        <button class="ui red button" onclick="$('#delete-network-modal').modal('show')">
+        <button class="ui basic button" onclick="$('#delete-network-modal').modal('show')">
             <i class="trash icon"></i>
             Remove
         </button>

@@ -12,7 +12,7 @@ function VolumesCollection($http, $q) {
         models;
 
     function extract(result) {
-        return result.data.Volumes;
+        return result.data;
     }
 
     function cache(result) {
@@ -20,23 +20,27 @@ function VolumesCollection($http, $q) {
         return models;
     }
 
-    volumescollection.get = function () {
-        return (models) ? $q.when(models) : $http.get(ContivGlobals.VOLUMES_ENDPOINT).then(cache);
+    volumescollection.get = function (reload) {
+        if (reload === undefined) reload = false;
+        return (!reload && models) ? $q.when(models) : $http.get(ContivGlobals.VOLUMES_ENDPOINT).then(cache);
     };
 
-    volumescollection.getModelByKey = function (key) {
+    volumescollection.getModelByKey = function (key, reload) {
+        if (reload === undefined) reload = false;
+
         var deferred = $q.defer();
 
         function findModel() {
             return _.find(models, function (c) {
-                return c.Name == key;
+                var tokens = key.split('/');
+                return (c.name == tokens[1] && c.policy == tokens[0]);
             })
         }
 
-        if (models) {
+        if (!reload && models) {
             deferred.resolve(findModel());
         } else {
-            volumescollection.get()
+            volumescollection.get(reload)
                 .then(function () {
                     deferred.resolve(findModel());
                 });
@@ -45,4 +49,15 @@ function VolumesCollection($http, $q) {
         return deferred.promise;
     };
 
+    volumescollection.delete = function (model) {
+        var url = ContivGlobals.VOLUMES_DELETE_ENDPOINT + model.policy + '/' + model.name;
+        $http.post(url, model)
+            .then(function successCallback(response) {
+                _.remove(models, function (n) {
+                    return (n.name == model.name && n.policy == model.name);
+                });
+            }, function errorCallback(response) {
+
+            });
+    }
 }

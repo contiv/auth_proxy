@@ -1,12 +1,13 @@
-<div class="ui nine column grid">
-    <div class="three wide column">
+<div class="ui sixteen column grid">
+    <div class="one wide column">
         <a ui-sref="contiv.applicationgroups()">
             <i class="arrow left icon"></i>
-            Application group details
         </a>
     </div>
-
-    <div ng-switch="applicationGroupDetailsCtrl.mode" class="six wide column">
+    <div class="left floated ten wide column">
+        <div class="content" style="font-size: 24px">Application Groups (Details)</div>
+    </div>
+    <div ng-switch="applicationGroupDetailsCtrl.mode" class="right floated five wide column">
         <div id="delete-group-modal" class="ui small modal">
             <div class="header">Remove Application Group: {{applicationGroupDetailsCtrl.applicationGroup.groupName}}
             </div>
@@ -20,17 +21,17 @@
                 </div>
             </div>
         </div>
-        <button ng-switch-when="edit" class="ui blue disabled button"
+        <button ng-switch-when="edit" class="ui disabled button"
                 ui-sref="contiv.applicationgroups.edit({key:applicationGroupDetailsCtrl.applicationGroup.key})">
             <i class="edit icon"></i>
             Edit
         </button>
-        <button ng-switch-when="details" class="ui blue button"
+        <button ng-switch-when="details" class="ui basic button"
                 ui-sref="contiv.applicationgroups.edit({key:applicationGroupDetailsCtrl.applicationGroup.key})">
             <i class="edit icon"></i>
             Edit
         </button>
-        <button class="ui red button" onclick="$('#delete-group-modal').modal('show')">
+        <button class="ui basic button" onclick="$('#delete-group-modal').modal('show')">
             <i class="trash icon"></i>
             Remove
         </button>
@@ -53,31 +54,25 @@
 
 
 <div class="ui section divider" style="margin-top: 30px"></div>
-<div class="ui sixteen column grid">
-    <div class="fifteen wide column">
-        <h4 class="ui header">Labels</h4>
-    </div>
-    <div class="one wide column">
-        <i class="add icon"></i>
-    </div>
-</div>
+<h4 class="ui header">
+    <i class="grey plus circle outline icon"></i>
+    Labels
+</h4>
+
 
 
 <div class="ui section divider"></div>
-<div class="ui sixteen column grid"
-     ng-click="applicationGroupDetailsCtrl.isolationPoliciesVisible = !applicationGroupDetailsCtrl.isolationPoliciesVisible">
-    <div class="fifteen wide column">
-        <h4 class="ui header">Isolation Policies</h4>
-    </div>
-    <div class="one wide column">
-        <i ng-if="applicationGroupDetailsCtrl.isolationPoliciesVisible" class="minus icon"></i>
-        <i ng-if="!applicationGroupDetailsCtrl.isolationPoliciesVisible" class="add icon"></i>
-    </div>
+<div ng-click="applicationGroupDetailsCtrl.isolationPoliciesVisible = !applicationGroupDetailsCtrl.isolationPoliciesVisible">
+    <h4 class="ui header">
+        <i ng-if="applicationGroupDetailsCtrl.isolationPoliciesVisible" class="grey minus circle outline icon"></i>
+        <i ng-if="!applicationGroupDetailsCtrl.isolationPoliciesVisible" class="grey plus circle outline icon"></i>
+        Isolation Policies
+    </h4>
 </div>
 
 <div ng-show="applicationGroupDetailsCtrl.isolationPoliciesVisible">
     <div ng-switch="applicationGroupDetailsCtrl.mode">
-        <table ng-switch-when="edit" class="ui very basic unstackable table">
+        <table ng-switch-when="edit" class="ui very basic collapsing unstackable table">
             <tbody>
             <tr>
                 <td>
@@ -93,18 +88,19 @@
                     </select>
                 </td>
                 <td>
-                    <button type="button" class="ui blue icon button"
+                    <button type="button" class="ui icon button"
                             ng-click="applicationGroupDetailsCtrl.addIsolationPolicy()">
-                        <i class="add icon"></i>
+                        <i class="blue add icon"></i>
                     </button>
                 </td>
             </tr>
             <tr ng-repeat="policy in applicationGroupDetailsCtrl.applicationGroup.policies">
                 <td>{{policy}}</td>
+                <td></td>
                 <td>
-                    <button type="button" class="ui red icon button"
+                    <button type="button" class="ui icon button"
                             ng-click="applicationGroupDetailsCtrl.removeIsolationPolicy(policy)">
-                        <i class="delete icon"></i>
+                        <i class="trash icon"></i>
                     </button>
                 </td>
             </tr>
@@ -177,41 +173,33 @@
 
 <div class="ui section divider"></div>
 
-<div class="ui sixteen column grid">
-    <div class="fifteen wide column">
-        <h4 class="ui header">Prioritization Policies</h4>
-    </div>
-    <div class="one wide column">
-        <i class="add icon"></i>
-    </div>
-</div>
+<h4 class="ui header">
+    <i class="grey plus circle outline icon"></i>
+    Prioritization Policies
+</h4>
+
 
 
 <div class="ui section divider"></div>
 
-<div class="ui sixteen column grid">
-    <div class="fifteen wide column">
-        <h4 class="ui header">Bandwidth Policies</h4>
-    </div>
-    <div class="one wide column">
-        <i class="add icon"></i>
-    </div>
-</div>
+<h4 class="ui header">
+    <i class="grey plus circle outline icon"></i>
+    Bandwidth Policies
+</h4>
+
 
 
 <div class="ui section divider"></div>
 
-<div class="ui sixteen column grid">
-    <div class="fifteen wide column">
-        <h4 class="ui header">Redirection Policies</h4>
-    </div>
-    <div class="one wide column">
-        <i class="add icon"></i>
-    </div>
-</div>
+<h4 class="ui header">
+    <i class="grey plus circle outline icon"></i>
+    Redirection Policies
+</h4>
+
+
 
 <div ng-switch="applicationGroupDetailsCtrl.mode" style="margin-top: 40px">
-    <button ng-switch-when="edit" type="button" class="negative ui button"
+    <button ng-switch-when="edit" type="button" class="ui basic button"
             ng-click="applicationGroupDetailsCtrl.cancelEditing()">Cancel
     </button>
     <button ng-switch-when="edit" type="button" class="ui blue button"
