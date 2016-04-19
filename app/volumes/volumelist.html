@@ -1,13 +1,13 @@
 <div ui-view class="ui container">
-    <div class="ui nine column grid">
-        <div class="three wide column">
-            <h4 class="ui header">Volumes</h4>
+    <div class="ui sixteen column grid">
+        <div class="thirteen wide column">
+            <div class="content" style="font-size: 24px">Volumes</div>
         </div>
 
-        <div class="six wide column">
-            <button class="ui teal button" ui-sref="contiv.volumes.create">
+        <div class="right floated three wide column">
+            <button class="ui blue button" ui-sref="contiv.volumes.create">
                 <i class="add icon"></i>
-                Create volume
+                Create Volume
             </button>
         </div>
     </div>
@@ -15,13 +15,15 @@
         <thead>
         <tr>
             <th>Name</th>
+            <th>Policy</th>
             <th>In use on host</th>
         </tr>
         </thead>
 
         <tbody>
         <tr ng-repeat="volume in volumeListCtrl.volumes">
-            <td><a ui-sref="contiv.volumes.details({key:volume.Name})">{{volume.Name}}</a></td>
+            <td><a ui-sref="contiv.volumes.details({key:volume.policy + '/' + volume.name})">{{volume.name}}</a></td>
+            <td>{{volume.policy}}</td>
             <td></td>
         </tr>
         </tbody>

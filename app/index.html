@@ -34,7 +34,7 @@
         <i class="sidebar_networkpolicies icon"></i>
         Network Policies
     </a>
-    <a class="item" href="#/">
+    <a class="item" ui-sref="contiv.storagepolicies()">
         <i class="sidebar_storagepolicies icon"></i>
         Storage Policies
     </a>
@@ -62,6 +62,7 @@
     <div ui-view="networks" style="margin-left:180px;margin-top:30px"></div>
     <div ui-view="applicationgroups" style="margin-left:180px;margin-top:30px"></div>
     <div ui-view="policies" style="margin-left:180px;margin-top:30px"></div>
+    <div ui-view="storagepolicies" style="margin-left:180px;margin-top:30px"></div>
     <div ui-view="volumes" style="margin-left:180px;margin-top:30px"></div>
     <div ui-view="nodes" style="margin-left:180px;margin-top:30px"></div>
 </div>
@@ -101,8 +102,11 @@
 <script src="network_policies/isolationpolicylistctrl.js"></script>
 <script src="network_policies/isolationpolicydetailsctrl.js"></script>
 <script src="network_policies/isolationpolicycreatectrl.js"></script>
+<script src="components/models/storagepoliciesmodel.js"></script>
+<script src="storage_policies/storagepolicylistctrl.js"></script>
 <script src="components/models/volumesmodel.js"></script>
 <script src="volumes/volumelistctrl.js"></script>
+<script src="volumes/volumedetailsctrl.js"></script>
 <script src="components/models/nodesmodel.js"></script>
 <script src="nodes/nodelistctrl.js"></script>
 <script src="nodes/nodedetailsctrl.js"></script>

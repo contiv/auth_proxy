@@ -28,30 +28,23 @@
 
     <div class="ui section divider" style="margin-top: 30px"></div>
     <div class="field">
-        <div class="ui sixteen column grid">
-            <div class="fifteen wide column">
-                <h4 class="ui header">Labels</h4>
-            </div>
-            <div class="one wide column">
-                <i class="add icon"></i>
-            </div>
-        </div>
+        <h4 class="ui header">
+            <i class="grey plus circle outline icon"></i>
+        Labels
+        </h4>
     </div>
 
     <div class="ui section divider"></div>
     <div class="field">
-        <div class="ui sixteen column grid"
-             ng-click="applicationGroupCreateCtrl.isolationPoliciesVisible = !applicationGroupCreateCtrl.isolationPoliciesVisible">
-            <div class="fifteen wide column">
-                <h4 class="ui header">Isolation Policies</h4>
-            </div>
-            <div class="one wide column">
-                <i ng-if="applicationGroupCreateCtrl.isolationPoliciesVisible" class="minus icon"></i>
-                <i ng-if="!applicationGroupCreateCtrl.isolationPoliciesVisible" class="add icon"></i>
-            </div>
+        <div ng-click="applicationGroupCreateCtrl.isolationPoliciesVisible = !applicationGroupCreateCtrl.isolationPoliciesVisible">
+            <h4 class="ui header">
+                <i ng-if="applicationGroupCreateCtrl.isolationPoliciesVisible" class="grey minus circle outline icon"></i>
+                <i ng-if="!applicationGroupCreateCtrl.isolationPoliciesVisible" class="grey plus circle outline icon"></i>
+                Isolation Policies
+            </h4>
         </div>
         <div ng-show="applicationGroupCreateCtrl.isolationPoliciesVisible">
-            <table class="ui very basic unstackable table">
+            <table class="ui very basic collapsing unstackable table">
                 <tbody>
                 <tr>
                     <td>
@@ -67,18 +60,19 @@
                         </select>
                     </td>
                     <td>
-                        <button type="button" class="ui blue icon button"
+                        <button type="button" class="ui icon button"
                                 ng-click="applicationGroupCreateCtrl.addIsolationPolicy()">
-                            <i class="add icon"></i>
+                            <i class="blue add icon"></i>
                         </button>
                     </td>
                 </tr>
                 <tr ng-repeat="policy in applicationGroupCreateCtrl.applicationGroup.policies">
                     <td>{{policy}}</td>
+                    <td></td>
                     <td>
-                        <button type="button" class="ui red icon button"
+                        <button type="button" class="ui icon button"
                                 ng-click="applicationGroupCreateCtrl.removeIsolationPolicy(policy)">
-                            <i class="delete icon"></i>
+                            <i class="trash icon"></i>
                         </button>
                     </td>
                 </tr>
@@ -102,7 +96,7 @@
                 <tr ng-repeat="rule in applicationGroupCreateCtrl.incomingRules">
                     <td>{{rule.priority}}</td>
                     <td>{{rule.action}}</td>
-                    <td>{{rule.fromGroup}}</td>
+                    <td>{{rule.fromEndpointGroup}}</td>
                     <td>{{rule.fromNetwork}}</td>
                     <td>{{rule.fromIPAddress}}</td>
                     <td>{{rule.protocol}}</td>
@@ -130,7 +124,7 @@
                 <tr ng-repeat="rule in applicationGroupCreateCtrl.outgoingRules">
                     <td>{{rule.priority}}</td>
                     <td>{{rule.action}}</td>
-                    <td>{{rule.toGroup}}</td>
+                    <td>{{rule.toEndpointGroup}}</td>
                     <td>{{rule.toNetwork}}</td>
                     <td>{{rule.toIPAddress}}</td>
                     <td>{{rule.protocol}}</td>
@@ -143,41 +137,29 @@
 
     <div class="ui section divider"></div>
     <div class="field">
-        <div class="ui sixteen column grid">
-            <div class="fifteen wide column">
-                <h4 class="ui header">Prioritization Policies</h4>
-            </div>
-            <div class="one wide column">
-                <i class="add icon"></i>
-            </div>
-        </div>
+        <h4 class="ui header">
+            <i class="grey plus circle outline icon"></i>
+            Prioritization Policies
+        </h4>
     </div>
 
     <div class="ui section divider"></div>
     <div class="field">
-        <div class="ui sixteen column grid">
-            <div class="fifteen wide column">
-                <h4 class="ui header">Bandwidth Policies</h4>
-            </div>
-            <div class="one wide column">
-                <i class="add icon"></i>
-            </div>
-        </div>
+        <h4 class="ui header">
+            <i class="grey plus circle outline icon"></i>
+            Bandwidth Policies
+        </h4>
     </div>
 
     <div class="ui section divider"></div>
     <div class="field">
-        <div class="ui sixteen column grid">
-            <div class="fifteen wide column">
-                <h4 class="ui header">Redirection Policies</h4>
-            </div>
-            <div class="one wide column">
-                <i class="add icon"></i>
-            </div>
-        </div>
+        <h4 class="ui header">
+            <i class="grey plus circle outline icon"></i>
+            Redirection Policies
+        </h4>
     </div>
     <div style="margin-top: 40px">
-        <button type="button" class="negative ui button" ng-click="applicationGroupCreateCtrl.cancelCreating()">Cancel
+        <button type="button" class="ui basic button" ng-click="applicationGroupCreateCtrl.cancelCreating()">Cancel
         </button>
         <button type="submit" class="ui blue button">
             Create

@@ -15,6 +15,8 @@ var ContivGlobals = (function () {
 
         //REST endpoints for VOLMASTER
         'VOLUMES_ENDPOINT': VOLMASTER + '/list',
+        'VOLUMES_DELETE_ENDPOINT': VOLMASTER + '/remove/',
+        'STORAGEPOLICIES_ENDPOINT': VOLMASTER + '/policy',
 
         //REST endpoints for CLUSTER
         'NODES_LIST_ENDPOINT': CLUSTER + '/info/nodes',

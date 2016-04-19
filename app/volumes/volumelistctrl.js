@@ -15,10 +15,25 @@ angular.module('contiv.volumes', ['contiv.models'])
             })
         ;
     })
-    .controller('VolumeListCtrl', ['VolumesModel', function (VolumesModel) {
+    .controller('VolumeListCtrl', ['$scope', '$interval', 'VolumesModel', function ($scope, $interval, VolumesModel) {
         var volumeListCtrl = this;
-        VolumesModel.get()
-            .then(function (result) {
-                volumeListCtrl.volumes = result;
-            });
+
+        function getVolumes(reload) {
+            VolumesModel.get(reload)
+                .then(function (result) {
+                    volumeListCtrl.volumes = result;
+                });
+        }
+
+        //Load from cache for quick display initially
+        getVolumes(false);
+
+        var promise = $interval(function () {
+            getVolumes(true);
+        }, 5000);
+
+        //stop polling when user moves away from the page
+        $scope.$on('$destroy', function () {
+            $interval.cancel(promise);
+        });
     }]);

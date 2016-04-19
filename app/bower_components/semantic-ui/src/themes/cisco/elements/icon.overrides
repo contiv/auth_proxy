@@ -2,6 +2,123 @@
          Cisco Icons
 *******************************/
 
+.icon.ban:before {
+    content: "\e94e";
+}
+.icon.cleared:before {
+    content: "\e939";
+}
+.icon.condition:before {
+    content: "\e93a";
+}
+.icon.critical .path1:before {
+    content: "\e93b";
+    color: rgb(235, 35, 0);
+}
+.icon.critical .path2:before {
+    content: "\e93c";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.icon.flapping:before {
+    content: "\e93d";
+}
+.icon.info .path1:before {
+    content: "\e93e";
+    color: rgb(0, 155, 209);
+}
+.icon.info .path2:before {
+    content: "\e93f";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.icon.info .path3:before {
+    content: "\e940";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.icon.major .path1:before {
+    content: "\e941";
+    color: rgb(255, 115, 0);
+}
+.icon.major .path2:before {
+    content: "\e942";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.icon.major .path3:before {
+    content: "\e943";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.icon.minor .path1:before {
+    content: "\e944";
+    color: rgb(255, 194, 0);
+}
+.icon.minor .path2:before {
+    content: "\e945";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.icon.minor .path3:before {
+    content: "\e946";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.icon.pending .path1:before {
+    content: "\e947";
+    color: rgb(51, 52, 57);
+}
+.icon.pending .path2:before {
+    content: "\e948";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.icon.pending .path3:before {
+    content: "\e949";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.icon.pending .path4:before {
+    content: "\e94a";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.icon.ready .path1:before {
+    content: "\e94b";
+    color: rgb(0, 201, 5);
+}
+.icon.ready .path2:before {
+    content: "\e94c";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.icon.soaking:before {
+    content: "\e94d";
+}
+.icon.unassociated:before {
+    content: "\e94f";
+}
+.icon.up:before {
+    content: "\e950";
+}
+.icon.upgrading:before {
+    content: "\e951";
+}
+.icon.warning .path1:before {
+    content: "\e952";
+    color: rgb(20, 167, 146);
+}
+.icon.warning .path2:before {
+    content: "\e953";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.icon.warning .path3:before {
+    content: "\e954";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
 .icon.check:before {
     content: "\e92c";
 }
@@ -20,23 +137,23 @@
 .icon.checkmark:before {
     content: "\e92d";
 }
-.icon.collapse:before {
-    content: "\e92e";
-}
 .icon.delete:before {
     content: "\e92f";
 }
 .icon.edit:before {
     content: "\e930";
 }
-.icon.expand:before {
-    content: "\e931";
-}
 .icon.file.text:before {
     content: "\e932";
 }
 .icon.minus:before {
     content: "\e933";
+}
+.icon.minus.circle.outline:before {
+    content: "\e92e";
+}
+.icon.plus.circle.outline:before {
+    content: "\e931";
 }
 .icon.refresh:before {
     content: "\e934";

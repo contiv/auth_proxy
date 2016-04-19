@@ -1,0 +1,94 @@
+<div class="ui sixteen column grid">
+    <div class="one wide column">
+        <a ui-sref="contiv.volumes()">
+            <i class="arrow left icon"></i>
+        </a>
+    </div>
+    <div class="left floated twelve wide column">
+        <div class="content" style="font-size: 24px">Volumes (Details)</div>
+    </div>
+    <div class="right floated three wide column">
+        <div id="delete-volume-modal" class="ui small modal">
+            <div class="header">Remove Volume: {{volumeDetailsCtrl.volume.Name}}</div>
+            <div class="content">
+                <p>Are you sure you want to remove this volume?</p>
+            </div>
+            <div class="actions">
+                <div class="ui negative button">No</div>
+                <div class="ui positive button" ng-click="volumeDetailsCtrl.deleteVolume()">
+                    Yes
+                </div>
+            </div>
+        </div>
+        <button class="ui basic button" onclick="$('#delete-volume-modal').modal('show')">
+            <i class="trash icon"></i>
+            Remove
+        </button>
+    </div>
+</div>
+<table class="ui very basic selectable table">
+    <tbody>
+    <tr>
+        <td class="three wide column">Name</td>
+        <td>{{volumeDetailsCtrl.volume.name}}</td>
+    </tr>
+    <tr>
+        <td class="three wide column">In use by host</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="three wide column">Status</td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+<div class="ui section divider" style="margin-top: 40px"></div>
+<h4 class="ui header" style="margin-top: 40px">Policy Settings</h4>
+<table class="ui very basic selectable table">
+    <tbody>
+    <tr>
+        <td class="three wide column">Policy name</td>
+        <td>{{volumeDetailsCtrl.volume.policy}}</td>
+    </tr>
+    <tr>
+        <td class="three wide column">Pool</td>
+        <td>{{volumeDetailsCtrl.volume.driver.pool}}</td>
+    </tr>
+    <tr>
+        <td class="three wide column">Size</td>
+        <td>{{volumeDetailsCtrl.volume.create.size}}</td>
+    </tr>
+    <tr>
+        <td class="three wide column">Filesystem</td>
+        <td>{{volumeDetailsCtrl.volume.create.filesystem}}</td>
+    </tr>
+    <tr>
+        <td class="three wide column">Snapshot enabled</td>
+        <td>{{volumeDetailsCtrl.volume.runtime.snapshots}}</td>
+    </tr>
+    <tr>
+        <td class="three wide column">Snapshot frequency</td>
+        <td>{{volumeDetailsCtrl.volume.runtime.snapshot.frequency}}</td>
+    </tr>
+    <tr>
+        <td class="three wide column">Number of saved snapshots</td>
+        <td>{{volumeDetailsCtrl.volume.runtime.snapshot.keep}}</td>
+    </tr>
+    <tr>
+        <td class="three wide column">write-iops</td>
+        <td>{{volumeDetailsCtrl.volume.runtime['rate-limit']['write-iops']}}</td>
+    </tr>
+    <tr>
+        <td class="three wide column">read-iops</td>
+        <td>{{volumeDetailsCtrl.volume.runtime['rate-limit']['read-iops']}}</td>
+    </tr>
+    <tr>
+        <td class="three wide column">write-bps</td>
+        <td>{{volumeDetailsCtrl.volume.runtime['rate-limit']['write-bps']}}</td>
+    </tr>
+    <tr>
+        <td class="three wide column">read-bps</td>
+        <td>{{volumeDetailsCtrl.volume.runtime['rate-limit']['read-bps']}}</td>
+    </tr>
+    </tbody>
+</table>
