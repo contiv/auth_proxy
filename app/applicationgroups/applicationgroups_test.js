@@ -139,8 +139,8 @@ describe('contiv.applicationgroups module', function () {
         }
     ];
 
-    describe('applicationgroupslistctrl', function () {
 
+    describe('applicationgroupslistctrl', function () {
         var $httpBackend;
 
         beforeEach(inject(function (_$httpBackend_) {
@@ -153,18 +153,20 @@ describe('contiv.applicationgroups module', function () {
             $httpBackend.verifyNoOutstandingRequest();
         });
 
-        var $controller;
-        beforeEach(inject(function (_$controller_) {
+        var $controller, $interval, $rootScope;
+        var groupListCtrl;
+        beforeEach(inject(function (_$interval_, _$rootScope_, _$controller_) {
+            $interval = _$interval_;
+            $rootScope = _$rootScope_;
             $controller = _$controller_;
+            groupListCtrl = $controller('ApplicationGroupListCtrl', { $interval: $interval, $scope: $rootScope });
         }));
         it('should be defined', function () {
             //spec body
-            var groupListCtrl = $controller('ApplicationGroupListCtrl');
             expect(groupListCtrl).toBeDefined();
             $httpBackend.flush();
         });
         it('ApplicationGroupListCtrl should do a GET on /api/endpointGroups/ REST API', function () {
-            $controller('ApplicationGroupListCtrl');
             $httpBackend.expectGET(ContivGlobals.APPLICATIONGROUPS_ENDPOINT);
             $httpBackend.flush();
         });

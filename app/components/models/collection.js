@@ -12,8 +12,9 @@ function Collection($http, $q, URLS) {
         return models;
     }
 
-    collection.get = function () {
-        return (models) ? $q.when(models) : $http.get(URLS.GET).then(cache);
+    collection.get = function (reload) {
+        if (reload === undefined) reload = false;
+        return (!reload && models) ? $q.when(models) : $http.get(URLS.GET).then(cache);
     };
 
     collection.setCurrentModel = function (model) {
@@ -30,7 +31,9 @@ function Collection($http, $q, URLS) {
         return currentModel ? currentModel.key : '';
     };
 
-    collection.getModelByKey = function (key) {
+    collection.getModelByKey = function (key, reload) {
+        if (reload === undefined) reload = false;
+
         var deferred = $q.defer();
 
         function findModel() {
@@ -39,10 +42,10 @@ function Collection($http, $q, URLS) {
             })
         }
 
-        if (models) {
+        if (!reload && models) {
             deferred.resolve(findModel());
         } else {
-            collection.get()
+            collection.get(reload)
                 .then(function () {
                     deferred.resolve(findModel());
                 });
