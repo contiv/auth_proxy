@@ -13,10 +13,25 @@ angular.module('contiv.networks', ['contiv.models'])
             })
         ;
     })
-    .controller('NetworksListCtrl', ['NetworksModel', function (NetworksModel) {
+    .controller('NetworksListCtrl', ['$scope', '$interval', 'NetworksModel', function ($scope, $interval, NetworksModel) {
         var networksListCtrl = this;
-        NetworksModel.get()
-            .then(function (result) {
-                networksListCtrl.networks = result;
-            });
+
+        function getNetworks(reload) {
+            NetworksModel.get(reload)
+                .then(function (result) {
+                    networksListCtrl.networks = result;
+                });
+        }
+
+        //Load from cache for quick display initially
+        getNetworks(false);
+
+        var promise = $interval(function () {
+            getNetworks(true);
+        }, 5000);
+
+        //stop polling when user moves away from the page
+        $scope.$on('$destroy', function () {
+            $interval.cancel(promise);
+        });
     }]);

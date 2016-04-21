@@ -121,11 +121,13 @@ describe('contiv.networks module', function () {
     });
 
     describe('networklist controller', function () {
-        var $controller;
+        var $controller, $interval, $rootScope;
         var networkListCtrl;
-        beforeEach(inject(function (_$controller_) {
+        beforeEach(inject(function (_$interval_, _$rootScope_, _$controller_) {
+            $interval = _$interval_;
+            $rootScope = _$rootScope_;
             $controller = _$controller_;
-            networkListCtrl = $controller('NetworksListCtrl');
+            networkListCtrl = $controller('NetworksListCtrl', { $interval: $interval, $scope: $rootScope });
         }));
         it('should be defined', function () {
             expect(networkListCtrl).toBeDefined();
@@ -135,46 +137,52 @@ describe('contiv.networks module', function () {
             $httpBackend.expectGET(ContivGlobals.NETWORKS_ENDPOINT);
             $httpBackend.flush();
         });
+        it('NetworksListCtrl should have networks array assigned to networks property', function () {
+            $httpBackend.expectGET(ContivGlobals.NETWORKS_ENDPOINT);
+            $httpBackend.flush();
+            expect(Array.isArray(networkListCtrl.networks)).toBeTruthy();
+            expect(networkListCtrl.networks.length).toEqual(1);
+        });
 
     });
 
     describe('networkdetails controller', function () {
-        var $controller, $state, $stateParams;
-        beforeEach(inject(function (_$state_ ,_$stateParams_, _$controller_) {
+        var $controller, $state, $stateParams, $interval, $rootScope;
+        var networkDetailsCtrl;
+        beforeEach(inject(function (_$state_ ,_$stateParams_, _$interval_, _$rootScope_, _$controller_) {
             $state = _$state_;
             $state.go = function (stateName) {};
             $stateParams = _$stateParams_;
             $stateParams.key = networksData[0].key;
+            $interval = _$interval_;
+            $rootScope = _$rootScope_;
             $controller = _$controller_;
+            networkDetailsCtrl = $controller('NetworkDetailsCtrl',
+                { $state: $state, $stateParams: $stateParams, $interval: $interval, $scope: $rootScope });
         }));
 
         it('should be defined', function () {
-            var networkDetailsCtrl = $controller('NetworkDetailsCtrl');
             expect(networkDetailsCtrl).toBeDefined();
             $httpBackend.flush();
         });
 
         it('NetworkDetailsCtrl should do a GET on /api/networks/ REST API', function () {
-            $controller('NetworkDetailsCtrl');
             $httpBackend.expectGET(ContivGlobals.NETWORKS_ENDPOINT);
             $httpBackend.flush();
         });
 
         it('NetworkDetailsCtrl should have network object assigned to network property', function () {
-            var networkDetailsCtrl = $controller('NetworkDetailsCtrl');
             $httpBackend.expectGET(ContivGlobals.NETWORKS_ENDPOINT);
             $httpBackend.flush();
             expect(networkDetailsCtrl.network).toEqual(networksData[0]);
         });
 
         it('NetworkDetailsCtrl should do a GET on /api/endpointGroups/ REST API', function () {
-            $controller('NetworkDetailsCtrl');
             $httpBackend.expectGET(ContivGlobals.APPLICATIONGROUPS_ENDPOINT);
             $httpBackend.flush();
         });
 
         it('NetworkDetailsCtrl should have application groups array assigned to applicationGroups property', function () {
-            var networkDetailsCtrl = $controller('NetworkDetailsCtrl');
             $httpBackend.expectGET(ContivGlobals.APPLICATIONGROUPS_ENDPOINT);
             $httpBackend.flush();
             expect(networkDetailsCtrl.applicationGroups.length).toEqual(1);
@@ -182,7 +190,6 @@ describe('contiv.networks module', function () {
         });
 
         it('NetworkDetailsCtrl.deleteNetwork() should do a DELETE on /api/networks/ REST API', function () {
-            var networkDetailsCtrl = $controller('NetworkDetailsCtrl');
             //Call flush to fulfill all the http requests to get network and application groups before calling deleteNetwork()
             $httpBackend.flush();
             networkDetailsCtrl.deleteNetwork();

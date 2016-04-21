@@ -15,10 +15,26 @@ angular.module('contiv.applicationgroups', ['contiv.models'])
             })
         ;
     })
-    .controller('ApplicationGroupListCtrl', ['ApplicationGroupsModel', function (ApplicationGroupsModel) {
-        var applicationGroupListCtrl = this;
-        ApplicationGroupsModel.get()
-            .then(function (result) {
-                applicationGroupListCtrl.groups = result;
+    .controller('ApplicationGroupListCtrl',
+        ['$scope', '$interval', 'ApplicationGroupsModel', function ($scope, $interval, ApplicationGroupsModel) {
+            var applicationGroupListCtrl = this;
+
+            function getApplicationGroups(reload) {
+                ApplicationGroupsModel.get(reload)
+                    .then(function (result) {
+                        applicationGroupListCtrl.groups = result;
+                    });
+            }
+
+            //Load from cache for quick display initially
+            getApplicationGroups(false);
+
+            var promise = $interval(function () {
+                getApplicationGroups(true);
+            }, 5000);
+
+            //stop polling when user moves away from the page
+            $scope.$on('$destroy', function () {
+                $interval.cancel(promise);
             });
-    }]);
+        }]);

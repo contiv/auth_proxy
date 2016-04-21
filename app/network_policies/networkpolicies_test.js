@@ -51,20 +51,28 @@ describe('contiv.networkpolicies module', function () {
             $httpBackend.verifyNoOutstandingRequest();
         });
 
-        var $controller;
-        beforeEach(inject(function (_$controller_) {
+        var $controller, $interval, $rootScope;
+        var policyListCtrl;
+        beforeEach(inject(function (_$interval_, _$rootScope_, _$controller_) {
+            $interval = _$interval_;
+            $rootScope = _$rootScope_;
             $controller = _$controller_;
+            policyListCtrl = $controller('IsolationPolicyListCtrl', { $interval: $interval, $scope: $rootScope });
         }));
         it('should be defined', function () {
             //spec body
-            var policyListCtrl = $controller('IsolationPolicyListCtrl');
             expect(policyListCtrl).toBeDefined();
             $httpBackend.flush();
         });
         it('IsolationPolicyListCtrl should do a GET on /api/policys/ REST API', function () {
-            $controller('IsolationPolicyListCtrl');
             $httpBackend.expectGET(ContivGlobals.POLICIES_ENDPOINT);
             $httpBackend.flush();
+        });
+        it('IsolationPolicyListCtrl should have policy array assigned to policies property', function () {
+            $httpBackend.expectGET(ContivGlobals.POLICIES_ENDPOINT);
+            $httpBackend.flush();
+            expect(Array.isArray(policyListCtrl.policies)).toBeTruthy();
+            expect(policyListCtrl.policies.length).toEqual(2);
         });
 
     });
