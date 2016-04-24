@@ -4,14 +4,10 @@
 angular.module('contiv.applicationgroups', ['contiv.models'])
     .config(function ($stateProvider) {
         $stateProvider
-            .state('contiv.applicationgroups', {
-                url: '/applicationgroups',
-                views: {
-                    'applicationgroups@': {
-                        controller: 'ApplicationGroupListCtrl as applicationGroupListCtrl',
-                        templateUrl: 'applicationgroups/applicationgrouplist.html'
-                    }
-                }
+            .state('contiv.applicationgroups.list', {
+                url: '/list',
+                controller: 'ApplicationGroupListCtrl as applicationGroupListCtrl',
+                templateUrl: 'applicationgroups/applicationgrouplist.html'
             })
         ;
     })
@@ -29,10 +25,13 @@ angular.module('contiv.applicationgroups', ['contiv.models'])
             //Load from cache for quick display initially
             getApplicationGroups(false);
 
-            var promise = $interval(function () {
-                getApplicationGroups(true);
-            }, 5000);
-
+            var promise;
+            //Don't do auto-refresh if one is already in progress
+            if (!angular.isDefined(promise)) {
+                promise = $interval(function () {
+                    getApplicationGroups(true);
+                }, 5000);
+            }
             //stop polling when user moves away from the page
             $scope.$on('$destroy', function () {
                 $interval.cancel(promise);

@@ -4,14 +4,10 @@
 angular.module('contiv.volumes', ['contiv.models'])
     .config(function ($stateProvider) {
         $stateProvider
-            .state('contiv.volumes', {
-                url: '/volumes',
-                views: {
-                    'volumes@': {
-                        controller: 'VolumeListCtrl as volumeListCtrl',
-                        templateUrl: 'volumes/volumelist.html'
-                    }
-                }
+            .state('contiv.volumes.list', {
+                url: '/list',
+                controller: 'VolumeListCtrl as volumeListCtrl',
+                templateUrl: 'volumes/volumelist.html'
             })
         ;
     })
@@ -28,10 +24,13 @@ angular.module('contiv.volumes', ['contiv.models'])
         //Load from cache for quick display initially
         getVolumes(false);
 
-        var promise = $interval(function () {
-            getVolumes(true);
-        }, 5000);
-
+        var promise;
+        //Don't do auto-refresh if one is already in progress
+        if (!angular.isDefined(promise)) {
+            promise = $interval(function () {
+                getVolumes(true);
+            }, 5000);
+        }
         //stop polling when user moves away from the page
         $scope.$on('$destroy', function () {
             $interval.cancel(promise);

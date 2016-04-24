@@ -35,7 +35,7 @@ angular.module('contiv.nodes')
         }
 
         function returnToNodes() {
-            $state.go('contiv.nodes');
+            $state.go('contiv.nodes.list');
         }
 
         function cancelCommissioningNode() {

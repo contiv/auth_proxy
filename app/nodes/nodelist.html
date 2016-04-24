@@ -1,31 +1,29 @@
-<div ui-view class="ui container">
-    <div class="ui sixteen column grid">
-        <div class="thirteen wide column">
-            <div class="content" style="font-size: 24px">Nodes</div>
-        </div>
-
-        <div class="right floated three wide column">
-            <button class="ui blue button" ui-sref="contiv.nodes.discover">
-                <i class="add icon"></i>
-                Discover Node
-            </button>
-        </div>
+<div class="ui sixteen column grid">
+    <div class="thirteen wide column">
+        <div class="content" style="font-size: 24px">Nodes</div>
     </div>
-    <table class="ui very basic unstackable table" style="margin-top: 40px">
-        <thead>
-        <tr>
-            <th>Name</th>
-        </tr>
-        </thead>
 
-        <tbody>
-        <tr ng-repeat="node in nodeListCtrl.nodes">
-            <td>
-                <i ng-if="node['inventory-state'].status == 'Allocated'" class="green check circle icon"></i>
-                <i ng-if="node['inventory-state'].status != 'Allocated'" class="grey ban icon"></i>
-                <a ui-sref="contiv.nodes.details.info({key:node.key})">{{node.key}}</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="right floated three wide column">
+        <button class="ui blue button" ui-sref="contiv.nodes.discover">
+            <i class="add icon"></i>
+            Discover Node
+        </button>
+    </div>
 </div>
+<table class="ui very basic unstackable table" style="margin-top: 40px">
+    <thead>
+    <tr>
+        <th>Name</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr ng-repeat="node in nodeListCtrl.nodes">
+        <td>
+            <i ng-if="node['inventory-state'].status == 'Allocated'" class="green check circle icon"></i>
+            <i ng-if="node['inventory-state'].status != 'Allocated'" class="grey ban icon"></i>
+            <a ui-sref="contiv.nodes.details.info({key:node.key})">{{node.key}}</a>
+        </td>
+    </tr>
+    </tbody>
+</table>

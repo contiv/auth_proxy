@@ -4,7 +4,7 @@
 angular.module('contiv.networkpolicies')
     .config(function ($stateProvider) {
         $stateProvider
-            .state('contiv.policies.isolation.details', {
+            .state('contiv.networkpolicies.isolation.details', {
                 url: '/details/:key',
                 controller: 'IsolationPolicyDetailsCtrl as isolationPolicyDetailsCtrl',
                 templateUrl: 'network_policies/isolationpolicydetails.html'
@@ -12,7 +12,7 @@ angular.module('contiv.networkpolicies')
     })
     .config(function ($stateProvider) {
         $stateProvider
-            .state('contiv.policies.isolation.edit', {
+            .state('contiv.networkpolicies.isolation.edit', {
                 url: '/edit/:key',
                 controller: 'IsolationPolicyDetailsCtrl as isolationPolicyDetailsCtrl',
                 templateUrl: 'network_policies/isolationpolicydetails.html'
@@ -35,11 +35,11 @@ angular.module('contiv.networkpolicies')
             isolationPolicyDetailsCtrl.newOutgoingSelectedApplicationGroup = '';
 
             function returnToPolicies() {
-                $state.go('contiv.policies.isolation');
+                $state.go('contiv.networkpolicies.isolation.list');
             }
 
             function returnToPolicyDetails() {
-                $state.go('contiv.policies.isolation.details', {key: isolationPolicyDetailsCtrl.policy.key});
+                $state.go('contiv.networkpolicies.isolation.details', {key: isolationPolicyDetailsCtrl.policy.key});
             }
 
             function cancelEditing() {
@@ -54,15 +54,16 @@ angular.module('contiv.networkpolicies')
             }
 
             function deletePolicy() {
-                PoliciesModel.delete(isolationPolicyDetailsCtrl.policy);
-                returnToPolicies();
+                PoliciesModel.delete(isolationPolicyDetailsCtrl.policy).then(function (result) {
+                    returnToPolicies();
+                });
             }
 
             /**
              * To show edit or details screen based on the route
              */
             function setMode() {
-                if ($state.is('contiv.policies.isolation.edit')) {
+                if ($state.is('contiv.networkpolicies.isolation.edit')) {
                     isolationPolicyDetailsCtrl.mode = 'edit';
                 } else {
                     isolationPolicyDetailsCtrl.mode = 'details';

@@ -1,9 +1,8 @@
 angular.module('contiv.networkpolicies')
     .config(function ($stateProvider) {
         $stateProvider
-            .state('contiv.policies.isolation', {
-
-                url: '/isolation',
+            .state('contiv.networkpolicies.isolation.list', {
+                url: '/list',
                 controller: 'IsolationPolicyListCtrl as isolationPolicyListCtrl',
                 templateUrl: 'network_policies/isolationpolicylist.html'
             })
@@ -22,10 +21,13 @@ angular.module('contiv.networkpolicies')
         //Load from cache for quick display initially
         getPolicies(false);
 
-        var promise = $interval(function () {
-            getPolicies(true);
-        }, 5000);
-
+        var promise;
+        //Don't do auto-refresh if one is already in progress
+        if (!angular.isDefined(promise)) {
+            promise = $interval(function () {
+                getPolicies(true);
+            }, 5000);
+        }
         //stop polling when user moves away from the page
         $scope.$on('$destroy', function () {
             $interval.cancel(promise);

@@ -17,7 +17,33 @@ angular.module('contivApp', [
         //abstract state serves as a PLACEHOLDER or NAMESPACE for application states
             .state('contiv', {
                 url: '',
-                abstract: true
+                abstract: true,
+                template: '<div ui-view class="ui container"/>'
+            })
+            .state('contiv.networks', {
+                url: '/networks',
+                abstract: true,
+                template: '<div ui-view class="ui container"/>'
+            })
+            .state('contiv.applicationgroups', {
+                url: '/applicationgroups',
+                abstract: true,
+                template: '<div ui-view class="ui container"/>'
+            })
+            .state('contiv.nodes', {
+                url: '/nodes',
+                abstract: true,
+                template: '<div ui-view class="ui container"/>'
+            })
+            .state('contiv.volumes', {
+                url: '/volumes',
+                abstract: true,
+                template: '<div ui-view class="ui container"/>'
+            })
+            .state('contiv.storagepolicies', {
+                url: '/storagepolicies',
+                abstract: true,
+                template: '<div ui-view class="ui container"/>'
             })
         ;
 

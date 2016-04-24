@@ -15,11 +15,12 @@ angular.module('contiv.volumes')
             var volumeDetailsCtrl = this;
 
             function returnToVolumes() {
-                $state.go('contiv.volumes');
+                $state.go('contiv.volumes.list');
             }
             function deleteVolume() {
-                VolumesModel.delete(volumeDetailsCtrl.volume);
-                returnToVolumes();
+                VolumesModel.delete(volumeDetailsCtrl.volume).then(function (result) {
+                    returnToVolumes();
+                });
             }
 
             function getVolumeInfo(reload) {
@@ -34,10 +35,13 @@ angular.module('contiv.volumes')
             //Load from cache for quick display initially
             getVolumeInfo(false);
 
-            var promise = $interval(function () {
-                getVolumeInfo(true);
-            }, 5000);
-
+            var promise;
+            //Don't do auto-refresh if one is already in progress
+            if (!angular.isDefined(promise)) {
+                promise = $interval(function () {
+                    getVolumeInfo(true);
+                }, 5000);
+            }
             //stop polling when user moves away from the page
             $scope.$on('$destroy', function () {
                 $interval.cancel(promise);

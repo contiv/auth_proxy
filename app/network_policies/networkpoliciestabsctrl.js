@@ -4,27 +4,27 @@
 angular.module('contiv.networkpolicies', ['contiv.models'])
     .config(function ($stateProvider) {
         $stateProvider
-            .state('contiv.policies', {
+            .state('contiv.networkpolicies', {
                 url: '/networkpolicies',
-                views: {
-                    //target the ui-view named 'policies' in ROOT state (contiv)
-                    'policies@': {
-                        controller: 'NetworkPoliciesTabsCtrl as networkPoliciesTabsCtrl',
-                        templateUrl: 'network_policies/networkpoliciestabs.html'
-                    }
-                }
+                controller: 'NetworkPoliciesTabsCtrl as networkPoliciesTabsCtrl',
+                templateUrl: 'network_policies/networkpoliciestabs.html'
             })
-            .state('contiv.policies.prioritization', {
+            .state('contiv.networkpolicies.isolation', {
+                url: '/isolation',
+                abstract: true,
+                template: '<ui-view/>'
+            })
+            .state('contiv.networkpolicies.prioritization', {
                 url: '/prioritization',
                 controller: 'NetworkPoliciesTabsCtrl as networkPoliciesTabsCtrl',
                 templateUrl: 'network_policies/prioritizationpolicylist.html'
             })
-            .state('contiv.policies.bandwidth', {
+            .state('contiv.networkpolicies.bandwidth', {
                 url: '/bandwidth',
                 controller: 'NetworkPoliciesTabsCtrl as networkPoliciesTabsCtrl',
                 templateUrl: 'network_policies/bandwidthpolicylist.html'
             })
-            .state('contiv.policies.redirection', {
+            .state('contiv.networkpolicies.redirection', {
                 url: '/redirection',
                 controller: 'NetworkPoliciesTabsCtrl as networkPoliciesTabsCtrl',
                 templateUrl: 'network_policies/redirectionpolicylist.html'

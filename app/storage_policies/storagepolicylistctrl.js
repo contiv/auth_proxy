@@ -4,14 +4,10 @@
 angular.module('contiv.storagepolicies', ['contiv.models'])
     .config(function ($stateProvider) {
         $stateProvider
-            .state('contiv.storagepolicies', {
-                url: '/storagepolicies',
-                views: {
-                    'storagepolicies@': {
-                        controller: 'StoragePolicyListCtrl as storagePolicyListCtrl',
-                        templateUrl: 'storage_policies/storagepolicylist.html'
-                    }
-                }
+            .state('contiv.storagepolicies.list', {
+                url: '/list',
+                controller: 'StoragePolicyListCtrl as storagePolicyListCtrl',
+                templateUrl: 'storage_policies/storagepolicylist.html'
             })
         ;
     })
@@ -28,10 +24,13 @@ angular.module('contiv.storagepolicies', ['contiv.models'])
         //Load from cache for quick display initially
         getPolicies(false);
 
-        var promise = $interval(function () {
-            getPolicies(true);
-        }, 5000);
-
+        var promise;
+        //Don't do auto-refresh if one is already in progress
+        if (!angular.isDefined(promise)) {
+            promise = $interval(function () {
+                getPolicies(true);
+            }, 5000);
+        }
         //stop polling when user moves away from the page
         $scope.$on('$destroy', function () {
             $interval.cancel(promise);

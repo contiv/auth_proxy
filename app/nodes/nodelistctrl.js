@@ -4,14 +4,10 @@
 angular.module('contiv.nodes', ['contiv.models'])
     .config(function ($stateProvider) {
         $stateProvider
-            .state('contiv.nodes', {
-                url: '/nodes',
-                views: {
-                    'nodes@': {
-                        controller: 'NodeListCtrl as nodeListCtrl',
-                        templateUrl: 'nodes/nodelist.html'
-                    }
-                }
+            .state('contiv.nodes.list', {
+                url: '/list',
+                controller: 'NodeListCtrl as nodeListCtrl',
+                templateUrl: 'nodes/nodelist.html'
             })
         ;
     })
@@ -28,10 +24,13 @@ angular.module('contiv.nodes', ['contiv.models'])
         //Load from cache for quick display initially
         getNodes(false);
 
-        var promise = $interval(function () {
-            getNodes(true);
-        }, 5000);
-
+        var promise;
+        //Don't do auto-refresh if one is already in progress
+        if (!angular.isDefined(promise)) {
+            promise = $interval(function () {
+                getNodes(true);
+            }, 5000);
+        }
         //stop polling when user moves away from the page
         $scope.$on('$destroy', function () {
             $interval.cancel(promise);
