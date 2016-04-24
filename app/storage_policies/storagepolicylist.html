@@ -1,31 +1,29 @@
-<div ui-view class="ui container">
-    <div class="ui sixteen column grid">
-        <div class="thirteen wide column">
-            <div class="content" style="font-size: 24px">Storage Policies</div>
-        </div>
-
-        <div class="right floated three wide column">
-            <button class="ui blue button" ui-sref="contiv.storagepolicies.create">
-                <i class="add icon"></i>
-                Create Policy
-            </button>
-        </div>
+<div class="ui sixteen column grid">
+    <div class="thirteen wide column">
+        <div class="content" style="font-size: 24px">Storage Policies</div>
     </div>
-    <table class="ui very basic unstackable table" style="margin-top: 40px">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Updated by</th>
-            <th>Last update</th>
-        </tr>
-        </thead>
 
-        <tbody>
-        <tr ng-repeat="policy in storagePolicyListCtrl.policies">
-            <td><a ui-sref="contiv.storagepolicies.details({key:policy.name})">{{policy.name}}</a></td>
-            <td>{{policy.updatedBy}}</td>
-            <td>{{policy.lastUpdate}}</td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="right floated three wide column">
+        <button class="ui blue button" ui-sref="contiv.storagepolicies.create">
+            <i class="add icon"></i>
+            Create Policy
+        </button>
+    </div>
 </div>
+<table class="ui very basic unstackable table" style="margin-top: 40px">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Updated by</th>
+        <th>Last update</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr ng-repeat="policy in storagePolicyListCtrl.policies">
+        <td><a ui-sref="contiv.storagepolicies.details({key:policy.name})">{{policy.name}}</a></td>
+        <td>{{policy.updatedBy}}</td>
+        <td>{{policy.lastUpdate}}</td>
+    </tr>
+    </tbody>
+</table>

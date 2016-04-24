@@ -4,7 +4,7 @@
 angular.module('contiv.networkpolicies')
     .config(function ($stateProvider) {
         $stateProvider
-            .state('contiv.policies.isolation.create', {
+            .state('contiv.networkpolicies.isolation.create', {
                 url: '/create',
                 controller: 'IsolationPolicyCreateCtrl as isolationPolicyCreateCtrl',
                 templateUrl: 'network_policies/isolationpolicycreate.html'
@@ -15,7 +15,7 @@ angular.module('contiv.networkpolicies')
         var isolationPolicyCreateCtrl = this;
 
         function returnToPolicies() {
-            $state.go('contiv.policies.isolation');
+            $state.go('contiv.networkpolicies.isolation.list');
         }
 
         function cancelCreating() {

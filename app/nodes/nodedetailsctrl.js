@@ -105,10 +105,13 @@ angular.module('contiv.nodes')
             //Load from cache for quick display initially
             getNodeInfo(false);
 
-            var promise = $interval(function () {
-                getNodeInfo(true);
-            }, 5000);
-
+            var promise;
+            //Don't do auto-refresh if one is already in progress
+            if (!angular.isDefined(promise)) {
+                promise = $interval(function () {
+                    getNodeInfo(true);
+                }, 5000);
+            }
             //stop polling when user moves away from the page
             $scope.$on('$destroy', function () {
                 $interval.cancel(promise);

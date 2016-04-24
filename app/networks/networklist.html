@@ -1,33 +1,31 @@
-<div ui-view class="ui container">
-    <div class="ui sixteen column grid">
-        <div class="thirteen wide column">
-            <div class="content" style="font-size: 24px">Networks</div>
-        </div>
-
-        <div class="right floated three wide column">
-            <button class="ui blue button" ui-sref="contiv.networks.create">
-                <i class="add icon"></i>
-                Create Network
-            </button>
-        </div>
+<div class="ui sixteen column grid">
+    <div class="thirteen wide column">
+        <div class="content" style="font-size: 24px">Networks</div>
     </div>
-    <table class="ui very basic unstackable table" style="margin-top: 40px">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Encapsulation</th>
-            <th>Subnet</th>
-            <th>Gateway</th>
-        </tr>
-        </thead>
 
-        <tbody>
-        <tr ng-repeat="network in networksListCtrl.networks">
-            <td><a ui-sref="contiv.networks.details({key:network.key})">{{network.networkName}}</a></td>
-            <td>{{network.encap}}</td>
-            <td>{{network.subnet}}</td>
-            <td>{{network.gateway}}</td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="right floated three wide column">
+        <button class="ui blue button" ui-sref="contiv.networks.create">
+            <i class="add icon"></i>
+            Create Network
+        </button>
+    </div>
 </div>
+<table class="ui very basic unstackable table" style="margin-top: 40px">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Encapsulation</th>
+        <th>Subnet</th>
+        <th>Gateway</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr ng-repeat="network in networksListCtrl.networks">
+        <td><a ui-sref="contiv.networks.details({key:network.key})">{{network.networkName}}</a></td>
+        <td>{{network.encap}}</td>
+        <td>{{network.subnet}}</td>
+        <td>{{network.gateway}}</td>
+    </tr>
+    </tbody>
+</table>

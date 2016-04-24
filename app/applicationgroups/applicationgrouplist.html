@@ -1,31 +1,29 @@
-<div ui-view class="ui container">
-    <div class="ui sixteen column grid">
-        <div class="twelve wide column">
-            <div class="content" style="font-size: 24px">Application Groups</div>
-        </div>
-
-        <div class="right floated four wide column">
-            <button class="ui blue button" ui-sref="contiv.applicationgroups.create">
-                <i class="add icon"></i>
-                Create Application Group
-            </button>
-        </div>
+<div class="ui sixteen column grid">
+    <div class="twelve wide column">
+        <div class="content" style="font-size: 24px">Application Groups</div>
     </div>
-    <table class="ui very basic unstackable table" style="margin-top: 40px">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Network</th>
-            <th>Policies</th>
-        </tr>
-        </thead>
 
-        <tbody>
-        <tr ng-repeat="group in applicationGroupListCtrl.groups">
-            <td><a ui-sref="contiv.applicationgroups.details({key:group.key})">{{group.groupName}}</a></td>
-            <td>{{group.networkName}}</td>
-            <td>{{group.policies.join(", ")}}</td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="right floated four wide column">
+        <button class="ui blue button" ui-sref="contiv.applicationgroups.create">
+            <i class="add icon"></i>
+            Create Application Group
+        </button>
+    </div>
 </div>
+<table class="ui very basic unstackable table" style="margin-top: 40px">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Network</th>
+        <th>Policies</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr ng-repeat="group in applicationGroupListCtrl.groups">
+        <td><a ui-sref="contiv.applicationgroups.details({key:group.key})">{{group.groupName}}</a></td>
+        <td>{{group.networkName}}</td>
+        <td>{{group.policies.join(", ")}}</td>
+    </tr>
+    </tbody>
+</table>

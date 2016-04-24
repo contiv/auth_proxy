@@ -1,6 +1,6 @@
 <div class="ui sixteen column grid">
     <div class="one wide column">
-        <a ui-sref="contiv.policies.isolation()">
+        <a ui-sref="contiv.networkpolicies.isolation.list()">
             <i class="arrow left icon"></i>
         </a>
     </div>
@@ -21,12 +21,12 @@
             </div>
         </div>
         <button ng-switch-when="edit" class="ui disabled button"
-                ui-sref="contiv.policies.isolation.edit({key:isolationPolicyDetailsCtrl.policy.key})">
+                ui-sref="contiv.networkpolicies.isolation.edit({key:isolationPolicyDetailsCtrl.policy.key})">
             <i class="edit icon"></i>
             Edit
         </button>
         <button ng-switch-when="details" class="ui basic button"
-                ui-sref="contiv.policies.isolation.edit({key:isolationPolicyDetailsCtrl.policy.key})">
+                ui-sref="contiv.networkpolicies.isolation.edit({key:isolationPolicyDetailsCtrl.policy.key})">
             <i class="edit icon"></i>
             Edit
         </button>

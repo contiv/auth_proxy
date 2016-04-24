@@ -50,7 +50,7 @@ angular.module('contiv.applicationgroups')
             }
 
             function returnToApplicationGroup() {
-                $state.go('contiv.applicationgroups');
+                $state.go('contiv.applicationgroups.list');
             }
 
             function returnToApplicationGroupDetails() {
@@ -77,8 +77,9 @@ angular.module('contiv.applicationgroups')
             }
 
             function deleteApplicationGroup() {
-                ApplicationGroupsModel.delete(applicationGroupDetailsCtrl.applicationGroup);
-                returnToApplicationGroup();
+                ApplicationGroupsModel.delete(applicationGroupDetailsCtrl.applicationGroup).then(function (result) {
+                    returnToApplicationGroup();
+                });
             }
 
             /**
@@ -93,14 +94,14 @@ angular.module('contiv.applicationgroups')
             }
 
             /**
-             * Add policy to new application group
+             * Add policy to application group
              */
             function addIsolationPolicy() {
                 ApplicationGroupService.addIsolationPolicy(applicationGroupDetailsCtrl);
             }
 
             /**
-             * Remove policy from new application group
+             * Remove policy from application group
              */
             function removeIsolationPolicy(policyName) {
                 ApplicationGroupService.removeIsolationPolicy(applicationGroupDetailsCtrl, policyName);

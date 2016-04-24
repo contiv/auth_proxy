@@ -38,7 +38,7 @@ angular.module('contiv.applicationgroups')
 
 
             function returnToApplicationGroup() {
-                $state.go('contiv.applicationgroups');
+                $state.go('contiv.applicationgroups.list');
             }
 
             function cancelCreating() {

@@ -17,7 +17,7 @@ angular.module('contiv.networks')
         networkCreateCtrl.cidrPattern = ContivGlobals.CIDR_REGEX;
 
         function returnToNetworks() {
-            $state.go('contiv.networks');
+            $state.go('contiv.networks.list');
         }
 
         function cancelCreating() {

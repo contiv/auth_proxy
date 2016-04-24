@@ -26,27 +26,27 @@
         <i class="sidebar_dashboard icon"></i>
         Dashboard
     </a>
-    <a class="item" ui-sref="contiv.applicationgroups()">
+    <a class="item" ui-sref="contiv.applicationgroups.list()">
         <i class="sidebar_appgroup icon"></i>
         Application Groups
     </a>
-    <a class="item" ui-sref="contiv.policies.isolation()">
+    <a class="item" ui-sref="contiv.networkpolicies.isolation.list()">
         <i class="sidebar_networkpolicies icon"></i>
         Network Policies
     </a>
-    <a class="item" ui-sref="contiv.storagepolicies()">
+    <a class="item" ui-sref="contiv.storagepolicies.list()">
         <i class="sidebar_storagepolicies icon"></i>
         Storage Policies
     </a>
-    <a class="item" ui-sref="contiv.networks()">
+    <a class="item" ui-sref="contiv.networks.list()">
         <i class="sidebar_networks icon"></i>
         Networks
     </a>
-    <a class="item" ui-sref="contiv.volumes()">
+    <a class="item" ui-sref="contiv.volumes.list()">
         <i class="sidebar_volumes icon"></i>
         Volumes
     </a>
-    <a class="item" ui-sref="contiv.nodes()">
+    <a class="item" ui-sref="contiv.nodes.list()">
         <i class="sidebar_nodes icon"></i>
         Nodes
     </a>
@@ -58,13 +58,8 @@
             <img class="ui image" src="images/ciscoUCP.svg" height="26" width="300">
         </h1>
     </div>
-    <div ui-view="dashboard" style="margin-left:180px;margin-top:30px"></div>
-    <div ui-view="networks" style="margin-left:180px;margin-top:30px"></div>
-    <div ui-view="applicationgroups" style="margin-left:180px;margin-top:30px"></div>
-    <div ui-view="policies" style="margin-left:180px;margin-top:30px"></div>
-    <div ui-view="storagepolicies" style="margin-left:180px;margin-top:30px"></div>
-    <div ui-view="volumes" style="margin-left:180px;margin-top:30px"></div>
-    <div ui-view="nodes" style="margin-left:180px;margin-top:30px"></div>
+
+    <div ui-view style="margin-left:180px;margin-top:30px"></div>
 </div>
 
 

@@ -86,15 +86,18 @@ function Collection($http, $q, URLS) {
     };
 
     collection.delete = function (model) {
+        var deferred = $q.defer();
         var url = URLS.DELETE + model.key + '/';
         $http.delete(url)
             .then(function successCallback(response) {
                 _.remove(models, function (n) {
                     return n.key == model.key;
                 });
+                deferred.resolve(extract(response));
             }, function errorCallback(response) {
-
+                deferred.reject(extract(response));
             });
+        return deferred.promise;
     };
 
     collection.deleteUsingKey = function (key) {
