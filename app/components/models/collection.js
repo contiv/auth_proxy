@@ -1,117 +1,151 @@
-function Collection($http, $q, URLS) {
-    var collection = this,
-        models,
-        currentModel;
-
-    function extract(result) {
-        return result.data;
-    }
-
-    function cache(result) {
-        models = extract(result);
-        return models;
-    }
-
-    collection.get = function (reload) {
-        if (reload === undefined) reload = false;
-        return (!reload && models) ? $q.when(models) : $http.get(URLS.GET).then(cache);
-    };
-
-    collection.setCurrentModel = function (model) {
-        return collection.getModelByKey(model).then(function (model) {
-            currentModel = model;
-        })
-    };
-
-    collection.getCurrentModel = function () {
-        return currentModel;
-    };
-
-    collection.getCurrentModelKey = function () {
-        return currentModel ? currentModel.key : '';
-    };
-
-    collection.getModelByKey = function (key, reload) {
-        if (reload === undefined) reload = false;
-
-        var deferred = $q.defer();
-
-        function findModel() {
-            return _.find(models, function (c) {
-                return c.key == key;
-            })
-        }
-
-        if (!reload && models) {
-            deferred.resolve(findModel());
-        } else {
-            collection.get(reload)
-                .then(function () {
-                    deferred.resolve(findModel());
-                });
-        }
-
-        return deferred.promise;
-    };
-
-    collection.create = function (model) {
-        var deferred = $q.defer();
-        var url = URLS.POST + model.key + '/';
-        $http.post(url, model)
-            .then(function successCallback(response) {
-                models = models || [];
-                models.push(extract(response));
-                deferred.resolve(extract(response));
-            }, function errorCallback(response) {
-                deferred.reject(extract(response));
-            });
-        return deferred.promise;
-    };
-
-    collection.save = function (model) {
-        var deferred = $q.defer();
-        var url = URLS.PUT + model.key + '/';
-        $http.put(url, model)
-            .then(function successCallback(response) {
-                models = models || [];
-                _.remove(models, function (n) {
-                    return n.key == model.key;
-                });
-                models.push(extract(response));
-                deferred.resolve(extract(response));
-            }, function errorCallback(response) {
-                deferred.reject(extract(response));
-            });
-        return deferred.promise;
-    };
-
-    collection.delete = function (model) {
-        var deferred = $q.defer();
-        var url = URLS.DELETE + model.key + '/';
-        $http.delete(url)
-            .then(function successCallback(response) {
-                _.remove(models, function (n) {
-                    return n.key == model.key;
-                });
-                deferred.resolve(extract(response));
-            }, function errorCallback(response) {
-                deferred.reject(extract(response));
-            });
-        return deferred.promise;
-    };
-
-    collection.deleteUsingKey = function (key) {
-        var deferred = $q.defer();
-        var url = URLS.DELETE + key + '/';
-        $http.delete(url)
-            .then(function successCallback(response) {
-                _.remove(models, function (n) {
-                    return n.key == key;
-                });
-                deferred.resolve(extract(response));
-            }, function errorCallback(response) {
-                deferred.reject(extract(response));
-            });
-        return deferred.promise;
-    }
+/**
+ * BaseCollection class that does just fetch of the objects.
+ * @param $http
+ * @param $q
+ * @param url
+ * @constructor
+ */
+function BaseCollection($http, $q, url) {
+    this.models = [];
+    this.$http = $http;
+    this.$q = $q;
+    this.url = url;
 }
+
+BaseCollection.prototype.extract = function (result) {
+    return result.data;
+};
+
+BaseCollection.prototype.get = function (reload) {
+    var collection = this;
+    if (reload === undefined) reload = false;
+    return (!reload && collection.models.length > 0) ?
+        collection.$q.when(collection.models) : collection.$http.get(collection.url)
+        .then(function (result) {
+            collection.models = collection.extract(result);
+            return collection.models;
+        });
+};
+
+BaseCollection.prototype.getModelByKey = function (key, reload) {
+    var collection = this;
+    if (reload === undefined) reload = false;
+
+    var deferred = collection.$q.defer();
+
+    function findModel() {
+        return _.find(collection.models, function (c) {
+            return c.key == key;
+        })
+    }
+
+    if (!reload && collection.models.length > 0) {
+        deferred.resolve(findModel());
+    } else {
+        collection.get(reload)
+            .then(function () {
+                deferred.resolve(findModel());
+            });
+    }
+
+    return deferred.promise;
+};
+
+BaseCollection.prototype.getModel = function (model, reload) {
+    var collection = this;
+    if (reload === undefined) reload = false;
+
+    var deferred = collection.$q.defer();
+
+    function findModel() {
+        return _.find(collection.models, model)
+    }
+
+    if (!reload && collection.models.length > 0) {
+        deferred.resolve(findModel());
+    } else {
+        collection.get(reload)
+            .then(function () {
+                deferred.resolve(findModel());
+            });
+    }
+
+    return deferred.promise;
+};
+
+
+/**
+ * Extends BaseCollection class to do create, update and delete using POST, PUT and DELETE verbs.
+ * @param $http
+ * @param $q
+ * @param url
+ * @constructor
+ */
+function Collection($http, $q, url) {
+    BaseCollection.call(this, $http, $q, url);
+}
+
+Collection.prototype = Object.create(BaseCollection.prototype);
+
+Collection.prototype.create = function (model) {
+    var collection = this;
+    var deferred = collection.$q.defer();
+    var url = collection.url + model.key + '/';
+    collection.$http.post(url, model)
+        .then(function successCallback(response) {
+            collection.models.push(collection.extract(response));
+            deferred.resolve(collection.extract(response));
+        }, function errorCallback(response) {
+            deferred.reject(collection.extract(response));
+        });
+    return deferred.promise;
+};
+
+Collection.prototype.save = function (model) {
+    var collection = this;
+    var deferred = collection.$q.defer();
+    var url = collection.url + model.key + '/';
+    collection.$http.put(url, model)
+        .then(function successCallback(response) {
+            _.remove(collection.models, function (n) {
+                return n.key == model.key;
+            });
+            collection.models.push(collection.extract(response));
+            deferred.resolve(collection.extract(response));
+        }, function errorCallback(response) {
+            deferred.reject(collection.extract(response));
+        });
+    return deferred.promise;
+};
+
+Collection.prototype.delete = function (model) {
+    var collection = this;
+    var deferred = collection.$q.defer();
+    var url = collection.url + model.key + '/';
+    collection.$http.delete(url)
+        .then(function successCallback(response) {
+            _.remove(collection.models, function (n) {
+                return n.key == model.key;
+            });
+            deferred.resolve(collection.extract(response));
+        }, function errorCallback(response) {
+            deferred.reject(collection.extract(response));
+        });
+    return deferred.promise;
+};
+
+Collection.prototype.deleteUsingKey = function (key) {
+    var collection = this;
+    var deferred = collection.$q.defer();
+    var url = collection.url + key + '/';
+    collection.$http.delete(url)
+        .then(function successCallback(response) {
+            _.remove(collection.models, function (n) {
+                return n.key == key;
+            });
+            deferred.resolve(collection.extract(response));
+        }, function errorCallback(response) {
+            deferred.reject(collection.extract(response));
+        });
+    return deferred.promise;
+};

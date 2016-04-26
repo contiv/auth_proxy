@@ -3,12 +3,7 @@
  */
 angular.module('contiv.models')
     .factory('RulesModel', ['$http', '$q', function ($http, $q) {
-        var URLS = {
-            POST: ContivGlobals.RULES_ENDPOINT,
-            DELETE: ContivGlobals.RULES_ENDPOINT,
-            GET: ContivGlobals.RULES_ENDPOINT
-        };
-        var rulesmodel = new Collection($http, $q, URLS);
+        var rulesmodel = new Collection($http, $q, ContivGlobals.RULES_ENDPOINT);
 
         /**
          * Get incoming rules for a given policy and a tenant

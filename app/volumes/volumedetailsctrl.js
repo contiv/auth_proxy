@@ -24,7 +24,11 @@ angular.module('contiv.volumes')
             }
 
             function getVolumeInfo(reload) {
-                VolumesModel.getModelByKey($stateParams.key, reload)
+                var tokens = $stateParams.key.split('/');
+                var model ={};
+                model.policy = tokens[0];
+                model.name = tokens[1];
+                VolumesModel.getModel(model, reload)
                     .then(function (volume) {
                         volumeDetailsCtrl.volume = volume;
                     });
