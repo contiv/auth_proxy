@@ -3,14 +3,7 @@
  */
 angular.module('contiv.models')
     .factory('ApplicationGroupsModel', ['$http', '$q', function ($http, $q) {
-        var URLS = {
-            POST: ContivGlobals.APPLICATIONGROUPS_ENDPOINT,
-            PUT: ContivGlobals.APPLICATIONGROUPS_ENDPOINT,
-            DELETE: ContivGlobals.APPLICATIONGROUPS_ENDPOINT,
-            GET: ContivGlobals.APPLICATIONGROUPS_ENDPOINT
-        };
-
-        var groupsmodel = new Collection($http, $q, URLS);
+        var groupsmodel = new Collection($http, $q, ContivGlobals.APPLICATIONGROUPS_ENDPOINT);
 
         /**
          * Generate key for application group

@@ -7,57 +7,27 @@ angular.module('contiv.models')
         return volumesmodel;
     }]);
 
+/**
+ * VolumesCollection extends from BaseCollection
+ * @param $http
+ * @param $q
+ * @constructor
+ */
 function VolumesCollection($http, $q) {
-    var volumescollection = this,
-        models;
-
-    function extract(result) {
-        return result.data;
-    }
-
-    function cache(result) {
-        models = extract(result);
-        return models;
-    }
-
-    volumescollection.get = function (reload) {
-        if (reload === undefined) reload = false;
-        return (!reload && models) ? $q.when(models) : $http.get(ContivGlobals.VOLUMES_ENDPOINT).then(cache);
-    };
-
-    volumescollection.getModelByKey = function (key, reload) {
-        if (reload === undefined) reload = false;
-
-        var deferred = $q.defer();
-
-        function findModel() {
-            return _.find(models, function (c) {
-                var tokens = key.split('/');
-                return (c.name == tokens[1] && c.policy == tokens[0]);
-            })
-        }
-
-        if (!reload && models) {
-            deferred.resolve(findModel());
-        } else {
-            volumescollection.get(reload)
-                .then(function () {
-                    deferred.resolve(findModel());
-                });
-        }
-
-        return deferred.promise;
-    };
-
-    volumescollection.delete = function (model) {
-        var url = ContivGlobals.VOLUMES_DELETE_ENDPOINT + model.policy + '/' + model.name;
-        $http.post(url, model)
-            .then(function successCallback(response) {
-                _.remove(models, function (n) {
-                    return (n.name == model.name && n.policy == model.name);
-                });
-            }, function errorCallback(response) {
-
-            });
-    }
+    BaseCollection.call(this, $http, $q, ContivGlobals.VOLUMES_ENDPOINT);
 }
+
+VolumesCollection.prototype = Object.create(BaseCollection.prototype);
+
+VolumesCollection.prototype.delete = function (model) {
+    var volumescollection = this;
+    var url = ContivGlobals.VOLUMES_DELETE_ENDPOINT + model.policy + '/' + model.name;
+    volumescollection.$http.post(url, model)
+        .then(function successCallback(response) {
+            _.remove(volumescollection.models, function (n) {
+                return (n.name == model.name && n.policy == model.name);
+            });
+        }, function errorCallback(response) {
+
+        });
+};

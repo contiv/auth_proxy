@@ -1,11 +1,6 @@
 angular.module('contiv.models')
     .factory('PoliciesModel', ['$http', '$q', function ($http, $q) {
-        var URLS = {
-            POST: ContivGlobals.POLICIES_ENDPOINT,
-            DELETE: ContivGlobals.POLICIES_ENDPOINT,
-            GET: ContivGlobals.POLICIES_ENDPOINT
-        };
-        var policiesmodel = new Collection($http, $q, URLS);
+        var policiesmodel = new Collection($http, $q, ContivGlobals.POLICIES_ENDPOINT);
 
         /**
          * Generate policy key to save policy on server
