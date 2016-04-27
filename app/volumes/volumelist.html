@@ -17,13 +17,21 @@
             <th>Name</th>
             <th>Policy</th>
             <th>In use on host</th>
+            <th class="right floated three wide column">
+                <div class="ui left icon input">
+                    <input type="text" ng-model="volumesSearchText"
+                           placeholder="Search volumes..." size="30">
+                    <i class="search icon"></i>
+                </div>
+            </th>
         </tr>
         </thead>
 
         <tbody>
-        <tr ng-repeat="volume in volumeListCtrl.volumes">
+        <tr ng-repeat="volume in volumeListCtrl.volumes | filter:volumesSearchText">
             <td><a ui-sref="contiv.volumes.details({key:volume.policy + '/' + volume.name})">{{volume.name}}</a></td>
             <td>{{volume.policy}}</td>
+            <td></td>
             <td></td>
         </tr>
         </tbody>
