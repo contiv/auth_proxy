@@ -639,9 +639,6 @@ i.icons .inverted.corner.icon {
 .icon.search:before {
   content: "\e935";
 }
-.icon.sidebar:before {
-  content: "\e936";
-}
 .icon.trash:before {
   content: "\e937";
 }
@@ -747,25 +744,25 @@ i.icons .inverted.corner.icon {
 .icon.toolbar_show:before {
   content: "\e917";
 }
-.icon.sidebar_appgroup:before {
+.icon.appgroup:before {
   content: "\e900";
 }
-.icon.sidebar_dashboard:before {
+.icon.dashboard:before {
   content: "\e901";
 }
-.icon.sidebar_networkpolicies:before {
+.icon.networkpolicies:before {
   content: "\e902";
 }
-.icon.sidebar_networks:before {
+.icon.networks:before {
   content: "\e903";
 }
-.icon.sidebar_nodes:before {
+.icon.nodes:before {
   content: "\e938";
 }
-.icon.sidebar_storagepolicies:before {
+.icon.storagepolicies:before {
   content: "\e904";
 }
-.icon.sidebar_volumes:before {
+.icon.volumes:before {
   content: "\e905";
 }
 
