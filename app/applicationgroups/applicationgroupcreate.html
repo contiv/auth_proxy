@@ -1,5 +1,8 @@
 <form class="ui form" name="applicationGroupCreateCtrl.form" role="form" ng-submit="applicationGroupCreateCtrl.createApplicationGroup(applicationGroup)"
       novalidate>
+    <div class="ui active inverted dimmer" ng-show="applicationGroupCreateCtrl.showLoader">
+        <div class="ui loader"></div>
+    </div>
     <div class="field">
         <div ng-show="applicationGroupCreateCtrl.form.$submitted">
             <div ng-hide="applicationGroupCreateCtrl.form.$valid" class="ui negative message">
@@ -165,4 +168,7 @@
             Create
         </button>
     </div>
+
+    <ctv-error ng-show="applicationGroupCreateCtrl.showServerError" header="Error creating application group" error="applicationGroupCreateCtrl.serverErrorMessage">
+    </ctv-error>
 </form>

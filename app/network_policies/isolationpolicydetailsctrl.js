@@ -25,7 +25,8 @@ angular.module('contiv.networkpolicies')
         'RulesModel',
         'NetworksModel',
         'ApplicationGroupsModel',
-        function ($state, $stateParams, PoliciesModel, RulesModel, NetworksModel, ApplicationGroupsModel) {
+        'CRUDHelperService',
+        function ($state, $stateParams, PoliciesModel, RulesModel, NetworksModel, ApplicationGroupsModel, CRUDHelperService) {
             var isolationPolicyDetailsCtrl = this;
             isolationPolicyDetailsCtrl.networks = [];
             isolationPolicyDetailsCtrl.applicationGroups = [];
@@ -54,8 +55,14 @@ angular.module('contiv.networkpolicies')
             }
 
             function deletePolicy() {
-                PoliciesModel.delete(isolationPolicyDetailsCtrl.policy).then(function (result) {
+                CRUDHelperService.hideServerError(isolationPolicyDetailsCtrl);
+                CRUDHelperService.startLoader(isolationPolicyDetailsCtrl);
+                PoliciesModel.delete(isolationPolicyDetailsCtrl.policy).then(function successCallback(result) {
+                    CRUDHelperService.stopLoader(isolationPolicyDetailsCtrl);
                     returnToPolicies();
+                }, function errorCallback(result) {
+                    CRUDHelperService.stopLoader(isolationPolicyDetailsCtrl);
+                    CRUDHelperService.showServerError(isolationPolicyDetailsCtrl, result);
                 });
             }
 
@@ -184,11 +191,17 @@ angular.module('contiv.networkpolicies')
              * Rule is saved to server
              */
             function addIncomingRule() {
+                CRUDHelperService.hideServerError(isolationPolicyDetailsCtrl);
+                CRUDHelperService.startLoader(isolationPolicyDetailsCtrl);
                 generateRuleId(isolationPolicyDetailsCtrl.newIncomingRule);
                 isolationPolicyDetailsCtrl.newIncomingRule.key = RulesModel.generateKey(isolationPolicyDetailsCtrl.newIncomingRule);
-                RulesModel.create(isolationPolicyDetailsCtrl.newIncomingRule).then(function (result) {
+                RulesModel.create(isolationPolicyDetailsCtrl.newIncomingRule).then(function successCallback(result) {
+                    CRUDHelperService.stopLoader(isolationPolicyDetailsCtrl);
                     isolationPolicyDetailsCtrl.incomingRules.push(result);
                     resetNewIncomingRule();
+                }, function errorCallback(result) {
+                    CRUDHelperService.stopLoader(isolationPolicyDetailsCtrl);
+                    CRUDHelperService.showServerError(isolationPolicyDetailsCtrl, result);
                 });
             }
 
@@ -196,11 +209,17 @@ angular.module('contiv.networkpolicies')
              * Rule is saved to server
              */
             function addOutgoingRule() {
+                CRUDHelperService.hideServerError(isolationPolicyDetailsCtrl);
+                CRUDHelperService.startLoader(isolationPolicyDetailsCtrl);
                 generateRuleId(isolationPolicyDetailsCtrl.newOutgoingRule);
                 isolationPolicyDetailsCtrl.newOutgoingRule.key = RulesModel.generateKey(isolationPolicyDetailsCtrl.newOutgoingRule);
-                RulesModel.create(isolationPolicyDetailsCtrl.newOutgoingRule).then(function (result) {
+                RulesModel.create(isolationPolicyDetailsCtrl.newOutgoingRule).then(function successCallback(result) {
+                    CRUDHelperService.stopLoader(isolationPolicyDetailsCtrl);
                     isolationPolicyDetailsCtrl.outgoingRules.push(result);
                     resetNewOutgoingRule();
+                }, function errorCallback(result) {
+                    CRUDHelperService.stopLoader(isolationPolicyDetailsCtrl);
+                    CRUDHelperService.showServerError(isolationPolicyDetailsCtrl, result);
                 });
             }
 
@@ -208,10 +227,16 @@ angular.module('contiv.networkpolicies')
              * Delete incoming rule from server
              */
             function deleteIncomingRule(key) {
-                RulesModel.deleteUsingKey(key).then(function (result) {
+                CRUDHelperService.hideServerError(isolationPolicyDetailsCtrl);
+                CRUDHelperService.startLoader(isolationPolicyDetailsCtrl);
+                RulesModel.deleteUsingKey(key).then(function successCallback(result) {
+                    CRUDHelperService.stopLoader(isolationPolicyDetailsCtrl);
                     _.remove(isolationPolicyDetailsCtrl.incomingRules, function (n) {
                         return n.key == key;
                     });
+                }, function errorCallback(result) {
+                    CRUDHelperService.stopLoader(isolationPolicyDetailsCtrl);
+                    CRUDHelperService.showServerError(isolationPolicyDetailsCtrl, result);
                 });
             }
 
@@ -219,12 +244,21 @@ angular.module('contiv.networkpolicies')
              * Delete outgoing rule from server
              */
             function deleteOutgoingRule(key) {
-                RulesModel.deleteUsingKey(key).then(function (result) {
+                CRUDHelperService.hideServerError(isolationPolicyDetailsCtrl);
+                CRUDHelperService.startLoader(isolationPolicyDetailsCtrl);
+                RulesModel.deleteUsingKey(key).then(function successCallback(result) {
+                    CRUDHelperService.stopLoader(isolationPolicyDetailsCtrl);
                     _.remove(isolationPolicyDetailsCtrl.outgoingRules, function (n) {
                         return n.key == key;
                     });
+                }, function errorCallback(result) {
+                    CRUDHelperService.stopLoader(isolationPolicyDetailsCtrl);
+                    CRUDHelperService.showServerError(isolationPolicyDetailsCtrl, result);
                 });
             }
+
+            CRUDHelperService.stopLoader(isolationPolicyDetailsCtrl);
+            CRUDHelperService.hideServerError(isolationPolicyDetailsCtrl);
 
             PoliciesModel.getModelByKey($stateParams.key)
                 .then(function (policy) {

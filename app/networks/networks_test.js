@@ -143,7 +143,11 @@ describe('contiv.networks module', function () {
             expect(Array.isArray(networkListCtrl.networks)).toBeTruthy();
             expect(networkListCtrl.networks.length).toEqual(1);
         });
-
+        it('NetworksListCtrl should do have showLoader property set to false after fetch', function () {
+            $httpBackend.expectGET(ContivGlobals.NETWORKS_ENDPOINT);
+            $httpBackend.flush();
+            expect(networkListCtrl.showLoader).toBeFalsy();
+        });
     });
 
     describe('networkdetails controller', function () {
@@ -195,31 +199,34 @@ describe('contiv.networks module', function () {
             networkDetailsCtrl.deleteNetwork();
             $httpBackend.expectDELETE(ContivGlobals.NETWORKS_ENDPOINT + networksData[0].key + '/');
             $httpBackend.flush();
+            expect(networkDetailsCtrl.showLoader).toBeFalsy();
+        });
+
+        it('NetworksDetailsCtrl should do have showLoader property set to false after fetch', function () {
+            $httpBackend.expectGET(ContivGlobals.NETWORKS_ENDPOINT);
+            $httpBackend.flush();
+            expect(networkDetailsCtrl.showLoader).toBeFalsy();
         });
     });
 
     describe('networkcreate controller', function () {
 
         var $controller, $state, $stateParams;
+        var networkCreateCtrl;
         beforeEach(inject(function (_$state_ ,_$stateParams_, _$controller_) {
             $state = _$state_;
             $state.go = function (stateName) {};
             $stateParams = _$stateParams_;
             $stateParams.key = networksData[0].key;
             $controller = _$controller_;
-        }));
-
-        beforeEach(inject(function (_$controller_) {
-            $controller = _$controller_;
+            networkCreateCtrl = $controller('NetworkCreateCtrl');
         }));
 
         it('should be defined', function () {
-            var networkCreateCtrl = $controller('NetworkCreateCtrl');
             expect(networkCreateCtrl).toBeDefined();
         });
 
         it('NetworkCreateCtrl should have new network object initialized', function () {
-            var networkCreateCtrl = $controller('NetworkCreateCtrl');
             expect(networkCreateCtrl.newNetwork).toBeDefined();
             expect(networkCreateCtrl.newNetwork.encap).toEqual('vxlan');
             expect(networkCreateCtrl.newNetwork.tenantName).not.toEqual('');
@@ -229,7 +236,6 @@ describe('contiv.networks module', function () {
         });
 
         it('NetworkCreateCtrl.createNetwork() should do a POST on /api/networks/ REST API', function () {
-            var networkCreateCtrl = $controller('NetworkCreateCtrl');
             networkCreateCtrl.form = {'$valid' : true};
             networkCreateCtrl.newNetwork.networkName = 'contiv-net1';
             networkCreateCtrl.newNetwork.subnet = '20.1.2.0/24';
@@ -237,16 +243,17 @@ describe('contiv.networks module', function () {
             networkCreateCtrl.createNetwork();
             $httpBackend.expectPOST(ContivGlobals.NETWORKS_ENDPOINT + networksData[0].key + '/');
             $httpBackend.flush();
+            expect(networkCreateCtrl.showLoader).toBeFalsy();
         });
 
         it('NetworkCreateCtrl.createNetwork() should not do a POST on /api/networks/ REST API for invalid form', function () {
-            var networkCreateCtrl = $controller('NetworkCreateCtrl');
             networkCreateCtrl.form = {'$valid' : false};
             networkCreateCtrl.newNetwork.networkName = 'contiv-net1';
             networkCreateCtrl.newNetwork.subnet = '20.1.2.0/24';
             networkCreateCtrl.newNetwork.gateway = '20.1.2.254';
             networkCreateCtrl.createNetwork();
             $httpBackend.verifyNoOutstandingRequest();
+            expect(networkCreateCtrl.showLoader).toBeFalsy();
         });
     });
 });

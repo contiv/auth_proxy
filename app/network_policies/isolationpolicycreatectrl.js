@@ -11,7 +11,8 @@ angular.module('contiv.networkpolicies')
             })
         ;
     })
-    .controller('IsolationPolicyCreateCtrl', ['$state', 'PoliciesModel', function ($state, PoliciesModel) {
+    .controller('IsolationPolicyCreateCtrl', ['$state', 'PoliciesModel', 'CRUDHelperService',
+        function ($state, PoliciesModel, CRUDHelperService) {
         var isolationPolicyCreateCtrl = this;
 
         function returnToPolicies() {
@@ -24,15 +25,23 @@ angular.module('contiv.networkpolicies')
 
         function createPolicy() {
             if (isolationPolicyCreateCtrl.form.$valid) {
+                CRUDHelperService.hideServerError(isolationPolicyCreateCtrl);
+                CRUDHelperService.startLoader(isolationPolicyCreateCtrl);
                 isolationPolicyCreateCtrl.newPolicy.key =
                     PoliciesModel.generateKey(isolationPolicyCreateCtrl.newPolicy);
-                PoliciesModel.create(isolationPolicyCreateCtrl.newPolicy).then(function (result) {
+                PoliciesModel.create(isolationPolicyCreateCtrl.newPolicy).then(function successCallback(result) {
+                    CRUDHelperService.stopLoader(isolationPolicyCreateCtrl);
                     returnToPolicies();
+                }, function errorCallback(result) {
+                    CRUDHelperService.stopLoader(isolationPolicyCreateCtrl);
+                    CRUDHelperService.showServerError(isolationPolicyCreateCtrl, result);
                 });
             }
         }
 
         function resetForm() {
+            CRUDHelperService.stopLoader(isolationPolicyCreateCtrl);
+            CRUDHelperService.hideServerError(isolationPolicyCreateCtrl);
             isolationPolicyCreateCtrl.newPolicy = {
                 policyName: '',
                 tenantName: 'default'//TODO: Remove hardcoded tenant.

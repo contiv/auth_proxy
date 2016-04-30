@@ -21,7 +21,14 @@ angular.module('contiv.applicationgroups')
         'PoliciesModel',
         'RulesModel',
         'ApplicationGroupService',
-        function ($state, ApplicationGroupsModel, NetworksModel, PoliciesModel, RulesModel, ApplicationGroupService) {
+        'CRUDHelperService',
+        function ($state,
+                  ApplicationGroupsModel,
+                  NetworksModel,
+                  PoliciesModel,
+                  RulesModel,
+                  ApplicationGroupService,
+                  CRUDHelperService) {
             var applicationGroupCreateCtrl = this;
             applicationGroupCreateCtrl.networks = [];
             applicationGroupCreateCtrl.isolationPolicies = [];
@@ -35,7 +42,6 @@ angular.module('contiv.applicationgroups')
             applicationGroupCreateCtrl.outgoingRules = [];
 
             applicationGroupCreateCtrl.isolationPoliciesVisible = false;
-
 
             function returnToApplicationGroup() {
                 $state.go('contiv.applicationgroups.list');
@@ -52,7 +58,7 @@ angular.module('contiv.applicationgroups')
                 NetworksModel.get().then(function (result) {
                     applicationGroupCreateCtrl.networks = _.filter(result, {
                         'tenantName': 'default'//TODO: Remove hardcoded tenant.
-                    })
+                    });
                 });
             }
 
@@ -63,7 +69,7 @@ angular.module('contiv.applicationgroups')
                 PoliciesModel.get().then(function (result) {
                     applicationGroupCreateCtrl.isolationPolicies = _.filter(result, {
                         'tenantName': 'default'//TODO: Remove hardcoded tenant.
-                    })
+                    });
                 });
             }
 
@@ -85,18 +91,27 @@ angular.module('contiv.applicationgroups')
                 //form controller is injected by the html template
                 //checking if all validations have passed
                 if (applicationGroupCreateCtrl.form.$valid) {
+                    CRUDHelperService.hideServerError(applicationGroupCreateCtrl);
+                    CRUDHelperService.startLoader(applicationGroupCreateCtrl);
                     applicationGroupCreateCtrl.applicationGroup.networkName =
                         applicationGroupCreateCtrl.selectedNetwork.networkName;
                     applicationGroupCreateCtrl.applicationGroup.key =
                         ApplicationGroupsModel.generateKey(applicationGroupCreateCtrl.applicationGroup);
 
-                    ApplicationGroupsModel.create(applicationGroupCreateCtrl.applicationGroup).then(function (result) {
-                        returnToApplicationGroup();
-                    });
+                    ApplicationGroupsModel.create(applicationGroupCreateCtrl.applicationGroup).then(
+                        function successCallback(result) {
+                            CRUDHelperService.stopLoader(applicationGroupCreateCtrl);
+                            returnToApplicationGroup();
+                        }, function errorCallback(result) {
+                            CRUDHelperService.stopLoader(applicationGroupCreateCtrl);
+                            CRUDHelperService.showServerError(applicationGroupCreateCtrl, result);
+                        });
                 }
             }
 
             function resetForm() {
+                CRUDHelperService.stopLoader(applicationGroupCreateCtrl);
+                CRUDHelperService.hideServerError(applicationGroupCreateCtrl);
                 applicationGroupCreateCtrl.applicationGroup = {
                     groupName: '',
                     networkName: '',

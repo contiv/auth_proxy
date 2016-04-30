@@ -27,48 +27,57 @@
     </div>
 </div>
 
+<div class="ui basic segment">
+    <div class="ui active inverted dimmer" ng-show="networkDetailsCtrl.showLoader">
+        <div class="ui loader"></div>
+    </div>
 
-<h4 class="ui header">Network Details</h4>
-<div>
-    <table class="ui very basic selectable table">
-        <tbody>
-        <tr>
-            <td class="three wide column">Network name</td>
-            <td>{{networkDetailsCtrl.network.networkName}}</td>
-        </tr>
-        <tr>
-            <td class="three wide column">Encapsulation</td>
-            <td>{{networkDetailsCtrl.network.encap}}</td>
-        </tr>
-        <tr>
-            <td class="three wide column">Subnet</td>
-            <td>{{networkDetailsCtrl.network.subnet}}</td>
-        </tr>
-        <tr>
-            <td class="three wide column">Gateway</td>
-            <td>{{networkDetailsCtrl.network.gateway}}</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+    <h4 class="ui header">Network Details</h4>
+    <div>
+        <table class="ui very basic selectable table">
+            <tbody>
+            <tr>
+                <td class="three wide column">Network name</td>
+                <td>{{networkDetailsCtrl.network.networkName}}</td>
+            </tr>
+            <tr>
+                <td class="three wide column">Encapsulation</td>
+                <td>{{networkDetailsCtrl.network.encap}}</td>
+            </tr>
+            <tr>
+                <td class="three wide column">Subnet</td>
+                <td>{{networkDetailsCtrl.network.subnet}}</td>
+            </tr>
+            <tr>
+                <td class="three wide column">Gateway</td>
+                <td>{{networkDetailsCtrl.network.gateway}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
-<div class="ui section divider"></div>
+    <div class="ui section divider"></div>
 
-<h4 class="ui header" style="margin-top: 40px">Application Groups</h4>
+    <h4 class="ui header" style="margin-top: 40px">Application Groups</h4>
 
-<div style="margin-top: 20px">
-    <table class="ui very basic unstackable table">
-        <thead>
-        <tr>
-            <th> Group name</th>
-            <th> Policies</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="group in networkDetailsCtrl.applicationGroups">
-            <td class="three wide column"><a ui-sref="contiv.applicationgroups.details({key:group.key})">{{group.groupName}}</a></td>
-            <td>{{group.policies.join(", ")}}</td>
-        </tr>
-        </tbody>
-    </table>
+    <div style="margin-top: 20px">
+        <table class="ui very basic unstackable table">
+            <thead>
+            <tr>
+                <th> Group name</th>
+                <th> Policies</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="group in networkDetailsCtrl.applicationGroups">
+                <td class="three wide column"><a ui-sref="contiv.applicationgroups.details({key:group.key})">{{group.groupName}}</a>
+                </td>
+                <td>{{group.policies.join(", ")}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <ctv-error ng-show="networkDetailsCtrl.showServerError" header="Error deleting network"
+               error="networkDetailsCtrl.serverErrorMessage">
+    </ctv-error>
 </div>

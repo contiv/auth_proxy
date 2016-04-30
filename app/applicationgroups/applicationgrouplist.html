@@ -10,28 +10,33 @@
         </button>
     </div>
 </div>
-<table class="ui very basic unstackable table" style="margin-top: 40px">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Network</th>
-        <th>Policies</th>
-        <th class="right floated four wide column">
-            <div class="ui left icon input">
-                <input type="text" ng-model="groupsSearchText"
-                       placeholder="Search application groups..." size="30">
-                <i class="search icon"></i>
-            </div>
-        </th>
-    </tr>
-    </thead>
+<div class="ui basic segment">
+    <div class="ui active inverted dimmer" ng-show="applicationGroupListCtrl.showLoader">
+        <div class="ui loader"></div>
+    </div>
+    <table class="ui very basic unstackable table" style="margin-top: 10px">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Network</th>
+            <th>Policies</th>
+            <th class="right floated four wide column">
+                <div class="ui left icon input">
+                    <input type="text" ng-model="groupsSearchText"
+                           placeholder="Search application groups..." size="30">
+                    <i class="search icon"></i>
+                </div>
+            </th>
+        </tr>
+        </thead>
 
-    <tbody>
-    <tr ng-repeat="group in applicationGroupListCtrl.groups | filter:groupsSearchText">
-        <td><a ui-sref="contiv.applicationgroups.details({key:group.key})">{{group.groupName}}</a></td>
-        <td>{{group.networkName}}</td>
-        <td>{{group.policies.join(", ")}}</td>
-        <td></td>
-    </tr>
-    </tbody>
-</table>
+        <tbody>
+        <tr ng-repeat="group in applicationGroupListCtrl.groups | filter:groupsSearchText">
+            <td><a ui-sref="contiv.applicationgroups.details({key:group.key})">{{group.groupName}}</a></td>
+            <td>{{group.networkName}}</td>
+            <td>{{group.policies.join(", ")}}</td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

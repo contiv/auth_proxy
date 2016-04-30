@@ -8,8 +8,8 @@ angular.module('contiv.networks')
             });
     })
     .controller('NetworkDetailsCtrl',
-        ['$state', '$stateParams', '$scope', '$interval', 'NetworksModel', 'ApplicationGroupsModel',
-            function ($state, $stateParams, $scope, $interval, NetworksModel, ApplicationGroupsModel) {
+        ['$state', '$stateParams', '$scope', '$interval', 'NetworksModel', 'ApplicationGroupsModel', 'CRUDHelperService',
+            function ($state, $stateParams, $scope, $interval, NetworksModel, ApplicationGroupsModel, CRUDHelperService) {
                 var networkDetailsCtrl = this;
 
                 function returnToNetworks() {
@@ -17,8 +17,14 @@ angular.module('contiv.networks')
                 }
 
                 function deleteNetwork() {
-                    NetworksModel.delete(networkDetailsCtrl.network).then(function (result) {
+                    CRUDHelperService.hideServerError(networkDetailsCtrl);
+                    CRUDHelperService.startLoader(networkDetailsCtrl);
+                    NetworksModel.delete(networkDetailsCtrl.network).then(function successCallback(result) {
+                        CRUDHelperService.stopLoader(networkDetailsCtrl);
                         returnToNetworks();
+                    }, function errorCallback(result) {
+                        CRUDHelperService.stopLoader(networkDetailsCtrl);
+                        CRUDHelperService.showServerError(networkDetailsCtrl, result);
                     });
                 }
 
@@ -32,6 +38,9 @@ angular.module('contiv.networks')
                         });
                     });
                 }
+
+                CRUDHelperService.stopLoader(networkDetailsCtrl);
+                CRUDHelperService.hideServerError(networkDetailsCtrl);
 
                 NetworksModel.getModelByKey($stateParams.key)
                     .then(function (network) {

@@ -38,174 +38,183 @@
     </div>
 </div>
 
-<h4 class="ui header">Basic Settings</h4>
-<table class="ui very basic selectable table">
-    <tbody>
-    <tr>
-        <td class="three wide column">Name</td>
-        <td>{{applicationGroupDetailsCtrl.applicationGroup.groupName}}</td>
-    </tr>
-    <tr>
-        <td class="three wide column">Network</td>
-        <td>{{applicationGroupDetailsCtrl.applicationGroup.networkName}}</td>
-    </tr>
-    </tbody>
-</table>
+<div class="ui basic segment">
+    <div class="ui active inverted dimmer" ng-show="applicationGroupDetailsCtrl.showLoader">
+        <div class="ui loader"></div>
+    </div>
+    <h4 class="ui header">Basic Settings</h4>
+    <table class="ui very basic selectable table">
+        <tbody>
+        <tr>
+            <td class="three wide column">Name</td>
+            <td>{{applicationGroupDetailsCtrl.applicationGroup.groupName}}</td>
+        </tr>
+        <tr>
+            <td class="three wide column">Network</td>
+            <td>{{applicationGroupDetailsCtrl.applicationGroup.networkName}}</td>
+        </tr>
+        </tbody>
+    </table>
 
 
-<div class="ui section divider" style="margin-top: 30px"></div>
-<h4 class="ui header">
-    <i class="grey plus circle outline icon"></i>
-    Labels
-</h4>
-
-
-
-<div class="ui section divider"></div>
-<div ng-click="applicationGroupDetailsCtrl.isolationPoliciesVisible = !applicationGroupDetailsCtrl.isolationPoliciesVisible">
+    <div class="ui section divider" style="margin-top: 30px"></div>
     <h4 class="ui header">
-        <i ng-if="applicationGroupDetailsCtrl.isolationPoliciesVisible" class="grey minus circle outline icon"></i>
-        <i ng-if="!applicationGroupDetailsCtrl.isolationPoliciesVisible" class="grey plus circle outline icon"></i>
-        Isolation Policies
+        <i class="grey plus circle outline icon"></i>
+        Labels
     </h4>
-</div>
 
-<div ng-show="applicationGroupDetailsCtrl.isolationPoliciesVisible">
-    <div ng-switch="applicationGroupDetailsCtrl.mode">
-        <table ng-switch-when="edit" class="ui very basic collapsing unstackable table">
-            <tbody>
+
+    <div class="ui section divider"></div>
+    <div ng-click="applicationGroupDetailsCtrl.isolationPoliciesVisible = !applicationGroupDetailsCtrl.isolationPoliciesVisible">
+        <h4 class="ui header">
+            <i ng-if="applicationGroupDetailsCtrl.isolationPoliciesVisible" class="grey minus circle outline icon"></i>
+            <i ng-if="!applicationGroupDetailsCtrl.isolationPoliciesVisible" class="grey plus circle outline icon"></i>
+            Isolation Policies
+        </h4>
+    </div>
+
+    <div ng-show="applicationGroupDetailsCtrl.isolationPoliciesVisible">
+        <div ng-switch="applicationGroupDetailsCtrl.mode">
+            <table ng-switch-when="edit" class="ui very basic collapsing unstackable table">
+                <tbody>
+                <tr>
+                    <td>
+                        <div class="ui left icon input">
+                            <input type="text" ng-model="isolationPolicySearchText.policyName"
+                                   placeholder="Filter by policy name">
+                            <i class="search icon"></i>
+                        </div>
+                    </td>
+                    <td>
+                        <select class="ui dropdown" ng-model="applicationGroupDetailsCtrl.selectedPolicy"
+                                ng-options="policy.policyName for policy in applicationGroupDetailsCtrl.isolationPolicies | filter:isolationPolicySearchText">
+                        </select>
+                    </td>
+                    <td>
+                        <button type="button" class="ui icon button"
+                                ng-click="applicationGroupDetailsCtrl.addIsolationPolicy()">
+                            <i class="blue add icon"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr ng-repeat="policy in applicationGroupDetailsCtrl.applicationGroup.policies">
+                    <td>{{policy}}</td>
+                    <td></td>
+                    <td>
+                        <button type="button" class="ui icon button"
+                                ng-click="applicationGroupDetailsCtrl.removeIsolationPolicy(policy)">
+                            <i class="trash icon"></i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <table ng-switch-when="details" class="ui very basic unstackable table">
+                <tbody>
+                <tr ng-repeat="policy in applicationGroupDetailsCtrl.applicationGroup.policies">
+                    <td>{{policy}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <h5 class="ui header">Incoming rules</h5>
+        <table class="ui very basic unstackable table" style="margin-top: 40px">
+            <thead>
             <tr>
-                <td>
-                    <div class="ui left icon input">
-                        <input type="text" ng-model="isolationPolicySearchText.policyName"
-                               placeholder="Filter by policy name">
-                        <i class="search icon"></i>
-                    </div>
-                </td>
-                <td>
-                    <select class="ui dropdown" ng-model="applicationGroupDetailsCtrl.selectedPolicy"
-                            ng-options="policy.policyName for policy in applicationGroupDetailsCtrl.isolationPolicies | filter:isolationPolicySearchText">
-                    </select>
-                </td>
-                <td>
-                    <button type="button" class="ui icon button"
-                            ng-click="applicationGroupDetailsCtrl.addIsolationPolicy()">
-                        <i class="blue add icon"></i>
-                    </button>
-                </td>
+                <th>Priority</th>
+                <th>Action</th>
+                <th>From group</th>
+                <th>From network</th>
+                <th>From IP address</th>
+                <th>Protocol</th>
+                <th>Port</th>
             </tr>
-            <tr ng-repeat="policy in applicationGroupDetailsCtrl.applicationGroup.policies">
-                <td>{{policy}}</td>
-                <td></td>
-                <td>
-                    <button type="button" class="ui icon button"
-                            ng-click="applicationGroupDetailsCtrl.removeIsolationPolicy(policy)">
-                        <i class="trash icon"></i>
-                    </button>
-                </td>
+            </thead>
+
+            <tbody>
+            <tr ng-repeat="rule in applicationGroupDetailsCtrl.incomingRules">
+                <td>{{rule.priority}}</td>
+                <td>{{rule.action}}</td>
+                <td>{{rule.fromEndpointGroup}}</td>
+                <td>{{rule.fromNetwork}}</td>
+                <td>{{rule.fromIPAddress}}</td>
+                <td>{{rule.protocol}}</td>
+                <td>{{rule.port}}</td>
             </tr>
+
             </tbody>
         </table>
 
-        <table ng-switch-when="details" class="ui very basic unstackable table">
+        <h5 class="ui header" style="margin-top: 40px">Outgoing rules</h5>
+        <table class="ui very basic unstackable table" style="margin-top: 40px">
+            <thead>
+            <tr>
+                <th>Priority</th>
+                <th>Action</th>
+                <th>To group</th>
+                <th>To network</th>
+                <th>To IP address</th>
+                <th>Protocol</th>
+                <th>Port</th>
+            </tr>
+            </thead>
+
             <tbody>
-            <tr ng-repeat="policy in applicationGroupDetailsCtrl.applicationGroup.policies">
-                <td>{{policy}}</td>
+            <tr ng-repeat="rule in applicationGroupDetailsCtrl.outgoingRules">
+                <td>{{rule.priority}}</td>
+                <td>{{rule.action}}</td>
+                <td>{{rule.toEndpointGroup}}</td>
+                <td>{{rule.toNetwork}}</td>
+                <td>{{rule.toIPAddress}}</td>
+                <td>{{rule.protocol}}</td>
+                <td>{{rule.port}}</td>
             </tr>
             </tbody>
         </table>
     </div>
-    <h5 class="ui header">Incoming rules</h5>
-    <table class="ui very basic unstackable table" style="margin-top: 40px">
-        <thead>
-        <tr>
-            <th>Priority</th>
-            <th>Action</th>
-            <th>From group</th>
-            <th>From network</th>
-            <th>From IP address</th>
-            <th>Protocol</th>
-            <th>Port</th>
-        </tr>
-        </thead>
 
-        <tbody>
-        <tr ng-repeat="rule in applicationGroupDetailsCtrl.incomingRules">
-            <td>{{rule.priority}}</td>
-            <td>{{rule.action}}</td>
-            <td>{{rule.fromEndpointGroup}}</td>
-            <td>{{rule.fromNetwork}}</td>
-            <td>{{rule.fromIPAddress}}</td>
-            <td>{{rule.protocol}}</td>
-            <td>{{rule.port}}</td>
-        </tr>
+    <div class="ui section divider"></div>
 
-        </tbody>
-    </table>
+    <h4 class="ui header">
+        <i class="grey plus circle outline icon"></i>
+        Prioritization Policies
+    </h4>
 
-    <h5 class="ui header" style="margin-top: 40px">Outgoing rules</h5>
-    <table class="ui very basic unstackable table" style="margin-top: 40px">
-        <thead>
-        <tr>
-            <th>Priority</th>
-            <th>Action</th>
-            <th>To group</th>
-            <th>To network</th>
-            <th>To IP address</th>
-            <th>Protocol</th>
-            <th>Port</th>
-        </tr>
-        </thead>
 
-        <tbody>
-        <tr ng-repeat="rule in applicationGroupDetailsCtrl.outgoingRules">
-            <td>{{rule.priority}}</td>
-            <td>{{rule.action}}</td>
-            <td>{{rule.toEndpointGroup}}</td>
-            <td>{{rule.toNetwork}}</td>
-            <td>{{rule.toIPAddress}}</td>
-            <td>{{rule.protocol}}</td>
-            <td>{{rule.port}}</td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="ui section divider"></div>
+
+    <h4 class="ui header">
+        <i class="grey plus circle outline icon"></i>
+        Bandwidth Policies
+    </h4>
+
+
+    <div class="ui section divider"></div>
+
+    <h4 class="ui header">
+        <i class="grey plus circle outline icon"></i>
+        Redirection Policies
+    </h4>
+
+
+    <div ng-switch="applicationGroupDetailsCtrl.mode" style="margin-top: 40px">
+        <button ng-switch-when="edit" type="button" class="ui basic button"
+                ng-click="applicationGroupDetailsCtrl.cancelEditing()">Cancel
+        </button>
+        <button ng-switch-when="edit" type="button" class="ui blue button"
+                ng-click="applicationGroupDetailsCtrl.saveApplicationGroup()">
+            Save
+        </button>
+        <ctv-error ng-switch-when="edit" ng-show="applicationGroupDetailsCtrl.showServerError"
+                   header="Error saving application group"
+                   error="applicationGroupDetailsCtrl.serverErrorMessage">
+        </ctv-error>
+        <ctv-error ng-switch-when="details" ng-show="applicationGroupDetailsCtrl.showServerError"
+                   header="Error deleting application group"
+                   error="applicationGroupDetailsCtrl.serverErrorMessage">
+        </ctv-error>
+    </div>
+
 </div>
-
-<div class="ui section divider"></div>
-
-<h4 class="ui header">
-    <i class="grey plus circle outline icon"></i>
-    Prioritization Policies
-</h4>
-
-
-
-<div class="ui section divider"></div>
-
-<h4 class="ui header">
-    <i class="grey plus circle outline icon"></i>
-    Bandwidth Policies
-</h4>
-
-
-
-<div class="ui section divider"></div>
-
-<h4 class="ui header">
-    <i class="grey plus circle outline icon"></i>
-    Redirection Policies
-</h4>
-
-
-
-<div ng-switch="applicationGroupDetailsCtrl.mode" style="margin-top: 40px">
-    <button ng-switch-when="edit" type="button" class="ui basic button"
-            ng-click="applicationGroupDetailsCtrl.cancelEditing()">Cancel
-    </button>
-    <button ng-switch-when="edit" type="button" class="ui blue button"
-            ng-click="applicationGroupDetailsCtrl.saveApplicationGroup()">
-        Save
-    </button>
-</div>
-
 
