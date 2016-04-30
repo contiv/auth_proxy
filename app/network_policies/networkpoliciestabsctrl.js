@@ -1,7 +1,7 @@
 /**
  * Created by vjain3 on 3/9/16.
  */
-angular.module('contiv.networkpolicies', ['contiv.models'])
+angular.module('contiv.networkpolicies', ['contiv.models', 'contiv.directives', 'contiv.utils'])
     .config(function ($stateProvider) {
         $stateProvider
             .state('contiv.networkpolicies', {

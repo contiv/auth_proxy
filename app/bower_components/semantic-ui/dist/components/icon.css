@@ -615,6 +615,9 @@ i.icons .inverted.corner.icon {
 .icon.checkmark:before {
   content: "\e92d";
 }
+.icon.close:before {
+  content: "\e92f";
+}
 .icon.delete:before {
   content: "\e92f";
 }

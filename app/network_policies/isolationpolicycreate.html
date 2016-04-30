@@ -1,5 +1,8 @@
 <form class="ui form" name="isolationPolicyCreateCtrl.form" role="form"
       ng-submit="isolationPolicyCreateCtrl.createPolicy(newPolicy)" novalidate>
+    <div class="ui active inverted dimmer" ng-show="isolationPolicyCreateCtrl.showLoader">
+        <div class="ui loader"></div>
+    </div>
     <div class="field">
         <div ng-show="isolationPolicyCreateCtrl.form.$submitted">
             <div ng-hide="isolationPolicyCreateCtrl.form.$valid" class="ui negative message">
@@ -22,4 +25,6 @@
     <button type="submit" class="ui blue button">
         Create
     </button>
+    <ctv-error ng-show="isolationPolicyCreateCtrl.showServerError" header="Error creating policy" error="isolationPolicyCreateCtrl.serverErrorMessage">
+    </ctv-error>
 </form>

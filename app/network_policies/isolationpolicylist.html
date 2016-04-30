@@ -11,29 +11,36 @@
             </button>
         </div>
     </div>
-    <table class="ui very basic unstackable table" style="margin-top: 40px">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Updated by</th>
-            <th>Last update</th>
-            <th class="right floated three wide column">
-                <div class="ui left icon input">
-                    <input type="text" ng-model="policiesSearchText"
-                           placeholder="Search isolation policies..." size="30">
-                    <i class="search icon"></i>
-                </div>
-            </th>
-        </tr>
-        </thead>
 
-        <tbody>
-        <tr ng-repeat="policy in isolationPolicyListCtrl.policies | filter:policiesSearchText">
-            <td><a ui-sref="contiv.networkpolicies.isolation.details({key:policy.key})">{{policy.policyName}}</a></td>
-            <td>{{policy.updatedBy}}</td>
-            <td>{{policy.lastUpdate}}</td>
-            <td></td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="ui basic segment">
+        <div class="ui active inverted dimmer" ng-show="isolationPolicyListCtrl.showLoader">
+            <div class="ui loader"></div>
+        </div>
+        <table class="ui very basic unstackable table" style="margin-top: 10px">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Updated by</th>
+                <th>Last update</th>
+                <th class="right floated three wide column">
+                    <div class="ui left icon input">
+                        <input type="text" ng-model="policiesSearchText"
+                               placeholder="Search isolation policies..." size="30">
+                        <i class="search icon"></i>
+                    </div>
+                </th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr ng-repeat="policy in isolationPolicyListCtrl.policies | filter:policiesSearchText">
+                <td><a ui-sref="contiv.networkpolicies.isolation.details({key:policy.key})">{{policy.policyName}}</a>
+                </td>
+                <td>{{policy.updatedBy}}</td>
+                <td>{{policy.lastUpdate}}</td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

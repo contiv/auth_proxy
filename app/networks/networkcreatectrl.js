@@ -12,43 +12,52 @@ angular.module('contiv.networks')
             })
         ;
     })
-    .controller('NetworkCreateCtrl', ['$state', '$stateParams', 'NetworksModel', function ($state, $stateParams, NetworksModel) {
-        var networkCreateCtrl = this;
-        networkCreateCtrl.cidrPattern = ContivGlobals.CIDR_REGEX;
+    .controller('NetworkCreateCtrl', ['$state', '$stateParams', 'NetworksModel', 'CRUDHelperService',
+        function ($state, $stateParams, NetworksModel, CRUDHelperService) {
+            var networkCreateCtrl = this;
+            networkCreateCtrl.cidrPattern = ContivGlobals.CIDR_REGEX;
 
-        function returnToNetworks() {
-            $state.go('contiv.networks.list');
-        }
-
-        function cancelCreating() {
-            returnToNetworks();
-        }
-
-        function createNetwork() {
-            //form controller is injected by the html template
-            //checking if all validations have passed
-            if (networkCreateCtrl.form.$valid) {
-                networkCreateCtrl.newNetwork.key =
-                    networkCreateCtrl.newNetwork.tenantName + ':' + networkCreateCtrl.newNetwork.networkName;
-                NetworksModel.create(networkCreateCtrl.newNetwork).then(function (result) {
-                    returnToNetworks();
-                });
+            function returnToNetworks() {
+                $state.go('contiv.networks.list');
             }
 
-        }
+            function cancelCreating() {
+                returnToNetworks();
+            }
 
-        function resetForm() {
-            networkCreateCtrl.newNetwork = {
-                networkName: '',
-                encap: 'vxlan',
-                subnet: '',
-                gateway: '',
-                tenantName: 'default'//TODO: Remove hardcoded tenant.
-            };
-        }
+            function createNetwork() {
+                //form controller is injected by the html template
+                //checking if all validations have passed
+                if (networkCreateCtrl.form.$valid) {
+                    CRUDHelperService.hideServerError(networkCreateCtrl);
+                    CRUDHelperService.startLoader(networkCreateCtrl);
+                    networkCreateCtrl.newNetwork.key =
+                        networkCreateCtrl.newNetwork.tenantName + ':' + networkCreateCtrl.newNetwork.networkName;
+                    NetworksModel.create(networkCreateCtrl.newNetwork).then(function successCallback(result) {
+                        CRUDHelperService.stopLoader(networkCreateCtrl);
+                        returnToNetworks();
+                    }, function errorCallback(result) {
+                        CRUDHelperService.stopLoader(networkCreateCtrl);
+                        CRUDHelperService.showServerError(networkCreateCtrl, result);
+                    });
+                }
 
-        networkCreateCtrl.createNetwork = createNetwork;
-        networkCreateCtrl.cancelCreating = cancelCreating;
+            }
 
-        resetForm();
-    }]);
+            function resetForm() {
+                CRUDHelperService.stopLoader(networkCreateCtrl);
+                CRUDHelperService.hideServerError(networkCreateCtrl);
+                networkCreateCtrl.newNetwork = {
+                    networkName: '',
+                    encap: 'vxlan',
+                    subnet: '',
+                    gateway: '',
+                    tenantName: 'default'//TODO: Remove hardcoded tenant.
+                };
+            }
+
+            networkCreateCtrl.createNetwork = createNetwork;
+            networkCreateCtrl.cancelCreating = cancelCreating;
+
+            resetForm();
+        }]);

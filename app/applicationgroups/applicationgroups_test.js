@@ -4,7 +4,6 @@ describe('contiv.applicationgroups module', function () {
 
     beforeEach(module('ui.router'));
 
-    beforeEach(module('contiv.models'));
     beforeEach(module('contiv.applicationgroups'));
 
     var groupListData = [
@@ -170,7 +169,17 @@ describe('contiv.applicationgroups module', function () {
             $httpBackend.expectGET(ContivGlobals.APPLICATIONGROUPS_ENDPOINT);
             $httpBackend.flush();
         });
-
+        it('ApplicationGroupListCtrl should have groups array assigned to groups property', function () {
+            $httpBackend.expectGET(ContivGlobals.APPLICATIONGROUPS_ENDPOINT);
+            $httpBackend.flush();
+            expect(Array.isArray(groupListCtrl.groups)).toBeTruthy();
+            expect(groupListCtrl.groups.length).toEqual(1);
+        });
+        it('ApplicationGroupListCtrl should have showLoader property set to false after fetch', function () {
+            $httpBackend.expectGET(ContivGlobals.APPLICATIONGROUPS_ENDPOINT);
+            $httpBackend.flush();
+            expect(groupListCtrl.showLoader).toBeFalsy();
+        });
     });
 
     describe('applicationgroupscreatectrl', function () {
@@ -223,9 +232,10 @@ describe('contiv.applicationgroups module', function () {
 
     describe('applicationgroupsdetailsctrl', function () {
 
-        var $httpBackend, $state, $stateParams;
+        var $httpBackend, $state, $stateParams, $controller;
+        var groupDetailsCtrl;
 
-        beforeEach(inject(function (_$httpBackend_, _$state_, _$stateParams_) {
+        beforeEach(inject(function (_$httpBackend_, _$state_, _$stateParams_, _$controller_) {
             $httpBackend = _$httpBackend_;
             $httpBackend.when('GET', ContivGlobals.APPLICATIONGROUPS_ENDPOINT).respond(groupListData);
             $httpBackend.when('GET', ContivGlobals.POLICIES_ENDPOINT).respond(policyListData);
@@ -236,6 +246,8 @@ describe('contiv.applicationgroups module', function () {
             $state.go = function (stateName) {};
             $stateParams = _$stateParams_;
             $stateParams.key = groupListData[0].key;
+            $controller = _$controller_;
+            groupDetailsCtrl = $controller('ApplicationGroupDetailsCtrl');
         }));
 
         afterEach(function () {
@@ -243,45 +255,62 @@ describe('contiv.applicationgroups module', function () {
             $httpBackend.verifyNoOutstandingRequest();
         });
 
-        var $controller;
-        beforeEach(inject(function (_$controller_) {
-            $controller = _$controller_;
-        }));
 
         it('should be defined', function () {
             //spec body
-            var groupDetailsCtrl = $controller('ApplicationGroupDetailsCtrl');
             expect(groupDetailsCtrl).toBeDefined();
             $httpBackend.flush();
         });
         it('ApplicationGroupDetailsCtrl should do a GET on /api/endpointGroups/ REST API', function () {
-            $controller('ApplicationGroupDetailsCtrl');
             $httpBackend.expectGET(ContivGlobals.APPLICATIONGROUPS_ENDPOINT);
             $httpBackend.flush();
         });
         it('ApplicationGroupDetailsCtrl should do a GET on /api/policys/ REST API', function () {
-            $controller('ApplicationGroupDetailsCtrl');
             $httpBackend.expectGET(ContivGlobals.POLICIES_ENDPOINT);
             $httpBackend.flush();
         });
         it('ApplicationGroupDetailsCtrl should do a GET on /api/rules/ REST API', function () {
-            $controller('ApplicationGroupDetailsCtrl');
             $httpBackend.expectGET(ContivGlobals.RULES_ENDPOINT);
             $httpBackend.flush();
         });
         it('ApplicationGroupDetailsCtrl.saveApplicationGroup() should do a PUT on /api/endpointGroups/ REST API', function () {
-            var groupDetailsCtrl = $controller('ApplicationGroupDetailsCtrl');
-            groupDetailsCtrl.applicationGroup = groupListData[0];
+            $httpBackend.expectGET(ContivGlobals.APPLICATIONGROUPS_ENDPOINT);
+            $httpBackend.flush();
             groupDetailsCtrl.saveApplicationGroup();
             $httpBackend.expectPUT(ContivGlobals.APPLICATIONGROUPS_ENDPOINT+ groupListData[0].key + '/');
             $httpBackend.flush();
+            expect(groupDetailsCtrl.showLoader).toBeFalsy();
         });
         it('ApplicationGroupDetailsCtrl.deleteApplicationGroup() should do a DELETE on /api/endpointGroups/ REST API', function () {
-            var groupDetailsCtrl = $controller('ApplicationGroupDetailsCtrl');
-            groupDetailsCtrl.applicationGroup = groupListData[0];
+            $httpBackend.expectGET(ContivGlobals.APPLICATIONGROUPS_ENDPOINT);
+            $httpBackend.flush();
             groupDetailsCtrl.deleteApplicationGroup();
             $httpBackend.expectDELETE(ContivGlobals.APPLICATIONGROUPS_ENDPOINT + groupListData[0].key + '/');
             $httpBackend.flush();
+            expect(groupDetailsCtrl.showLoader).toBeFalsy();
+        });
+        it('ApplicationGroupDetailsCtrl should have group object assigned to applicationGroup property', function () {
+            $httpBackend.expectGET(ContivGlobals.APPLICATIONGROUPS_ENDPOINT);
+            $httpBackend.flush();
+            expect(groupDetailsCtrl.applicationGroup).toEqual(groupListData[0]);
+        });
+        it('ApplicationGroupDetailsCtrl should have isolation policies array assigned to isolationPolicies property', function () {
+            $httpBackend.expectGET(ContivGlobals.POLICIES_ENDPOINT);
+            $httpBackend.flush();
+            expect(groupDetailsCtrl.isolationPolicies.length).toEqual(2);
+            expect(groupDetailsCtrl.isolationPolicies[0]).toEqual(policyListData[0]);
+            expect(groupDetailsCtrl.isolationPolicies[1]).toEqual(policyListData[1]);
+        });
+        it('ApplicationGroupDetailsCtrl should have incoming rules array assigned to incomingRules property', function () {
+            $httpBackend.expectGET(ContivGlobals.RULES_ENDPOINT);
+            $httpBackend.flush();
+            expect(Array.isArray(groupDetailsCtrl.incomingRules)).toBeTruthy();
+            expect(groupDetailsCtrl.incomingRules.length).toEqual(2);
+        });
+        it('ApplicationGroupDetailsCtrl should have showLoader property set to false after fetch', function () {
+            $httpBackend.expectGET(ContivGlobals.APPLICATIONGROUPS_ENDPOINT);
+            $httpBackend.flush();
+            expect(groupDetailsCtrl.showLoader).toBeFalsy();
         });
     });
 });

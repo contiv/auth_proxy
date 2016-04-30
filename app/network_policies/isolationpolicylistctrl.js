@@ -8,13 +8,17 @@ angular.module('contiv.networkpolicies')
             })
         ;
     })
-    .controller('IsolationPolicyListCtrl', ['$scope', '$interval', 'PoliciesModel', function ($scope, $interval, PoliciesModel) {
+    .controller('IsolationPolicyListCtrl', ['$scope', '$interval', 'PoliciesModel', 'CRUDHelperService',
+        function ($scope, $interval, PoliciesModel, CRUDHelperService) {
         var policiesListCtrl = this;
 
         function getPolicies(reload) {
             PoliciesModel.get(reload)
-                .then(function (result) {
+                .then(function successCallback(result) {
+                    CRUDHelperService.stopLoader(policiesListCtrl);
                     policiesListCtrl.policies = result;
+                }, function errorCallback(result) {
+                    CRUDHelperService.stopLoader(policiesListCtrl);
                 });
         }
 
@@ -22,7 +26,7 @@ angular.module('contiv.networkpolicies')
         getPolicies(false);
 
         var promise;
-        //Don't do auto-refresh if one is already in progress
+        //Don't start auto-refresh if one is already in progress
         if (!angular.isDefined(promise)) {
             promise = $interval(function () {
                 getPolicies(true);

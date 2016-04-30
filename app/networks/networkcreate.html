@@ -1,5 +1,8 @@
 <form id="networkCreationForm" name="networkCreateCtrl.form" class="ui form" role="form"
       ng-submit="networkCreateCtrl.createNetwork(newNetwork)" novalidate>
+    <div class="ui active inverted dimmer" ng-show="networkCreateCtrl.showLoader">
+        <div class="ui loader"></div>
+    </div>
     <div class="field">
         <div ng-show="networkCreateCtrl.form.$submitted">
             <div ng-hide="networkCreateCtrl.form.$valid" class="ui negative message">
@@ -40,4 +43,6 @@
         Create
     </button>
 
+    <ctv-error ng-show="networkCreateCtrl.showServerError" header="Error creating network" error="networkCreateCtrl.serverErrorMessage">
+    </ctv-error>
 </form>

@@ -23,7 +23,14 @@ angular.module('contiv.applicationgroups')
         'PoliciesModel',
         'RulesModel',
         'ApplicationGroupService',
-        function ($state, $stateParams, ApplicationGroupsModel, PoliciesModel, RulesModel, ApplicationGroupService) {
+        'CRUDHelperService',
+        function ($state,
+                  $stateParams,
+                  ApplicationGroupsModel,
+                  PoliciesModel,
+                  RulesModel,
+                  ApplicationGroupService,
+                  CRUDHelperService) {
             var applicationGroupDetailsCtrl = this;
             applicationGroupDetailsCtrl.isolationPolicies = [];
             applicationGroupDetailsCtrl.applicationGroup = {};
@@ -77,9 +84,16 @@ angular.module('contiv.applicationgroups')
             }
 
             function deleteApplicationGroup() {
-                ApplicationGroupsModel.delete(applicationGroupDetailsCtrl.applicationGroup).then(function (result) {
-                    returnToApplicationGroup();
-                });
+                CRUDHelperService.hideServerError(applicationGroupDetailsCtrl);
+                CRUDHelperService.startLoader(applicationGroupDetailsCtrl);
+                ApplicationGroupsModel.delete(applicationGroupDetailsCtrl.applicationGroup).then(
+                    function successCallback(result) {
+                        CRUDHelperService.stopLoader(applicationGroupDetailsCtrl);
+                        returnToApplicationGroup();
+                    }, function errorCallback(result) {
+                        CRUDHelperService.stopLoader(applicationGroupDetailsCtrl);
+                        CRUDHelperService.showServerError(applicationGroupDetailsCtrl, result);
+                    });
             }
 
             /**
@@ -108,10 +122,19 @@ angular.module('contiv.applicationgroups')
             }
 
             function saveApplicationGroup() {
-                ApplicationGroupsModel.save(applicationGroupDetailsCtrl.applicationGroup).then(function (result) {
+                CRUDHelperService.hideServerError(applicationGroupDetailsCtrl);
+                CRUDHelperService.startLoader(applicationGroupDetailsCtrl);
+                ApplicationGroupsModel.save(applicationGroupDetailsCtrl.applicationGroup).then(function successCallback(result) {
+                    CRUDHelperService.stopLoader(applicationGroupDetailsCtrl);
                     returnToApplicationGroupDetails();
+                }, function errorCallback(result) {
+                    CRUDHelperService.stopLoader(applicationGroupDetailsCtrl);
+                    CRUDHelperService.showServerError(applicationGroupDetailsCtrl, result);
                 });
             }
+
+            CRUDHelperService.stopLoader(applicationGroupDetailsCtrl);
+            CRUDHelperService.hideServerError(applicationGroupDetailsCtrl);
 
             ApplicationGroupsModel.getModelByKey($stateParams.key)
                 .then(function (group) {

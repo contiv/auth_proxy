@@ -1,7 +1,7 @@
 /**
  * Created by vjain3 on 3/11/16.
  */
-angular.module('contiv.applicationgroups', ['contiv.models'])
+angular.module('contiv.applicationgroups', ['contiv.models', 'contiv.directives', 'contiv.utils'])
     .config(function ($stateProvider) {
         $stateProvider
             .state('contiv.applicationgroups.list', {
@@ -12,28 +12,32 @@ angular.module('contiv.applicationgroups', ['contiv.models'])
         ;
     })
     .controller('ApplicationGroupListCtrl',
-        ['$scope', '$interval', 'ApplicationGroupsModel', function ($scope, $interval, ApplicationGroupsModel) {
-            var applicationGroupListCtrl = this;
+        ['$scope', '$interval', 'ApplicationGroupsModel', 'CRUDHelperService',
+            function ($scope, $interval, ApplicationGroupsModel, CRUDHelperService) {
+                var applicationGroupListCtrl = this;
 
-            function getApplicationGroups(reload) {
-                ApplicationGroupsModel.get(reload)
-                    .then(function (result) {
-                        applicationGroupListCtrl.groups = result;
-                    });
-            }
+                function getApplicationGroups(reload) {
+                    ApplicationGroupsModel.get(reload)
+                        .then(function successCallback(result) {
+                            CRUDHelperService.stopLoader(applicationGroupListCtrl);
+                            applicationGroupListCtrl.groups = result;
+                        }, function errorCallback(result) {
+                            CRUDHelperService.stopLoader(applicationGroupListCtrl);
+                        });
+                }
 
-            //Load from cache for quick display initially
-            getApplicationGroups(false);
+                //Load from cache for quick display initially
+                getApplicationGroups(false);
 
-            var promise;
-            //Don't do auto-refresh if one is already in progress
-            if (!angular.isDefined(promise)) {
-                promise = $interval(function () {
-                    getApplicationGroups(true);
-                }, 5000);
-            }
-            //stop polling when user moves away from the page
-            $scope.$on('$destroy', function () {
-                $interval.cancel(promise);
-            });
-        }]);
+                var promise;
+                //Don't start auto-refresh if one is already in progress
+                if (!angular.isDefined(promise)) {
+                    promise = $interval(function () {
+                        getApplicationGroups(true);
+                    }, 5000);
+                }
+                //stop polling when user moves away from the page
+                $scope.$on('$destroy', function () {
+                    $interval.cancel(promise);
+                });
+            }]);
