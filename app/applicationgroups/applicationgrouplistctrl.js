@@ -12,15 +12,15 @@ angular.module('contiv.applicationgroups', ['contiv.models', 'contiv.directives'
         ;
     })
     .controller('ApplicationGroupListCtrl',
-        ['$scope', '$interval', 'ApplicationGroupsModel', 'CRUDHelperService',
-            function ($scope, $interval, ApplicationGroupsModel, CRUDHelperService) {
+        ['$scope', '$interval', '$filter', 'ApplicationGroupsModel', 'CRUDHelperService',
+            function ($scope, $interval, $filter, ApplicationGroupsModel, CRUDHelperService) {
                 var applicationGroupListCtrl = this;
 
                 function getApplicationGroups(reload) {
                     ApplicationGroupsModel.get(reload)
                         .then(function successCallback(result) {
                             CRUDHelperService.stopLoader(applicationGroupListCtrl);
-                            applicationGroupListCtrl.groups = result;
+                            applicationGroupListCtrl.groups = $filter('orderBy')(result, 'groupName');
                         }, function errorCallback(result) {
                             CRUDHelperService.stopLoader(applicationGroupListCtrl);
                         });

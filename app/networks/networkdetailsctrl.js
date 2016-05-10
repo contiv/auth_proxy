@@ -8,8 +8,8 @@ angular.module('contiv.networks')
             });
     })
     .controller('NetworkDetailsCtrl',
-        ['$state', '$stateParams', '$scope', '$interval', 'NetworksModel', 'ApplicationGroupsModel', 'CRUDHelperService',
-            function ($state, $stateParams, $scope, $interval, NetworksModel, ApplicationGroupsModel, CRUDHelperService) {
+        ['$state', '$stateParams', '$scope', '$interval', '$filter', 'NetworksModel', 'ApplicationGroupsModel', 'CRUDHelperService',
+            function ($state, $stateParams, $scope, $interval, $filter, NetworksModel, ApplicationGroupsModel, CRUDHelperService) {
                 var networkDetailsCtrl = this;
 
                 function returnToNetworks() {
@@ -33,9 +33,9 @@ angular.module('contiv.networks')
                  */
                 function getApplicationGroups(reload) {
                     ApplicationGroupsModel.get(reload).then(function (result) {
-                        networkDetailsCtrl.applicationGroups = _.filter(result, {
+                        networkDetailsCtrl.applicationGroups = $filter('orderBy')(_.filter(result, {
                             'networkName': networkDetailsCtrl.network.networkName
-                        });
+                        }), 'groupName');
                     });
                 }
 
@@ -55,7 +55,7 @@ angular.module('contiv.networks')
                 if (!angular.isDefined(promise)) {
                     promise = $interval(function () {
                         getApplicationGroups(true);
-                    }, 5000);
+                    }, ContivGlobals.REFRESH_INTERVAL);
                 }
 
                 //stop polling when user moves away from the page

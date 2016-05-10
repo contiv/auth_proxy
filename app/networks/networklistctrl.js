@@ -8,15 +8,15 @@ angular.module('contiv.networks', ['contiv.models', 'contiv.directives', 'contiv
             })
         ;
     })
-    .controller('NetworksListCtrl', ['$scope', '$interval', 'NetworksModel', 'CRUDHelperService',
-        function ($scope, $interval, NetworksModel, CRUDHelperService) {
+    .controller('NetworksListCtrl', ['$scope', '$interval', '$filter', 'NetworksModel', 'CRUDHelperService',
+        function ($scope, $interval, $filter, NetworksModel, CRUDHelperService) {
             var networksListCtrl = this;
 
             function getNetworks(reload) {
                 NetworksModel.get(reload)
                     .then(function successCallback(result) {
                             CRUDHelperService.stopLoader(networksListCtrl);
-                            networksListCtrl.networks = result;
+                            networksListCtrl.networks = $filter('orderBy')(result, 'networkName');
                         },
                         function errorCallback(result) {
                             CRUDHelperService.stopLoader(networksListCtrl);
@@ -31,7 +31,7 @@ angular.module('contiv.networks', ['contiv.models', 'contiv.directives', 'contiv
             if (!angular.isDefined(promise)) {
                 promise = $interval(function () {
                     getNetworks(true);
-                }, 5000);
+                }, ContivGlobals.REFRESH_INTERVAL);
             }
 
             //stop polling when user moves away from the page

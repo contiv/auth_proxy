@@ -1,7 +1,7 @@
 /**
  * Created by vjain3 on 3/22/16.
  */
-angular.module('contiv.nodes', ['contiv.models'])
+angular.module('contiv.nodes', ['contiv.models', 'contiv.directives', 'contiv.utils'])
     .config(function ($stateProvider) {
         $stateProvider
             .state('contiv.nodes.list', {
@@ -11,13 +11,17 @@ angular.module('contiv.nodes', ['contiv.models'])
             })
         ;
     })
-    .controller('NodeListCtrl', ['$scope', '$interval', 'NodesModel', function ($scope, $interval, NodesModel) {
+    .controller('NodeListCtrl', ['$scope', '$interval', '$filter', 'NodesModel', 'CRUDHelperService',
+        function ($scope, $interval, $filter, NodesModel, CRUDHelperService) {
         var nodeListCtrl = this;
 
         function getNodes(reload) {
             NodesModel.get(reload)
-                .then(function (result) {
-                    nodeListCtrl.nodes = result;
+                .then(function successCallback(result) {
+                    CRUDHelperService.stopLoader(nodeListCtrl);
+                    nodeListCtrl.nodes = $filter('orderBy')(result, 'key');
+                }, function errorCallback(result) {
+                    CRUDHelperService.stopLoader(nodeListCtrl);
                 });
         }
 
@@ -29,7 +33,7 @@ angular.module('contiv.nodes', ['contiv.models'])
         if (!angular.isDefined(promise)) {
             promise = $interval(function () {
                 getNodes(true);
-            }, 5000);
+            }, ContivGlobals.REFRESH_INTERVAL);
         }
         //stop polling when user moves away from the page
         $scope.$on('$destroy', function () {

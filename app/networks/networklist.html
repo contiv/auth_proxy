@@ -15,31 +15,35 @@
     <div class="ui active inverted dimmer" ng-show="networksListCtrl.showLoader">
         <div class="ui loader"></div>
     </div>
-    <table class="ui very basic unstackable table" style="margin-top: 10px">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Encapsulation</th>
-            <th>Subnet</th>
-            <th>Gateway</th>
-            <th class="right floated three wide column">
-                <div class="ui left icon input">
-                    <input type="text" ng-model="networksSearchText"
-                           placeholder="Search networks..." size="30">
-                    <i class="search icon"></i>
-                </div>
-            </th>
-        </tr>
-        </thead>
+    <ctv-table items="networksListCtrl.networks" filtereditems="networksListCtrl.filterednetworks" size="12">
+        <ctv-thead>
+            <ctv-tr>
+                <ctv-th>Name</ctv-th>
+                <ctv-th>Encapsulation</ctv-th>
+                <ctv-th>Subnet</ctv-th>
+                <ctv-th>Gateway</ctv-th>
+                <ctv-th class="right floated three wide column">
+                    <ctv-tsearch placeholder="Search networks..." size="30"></ctv-tsearch>
+                </ctv-th>
+            </ctv-tr>
+        </ctv-thead>
 
-        <tbody>
-        <tr ng-repeat="network in networksListCtrl.networks | filter:networksSearchText">
-            <td><a ui-sref="contiv.networks.details({key:network.key})">{{network.networkName}}</a></td>
-            <td>{{network.encap}}</td>
-            <td>{{network.subnet}}</td>
-            <td>{{network.gateway}}</td>
-            <td></td>
-        </tr>
-        </tbody>
-    </table>
+        <ctv-tbody>
+            <ctv-tr ng-repeat="network in networksListCtrl.filterednetworks">
+                <ctv-td><a ui-sref="contiv.networks.details({key:network.key})">{{network.networkName}}</a></ctv-td>
+                <ctv-td>{{network.encap}}</ctv-td>
+                <ctv-td>{{network.subnet}}</ctv-td>
+                <ctv-td>{{network.gateway}}</ctv-td>
+                <ctv-td></ctv-td>
+            </ctv-tr>
+        </ctv-tbody>
+
+        <ctv-tfoot>
+            <ctv-tr>
+                <ctv-th colspan="5">
+                    <ctv-tpagination></ctv-tpagination>
+                </ctv-th>
+            </ctv-tr>
+        </ctv-tfoot>
+    </ctv-table>
 </div>

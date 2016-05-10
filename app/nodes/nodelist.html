@@ -10,20 +10,37 @@
         </button>
     </div>
 </div>
-<table class="ui very basic unstackable table" style="margin-top: 40px">
-    <thead>
-    <tr>
-        <th>Name</th>
-    </tr>
-    </thead>
+<div class="ui basic segment">
+    <div class="ui active inverted dimmer" ng-show="nodeListCtrl.showLoader">
+        <div class="ui loader"></div>
+    </div>
+    <ctv-table items="nodeListCtrl.nodes" filtereditems="nodeListCtrl.filteredNodes" size="12" style="margin-top: 40px">
+        <ctv-thead>
+            <ctv-tr>
+                <ctv-th>Name</ctv-th>
+                <ctv-th class="right floated three wide column">
+                    <ctv-tsearch placeholder="Search nodes..." size="30"></ctv-tsearch>
+                </ctv-th>
+            </ctv-tr>
+        </ctv-thead>
 
-    <tbody>
-    <tr ng-repeat="node in nodeListCtrl.nodes">
-        <td>
-            <i ng-if="node['inventory-state'].status == 'Allocated'" class="green check circle icon"></i>
-            <i ng-if="node['inventory-state'].status != 'Allocated'" class="grey ban icon"></i>
-            <a ui-sref="contiv.nodes.details.info({key:node.key})">{{node.key}}</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+        <ctv-tbody>
+            <ctv-tr ng-repeat="node in nodeListCtrl.filteredNodes">
+                <ctv-td>
+                    <i ng-if="node['inventory-state'].status == 'Allocated'" class="green check circle icon"></i>
+                    <i ng-if="node['inventory-state'].status != 'Allocated'" class="grey ban icon"></i>
+                    <a ui-sref="contiv.nodes.details.info({key:node.key})">{{node.key}}</a>
+                </ctv-td>
+                <ctv-td></ctv-td>
+            </ctv-tr>
+        </ctv-tbody>
+
+        <ctv-tfoot>
+            <ctv-tr>
+                <ctv-th colspan="2">
+                    <ctv-tpagination></ctv-tpagination>
+                </ctv-th>
+            </ctv-tr>
+        </ctv-tfoot>
+    </ctv-table>
+</div>

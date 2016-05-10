@@ -1,39 +1,47 @@
-<div ui-view class="ui container">
-    <div class="ui sixteen column grid">
-        <div class="thirteen wide column">
-            <div class="content" style="font-size: 24px">Volumes</div>
-        </div>
-
-        <div class="right floated three wide column">
-            <button class="ui blue button" ui-sref="contiv.volumes.create">
-                <i class="add icon"></i>
-                Create Volume
-            </button>
-        </div>
+<div class="ui sixteen column grid">
+    <div class="thirteen wide column">
+        <div class="content" style="font-size: 24px">Volumes</div>
     </div>
-    <table class="ui very basic unstackable table" style="margin-top: 40px">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Policy</th>
-            <th>In use on host</th>
-            <th class="right floated three wide column">
-                <div class="ui left icon input">
-                    <input type="text" ng-model="volumesSearchText"
-                           placeholder="Search volumes..." size="30">
-                    <i class="search icon"></i>
-                </div>
-            </th>
-        </tr>
-        </thead>
 
-        <tbody>
-        <tr ng-repeat="volume in volumeListCtrl.volumes | filter:volumesSearchText">
-            <td><a ui-sref="contiv.volumes.details({key:volume.policy + '/' + volume.name})">{{volume.name}}</a></td>
-            <td>{{volume.policy}}</td>
-            <td></td>
-            <td></td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="right floated three wide column">
+        <button class="ui blue button" ui-sref="contiv.volumes.create">
+            <i class="add icon"></i>
+            Create Volume
+        </button>
+    </div>
+</div>
+<div class="ui basic segment">
+    <div class="ui active inverted dimmer" ng-show="volumeListCtrl.showLoader">
+        <div class="ui loader"></div>
+    </div>
+    <ctv-table items="volumeListCtrl.volumes" filtereditems="volumeListCtrl.filteredvolumes" size="12">
+        <ctv-thead>
+            <ctv-tr>
+                <ctv-th>Name</ctv-th>
+                <ctv-th>Policy</ctv-th>
+                <ctv-th>In use on host</ctv-th>
+                <ctv-th class="right floated three wide column">
+                    <ctv-tsearch placeholder="Search volumes..." size="30">
+                </ctv-th>
+            </ctv-tr>
+        </ctv-thead>
+
+        <ctv-tbody>
+            <ctv-tr ng-repeat="volume in volumeListCtrl.filteredvolumes">
+                <ctv-td><a ui-sref="contiv.volumes.details({key:volume.policy + '/' + volume.name})">{{volume.name}}</a>
+                </ctv-td>
+                <ctv-td>{{volume.policy}}</ctv-td>
+                <ctv-td></ctv-td>
+                <ctv-td></ctv-td>
+            </ctv-tr>
+        </ctv-tbody>
+
+        <ctv-tfoot>
+            <ctv-tr>
+                <ctv-th colspan="4">
+                    <ctv-tpagination></ctv-tpagination>
+                </ctv-th>
+            </ctv-tr>
+        </ctv-tfoot>
+    </ctv-table>
 </div>

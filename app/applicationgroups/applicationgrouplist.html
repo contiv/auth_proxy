@@ -14,29 +14,33 @@
     <div class="ui active inverted dimmer" ng-show="applicationGroupListCtrl.showLoader">
         <div class="ui loader"></div>
     </div>
-    <table class="ui very basic unstackable table" style="margin-top: 10px">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Network</th>
-            <th>Policies</th>
-            <th class="right floated four wide column">
-                <div class="ui left icon input">
-                    <input type="text" ng-model="groupsSearchText"
-                           placeholder="Search application groups..." size="30">
-                    <i class="search icon"></i>
-                </div>
-            </th>
-        </tr>
-        </thead>
+    <ctv-table items="applicationGroupListCtrl.groups" filtereditems="applicationGroupListCtrl.filteredgroups" size="12">
+        <ctv-thead>
+            <ctv-tr>
+                <ctv-th>Name</ctv-th>
+                <ctv-th>Network</ctv-th>
+                <ctv-th>Policies</ctv-th>
+                <ctv-th class="right floated three wide column">
+                    <ctv-tsearch placeholder="Search application groups..." size="30"></ctv-tsearch>
+                </ctv-th>
+            </ctv-tr>
+        </ctv-thead>
 
-        <tbody>
-        <tr ng-repeat="group in applicationGroupListCtrl.groups | filter:groupsSearchText">
-            <td><a ui-sref="contiv.applicationgroups.details({key:group.key})">{{group.groupName}}</a></td>
-            <td>{{group.networkName}}</td>
-            <td>{{group.policies.join(", ")}}</td>
-            <td></td>
-        </tr>
-        </tbody>
-    </table>
+        <ctv-tbody>
+            <ctv-tr ng-repeat="group in applicationGroupListCtrl.filteredgroups">
+                <ctv-td><a ui-sref="contiv.applicationgroups.details({key:group.key})">{{group.groupName}}</a></ctv-td>
+                <ctv-td>{{group.networkName}}</ctv-td>
+                <ctv-td>{{group.policies.join(", ")}}</ctv-td>
+                <ctv-td></ctv-td>
+            </ctv-tr>
+        </ctv-tbody>
+
+        <ctv-tfoot>
+            <ctv-tr>
+                <ctv-th colspan="4">
+                    <ctv-tpagination></ctv-tpagination>
+                </ctv-th>
+            </ctv-tr>
+        </ctv-tfoot>
+    </ctv-table>
 </div>
