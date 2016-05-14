@@ -19,6 +19,8 @@ module.exports = function (config) {
             'app/network_policies/**/*.js',
             'app/applicationgroups/applicationgrouplistctrl.js',
             'app/applicationgroups/**/*.js',
+            'app/service_lbs/servicelblistctrl.js',
+            'app/service_lbs/**/*.js',
             'app/nodes/nodelistctrl.js',
             'app/nodes/**/*.js'
         ],

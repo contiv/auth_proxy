@@ -12,6 +12,7 @@ var ContivGlobals = (function () {
         'POLICIES_ENDPOINT': NETMASTER + '/api/policys/',
         'RULES_ENDPOINT': NETMASTER + '/api/rules/',
         'APPLICATIONGROUPS_ENDPOINT': NETMASTER + '/api/endpointGroups/',
+        'SERVICELBS_ENDPOINT': NETMASTER + '/api/serviceLBs/',
 
         //REST endpoints for VOLMASTER
         'VOLUMES_ENDPOINT': VOLMASTER + '/list',

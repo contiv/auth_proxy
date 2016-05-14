@@ -1,0 +1,44 @@
+<table class="ui very basic unstackable table" style="margin-top: 10px">
+    <thead>
+    <th>Service Port</th>
+    <th>Provider Port</th>
+    <th>Protocol</th>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
+            <div class="ui input">
+                <input type="number" ng-model="newItem.servicePort" placeholder="0-65535">
+            </div>
+        </td>
+        <td>
+            <div class="ui input">
+                <input type="number" ng-model="newItem.providerPort" placeholder="0-65535">
+            </div>
+        </td>
+        <td>
+            <select class="ui dropdown" ng-model="newItem.protocol">
+                <option value="tcp">tcp</option>
+                <option value="udp">udp</option>
+                <option value="icmp">icmp</option>
+            </select>
+        </td>
+        <td>
+            <button type="button" class="ui icon button" ng-click="add()">
+                <i class="blue add icon"></i>
+            </button>
+        </td>
+    </tr>
+    <tr ng-repeat="item in items">
+        <td>{{item.split(':')[0]}}</td>
+        <td>{{item.split(':')[1]}}</td>
+        <td>{{item.split(':')[2]}}</td>
+        <td>
+            <button type="button" class="ui icon button"
+                    ng-click="remove(item)">
+                <i class="trash icon"></i>
+            </button>
+        </td>
+    </tr>
+    </tbody>
+</table>

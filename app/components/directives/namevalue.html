@@ -1,0 +1,35 @@
+<table class="ui very basic unstackable table" style="margin-top: 10px">
+    <thead>
+    <th>Name</th>
+    <th>Value</th>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
+            <div class="ui input">
+                <input type="text" ng-model="newItem.name" placeholder="">
+            </div>
+        </td>
+        <td>
+            <div class="ui input">
+                <input type="text" ng-model="newItem.value" placeholder="">
+            </div>
+        </td>
+        <td>
+            <button type="button" class="ui icon button" ng-click="add()">
+                <i class="blue add icon"></i>
+            </button>
+        </td>
+    </tr>
+    <tr ng-repeat="item in items">
+        <td>{{item.name}}</td>
+        <td>{{item.value}}</td>
+        <td>
+            <button type="button" class="ui icon button"
+                    ng-click="remove(item)">
+                <i class="trash icon"></i>
+            </button>
+        </td>
+    </tr>
+    </tbody>
+</table>

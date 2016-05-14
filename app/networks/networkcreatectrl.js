@@ -5,8 +5,7 @@ angular.module('contiv.networks')
     .config(function ($stateProvider) {
         $stateProvider
             .state('contiv.networks.create', {
-                url: '/networks/create',
-                //target the un-named 'ui-view' in PARENT states template
+                url: '/create',
                 templateUrl: 'networks/networkcreate.html',
                 controller: 'NetworkCreateCtrl as networkCreateCtrl'
             })

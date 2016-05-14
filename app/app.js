@@ -9,6 +9,7 @@ angular.module('contivApp', [
         'contiv.networks',
         'contiv.networkpolicies',
         'contiv.storagepolicies',
+        'contiv.servicelbs',
         'contiv.volumes',
         'contiv.nodes'
     ])
@@ -42,6 +43,11 @@ angular.module('contivApp', [
             })
             .state('contiv.storagepolicies', {
                 url: '/storagepolicies',
+                abstract: true,
+                template: '<div ui-view class="ui container"/>'
+            })
+            .state('contiv.servicelbs', {
+                url: '/servicelbs',
                 abstract: true,
                 template: '<div ui-view class="ui container"/>'
             })

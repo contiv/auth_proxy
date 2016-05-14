@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <!--[if lt IE 7]>
-<html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<html lang="en" ng-app="contivApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>
-<html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<html lang="en" ng-app="contivApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>
-<html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<html lang="en" ng-app="contivApp" class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
 <html lang="en" ng-app="contivApp" class="no-js"> <!--<![endif]-->
 <head>
@@ -37,6 +37,10 @@
     <a class="item" ui-sref="contiv.storagepolicies.list()">
         <i class="storagepolicies icon"></i>
         Storage Policies
+    </a>
+    <a class="item" ui-sref="contiv.servicelbs.list()">
+        <i class="loadbalancer icon"></i>
+        Service Load Balancers
     </a>
     <a class="item" ui-sref="contiv.networks.list()">
         <i class="networks icon"></i>
@@ -81,6 +85,7 @@
 <script src="app.js"></script>
 <script src="components/directives/errormessagedirective.js"></script>
 <script src="components/directives/tabledirective.js"></script>
+<script src="components/directives/namevaluedirective.js"></script>
 <script src="components/utils/crudhelperservice.js"></script>
 <script src="components/models/collection.js"></script>
 <script src="dashboard/dashboardctrl.js"></script>
@@ -109,5 +114,10 @@
 <script src="nodes/nodelistctrl.js"></script>
 <script src="nodes/nodedetailsctrl.js"></script>
 <script src="nodes/nodecommissionctrl.js"></script>
+<script src="components/models/servicelbsmodel.js"></script>
+<script src="service_lbs/servicelblistctrl.js"></script>
+<script src="service_lbs/servicelbdetailsctrl.js"></script>
+<script src="service_lbs/servicelbcreatectrl.js"></script>
+<script src="service_lbs/servicelbportsdirective.js"></script>
 </body>
 </html>

@@ -1,0 +1,51 @@
+<div class="ui sixteen column grid">
+    <div class="twelve wide column">
+        <div class="content" style="font-size: 24px">Service Load Balancers</div>
+    </div>
+
+    <div class="right floated four wide column">
+        <button class="ui blue button" ui-sref="contiv.servicelbs.create()">
+            <i class="add icon"></i>
+            Create Service Load Balancer
+        </button>
+    </div>
+</div>
+
+<div class="ui basic segment">
+    <div class="ui active inverted dimmer" ng-show="servicelbListCtrl.showLoader">
+        <div class="ui loader"></div>
+    </div>
+    <ctv-table items="servicelbListCtrl.servicelbs" filtereditems="servicelbListCtrl.filteredservicelbs" size="12">
+        <ctv-thead>
+            <ctv-tr>
+                <ctv-th>Name</ctv-th>
+                <ctv-th>Network</ctv-th>
+                <ctv-th>IP Address</ctv-th>
+                <ctv-th>Label Selectors</ctv-th>
+                <ctv-th class="right floated three wide column">
+                    <ctv-tsearch placeholder="Search services..." size="30"></ctv-tsearch>
+                </ctv-th>
+            </ctv-tr>
+        </ctv-thead>
+
+        <ctv-tbody>
+            <ctv-tr ng-repeat="servicelb in servicelbListCtrl.filteredservicelbs">
+                <ctv-td><a ui-sref="contiv.servicelbs.details({key:servicelb.key})">{{servicelb.serviceName}}</a></ctv-td>
+                <ctv-td>{{servicelb.network}}</ctv-td>
+                <ctv-td>{{servicelb.ipAddress}}</ctv-td>
+                <ctv-td>
+                    <div class="ui label tiny" ng-repeat="selector in servicelb.selectors">{{selector}}</div>
+                </ctv-td>
+                <ctv-td></ctv-td>
+            </ctv-tr>
+        </ctv-tbody>
+
+        <ctv-tfoot>
+            <ctv-tr>
+                <ctv-th colspan="5">
+                    <ctv-tpagination></ctv-tpagination>
+                </ctv-th>
+            </ctv-tr>
+        </ctv-tfoot>
+    </ctv-table>
+</div>

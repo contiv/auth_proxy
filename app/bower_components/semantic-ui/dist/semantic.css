@@ -7890,6 +7890,10 @@ i.icons .inverted.corner.icon {
   content: "\e901";
 }
 
+.icon.loadbalancer:before {
+  content: "\e957";
+}
+
 .icon.networkpolicies:before {
   content: "\e902";
 }
