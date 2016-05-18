@@ -2,22 +2,22 @@
  * Created by vjain3 on 3/8/16.
  */
 angular.module('contiv.networkpolicies')
-    .config(function ($stateProvider) {
+    .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
             .state('contiv.networkpolicies.isolation.details', {
                 url: '/details/:key',
                 controller: 'IsolationPolicyDetailsCtrl as isolationPolicyDetailsCtrl',
                 templateUrl: 'network_policies/isolationpolicydetails.html'
             });
-    })
-    .config(function ($stateProvider) {
+    }])
+    .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
             .state('contiv.networkpolicies.isolation.edit', {
                 url: '/edit/:key',
                 controller: 'IsolationPolicyDetailsCtrl as isolationPolicyDetailsCtrl',
                 templateUrl: 'network_policies/isolationpolicydetails.html'
             });
-    })
+    }])
     .controller('IsolationPolicyDetailsCtrl', [
         '$state',
         '$stateParams',

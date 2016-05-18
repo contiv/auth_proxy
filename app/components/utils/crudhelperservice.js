@@ -1,7 +1,7 @@
 /**
  * Created by vjain3 on 4/29/16.
  */
-angular.module('contiv.utils', [])
+angular.module('contiv.utils')
     .factory('CRUDHelperService', function () {
             function startLoader(controller) {
                 controller.showLoader = true;

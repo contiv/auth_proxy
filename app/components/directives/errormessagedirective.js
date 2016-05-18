@@ -1,7 +1,7 @@
 /**
  * Created by vjain3 on 4/28/16.
  */
-angular.module("contiv.directives", [])
+angular.module("contiv.directives")
     .directive("ctvError", function () {
         return {
             restrict: 'E',

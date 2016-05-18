@@ -1,8 +1,8 @@
 /**
  * Created by vjain3 on 4/18/16.
  */
-angular.module('contiv.storagepolicies', ['contiv.models'])
-    .config(function ($stateProvider) {
+angular.module('contiv.storagepolicies')
+    .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
             .state('contiv.storagepolicies.list', {
                 url: '/list',
@@ -10,7 +10,7 @@ angular.module('contiv.storagepolicies', ['contiv.models'])
                 templateUrl: 'storage_policies/storagepolicylist.html'
             })
         ;
-    })
+    }])
     .controller('StoragePolicyListCtrl', ['$scope', '$interval', 'StoragePoliciesModel', function ($scope, $interval, StoragePoliciesModel) {
         var storagePolicyListCtrl = this;
 

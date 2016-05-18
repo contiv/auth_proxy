@@ -1,12 +1,12 @@
 angular.module('contiv.networks')
-    .config(function ($stateProvider) {
+    .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
             .state('contiv.networks.details', {
                 url: '/details/:key',
                 controller: 'NetworkDetailsCtrl as networkDetailsCtrl',
                 templateUrl: 'networks/networkdetails.html'
             });
-    })
+    }])
     .controller('NetworkDetailsCtrl',
         ['$state', '$stateParams', '$scope', '$interval', '$filter', 'NetworksModel', 'ApplicationGroupsModel', 'CRUDHelperService',
             function ($state, $stateParams, $scope, $interval, $filter, NetworksModel, ApplicationGroupsModel, CRUDHelperService) {

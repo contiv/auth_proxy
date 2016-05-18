@@ -2,7 +2,7 @@
  * Created by vjain3 on 3/10/16.
  */
 angular.module('contiv.networkpolicies')
-    .config(function ($stateProvider) {
+    .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
             .state('contiv.networkpolicies.isolation.create', {
                 url: '/create',
@@ -10,7 +10,7 @@ angular.module('contiv.networkpolicies')
                 templateUrl: 'network_policies/isolationpolicycreate.html'
             })
         ;
-    })
+    }])
     .controller('IsolationPolicyCreateCtrl', ['$state', 'PoliciesModel', 'CRUDHelperService',
         function ($state, PoliciesModel, CRUDHelperService) {
         var isolationPolicyCreateCtrl = this;

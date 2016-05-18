@@ -1,8 +1,8 @@
 /**
  * Created by vjain3 on 3/9/16.
  */
-angular.module('contiv.networkpolicies', ['contiv.models', 'contiv.directives', 'contiv.utils'])
-    .config(function ($stateProvider) {
+angular.module('contiv.networkpolicies')
+    .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
             .state('contiv.networkpolicies', {
                 url: '/networkpolicies',
@@ -30,6 +30,6 @@ angular.module('contiv.networkpolicies', ['contiv.models', 'contiv.directives', 
                 templateUrl: 'network_policies/redirectionpolicylist.html'
             })
         ;
-    })
+    }])
     .controller('NetworkPoliciesTabsCtrl', ['$state', function ($state) {
     }]);

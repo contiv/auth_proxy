@@ -2,7 +2,7 @@
  * Created by vjain3 on 3/25/16.
  */
 angular.module('contiv.nodes')
-    .config(function ($stateProvider) {
+    .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
             .state('contiv.nodes.commission', {
                 url: '/commission/:key',
@@ -15,7 +15,7 @@ angular.module('contiv.nodes')
                 templateUrl: 'nodes/nodecommission.html'
             })
         ;
-    })
+    }])
     .controller('NodeCommissionCtrl', ['$state', '$stateParams', 'NodesModel', function ($state, $stateParams, NodesModel) {
         var nodeCommissionCtrl = this;
 

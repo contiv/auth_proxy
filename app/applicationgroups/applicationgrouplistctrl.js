@@ -1,8 +1,8 @@
 /**
  * Created by vjain3 on 3/11/16.
  */
-angular.module('contiv.applicationgroups', ['contiv.models', 'contiv.directives', 'contiv.utils'])
-    .config(function ($stateProvider) {
+angular.module('contiv.applicationgroups')
+    .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
             .state('contiv.applicationgroups.list', {
                 url: '/list',
@@ -10,7 +10,7 @@ angular.module('contiv.applicationgroups', ['contiv.models', 'contiv.directives'
                 templateUrl: 'applicationgroups/applicationgrouplist.html'
             })
         ;
-    })
+    }])
     .controller('ApplicationGroupListCtrl',
         ['$scope', '$interval', '$filter', 'ApplicationGroupsModel', 'CRUDHelperService',
             function ($scope, $interval, $filter, ApplicationGroupsModel, CRUDHelperService) {

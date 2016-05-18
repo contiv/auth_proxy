@@ -1,5 +1,5 @@
-angular.module('contiv.networks', ['contiv.models', 'contiv.directives', 'contiv.utils'])
-    .config(function ($stateProvider) {
+angular.module('contiv.networks')
+    .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
             .state('contiv.networks.list', {
                 url: '/list',
@@ -7,7 +7,7 @@ angular.module('contiv.networks', ['contiv.models', 'contiv.directives', 'contiv
                 templateUrl: 'networks/networklist.html'
             })
         ;
-    })
+    }])
     .controller('NetworksListCtrl', ['$scope', '$interval', '$filter', 'NetworksModel', 'CRUDHelperService',
         function ($scope, $interval, $filter, NetworksModel, CRUDHelperService) {
             var networksListCtrl = this;

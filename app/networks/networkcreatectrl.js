@@ -2,7 +2,7 @@
  * Created by vjain3 on 2/19/16.
  */
 angular.module('contiv.networks')
-    .config(function ($stateProvider) {
+    .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
             .state('contiv.networks.create', {
                 url: '/create',
@@ -10,7 +10,7 @@ angular.module('contiv.networks')
                 controller: 'NetworkCreateCtrl as networkCreateCtrl'
             })
         ;
-    })
+    }])
     .controller('NetworkCreateCtrl', ['$state', '$stateParams', 'NetworksModel', 'CRUDHelperService',
         function ($state, $stateParams, NetworksModel, CRUDHelperService) {
             var networkCreateCtrl = this;

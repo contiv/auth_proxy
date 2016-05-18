@@ -2,7 +2,7 @@
  * Created by vjain3 on 3/25/16.
  */
 angular.module('contiv.nodes')
-    .config(function ($stateProvider) {
+    .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
             .state('contiv.nodes.details', {
                 url: '/details/:key',
@@ -25,7 +25,7 @@ angular.module('contiv.nodes')
                 templateUrl: 'nodes/nodelogs.html'
             })
         ;
-    })
+    }])
     .controller('NodeDetailsCtrl', ['$state', '$stateParams', '$scope', '$interval', 'NodesModel',
         function ($state, $stateParams, $scope, $interval, NodesModel) {
             var nodeDetailsCtrl = this;

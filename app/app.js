@@ -13,7 +13,7 @@ angular.module('contivApp', [
         'contiv.volumes',
         'contiv.nodes'
     ])
-    .config(function ($stateProvider, $urlRouterProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         $stateProvider
         //abstract state serves as a PLACEHOLDER or NAMESPACE for application states
             .state('contiv', {
@@ -54,4 +54,4 @@ angular.module('contivApp', [
         ;
 
         $urlRouterProvider.otherwise('/');
-    });
+    }]);

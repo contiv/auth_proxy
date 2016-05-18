@@ -2,7 +2,7 @@
  * Created by vjain3 on 3/15/16.
  */
 angular.module('contiv.applicationgroups')
-    .config(function ($stateProvider) {
+    .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
             .state('contiv.applicationgroups.details', {
                 url: '/details/:key',
@@ -15,7 +15,7 @@ angular.module('contiv.applicationgroups')
                 templateUrl: 'applicationgroups/applicationgroupdetails.html'
             })
         ;
-    })
+    }])
     .controller('ApplicationGroupDetailsCtrl', [
         '$state',
         '$stateParams',

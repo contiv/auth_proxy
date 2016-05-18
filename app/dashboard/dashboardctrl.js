@@ -1,15 +1,15 @@
 /**
  * Created by vjain3 on 3/11/16.
  */
-angular.module('contiv.dashboard', ['contiv.models'])
-    .config(function ($stateProvider) {
+angular.module('contiv.dashboard')
+    .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
             .state('contiv.dashboard', {
                 url: '/',
                 controller: 'DashboardCtrl as dashboardCtrl',
                 templateUrl: 'dashboard/dashboard.html'
             });
-    })
+    }])
     .controller('DashboardCtrl',
         [
             '$scope',

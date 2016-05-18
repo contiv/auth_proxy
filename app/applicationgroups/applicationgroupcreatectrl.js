@@ -5,7 +5,7 @@
  * Created by vjain3 on 3/10/16.
  */
 angular.module('contiv.applicationgroups')
-    .config(function ($stateProvider) {
+    .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
             .state('contiv.applicationgroups.create', {
                 url: '/create',
@@ -13,7 +13,7 @@ angular.module('contiv.applicationgroups')
                 templateUrl: 'applicationgroups/applicationgroupcreate.html'
             })
         ;
-    })
+    }])
     .controller('ApplicationGroupCreateCtrl', [
         '$state',
         'ApplicationGroupsModel',

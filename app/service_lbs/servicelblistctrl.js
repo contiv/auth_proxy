@@ -1,8 +1,8 @@
 /**
  * Created by vjain3 on 5/11/16.
  */
-angular.module('contiv.servicelbs', ['contiv.models', 'contiv.directives', 'contiv.utils'])
-    .config(function ($stateProvider) {
+angular.module('contiv.servicelbs')
+    .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
             .state('contiv.servicelbs.list', {
                 url: '/list',
@@ -10,7 +10,7 @@ angular.module('contiv.servicelbs', ['contiv.models', 'contiv.directives', 'cont
                 templateUrl: 'service_lbs/servicelblist.html'
             })
         ;
-    })
+    }])
     .controller('ServicelbListCtrl', ['$scope', '$interval', '$filter', 'ServicelbsModel', 'CRUDHelperService',
         function ($scope, $interval, $filter, ServicelbsModel, CRUDHelperService) {
             var servicelbListCtrl = this;

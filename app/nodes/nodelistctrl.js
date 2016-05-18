@@ -1,8 +1,8 @@
 /**
  * Created by vjain3 on 3/22/16.
  */
-angular.module('contiv.nodes', ['contiv.models', 'contiv.directives', 'contiv.utils'])
-    .config(function ($stateProvider) {
+angular.module('contiv.nodes')
+    .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
             .state('contiv.nodes.list', {
                 url: '/list',
@@ -10,7 +10,7 @@ angular.module('contiv.nodes', ['contiv.models', 'contiv.directives', 'contiv.ut
                 templateUrl: 'nodes/nodelist.html'
             })
         ;
-    })
+    }])
     .controller('NodeListCtrl', ['$scope', '$interval', '$filter', 'NodesModel', 'CRUDHelperService',
         function ($scope, $interval, $filter, NodesModel, CRUDHelperService) {
         var nodeListCtrl = this;

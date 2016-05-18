@@ -2,7 +2,7 @@
  * Created by vjain3 on 5/12/16.
  */
 angular.module('contiv.servicelbs')
-    .config(function ($stateProvider) {
+    .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
             .state('contiv.servicelbs.create', {
                 url: '/create',
@@ -10,7 +10,7 @@ angular.module('contiv.servicelbs')
                 controller: 'ServicelbCreateCtrl as servicelbCreateCtrl'
             })
         ;
-    })
+    }])
     .controller('ServicelbCreateCtrl', [
         '$state', '$stateParams', 'ServicelbsModel', 'NetworksModel', 'CRUDHelperService',
         function ($state, $stateParams, ServicelbsModel, NetworksModel, CRUDHelperService) {

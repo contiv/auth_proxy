@@ -1,5 +1,5 @@
 angular.module('contiv.networkpolicies')
-    .config(function ($stateProvider) {
+    .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
             .state('contiv.networkpolicies.isolation.list', {
                 url: '/list',
@@ -7,7 +7,7 @@ angular.module('contiv.networkpolicies')
                 templateUrl: 'network_policies/isolationpolicylist.html'
             })
         ;
-    })
+    }])
     .controller('IsolationPolicyListCtrl', ['$scope', '$interval', '$filter', 'PoliciesModel', 'CRUDHelperService',
         function ($scope, $interval, $filter, PoliciesModel, CRUDHelperService) {
             var policiesListCtrl = this;
