@@ -1,0 +1,4 @@
+app/*.js
+app/**/*.js
+app/components/**/*.js
+!app/bundle.js
