@@ -4,7 +4,7 @@
     </div>
 
     <div class="right floated four wide column">
-        <button class="ui blue button" ui-sref="contiv.applicationgroups.create">
+        <button class="ui blue button" ui-sref="contiv.menu.applicationgroups.create">
             <i class="add icon"></i>
             Create Application Group
         </button>
@@ -28,7 +28,7 @@
 
         <ctv-tbody>
             <ctv-tr ng-repeat="group in applicationGroupListCtrl.filteredgroups">
-                <ctv-td><a ui-sref="contiv.applicationgroups.details({key:group.key})">{{group.groupName}}</a></ctv-td>
+                <ctv-td><a ui-sref="contiv.menu.applicationgroups.details({key:group.key})">{{group.groupName}}</a></ctv-td>
                 <ctv-td>{{group.networkName}}</ctv-td>
                 <ctv-td>{{group.policies.join(", ")}}</ctv-td>
                 <ctv-td></ctv-td>

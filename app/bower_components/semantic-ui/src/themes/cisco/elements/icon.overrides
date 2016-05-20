@@ -188,16 +188,16 @@
 .icon.faultsummary_warning:before {
     content: "\e91c";
 }
-.icon.global_account:before {
+.icon.user:before {
     content: "\e91d";
 }
 .icon.global_bootserver:before {
     content: "\e91e";
 }
-.icon.global_help:before {
+.icon.help:before {
     content: "\e91f";
 }
-.icon.global_logout:before {
+.icon.logout:before {
     content: "\e920";
 }
 .icon.global_notification:before {

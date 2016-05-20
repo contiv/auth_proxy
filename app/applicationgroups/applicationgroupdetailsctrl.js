@@ -4,12 +4,12 @@
 angular.module('contiv.applicationgroups')
     .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
-            .state('contiv.applicationgroups.details', {
+            .state('contiv.menu.applicationgroups.details', {
                 url: '/details/:key',
                 controller: 'ApplicationGroupDetailsCtrl as applicationGroupDetailsCtrl',
                 templateUrl: 'applicationgroups/applicationgroupdetails.html'
             })
-            .state('contiv.applicationgroups.edit', {
+            .state('contiv.menu.applicationgroups.edit', {
                 url: '/edit/:key',
                 controller: 'ApplicationGroupDetailsCtrl as applicationGroupDetailsCtrl',
                 templateUrl: 'applicationgroups/applicationgroupdetails.html'
@@ -49,7 +49,7 @@ angular.module('contiv.applicationgroups')
              * To show edit or details screen based on the route
              */
             function setMode() {
-                if ($state.is('contiv.applicationgroups.edit')) {
+                if ($state.is('contiv.menu.applicationgroups.edit')) {
                     applicationGroupDetailsCtrl.mode = 'edit';
                 } else {
                     applicationGroupDetailsCtrl.mode = 'details';
@@ -57,11 +57,11 @@ angular.module('contiv.applicationgroups')
             }
 
             function returnToApplicationGroup() {
-                $state.go('contiv.applicationgroups.list');
+                $state.go('contiv.menu.applicationgroups.list');
             }
 
             function returnToApplicationGroupDetails() {
-                $state.go('contiv.applicationgroups.details', {'key': applicationGroupDetailsCtrl.applicationGroup.key});
+                $state.go('contiv.menu.applicationgroups.details', {'key': applicationGroupDetailsCtrl.applicationGroup.key});
             }
 
             function cancelEditing() {

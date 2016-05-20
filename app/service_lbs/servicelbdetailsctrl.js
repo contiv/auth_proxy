@@ -4,12 +4,12 @@
 angular.module('contiv.servicelbs')
     .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
-            .state('contiv.servicelbs.details', {
+            .state('contiv.menu.servicelbs.details', {
                 url: '/details/:key',
                 controller: 'ServicelbDetailsCtrl as servicelbDetailsCtrl',
                 templateUrl: 'service_lbs/servicelbdetails.html'
             })
-            .state('contiv.servicelbs.edit', {
+            .state('contiv.menu.servicelbs.edit', {
                 url: '/edit/:key',
                 controller: 'ServicelbDetailsCtrl as servicelbDetailsCtrl',
                 templateUrl: 'service_lbs/servicelbdetails.html'
@@ -25,7 +25,7 @@ angular.module('contiv.servicelbs')
                  * To show edit or details screen based on the route
                  */
                 function setMode() {
-                    if ($state.is('contiv.servicelbs.edit')) {
+                    if ($state.is('contiv.menu.servicelbs.edit')) {
                         servicelbDetailsCtrl.mode = 'edit';
                     } else {
                         servicelbDetailsCtrl.mode = 'details';
@@ -33,11 +33,11 @@ angular.module('contiv.servicelbs')
                 }
 
                 function returnToServicelbs() {
-                    $state.go('contiv.servicelbs.list');
+                    $state.go('contiv.menu.servicelbs.list');
                 }
 
                 function returnToServicelbDetails() {
-                    $state.go('contiv.servicelbs.details', {'key': servicelbDetailsCtrl.servicelb.key});
+                    $state.go('contiv.menu.servicelbs.details', {'key': servicelbDetailsCtrl.servicelb.key});
                 }
 
                 function cancelEditing() {

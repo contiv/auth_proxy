@@ -1,7 +1,7 @@
 angular.module('contiv.networks')
     .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
-            .state('contiv.networks.details', {
+            .state('contiv.menu.networks.details', {
                 url: '/details/:key',
                 controller: 'NetworkDetailsCtrl as networkDetailsCtrl',
                 templateUrl: 'networks/networkdetails.html'
@@ -13,7 +13,7 @@ angular.module('contiv.networks')
                 var networkDetailsCtrl = this;
 
                 function returnToNetworks() {
-                    $state.go('contiv.networks.list');
+                    $state.go('contiv.menu.networks.list');
                 }
 
                 function deleteNetwork() {

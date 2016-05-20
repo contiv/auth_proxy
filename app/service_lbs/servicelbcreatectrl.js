@@ -4,7 +4,7 @@
 angular.module('contiv.servicelbs')
     .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
-            .state('contiv.servicelbs.create', {
+            .state('contiv.menu.servicelbs.create', {
                 url: '/create',
                 templateUrl: 'service_lbs/servicelbcreate.html',
                 controller: 'ServicelbCreateCtrl as servicelbCreateCtrl'
@@ -19,7 +19,7 @@ angular.module('contiv.servicelbs')
             servicelbCreateCtrl.networks = [];
 
             function returnToServicelbs() {
-                $state.go('contiv.servicelbs.list');
+                $state.go('contiv.menu.servicelbs.list');
             }
 
             function cancelCreating() {

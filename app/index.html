@@ -19,53 +19,7 @@
     <link rel="stylesheet" href="bower_components/semantic-ui/dist/semantic.min.css">
     <link rel="stylesheet" href="app.css">
 </head>
-<body>
-
-<div id="sidebar" class="ui visible left vertical sidebar icon labeled menu">
-    <a class="item" ui-sref="contiv.dashboard()">
-        <i class="dashboard icon"></i>
-        Dashboard
-    </a>
-    <a class="item" ui-sref="contiv.applicationgroups.list()">
-        <i class="appgroup icon"></i>
-        Application Groups
-    </a>
-    <a class="item" ui-sref="contiv.networkpolicies.isolation.list()">
-        <i class="networkpolicies icon"></i>
-        Network Policies
-    </a>
-    <a class="item" ui-sref="contiv.storagepolicies.list()">
-        <i class="storagepolicies icon"></i>
-        Storage Policies
-    </a>
-    <a class="item" ui-sref="contiv.servicelbs.list()">
-        <i class="loadbalancer icon"></i>
-        Service Load Balancers
-    </a>
-    <a class="item" ui-sref="contiv.networks.list()">
-        <i class="networks icon"></i>
-        Networks
-    </a>
-    <a class="item" ui-sref="contiv.volumes.list()">
-        <i class="volumes icon"></i>
-        Volumes
-    </a>
-    <a class="item" ui-sref="contiv.nodes.list()">
-        <i class="nodes icon"></i>
-        Nodes
-    </a>
-</div>
-
-<div class="page header">
-    <div class="ui top attached menu">
-        <h1 class="header" style="margin-left:200px; margin-right:auto;">
-            <img class="ui image" src="images/ciscoUCP.svg" height="26" width="300">
-        </h1>
-    </div>
-
-    <div ui-view style="margin-left:180px;margin-top:30px"></div>
-</div>
-
+<body ui-view>
 
 <!--[if lt IE 7]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade

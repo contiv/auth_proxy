@@ -1,84 +1,86 @@
-<div class="content" style="font-size: 18px; margin-top: 30px">Resources</div>
-<div class="ui three column grid" style="margin-top: 15px">
-    <div class="column">
-        <a class="ui fluid card" ui-sref="contiv.nodes.list()">
-            <div class="content">
-                <div class="ui grey ribbon label">
-                    <i class="nodes icon"></i> Nodes
-                </div>
-                <div class="description">
-                    <p class="center aligned" style="font-size: 5rem">{{dashboardCtrl.nodes}}</p>
-                </div>
+<div class="ui container">
+    <div class="content" style="font-size: 18px; margin-top: 30px">Resources</div>
+    <div class="ui three column grid" style="margin-top: 15px">
+        <div class="column">
+            <a class="ui fluid card" ui-sref="contiv.menu.nodes.list()">
+                <div class="content">
+                    <div class="ui grey ribbon label">
+                        <i class="nodes icon"></i> Nodes
+                    </div>
+                    <div class="description">
+                        <p class="center aligned" style="font-size: 5rem">{{dashboardCtrl.nodes}}</p>
+                    </div>
 
-            </div>
-        </a>
+                </div>
+            </a>
+        </div>
+        <div class="column">
+            <a class="ui fluid card" ui-sref="contiv.menu.networks.list()">
+                <div class="content">
+                    <div class="ui grey ribbon label">
+                        <i class="small networks icon" style="margin-left: 0.75em"></i> Networks
+                    </div>
+                    <div class="description">
+                        <p class="center aligned" style="font-size: 5rem">{{dashboardCtrl.networks}}</p>
+                    </div>
+
+                </div>
+            </a>
+        </div>
+        <div class="column">
+            <a class="ui fluid card" ui-sref="contiv.menu.volumes.list()">
+                <div class="content">
+                    <div class="ui grey ribbon label">
+                        <i class="volumes icon"></i> Volumes
+                    </div>
+                    <div class="description">
+                        <p class="center aligned" style="font-size: 5rem">{{dashboardCtrl.volumes}}</p>
+                    </div>
+
+                </div>
+            </a>
+        </div>
     </div>
-    <div class="column">
-        <a class="ui fluid card" ui-sref="contiv.networks.list()">
-            <div class="content">
-                <div class="ui grey ribbon label">
-                    <i class="small networks icon" style="margin-left: 0.75em"></i> Networks
-                </div>
-                <div class="description">
-                    <p class="center aligned" style="font-size: 5rem">{{dashboardCtrl.networks}}</p>
-                </div>
+    <div class="content" style="font-size: 18px; margin-top: 30px">Policies</div>
+    <div class="ui three column grid" style="margin-top: 15px">
+        <div class="column">
+            <a class="ui fluid card" ui-sref="contiv.menu.applicationgroups.list()">
+                <div class="content">
+                    <div class="ui grey ribbon label">
+                        <i class="appgroup icon"></i> Application Groups
+                    </div>
+                    <div class="description">
+                        <p class="center aligned" style="font-size: 5rem">{{dashboardCtrl.groups}}</p>
+                    </div>
 
-            </div>
-        </a>
-    </div>
-    <div class="column">
-        <a class="ui fluid card" ui-sref="contiv.volumes.list()">
-            <div class="content">
-                <div class="ui grey ribbon label">
-                    <i class="volumes icon"></i> Volumes
                 </div>
-                <div class="description">
-                    <p class="center aligned" style="font-size: 5rem">{{dashboardCtrl.volumes}}</p>
-                </div>
+            </a>
+        </div>
+        <div class="column">
+            <a class="ui fluid card" ui-sref="contiv.menu.networkpolicies.isolation.list()">
+                <div class="content">
+                    <div class="ui grey ribbon label">
+                        <i class="networkpolicies icon"></i> Network Policies
+                    </div>
+                    <div class="description">
+                        <p class="center aligned" style="font-size: 5rem">{{dashboardCtrl.networkpolicies}}</p>
+                    </div>
 
-            </div>
-        </a>
-    </div>
-</div>
-<div class="content" style="font-size: 18px; margin-top: 30px">Policies</div>
-<div class="ui three column grid" style="margin-top: 15px">
-    <div class="column">
-        <a class="ui fluid card" ui-sref="contiv.applicationgroups.list()">
-            <div class="content">
-                <div class="ui grey ribbon label">
-                    <i class="appgroup icon"></i> Application Groups
                 </div>
-                <div class="description">
-                    <p class="center aligned" style="font-size: 5rem">{{dashboardCtrl.groups}}</p>
-                </div>
+            </a>
+        </div>
+        <div class="column">
+            <a class="ui fluid card" ui-sref="contiv.menu.storagepolicies.list()">
+                <div class="content">
+                    <div class="ui grey ribbon label">
+                        <i class="storagepolicies icon"></i> Storage Policies
+                    </div>
+                    <div class="description">
+                        <p class="center aligned" style="font-size: 5rem">{{dashboardCtrl.storagepolicies}}</p>
+                    </div>
 
-            </div>
-        </a>
-    </div>
-    <div class="column">
-        <a class="ui fluid card" ui-sref="contiv.networkpolicies.isolation.list()">
-            <div class="content">
-                <div class="ui grey ribbon label">
-                    <i class="networkpolicies icon"></i> Network Policies
                 </div>
-                <div class="description">
-                    <p class="center aligned" style="font-size: 5rem">{{dashboardCtrl.networkpolicies}}</p>
-                </div>
-
-            </div>
-        </a>
-    </div>
-    <div class="column">
-        <a class="ui fluid card" ui-sref="contiv.storagepolicies.list()">
-            <div class="content">
-                <div class="ui grey ribbon label">
-                    <i class="storagepolicies icon"></i> Storage Policies
-                </div>
-                <div class="description">
-                    <p class="center aligned" style="font-size: 5rem">{{dashboardCtrl.storagepolicies}}</p>
-                </div>
-
-            </div>
-        </a>
+            </a>
+        </div>
     </div>
 </div>

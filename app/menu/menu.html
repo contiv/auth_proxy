@@ -1,0 +1,65 @@
+<div id="sidebar" class="ui visible left vertical sidebar icon labeled menu">
+    <a class="item" ui-sref="contiv.menu.dashboard()">
+        <i class="dashboard icon"></i>
+        Dashboard
+    </a>
+    <a class="item" ui-sref="contiv.menu.applicationgroups.list()">
+        <i class="appgroup icon"></i>
+        Application Groups
+    </a>
+    <a class="item" ui-sref="contiv.menu.networkpolicies.isolation.list()">
+        <i class="networkpolicies icon"></i>
+        Network Policies
+    </a>
+    <a class="item" ui-sref="contiv.menu.storagepolicies.list()">
+        <i class="storagepolicies icon"></i>
+        Storage Policies
+    </a>
+    <a class="item" ui-sref="contiv.menu.servicelbs.list()">
+        <i class="loadbalancer icon"></i>
+        Service Load Balancers
+    </a>
+    <a class="item" ui-sref="contiv.menu.networks.list()">
+        <i class="networks icon"></i>
+        Networks
+    </a>
+    <a class="item" ui-sref="contiv.menu.volumes.list()">
+        <i class="volumes icon"></i>
+        Volumes
+    </a>
+    <a class="item" ui-sref="contiv.menu.nodes.list()">
+        <i class="nodes icon"></i>
+        Nodes
+    </a>
+</div>
+
+<div class="page header">
+    <div class="ui top attached menu">
+        <h1 class="header" style="margin-left:200px; margin-right:auto; margin-top: 12px;">
+            <img class="ui image" src="images/ciscocontiv.svg" height="26" width="300">
+        </h1>
+        <div class="right floated one wide column" style="margin-top: 12px; margin-right: 12px;">
+            <button type="button" class="circular ui mini icon button"
+                    ng-click="menuCtrl.help()">
+                <i class="help icon"></i>
+            </button>
+            <button type="button" class="circular ui mini icon button"
+                    ng-click="menuCtrl.logout()">
+                <i class="logout icon"></i>
+            </button>
+            <button type="button" class="circular ui mini icon button"
+                    ng-click="menuCtrl.account()">
+                <i class="user icon"></i>
+            </button>
+            <div class="ui dropdown">
+                <div class="text">{{menuCtrl.username}}</div>
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div ui-view style="margin-left:180px;margin-top:30px"></div>
+</div>

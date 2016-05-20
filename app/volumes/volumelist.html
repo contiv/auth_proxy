@@ -4,7 +4,7 @@
     </div>
 
     <div class="right floated three wide column">
-        <button class="ui blue button" ui-sref="contiv.volumes.create">
+        <button class="ui blue button" ui-sref="contiv.menu.volumes.create">
             <i class="add icon"></i>
             Create Volume
         </button>
@@ -28,7 +28,7 @@
 
         <ctv-tbody>
             <ctv-tr ng-repeat="volume in volumeListCtrl.filteredvolumes">
-                <ctv-td><a ui-sref="contiv.volumes.details({key:volume.policy + '/' + volume.name})">{{volume.name}}</a>
+                <ctv-td><a ui-sref="contiv.menu.volumes.details({key:volume.policy + '/' + volume.name})">{{volume.name}}</a>
                 </ctv-td>
                 <ctv-td>{{volume.policy}}</ctv-td>
                 <ctv-td></ctv-td>

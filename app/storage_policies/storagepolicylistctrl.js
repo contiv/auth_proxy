@@ -4,7 +4,7 @@
 angular.module('contiv.storagepolicies')
     .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
-            .state('contiv.storagepolicies.list', {
+            .state('contiv.menu.storagepolicies.list', {
                 url: '/list',
                 controller: 'StoragePolicyListCtrl as storagePolicyListCtrl',
                 templateUrl: 'storage_policies/storagepolicylist.html'

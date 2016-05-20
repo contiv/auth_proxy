@@ -5,7 +5,7 @@
         </div>
 
         <div class="right floated three wide column">
-            <button class="ui blue button" ui-sref="contiv.networkpolicies.isolation.create">
+            <button class="ui blue button" ui-sref="contiv.menu.networkpolicies.isolation.create">
                 <i class="add icon"></i>
                 Create Policy
             </button>
@@ -30,7 +30,7 @@
 
             <ctv-tbody>
                 <ctv-tr ng-repeat="policy in isolationPolicyListCtrl.filteredPolicies">
-                    <ctv-td><a ui-sref="contiv.networkpolicies.isolation.details({key:policy.key})">{{policy.policyName}}</a>
+                    <ctv-td><a ui-sref="contiv.menu.networkpolicies.isolation.details({key:policy.key})">{{policy.policyName}}</a>
                     </ctv-td>
                     <ctv-td>{{policy.updatedBy}}</ctv-td>
                     <ctv-td>{{policy.lastUpdate}}</ctv-td>

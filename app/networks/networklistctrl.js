@@ -1,7 +1,7 @@
 angular.module('contiv.networks')
     .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
-            .state('contiv.networks.list', {
+            .state('contiv.menu.networks.list', {
                 url: '/list',
                 controller: 'NetworksListCtrl as networksListCtrl',
                 templateUrl: 'networks/networklist.html'

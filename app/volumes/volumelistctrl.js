@@ -4,7 +4,7 @@
 angular.module('contiv.volumes')
     .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
-            .state('contiv.volumes.list', {
+            .state('contiv.menu.volumes.list', {
                 url: '/list',
                 controller: 'VolumeListCtrl as volumeListCtrl',
                 templateUrl: 'volumes/volumelist.html'

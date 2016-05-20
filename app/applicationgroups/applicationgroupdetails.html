@@ -1,6 +1,6 @@
 <div class="ui sixteen column grid">
     <div class="one wide column">
-        <a ui-sref="contiv.applicationgroups.list()">
+        <a ui-sref="contiv.menu.applicationgroups.list()">
             <i class="arrow left icon"></i>
         </a>
     </div>
@@ -22,12 +22,12 @@
             </div>
         </div>
         <button ng-switch-when="edit" class="ui disabled button"
-                ui-sref="contiv.applicationgroups.edit({key:applicationGroupDetailsCtrl.applicationGroup.key})">
+                ui-sref="contiv.menu.applicationgroups.edit({key:applicationGroupDetailsCtrl.applicationGroup.key})">
             <i class="edit icon"></i>
             Edit
         </button>
         <button ng-switch-when="details" class="ui basic button"
-                ui-sref="contiv.applicationgroups.edit({key:applicationGroupDetailsCtrl.applicationGroup.key})">
+                ui-sref="contiv.menu.applicationgroups.edit({key:applicationGroupDetailsCtrl.applicationGroup.key})">
             <i class="edit icon"></i>
             Edit
         </button>

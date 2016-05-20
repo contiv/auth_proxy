@@ -4,7 +4,7 @@
 angular.module('contiv.volumes')
     .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
-            .state('contiv.volumes.details', {
+            .state('contiv.menu.volumes.details', {
                 url: '/details/:key',
                 controller: 'VolumeDetailsCtrl as volumeDetailsCtrl',
                 templateUrl: 'volumes/volumedetails.html'
@@ -15,7 +15,7 @@ angular.module('contiv.volumes')
             var volumeDetailsCtrl = this;
 
             function returnToVolumes() {
-                $state.go('contiv.volumes.list');
+                $state.go('contiv.menu.volumes.list');
             }
             function deleteVolume() {
                 VolumesModel.delete(volumeDetailsCtrl.volume).then(function (result) {

@@ -4,7 +4,7 @@
 angular.module('contiv.networkpolicies')
     .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
-            .state('contiv.networkpolicies.isolation.details', {
+            .state('contiv.menu.networkpolicies.isolation.details', {
                 url: '/details/:key',
                 controller: 'IsolationPolicyDetailsCtrl as isolationPolicyDetailsCtrl',
                 templateUrl: 'network_policies/isolationpolicydetails.html'
@@ -12,7 +12,7 @@ angular.module('contiv.networkpolicies')
     }])
     .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
-            .state('contiv.networkpolicies.isolation.edit', {
+            .state('contiv.menu.networkpolicies.isolation.edit', {
                 url: '/edit/:key',
                 controller: 'IsolationPolicyDetailsCtrl as isolationPolicyDetailsCtrl',
                 templateUrl: 'network_policies/isolationpolicydetails.html'
@@ -36,11 +36,11 @@ angular.module('contiv.networkpolicies')
             isolationPolicyDetailsCtrl.newOutgoingSelectedApplicationGroup = '';
 
             function returnToPolicies() {
-                $state.go('contiv.networkpolicies.isolation.list');
+                $state.go('contiv.menu.networkpolicies.isolation.list');
             }
 
             function returnToPolicyDetails() {
-                $state.go('contiv.networkpolicies.isolation.details', {key: isolationPolicyDetailsCtrl.policy.key});
+                $state.go('contiv.menu.networkpolicies.isolation.details', {key: isolationPolicyDetailsCtrl.policy.key});
             }
 
             function cancelEditing() {
@@ -70,7 +70,7 @@ angular.module('contiv.networkpolicies')
              * To show edit or details screen based on the route
              */
             function setMode() {
-                if ($state.is('contiv.networkpolicies.isolation.edit')) {
+                if ($state.is('contiv.menu.networkpolicies.isolation.edit')) {
                     isolationPolicyDetailsCtrl.mode = 'edit';
                 } else {
                     isolationPolicyDetailsCtrl.mode = 'details';

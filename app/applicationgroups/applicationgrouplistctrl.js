@@ -4,7 +4,7 @@
 angular.module('contiv.applicationgroups')
     .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
-            .state('contiv.applicationgroups.list', {
+            .state('contiv.menu.applicationgroups.list', {
                 url: '/list',
                 controller: 'ApplicationGroupListCtrl as applicationGroupListCtrl',
                 templateUrl: 'applicationgroups/applicationgrouplist.html'

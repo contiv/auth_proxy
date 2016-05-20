@@ -7,7 +7,7 @@
 angular.module('contiv.applicationgroups')
     .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
-            .state('contiv.applicationgroups.create', {
+            .state('contiv.menu.applicationgroups.create', {
                 url: '/create',
                 controller: 'ApplicationGroupCreateCtrl as applicationGroupCreateCtrl',
                 templateUrl: 'applicationgroups/applicationgroupcreate.html'
@@ -44,7 +44,7 @@ angular.module('contiv.applicationgroups')
             applicationGroupCreateCtrl.isolationPoliciesVisible = false;
 
             function returnToApplicationGroup() {
-                $state.go('contiv.applicationgroups.list');
+                $state.go('contiv.menu.applicationgroups.list');
             }
 
             function cancelCreating() {

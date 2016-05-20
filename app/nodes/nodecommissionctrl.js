@@ -4,12 +4,12 @@
 angular.module('contiv.nodes')
     .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
-            .state('contiv.nodes.commission', {
+            .state('contiv.menu.nodes.commission', {
                 url: '/commission/:key',
                 controller: 'NodeCommissionCtrl as nodeCommissionCtrl',
                 templateUrl: 'nodes/nodecommission.html'
             })
-            .state('contiv.nodes.discover', {
+            .state('contiv.menu.nodes.discover', {
                 url: '/discover',
                 controller: 'NodeCommissionCtrl as nodeCommissionCtrl',
                 templateUrl: 'nodes/nodecommission.html'
@@ -23,7 +23,7 @@ angular.module('contiv.nodes')
          * To show commission or discover screen based on the route
          */
         function setMode() {
-            if ($state.is('contiv.nodes.commission')) {
+            if ($state.is('contiv.menu.nodes.commission')) {
                 nodeCommissionCtrl.mode = 'commission';
             } else {
                 nodeCommissionCtrl.mode = 'discover';
@@ -31,11 +31,11 @@ angular.module('contiv.nodes')
         }
 
         function returnToNodeDetails() {
-            $state.go('contiv.nodes.details.info', {'key': $stateParams.key});
+            $state.go('contiv.menu.nodes.details.info', {'key': $stateParams.key});
         }
 
         function returnToNodes() {
-            $state.go('contiv.nodes.list');
+            $state.go('contiv.menu.nodes.list');
         }
 
         function cancelCommissioningNode() {

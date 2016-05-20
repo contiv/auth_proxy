@@ -1,20 +1,17 @@
-<div class="ui secondary pointing menu">
-    <div class="ui container">
-        <a class="blue item" ui-sref="contiv.networkpolicies.isolation.list()" ui-sref-active="active">
+<div class="ui container">
+    <div class="ui secondary pointing menu">
+        <a class="blue item" ui-sref="contiv.menu.networkpolicies.isolation.list()" ui-sref-active="active">
             Isolation Policies
         </a>
-        <a class="blue item" ui-sref="contiv.networkpolicies.prioritization()" ui-sref-active="active">
+        <a class="blue item" ui-sref="contiv.menu.networkpolicies.prioritization()" ui-sref-active="active">
             Prioritization Policies
         </a>
-        <a class="blue item" ui-sref="contiv.networkpolicies.bandwidth()" ui-sref-active="active">
+        <a class="blue item" ui-sref="contiv.menu.networkpolicies.bandwidth()" ui-sref-active="active">
             Bandwidth Policies
         </a>
-        <a class="blue item" ui-sref="contiv.networkpolicies.redirection()" ui-sref-active="active">
+        <a class="blue item" ui-sref="contiv.menu.networkpolicies.redirection()" ui-sref-active="active">
             Redirection Policies
         </a>
     </div>
+    <div ui-view style="margin-top:30px"></div>
 </div>
-
-<div ui-view style="margin-top:30px"></div>
-
-

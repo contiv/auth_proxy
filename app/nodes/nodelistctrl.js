@@ -4,7 +4,7 @@
 angular.module('contiv.nodes')
     .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
-            .state('contiv.nodes.list', {
+            .state('contiv.menu.nodes.list', {
                 url: '/list',
                 controller: 'NodeListCtrl as nodeListCtrl',
                 templateUrl: 'nodes/nodelist.html'

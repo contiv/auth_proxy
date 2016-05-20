@@ -1,7 +1,7 @@
 angular.module('contiv.networkpolicies')
     .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
-            .state('contiv.networkpolicies.isolation.list', {
+            .state('contiv.menu.networkpolicies.isolation.list', {
                 url: '/list',
                 controller: 'IsolationPolicyListCtrl as isolationPolicyListCtrl',
                 templateUrl: 'network_policies/isolationpolicylist.html'

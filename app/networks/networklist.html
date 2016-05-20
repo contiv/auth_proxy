@@ -4,7 +4,7 @@
     </div>
 
     <div class="right floated three wide column">
-        <button class="ui blue button" ui-sref="contiv.networks.create">
+        <button class="ui blue button" ui-sref="contiv.menu.networks.create">
             <i class="add icon"></i>
             Create Network
         </button>
@@ -30,7 +30,7 @@
 
         <ctv-tbody>
             <ctv-tr ng-repeat="network in networksListCtrl.filterednetworks">
-                <ctv-td><a ui-sref="contiv.networks.details({key:network.key})">{{network.networkName}}</a></ctv-td>
+                <ctv-td><a ui-sref="contiv.menu.networks.details({key:network.key})">{{network.networkName}}</a></ctv-td>
                 <ctv-td>{{network.encap}}</ctv-td>
                 <ctv-td>{{network.subnet}}</ctv-td>
                 <ctv-td>{{network.gateway}}</ctv-td>

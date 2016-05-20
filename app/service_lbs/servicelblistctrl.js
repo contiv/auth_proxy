@@ -4,7 +4,7 @@
 angular.module('contiv.servicelbs')
     .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
-            .state('contiv.servicelbs.list', {
+            .state('contiv.menu.servicelbs.list', {
                 url: '/list',
                 controller: 'ServicelbListCtrl as servicelbListCtrl',
                 templateUrl: 'service_lbs/servicelblist.html'

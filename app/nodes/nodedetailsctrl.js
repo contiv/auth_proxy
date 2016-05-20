@@ -4,22 +4,22 @@
 angular.module('contiv.nodes')
     .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
-            .state('contiv.nodes.details', {
+            .state('contiv.menu.nodes.details', {
                 url: '/details/:key',
                 controller: 'NodeDetailsCtrl as nodeDetailsCtrl',
                 templateUrl: 'nodes/nodedetails.html'
             })
-            .state('contiv.nodes.details.info', {
+            .state('contiv.menu.nodes.details.info', {
                 url: '/info',
                 controller: 'NodeDetailsCtrl as nodeDetailsCtrl',
                 templateUrl: 'nodes/nodeinfo.html'
             })
-            .state('contiv.nodes.details.stats', {
+            .state('contiv.menu.nodes.details.stats', {
                 url: '/stats',
                 controller: 'NodeDetailsCtrl as nodeDetailsCtrl',
                 templateUrl: 'nodes/nodestats.html'
             })
-            .state('contiv.nodes.details.logs', {
+            .state('contiv.menu.nodes.details.logs', {
                 url: '/logs',
                 controller: 'NodeDetailsCtrl as nodeDetailsCtrl',
                 templateUrl: 'nodes/nodelogs.html'

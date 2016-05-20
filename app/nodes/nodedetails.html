@@ -1,6 +1,6 @@
 <div class="ui sixteen column grid">
     <div class="one wide column">
-        <a ui-sref="contiv.nodes.list()">
+        <a ui-sref="contiv.menu.nodes.list()">
             <i class="arrow left icon"></i>
         </a>
     </div>
@@ -50,13 +50,13 @@
 
         <button ng-if="nodeDetailsCtrl.showCommissionButton && nodeDetailsCtrl.commissionButtonEnabled"
                 class="ui basic button"
-                ui-sref="contiv.nodes.commission({key:nodeDetailsCtrl.node.key})">
+                ui-sref="contiv.menu.nodes.commission({key:nodeDetailsCtrl.node.key})">
             <i class="checkmark icon"></i>
             Commission
         </button>
         <button ng-if="nodeDetailsCtrl.showCommissionButton && !nodeDetailsCtrl.commissionButtonEnabled"
                 class="ui disabled button"
-                ui-sref="contiv.nodes.commission({key:nodeDetailsCtrl.node.key})">
+                ui-sref="contiv.menu.nodes.commission({key:nodeDetailsCtrl.node.key})">
             <i class="checkmark icon"></i>
             Commission
         </button>
@@ -75,15 +75,15 @@
 </div>
 <div class="ui secondary pointing menu">
     <div class="ui container">
-        <a class="blue item" ui-sref="contiv.nodes.details.info({key:nodeDetailsCtrl.node.key})" ui-sref-active="active">
+        <a class="blue item" ui-sref="contiv.menu.nodes.details.info({key:nodeDetailsCtrl.node.key})" ui-sref-active="active">
             <i class="sidebar icon"></i>
             DETAILS
         </a>
-        <a class="blue item" ui-sref="contiv.nodes.details.logs({key:nodeDetailsCtrl.node.key})" ui-sref-active="active">
+        <a class="blue item" ui-sref="contiv.menu.nodes.details.logs({key:nodeDetailsCtrl.node.key})" ui-sref-active="active">
             <i class="file text outline icon"></i>
             LOGS
         </a>
-        <a class="blue item" ui-sref="contiv.nodes.details.stats({key:nodeDetailsCtrl.node.key})" ui-sref-active="active">
+        <a class="blue item" ui-sref="contiv.menu.nodes.details.stats({key:nodeDetailsCtrl.node.key})" ui-sref-active="active">
             <i class="area chart icon"></i>
             STATS
         </a>

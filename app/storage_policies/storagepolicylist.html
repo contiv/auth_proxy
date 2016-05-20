@@ -4,7 +4,7 @@
     </div>
 
     <div class="right floated three wide column">
-        <button class="ui blue button" ui-sref="contiv.storagepolicies.create">
+        <button class="ui blue button" ui-sref="contiv.menu.storagepolicies.create">
             <i class="add icon"></i>
             Create Policy
         </button>
@@ -28,7 +28,7 @@
 
     <tbody>
     <tr ng-repeat="policy in storagePolicyListCtrl.policies | filter:policiesSearchText">
-        <td><a ui-sref="contiv.storagepolicies.details({key:policy.name})">{{policy.name}}</a></td>
+        <td><a ui-sref="contiv.menu.storagepolicies.details({key:policy.name})">{{policy.name}}</a></td>
         <td>{{policy.updatedBy}}</td>
         <td>{{policy.lastUpdate}}</td>
         <td></td>

@@ -4,7 +4,7 @@
     </div>
 
     <div class="right floated three wide column">
-        <button class="ui blue button" ui-sref="contiv.nodes.discover">
+        <button class="ui blue button" ui-sref="contiv.menu.nodes.discover">
             <i class="add icon"></i>
             Discover Node
         </button>
@@ -29,7 +29,7 @@
                 <ctv-td>
                     <i ng-if="node['inventory-state'].status == 'Allocated'" class="green check circle icon"></i>
                     <i ng-if="node['inventory-state'].status != 'Allocated'" class="grey ban icon"></i>
-                    <a ui-sref="contiv.nodes.details.info({key:node.key})">{{node.key}}</a>
+                    <a ui-sref="contiv.menu.nodes.details.info({key:node.key})">{{node.key}}</a>
                 </ctv-td>
                 <ctv-td></ctv-td>
             </ctv-tr>

@@ -4,7 +4,7 @@
 angular.module('contiv.networks')
     .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
-            .state('contiv.networks.create', {
+            .state('contiv.menu.networks.create', {
                 url: '/create',
                 templateUrl: 'networks/networkcreate.html',
                 controller: 'NetworkCreateCtrl as networkCreateCtrl'
@@ -17,7 +17,7 @@ angular.module('contiv.networks')
             networkCreateCtrl.cidrPattern = ContivGlobals.CIDR_REGEX;
 
             function returnToNetworks() {
-                $state.go('contiv.networks.list');
+                $state.go('contiv.menu.networks.list');
             }
 
             function cancelCreating() {
