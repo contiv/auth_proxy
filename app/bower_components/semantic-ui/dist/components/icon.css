@@ -648,6 +648,9 @@ i.icons .inverted.corner.icon {
 .icon.search:before {
   content: "\e935";
 }
+.icon.details:before {
+  content: "\e936";
+}
 .icon.trash:before {
   content: "\e937";
 }

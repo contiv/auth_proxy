@@ -16,157 +16,125 @@ angular.module('contiv.nodes')
             })
         ;
     }])
-    .controller('NodeCommissionCtrl', ['$state', '$stateParams', 'NodesModel', function ($state, $stateParams, NodesModel) {
-        var nodeCommissionCtrl = this;
+    .controller('NodeCommissionCtrl', [
+        '$state', '$stateParams', 'NodesModel', 'CRUDHelperService',
+        function ($state, $stateParams, NodesModel, CRUDHelperService) {
+            var nodeCommissionCtrl = this;
 
-        /**
-         * To show commission or discover screen based on the route
-         */
-        function setMode() {
-            if ($state.is('contiv.menu.nodes.commission')) {
-                nodeCommissionCtrl.mode = 'commission';
-            } else {
-                nodeCommissionCtrl.mode = 'discover';
+            /**
+             * To show commission or discover screen based on the route
+             */
+            function setMode() {
+                if ($state.is('contiv.menu.nodes.commission')) {
+                    nodeCommissionCtrl.mode = 'commission';
+                } else {
+                    nodeCommissionCtrl.mode = 'discover';
+                }
             }
-        }
 
-        function returnToNodeDetails() {
-            $state.go('contiv.menu.nodes.details.info', {'key': $stateParams.key});
-        }
+            function returnToNodeDetails() {
+                $state.go('contiv.menu.nodes.details.info', {'key': $stateParams.key});
+            }
 
-        function returnToNodes() {
-            $state.go('contiv.menu.nodes.list');
-        }
+            function returnToNodes() {
+                $state.go('contiv.menu.nodes.list');
+            }
 
-        function cancelCommissioningNode() {
-            returnToNodeDetails();
-        }
+            function cancelCommissioningNode() {
+                returnToNodeDetails();
+            }
 
-        function cancelDiscoveringNode() {
-            returnToNodes();
-        }
+            function cancelDiscoveringNode() {
+                returnToNodes();
+            }
 
-        /**
-         * Compare if two variables (ansible or environment) have same name
-         * @param val1
-         * @param val2
-         * @returns {boolean}
-         */
-        function compareVariable(val1, val2) {
-            return val1.name == val2.name;
-        }
-
-        function addAnsibleVariable() {
-            //Removes existing variable with the same name first if it exists.
-            _.pullAllWith(nodeCommissionCtrl.ansibleVariables, [nodeCommissionCtrl.newAnsibleVariable], compareVariable);
-            nodeCommissionCtrl.ansibleVariables.push(nodeCommissionCtrl.newAnsibleVariable);
-            resetNewAnsibleVariable();
-        }
-
-        function removeAnsibleVariable(ansibleVariable) {
-            _.remove(nodeCommissionCtrl.ansibleVariables, function (item) {
-                return item.name == ansibleVariable.name;
-            });
-        }
-
-        function addEnvVariable() {
-            //Removes existing variable with the same name first if it exists.
-            _.pullAllWith(nodeCommissionCtrl.envVariables, [nodeCommissionCtrl.newEnvVariable], compareVariable);
-            nodeCommissionCtrl.envVariables.push(nodeCommissionCtrl.newEnvVariable);
-            resetNewEnvironmentVariable();
-        }
-
-        function removeEnvVariable(envVariable) {
-            _.remove(nodeCommissionCtrl.envVariables, function (item) {
-                return item.name == envVariable.name;
-            });
-        }
-
-        function createExtraVars() {
-            //Add ansible variables to extraVars
-            nodeCommissionCtrl.ansibleVariables.forEach(function (item) {
-                nodeCommissionCtrl.extraVars[item.name] = item.value
-            });
-            //Add environment variables to extraVars
-            var envVars = {};
-            nodeCommissionCtrl.envVariables.forEach(function (item) {
-                envVars[item.name] = item.value;
-            });
-            nodeCommissionCtrl.extraVars['env'] = envVars;
-        }
-
-        function commission() {
-            if (nodeCommissionCtrl.form.$valid) {
-                cleanupExtraVars();
-                createExtraVars();
-                NodesModel.commission($stateParams.key, nodeCommissionCtrl.extraVars).then(function (result) {
-                    returnToNodeDetails();
+            function createExtraVars() {
+                //Add ansible variables to extra_vars
+                nodeCommissionCtrl.ansibleVariables.forEach(function (item) {
+                    nodeCommissionCtrl.extra_vars[item.name] = item.value
                 });
-            }
-        }
-
-        function discover() {
-            if (nodeCommissionCtrl.form.$valid) {
-                createExtraVars();
-                NodesModel.discover(nodeCommissionCtrl.nodeIPAddr, nodeCommissionCtrl.extraVars).then(function (result) {
-                    returnToNodes();
+                //Add environment variables to extra_vars
+                var envVars = {};
+                nodeCommissionCtrl.envVariables.forEach(function (item) {
+                    envVars[item.name] = item.value;
                 });
+                nodeCommissionCtrl.extra_vars['env'] = envVars;
+                nodeCommissionCtrl.nodeOpsObj.extra_vars = JSON.stringify(nodeCommissionCtrl.extra_vars);
             }
-        }
 
-        function resetNewAnsibleVariable() {
-            nodeCommissionCtrl.newAnsibleVariable = {
-                'name': '',
-                'value': ''
-            };
-        }
-
-        function resetNewEnvironmentVariable() {
-            nodeCommissionCtrl.newEnvVariable = {
-                'name': '',
-                'value': ''
-            };
-        }
-
-        /**
-         * Cleanup ansible variables for network mode and scheduler. ng-if removes it from the view (DOM) but not from
-         * the model.
-         */
-        function cleanupExtraVars() {
-            //Cleanup for network mode
-            if (nodeCommissionCtrl.extraVars['contiv_network_mode'] == 'aci') {
-                delete nodeCommissionCtrl.extraVars['fwd_mode'];
-            } else {
-                delete nodeCommissionCtrl.extraVars['apic_url'];
-                delete nodeCommissionCtrl.extraVars['apic_username'];
-                delete nodeCommissionCtrl.extraVars['apic_password'];
-                delete nodeCommissionCtrl.extraVars['apic_leaf_nodes'];
-                delete nodeCommissionCtrl.extraVars['apic_phys_domain'];
-                delete nodeCommissionCtrl.extraVars['apic_epg_bridge_domain'];
-                delete nodeCommissionCtrl.extraVars['apic_contracts_unrestricted_mode'];
+            function commission() {
+                if (nodeCommissionCtrl.form.$valid) {
+                    CRUDHelperService.hideServerError(nodeCommissionCtrl);
+                    CRUDHelperService.startLoader(nodeCommissionCtrl);
+                    nodeCommissionCtrl.nodeOpsObj.nodes = [$stateParams.key];
+                    cleanupExtraVars();
+                    createExtraVars();
+                    NodesModel.commission(nodeCommissionCtrl.nodeOpsObj).then(function successCallback(result) {
+                        CRUDHelperService.stopLoader(nodeCommissionCtrl);
+                        returnToNodeDetails();
+                    }, function errorCallback(result) {
+                        CRUDHelperService.stopLoader(nodeCommissionCtrl);
+                        CRUDHelperService.showServerError(nodeCommissionCtrl, result);
+                    });
+                }
             }
-            //Cleanup for scheduler
-            if (nodeCommissionCtrl.extraVars['scheduler_provider'] == 'native-swarm') {
-                delete nodeCommissionCtrl.extraVars['ucp_bootstrap_node_name'];
+
+            function discover() {
+                if (nodeCommissionCtrl.form.$valid) {
+                    CRUDHelperService.hideServerError(nodeCommissionCtrl);
+                    CRUDHelperService.startLoader(nodeCommissionCtrl);
+                    createIPAddrArray();
+                    createExtraVars();
+                    NodesModel.discover(nodeCommissionCtrl.nodeOpsObj).then(function successCallback(result) {
+                        CRUDHelperService.stopLoader(nodeCommissionCtrl);
+                        returnToNodes();
+                    }, function errorCallback(result) {
+                        CRUDHelperService.stopLoader(nodeCommissionCtrl);
+                        CRUDHelperService.showServerError(nodeCommissionCtrl, result);
+                    });
+                }
             }
-        }
 
-        nodeCommissionCtrl.extraVars = {}; //TODO Intialize from global settings
-        nodeCommissionCtrl.ansibleVariables = [];
-        nodeCommissionCtrl.envVariables = [];
-        nodeCommissionCtrl.nodeIPAddr=''; //IP address of node to discover
+            /**
+             * Cleanup ansible variables for network mode and scheduler. ng-if removes it from the view (DOM) but not from
+             * the model.
+             */
+            function cleanupExtraVars() {
+                //Cleanup for network mode
+                if (nodeCommissionCtrl.extra_vars['contiv_network_mode'] == 'aci') {
+                    delete nodeCommissionCtrl.extra_vars['fwd_mode'];
+                } else {
+                    delete nodeCommissionCtrl.extra_vars['apic_url'];
+                    delete nodeCommissionCtrl.extra_vars['apic_username'];
+                    delete nodeCommissionCtrl.extra_vars['apic_password'];
+                    delete nodeCommissionCtrl.extra_vars['apic_leaf_nodes'];
+                    delete nodeCommissionCtrl.extra_vars['apic_phys_domain'];
+                    delete nodeCommissionCtrl.extra_vars['apic_epg_bridge_domain'];
+                    delete nodeCommissionCtrl.extra_vars['apic_contracts_unrestricted_mode'];
+                }
+                //Cleanup for scheduler
+                if (nodeCommissionCtrl.extra_vars['scheduler_provider'] == 'native-swarm') {
+                    delete nodeCommissionCtrl.extra_vars['ucp_bootstrap_node_name'];
+                }
+            }
 
-        nodeCommissionCtrl.addAnsibleVariable = addAnsibleVariable;
-        nodeCommissionCtrl.removeAnsibleVariable = removeAnsibleVariable;
-        nodeCommissionCtrl.addEnvVariable = addEnvVariable;
-        nodeCommissionCtrl.removeEnvVariable = removeEnvVariable;
-        nodeCommissionCtrl.cancelCommissioningNode = cancelCommissioningNode;
-        nodeCommissionCtrl.commission = commission;
-        nodeCommissionCtrl.discover = discover;
-        nodeCommissionCtrl.cancelDiscoveringNode = cancelDiscoveringNode;
+            function createIPAddrArray() {
+                nodeCommissionCtrl.nodeOpsObj.addrs = _.words(nodeCommissionCtrl.nodeIPAddr, /[^, ]+/g);
+            }
 
-        setMode();
-        resetNewAnsibleVariable();
-        resetNewEnvironmentVariable();
+            nodeCommissionCtrl.nodeOpsObj = {};
+            nodeCommissionCtrl.extra_vars = {}; //TODO Intialize from global settings
+            nodeCommissionCtrl.ansibleVariables = [];
+            nodeCommissionCtrl.envVariables = [];
+            nodeCommissionCtrl.nodeIPAddr = ''; //IP address of nodes to discover
 
-    }]);
+            nodeCommissionCtrl.cancelCommissioningNode = cancelCommissioningNode;
+            nodeCommissionCtrl.commission = commission;
+            nodeCommissionCtrl.discover = discover;
+            nodeCommissionCtrl.cancelDiscoveringNode = cancelDiscoveringNode;
+
+            setMode();
+            CRUDHelperService.stopLoader(nodeCommissionCtrl);
+            CRUDHelperService.hideServerError(nodeCommissionCtrl);
+
+        }]);

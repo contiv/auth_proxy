@@ -27,8 +27,8 @@
         <ctv-tbody>
             <ctv-tr ng-repeat="node in nodeListCtrl.filteredNodes">
                 <ctv-td>
-                    <i ng-if="node['inventory-state'].status == 'Allocated'" class="green check circle icon"></i>
-                    <i ng-if="node['inventory-state'].status != 'Allocated'" class="grey ban icon"></i>
+                    <i ng-if="node['inventory_state'].status == 'Allocated'" class="green check circle icon"></i>
+                    <i ng-if="node['inventory_state'].status != 'Allocated'" class="grey ban icon"></i>
                     <a ui-sref="contiv.menu.nodes.details.info({key:node.key})">{{node.key}}</a>
                 </ctv-td>
                 <ctv-td></ctv-td>

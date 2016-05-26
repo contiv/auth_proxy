@@ -1,6 +1,10 @@
 module.exports = function (config) {
     config.set({
 
+        preprocessors: {
+            'app/components/directives/*.html': ['ng-html2js']
+        },
+
         basePath: './',
 
         files: [
@@ -13,6 +17,7 @@ module.exports = function (config) {
             'app/bower_components/angular-mocks/angular-mocks.js',
             'app/components/models/module.js',
             'app/components/directives/module.js',
+            'app/components/directives/*.html',
             'app/components/utils/module.js',
             'app/components/**/*.js',
             'app/networks/module.js',//Needed because jasmine is unable to locate the contiv.networks module which is defined here
@@ -37,12 +42,18 @@ module.exports = function (config) {
             'karma-chrome-launcher',
             'karma-firefox-launcher',
             'karma-jasmine',
-            'karma-junit-reporter'
+            'karma-junit-reporter',
+            'karma-ng-html2js-preprocessor'
         ],
 
         junitReporter: {
             outputFile: 'test_out/unit.xml',
             suite: 'unit'
+        },
+
+        ngHtml2JsPreprocessor: {
+            stripPrefix: 'app/',
+            moduleName: 'contiv.test.directives'
         }
 
     });

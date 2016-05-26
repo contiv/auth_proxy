@@ -6,69 +6,69 @@
 describe("contiv.nodes module", function () {
     var nodesData = {
         "cluster-node1-0": {
-            "monitoring-state": {
+            "monitoring_state": {
                 "label": "cluster-node1",
-                "serial-number": "0",
-                "management-address": "192.168.2.10"
+                "serial_number": "0",
+                "management_address": "192.168.2.10"
             },
-            "inventory-state": {
+            "inventory_state": {
                 "name": "cluster-node1-0",
                 "status": "Unallocated",
-                "prev-status": "Incomplete",
+                "prev_status": "Incomplete",
                 "state": "Discovered",
-                "prev-state": "Unknown"
+                "prev_state": "Unknown"
             },
-            "configuration-state": {
-                "inventory-name": "cluster-node1-0",
-                "host-group": "service-master",
-                "ssh-address": "192.168.2.10",
-                "inventory-vars": {
+            "configuration_state": {
+                "inventory_name": "cluster-node1-0",
+                "host_group": "service-master",
+                "ssh_address": "192.168.2.10",
+                "inventory_vars": {
                     "node_addr": "192.168.2.10",
                     "node_name": "cluster-node1-0"
                 }
             }
         },
         "cluster-node2-0": {
-            "monitoring-state": {
+            "monitoring_state": {
                 "label": "cluster-node2",
-                "serial-number": "0",
-                "management-address": "192.168.2.11"
+                "serial_number": "0",
+                "management_address": "192.168.2.11"
             },
-            "inventory-state": {
+            "inventory_state": {
                 "name": "cluster-node2-0",
                 "status": "Unallocated",
-                "prev-status": "Incomplete",
+                "prev_status": "Incomplete",
                 "state": "Discovered",
-                "prev-state": "Unknown"
+                "prev_state": "Unknown"
             },
-            "configuration-state": {
-                "inventory-name": "cluster-node2-0",
-                "host-group": "service-master",
-                "ssh-address": "192.168.2.11",
-                "inventory-vars": {
+            "configuration_state": {
+                "inventory_name": "cluster-node2-0",
+                "host_group": "service-master",
+                "ssh_address": "192.168.2.11",
+                "inventory_vars": {
                     "node_addr": "192.168.2.11",
                     "node_name": "cluster-node2-0"
                 }
             }
         },
         "cluster-node3-0": {
-            "monitoring-state": {
+            "monitoring_state": {
                 "label": "cluster-node3",
-                "serial-number": "0",
-                "management-address": "192.168.2.12"
+                "serial_number": "0",
+                "management_address": "192.168.2.12"
             },
-            "inventory-state": {
+            "inventory_state": {
                 "name": "cluster-node3-0",
                 "status": "Unallocated",
-                "prev-status": "Incomplete",
+                "prev_status": "Incomplete",
                 "state": "Discovered",
-                "prev-state": "Unknown"
+                "prev_state": "Unknown"
             },
-            "configuration-state": {
-                "inventory-name": "cluster-node3-0",
-                "host-group": "service-master",
-                "ssh-address": "192.168.2.12",
-                "inventory-vars": {
+            "configuration_state": {
+                "inventory_name": "cluster-node3-0",
+                "host_group": "service-master",
+                "ssh_address": "192.168.2.12",
+                "inventory_vars": {
                     "node_addr": "192.168.2.12",
                     "node_name": "cluster-node3-0"
                 }
@@ -108,12 +108,10 @@ describe("contiv.nodes module", function () {
     beforeEach(inject(function (_$httpBackend_) {
         $httpBackend = _$httpBackend_;
         $httpBackend.when('GET', ContivGlobals.NODES_LIST_ENDPOINT).respond(nodesData);
-        $httpBackend.when('POST', ContivGlobals.NODES_COMMISSION_ENDPOINT + "cluster-node1-0?" +
-            'extra_vars=' + JSON.stringify(extraVars)).respond();
-        $httpBackend.when('POST', ContivGlobals.NODES_DISCOVER_ENDPOINT + "192.168.2.10?" +
-            'extra_vars=' + JSON.stringify(extraVars)).respond();
-        $httpBackend.when('POST', ContivGlobals.NODES_DECOMMISSION_ENDPOINT + 'cluster-node1-0').respond();
-        $httpBackend.when('POST', ContivGlobals.NODES_MAINTENANCE_ENDPOINT + 'cluster-node1-0').respond();
+        $httpBackend.when('POST', ContivGlobals.NODES_COMMISSION_ENDPOINT).respond();
+        $httpBackend.when('POST', ContivGlobals.NODES_DISCOVER_ENDPOINT).respond();
+        $httpBackend.when('POST', ContivGlobals.NODES_DECOMMISSION_ENDPOINT).respond();
+        $httpBackend.when('POST', ContivGlobals.NODES_MAINTENANCE_ENDPOINT).respond();
     }));
 
     afterEach(function () {
@@ -165,115 +163,22 @@ describe("contiv.nodes module", function () {
             //spec body
             expect(nodeCommissionCtrl).toBeDefined();
         });
-        it('NodeCommissionCtrl.addAnsibleVariable() should cache ansible variable', function () {
-            nodeCommissionCtrl.newAnsibleVariable = ansibleVariables[0];
-            nodeCommissionCtrl.addAnsibleVariable();
-            expect(nodeCommissionCtrl.ansibleVariables.length).toEqual(1);
-            expect(nodeCommissionCtrl.ansibleVariables[0].name).toEqual('fooAV1');
-            expect(nodeCommissionCtrl.ansibleVariables[0].value).toEqual('barAV1');
-            //newAnsibleVariable should be reset
-            expect(nodeCommissionCtrl.newAnsibleVariable.name).toEqual('');
-            expect(nodeCommissionCtrl.newAnsibleVariable.value).toEqual('');
-        });
-        it('NodeCommissionCtrl.addAnsibleVariable() called twice with same variable name should only have the latest addition', function () {
-            nodeCommissionCtrl.newAnsibleVariable = ansibleVariables[0];
-            nodeCommissionCtrl.addAnsibleVariable();
-            nodeCommissionCtrl.newAnsibleVariable = ansibleVariables[1];
-            nodeCommissionCtrl.addAnsibleVariable();
-            expect(nodeCommissionCtrl.ansibleVariables.length).toEqual(1);
-            expect(nodeCommissionCtrl.ansibleVariables[0].name).toEqual('fooAV1');
-            expect(nodeCommissionCtrl.ansibleVariables[0].value).toEqual('barAV2');
-        });
-        it('NodeCommissionCtrl.removeAnsibleVariable() should remove the ansible variable from cache', function () {
-            nodeCommissionCtrl.newAnsibleVariable = ansibleVariables[0];
-            nodeCommissionCtrl.addAnsibleVariable();
-            nodeCommissionCtrl.newAnsibleVariable = ansibleVariables[2];
-            nodeCommissionCtrl.addAnsibleVariable();
-            expect(nodeCommissionCtrl.ansibleVariables.length).toEqual(2);
-            nodeCommissionCtrl.removeAnsibleVariable(ansibleVariables[2]);
-            expect(nodeCommissionCtrl.ansibleVariables.length).toEqual(1);
-            expect(nodeCommissionCtrl.ansibleVariables[0].name).toEqual('fooAV1');
-            expect(nodeCommissionCtrl.ansibleVariables[0].value).toEqual('barAV1');
-            nodeCommissionCtrl.removeAnsibleVariable(ansibleVariables[0]);
-            expect(nodeCommissionCtrl.ansibleVariables.length).toEqual(0);
-            nodeCommissionCtrl.removeAnsibleVariable(ansibleVariables[0]);
-            expect(nodeCommissionCtrl.ansibleVariables.length).toEqual(0);
-        });
-        it('NodeCommissionCtrl.addEnvVariable() should cache env variable', function () {
-            nodeCommissionCtrl.newEnvVariable = envVariables[0];
-            nodeCommissionCtrl.addEnvVariable();
-            expect(nodeCommissionCtrl.envVariables.length).toEqual(1);
-            expect(nodeCommissionCtrl.envVariables[0].name).toEqual('fooEnv1');
-            expect(nodeCommissionCtrl.envVariables[0].value).toEqual('barEnv1');
-            //newEnvVariable should be reset
-            expect(nodeCommissionCtrl.newEnvVariable.name).toEqual('');
-            expect(nodeCommissionCtrl.newEnvVariable.value).toEqual('');
-        });
-        it('NodeCommissionCtrl.addEnvVariable() called twice with same variable name should only have the latest addition', function () {
-            nodeCommissionCtrl.newEnvVariable = envVariables[0];
-            nodeCommissionCtrl.addEnvVariable();
-            nodeCommissionCtrl.newEnvVariable = envVariables[1];
-            nodeCommissionCtrl.addEnvVariable();
-            expect(nodeCommissionCtrl.envVariables.length).toEqual(1);
-            expect(nodeCommissionCtrl.envVariables[0].name).toEqual('fooEnv1');
-            expect(nodeCommissionCtrl.envVariables[0].value).toEqual('barEnv2');
-        });
-        it('NodeCommissionCtrl.removeEnvVariable() should remove the environment variable from cache', function () {
-            nodeCommissionCtrl.newEnvVariable = envVariables[0];
-            nodeCommissionCtrl.addEnvVariable();
-            nodeCommissionCtrl.newEnvVariable = envVariables[2];
-            nodeCommissionCtrl.addEnvVariable();
-            expect(nodeCommissionCtrl.envVariables.length).toEqual(2);
-            nodeCommissionCtrl.removeEnvVariable(envVariables[2]);
-            expect(nodeCommissionCtrl.envVariables.length).toEqual(1);
-            expect(nodeCommissionCtrl.envVariables[0].name).toEqual('fooEnv1');
-            expect(nodeCommissionCtrl.envVariables[0].value).toEqual('barEnv1');
-            nodeCommissionCtrl.removeEnvVariable(envVariables[0]);
-            expect(nodeCommissionCtrl.envVariables.length).toEqual(0);
-            nodeCommissionCtrl.removeEnvVariable(envVariables[0]);
-            expect(nodeCommissionCtrl.envVariables.length).toEqual(0);
-        });
         it('NodeCommissionCtrl.commission() should do a POST on /commission/node/ REST API', function () {
             nodeCommissionCtrl.form = {'$valid' : true};
-            _.forEach(extraVars, function (value, key) {
-                if (key != 'env') {
-                    nodeCommissionCtrl.newAnsibleVariable.name = key;
-                    nodeCommissionCtrl.newAnsibleVariable.value = value;
-                    nodeCommissionCtrl.addAnsibleVariable();
-                }
-                else {
-                    _.forEach(value, function (envVal, envKey) {
-                        nodeCommissionCtrl.newEnvVariable.name = envKey;
-                        nodeCommissionCtrl.newEnvVariable.value = envVal;
-                        nodeCommissionCtrl.addEnvVariable();
-                    })
-                }
-            });
+            nodeCommissionCtrl.ansibleVariables = ansibleVariables;
+            nodeCommissionCtrl.envVariables = envVariables;
+            nodeCommissionCtrl.nodeOpsObj.host_group = 'service-master';
             nodeCommissionCtrl.commission();
-            $httpBackend.expectPOST(ContivGlobals.NODES_COMMISSION_ENDPOINT + "cluster-node1-0?" +
-                'extra_vars=' + JSON.stringify(extraVars));
+            $httpBackend.expectPOST(ContivGlobals.NODES_COMMISSION_ENDPOINT);
             $httpBackend.flush();
         });
         it('NodeCommissionCtrl.discover() should do a POST on /discover/node/ REST API', function () {
             nodeCommissionCtrl.form = {'$valid' : true};
             nodeCommissionCtrl.nodeIPAddr = '192.168.2.10';
-            _.forEach(extraVars, function (value, key) {
-                if (key != 'env') {
-                    nodeCommissionCtrl.newAnsibleVariable.name = key;
-                    nodeCommissionCtrl.newAnsibleVariable.value = value;
-                    nodeCommissionCtrl.addAnsibleVariable();
-                }
-                else {
-                    _.forEach(value, function (envVal, envKey) {
-                        nodeCommissionCtrl.newEnvVariable.name = envKey;
-                        nodeCommissionCtrl.newEnvVariable.value = envVal;
-                        nodeCommissionCtrl.addEnvVariable();
-                    })
-                }
-            });
+            nodeCommissionCtrl.ansibleVariables = ansibleVariables;
+            nodeCommissionCtrl.envVariables = envVariables;
             nodeCommissionCtrl.discover();
-            $httpBackend.expectPOST(ContivGlobals.NODES_DISCOVER_ENDPOINT + "192.168.2.10?" +
-                'extra_vars=' + JSON.stringify(extraVars));
+            $httpBackend.expectPOST(ContivGlobals.NODES_DISCOVER_ENDPOINT);
             $httpBackend.flush();
         });
     });
@@ -302,7 +207,7 @@ describe("contiv.nodes module", function () {
         });
         it('NodeDetailsCtrl.decommission() should do a POST on /decommission/node/', function () {
             nodeDetailsCtrl.decommission();
-            $httpBackend.expectPOST(ContivGlobals.NODES_DECOMMISSION_ENDPOINT + $stateParams.key);
+            $httpBackend.expectPOST(ContivGlobals.NODES_DECOMMISSION_ENDPOINT);
             $httpBackend.flush();
             expect(nodeDetailsCtrl.showCommissionButton).toBeFalsy();
             expect(nodeDetailsCtrl.commissionButtonEnabled).toBeFalsy();
@@ -310,7 +215,7 @@ describe("contiv.nodes module", function () {
         });
         it('NodeDetailsCtrl.upgrade() should do a POST on /maintenance/node/', function () {
             nodeDetailsCtrl.upgrade();
-            $httpBackend.expectPOST(ContivGlobals.NODES_MAINTENANCE_ENDPOINT + $stateParams.key);
+            $httpBackend.expectPOST(ContivGlobals.NODES_MAINTENANCE_ENDPOINT);
             $httpBackend.flush();
             expect(nodeDetailsCtrl.showCommissionButton).toBeFalsy();
             expect(nodeDetailsCtrl.commissionButtonEnabled).toBeFalsy();

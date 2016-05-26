@@ -5,7 +5,7 @@ angular.module('contiv.dashboard')
     .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
             .state('contiv.menu.dashboard', {
-                url: '/',
+                url: '/dashboard',
                 controller: 'DashboardCtrl as dashboardCtrl',
                 templateUrl: 'dashboard/dashboard.html'
             });

@@ -5,7 +5,7 @@ angular.module('contiv.login')
     .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
             .state('contiv.login', {
-                url: '/login',
+                url: '/',
                 templateUrl: 'login/login.html',
                 controller: 'LoginCtrl as loginCtrl'
             })

@@ -31,7 +31,10 @@ angular.module('contiv.nodes')
             var nodeDetailsCtrl = this;
 
             function decommission() {
-                NodesModel.decommission($stateParams.key).then(function (result) {
+                var nodeOpsObj = {
+                  nodes: [$stateParams.key]
+                };
+                NodesModel.decommission(nodeOpsObj).then(function (result) {
                     //Disable all buttons initially. Poll will assign values appropriately.
                     nodeDetailsCtrl.showCommissionButton = false;
                     nodeDetailsCtrl.commissionButtonEnabled = false;
@@ -40,7 +43,10 @@ angular.module('contiv.nodes')
             }
 
             function upgrade() {
-                NodesModel.upgrade($stateParams.key).then(function (result) {
+                var nodeOpsObj = {
+                    nodes: [$stateParams.key]
+                };
+                NodesModel.upgrade(nodeOpsObj).then(function (result) {
                     //Disable all buttons initially. Poll will assign values appropriately.
                     nodeDetailsCtrl.showCommissionButton = false;
                     nodeDetailsCtrl.commissionButtonEnabled = false;
@@ -52,7 +58,7 @@ angular.module('contiv.nodes')
              * Display buttons based on status of node
              */
             function setButtonDisplay() {
-                switch (nodeDetailsCtrl.node['inventory-state'].status) {
+                switch (nodeDetailsCtrl.node['inventory_state'].status) {
                     case 'Unallocated':
                         nodeDetailsCtrl.showCommissionButton = true;
                         nodeDetailsCtrl.commissionButtonEnabled = true;

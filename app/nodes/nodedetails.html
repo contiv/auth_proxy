@@ -1,7 +1,7 @@
 <div class="ui sixteen column grid">
     <div class="one wide column">
         <a ui-sref="contiv.menu.nodes.list()">
-            <i class="arrow left icon"></i>
+            <i class="large arrow left icon"></i>
         </a>
     </div>
     <div class="left floated ten wide column">
@@ -38,13 +38,13 @@
         <button ng-if="!nodeDetailsCtrl.showCommissionButton && nodeDetailsCtrl.commissionButtonEnabled"
                 class="ui basic button"
                 onclick="$('#decommission-node-modal').modal('show')">
-            <i class="remove icon"></i>
+            <i class="delete icon"></i>
             Decommission
         </button>
         <button ng-if="!nodeDetailsCtrl.showCommissionButton && !nodeDetailsCtrl.commissionButtonEnabled"
                 class="ui disabled button"
                 onclick="$('#decommission-node-modal').modal('show')">
-            <i class="remove icon"></i>
+            <i class="delete icon"></i>
             Decommission
         </button>
 
@@ -76,7 +76,7 @@
 <div class="ui secondary pointing menu">
     <div class="ui container">
         <a class="blue item" ui-sref="contiv.menu.nodes.details.info({key:nodeDetailsCtrl.node.key})" ui-sref-active="active">
-            <i class="sidebar icon"></i>
+            <i class="details icon"></i>
             DETAILS
         </a>
         <a class="blue item" ui-sref="contiv.menu.nodes.details.logs({key:nodeDetailsCtrl.node.key})" ui-sref-active="active">

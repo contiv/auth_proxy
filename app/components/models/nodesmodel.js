@@ -39,12 +39,11 @@ NodesCollection.prototype.extract = function (result) {
      * }
  * @returns {*}
  */
-NodesCollection.prototype.commission = function (key, extraVars) {
+NodesCollection.prototype.commission = function (nodeOpsObj) {
     var nodescollection = this;
     var deferred = nodescollection.$q.defer();
-    var queryString = 'extra_vars=' + JSON.stringify(extraVars);
-    var url = ContivGlobals.NODES_COMMISSION_ENDPOINT + key + '?' + queryString;
-    nodescollection.$http.post(url, {}, {
+    var url = ContivGlobals.NODES_COMMISSION_ENDPOINT;
+    nodescollection.$http.post(url, nodeOpsObj, {
             'headers': {
                 'Content-Type': 'application/json'
             }
@@ -58,11 +57,11 @@ NodesCollection.prototype.commission = function (key, extraVars) {
     return deferred.promise;
 };
 
-NodesCollection.prototype.decommission = function (key) {
+NodesCollection.prototype.decommission = function (nodeOpsObj) {
     var nodescollection = this;
     var deferred = nodescollection.$q.defer();
-    var url = ContivGlobals.NODES_DECOMMISSION_ENDPOINT + key;
-    nodescollection.$http.post(url, {}, {
+    var url = ContivGlobals.NODES_DECOMMISSION_ENDPOINT;
+    nodescollection.$http.post(url, nodeOpsObj, {
             'headers': {
                 'Content-Type': 'application/json'
             }
@@ -75,11 +74,11 @@ NodesCollection.prototype.decommission = function (key) {
     return deferred.promise;
 };
 
-NodesCollection.prototype.upgrade = function (key) {
+NodesCollection.prototype.upgrade = function (nodeOpsObj) {
     var nodescollection = this;
     var deferred = nodescollection.$q.defer();
-    var url = ContivGlobals.NODES_MAINTENANCE_ENDPOINT + key;
-    nodescollection.$http.post(url, {}, {
+    var url = ContivGlobals.NODES_MAINTENANCE_ENDPOINT;
+    nodescollection.$http.post(url, nodeOpsObj, {
             'headers': {
                 'Content-Type': 'application/json'
             }
@@ -102,12 +101,11 @@ NodesCollection.prototype.upgrade = function (key) {
      * }
  * @returns {*}
  */
-NodesCollection.prototype.discover = function (ip, extraVars) {
+NodesCollection.prototype.discover = function (nodeOpsObj) {
     var nodescollection = this;
     var deferred = nodescollection.$q.defer();
-    var queryString = 'extra_vars=' + JSON.stringify(extraVars);
-    var url = ContivGlobals.NODES_DISCOVER_ENDPOINT + ip + '?' + queryString;
-    nodescollection.$http.post(url, {}, {
+    var url = ContivGlobals.NODES_DISCOVER_ENDPOINT;
+    nodescollection.$http.post(url, nodeOpsObj, {
             'headers': {
                 'Content-Type': 'application/json'
             }

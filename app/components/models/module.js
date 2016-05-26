@@ -21,10 +21,10 @@ var ContivGlobals = (function () {
 
         //REST endpoints for CLUSTER
         'NODES_LIST_ENDPOINT': CLUSTER + '/info/nodes',
-        'NODES_DISCOVER_ENDPOINT': CLUSTER + '/discover/node/',
-        'NODES_COMMISSION_ENDPOINT': CLUSTER + '/commission/node/',
-        'NODES_DECOMMISSION_ENDPOINT': CLUSTER + '/decommission/node/',
-        'NODES_MAINTENANCE_ENDPOINT': CLUSTER + '/maintenance/node/',
+        'NODES_DISCOVER_ENDPOINT': CLUSTER + '/discover/nodes',
+        'NODES_COMMISSION_ENDPOINT': CLUSTER + '/commission/nodes',
+        'NODES_DECOMMISSION_ENDPOINT': CLUSTER + '/decommission/nodes',
+        'NODES_MAINTENANCE_ENDPOINT': CLUSTER + '/maintenance/nodes',
 
         //Refresh interval in milliseconds
         'REFRESH_INTERVAL': 5000,
