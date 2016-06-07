@@ -82,13 +82,15 @@
                     <select class="ui dropdown"
                             ng-model="isolationPolicyDetailsCtrl.newIncomingSelectedApplicationGroup"
                             ng-options="group.groupName for group in isolationPolicyDetailsCtrl.applicationGroups"
-                            ng-change="isolationPolicyDetailsCtrl.onChangeIncomingApplicationGroupSelection()">
+                            ng-change="isolationPolicyDetailsCtrl.onChangeIncomingApplicationGroupSelection()"
+                            ng-disabled="isolationPolicyDetailsCtrl.disableIncomingApplicationGroupSelection">
                         <option value="">none</option>
                     </select>
                 </td>
                 <td>
                     <select class="ui dropdown" ng-model="isolationPolicyDetailsCtrl.newIncomingRule.fromNetwork"
                             ng-options="network.networkName as network.networkName for network in isolationPolicyDetailsCtrl.networks"
+                            ng-change="isolationPolicyDetailsCtrl.onChangeIncomingNetworkSelection()"
                             ng-disabled="isolationPolicyDetailsCtrl.disableIncomingNetworkSelection">
                         <option value="">none</option>
                     </select>
@@ -164,13 +166,15 @@
                     <select class="ui dropdown"
                             ng-model="isolationPolicyDetailsCtrl.newOutgoingSelectedApplicationGroup"
                             ng-options="group.groupName for group in isolationPolicyDetailsCtrl.applicationGroups"
-                            ng-change="isolationPolicyDetailsCtrl.onChangeOutgoingApplicationGroupSelection()">
+                            ng-change="isolationPolicyDetailsCtrl.onChangeOutgoingApplicationGroupSelection()"
+                            ng-disabled="isolationPolicyDetailsCtrl.disableOutgoingApplicationGroupSelection">
                         <option value="">none</option>
                     </select>
                 </td>
                 <td>
                     <select class="ui dropdown" ng-model="isolationPolicyDetailsCtrl.newOutgoingRule.toNetwork"
                             ng-options="network.networkName as network.networkName for network in isolationPolicyDetailsCtrl.networks"
+                            ng-change="isolationPolicyDetailsCtrl.onChangeOutgoingNetworkSelection()"
                             ng-disabled="isolationPolicyDetailsCtrl.disableOutgoingNetworkSelection">
                         <option value="">none</option>
                     </select>

@@ -32,6 +32,8 @@ angular.module('contiv.networkpolicies')
             isolationPolicyDetailsCtrl.applicationGroups = [];
             isolationPolicyDetailsCtrl.disableOutgoingNetworkSelection = false;
             isolationPolicyDetailsCtrl.disableIncomingNetworkSelection = false;
+            isolationPolicyDetailsCtrl.disableOutgoingApplicationGroupSelection = false;
+            isolationPolicyDetailsCtrl.disableIncomingApplicationGroupSelection = false;
             isolationPolicyDetailsCtrl.newIncomingSelectedApplicationGroup = '';
             isolationPolicyDetailsCtrl.newOutgoingSelectedApplicationGroup = '';
 
@@ -91,8 +93,10 @@ angular.module('contiv.networkpolicies')
                     direction: 'in',
                     tenantName: 'default',
                     policyName: isolationPolicyDetailsCtrl.policy.policyName
-                }
-
+                };
+                isolationPolicyDetailsCtrl.newIncomingSelectedApplicationGroup = '';
+                isolationPolicyDetailsCtrl.disableIncomingNetworkSelection = false;
+                isolationPolicyDetailsCtrl.disableIncomingApplicationGroupSelection = false;
             }
 
             function resetNewOutgoingRule() {
@@ -109,8 +113,10 @@ angular.module('contiv.networkpolicies')
                     direction: 'out',
                     tenantName: 'default',
                     policyName: isolationPolicyDetailsCtrl.policy.policyName
-                }
-
+                };
+                isolationPolicyDetailsCtrl.newOutgoingSelectedApplicationGroup = '';
+                isolationPolicyDetailsCtrl.disableOutgoingNetworkSelection = false;
+                isolationPolicyDetailsCtrl.disableOutgoingApplicationGroupSelection = false;
             }
 
             /**
@@ -147,8 +153,7 @@ angular.module('contiv.networkpolicies')
                     //If application group has been selected
                     isolationPolicyDetailsCtrl.newOutgoingRule.toEndpointGroup =
                         isolationPolicyDetailsCtrl.newOutgoingSelectedApplicationGroup.groupName;
-                    isolationPolicyDetailsCtrl.newOutgoingRule.toNetwork =
-                        isolationPolicyDetailsCtrl.newOutgoingSelectedApplicationGroup.networkName;
+                    isolationPolicyDetailsCtrl.newOutgoingRule.toNetwork = '';
                     isolationPolicyDetailsCtrl.disableOutgoingNetworkSelection = true;
                 } else {
                     //When 'none' is selected
@@ -166,8 +171,7 @@ angular.module('contiv.networkpolicies')
                     //If application group has been selected
                     isolationPolicyDetailsCtrl.newIncomingRule.fromEndpointGroup =
                         isolationPolicyDetailsCtrl.newIncomingSelectedApplicationGroup.groupName;
-                    isolationPolicyDetailsCtrl.newIncomingRule.fromNetwork =
-                        isolationPolicyDetailsCtrl.newIncomingSelectedApplicationGroup.networkName;
+                    isolationPolicyDetailsCtrl.newIncomingRule.fromNetwork = '';
                     isolationPolicyDetailsCtrl.disableIncomingNetworkSelection = true;
                 } else {
                     //When 'none' is selected
@@ -177,6 +181,33 @@ angular.module('contiv.networkpolicies')
 
             }
 
+            /**
+             * Event handler to disable application group selection box once network is selected while creating a new
+             * rule.
+             */
+            function onChangeOutgoingNetworkSelection() {
+                if (isolationPolicyDetailsCtrl.newOutgoingRule.toNetwork != null) {
+                    //If network has been selected
+                    isolationPolicyDetailsCtrl.newOutgoingRule.ToEndpointGroup = '';
+                    isolationPolicyDetailsCtrl.disableOutgoingApplicationGroupSelection = true;
+                } else {
+                    isolationPolicyDetailsCtrl.disableOutgoingApplicationGroupSelection = false;
+                }
+            }
+
+            /**
+             * Event handler to disable application group selection box once network is selected while creating a new
+             * rule.
+             */
+            function onChangeIncomingNetworkSelection() {
+                if (isolationPolicyDetailsCtrl.newIncomingRule.fromNetwork != null) {
+                    //If network has been selected
+                    isolationPolicyDetailsCtrl.newIncomingRule.fromEndpointGroup = '';
+                    isolationPolicyDetailsCtrl.disableIncomingApplicationGroupSelection = true;
+                } else {
+                    isolationPolicyDetailsCtrl.disableIncomingApplicationGroupSelection = false;
+                }
+            }
             /**
              * Generates rule id
              * TODO Make it cryptographically stronger once we have multiple users updating same policy
@@ -285,6 +316,8 @@ angular.module('contiv.networkpolicies')
             //Event Handlers
             isolationPolicyDetailsCtrl.onChangeOutgoingApplicationGroupSelection = onChangeOutgoingApplicationGroupSelection;
             isolationPolicyDetailsCtrl.onChangeIncomingApplicationGroupSelection = onChangeIncomingApplicationGroupSelection;
+            isolationPolicyDetailsCtrl.onChangeOutgoingNetworkSelection = onChangeOutgoingNetworkSelection;
+            isolationPolicyDetailsCtrl.onChangeIncomingNetworkSelection = onChangeIncomingNetworkSelection;
 
             setMode();
 

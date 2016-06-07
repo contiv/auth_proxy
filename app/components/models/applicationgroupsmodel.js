@@ -10,7 +10,7 @@ angular.module('contiv.models')
          * @param group
          */
         groupsmodel.generateKey = function (group) {
-            return group.tenantName + ':' + group.networkName + ':' + group.groupName;
+            return group.tenantName + ':' + group.groupName;
         };
 
         return groupsmodel;
