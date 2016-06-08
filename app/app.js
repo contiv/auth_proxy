@@ -13,7 +13,8 @@ angular.module('contivApp', [
         'contiv.storagepolicies',
         'contiv.servicelbs',
         'contiv.volumes',
-        'contiv.nodes'
+        'contiv.nodes',
+        'contiv.organizations'
     ])
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         $stateProvider

@@ -1,0 +1,26 @@
+<form id="organizationCreationForm" name="organizationCreateCtrl.form" class="ui form" role="form"
+      ng-submit="organizationCreateCtrl.createOrganization(newOrganization)" novalidate>
+    <div class="ui active inverted dimmer" ng-show="organizationCreateCtrl.showLoader">
+        <div class="ui loader"></div>
+    </div>
+    <div class="field">
+        <div ng-show="organizationCreateCtrl.form.$submitted">
+            <div ng-hide="organizationCreateCtrl.form.$valid" class="ui negative message">
+                <ul class="list">
+                    <li ng-show="organizationCreateCtrl.form.newOrganizationName.$error.required">Please enter organization name</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <label for="newOrganizationName">Organization name</label>
+        <input type="text" id="newOrganizationName" name="newOrganizationName" ng-model="organizationCreateCtrl.newOrganization.tenantName"
+               placeholder="Enter name" required>
+    </div>
+
+    <button type="button" class="ui basic button" ng-click="organizationCreateCtrl.cancelCreating()">Cancel</button>
+    <button type="submit" class="ui blue button">Create</button>
+
+    <ctv-error ng-show="organizationCreateCtrl.showServerError" header="Error creating organization" error="organizationCreateCtrl.serverErrorMessage">
+    </ctv-error>
+</form>

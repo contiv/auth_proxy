@@ -1,0 +1,43 @@
+<div class="ui sixteen column grid">
+    <div class="twelve wide column">
+        <div class="content" style="font-size: 24px">Organizations</div>
+    </div>
+
+    <div class="right floated four wide column">
+        <button class="ui blue button" ui-sref="contiv.menu.organizations.create">
+            <i class="add icon"></i>
+            Create Organization
+        </button>
+    </div>
+</div>
+
+<div class="ui basic segment">
+    <div class="ui active inverted dimmer" ng-show="organizationsListCtrl.showLoader">
+        <div class="ui loader"></div>
+    </div>
+    <ctv-table items="organizationsListCtrl.organizations" filtereditems="organizationsListCtrl.filteredorganizations" size="12">
+        <ctv-thead>
+            <ctv-tr>
+                <ctv-th>Organization Name</ctv-th>
+                <ctv-th class="right floated three wide column">
+                    <ctv-tsearch placeholder="Search organizations..." size="30"></ctv-tsearch>
+                </ctv-th>
+            </ctv-tr>
+        </ctv-thead>
+
+        <ctv-tbody>
+            <ctv-tr ng-repeat="organization in organizationsListCtrl.filteredorganizations">
+                <ctv-td><a ui-sref="contiv.menu.organizations.details({key:organization.key})">{{organization.tenantName}}</a></ctv-td>
+                <ctv-td></ctv-td>
+            </ctv-tr>
+        </ctv-tbody>
+
+        <ctv-tfoot>
+            <ctv-tr>
+                <ctv-th colspan="5">
+                    <ctv-tpagination></ctv-tpagination>
+                </ctv-th>
+            </ctv-tr>
+        </ctv-tfoot>
+    </ctv-table>
+</div>

@@ -29,7 +29,9 @@ module.exports = function (config) {
             'app/service_lbs/module.js',
             'app/service_lbs/**/*.js',
             'app/nodes/module.js',
-            'app/nodes/**/*.js'
+            'app/nodes/**/*.js',
+            'app/organizations/module.js',
+            'app/organizations/**/*.js'
         ],
 
         autoWatch: true,
