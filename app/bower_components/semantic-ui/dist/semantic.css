@@ -7910,6 +7910,10 @@ i.icons .inverted.corner.icon {
   content: "\e938";
 }
 
+.icon.organizations:before {
+  content: "\e95a";
+}
+
 .icon.storagepolicies:before {
   content: "\e904";
 }
