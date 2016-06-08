@@ -11,28 +11,32 @@ angular.module('contiv.storagepolicies')
             })
         ;
     }])
-    .controller('StoragePolicyListCtrl', ['$scope', '$interval', 'StoragePoliciesModel', function ($scope, $interval, StoragePoliciesModel) {
-        var storagePolicyListCtrl = this;
+    .controller('StoragePolicyListCtrl', ['$scope', '$interval', '$filter', 'StoragePoliciesModel', 'CRUDHelperService',
+        function ($scope, $interval, $filter, StoragePoliciesModel, CRUDHelperService) {
+            var storagePolicyListCtrl = this;
 
-        function getPolicies(reload) {
-            StoragePoliciesModel.get(reload)
-                .then(function (result) {
-                    storagePolicyListCtrl.policies = result;
-                });
-        }
+            function getPolicies(reload) {
+                StoragePoliciesModel.get(reload)
+                    .then(function successCallback(result) {
+                        CRUDHelperService.stopLoader(storagePolicyListCtrl);
+                        storagePolicyListCtrl.policies = $filter('orderBy')(result, 'name');
+                    }, function errorCallback(result) {
+                        CRUDHelperService.stopLoader(storagePolicyListCtrl);
+                    });
+            }
 
-        //Load from cache for quick display initially
-        getPolicies(false);
+            //Load from cache for quick display initially
+            getPolicies(false);
 
-        var promise;
-        //Don't do auto-refresh if one is already in progress
-        if (!angular.isDefined(promise)) {
-            promise = $interval(function () {
-                getPolicies(true);
-            }, 5000);
-        }
-        //stop polling when user moves away from the page
-        $scope.$on('$destroy', function () {
-            $interval.cancel(promise);
-        });
-    }]);
+            var promise;
+            //Don't do auto-refresh if one is already in progress
+            if (!angular.isDefined(promise)) {
+                promise = $interval(function () {
+                    getPolicies(true);
+                }, ContivGlobals.REFRESH_INTERVAL);
+            }
+            //stop polling when user moves away from the page
+            $scope.$on('$destroy', function () {
+                $interval.cancel(promise);
+            });
+        }]);

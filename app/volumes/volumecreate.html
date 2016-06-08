@@ -1,0 +1,150 @@
+<form class="ui form" name="volumeCreateCtrl.form" role="form"
+      ng-submit="volumeCreateCtrl.createVolume(volume)"
+      novalidate>
+    <div class="ui active inverted dimmer" ng-show="volumeCreateCtrl.showLoader">
+        <div class="ui loader"></div>
+    </div>
+    <div class="field">
+        <div ng-show="volumeCreateCtrl.form.$submitted">
+            <div ng-hide="volumeCreateCtrl.form.$valid" class="ui negative message">
+                <ul class="list">
+                    <li ng-show="volumeCreateCtrl.form.newVolumeName.$error.required">Please enter volume name
+                    </li>
+                    <li ng-show="volumeCreateCtrl.form.newVolumePolicy.$error.required">Please select storage policy
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <label for="newVolumeName">Volume name</label>
+        <input type="text" id="newVolumeName" name="newVolumeName"
+               ng-model="volumeCreateCtrl.newVolume.volume" placeholder="Enter name" required>
+    </div>
+
+    <div class="ui section divider" style="margin-top: 30px"></div>
+    <ctv-collapsible title="Policy Settings">
+        <div class="inline fields">
+            <div class="field">
+                <div class="ui left icon input">
+                    <input type="text" ng-model="policySearchText.name"
+                           placeholder="Filter by policy name">
+                    <i class="search icon"></i>
+                </div>
+            </div>
+            <div class="field">
+                <select id="newVolumePolicy"
+                        name="newVolumePolicy"
+                        class="ui dropdown"
+                        ng-model="volumeCreateCtrl.selectedPolicy"
+                        ng-options="policy.name for policy in volumeCreateCtrl.policies | filter:policySearchText" required>
+                </select>
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="newVolumePool">Pool</label>
+            <input type="text" id="newVolumePool" name="newVolumePool"
+                   ng-model="volumeCreateCtrl.selectedPolicy.driver.pool"
+                   placeholder="Enter pool" required>
+        </div>
+        <div class="field">
+            <label for="newVolumePool">Size</label>
+            <input type="text" id="newVolumeSize" name="newVolumeSize"
+                   ng-model="volumeCreateCtrl.selectedPolicy.create.size"
+                   placeholder="Enter size" required>
+        </div>
+        <div class="field">
+            <label for="newVolumeFilesystem">Filesystem</label>
+            <select id="newVolumeFilesystem" class="ui dropdown"
+                    ng-model="volumeCreateCtrl.selectedPolicy.create.filesystem">
+                <option ng-repeat="fs in volumeCreateCtrl.filesystems" value="{{fs}}">{{fs}}</option>
+            </select>
+        </div>
+        <div class="inline fields">
+            <label>Snapshots enabled:</label>
+            <div class="field">
+                <div class="ui radio checkbox">
+                    <input type="radio" ng-model="volumeCreateCtrl.selectedPolicy.runtime.snapshots"
+                           ng-value="true">
+                    <label>Yes</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui radio checkbox">
+                    <input type="radio" ng-model="volumeCreateCtrl.selectedPolicy.runtime.snapshots"
+                           ng-value="false">
+                    <label>No</label>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label for="newVolumeSnapshotFrequency">Snapshot frequency</label>
+            <input type="text" id="newVolumeSnapshotFrequency" name="newVolumeSnapshotFrequency"
+                   ng-model="volumeCreateCtrl.selectedPolicy.runtime.snapshot.frequency"
+                   placeholder="In minutes, for example 20m" required>
+        </div>
+        <div class="field">
+            <label for="newVolumeSnapshotKeep">Number of saved snapshots</label>
+            <input type="number" id="newVolumeSnapshotKeep" name="newVolumeSnapshotKeep"
+                   ng-model="volumeCreateCtrl.selectedPolicy.runtime.snapshot.keep" placeholder="" required>
+        </div>
+        <div class="field">
+            <label for="newVolumeWriteIops">write-iops</label>
+            <input type="number" id="newVolumeWriteIops" name="newVolumeWriteIops"
+                   ng-model="volumeCreateCtrl.selectedPolicy.runtime['rate-limit']['write-iops']"
+                   placeholder="">
+        </div>
+        <div class="field">
+            <label for="newVolumeReadIops">read-iops</label>
+            <input type="number" id="newVolumeReadIops" name="newVolumeReadIops"
+                   ng-model="volumeCreateCtrl.selectedPolicy.runtime['rate-limit']['read-iops']"
+                   placeholder="">
+        </div>
+        <div class="field">
+            <label for="newVolumeWriteBps">write-bps</label>
+            <input type="number" id="newVolumeWriteBps" name="newVolumeWriteBps"
+                   ng-model="volumeCreateCtrl.selectedPolicy.runtime['rate-limit']['write-bps']"
+                   placeholder="">
+        </div>
+        <div class="field">
+            <label for="newVolumeReadBps">read-bps</label>
+            <input type="number" id="newVolumeReadBps" name="newVolumeReadBps"
+                   ng-model="volumeCreateCtrl.selectedPolicy.runtime['rate-limit']['read-bps']" placeholder="">
+        </div>
+        <div class="field">
+            <label for="newVolumeCRUDDriver">CRUD driver</label>
+            <select id="newVolumeCRUDDriver" class="ui dropdown"
+                    ng-model="volumeCreateCtrl.selectedPolicy.backends.crud">
+                <option value="ceph">ceph</option>
+            </select>
+        </div>
+        <div class="field">
+            <label for="newVolumeMountDriver">Mount driver</label>
+            <select id="newVolumeMountDriver" class="ui dropdown"
+                    ng-model="volumeCreateCtrl.selectedPolicy.backends.mount">
+                <option value="ceph">ceph</option>
+                <option value="ceph">NFS</option>
+            </select>
+        </div>
+        <div class="field">
+            <label for="newVolumeSnapshotDriver">Snapshot driver</label>
+            <select id="newVolumeSnapshotDriver" class="ui dropdown"
+                    ng-model="volumeCreateCtrl.selectedPolicy.backends.snapshot">
+                <option value="ceph">ceph</option>
+            </select>
+        </div>
+    </ctv-collapsible>
+
+    <div style="margin-top: 40px">
+        <button type="button" class="ui basic button" ng-click="volumeCreateCtrl.cancelCreating()">Cancel
+        </button>
+        <button type="submit" class="ui blue button">
+            Create
+        </button>
+    </div>
+
+    <ctv-error ng-show="volumeCreateCtrl.showServerError" header="Error creating volume"
+               error="volumeCreateCtrl.serverErrorMessage">
+    </ctv-error>
+</form>

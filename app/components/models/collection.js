@@ -2,7 +2,7 @@
  * BaseCollection class that does just fetch of the objects.
  * @param $http
  * @param $q
- * @param url
+ * @param url Used for doing HTTP GET and fetch objects from server
  * @constructor
  */
 function BaseCollection($http, $q, url) {
@@ -16,6 +16,11 @@ BaseCollection.prototype.extract = function (result) {
     return result.data;
 };
 
+/**
+ *
+ * @param reload Optional. Default is false
+ * @returns {*}
+ */
 BaseCollection.prototype.get = function (reload) {
     var collection = this;
     if (reload === undefined) reload = false;
@@ -27,15 +32,23 @@ BaseCollection.prototype.get = function (reload) {
         });
 };
 
-BaseCollection.prototype.getModelByKey = function (key, reload) {
+/**
+ *
+ * @param key
+ * @param reload Optional. Default is false
+ * @param keyname
+ * @returns {*}
+ */
+BaseCollection.prototype.getModelByKey = function (key, reload, keyname) {
     var collection = this;
     if (reload === undefined) reload = false;
+    if (keyname === undefined) keyname = 'key';
 
     var deferred = collection.$q.defer();
 
     function findModel() {
         return _.find(collection.models, function (c) {
-            return c.key == key;
+            return c[keyname] == key;
         })
     }
 
@@ -51,6 +64,12 @@ BaseCollection.prototype.getModelByKey = function (key, reload) {
     return deferred.promise;
 };
 
+/**
+ *
+ * @param model
+ * @param reload Optional. Default is false
+ * @returns {*}
+ */
 BaseCollection.prototype.getModel = function (model, reload) {
     var collection = this;
     if (reload === undefined) reload = false;
@@ -78,7 +97,7 @@ BaseCollection.prototype.getModel = function (model, reload) {
  * Extends BaseCollection class to do create, update and delete using POST, PUT and DELETE verbs.
  * @param $http
  * @param $q
- * @param url
+ * @param url Used for doing HTTP GET and fetch objects from server
  * @constructor
  */
 function Collection($http, $q, url) {
@@ -87,13 +106,25 @@ function Collection($http, $q, url) {
 
 Collection.prototype = Object.create(BaseCollection.prototype);
 
-Collection.prototype.create = function (model) {
+/**
+ *
+ * @param model
+ * @param url Optional if not passed it is constructed using key and url passed in constructor
+ * @returns {*}
+ */
+Collection.prototype.create = function (model, url) {
     var collection = this;
     var deferred = collection.$q.defer();
-    var url = collection.url + model.key + '/';
+    if (url === undefined) url = collection.url + model.key + '/';
     collection.$http.post(url, model)
         .then(function successCallback(response) {
-            collection.models.push(collection.extract(response));
+            var responseData = collection.extract(response);
+            //For rest endpoints that do not return created json object in response
+            if ((responseData === undefined) || (responseData === '')) {
+                responseData = model;
+            }
+            //collection.models.push(collection.extract(response));
+            collection.models.push(responseData);
             deferred.resolve(collection.extract(response));
         }, function errorCallback(response) {
             deferred.reject(collection.extract(response));
@@ -101,6 +132,13 @@ Collection.prototype.create = function (model) {
     return deferred.promise;
 };
 
+/**
+ * This is for netmaster specific endpoints and used by netmaster objects only.
+ * TODO: Generalize
+ * @param model
+ * @param url Optional
+ * @returns {*}
+ */
 Collection.prototype.save = function (model) {
     var collection = this;
     var deferred = collection.$q.defer();
@@ -118,6 +156,12 @@ Collection.prototype.save = function (model) {
     return deferred.promise;
 };
 
+/**
+ * This is for netmaster specific endpoints and used by netmaster objects only.
+ * TODO: Generalize
+ * @param model
+ * @returns {*}
+ */
 Collection.prototype.delete = function (model) {
     var collection = this;
     var deferred = collection.$q.defer();
@@ -134,14 +178,23 @@ Collection.prototype.delete = function (model) {
     return deferred.promise;
 };
 
-Collection.prototype.deleteUsingKey = function (key) {
+/**
+ *
+ * @param key
+ * @param keyname
+ * @param url Optional if not passed it is constructed using key and url passed in constructor
+ * @returns {*}
+ */
+Collection.prototype.deleteUsingKey = function (key, keyname, url) {
     var collection = this;
+    if (keyname === undefined) keyname = 'key';
+
     var deferred = collection.$q.defer();
-    var url = collection.url + key + '/';
+    if (url === undefined) url = collection.url + key + '/';
     collection.$http.delete(url)
         .then(function successCallback(response) {
             _.remove(collection.models, function (n) {
-                return n.key == key;
+                return n[keyname] == key;
             });
             deferred.resolve(collection.extract(response));
         }, function errorCallback(response) {

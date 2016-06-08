@@ -10,8 +10,9 @@ angular.module('contiv.volumes')
                 templateUrl: 'volumes/volumedetails.html'
             });
     }])
-    .controller('VolumeDetailsCtrl', ['$state', '$stateParams', '$scope', '$interval', 'VolumesModel',
-        function ($state, $stateParams, $scope, $interval, VolumesModel) {
+    .controller('VolumeDetailsCtrl',
+        ['$state', '$stateParams', '$scope', '$interval', '$http', 'VolumesModel', 'VolumeService',
+        function ($state, $stateParams, $scope, $interval, $http, VolumesModel, VolumeService) {
             var volumeDetailsCtrl = this;
 
             function returnToVolumes() {
@@ -31,10 +32,37 @@ angular.module('contiv.volumes')
                 VolumesModel.getModel(model, reload)
                     .then(function (volume) {
                         volumeDetailsCtrl.volume = volume;
+                        getVolumeUseInfo();
+                        getVolumeSnapshots();
                     });
             }
 
+            function getVolumeUseInfo() {
+                VolumeService.getVolumeUseInfo(volumeDetailsCtrl.volume).then(function successCallback(result) {
+                    volumeDetailsCtrl.volumeUse = result;
+                }, function errorCallback(result) {
+                    //Returns error if volume is not mounted by any container
+                });
+            }
+
+            function getVolumeSnapshots() {
+                VolumeService.getVolumeSnapshots(volumeDetailsCtrl.volume).then(function successCallback(result) {
+                    volumeDetailsCtrl.snapshots = result;
+                }, function errorCallback(result) {
+                })
+            }
+
+            function copySnapshot(snapshot, newVolume) {
+                VolumesModel.copy(model, snapshot, newVolume)
+                    .then(function successCallback(result) {
+
+                    }, function errorCallback(result) {
+
+                    })
+            }
+
             volumeDetailsCtrl.deleteVolume = deleteVolume;
+            volumeDetailsCtrl.copySnapshot = copySnapshot;
 
             //Load from cache for quick display initially
             getVolumeInfo(false);
@@ -44,7 +72,7 @@ angular.module('contiv.volumes')
             if (!angular.isDefined(promise)) {
                 promise = $interval(function () {
                     getVolumeInfo(true);
-                }, 5000);
+                }, ContivGlobals.REFRESH_INTERVAL);
             }
             //stop polling when user moves away from the page
             $scope.$on('$destroy', function () {

@@ -6,7 +6,11 @@ angular.module("contiv.directives")
        return {
            restrict: 'E',
            scope: {
-               items: '='
+               items: '=',
+               nameheader: '@',//Field name to display for key
+               valueheader: '@',//Field name to display for value
+               type: '@',//'text' or 'select' to choose input or select html tag for key
+               options: '='//To be used when type is 'select'
            },
            link: function(scope) {
                /**
@@ -47,6 +51,10 @@ angular.module("contiv.directives")
                    });
                };
                resetNewItem();
+
+               if (scope.nameheader === undefined) scope.nameheader = 'Name';
+               if (scope.valueheader === undefined) scope.valueheader = 'Value';
+               if (scope.type === undefined) scope.type = 'text';
            },
            templateUrl: 'components/directives/namevalue.html'
        }

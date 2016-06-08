@@ -1,0 +1,30 @@
+<ctv-collapsible title="Snapshot Settings">
+    <div class="inline fields">
+        <label>Enabled:</label>
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input type="radio" ng-model="policy.runtime.snapshots"
+                       ng-value="true">
+                <label>Yes</label>
+            </div>
+        </div>
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input type="radio" ng-model="policy.runtime.snapshots"
+                       ng-value="false">
+                <label>No</label>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <label for="newStoragePolicySnapshotFrequency">Frequency</label>
+        <input type="text" id="newStoragePolicySnapshotFrequency" name="newStoragePolicySnapshotFrequency"
+               ng-model="policy.runtime.snapshot.frequency"
+               placeholder="In minutes, for example 20m" required>
+    </div>
+    <div class="field">
+        <label for="newStoragePolicySnapshotKeep">Number of saved snapshots</label>
+        <input type="number" id="newStoragePolicySnapshotKeep" name="newStoragePolicySnapshotKeep"
+               ng-model="policy.runtime.snapshot.keep" placeholder="" required>
+    </div>
+</ctv-collapsible>

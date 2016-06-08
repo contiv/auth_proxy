@@ -1,0 +1,217 @@
+<div class="ui sixteen column grid">
+    <div class="one wide column">
+        <a ui-sref="contiv.menu.storagepolicies.list()">
+            <i class="large arrow left icon"></i>
+        </a>
+    </div>
+    <div class="left floated eleven wide column">
+        <div class="content" style="font-size: 24px">Storage Policies (Details)</div>
+    </div>
+    <div ng-switch="storagePolicyDetailsCtrl.mode" class="right floated four wide column">
+        <div id="delete-storagepolicy-modal" class="ui small modal">
+            <div class="header">Remove Storage Policy: {{storagePolicyDetailsCtrl.policy.name}}</div>
+            <div class="content">
+                <p>Are you sure you want to remove this storage policy?</p>
+            </div>
+            <div class="actions">
+                <div class="ui negative button">No</div>
+                <div class="ui positive button" ng-click="storagePolicyDetailsCtrl.deletePolicy()">
+                    Yes
+                </div>
+            </div>
+        </div>
+        <button ng-switch-when="edit" class="ui disabled button"
+                ui-sref="contiv.menu.storagepolicies.edit({key:storagePolicyDetailsCtrl.policy.name})">
+            <i class="edit icon"></i>
+            Edit
+        </button>
+        <button ng-switch-when="details" class="ui basic button"
+                ui-sref="contiv.menu.storagepolicies.edit({key:storagePolicyDetailsCtrl.policy.name})">
+            <i class="edit icon"></i>
+            Edit
+        </button>
+        <button class="ui basic button" onclick="$('#delete-storagepolicy-modal').modal('show')">
+            <i class="trash icon"></i>
+            Remove
+        </button>
+    </div>
+</div>
+<div ng-switch="storagePolicyDetailsCtrl.mode" class="ui basic segment">
+    <div class="ui active inverted dimmer" ng-show="storagePolicyDetailsCtrl.showLoader">
+        <div class="ui loader"></div>
+    </div>
+    <div ng-switch-when="details">
+        <h4 class="ui header">Basic Settings</h4>
+
+        <table class="ui very basic selectable table">
+            <tbody>
+            <tr>
+                <td class="ctv-header three wide column">Name</td>
+                <td>{{storagePolicyDetailsCtrl.policy.name}}</td>
+            </tr>
+            <tr>
+                <td class="ctv-header three wide column">Pool</td>
+                <td>{{storagePolicyDetailsCtrl.policy.driver.pool}}</td>
+            </tr>
+            <tr>
+                <td class="ctv-header three wide column">Size</td>
+                <td>{{storagePolicyDetailsCtrl.policy.create.size}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="ui section divider" style="margin-top: 30px"></div>
+        <ctv-collapsible title="Filesystem Settings">
+            <table class="ui very basic selectable table">
+                <tbody>
+                <tr>
+                    <td class="ctv-header three wide column">Filesystem</td>
+                    <td>{{storagePolicyDetailsCtrl.policy.create.filesystem}}</td>
+                </tr>
+                <tr ng-repeat="(key, value) in storagePolicyDetailsCtrl.policy.filesystems">
+                    <td class="ctv-header three wide column">{{key}}</td>
+                    <td>{{value}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </ctv-collapsible>
+
+        <div class="ui section divider"></div>
+        <ctv-collapsible title="Snapshot Settings">
+            <table class="ui very basic selectable table">
+                <tbody>
+                <tr>
+                    <td class="ctv-header three wide column">Enabled</td>
+                    <td>{{storagePolicyDetailsCtrl.policy.runtime.snapshots}}</td>
+                </tr>
+                <tr>
+                    <td class="ctv-header three wide column">Frequency</td>
+                    <td>{{storagePolicyDetailsCtrl.policy.runtime.snapshot.frequency}}</td>
+                </tr>
+                <tr>
+                    <td class="ctv-header three wide column">Number of saved snapshots</td>
+                    <td>{{storagePolicyDetailsCtrl.policy.runtime.snapshot.keep}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </ctv-collapsible>
+
+        <div class="ui section divider"></div>
+        <ctv-collapsible title="Read Write Operations Settings">
+            <table class="ui very basic selectable table">
+                <tbody>
+                <tr>
+                    <td class="ctv-header three wide column">write-iops</td>
+                    <td>{{storagePolicyDetailsCtrl.policy.runtime['rate-limit']['write-iops']}}</td>
+                </tr>
+                <tr>
+                    <td class="ctv-header three wide column">read-iops</td>
+                    <td>{{storagePolicyDetailsCtrl.policy.runtime['rate-limit']['read-iops']}}</td>
+                </tr>
+                <tr>
+                    <td class="ctv-header three wide column">write-bps</td>
+                    <td>{{storagePolicyDetailsCtrl.policy.runtime['rate-limit']['write-bps']}}</td>
+                </tr>
+                <tr>
+                    <td class="ctv-header three wide column">read-bps</td>
+                    <td>{{storagePolicyDetailsCtrl.policy.runtime['rate-limit']['read-bps']}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </ctv-collapsible>
+
+        <div class="ui section divider"></div>
+        <ctv-collapsible title="Storage Backend Drivers">
+            <table class="ui very basic selectable table">
+                <tbody>
+                <tr>
+                    <td class="ctv-header three wide column">CRUD Operations</td>
+                    <td>{{storagePolicyDetailsCtrl.policy.backends.crud}}</td>
+                </tr>
+                <tr>
+                    <td class="ctv-header three wide column">Mount Operation</td>
+                    <td>{{storagePolicyDetailsCtrl.policy.backends.mount}}</td>
+                </tr>
+                <tr>
+                    <td class="ctv-header three wide column">Snapshot Operation</td>
+                    <td>{{storagePolicyDetailsCtrl.policy.backends.snapshot}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </ctv-collapsible>
+    </div>
+    <div ng-switch-when="edit">
+        <form class="ui form" name="storagePolicyDetailsCtrl.form" role="form"
+              ng-submit="storagePolicyDetailsCtrl.savePolicy(storagePolicy)"
+              novalidate>
+            <div class="ui active inverted dimmer" ng-show="storagePolicyDetailsCtrl.showLoader">
+                <div class="ui loader"></div>
+            </div>
+            <div class="field">
+                <div ng-show="storagePolicyDetailsCtrl.form.$submitted">
+                    <div ng-hide="storagePolicyDetailsCtrl.form.$valid" class="ui negative message">
+                        <ul class="list">
+                            <li ng-show="storagePolicyDetailsCtrl.form.newStoragePolicyName.$error.required">Please
+                                enter storage
+                                policy name
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <h4 class="ui header">Basic Settings</h4>
+            <table class="ui very basic selectable table">
+                <tbody>
+                <tr>
+                    <td class="ctv-header three wide column">Name</td>
+                    <td>{{storagePolicyDetailsCtrl.policy.name}}</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="field">
+                <label for="newStoragePolicyPool">Pool</label>
+                <input type="text" id="newStoragePolicyPool" name="newStoragePolicyPool"
+                       ng-model="storagePolicyDetailsCtrl.policy.driver.pool" placeholder="Enter pool" required>
+            </div>
+            <div class="field">
+                <label for="newStoragePolicyPool">Size</label>
+                <input type="text" id="newStoragePolicySize" name="newStoragePolicySize"
+                       ng-model="storagePolicyDetailsCtrl.policy.create.size" placeholder="Enter size" required>
+            </div>
+
+            <div class="ui section divider" style="margin-top: 30px"></div>
+
+            <ctv-storagepolicyfilesystemsettings
+                    policy="storagePolicyDetailsCtrl.policy"
+                    filesystemcmds="storagePolicyDetailsCtrl.filesystemcmds">
+            </ctv-storagepolicyfilesystemsettings>
+
+            <div class="ui section divider"></div>
+
+            <ctv-storagepolicysnapshotsettings
+                    policy="storagePolicyDetailsCtrl.policy"></ctv-storagepolicysnapshotsettings>
+
+            <div class="ui section divider"></div>
+
+            <ctv-storagepolicyrwopssettings policy="storagePolicyDetailsCtrl.policy"></ctv-storagepolicyrwopssettings>
+
+            <div class="ui section divider"></div>
+
+            <ctv-storagepolicybackenddrivers policy="storagePolicyDetailsCtrl.policy"></ctv-storagepolicybackenddrivers>
+
+            <div style="margin-top: 40px">
+                <button type="button" class="ui basic button" ng-click="storagePolicyDetailsCtrl.cancelEditing()">Cancel
+                </button>
+                <button type="submit" class="ui blue button">
+                    Save
+                </button>
+            </div>
+
+            <ctv-error ng-show="storagePolicyDetailsCtrl.showServerError" header="Error saving storage policy"
+                       error="storagePolicyDetailsCtrl.serverErrorMessage">
+            </ctv-error>
+        </form>
+    </div>
+
+</div>

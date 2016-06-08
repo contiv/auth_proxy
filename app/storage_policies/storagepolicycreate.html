@@ -1,0 +1,64 @@
+<form class="ui form" name="storagePolicyCreateCtrl.form" role="form"
+      ng-submit="storagePolicyCreateCtrl.createPolicy(storagePolicy)"
+      novalidate>
+    <div class="ui active inverted dimmer" ng-show="storagePolicyCreateCtrl.showLoader">
+        <div class="ui loader"></div>
+    </div>
+    <div class="field">
+        <div ng-show="storagePolicyCreateCtrl.form.$submitted">
+            <div ng-hide="storagePolicyCreateCtrl.form.$valid" class="ui negative message">
+                <ul class="list">
+                    <li ng-show="storagePolicyCreateCtrl.form.newStoragePolicyName.$error.required">Please enter storage
+                        policy name
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <label for="newStoragePolicyName">Storage policy name</label>
+        <input type="text" id="newStoragePolicyName" name="newStoragePolicyName"
+               ng-model="storagePolicyCreateCtrl.newStoragePolicy.name" placeholder="Enter name" required>
+    </div>
+    <div class="field">
+        <label for="newStoragePolicyPool">Pool</label>
+        <input type="text" id="newStoragePolicyPool" name="newStoragePolicyPool"
+               ng-model="storagePolicyCreateCtrl.newStoragePolicy.driver.pool" placeholder="Enter pool" required>
+    </div>
+    <div class="field">
+        <label for="newStoragePolicyPool">Size</label>
+        <input type="text" id="newStoragePolicySize" name="newStoragePolicySize"
+               ng-model="storagePolicyCreateCtrl.newStoragePolicy.create.size" placeholder="Enter size" required>
+    </div>
+
+    <div class="ui section divider" style="margin-top: 30px"></div>
+
+    <ctv-storagepolicyfilesystemsettings
+            policy="storagePolicyCreateCtrl.newStoragePolicy"
+            filesystemcmds="storagePolicyCreateCtrl.filesystemcmds">
+    </ctv-storagepolicyfilesystemsettings>
+
+    <div class="ui section divider"></div>
+
+    <ctv-storagepolicysnapshotsettings policy="storagePolicyCreateCtrl.newStoragePolicy"></ctv-storagepolicysnapshotsettings>
+
+    <div class="ui section divider"></div>
+
+    <ctv-storagepolicyrwopssettings policy="storagePolicyCreateCtrl.newStoragePolicy"></ctv-storagepolicyrwopssettings>
+
+    <div class="ui section divider"></div>
+
+    <ctv-storagepolicybackenddrivers policy="storagePolicyCreateCtrl.newStoragePolicy"></ctv-storagepolicybackenddrivers>
+
+    <div style="margin-top: 40px">
+        <button type="button" class="ui basic button" ng-click="storagePolicyCreateCtrl.cancelCreating()">Cancel
+        </button>
+        <button type="submit" class="ui blue button">
+            Create
+        </button>
+    </div>
+
+    <ctv-error ng-show="storagePolicyCreateCtrl.showServerError" header="Error creating storage policy"
+               error="storagePolicyCreateCtrl.serverErrorMessage">
+    </ctv-error>
+</form>

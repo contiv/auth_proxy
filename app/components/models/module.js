@@ -3,28 +3,32 @@
  */
 angular.module('contiv.models', []);
 var ContivGlobals = (function () {
-    var NETMASTER = '';
-    var CLUSTER = '';
-    var VOLMASTER = '';
+
     return {
-        //REST endpoints for NETMASTER
-        'NETWORKS_ENDPOINT': NETMASTER + '/api/networks/',
-        'POLICIES_ENDPOINT': NETMASTER + '/api/policys/',
-        'RULES_ENDPOINT': NETMASTER + '/api/rules/',
-        'APPLICATIONGROUPS_ENDPOINT': NETMASTER + '/api/endpointGroups/',
-        'SERVICELBS_ENDPOINT': NETMASTER + '/api/serviceLBs/',
+        //REST endpoints for 
+        'NETWORKS_ENDPOINT': '/netmaster/api/networks/',
+        'POLICIES_ENDPOINT': '/netmaster/api/policys/',
+        'RULES_ENDPOINT': '/netmaster/api/rules/',
+        'APPLICATIONGROUPS_ENDPOINT': '/netmaster/api/endpointGroups/',
+        'SERVICELBS_ENDPOINT': '/netmaster/api/serviceLBs/',
 
         //REST endpoints for VOLMASTER
-        'VOLUMES_ENDPOINT': VOLMASTER + '/list',
-        'VOLUMES_DELETE_ENDPOINT': VOLMASTER + '/remove/',
-        'STORAGEPOLICIES_ENDPOINT': VOLMASTER + '/policy',
+        'VOLUMES_ENDPOINT': '/volmaster/volumes/',
+        'VOLUMES_CREATE_ENDPOINT': '/volmaster/volumes/create/',
+        'VOLUMES_DELETE_ENDPOINT': '/volmaster/volumes/remove/',
+        'VOLUMES_COPYSNAPSHOTS_ENDPOINT': '/volmaster/volumes/copy/',
+        'VOLUMES_USES_ENDPOINT': '/volmaster/uses/mounts/',
+        'VOLUMES_SNAPSHOTS_ENDPOINT': '/volmaster/snapshots/',
+
+        'STORAGEPOLICIES_ENDPOINT': '/volmaster/policies/',
+
 
         //REST endpoints for CLUSTER
-        'NODES_LIST_ENDPOINT': CLUSTER + '/info/nodes',
-        'NODES_DISCOVER_ENDPOINT': CLUSTER + '/discover/nodes',
-        'NODES_COMMISSION_ENDPOINT': CLUSTER + '/commission/nodes',
-        'NODES_DECOMMISSION_ENDPOINT': CLUSTER + '/decommission/nodes',
-        'NODES_MAINTENANCE_ENDPOINT': CLUSTER + '/maintenance/nodes',
+        'NODES_LIST_ENDPOINT': '/info/nodes',
+        'NODES_DISCOVER_ENDPOINT': '/discover/nodes',
+        'NODES_COMMISSION_ENDPOINT': '/commission/nodes',
+        'NODES_DECOMMISSION_ENDPOINT': '/decommission/nodes',
+        'NODES_MAINTENANCE_ENDPOINT': '/maintenance/nodes',
 
         //Refresh interval in milliseconds
         'REFRESH_INTERVAL': 5000,

@@ -17,24 +17,12 @@ $ cd cluster
 Modify Vagrantfile to forward netmaster and cluster ports:
 
 ```
-node.vm.network "forwarded_port", guest: 9876, host:9876
+node.vm.network "forwarded_port", guest: 9007, host:9007
 node.vm.network "forwarded_port", guest: 9999, host:9999
 ```
 
 ```
 $ make demo
-$ vagrant ssh cluster-node1
-$ sudo vi /etc/default/clusterm/clusterm.conf
-
-Add following lines to clusterm.conf
-{
-  "manager" : {
-    "addr": ":9876"
-  }
-} 
-
-$ sudo systemctl restart clusterm
-$ exit
 ```
 
 #### Step 3: Deploy Contiv UI as a nginx container on linux server
