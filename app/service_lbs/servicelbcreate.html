@@ -24,7 +24,7 @@
         <select id="servicelbNetwork" class="ui dropdown"
                 name="servicelbNetwork"
                 ng-model="servicelbCreateCtrl.servicelb.networkName"
-                ng-options="network.networkName for network in servicelbCreateCtrl.networks"
+                ng-options="network.networkName as network.networkName for network in servicelbCreateCtrl.networks"
                 required>
             <option value="">-- Please select network --</option>
         </select>
@@ -32,7 +32,7 @@
     <div class="field">
         <label for="servicelbIP">Service IP address</label>
         <input type="text" id="servicelbIP" name="servicelbIP"
-               ng-model="servicelbCreateCtrl.servicelb.ipAddress" placeholder="Enter IP address" required>
+               ng-model="servicelbCreateCtrl.servicelb.ipAddress" placeholder="Enter IP address">
     </div>
     <div class="ui section divider" style="margin-top: 30px"></div>
     <div class="field">

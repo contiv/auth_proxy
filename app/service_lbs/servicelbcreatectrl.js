@@ -38,12 +38,15 @@ angular.module('contiv.servicelbs')
             }
 
             function createLabelSelectorStrings() {
+                //Empty out the selectors. In case of server errors this needs to be reset.
+                servicelbCreateCtrl.servicelb.selectors = [];
                 angular.forEach(servicelbCreateCtrl.labelSelectors, function(labelSelector) {
                     var selectorString = labelSelector.name + '=' + labelSelector.value;
                     servicelbCreateCtrl.servicelb.selectors.push(selectorString);
                 })
             }
             function createServicelb() {
+                createLabelSelectorStrings();
                 //form controller is injected by the html template
                 //checking if all validations have passed
                 if (servicelbCreateCtrl.form.$valid) {
@@ -51,7 +54,6 @@ angular.module('contiv.servicelbs')
                     CRUDHelperService.startLoader(servicelbCreateCtrl);
                     servicelbCreateCtrl.servicelb.key =
                         servicelbCreateCtrl.servicelb.tenantName + ':' + servicelbCreateCtrl.servicelb.serviceName;
-                    createLabelSelectorStrings();
                     ServicelbsModel.create(servicelbCreateCtrl.servicelb).then(function successCallback(result) {
                         CRUDHelperService.stopLoader(servicelbCreateCtrl);
                         returnToServicelbs();
@@ -75,7 +77,6 @@ angular.module('contiv.servicelbs')
                     tenantName: 'default'//TODO: Remove hardcoded tenant.
                 };
             }
-
             servicelbCreateCtrl.createServicelb = createServicelb;
             servicelbCreateCtrl.cancelCreating = cancelCreating;
 

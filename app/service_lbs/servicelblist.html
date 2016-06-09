@@ -31,7 +31,7 @@
         <ctv-tbody>
             <ctv-tr ng-repeat="servicelb in servicelbListCtrl.filteredservicelbs">
                 <ctv-td><a ui-sref="contiv.menu.servicelbs.details({key:servicelb.key})">{{servicelb.serviceName}}</a></ctv-td>
-                <ctv-td>{{servicelb.network}}</ctv-td>
+                <ctv-td>{{servicelb.networkName}}</ctv-td>
                 <ctv-td>{{servicelb.ipAddress}}</ctv-td>
                 <ctv-td>
                     <div class="ui label tiny" ng-repeat="selector in servicelb.selectors">{{selector}}</div>

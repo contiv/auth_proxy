@@ -80,9 +80,7 @@ angular.module('contiv.servicelbs')
                 }
 
                 function createLabelSelectorStrings() {
-                    if (servicelbDetailsCtrl.servicelb.selectors === undefined) {
-                        servicelbDetailsCtrl.servicelb.selectors = [];
-                    }
+                    servicelbDetailsCtrl.servicelb.selectors = [];
                     angular.forEach(servicelbDetailsCtrl.labelSelectors, function(labelSelector) {
                         var selectorString = labelSelector.name + '=' + labelSelector.value;
                         servicelbDetailsCtrl.servicelb.selectors.push(selectorString);
