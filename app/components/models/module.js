@@ -6,12 +6,12 @@ var ContivGlobals = (function () {
 
     return {
         //REST endpoints for 
-        'NETWORKS_ENDPOINT': '/netmaster/api/networks/',
-        'POLICIES_ENDPOINT': '/netmaster/api/policys/',
-        'RULES_ENDPOINT': '/netmaster/api/rules/',
-        'APPLICATIONGROUPS_ENDPOINT': '/netmaster/api/endpointGroups/',
-        'SERVICELBS_ENDPOINT': '/netmaster/api/serviceLBs/',
-        'ORGANIZATIONS_ENDPOINT':'/netmaster/api/tenants/',
+        'NETWORKS_ENDPOINT': '/netmaster/api/v1/networks/',
+        'POLICIES_ENDPOINT': '/netmaster/api/v1/policys/',
+        'RULES_ENDPOINT': '/netmaster/api/v1/rules/',
+        'APPLICATIONGROUPS_ENDPOINT': '/netmaster/api/v1/endpointGroups/',
+        'SERVICELBS_ENDPOINT': '/netmaster/api/v1/serviceLBs/',
+        'ORGANIZATIONS_ENDPOINT':'/netmaster/api/v1/tenants/',
 
         //REST endpoints for VOLMASTER
         'VOLUMES_ENDPOINT': '/volmaster/volumes/',
