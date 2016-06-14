@@ -65,15 +65,8 @@
 
 
     <div class="ui section divider"></div>
-    <div ng-click="applicationGroupDetailsCtrl.isolationPoliciesVisible = !applicationGroupDetailsCtrl.isolationPoliciesVisible">
-        <h4 class="ui header">
-            <i ng-if="applicationGroupDetailsCtrl.isolationPoliciesVisible" class="grey minus circle outline icon"></i>
-            <i ng-if="!applicationGroupDetailsCtrl.isolationPoliciesVisible" class="grey plus circle outline icon"></i>
-            Isolation Policies
-        </h4>
-    </div>
 
-    <div ng-show="applicationGroupDetailsCtrl.isolationPoliciesVisible">
+    <ctv-collapsible title="Isolation Policies">
         <div ng-switch="applicationGroupDetailsCtrl.mode">
             <table ng-switch-when="edit" class="ui very basic collapsing unstackable table">
                 <tbody>
@@ -118,6 +111,8 @@
                 </tbody>
             </table>
         </div>
+
+
         <h5 class="ui header">Incoming rules</h5>
         <table class="ui very basic unstackable table" style="margin-top: 40px">
             <thead>
@@ -172,7 +167,7 @@
             </tr>
             </tbody>
         </table>
-    </div>
+    </ctv-collapsible>
 
     <div class="ui section divider"></div>
 
