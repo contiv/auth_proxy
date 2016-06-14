@@ -19,12 +19,21 @@
         <input type="text" id="newPolicyName" name="newPolicyName"
                ng-model="isolationPolicyCreateCtrl.newPolicy.policyName" placeholder="Enter name" required>
     </div>
-    <button type="button" class="ui basic button" ng-click="isolationPolicyCreateCtrl.cancelCreating()">
-        Cancel
-    </button>
-    <button type="submit" class="ui blue button">
-        Create
-    </button>
+
+    <div class="ui sixteen column grid">
+        <div class="right floated three wide column">
+            <div style="margin-top: 40px">
+
+                <button type="button" class="ui basic button" ng-click="isolationPolicyCreateCtrl.cancelCreating()">
+                    Cancel
+                </button>
+                <button type="submit" class="ui blue button">
+                    Create
+                </button>
+            </div>
+        </div>
+    </div>
+
     <ctv-error ng-show="isolationPolicyCreateCtrl.showServerError" header="Error creating policy" error="isolationPolicyCreateCtrl.serverErrorMessage">
     </ctv-error>
 </form>

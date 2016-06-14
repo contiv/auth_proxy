@@ -62,12 +62,16 @@
         </div>
     </div>
 
-    <div style="margin-top: 40px">
-        <button type="button" class="ui basic button" ng-click="servicelbCreateCtrl.cancelCreating()">Cancel
-        </button>
-        <button type="submit" class="ui blue button">
-            Create
-        </button>
+    <div class="ui sixteen column grid">
+        <div class="right floated three wide column">
+            <div style="margin-top: 40px">
+                <button type="button" class="ui basic button" ng-click="servicelbCreateCtrl.cancelCreating()">Cancel
+                </button>
+                <button type="submit" class="ui blue button">
+                    Create
+                </button>
+            </div>
+        </div>
     </div>
 
     <ctv-error ng-show="servicelbCreateCtrl.showServerError" header="Error creating service load balancer" error="servicelbCreateCtrl.serverErrorMessage">

@@ -136,12 +136,16 @@
         </div>
     </ctv-collapsible>
 
-    <div style="margin-top: 40px">
-        <button type="button" class="ui basic button" ng-click="volumeCreateCtrl.cancelCreating()">Cancel
-        </button>
-        <button type="submit" class="ui blue button">
-            Create
-        </button>
+    <div class="ui sixteen column grid">
+        <div class="right floated three wide column">
+            <div style="margin-top: 40px">
+                <button type="button" class="ui basic button" ng-click="volumeCreateCtrl.cancelCreating()">Cancel
+                </button>
+                <button type="submit" class="ui blue button">
+                    Create
+                </button>
+            </div>
+        </div>
     </div>
 
     <ctv-error ng-show="volumeCreateCtrl.showServerError" header="Error creating volume"

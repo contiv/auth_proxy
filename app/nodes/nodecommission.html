@@ -214,22 +214,27 @@
             </div>
         </div>
 
-        <div style="margin-top: 40px">
-            <button ng-switch-when="commission" type="button" class="ui basic button"
-                    ng-click="nodeCommissionCtrl.cancelCommissioningNode()">
-                Cancel
-            </button>
-            <button ng-switch-when="commission" type="submit" class="ui blue button">
-                Commission
-            </button>
-            <button ng-switch-when="discover" type="button" class="ui basic button"
-                    ng-click="nodeCommissionCtrl.cancelDiscoveringNode()">
-                Cancel
-            </button>
-            <button ng-switch-when="discover" type="submit" class="ui blue button">
-                Discover
-            </button>
+        <div class="ui sixteen column grid">
+            <div class="right floated four wide column">
+                <div style="margin-top: 40px">
+                    <button ng-switch-when="commission" type="button" class="ui basic button"
+                            ng-click="nodeCommissionCtrl.cancelCommissioningNode()">
+                        Cancel
+                    </button>
+                    <button ng-switch-when="commission" type="submit" class="ui blue button">
+                        Commission
+                    </button>
+                    <button ng-switch-when="discover" type="button" class="ui basic button"
+                            ng-click="nodeCommissionCtrl.cancelDiscoveringNode()">
+                        Cancel
+                    </button>
+                    <button ng-switch-when="discover" type="submit" class="ui blue button">
+                        Discover
+                    </button>
+                </div>
+            </div>
         </div>
+
         <ctv-error ng-switch-when="discover" ng-show="nodeCommissionCtrl.showServerError" header="Error discovering nodes" error="nodeCommissionCtrl.serverErrorMessage">
         </ctv-error>
         <ctv-error ng-switch-when="commission" ng-show="nodeCommissionCtrl.showServerError" header="Error commissioning node" error="nodeCommissionCtrl.serverErrorMessage">

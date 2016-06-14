@@ -157,12 +157,17 @@
             Redirection Policies
         </h4>
     </div>
-    <div style="margin-top: 40px">
-        <button type="button" class="ui basic button" ng-click="applicationGroupCreateCtrl.cancelCreating()">Cancel
-        </button>
-        <button type="submit" class="ui blue button">
-            Create
-        </button>
+
+    <div class="ui sixteen column grid">
+        <div class="right floated three wide column">
+            <div style="margin-top: 40px">
+                <button type="button" class="ui basic button" ng-click="applicationGroupCreateCtrl.cancelCreating()">Cancel
+                </button>
+                <button type="submit" class="ui blue button">
+                    Create
+                </button>
+            </div>
+        </div>
     </div>
 
     <ctv-error ng-show="applicationGroupCreateCtrl.showServerError" header="Error creating application group" error="applicationGroupCreateCtrl.serverErrorMessage">
