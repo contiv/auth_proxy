@@ -112,6 +112,8 @@ describe("contiv.nodes module", function () {
         $httpBackend.when('POST', ContivGlobals.NODES_DISCOVER_ENDPOINT).respond();
         $httpBackend.when('POST', ContivGlobals.NODES_DECOMMISSION_ENDPOINT).respond();
         $httpBackend.when('POST', ContivGlobals.NODES_MAINTENANCE_ENDPOINT).respond();
+        $httpBackend.when('GET', ContivGlobals.NODES_ACTIVE_JOB_ENDPOINT).respond();
+        $httpBackend.when('GET', ContivGlobals.NODES_LAST_JOB_ENDPOINT).respond();
     }));
 
     afterEach(function () {
@@ -143,6 +145,14 @@ describe("contiv.nodes module", function () {
             $httpBackend.flush();
             expect(Array.isArray(nodeListCtrl.nodes)).toBeTruthy();
             expect(nodeListCtrl.nodes.length).toEqual(3);
+        });
+        it('NodeListCtrl should do a GET on /info/job/last REST API', function () {
+            $httpBackend.expectGET(ContivGlobals.NODES_LAST_JOB_ENDPOINT);
+            $httpBackend.flush();
+        });
+        it('NodeListCtrl should do a GET on /info/job/active REST API', function () {
+            $httpBackend.expectGET(ContivGlobals.NODES_ACTIVE_JOB_ENDPOINT);
+            $httpBackend.flush();
         });
     });
 

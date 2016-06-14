@@ -30,6 +30,8 @@ var ContivGlobals = (function () {
         'NODES_COMMISSION_ENDPOINT': '/commission/nodes',
         'NODES_DECOMMISSION_ENDPOINT': '/decommission/nodes',
         'NODES_MAINTENANCE_ENDPOINT': '/maintenance/nodes',
+        'NODES_LAST_JOB_ENDPOINT': '/info/job/last',
+        'NODES_ACTIVE_JOB_ENDPOINT': '/info/job/active',
 
         //Refresh interval in milliseconds
         'REFRESH_INTERVAL': 5000,

@@ -11,8 +11,8 @@ angular.module('contiv.nodes')
             })
         ;
     }])
-    .controller('NodeListCtrl', ['$scope', '$interval', '$filter', 'NodesModel', 'CRUDHelperService',
-        function ($scope, $interval, $filter, NodesModel, CRUDHelperService) {
+    .controller('NodeListCtrl', ['$scope', '$interval', '$filter', 'NodesModel', 'CRUDHelperService', 'NodeService',
+        function ($scope, $interval, $filter, NodesModel, CRUDHelperService, NodeService) {
         var nodeListCtrl = this;
 
         function getNodes(reload) {
@@ -23,7 +23,26 @@ angular.module('contiv.nodes')
                 }, function errorCallback(result) {
                     CRUDHelperService.stopLoader(nodeListCtrl);
                 });
+                getActiveLogs();
+                getLastLogs();
         }
+
+        function getActiveLogs() {
+            NodeService.getActiveLogs().then(function successCallback(result) {
+                nodeListCtrl.activeLogs = result;
+            }, function errorCallback(result) {
+            });
+        }
+
+        function getLastLogs() {
+            NodeService.getLastLogs().then(function successCallback(result) {
+                nodeListCtrl.lastLogs = result;
+            }, function errorCallback(result) {
+            });
+        }
+
+        nodeListCtrl.getActiveLogs = getActiveLogs;
+        nodeListCtrl.getLastLogs = getLastLogs;
 
         //Load from cache for quick display initially
         getNodes(false);
@@ -39,5 +58,4 @@ angular.module('contiv.nodes')
         $scope.$on('$destroy', function () {
             $interval.cancel(promise);
         });
-
     }]);

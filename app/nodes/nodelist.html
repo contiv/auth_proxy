@@ -10,10 +10,64 @@
         </button>
     </div>
 </div>
+
 <div class="ui basic segment">
     <div class="ui active inverted dimmer" ng-show="nodeListCtrl.showLoader">
         <div class="ui loader"></div>
     </div>
+
+    <table class="ui very basic selectable table">
+        <tbody>
+            <ctv-th>Cluster</ctv-th>
+            <tr>
+                <td class="ctv-header three wide column">Status</td>
+                <!-- Healthy is hardcoded -->
+                <td><i class="up icon"></i>Healthy</i></td>
+                <!-- get green arrow icon? -->
+            </tr>
+            <tr>
+                <td class="ctv-header three wide column">Last Job</td> 
+                <div id="last-job-modal" class="ui large modal">
+                    <div class="header">Last Job</div>
+                    <div class="content">
+                        <p><b>Description: </b>{{ nodeListCtrl.lastLogs.desc }}</p>
+                        <p><b>Task: </b>{{ nodeListCtrl.lastLogs.task }}</p>
+                        <p><b>Status: </b>{{ nodeListCtrl.lastLogs.status }}</p>
+                        <p><b>Error: </b>{{ nodeListCtrl.lastLogs.error }}</p>
+                        <p>
+                            <b>Logs: </b>
+                            <div ng-repeat="line in nodeListCtrl.lastLogs.logs track by $index">{{ line }}</div>
+                        </p>
+                    </div>
+                </div>
+                <td onclick="$('#last-job-modal').modal('show')" ng-click="nodeListCtrl.getLastLogs()">
+                    job_recent &nbsp&nbsp<i class="file text icon"></i>
+                </td>
+            </tr>
+            <tr>
+                <td class="ctv-header three wide column">Active Job</td>
+                <div id="active-job-modal" class="ui large modal">
+                    <div class="header">Active Job</div>
+                    <div class="content">
+                        <p><b>Description: </b>{{ nodeListCtrl.activeLogs.desc }}</p>
+                        <p><b>Task: </b>{{ nodeListCtrl.activeLogs.task }}</p>
+                        <p><b>Status: </b>{{ nodeListCtrl.activeLogs.status }}</p>
+                        <p><b>Error: </b>{{ nodeListCtrl.activeLogs.error }}</p>
+                        <p>
+                            <b>Logs: </b>
+                            <div ng-repeat="line in nodeListCtrl.activeLogs.logs track by $index">{{ line }}</div>
+                        </p>
+                    </div>
+                </div>
+                <td onclick="$('#active-job-modal').modal('show')" ng-click="nodeListCtrl.getActiveLogs()">
+                    job_active &nbsp&nbsp&nbsp<i class="file text icon"></i>
+                </td>
+            </tr>
+        </tbody>
+    </table>    
+
+    <div class="ui section divider"></div>
+
     <ctv-table items="nodeListCtrl.nodes" filtereditems="nodeListCtrl.filteredNodes" size="12" style="margin-top: 40px">
         <ctv-thead>
             <ctv-tr>
