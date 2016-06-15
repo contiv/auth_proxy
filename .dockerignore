@@ -1,4 +1,5 @@
 app/*.js
 app/**/*.js
 app/components/**/*.js
+!app/bower_components/**
 !app/bundle.js

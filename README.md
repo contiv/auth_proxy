@@ -22,7 +22,7 @@ node.vm.network "forwarded_port", guest: 9999, host:9999
 ```
 
 ```
-$ make demo
+$ make demo-cluster
 ```
 
 #### Step 3: Deploy Contiv UI as a nginx container on linux server
