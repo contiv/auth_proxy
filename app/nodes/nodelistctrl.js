@@ -31,6 +31,10 @@ angular.module('contiv.nodes')
             NodeService.getActiveLogs().then(function successCallback(result) {
                 nodeListCtrl.activeLogs = result;
             }, function errorCallback(result) {
+                //Once the job finishes, endpoint returns 500 error. So reset the activeLogs
+                nodeListCtrl.activeLogs = {
+                    desc: 'There is currently no active job. Check Last Job for a job that recently finished.'
+                };
             });
         }
 

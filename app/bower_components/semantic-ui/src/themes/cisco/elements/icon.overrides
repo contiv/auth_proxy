@@ -96,6 +96,15 @@
 .icon.soaking:before {
     content: "\e94d";
 }
+.icon.spinner .path1:before {
+    content: "\e95c";
+    color: rgb(207, 208, 208);
+}
+.icon.spinner .path2:before {
+    content: "\e95d";
+    margin-left: -1em;
+    color: rgb(12, 158, 217);
+}
 .icon.unassociated:before {
     content: "\e94f";
 }

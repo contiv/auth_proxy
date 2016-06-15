@@ -7645,6 +7645,17 @@ i.icons .inverted.corner.icon {
   content: "\e94d";
 }
 
+.icon.spinner .path1:before {
+  content: "\e95c";
+  color: #cfd0d0;
+}
+
+.icon.spinner .path2:before {
+  content: "\e95d";
+  margin-left: -1em;
+  color: #0c9ed9;
+}
+
 .icon.unassociated:before {
   content: "\e94f";
 }
