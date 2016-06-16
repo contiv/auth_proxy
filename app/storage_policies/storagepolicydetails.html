@@ -200,14 +200,16 @@
 
             <ctv-storagepolicybackenddrivers policy="storagePolicyDetailsCtrl.policy"></ctv-storagepolicybackenddrivers>
 
-            <div style="margin-top: 40px">
-                <button type="button" class="ui basic button" ng-click="storagePolicyDetailsCtrl.cancelEditing()">Cancel
-                </button>
-                <button type="submit" class="ui blue button">
-                    Save
-                </button>
+            <div class="ui sixteen column grid" style="margin-top: 40px">
+                <div class="right floated three wide column">
+                    <button type="button" class="ui basic button"
+                            ng-click="storagePolicyDetailsCtrl.cancelEditing()">Cancel
+                    </button>
+                    <button type="submit" class="ui blue button">
+                        Save
+                    </button>
+                </div>
             </div>
-
             <ctv-error ng-show="storagePolicyDetailsCtrl.showServerError" header="Error saving storage policy"
                        error="storagePolicyDetailsCtrl.serverErrorMessage">
             </ctv-error>

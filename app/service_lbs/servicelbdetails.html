@@ -121,23 +121,25 @@
                 </div>
             </div>
         </div>
-        <div style="margin-top: 40px">
-            <button ng-switch-when="edit" type="button" class="ui basic button"
-                    ng-click="servicelbDetailsCtrl.cancelEditing()">Cancel
-            </button>
-            <button ng-switch-when="edit" type="button" class="ui blue button"
-                    ng-click="servicelbDetailsCtrl.saveServicelb()">
-                Save
-            </button>
-            <ctv-error ng-switch-when="edit" ng-show="servicelbDetailsCtrl.showServerError"
-                       header="Error saving service load balancer"
-                       error="servicelbDetailsCtrl.serverErrorMessage">
-            </ctv-error>
-            <ctv-error ng-switch-when="details" ng-show="servicelbDetailsCtrl.showServerError"
-                       header="Error deleting service load balancer"
-                       error="servicelbDetailsCtrl.serverErrorMessage">
-            </ctv-error>
+        <div class="ui sixteen column grid" style="margin-top: 40px">
+            <div class="right floated three wide column">
+                <button ng-switch-when="edit" type="button" class="ui basic button"
+                        ng-click="servicelbDetailsCtrl.cancelEditing()">Cancel
+                </button>
+                <button ng-switch-when="edit" type="button" class="ui blue button"
+                        ng-click="servicelbDetailsCtrl.saveServicelb()">
+                    Save
+                </button>
+            </div>
         </div>
+        <ctv-error ng-switch-when="edit" ng-show="servicelbDetailsCtrl.showServerError"
+                   header="Error saving service load balancer"
+                   error="servicelbDetailsCtrl.serverErrorMessage">
+        </ctv-error>
+        <ctv-error ng-switch-when="details" ng-show="servicelbDetailsCtrl.showServerError"
+                   header="Error deleting service load balancer"
+                   error="servicelbDetailsCtrl.serverErrorMessage">
+        </ctv-error>
     </div>
 
 </div>

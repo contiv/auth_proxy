@@ -222,10 +222,14 @@
         </table>
     </form>
     <div ng-switch="isolationPolicyDetailsCtrl.mode">
-        <button ng-switch-when="edit" type="button" class="ui blue button"
-                ng-click="isolationPolicyDetailsCtrl.doneEditing()">
-            Done
-        </button>
+        <div class="ui sixteen column grid" style="margin-top: 40px">
+            <div class="right floated two wide column">
+                <button ng-switch-when="edit" type="button" class="ui blue button"
+                        ng-click="isolationPolicyDetailsCtrl.doneEditing()">
+                    Done
+                </button>
+            </div>
+        </div>
         <ctv-error ng-switch-when="edit" ng-show="isolationPolicyDetailsCtrl.showServerError"
                    header="Error editing isolation policy"
                    error="isolationPolicyDetailsCtrl.serverErrorMessage">

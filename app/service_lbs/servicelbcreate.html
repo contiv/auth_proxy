@@ -1,4 +1,5 @@
-<form class="ui form" name="servicelbCreateCtrl.form" role="form" ng-submit="servicelbCreateCtrl.createServicelb(servicelb)"
+<form class="ui form" name="servicelbCreateCtrl.form" role="form"
+      ng-submit="servicelbCreateCtrl.createServicelb(servicelb)"
       novalidate>
     <div class="ui active inverted dimmer" ng-show="servicelbCreateCtrl.showLoader">
         <div class="ui loader"></div>
@@ -7,9 +8,10 @@
         <div ng-show="servicelbCreateCtrl.form.$submitted">
             <div ng-hide="servicelbCreateCtrl.form.$valid" class="ui negative message">
                 <ul class="list">
-                    <li ng-show="servicelbCreateCtrl.form.servicelbName.$error.required">Please enter service load balancer name</li>
+                    <li ng-show="servicelbCreateCtrl.form.servicelbName.$error.required">Please enter service load
+                        balancer name
+                    </li>
                     <li ng-show="servicelbCreateCtrl.form.servicelbNetwork.$error.required">Please select network</li>
-                    <li ng-show="servicelbCreateCtrl.form.servicelbIP.$error.required">Please enter service IP address</li>
                 </ul>
             </div>
         </div>
@@ -62,18 +64,17 @@
         </div>
     </div>
 
-    <div class="ui sixteen column grid">
+    <div class="ui sixteen column grid" style="margin-top: 40px">
         <div class="right floated three wide column">
-            <div style="margin-top: 40px">
-                <button type="button" class="ui basic button" ng-click="servicelbCreateCtrl.cancelCreating()">Cancel
-                </button>
-                <button type="submit" class="ui blue button">
-                    Create
-                </button>
-            </div>
+            <button type="button" class="ui basic button" ng-click="servicelbCreateCtrl.cancelCreating()">Cancel
+            </button>
+            <button type="submit" class="ui blue button">
+                Create
+            </button>
         </div>
     </div>
 
-    <ctv-error ng-show="servicelbCreateCtrl.showServerError" header="Error creating service load balancer" error="servicelbCreateCtrl.serverErrorMessage">
+    <ctv-error ng-show="servicelbCreateCtrl.showServerError" header="Error creating service load balancer"
+               error="servicelbCreateCtrl.serverErrorMessage">
     </ctv-error>
 </form>
