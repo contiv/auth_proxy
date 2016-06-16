@@ -116,6 +116,7 @@
             <label for="newVolumeCRUDDriver">CRUD driver</label>
             <select id="newVolumeCRUDDriver" class="ui dropdown"
                     ng-model="volumeCreateCtrl.selectedPolicy.backends.crud">
+                <option value="">none</option>
                 <option value="ceph">ceph</option>
             </select>
         </div>
@@ -124,13 +125,14 @@
             <select id="newVolumeMountDriver" class="ui dropdown"
                     ng-model="volumeCreateCtrl.selectedPolicy.backends.mount">
                 <option value="ceph">ceph</option>
-                <option value="ceph">NFS</option>
+                <option value="nfs">NFS</option>
             </select>
         </div>
         <div class="field">
             <label for="newVolumeSnapshotDriver">Snapshot driver</label>
             <select id="newVolumeSnapshotDriver" class="ui dropdown"
                     ng-model="volumeCreateCtrl.selectedPolicy.backends.snapshot">
+                <option value="">none</option>
                 <option value="ceph">ceph</option>
             </select>
         </div>

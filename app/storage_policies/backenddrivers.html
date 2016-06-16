@@ -3,6 +3,7 @@
         <label for="newStoragePolicyCRUDDriver">CRUD operations</label>
         <select id="newStoragePolicyCRUDDriver" class="ui dropdown"
                 ng-model="policy.backends.crud">
+            <option value="">none</option>
             <option value="ceph">ceph</option>
         </select>
     </div>
@@ -11,13 +12,14 @@
         <select id="newStoragePolicyMountDriver" class="ui dropdown"
                 ng-model="policy.backends.mount">
             <option value="ceph">ceph</option>
-            <option value="ceph">NFS</option>
+            <option value="nfs">NFS</option>
         </select>
     </div>
     <div class="field">
         <label for="newStoragePolicySnapshotDriver">Snapshot operation</label>
         <select id="newStoragePolicySnapshotDriver" class="ui dropdown"
                 ng-model="policy.backends.snapshot">
+            <option value="">none</option>
             <option value="ceph">ceph</option>
         </select>
     </div>
