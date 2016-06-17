@@ -63,8 +63,8 @@ angular.module('contiv.storagepolicies')
                         "pool": "rbd"
                     },
                     "create": {
-                        "size": "10MB",
-                        "filesystem": "ext4"
+                        "size": "0",
+                        "filesystem": ""
                     },
                     "runtime": {
                         "snapshots": true,
@@ -73,10 +73,10 @@ angular.module('contiv.storagepolicies')
                             "keep": 20
                         },
                         "rate-limit": {
-                            "write-iops": 1000,
-                            "read-iops": 1000,
-                            "write-bps": 100000000,
-                            "read-bps": 100000000
+                            "write-iops": 0,
+                            "read-iops": 0,
+                            "write-bps": 0,
+                            "read-bps": 0 
                         }
                     },
                     "filesystems": {}
