@@ -1,11 +1,21 @@
 #Contributing to Contiv-ui
 
-##Developers
 
-###Setup Contiv-ui on Mac and Windows
 
+##Developers - Table of contents
+=================
+
+  * [Setup](#setting-up-contiv-ui-on-mac-and-windows)
+    * [Windows](#for-windows)
+    * [Mac](#for-mac)
+  * [Testing](#testing)
+    * [Directives] (#writing-directive-tests)
+
+
+###Setting up Contiv-ui on Mac and Windows
+==========================================
 ###For Windows:
-
+---------------
 ####Fix long path issue and clone the repo:
 * install git, then run
 ```
@@ -53,6 +63,7 @@ $ nginx -s stop
 ```
 
 ###For Mac:
+-----------
 ####Install git and clone repo
 ```
 $ git
@@ -84,13 +95,6 @@ $ brew install nginx
 * Change the root to point to the absolute path of contiv-ui/app instead of html
 
 ####Running nginx
-* To start nginx, from any directory run:
-=======
-* Paste into nginx.conf (in nginx_location/conf) after line 47
-* In the section you just pasted, replace localhost with your server
-* Change the root to point to the absolute path of contiv-ui/app instead of html
-
-####Running nginx
 * In the directory of nginx, to start nginx:
 ```
 $ nginx
@@ -107,6 +111,35 @@ $ nginx -s reload
 $ nginx -s stop
 ```
 
+###Testing
+==========
+To run all tests:
+```
+$ npm test
+```
+
+####Writing Directive Tests
+---------------------------
+You must configure karma to pre-process the linked template html file. To do so:
+* In the Karma.conf.js file:
+ * add the location under preprocessors in the following format
+ ```
+ preprocessors: {
+            'app/example/**/*.html':['ng-html2js']
+        },
+ ```
+ * Include the module.js file, all other js files, and the html file.
+ ```
+ files: [
+            'app/example/module.js',
+            'app/example/**/*.js,
+            'app/example/**/*.html
+        ]
+ ```
+* In the test file, add the following to load the html:
+ ```
+ beforeEach(module('contiv.test.directives'));
+ ```
 
 
 
