@@ -8,6 +8,7 @@
   * [Setup](#setting-up-contiv-ui-on-mac-and-windows)
     * [Windows](#for-windows)
     * [Mac](#for-mac)
+  * [Adding icon](#adding-custom-icons-into-semantic-ui)
   * [Testing](#testing)
     * [Directives] (#writing-directive-tests)
 
@@ -110,6 +111,35 @@ $ nginx -s reload
 ```
 $ nginx -s stop
 ```
+
+### Adding custom icons into semantic-ui
+----------------------------------------
+
+* Uncompress the folder containing the files related to the icons.
+* Copy and replace the following files cisco-ucp.eot, cisco-ucp.svg, cisco-ucp.tff, cisco-ucp.woff, cisco-ucp.woff2 from /font/ of the uncompressed folder into contiv-ui/app/bower_components/semantic-ui/src/themes/cisco/assets/fonts/.
+* Add the new icon to icon.overrides file present in contiv-ui/app/bower_components/semantic-ui/src/themes/cisco/elements/
+* eg for adding a snapshot icon - 
+
+```
+.icon.snapshot:before {
+    content: "\e959";
+}
+
+Here content refers to the id of the icon present inside demo.html file.
+
+```
+* Do a gulp build inside the semantic installed folder
+
+```
+$ gulp build
+```
+
+* The icon can be used in the project as below :
+
+```
+<i class="snapshot icon"></i>
+```
+
 
 ###Testing
 ==========
