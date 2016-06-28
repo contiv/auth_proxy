@@ -1,5 +1,5 @@
 angular.module('contiv.nodes')
-    .factory('NodeService', ['$http', '$q', function ($http, $q) {
+    .factory('LogService', ['$http', '$q', function ($http, $q) {
         function getActiveLogs() {
             var deferred = $q.defer();
             var url = ContivGlobals.NODES_ACTIVE_JOB_ENDPOINT;

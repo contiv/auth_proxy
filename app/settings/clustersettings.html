@@ -1,0 +1,68 @@
+<form class="ui form" name="clusterSettingCtrl.form" role="form"
+      ng-submit="clusterSettingCtrl.updateClusterSettings()" novalidate>
+    <div class="ui active inverted dimmer" ng-show="clusterSettingCtrl.showLoader">
+        <div class="ui loader"></div>
+    </div>
+    <div class="field">
+        <div ng-show="clusterSettingCtrl.form.$submitted">
+            <div ng-hide="clusterSettingCtrl.form.$valid" class="ui negative message">
+                <ul class="list">
+                    <li ng-show="clusterSettingCtrl.form.controlInterface.$error.required">
+                        Please enter control interface
+                    </li>
+
+                    <!--Node commissioning related validation -->
+                    <li ng-show="clusterSettingCtrl.form.serviceVIP.$error.required">
+                        Please enter virtual IP address for cluster services
+                    </li>
+                    <li ng-show="clusterSettingCtrl.form.dataInterface.$error.required">
+                        Please enter data interface
+                    </li>
+                    <li ng-show="clusterSettingCtrl.form.ucpBootstrapNodeName.$error.required">
+                        Please enter node name
+                    </li>
+                    <ctv-acivalid ctrl="clusterSettingCtrl.form"></ctv-acivalid>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <ctv-controlinterface extravars="clusterSettingCtrl.extra_vars"></ctv-controlinterface>
+    <p></p>
+    <div class="field">
+        <label for="dataInterface">Data interface</label>
+        <input type="text" id="dataInterface" name="dataInterface"
+               ng-model="clusterSettingCtrl.extra_vars['netplugin_if']"
+               placeholder="Enter data interface" required>
+    </div>
+    <p></p>
+    <div class="field">
+        <label for="serviceVIP">Virtual IP address for cluster services</label>
+        <input type="text" id="serviceVIP" name="serviceVIP"
+               ng-model="clusterSettingCtrl.extra_vars['service_vip']"
+               placeholder="Enter virtual IP address" required>
+    </div>
+    <ctv-scheduler ctrl="clusterSettingCtrl" extravars="clusterSettingCtrl.extra_vars"></ctv-scheduler>
+    <div class="ui section divider"></div>
+    <ctv-networkmode extravars="clusterSettingCtrl.extra_vars"></ctv-networkmode>
+    <div class="ui section divider"></div>
+
+    <ctv-collapsible title="Ansible Variables">
+        <ctv-namevalue items="clusterSettingCtrl.ansibleVariables"></ctv-namevalue>
+    </ctv-collapsible>
+    <div class="ui section divider"></div>
+    <ctv-collapsible title="Environment Variables">
+        <ctv-namevalue items="clusterSettingCtrl.envVariables"></ctv-namevalue>
+    </ctv-collapsible>
+
+    <div class="ui sixteen column grid">
+        <div class="right floated five wide column">
+            <div style="margin-top: 40px">
+                <button type="submit" class="ui blue button">
+                    Update Global Cluster Settings
+                </button>
+            </div>
+        </div>
+    </div>
+    <ctv-error ng-show="clusterSettingCtrl.showServerError" header="Error updating settings" error="clusterSettingCtrl.serverErrorMessage">
+    </ctv-error>
+</form>

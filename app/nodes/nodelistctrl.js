@@ -11,8 +11,8 @@ angular.module('contiv.nodes')
             })
         ;
     }])
-    .controller('NodeListCtrl', ['$scope', '$interval', '$filter', 'NodesModel', 'CRUDHelperService', 'NodeService',
-        function ($scope, $interval, $filter, NodesModel, CRUDHelperService, NodeService) {
+    .controller('NodeListCtrl', ['$scope', '$interval', '$filter', 'NodesModel', 'CRUDHelperService', 'LogService',
+        function ($scope, $interval, $filter, NodesModel, CRUDHelperService, LogService) {
         var nodeListCtrl = this;
 
         function getNodes(reload) {
@@ -28,7 +28,7 @@ angular.module('contiv.nodes')
         }
 
         function getActiveLogs() {
-            NodeService.getActiveLogs().then(function successCallback(result) {
+            LogService.getActiveLogs().then(function successCallback(result) {
                 nodeListCtrl.activeLogs = result;
             }, function errorCallback(result) {
                 //Once the job finishes, endpoint returns 500 error. So reset the activeLogs
@@ -39,7 +39,7 @@ angular.module('contiv.nodes')
         }
 
         function getLastLogs() {
-            NodeService.getLastLogs().then(function successCallback(result) {
+            LogService.getLastLogs().then(function successCallback(result) {
                 nodeListCtrl.lastLogs = result;
             }, function errorCallback(result) {
             });

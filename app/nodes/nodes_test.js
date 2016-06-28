@@ -100,6 +100,19 @@ describe("contiv.nodes module", function () {
         }
     };
 
+    var global = {
+        "extra_vars": {
+            "contiv_network_mode":"standalone",
+            "control_interface":"eth0",
+            "env": {},
+            "fwd_mode":"bridge",
+            "http_proxy":"http://proxy.cisco.com",
+            "netplugin_if":"eth2",
+            "scheduler_provider":"native-swarm",
+            "service_vip":"192.168.2.252"
+        }
+    };
+
     beforeEach(module('ui.router'));
     beforeEach(module('contiv.nodes'));
 
@@ -114,6 +127,7 @@ describe("contiv.nodes module", function () {
         $httpBackend.when('POST', ContivGlobals.NODES_MAINTENANCE_ENDPOINT).respond();
         $httpBackend.when('GET', ContivGlobals.NODES_ACTIVE_JOB_ENDPOINT).respond();
         $httpBackend.when('GET', ContivGlobals.NODES_LAST_JOB_ENDPOINT).respond();
+        $httpBackend.when('GET', ContivGlobals.NODES_SETTINGS_GET_ENDPOINT).respond(global);
     }));
 
     afterEach(function () {
@@ -172,6 +186,7 @@ describe("contiv.nodes module", function () {
         it('should be defined', function () {
             //spec body
             expect(nodeCommissionCtrl).toBeDefined();
+            $httpBackend.flush();
         });
         it('NodeCommissionCtrl.commission() should do a POST on /commission/node/ REST API', function () {
             nodeCommissionCtrl.form = {'$valid' : true};
@@ -182,14 +197,46 @@ describe("contiv.nodes module", function () {
             $httpBackend.expectPOST(ContivGlobals.NODES_COMMISSION_ENDPOINT);
             $httpBackend.flush();
         });
-        it('NodeCommissionCtrl.discover() should do a POST on /discover/node/ REST API', function () {
-            nodeCommissionCtrl.form = {'$valid' : true};
-            nodeCommissionCtrl.nodeIPAddr = '192.168.2.10';
-            nodeCommissionCtrl.ansibleVariables = ansibleVariables;
-            nodeCommissionCtrl.envVariables = envVariables;
-            nodeCommissionCtrl.discover();
+        it('NodeCommissionCtrl.commission() should not do a POST on /commission/node/ REST API for invalid form', function () {
+            nodeCommissionCtrl.form = {'$valid' : false};
+            nodeCommissionCtrl.commission();
+            $httpBackend.verifyNoOutstandingRequest();
+            $httpBackend.flush();
+            expect(nodeCommissionCtrl.showLoader).toBeFalsy();
+        });
+    });
+
+    describe('nodediscover controller', function () {
+        var $controller, $state, $stateParams;
+        var nodeDiscoverCtrl;
+        beforeEach(inject(function (_$state_ ,_$stateParams_, _$controller_) {
+            $state = _$state_;
+            $state.go = function (stateName) {};
+            $stateParams = _$stateParams_;
+            $stateParams.key = 'cluster-node1-0';
+            $controller = _$controller_;
+            nodeDiscoverCtrl = $controller('NodeDiscoverCtrl',
+                { $state: $state, $stateParams: $stateParams });
+        }));
+
+        it('should be defined', function () {
+            //spec body
+            expect(nodeDiscoverCtrl).toBeDefined();
+        });
+        it('NodeDiscoverCtrl.discover() should do a POST on /discover/node/ REST API', function () {
+            nodeDiscoverCtrl.form = {'$valid' : true};
+            nodeDiscoverCtrl.nodeIPAddr = '192.168.2.10';
+            nodeDiscoverCtrl.ansibleVariables = ansibleVariables;
+            nodeDiscoverCtrl.envVariables = envVariables;
+            nodeDiscoverCtrl.discover();
             $httpBackend.expectPOST(ContivGlobals.NODES_DISCOVER_ENDPOINT);
             $httpBackend.flush();
+        });
+        it('NodeDiscoverCtrl.discover() should not do a POST on /discover/node/ REST API for invalid form', function () {
+            nodeDiscoverCtrl.form = {'$valid' : false};
+            nodeDiscoverCtrl.discover();
+            $httpBackend.verifyNoOutstandingRequest();
+            expect(nodeDiscoverCtrl.showLoader).toBeFalsy();
         });
     });
 
