@@ -47,6 +47,8 @@ angular.module('contiv.nodes')
             nodeDiscoverCtrl.envVariables = [];
             nodeDiscoverCtrl.nodeIPAddr = ''; //IP address of nodes to discover
 
+            NodesService.getSettings(nodeDiscoverCtrl);
+
             nodeDiscoverCtrl.discover = discover;
             nodeDiscoverCtrl.cancelDiscoveringNode = cancelDiscoveringNode;
 

@@ -4,34 +4,33 @@
         <div class="ui loader"></div>
     </div>
     <div class="field">
-            <div ng-show="nodeDiscoverCtrl.form.$submitted">
-                <div ng-hide="nodeDiscoverCtrl.form.$valid" class="ui negative message">
-                    <ul class="list">
-                        <li ng-show="nodeDiscoverCtrl.form.controlInterface.$error.required">
-                            Please enter control interface
-                        </li>
+        <div ng-show="nodeDiscoverCtrl.form.$submitted">
+            <div ng-hide="nodeDiscoverCtrl.form.$valid" class="ui negative message">
+                <ul class="list">
+                    <li ng-show="nodeDiscoverCtrl.form.controlInterface.$error.required">
+                        Please enter control interface
+                    </li>
 
-                        <!--Node discovery related validation -->
-                        <li ng-show="nodeDiscoverCtrl.form.ipAddr.$error.required">
-                            Please enter IP address for node
-                        </li>
-                    </ul>
-                </div>
+                    <!--Node discovery related validation -->
+                    <li ng-show="nodeDiscoverCtrl.form.ipAddr.$error.required">
+                        Please enter IP address for node
+                    </li>
+                </ul>
             </div>
         </div>
-    <ctv-controlinterface extravars="nodeDiscoverCtrl.extra_vars"> </ctv-controlinterface>
-    <p></p>
-    <div class="field">
-        <label for="clusterName">Cluster name</label>
-        <input type="text" id="clusterName" name="clusterName"
-               ng-model="nodeDiscoverCtrl.extra_vars['cluster_name']"
-               placeholder="Enter cluster name">
     </div>
     <div class="field">
         <label for="ipAddr">IP Addresses</label>
         <input type="text" id="ipAddr" name="ipAddr"
                ng-model="nodeDiscoverCtrl.nodeIPAddr"
                placeholder="Enter IP addresses of nodes, comma separated" required>
+    </div>
+    <ctv-controlinterface extravars="nodeDiscoverCtrl.extra_vars"> </ctv-controlinterface>
+    <div class="field" style="margin-top: 15px">
+        <label for="clusterName">Cluster name</label>
+        <input type="text" id="clusterName" name="clusterName"
+               ng-model="nodeDiscoverCtrl.extra_vars['cluster_name']"
+               placeholder="Enter cluster name">
     </div>
     <div class="ui section divider"></div>
     

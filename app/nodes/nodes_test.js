@@ -222,6 +222,7 @@ describe("contiv.nodes module", function () {
         it('should be defined', function () {
             //spec body
             expect(nodeDiscoverCtrl).toBeDefined();
+            $httpBackend.flush();
         });
         it('NodeDiscoverCtrl.discover() should do a POST on /discover/node/ REST API', function () {
             nodeDiscoverCtrl.form = {'$valid' : true};
@@ -237,6 +238,7 @@ describe("contiv.nodes module", function () {
             nodeDiscoverCtrl.discover();
             $httpBackend.verifyNoOutstandingRequest();
             expect(nodeDiscoverCtrl.showLoader).toBeFalsy();
+            $httpBackend.flush();
         });
     });
 

@@ -17,20 +17,11 @@
                         Please enter node name
                     </li>
 
-                    <ctv-acivalid ctrl="nodeCommissionCtrl.form"></ctv-acivalid>
+                    <ctv-acivalid form="nodeCommissionCtrl.form"></ctv-acivalid>
                 </ul>
             </div>
         </div>
     </div>
-    <ctv-controlinterface extravars="nodeCommissionCtrl.extra_vars"></ctv-controlinterface>
-    <p></p>
-    <div class="field">
-        <label for="dataInterface">Data interface</label>
-        <input type="text" id="dataInterface" name="dataInterface"
-               ng-model="nodeCommissionCtrl.extra_vars['netplugin_if']"
-               placeholder="Enter data interface" required>
-    </div>
-    <p></p>
     <div class="field">
         <label for="hostgroup">Host group</label>
         <select id="hostgroup" class="ui dropdown"
@@ -41,7 +32,13 @@
             <option value="service-worker">Service Worker</option>
         </select>
     </div>
-    <p></p>
+    <ctv-controlinterface extravars="nodeCommissionCtrl.extra_vars"></ctv-controlinterface>
+    <div class="field" style ="margin-top: 15px">
+        <label for="dataInterface">Data interface</label>
+        <input type="text" id="dataInterface" name="dataInterface"
+               ng-model="nodeCommissionCtrl.extra_vars['netplugin_if']"
+               placeholder="Enter data interface" required>
+    </div>
     <ctv-scheduler ctrl="nodeCommissionCtrl" extravars="nodeCommissionCtrl.extra_vars"></ctv-scheduler>
     <div class="ui section divider"></div>
 
