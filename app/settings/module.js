@@ -25,11 +25,6 @@ angular.module('contiv.settings', ['contiv.models', 'contiv.directives', 'contiv
                 controller: '',
                 templateUrl: ''
             })
-            .state('contiv.menu.settings.details.networks', {
-                url: '/networks',
-                controller: '',
-                templateUrl: ''
-            })
             .state('contiv.menu.settings.details.policies', {
                 url: '/policies',
                 controller: '',

@@ -8,9 +8,8 @@ angular.module('contiv.settings')
             })
         ;
     }])
-    .controller('ClusterSettingCtrl', [
-        '$state', '$stateParams', 'CRUDHelperService', 'NodesService',
-        function ($state, $stateParams, CRUDHelperService, NodesService) {
+    .controller('ClusterSettingCtrl', ['$stateParams', 'CRUDHelperService', 'NodesService',
+        function ($stateParams, CRUDHelperService, NodesService) {
             var clusterSettingCtrl = this;
 
             function updateClusterSettings() {

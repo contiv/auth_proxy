@@ -107,22 +107,11 @@ angular.module('contiv.utils')
             };
 
             function updateSettings(nodeOpsObj) {
-                BaseCollection.call(this, $http, $q, ContivGlobals.NODES_SETTINGS_GET_ENDPOINT);
-                var settingscollection = this;
-                var deferred = settingscollection.$q.defer();
-                var url = ContivGlobals.NODES_SETTINGS_SET_ENDPOINT;
-                settingscollection.$http.post(url, nodeOpsObj, {
+                return $http.post(ContivGlobals.NODES_SETTINGS_SET_ENDPOINT, nodeOpsObj, {
                         'headers': {
                             'Content-Type': 'application/json'
                         }
-                    })
-                    .then(function successCallback(response) {
-                        //Server doesn't return any json in response
-                        deferred.resolve();
-                    }, function errorCallback(response) {
-                        deferred.reject(response);
                     });
-                return deferred.promise;
             };
 
             function createExtraVars(ctrl) {

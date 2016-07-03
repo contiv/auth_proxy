@@ -12,6 +12,7 @@ var ContivGlobals = (function () {
         'APPLICATIONGROUPS_ENDPOINT': '/netmaster/api/v1/endpointGroups/',
         'SERVICELBS_ENDPOINT': '/netmaster/api/v1/serviceLBs/',
         'ORGANIZATIONS_ENDPOINT':'/netmaster/api/v1/tenants/',
+        'NETWORK_SETTINGS_ENDPOINT': '/netmaster/api/v1/globals/',
 
         //REST endpoints for VOLMASTER
         'VOLUMES_ENDPOINT': '/volmaster/volumes/',
@@ -39,6 +40,8 @@ var ContivGlobals = (function () {
         'REFRESH_INTERVAL': 5000,
 
         //RegEx for validation
-        'CIDR_REGEX' : '^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1-2][0-9]|3[0-2]))$'
+        'CIDR_REGEX' : '^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1-2][0-9]|3[0-2]))$',
+        'VLAN_REGEX' : '^([0-9]{1,4}?-[0-9]{1,4}?)$',
+        'VXLAN_REGEX' : '^([0-9]{1,8}?-[0-9]{1,8}?)$' 
     }
 })();

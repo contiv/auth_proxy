@@ -1,0 +1,58 @@
+<form class="ui form" name="networkSettingCtrl.form" role="form"
+      ng-submit="networkSettingCtrl.updateNetworkSettings()" novalidate> 
+    <div class="ui active inverted dimmer" ng-show="networkSettingCtrl.showLoader">
+        <div class="ui loader"></div>
+    </div>
+    <div class="field">
+        <div ng-show="networkSettingCtrl.form.$submitted">
+            <div ng-hide="networkSettingCtrl.form.$valid" class="ui negative message">
+                <ul class="list">
+                    <li ng-show="networkSettingCtrl.form.networkInfrastructure.$error.required">
+                        Please enter network infrastructure type
+                    </li>
+                    <li ng-show="networkSettingCtrl.form.allowedVlanRange.$error.required">
+                        Please enter allowed vlan range
+                    </li>
+                    <li ng-show="networkSettingCtrl.form.allowedVxlanRange.$error.required">
+                        Please enter allowed vxlan range
+                    </li>
+                    <li ng-show="networkSettingCtrl.form.allowedVlanRange.$error.pattern">
+                        Please enter vlan in range in the correct notation
+                    </li>
+                    <li ng-show="networkSettingCtrl.form.allowedVxlanRange.$error.pattern">
+                        Please enter vxlan in range in the correct notation
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="field">
+        <label for="networkInfrastructure">Network infrastructure type</label>
+        <select id="networkInfrastructure" name="networkInfrastructure" class="ui dropdown" ng-model="networkSettingCtrl.setting['networkInfraType']" required>
+            <option value="">-- Please select network infrastructure type --</option>
+            <option value="default">default</option>
+            <option value="aci">aci</option>
+        </select>
+    </div>
+    <div class="field">
+        <label for="allowedVlanRange">Allowed vlan range</label>
+        <input type="text" id="allowedVlanRange" name="allowedVlanRange" ng-model="networkSettingCtrl.setting['vlans']" placeholder="1-4094" required ng-pattern="networkSettingCtrl.vlanPattern">
+    </div>
+    <div class="field">
+        <label for="allowedVxlanRange">Allowed vxlan range</label>
+        <input type="text" id="allowedVxlanRange" name="allowedVxlanRange" ng-model="networkSettingCtrl.setting['vxlans']" placeholder="1-10000" required ng-pattern="networkSettingCtrl.vxlanPattern">
+    </div>
+
+    <div class="ui sixteen column grid">
+        <div class="right floated four wide column">
+            <div style="margin-top: 40px">
+                <button type="submit" class="ui blue button">
+                    Update Network Settings
+                </button>
+            </div>
+        </div>
+    </div>
+    <ctv-error ng-show="networkSettingCtrl.showServerError" header="Error updating network settings" error="networkSettingCtrl.serverErrorMessage">
+    </ctv-error>
+</form>
