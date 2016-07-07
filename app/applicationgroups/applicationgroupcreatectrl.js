@@ -16,16 +16,20 @@ angular.module('contiv.applicationgroups')
     }])
     .controller('ApplicationGroupCreateCtrl', [
         '$state',
+        '$stateParams',
         'ApplicationGroupsModel',
         'NetworksModel',
         'PoliciesModel',
+        'NetprofilesModel',
         'RulesModel',
         'ApplicationGroupService',
         'CRUDHelperService',
         function ($state,
+                  $stateParams,
                   ApplicationGroupsModel,
                   NetworksModel,
                   PoliciesModel,
+                  NetprofilesModel,
                   RulesModel,
                   ApplicationGroupService,
                   CRUDHelperService) {
@@ -36,6 +40,7 @@ angular.module('contiv.applicationgroups')
             applicationGroupCreateCtrl.selectedNetwork = {};
             applicationGroupCreateCtrl.selectedPolicy = {};
             applicationGroupCreateCtrl.selectedPolicies = [];
+            applicationGroupCreateCtrl.selectedNetprofile = {};
 
             //To display incoming and outgoing rules for selected policies
             applicationGroupCreateCtrl.incomingRules = [];
@@ -95,6 +100,10 @@ angular.module('contiv.applicationgroups')
                     CRUDHelperService.startLoader(applicationGroupCreateCtrl);
                     applicationGroupCreateCtrl.applicationGroup.networkName =
                         applicationGroupCreateCtrl.selectedNetwork.networkName;
+                    
+                    applicationGroupCreateCtrl.applicationGroup.netProfile =
+                        applicationGroupCreateCtrl.selectedNetprofile.profileName;
+                    
                     applicationGroupCreateCtrl.applicationGroup.key =
                         ApplicationGroupsModel.generateKey(applicationGroupCreateCtrl.applicationGroup);
 
@@ -108,7 +117,7 @@ angular.module('contiv.applicationgroups')
                         });
                 }
             }
-
+            
             function resetForm() {
                 CRUDHelperService.stopLoader(applicationGroupCreateCtrl);
                 CRUDHelperService.hideServerError(applicationGroupCreateCtrl);
@@ -122,11 +131,12 @@ angular.module('contiv.applicationgroups')
 
             getNetworks();
             getIsolationPolicies();
-
+            
             applicationGroupCreateCtrl.createApplicationGroup = createApplicationGroup;
             applicationGroupCreateCtrl.cancelCreating = cancelCreating;
             applicationGroupCreateCtrl.addIsolationPolicy = addIsolationPolicy;
             applicationGroupCreateCtrl.removeIsolationPolicy = removeIsolationPolicy;
+
 
             resetForm();
         }]);

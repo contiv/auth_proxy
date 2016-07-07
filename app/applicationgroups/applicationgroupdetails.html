@@ -167,6 +167,7 @@
             </tr>
             </tbody>
         </table>
+
     </ctv-collapsible>
 
     <div class="ui section divider"></div>
@@ -179,10 +180,23 @@
 
     <div class="ui section divider"></div>
 
-    <h4 class="ui header">
-        <i class="grey plus circle outline icon"></i>
-        Bandwidth Policies
-    </h4>
+    <ctv-collapsible title="Bandwidth Policies">
+        <div ng-switch="applicationGroupDetailsCtrl.mode">
+            <div ng-switch-when="edit">
+                <ctv-netprofiles type="edit" netprofile="applicationGroupDetailsCtrl.selectedNetprofile">
+            </div>
+
+            <table ng-switch-when="details" class="ui very basic unstackable table">
+                <tbody>
+                    <tr>
+                        <td class="ctv-header three wide column">Profile Name</td>
+                        <td>{{applicationGroupDetailsCtrl.applicationGroup.netProfile}}</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </ctv-collapsible>
 
 
     <div class="ui section divider"></div>

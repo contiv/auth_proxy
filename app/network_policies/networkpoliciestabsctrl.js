@@ -21,8 +21,8 @@ angular.module('contiv.networkpolicies')
             })
             .state('contiv.menu.networkpolicies.bandwidth', {
                 url: '/bandwidth',
-                controller: 'NetworkPoliciesTabsCtrl as networkPoliciesTabsCtrl',
-                templateUrl: 'network_policies/bandwidthpolicylist.html'
+                abstract: true,
+                template: '<ui-view/>'
             })
             .state('contiv.menu.networkpolicies.redirection', {
                 url: '/redirection',

@@ -1,0 +1,38 @@
+
+
+<form class="ui form" name="bandwidthPolicyCreateCtrl.form" role="form"
+      ng-submit="bandwidthPolicyCreateCtrl.createPolicy(newPolicy)" novalidate>
+    <div class="ui active inverted dimmer" ng-show="bandwidthPolicyCreateCtrl.showLoader">
+        <div class="ui loader"></div>
+    </div>
+    <div class="field">
+        <div ng-show="bandwidthPolicyCreateCtrl.form.$submitted">
+            <div ng-hide="bandwidthPolicyCreateCtrl.form.$valid" class="ui negative message">
+                <ul class="list">
+                    <li ng-show="bandwidthPolicyCreateCtrl.form.newProfileName.$error.required">Please enter profile name</li>
+                    <li ng-show="bandwidthPolicyCreateCtrl.form.newBandwidthNumber.$error.required">Please enter bandwidth</li>
+                    <li ng-show="bandwidthPolicyCreateCtrl.form.newBandwidthUnit.$error.required">Please select bandwidth Unit</li>
+                    <li ng-show="bandwidthPolicyCreateCtrl.form.newDSCP.$error.required">Please enter DSCP</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <ctv-bandwidth mode="create" bandwidth-policy="bandwidthPolicyCreateCtrl.newPolicy"></ctv-bandwidth>
+
+    <div class="ui sixteen column grid">
+        <div class="right floated three wide column">
+            <div style="margin-top: 40px">
+            <button type="button" class="ui basic button" ng-click="bandwidthPolicyCreateCtrl.cancelCreating()">
+                Cancel
+            </button>
+            <button type="submit" class="ui blue button">
+                Create
+            </button>
+            </div>
+        </div>
+    </div>
+
+    <ctv-error ng-show="bandwidthPolicyCreateCtrl.showServerError" header="Error creating policy" error="bandwidthPolicyCreateCtrl.serverErrorMessage">
+    </ctv-error>
+</form>

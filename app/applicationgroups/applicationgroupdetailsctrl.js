@@ -1,4 +1,4 @@
-/**
+ /**
  * Created by vjain3 on 3/15/16.
  */
 angular.module('contiv.applicationgroups')
@@ -21,6 +21,7 @@ angular.module('contiv.applicationgroups')
         '$stateParams',
         'ApplicationGroupsModel',
         'PoliciesModel',
+        'NetprofilesModel',
         'RulesModel',
         'ApplicationGroupService',
         'CRUDHelperService',
@@ -28,6 +29,7 @@ angular.module('contiv.applicationgroups')
                   $stateParams,
                   ApplicationGroupsModel,
                   PoliciesModel,
+                  NetprofilesModel,
                   RulesModel,
                   ApplicationGroupService,
                   CRUDHelperService) {
@@ -37,6 +39,7 @@ angular.module('contiv.applicationgroups')
             applicationGroupDetailsCtrl.selectedNetwork = {};
             applicationGroupDetailsCtrl.selectedPolicy = {};
             applicationGroupDetailsCtrl.selectedPolicies = [];
+            applicationGroupDetailsCtrl.selectedNetprofile = {};
 
             //To display incoming and outgoing rules for selected policies
             applicationGroupDetailsCtrl.incomingRules = [];
@@ -100,6 +103,7 @@ angular.module('contiv.applicationgroups')
              * Get policies for the given tenant.
              */
             function getIsolationPolicies() {
+
                 PoliciesModel.get().then(function (result) {
                     applicationGroupDetailsCtrl.isolationPolicies = _.filter(result, {
                         'tenantName': 'default'//TODO: Remove hardcoded tenant.
@@ -124,6 +128,9 @@ angular.module('contiv.applicationgroups')
             function saveApplicationGroup() {
                 CRUDHelperService.hideServerError(applicationGroupDetailsCtrl);
                 CRUDHelperService.startLoader(applicationGroupDetailsCtrl);
+
+                applicationGroupDetailsCtrl.applicationGroup.netProfile = applicationGroupDetailsCtrl.selectedNetprofile.profileName;
+
                 ApplicationGroupsModel.save(applicationGroupDetailsCtrl.applicationGroup).then(function successCallback(result) {
                     CRUDHelperService.stopLoader(applicationGroupDetailsCtrl);
                     returnToApplicationGroupDetails();
@@ -145,7 +152,7 @@ angular.module('contiv.applicationgroups')
                     }
                     getRules();
                 });
-
+            
             getIsolationPolicies();
 
             applicationGroupDetailsCtrl.saveApplicationGroup = saveApplicationGroup;

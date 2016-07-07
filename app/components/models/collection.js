@@ -115,6 +115,7 @@ Collection.prototype = Object.create(BaseCollection.prototype);
 Collection.prototype.create = function (model, url) {
     var collection = this;
     var deferred = collection.$q.defer();
+    
     if (url === undefined) url = collection.url + model.key + '/';
     collection.$http.post(url, model)
         .then(function successCallback(response) {

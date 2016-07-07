@@ -143,14 +143,13 @@
     </div>
 
     <div class="ui section divider"></div>
-    <div class="field">
-        <h4 class="ui header">
-            <i class="grey plus circle outline icon"></i>
-            Bandwidth Policies
-        </h4>
-    </div>
+
+    <ctv-collapsible title="Bandwidth Policies">
+        <ctv-netprofiles type="create" netprofile="applicationGroupCreateCtrl.selectedNetprofile">
+    </ctv-collapsible>
 
     <div class="ui section divider"></div>
+
     <div class="field">
         <h4 class="ui header">
             <i class="grey plus circle outline icon"></i>

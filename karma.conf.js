@@ -2,7 +2,10 @@ module.exports = function (config) {
     config.set({
 
         preprocessors: {
-            'app/components/directives/*.html': ['ng-html2js']
+            'app/components/directives/*.html': ['ng-html2js'],
+            'app/network_policies/bandwidth.html': ['ng-html2js'],
+            'app/applicationgroups/netprofile.html': ['ng-html2js']
+
         },
 
         basePath: './',
@@ -24,8 +27,10 @@ module.exports = function (config) {
             'app/networks/**/*.js',
             'app/network_policies/module.js',
             'app/network_policies/**/*.js',
+            'app/network_policies/**/*.html',
             'app/applicationgroups/module.js',
             'app/applicationgroups/**/*.js',
+            'app/applicationgroups/**/*.html',
             'app/service_lbs/module.js',
             'app/service_lbs/**/*.js',
             'app/nodes/module.js',
@@ -33,7 +38,8 @@ module.exports = function (config) {
             'app/organizations/module.js',
             'app/organizations/**/*.js',
             'app/settings/module.js',
-            'app/settings/**/*.js'
+            'app/settings/**/*.js',
+
         ],
 
         autoWatch: true,

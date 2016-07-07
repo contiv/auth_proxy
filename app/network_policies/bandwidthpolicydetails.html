@@ -1,0 +1,110 @@
+<div class="ui sixteen column grid">
+    <div class="one wide column">
+        <a ui-sref="contiv.menu.networkpolicies.bandwidth.list()">
+            <i class="large arrow left icon"></i>
+        </a>
+    </div>
+    <div class="left floated ten wide column">
+        <div class="content" style="font-size: 24px">Bandwidth Policies (Details)</div>
+    </div>
+
+    <div ng-switch="bandwidthPolicyDetailsCtrl.mode" class="right floated five wide column">
+        <div id="delete-policy-modal" class="ui small modal">
+            <div class="header">Remove Policy: {{bandwidthPolicyDetailsCtrl.policy.profileName}}</div>
+            <div class="content">
+                <p>Are you sure you want to remove this bandwidth policy?</p>
+            </div>
+            <div class="actions">
+                <div class="ui negative button">No</div>
+                <div class="ui positive blue button" ng-click="bandwidthPolicyDetailsCtrl.deletePolicy()">
+                    Yes
+                </div>
+            </div>
+        </div>
+
+        <button ng-switch-when="edit" class="ui disabled button"
+                ui-sref="contiv.menu.networkpolicies.bandwidth.edit({key:bandwidthPolicyDetailsCtrl.policy.key})">
+            <i class="edit icon"></i>
+            Edit
+        </button>
+
+        <button ng-switch-when="details" class="ui basic button"
+                ui-sref="contiv.menu.networkpolicies.bandwidth.edit({key:bandwidthPolicyDetailsCtrl.policy.key})">
+            <i class="edit icon"></i>
+            Edit
+        </button>
+
+        <button class="ui basic button" onclick="$('#delete-policy-modal').modal('show')">
+            <i class="trash icon"></i>
+            Remove
+        </button>
+    </div>
+</div>
+
+<div ng-switch="bandwidthPolicyDetailsCtrl.mode" class="ui basic segment">
+    <div class="ui active inverted dimmer" ng-show="bandwidthPolicyDetailsCtrl.showLoader">
+        <div class="ui loader"></div>
+    </div>
+
+    <div ng-switch-when="details">
+        <h4 class="ui header">Basic Settings</h4>
+        <table class="ui very basic selectable table">
+            <tbody>
+            <tr>
+                <td class="ctv-header three wide column">Profile Name</td>
+                <td>{{bandwidthPolicyDetailsCtrl.policy.profileName}}</td>
+            </tr>
+            <tr>
+                <td class="ctv-header three wide column">Bandwidth</td>
+                <td>{{bandwidthPolicyDetailsCtrl.policy.bandwidth}}</td>
+            </tr>
+            <tr>
+                <td class="ctv-header three wide column">DSCP</td>
+                <td>{{bandwidthPolicyDetailsCtrl.policy.DSCP}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div ng-switch-when="edit">
+        <form class="ui form" name="bandwidthPolicyDetailsCtrl.form" role="form"
+              ng-submit="bandwidthPolicyDetailsCtrl.savePolicy(newpolicy)" novalidate>
+            <div class="ui active inverted dimmer" ng-show="bandwidthPolicyDetailsCtrl.showLoader">
+                <div class="ui loader"></div>
+            </div>
+            <div class="field">
+                <div ng-show="bandwidthPolicyDetailsCtrl.form.$submitted">
+                    <div ng-hide="bandwidthPolicyDetailsCtrl.form.$valid" class="ui negative message">
+                        <ul class="list">
+                            <li ng-show="bandwidthPolicyDetailsCtrl.form.newBandwidthNumber.$error.required">
+                                Please enter bandwidth
+                            </li>
+                            <li ng-show="bandwidthPolicyDetailsCtrl.form.newBandwidthUnit.$error.required">
+                                Please select bandwidth Unit
+                            </li>
+                            <li ng-show="bandwidthPolicyDetailsCtrl.form.newDSCP.$error.required">
+                                Please enter DSCP
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <h4 class="ui header">Basic Settings</h4>
+
+            <ctv-bandwidth mode="edit" bandwidth-policy="bandwidthPolicyDetailsCtrl.policy"></ctv-bandwidth>
+
+            <div class="ui sixteen column grid" style="margin-top: 40px">
+                <div class="right floated three wide column">
+                    <button type="button" class="ui basic button"
+                            ng-click="bandwidthPolicyDetailsCtrl.cancelEditing()">Cancel
+                    </button>
+
+                    <button type="submit" class="ui blue button">
+                        Save
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
