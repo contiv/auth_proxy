@@ -5,6 +5,11 @@ angular.module('contiv.networks')
                 url: '/details/:key',
                 controller: 'NetworkDetailsCtrl as networkDetailsCtrl',
                 templateUrl: 'networks/networkdetails.html'
+            })
+            .state('contiv.menu.networks.details.info', {
+                url: '/info',
+                controller: 'NetworkDetailsCtrl as networkDetailsCtrl',
+                templateUrl: 'networks/networkinfo.html'
             });
     }])
     .controller('NetworkDetailsCtrl',

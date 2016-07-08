@@ -11,10 +11,10 @@ module.exports = function (config) {
         basePath: './',
 
         files: [
+            'app/bower_components/jquery/dist/jquery.js',
             'app/bower_components/angular/angular.js',
             'app/bower_components/angular-route/angular-route.js',
             'app/bower_components/angular-ui-router/release/angular-ui-router.js',
-            'app/bower_components/jquery/dist/jquery.js',
             'app/bower_components/semantic/dist/semantic.js',
             'app/bower_components/lodash/dist/lodash.js',
             'app/bower_components/angular-mocks/angular-mocks.js',

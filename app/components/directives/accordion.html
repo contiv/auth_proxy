@@ -1,0 +1,19 @@
+<div class="ui accordion">
+    <div class="title">
+        <i class="dropdown icon"></i>
+        {{title}}
+    </div>
+    <div class="content">
+        <table style="margin-left:3%">
+            <tbody style="border-style: hidden">
+            <tr ng-repeat="item in items">
+                <td class="ctv-header three column wide">{{item.name}}</td>
+                <td ng-if="item.format=='label'">
+                    <div class="ui label tiny" ng-repeat="selector in item.value" ng-if="item.type=='array'" style="margin-top: 2px;">{{selector}}</div>
+                </td>
+                <td ng-if="item.format!='label'">{{item.value}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

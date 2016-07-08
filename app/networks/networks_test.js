@@ -101,6 +101,42 @@ describe('contiv.networks module', function () {
         }
     ];
 
+    var networkOperData = {
+        "Oper":{
+            "allocatedAddressesCount":2,
+            "allocatedIPAddresses":"20.1.1.1-20.1.1.6, 20.1.1.254",
+            "dnsServerIP":"20.1.1.1",
+            "endpoints":[
+                {
+                    "containerID":"c44e011692b36f3dc0c1b2d7f02f65446aa8c839725f2247eb160f902e662b3b",
+                    "homingHost":"cluster-node1",
+                    "ipAddress":[
+                        "20.1.1.2",
+                        ""
+                    ],
+                    "labels":"map[com.docker.swarm.id:f3d9025b52147907722e154d8d60963375dbe01fe2daf557902ac9eab37170c3]",
+                    "macAddress":"02:02:14:01:01:02",
+                    "name":"b437653f2b2009c1ebfb6f03546cf650dd6873a31b92326ad390b4a22af3c33c",
+                    "network":"contiv-net1.default"
+                },
+                {
+                    "containerID":"dd02a4ae156f3068ba0a66cd875c6b667e3b1aab6a005a61bccef4f186252b03",
+                    "homingHost":"cluster-node1",
+                    "ipAddress":[
+                        "20.1.1.3",
+                        ""
+                    ],
+                    "labels":"map[com.docker.swarm.id:f8cff2b516b2133ed8f6b6cc6fcbc989437b30744572e08dc874e737d0292410]",
+                    "macAddress":"02:02:14:01:01:03",
+                    "name":"ae20564a67bbb596f84d14d321ccc792b80755b035af56606bd0ccb25cb0c0b2",
+                    "network":"contiv-net1.default"
+                }],
+            "externalPktTag":1,
+            "numEndpoints":2,
+            "pktTag":1
+        }
+    };
+
     beforeEach(module('ui.router'));
 
     beforeEach(module('contiv.networks'));
@@ -109,6 +145,7 @@ describe('contiv.networks module', function () {
 
     beforeEach(inject(function (_$httpBackend_) {
         $httpBackend = _$httpBackend_;
+        $httpBackend.when('GET', ContivGlobals.NETWORKS_INSPECT_ENDPOINT + networksData[0].key + '/').respond(networkOperData);
         $httpBackend.when('GET', ContivGlobals.NETWORKS_ENDPOINT).respond(networksData);
         $httpBackend.when('GET', ContivGlobals.APPLICATIONGROUPS_ENDPOINT).respond(groupsData);
         $httpBackend.when('DELETE', ContivGlobals.NETWORKS_ENDPOINT + networksData[0].key + '/').respond(networksData[0]);
@@ -256,4 +293,55 @@ describe('contiv.networks module', function () {
             expect(networkCreateCtrl.showLoader).toBeFalsy();
         });
     });
+
+    describe('networkstats controller', function () {
+
+        var $controller, $state, $stateParams, $interval, $rootScope;
+        var networkStatsCtrl;
+        beforeEach(inject(function (_$state_ ,_$stateParams_, _$interval_, _$rootScope_, _$controller_) {
+            $state = _$state_;
+            $state.go = function (stateName) {};
+            $stateParams = _$stateParams_;
+            $stateParams.key = networksData[0].key;
+            $interval = _$interval_;
+            $rootScope = _$rootScope_;
+            $controller = _$controller_;
+            networkStatsCtrl = $controller('NetworkStatsCtrl',
+                { $state: $state, $stateParams: $stateParams, $interval: $interval, $scope: $rootScope });
+        }));
+
+        it('should be defined', function () {
+            expect(networkStatsCtrl).toBeDefined();
+            $httpBackend.flush();
+        });
+
+        it('NetworkStatsCtrl should do a GET on /netmaster/api/v1/inspect/networks/:key REST API', function () {
+            $httpBackend.expectGET(ContivGlobals.NETWORKS_INSPECT_ENDPOINT + networksData[0].key + '/');
+            $httpBackend.flush();
+        });
+        it('buildEndPoints function should construct container list with all the endpoints', function () {
+            $httpBackend.flush();
+            expect(networkStatsCtrl.endpoints).toBeDefined();
+            expect(Array.isArray(networkStatsCtrl.endpoints)).toBeTruthy();
+            expect(networkStatsCtrl.endpoints.length).toEqual(networkOperData.Oper.endpoints.length);
+        });
+        it('buildEndPoints function should construct endpoints object', function () {
+            $httpBackend.flush();
+            expect(networkStatsCtrl.containerDetails).toBeDefined();
+            var len = Object.keys(networkStatsCtrl.containerDetails).length;
+            expect(len).toEqual(2);
+        });
+        it('Labels inside endpoints should be an array and Ip Address should be a string',function(){
+            $httpBackend.flush();
+            var endpoint = networkOperData.Oper.endpoints[0].name;
+            var endpointStatsArray = networkStatsCtrl.containerDetails[endpoint];
+            for(var i in endpointStatsArray){
+                if(endpointStatsArray[i].name == "labels")
+                    expect(Array.isArray((endpointStatsArray[i].value))).toBeTruthy();
+                if(endpointStatsArray[i].name == "ipAddress")
+                    expect(typeof endpointStatsArray[i].value == "string").toBeTruthy();
+            }
+        });
+    });
+    
 });

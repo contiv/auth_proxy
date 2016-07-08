@@ -102,6 +102,7 @@ BaseCollection.prototype.getModel = function (model, reload) {
  */
 function Collection($http, $q, url) {
     BaseCollection.call(this, $http, $q, url);
+    this.inspectStats = {};
 }
 
 Collection.prototype = Object.create(BaseCollection.prototype);
@@ -201,5 +202,26 @@ Collection.prototype.deleteUsingKey = function (key, keyname, url) {
         }, function errorCallback(response) {
             deferred.reject(collection.extract(response));
         });
+    return deferred.promise;
+};
+
+
+Collection.prototype.getInspectByKey = function(key, url, refresh){
+    var collection = this;
+    var deferred = collection.$q.defer();
+    if(key in collection.inspectStats && refresh == false){
+        deferred.resolve(collection.inspectStats[key]);
+    }
+    else {
+        collection.$http.get(url + key + '/')
+            .then(function successCallback(response) {
+                    var responseStats = collection.extract(response);
+                    collection.inspectStats[key] = responseStats
+                    deferred.resolve(responseStats);
+                }
+                , function errorCallback(error) {
+                    deferred.reject(error);
+                });
+    }
     return deferred.promise;
 };

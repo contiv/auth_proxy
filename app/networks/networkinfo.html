@@ -1,0 +1,63 @@
+<div class="ui basic segment">
+    <div class="ui active inverted dimmer" ng-show="networkDetailsCtrl.showLoader">
+        <div class="ui loader"></div>
+    </div>
+    <table class="ui very basic selectable table">
+        <tbody>
+        <tr>
+            <td class="ctv-header three wide column">Name</td>
+            <td>{{networkDetailsCtrl.network.networkName}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header three wide column">Encapsulation</td>
+            <td>{{networkDetailsCtrl.network.encap}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header three wide column">Subnet</td>
+            <td>{{networkDetailsCtrl.network.subnet}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header three wide column">Gateway</td>
+            <td>{{networkDetailsCtrl.network.gateway}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="ui section divider"></div>
+
+    <h4 class="ui header" style="margin-top: 40px">Application Groups</h4>
+
+    <div style="margin-top: 20px">
+        <ctv-table items="networkDetailsCtrl.applicationGroups"
+                   filtereditems="networkDetailsCtrl.filteredApplicationGroups" size="5">
+            <ctv-thead>
+                <ctv-tr>
+                    <ctv-th> Group name</ctv-th>
+                    <ctv-th> Policies</ctv-th>
+                    <ctv-th class="right floated three wide column">
+                        <ctv-tsearch placeholder="Search application groups..." size="30"></ctv-tsearch>
+                    </ctv-th>
+                </ctv-tr>
+            </ctv-thead>
+            <ctv-tbody>
+                <ctv-tr ng-repeat="group in networkDetailsCtrl.filteredApplicationGroups">
+                    <ctv-td class="three wide column">
+                        <a ui-sref="contiv.menu.applicationgroups.details({key:group.key})">{{group.groupName}}</a>
+                    </ctv-td>
+                    <ctv-td>{{group.policies.join(", ")}}</ctv-td>
+                    <ctv-td></ctv-td>
+                </ctv-tr>
+            </ctv-tbody>
+            <ctv-tfoot>
+                <ctv-tr>
+                    <ctv-th colspan="3">
+                        <ctv-tpagination></ctv-tpagination>
+                    </ctv-th>
+                </ctv-tr>
+            </ctv-tfoot>
+        </ctv-table>
+    </div>
+    <ctv-error ng-show="networkDetailsCtrl.showServerError" header="Error deleting network"
+               error="networkDetailsCtrl.serverErrorMessage">
+    </ctv-error>
+</div>

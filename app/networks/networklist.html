@@ -30,7 +30,7 @@
 
         <ctv-tbody>
             <ctv-tr ng-repeat="network in networksListCtrl.filterednetworks">
-                <ctv-td><a ui-sref="contiv.menu.networks.details({key:network.key})">{{network.networkName}}</a></ctv-td>
+                <ctv-td><a ui-sref="contiv.menu.networks.details.info({key:network.key})">{{network.networkName}}</a></ctv-td>
                 <ctv-td>{{network.encap}}</ctv-td>
                 <ctv-td>{{network.subnet}}</ctv-td>
                 <ctv-td>{{network.gateway}}</ctv-td>

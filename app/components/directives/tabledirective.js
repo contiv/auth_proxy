@@ -35,7 +35,6 @@ angular.module("contiv.directives")
 
                     if ($scope.items !== undefined) {//TODO: Check why items are undefined during initialization
                         var searchTextFilteredItems = filterFilter($scope.items, tableCtrl.searchText);
-
                         var noOfChunks = Math.ceil(searchTextFilteredItems.length / tableCtrl.size);
                         if (noOfChunks == 0) {
                             noOfChunks = 1;

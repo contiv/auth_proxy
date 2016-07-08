@@ -5,8 +5,9 @@ angular.module('contiv.models', []);
 var ContivGlobals = (function () {
 
     return {
-        //REST endpoints for 
+        //REST endpoints for NETMASTER
         'NETWORKS_ENDPOINT': '/netmaster/api/v1/networks/',
+        'NETWORKS_INSPECT_ENDPOINT':'/netmaster/api/v1/inspect/networks/',
         'POLICIES_ENDPOINT': '/netmaster/api/v1/policys/',
         'RULES_ENDPOINT': '/netmaster/api/v1/rules/',
         'APPLICATIONGROUPS_ENDPOINT': '/netmaster/api/v1/endpointGroups/',
