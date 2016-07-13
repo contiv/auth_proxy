@@ -1,0 +1,35 @@
+<div class="ui sixteen column grid">
+    <div class="one wide column">
+        <a ui-sref="contiv.menu.nodes.list()">
+            <i class="large arrow left icon"></i>
+        </a>
+    </div>
+    <div class="left floated ten wide column" style="font-size: 24px">{{title}}</div>
+</div>
+
+<table class="ui very basic table" style="margin-top:30px">
+    <tbody> 
+        <tr>
+            <td class="ctv-header three wide column top aligned">Description</td>
+            <td class="ctv-wordwrap">{{log.desc}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header three wide column top aligned">Task</td>
+            <td class="ctv-wordwrap">{{log.task}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header three wide column top aligned">Status</td>
+            <td>{{log.status}}</td>
+        </tr>
+        <tr> 
+            <td class="ctv-header three wide column top aligned">Error</td>
+            <td>{{log.error}}</td>
+        </tr>
+        <tr> 
+            <td class="ctv-header three wide column top aligned">Logs</td>
+            <td class="ctv-wordwrap">
+                <div ng-repeat="line in log.logs track by $index">{{line}}</div>
+            </td>
+        </tr>
+    </tbody>
+</table>

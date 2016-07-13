@@ -160,12 +160,46 @@ describe("contiv.nodes module", function () {
             expect(Array.isArray(nodeListCtrl.nodes)).toBeTruthy();
             expect(nodeListCtrl.nodes.length).toEqual(3);
         });
-        it('NodeListCtrl should do a GET on /info/job/last REST API', function () {
-            $httpBackend.expectGET(ContivGlobals.NODES_LAST_JOB_ENDPOINT);
+    });
+
+    describe('nodeActiveJobLogsCtrl controller', function () {
+        var $controller, $interval, $rootScope;
+        var nodeActiveJobLogsCtrl;
+        beforeEach(inject(function (_$interval_, _$rootScope_, _$controller_) {
+            $interval = _$interval_;
+            $rootScope = _$rootScope_;
+            $controller = _$controller_;
+            nodeActiveJobLogsCtrl = $controller('NodeActiveJobLogsCtrl', { $interval: $interval, $scope: $rootScope });
+        }));
+
+        it('should be defined', function () {
+            //spec body
+            expect(nodeActiveJobLogsCtrl).toBeDefined();
             $httpBackend.flush();
         });
-        it('NodeListCtrl should do a GET on /info/job/active REST API', function () {
+        it('NodeActiveJobLogsCtrl should do a GET on /info/job/active REST API', function () {
             $httpBackend.expectGET(ContivGlobals.NODES_ACTIVE_JOB_ENDPOINT);
+            $httpBackend.flush();
+        });
+    });
+
+    describe('nodeLastJobLogsCtrl controller', function () {
+        var $controller, $interval, $rootScope;
+        var nodeLastJobLogsCtrl;
+        beforeEach(inject(function (_$interval_, _$rootScope_, _$controller_) {
+            $interval = _$interval_;
+            $rootScope = _$rootScope_;
+            $controller = _$controller_;
+            nodeLastJobLogsCtrl = $controller('NodeLastJobLogsCtrl', { $interval: $interval, $scope: $rootScope });
+        }));
+
+        it('should be defined', function () {
+            //spec body
+            expect(nodeLastJobLogsCtrl).toBeDefined();
+            $httpBackend.flush();
+        });
+        it('NodeLastJobLogsCtrl should do a GET on /info/job/last REST API', function () {
+            $httpBackend.expectGET(ContivGlobals.NODES_LAST_JOB_ENDPOINT);
             $httpBackend.flush();
         });
     });

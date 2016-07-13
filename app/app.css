@@ -2,3 +2,11 @@
 td.ctv-header {
     color: grey;
 }
+
+tr:nth-child(even) {
+    background: #f1fafe
+}
+
+td.ctv-wordwrap {
+  word-break: break-all;
+}
