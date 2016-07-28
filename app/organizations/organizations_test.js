@@ -26,28 +26,33 @@ describe('contiv.organizations module', function () {
     });
 
     describe('organizationlist controller', function () {
-        var $controller, $interval, $rootScope;
+        var $rootScope, $interval, $filter, $controller;
         var organizationListCtrl;
-        beforeEach(inject(function (_$interval_, _$rootScope_, _$controller_) {
-            $interval = _$interval_;
+        beforeEach(inject(function (_$rootScope_, _$interval_, _$filter_, _$controller_) {
             $rootScope = _$rootScope_;
+            $interval = _$interval_;
+            $filter = _$filter_;
             $controller = _$controller_;
-            organizationListCtrl = $controller('OrganizationsListCtrl', { $interval: $interval, $scope: $rootScope });
+            organizationListCtrl = $controller('OrganizationsListCtrl', { $interval: $interval, $scope: $rootScope, $filter: $filter });
         }));
+
         it('should be defined', function () {
             expect(organizationListCtrl).toBeDefined();
             $httpBackend.flush();
         });
+
         it('OrganizationsListCtrl should do a GET on /api/organizations/ REST API', function () {
             $httpBackend.expectGET(ContivGlobals.ORGANIZATIONS_ENDPOINT);
             $httpBackend.flush();
         });
+
         it('OrganizationsListCtrl should have organizations array assigned to organizations property', function () {
             $httpBackend.expectGET(ContivGlobals.ORGANIZATIONS_ENDPOINT);
             $httpBackend.flush();
             expect(Array.isArray(organizationListCtrl.organizations)).toBeTruthy();
             expect(organizationListCtrl.organizations.length).toEqual(1);
         });
+
         it('OrganizationsListCtrl should do have showLoader property set to false after fetch', function () {
             $httpBackend.expectGET(ContivGlobals.ORGANIZATIONS_ENDPOINT);
             $httpBackend.flush();
@@ -56,18 +61,16 @@ describe('contiv.organizations module', function () {
     });
 
     describe('organizationdetails controller', function () {
-        var $controller, $state, $stateParams, $interval, $rootScope;
+        var $state, $stateParams, $controller;
         var organizationDetailsCtrl;
-        beforeEach(inject(function (_$state_ ,_$stateParams_, _$interval_, _$rootScope_, _$controller_) {
+        beforeEach(inject(function (_$state_ ,_$stateParams_, _$controller_) {
             $state = _$state_;
             $state.go = function (stateName) {};
             $stateParams = _$stateParams_;
             $stateParams.key = organizationsData[0].key;
-            $interval = _$interval_;
-            $rootScope = _$rootScope_;
             $controller = _$controller_;
             organizationDetailsCtrl = $controller('OrganizationDetailsCtrl',
-                { $state: $state, $stateParams: $stateParams, $interval: $interval, $scope: $rootScope });
+                { $state: $state, $stateParams: $stateParams });
         }));
 
         it('should be defined', function () {
@@ -103,13 +106,11 @@ describe('contiv.organizations module', function () {
     });
     
     describe('organizationcreate controller', function () {
-        var $controller, $state, $stateParams;
+        var $state, $controller;
         var organizationCreateCtrl;
-        beforeEach(inject(function (_$state_ ,_$stateParams_, _$controller_) {
+        beforeEach(inject(function (_$state_ , _$controller_) {
             $state = _$state_;
             $state.go = function (stateName) {};
-            $stateParams = _$stateParams_;
-            $stateParams.key = organizationsData[0].key;
             $controller = _$controller_;
             organizationCreateCtrl = $controller('OrganizationCreateCtrl');
         }));
@@ -140,6 +141,4 @@ describe('contiv.organizations module', function () {
             expect(organizationCreateCtrl.showLoader).toBeFalsy();
         });
     });
-
-
 });

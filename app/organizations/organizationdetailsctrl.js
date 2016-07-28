@@ -8,8 +8,8 @@ angular.module('contiv.organizations')
             });
     }])
     .controller('OrganizationDetailsCtrl',
-        ['$state', '$stateParams', '$scope', '$interval', '$filter', 'OrganizationsModel', 'CRUDHelperService',
-            function ($state, $stateParams, $scope, $interval, $filter, OrganizationsModel, CRUDHelperService) {
+        ['$state', '$stateParams', 'OrganizationsModel', 'CRUDHelperService',
+            function ($state, $stateParams, OrganizationsModel, CRUDHelperService) {
                 var organizationDetailsCtrl = this;
 
                 function returnToOrganizations() {

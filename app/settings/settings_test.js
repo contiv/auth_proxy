@@ -31,6 +31,13 @@ describe('contiv.settings module', function () {
         }
     ];
 
+    var volumesettingData = {
+        "Debug":true,
+        "Timeout":10,
+        "TTL":30,
+        "MountPath":"/mnt/ceph"
+    };
+
     beforeEach(module('ui.router'));
     beforeEach(module('contiv.settings'));
 
@@ -42,6 +49,9 @@ describe('contiv.settings module', function () {
 
         $httpBackend.when('GET', ContivGlobals.NETWORK_SETTINGS_ENDPOINT).respond(networksettingData);
         $httpBackend.when('POST', ContivGlobals.NETWORK_SETTINGS_ENDPOINT + networksettingData[0].key + '/').respond();
+
+        $httpBackend.when('GET', ContivGlobals.VOLUMES_GLOBAL_ENDPOINT).respond(volumesettingData);
+        $httpBackend.when('POST', ContivGlobals.VOLUMES_GLOBAL_ENDPOINT).respond();
     }));
 
     afterEach(function () {
@@ -128,6 +138,46 @@ describe('contiv.settings module', function () {
             $httpBackend.expectGET(ContivGlobals.NETWORK_SETTINGS_ENDPOINT);
             $httpBackend.flush();
             expect(networkSettingCtrl.setting).toEqual(networksettingData[0]);
+        });
+    });
+
+    describe('volumesettings controller', function () {
+        var $controller;
+        var volumeSettingCtrl;
+        beforeEach(inject(function (_$controller_) {
+            $controller = _$controller_;
+            volumeSettingCtrl = $controller('VolumeSettingCtrl', {});
+        }));
+        it('should be defined', function () {
+            expect(volumeSettingCtrl).toBeDefined();
+            $httpBackend.flush();
+        });
+        it('VolumeSettingCtrl should do a GET on /volmaster/global/ REST API', function () {
+            $httpBackend.expectGET(ContivGlobals.VOLUMES_GLOBAL_ENDPOINT);
+            $httpBackend.flush();
+        });
+        it('VolumeSettingCtrl should do have showLoader property set to false after fetch', function () {
+            $httpBackend.expectGET(ContivGlobals.VOLUMES_GLOBAL_ENDPOINT);
+            $httpBackend.flush();
+            expect(volumeSettingCtrl.showLoader).toBeFalsy();
+        });
+        it('VolumeSettingCtrl.updateVolumeSettings() should do a POST on /volmaster/global/', function () {
+            volumeSettingCtrl.form = {'$valid' : true};
+            volumeSettingCtrl.updateVolumeSettings();
+            $httpBackend.expectPOST(ContivGlobals.VOLUMES_GLOBAL_ENDPOINT);
+            $httpBackend.flush();
+        });
+        it('VolumeSettingCtrl.updateVolumeSettings() should not do a POST on /volmaster/global/ REST API for invalid form', function () {
+            volumeSettingCtrl.form = {'$valid' : false};
+            volumeSettingCtrl.updateVolumeSettings();
+            $httpBackend.verifyNoOutstandingRequest();
+            $httpBackend.flush();
+            expect(volumeSettingCtrl.showLoader).toBeFalsy();
+        });
+        it('VolumeSettingCtrl should have volumesettingData object assigned to setting property', function () {
+            $httpBackend.expectGET(ContivGlobals.VOLUMES_GLOBAL_ENDPOINT);
+            $httpBackend.flush();
+            expect(volumeSettingCtrl.setting).toEqual(volumesettingData);
         });
     });
 });

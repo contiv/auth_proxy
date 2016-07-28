@@ -1,0 +1,37 @@
+<form class="ui form" name="volumeSettingCtrl.form" role="form"
+      ng-submit="volumeSettingCtrl.updateVolumeSettings()" novalidate> 
+    <div class="ui active inverted dimmer" ng-show="volumeSettingCtrl.showLoader">
+        <div class="ui loader"></div>
+    </div>
+
+    <div class="field">
+        <label for="timeout">Timeout</label>
+        <input type="number" id="timeout" name="timeout" ng-model="volumeSettingCtrl.setting.Timeout" placeholder="10">
+    </div>
+    <div class="field">
+        <label for="ttl">Time to Live (TTL)</label>
+        <input type="number" id="ttl" name="ttl" ng-model="volumeSettingCtrl.setting.TTL" placeholder="30">
+    </div>
+    <div class="field">
+        <label for="mountpath">Mount Path</label>
+        <input type="text" id="mountpath" name="mountpath" ng-model="volumeSettingCtrl.setting.MountPath" placeholder="/mnt/ceph" required>
+    </div>
+    <div class="field">
+        <div class="ui checkbox">
+            <input type="checkbox" name="debug" tabindex="0" ng-model="volumeSettingCtrl.setting.Debug">
+            <label>Debug</label>
+        </div>
+    </div>
+
+    <div class="ui sixteen column grid">
+        <div class="right floated four wide column">
+            <div style="margin-top: 40px">
+                <button type="submit" class="ui blue button">
+                    Update Volume Settings
+                </button>
+            </div>
+        </div>
+    </div>
+    <ctv-error ng-show="volumeSettingCtrl.showServerError" header="Error updating volume settings" error="volumeSettingCtrl.serverErrorMessage">
+    </ctv-error>
+</form>

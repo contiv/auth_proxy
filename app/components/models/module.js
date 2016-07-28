@@ -16,8 +16,6 @@ var ContivGlobals = (function () {
         'NETWORK_SETTINGS_ENDPOINT': '/netmaster/api/v1/globals/',
         'NETPROFILES_ENDPOINT': '/netmaster/api/v1/netprofiles/',
 
-
-
         //REST endpoints for VOLMASTER
         'VOLUMES_ENDPOINT': '/volmaster/volumes/',
         'VOLUMES_CREATE_ENDPOINT': '/volmaster/volumes/create/',
@@ -25,9 +23,8 @@ var ContivGlobals = (function () {
         'VOLUMES_COPYSNAPSHOTS_ENDPOINT': '/volmaster/volumes/copy/',
         'VOLUMES_USES_ENDPOINT': '/volmaster/uses/mounts/',
         'VOLUMES_SNAPSHOTS_ENDPOINT': '/volmaster/snapshots/',
-
         'STORAGEPOLICIES_ENDPOINT': '/volmaster/policies/',
-
+        'VOLUMES_GLOBAL_ENDPOINT': '/volmaster/global/',
 
         //REST endpoints for CLUSTER
         'NODES_LIST_ENDPOINT': '/info/nodes',
