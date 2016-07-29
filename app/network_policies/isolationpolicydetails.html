@@ -126,7 +126,7 @@
                 <td>{{rule.fromIPAddress}}</td>
                 <td>{{rule.protocol}}</td>
                 <td>{{rule.port}}</td>
-                <td ng-switch-when="edit">
+                <td ng-if="isolationPolicyDetailsCtrl.mode == 'edit'">
                     <button class="ui icon button" ng-click="isolationPolicyDetailsCtrl.deleteIncomingRule(rule.key)">
                         <i class="trash icon"></i>
                     </button>
@@ -212,7 +212,7 @@
                 <td>{{rule.toIPAddress}}</td>
                 <td>{{rule.protocol}}</td>
                 <td>{{rule.port}}</td>
-                <td ng-switch-when="edit">
+                <td ng-if="isolationPolicyDetailsCtrl.mode == 'edit'">
                     <button class="ui icon button" ng-click="isolationPolicyDetailsCtrl.deleteOutgoingRule(rule.key)">
                         <i class="trash icon"></i>
                     </button>
