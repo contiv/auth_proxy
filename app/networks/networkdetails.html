@@ -39,3 +39,6 @@
     </div>
 </div>
 <div ui-view style="margin-top:30px"></div>
+<ctv-error ng-show="networkDetailsCtrl.showServerError" header="Error deleting network"
+           error="networkDetailsCtrl.serverErrorMessage">
+</ctv-error>

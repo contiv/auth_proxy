@@ -8,6 +8,7 @@ var ContivGlobals = (function () {
         //REST endpoints for NETMASTER
         'NETWORKS_ENDPOINT': '/netmaster/api/v1/networks/',
         'NETWORKS_INSPECT_ENDPOINT':'/netmaster/api/v1/inspect/networks/',
+        'SERVICELBS_INSPECT_ENDPOINT':'/netmaster/api/v1/inspect/serviceLBs/',
         'POLICIES_ENDPOINT': '/netmaster/api/v1/policys/',
         'RULES_ENDPOINT': '/netmaster/api/v1/rules/',
         'APPLICATIONGROUPS_ENDPOINT': '/netmaster/api/v1/endpointGroups/',

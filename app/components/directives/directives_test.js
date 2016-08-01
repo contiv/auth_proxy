@@ -8,8 +8,6 @@ describe('contiv.directives', function() {
         {name: 'fooEnv3', value: 'barEnv3'}
     ];
 
-    var accordionTitle = "Accordion1";
-
     var accordionItems = [
         {name: "name1", value: "value1"},
         {name: "name2", value: "value2"},
@@ -102,10 +100,9 @@ describe('contiv.directives', function() {
         beforeEach(inject(function(){
             // Compile a piece of HTML containing the directive
             $rootScope.accordionItems = accordionItems;
-            $rootScope.accordionTitle = accordionTitle;
             $rootScope.accordion = function(){};
             // fire all the watches, so the scope expression will be evaluated
-            element = $compile("<ctv-accordion items = 'accordionItems' title = 'accordionTitle'></ctv-accordion>")($rootScope);
+            element = $compile("<ctv-accordion items = 'accordionItems'><span>Accordion Title</span></ctv-accordion>")($rootScope);
             $rootScope.$digest();
             isolateScope = element.isolateScope();
         }));
@@ -114,8 +111,8 @@ describe('contiv.directives', function() {
             expect(element.find("div:first-child").hasClass("accordion")).toBeTruthy();
         });
 
-        it('Accordion shoud have the title with the assigned name', function(){
-            expect(element.find("div.title").text().replace(/\s/g, '')).toEqual(accordionTitle);
+        it('Title must be present for an accordion', function(){
+            expect(element.find("div.title span").text()).toEqual("Accordion Title");
         });
 
         it('Number of table rows should be equal to the number of name value pairs in accordiondata', function(){

@@ -331,17 +331,6 @@ describe('contiv.networks module', function () {
             var len = Object.keys(networkStatsCtrl.containerDetails).length;
             expect(len).toEqual(2);
         });
-        it('Labels inside endpoints should be an array and Ip Address should be a string',function(){
-            $httpBackend.flush();
-            var endpoint = networkOperData.Oper.endpoints[0].name;
-            var endpointStatsArray = networkStatsCtrl.containerDetails[endpoint];
-            for(var i in endpointStatsArray){
-                if(endpointStatsArray[i].name == "labels")
-                    expect(Array.isArray((endpointStatsArray[i].value))).toBeTruthy();
-                if(endpointStatsArray[i].name == "ipAddress")
-                    expect(typeof endpointStatsArray[i].value == "string").toBeTruthy();
-            }
-        });
     });
     
 });

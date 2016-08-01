@@ -8,7 +8,6 @@ angular.module('contiv.networks')
             })
             .state('contiv.menu.networks.details.info', {
                 url: '/info',
-                controller: 'NetworkDetailsCtrl as networkDetailsCtrl',
                 templateUrl: 'networks/networkinfo.html'
             });
     }])

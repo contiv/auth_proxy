@@ -5,9 +5,9 @@ angular.module("contiv.directives")
     .directive("ctvAccordion", function () {
         return {
             restrict: 'E',
+            transclude: true,
             scope: {
                 items: '=',
-                title: '='
             },
             link:function(scope, element){
                 if(typeof element.find('.ui.accordion').accordion == 'function')

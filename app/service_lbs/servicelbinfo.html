@@ -1,0 +1,87 @@
+<div class="ui basic segment">
+    <div class="ui active inverted dimmer" ng-show="servicelbDetailsCtrl.showLoader">
+        <div class="ui loader"></div>
+    </div>
+
+    <h4 class="ui header">Service Details</h4>
+    <table class="ui very basic selectable table">
+        <tbody>
+        <tr>
+            <td class="ctv-header three wide column">Name</td>
+            <td>{{servicelbDetailsCtrl.servicelb.serviceName}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header three wide column">Network</td>
+            <td>{{servicelbDetailsCtrl.servicelb.networkName}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header three wide column">IP address</td>
+            <td>{{servicelbDetailsCtrl.servicelb.ipAddress}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <div ng-switch="servicelbDetailsCtrl.mode">
+        <ctv-error ng-switch-when="edit" ng-show="servicelbDetailsCtrl.showServerError"
+                   header="Error saving service load balancer"
+                   error="servicelbDetailsCtrl.serverErrorMessage">
+        </ctv-error>
+        <ctv-error ng-switch-when="details" ng-show="servicelbDetailsCtrl.showServerError"
+                   header="Error deleting service load balancer"
+                   error="servicelbDetailsCtrl.serverErrorMessage">
+        </ctv-error>
+        <div ng-switch-when="details">
+            <div class="ui section divider" style="margin-top: 40px"></div>
+            <h4 class="ui header" style="margin-top: 40px">Label Selectors</h4>
+            <table class="ui very basic selectable table">
+                <tbody>
+                <tr ng-repeat="selector in servicelbDetailsCtrl.servicelb.selectors">
+                    <td class="ctv-header three wide column">{{selector.split('=')[0]}}</td>
+                    <td>{{selector.split('=')[1]}}</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="ui section divider" style="margin-top: 40px"></div>
+            <h4 class="ui header" style="margin-top: 40px">Ports</h4>
+            <table class="ui very basic unstackable table">
+                <tbody>
+                <tr>
+                    <td class="ctv-header">Service port</td>
+                    <td class="ctv-header">Provider port</td>
+                    <td class="ctv-header">Protocol</td>
+                </tr>
+                <tr ng-repeat="port in servicelbDetailsCtrl.servicelb.ports">
+                    <td>{{port.split(':')[0]}}</td>
+                    <td>{{port.split(':')[1]}}</td>
+                    <td>{{port.split(':')[2]}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div ng-switch-when="edit">
+            <div class="ui section divider" style="margin-top: 30px"></div>
+            <div class="field">
+                <ctv-collapsible title="Label Selectors">
+                    <ctv-namevalue items="servicelbDetailsCtrl.labelSelectors"></ctv-namevalue>
+                </ctv-collapsible>
+            </div>
+            <div class="ui section divider"></div>
+            <div class="field">
+                <ctv-collapsible title="Ports">
+                    <ctv-servicelbports items="servicelbDetailsCtrl.servicelb.ports"></ctv-servicelbports>
+                </ctv-collapsible>
+            </div>
+        </div>
+        <div class="ui sixteen column grid" style="margin-top: 40px">
+            <div class="right floated three wide column">
+                <button ng-switch-when="edit" type="button" class="ui basic button"
+                        ng-click="servicelbDetailsCtrl.cancelEditing()">Cancel
+                </button>
+                <button ng-switch-when="edit" type="button" class="ui blue button"
+                        ng-click="servicelbDetailsCtrl.saveServicelb()">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

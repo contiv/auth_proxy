@@ -1,0 +1,54 @@
+<table class="ui very basic selectable table">
+    <tbody>
+    <tr>
+        <td class="ctv-header three wide column">Number of Providers</td>
+        <td>{{servicelbStatsCtrl.servicelbInspectStats.numProviders}}</td>
+    </tr>
+    <tr>
+        <td class="ctv-header three wide column">Service Vip</td>
+        <td>{{servicelbStatsCtrl.servicelbInspectStats.serviceVip}}</td>
+    </tr>
+    </tbody>
+</table>
+<div class="ui section divider"></div>
+<ctv-collapsible title="Providers">
+    <ctv-table items="servicelbStatsCtrl.providers" filtereditems="servicelbStatsCtrl.filteredproviders" size="12">
+        <ctv-thead>
+            <ctv-tr>
+                <ctv-th>
+                    <div class="ui three column grid" style="margin-left:30px">
+                        <div class="column">Container Name</div>
+                        <div class="column">IP Address</div>
+                        <div class="column">Host</div>
+                    </div>
+                </ctv-th>
+                <ctv-th class="right floated three wide column">
+                    <ctv-tsearch placeholder="Search Containers..." size="30"></ctv-tsearch>
+                </ctv-th>
+            </ctv-tr>
+        </ctv-thead>
+
+        <ctv-tbody>
+            <ctv-tr ng-repeat="provider in servicelbStatsCtrl.filteredproviders">
+                <ctv-td>
+                    <ctv-accordion items="servicelbStatsCtrl.providerDetails[provider.name]">
+                        <div class="ui three column grid" style="margin-top: -35px; margin-left: 30px;">
+                            <div class="column">{{provider.name.substr(0,12)}}</div>
+                            <div class="column">{{provider.ipAddress.join(' ')}}</div>
+                            <div class="column">{{provider.homingHost}}</div>
+                        </div>
+                    </ctv-accordion>
+                </ctv-td>
+                <ctv-td></ctv-td>
+            </ctv-tr>
+        </ctv-tbody>
+
+        <ctv-tfoot>
+            <ctv-tr>
+                <ctv-th colspan="2">
+                    <ctv-tpagination></ctv-tpagination>
+                </ctv-th>
+            </ctv-tr>
+        </ctv-tfoot>
+    </ctv-table>
+</ctv-collapsible>

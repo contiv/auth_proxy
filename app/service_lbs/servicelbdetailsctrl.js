@@ -9,10 +9,15 @@ angular.module('contiv.servicelbs')
                 controller: 'ServicelbDetailsCtrl as servicelbDetailsCtrl',
                 templateUrl: 'service_lbs/servicelbdetails.html'
             })
-            .state('contiv.menu.servicelbs.edit', {
+            .state('contiv.menu.servicelbs.details.info', {
+                url: '/info',
+                controller: 'ServicelbDetailsCtrl as servicelbDetailsCtrl',
+                templateUrl: 'service_lbs/servicelbinfo.html'
+            })
+            .state('contiv.menu.servicelbs.details.edit', {
                 url: '/edit/:key',
                 controller: 'ServicelbDetailsCtrl as servicelbDetailsCtrl',
-                templateUrl: 'service_lbs/servicelbdetails.html'
+                templateUrl: 'service_lbs/servicelbinfo.html'
             });
     }])
     .controller('ServicelbDetailsCtrl',
@@ -25,7 +30,7 @@ angular.module('contiv.servicelbs')
                  * To show edit or details screen based on the route
                  */
                 function setMode() {
-                    if ($state.is('contiv.menu.servicelbs.edit')) {
+                    if ($state.is('contiv.menu.servicelbs.details.edit')) {
                         servicelbDetailsCtrl.mode = 'edit';
                     } else {
                         servicelbDetailsCtrl.mode = 'details';
@@ -37,7 +42,7 @@ angular.module('contiv.servicelbs')
                 }
 
                 function returnToServicelbDetails() {
-                    $state.go('contiv.menu.servicelbs.details', {'key': servicelbDetailsCtrl.servicelb.key});
+                    $state.go('contiv.menu.servicelbs.details.info', {'key': servicelbDetailsCtrl.servicelb.key});
                 }
 
                 function cancelEditing() {
@@ -59,11 +64,14 @@ angular.module('contiv.servicelbs')
                 function saveServicelb() {
                     CRUDHelperService.hideServerError(servicelbDetailsCtrl);
                     CRUDHelperService.startLoader(servicelbDetailsCtrl);
+                    var existingLabels = servicelbDetailsCtrl.servicelb.selectors;
                     createLabelSelectorStrings();
                     ServicelbsModel.save(servicelbDetailsCtrl.servicelb).then(function successCallback(result) {
                         CRUDHelperService.stopLoader(servicelbDetailsCtrl);
                         returnToServicelbDetails();
                     }, function errorCallback(result) {
+                        servicelbDetailsCtrl.servicelb.selectors = existingLabels;
+                        createLabelSelectors();
                         CRUDHelperService.stopLoader(servicelbDetailsCtrl);
                         CRUDHelperService.showServerError(servicelbDetailsCtrl, result);
                     });

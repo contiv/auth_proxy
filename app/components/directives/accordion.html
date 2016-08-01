@@ -1,12 +1,12 @@
 <div class="ui accordion">
     <div class="title">
-        <i class="dropdown icon"></i>
-        {{title}}
+        <i class="dropdown icon" style="margin-left: 6px;"></i>
+        <div ng-transclude></div>
     </div>
     <div class="content">
-        <table style="margin-left:3%">
+        <table style="margin-left:5.5%">
             <tbody style="border-style: hidden">
-            <tr ng-repeat="item in items">
+            <tr ng-repeat="item in items" style="background: none">
                 <td class="ctv-header three column wide">{{item.name}}</td>
                 <td ng-if="item.format=='label'">
                     <div class="ui label tiny" ng-repeat="selector in item.value" ng-if="item.type=='array'" style="margin-top: 2px;">{{selector}}</div>
