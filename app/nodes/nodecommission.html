@@ -7,6 +7,9 @@
         <div ng-show="nodeCommissionCtrl.form.$submitted">
             <div ng-hide="nodeCommissionCtrl.form.$valid" class="ui negative message">
                 <ul class="list">
+                    <li ng-show="nodeCommissionCtrl.form.hostgroup.$error.required">
+                        Please select host group
+                    </li>
                     <li ng-show="nodeCommissionCtrl.form.controlInterface.$error.required">
                         Please enter control interface
                     </li>
@@ -26,7 +29,7 @@
         <label for="hostgroup">Host group</label>
         <select id="hostgroup" class="ui dropdown"
                 name="hostgroup"
-                ng-model="nodeCommissionCtrl.nodeOpsObj.host_group">
+                ng-model="nodeCommissionCtrl.nodeOpsObj.host_group" required>
             <option value="">-- Please select host group --</option>
             <option value="service-master">Service Master</option>
             <option value="service-worker">Service Worker</option>
