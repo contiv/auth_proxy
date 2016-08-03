@@ -23,7 +23,6 @@
   opacity: 1;
 }
 
-
 /*--------------
       Hover
 ---------------*/
@@ -46,4 +45,12 @@
 .ui.menu a.item:active {
   background: rgba(0, 0, 0, 0.03);
   color: rgba(0, 0, 0, 0.95);
+}
+
+/*----------------------
+   Vertical Menu Active
+------------------------*/
+
+.ui.vertical.menu .white.active  {
+   color: #FFFFFF!important;
 }
