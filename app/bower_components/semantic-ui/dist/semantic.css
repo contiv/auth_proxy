@@ -1481,15 +1481,15 @@ input::selection {
 
 .ui.basic.buttons .button:hover,
 .ui.basic.button:hover {
-  background: #FFFFFF !important;
-  color: rgba(0, 0, 0, 0.8) !important;
+  background: #cfcfcf !important;
+  color: #48494d !important;
   box-shadow: 0px 0px 0px 1px rgba(34, 36, 38, 0.35) inset, 0px 0px 0px 0px rgba(34, 36, 38, 0.15) inset;
 }
 
 .ui.basic.buttons .button:focus,
 .ui.basic.button:focus {
-  background: #FFFFFF !important;
-  color: rgba(0, 0, 0, 0.8) !important;
+  background: #cfcfcf !important;
+  color: #48494d !important;
   box-shadow: 0px 0px 0px 1px rgba(34, 36, 38, 0.35) inset, 0px 0px 0px 0px rgba(34, 36, 38, 0.15) inset;
 }
 
@@ -4462,6 +4462,10 @@ input::selection {
   border: 1px solid #DB2828;
   text-shadow: none;
   background-image: none;
+}
+
+.ui.basic.button:hover {
+  box-shadow: 0 0 0 1px #cfcfcf;
 }
 
 /*******************************

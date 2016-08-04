@@ -5,3 +5,9 @@
 
 @negativeColor: #FFFFFF;
 @positiveColor: @blue;
+
+/* Basic Hover */
+@basicHoverBackground: #cfcfcf;
+@basicHoverTextColor: #48494d;
+
+
