@@ -16,7 +16,7 @@ angular.module('contiv.networkpolicies')
         var isolationPolicyCreateCtrl = this;
 
         function returnToPolicies() {
-            $state.go('contiv.menu.networkpolicies.isolation.list');
+            $state.go('contiv.menu.networkpolicies.list.isolation');
         }
 
         function cancelCreating() {

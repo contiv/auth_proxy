@@ -38,7 +38,7 @@ angular.module('contiv.networkpolicies')
             isolationPolicyDetailsCtrl.newOutgoingSelectedApplicationGroup = '';
 
             function returnToPolicies() {
-                $state.go('contiv.menu.networkpolicies.isolation.list');
+                $state.go('contiv.menu.networkpolicies.list.isolation');
             }
 
             function returnToPolicyDetails() {

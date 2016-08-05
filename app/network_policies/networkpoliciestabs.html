@@ -1,22 +1,30 @@
-<div class="ui container">
-    <div class="ui sixteen column grid">
-        <div class="twelve wide column">
-            <div class="content" style="font-size: 24px">Network Policies</div>
-        </div>
+<div class="ui sixteen column grid">
+    <div class="twelve wide column">
+        <div class="content" style="font-size: 24px">Network Policies</div>
     </div>
 
-    <div style="margin-top:30px"></div>
-    <div class="ui secondary pointing menu">
-        <a class="blue item" ui-sref="contiv.menu.networkpolicies.isolation.list()" ui-sref-active="{'active':'contiv.menu.networkpolicies.isolation'}">
-            Isolation Policies
-        </a>
-        <a class="blue item" ui-sref="contiv.menu.networkpolicies.bandwidth.list()" ui-sref-active="{'active':'contiv.menu.networkpolicies.bandwidth'}">
-            Bandwidth Policies
-        </a>
-        <a class="blue item" ui-sref="contiv.menu.networkpolicies.redirection()" ui-sref-active="active">
-            Redirection Policies
-        </a>
+    <div class="right aligned four wide column">
+        <button class="ui blue button" ng-click="networkPoliciesTabsCtrl.createNetworkPolicy()">
+            <i class="add icon"></i>
+            Create Policy
+        </button>
+
     </div>
-    <div ui-view style="margin-top:30px"></div>
 </div>
+<div class="ui secondary pointing menu">
+    <a class="blue item" ui-sref="contiv.menu.networkpolicies.list.isolation()"
+       ui-sref-active="{'active':'contiv.menu.networkpolicies.list.isolation'}">
+        Isolation Policies
+    </a>
+    <a class="blue item" ui-sref="contiv.menu.networkpolicies.list.bandwidth()"
+       ui-sref-active="{'active':'contiv.menu.networkpolicies.list.bandwidth'}">
+        Bandwidth Policies
+    </a>
+    <a class="blue item" ui-sref="contiv.menu.networkpolicies.list.redirection()"
+       ui-sref-active="{'active':'contiv.menu.networkpolicies.list.redirection'}">
+        Redirection Policies
+    </a>
+</div>
+<div ui-view></div>
+
 

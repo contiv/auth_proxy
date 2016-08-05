@@ -18,7 +18,7 @@ angular.module('contiv.networkpolicies')
             var bandwidthPolicyCreateCtrl = this;
 
             function returnToPolicies() {
-                $state.go('contiv.menu.networkpolicies.bandwidth.list');
+                $state.go('contiv.menu.networkpolicies.list.bandwidth');
             }
 
             function cancelCreating() {

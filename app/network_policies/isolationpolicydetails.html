@@ -1,11 +1,11 @@
 <div class="ui sixteen column grid">
     <div class="one wide column">
-        <a ui-sref="contiv.menu.networkpolicies.isolation.list()">
+        <a ui-sref="contiv.menu.networkpolicies.list.isolation()">
             <i class="large arrow left icon"></i>
         </a>
     </div>
     <div class="left floated ten wide column">
-        <div class="content" style="font-size: 24px">Network Policies (Details)</div>
+        <div class="content" style="font-size: 24px">Isolation Policies (Details)</div>
     </div>
     <div ng-switch="isolationPolicyDetailsCtrl.mode" class="right aligned five wide column">
         <div id="delete-policy-modal" class="ui small modal">
@@ -41,7 +41,7 @@
     <div class="ui active inverted dimmer" ng-show="isolationPolicyDetailsCtrl.showLoader">
         <div class="ui loader"></div>
     </div>
-    <h4 class="ui header">Basic Settings</h4>
+    <div><h4 class="ui header">Basic Settings</h4></div>
     <table class="ui very basic selectable table">
         <tbody>
         <tr>

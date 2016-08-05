@@ -62,7 +62,7 @@ angular.module('contiv.networkpolicies')
 
 
             function returnToPolicies() {
-                $state.go('contiv.menu.networkpolicies.bandwidth.list');
+                $state.go('contiv.menu.networkpolicies.list.bandwidth');
             }
 
             function returnToPolicyDetails() {

@@ -5,8 +5,8 @@
 angular.module('contiv.networkpolicies')
     .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
-            .state('contiv.menu.networkpolicies.bandwidth.list', {
-                url: '/list',
+            .state('contiv.menu.networkpolicies.list.bandwidth', {
+                url: '/bandwidth',
                 controller: 'BandwidthPolicyListCtrl as bandwidthPolicyListCtrl',
                 templateUrl: 'network_policies/bandwidthpolicylist.html'
             })

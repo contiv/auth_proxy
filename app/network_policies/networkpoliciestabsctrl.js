@@ -4,32 +4,29 @@
 angular.module('contiv.networkpolicies')
     .config(['$stateProvider', function ($stateProvider) {
         $stateProvider
-            .state('contiv.menu.networkpolicies', {
-                url: '/networkpolicies',
+            .state('contiv.menu.networkpolicies.list', {
+                url: '/list',
+                abstract: true,
                 controller: 'NetworkPoliciesTabsCtrl as networkPoliciesTabsCtrl',
                 templateUrl: 'network_policies/networkpoliciestabs.html'
             })
-            .state('contiv.menu.networkpolicies.isolation', {
-                url: '/isolation',
-                abstract: true,
-                template: '<ui-view/>'
-            })
-            .state('contiv.menu.networkpolicies.prioritization', {
-                url: '/prioritization',
-                controller: 'NetworkPoliciesTabsCtrl as networkPoliciesTabsCtrl',
-                templateUrl: 'network_policies/prioritizationpolicylist.html'
-            })
-            .state('contiv.menu.networkpolicies.bandwidth', {
-                url: '/bandwidth',
-                abstract: true,
-                template: '<ui-view/>'
-            })
-            .state('contiv.menu.networkpolicies.redirection', {
+            .state('contiv.menu.networkpolicies.list.redirection', {
                 url: '/redirection',
-                controller: 'NetworkPoliciesTabsCtrl as networkPoliciesTabsCtrl',
-                templateUrl: 'network_policies/redirectionpolicylist.html'
+                template: ''
             })
         ;
     }])
-    .controller('NetworkPoliciesTabsCtrl', ['$state', function ($state) {
+    .controller('NetworkPoliciesTabsCtrl', ['$state',function ($state) {
+        var networkPoliciesTabsCtrl = this;
+        
+        function createNetworkPolicy() {
+            if($state.$current.includes['contiv.menu.networkpolicies.list.isolation']){
+                $state.go('contiv.menu.networkpolicies.isolation.create');
+            }
+            if($state.$current.includes['contiv.menu.networkpolicies.list.bandwidth']) {
+                $state.go('contiv.menu.networkpolicies.bandwidth.create');
+            }
+        }
+
+        networkPoliciesTabsCtrl.createNetworkPolicy = createNetworkPolicy;
     }]);
