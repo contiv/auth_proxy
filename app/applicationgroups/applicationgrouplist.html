@@ -15,12 +15,12 @@
     <div class="ui active inverted dimmer" ng-show="applicationGroupListCtrl.showLoader">
         <div class="ui loader"></div>
     </div>
-    <ctv-table items="applicationGroupListCtrl.groups" filtereditems="applicationGroupListCtrl.filteredgroups" size="12">
+    <ctv-table defaultsortcolumn="groupName" items="applicationGroupListCtrl.groups" filtereditems="applicationGroupListCtrl.filteredgroups" size="12">
         <ctv-thead>
             <ctv-tr>
-                <ctv-th>Name</ctv-th>
-                <ctv-th>Network</ctv-th>
-                <ctv-th>Policies</ctv-th>
+                <ctv-th sortfield="'groupName'">Name</ctv-th>
+                <ctv-th sortfield="'networkName'">Network</ctv-th>
+                <ctv-th sortfield="'policies'">Policies</ctv-th>
                 <ctv-th class="right floated three wide column">
                     <ctv-tsearch placeholder="Search application groups..." size="30"></ctv-tsearch>
                 </ctv-th>

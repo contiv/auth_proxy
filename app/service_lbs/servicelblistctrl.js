@@ -19,7 +19,7 @@ angular.module('contiv.servicelbs')
                 ServicelbsModel.get(reload)
                     .then(function successCallback(result) {
                             CRUDHelperService.stopLoader(servicelbListCtrl);
-                            servicelbListCtrl.servicelbs = $filter('orderBy')(result, 'serviceName');
+                            servicelbListCtrl.servicelbs = result;
                         },
                         function errorCallback(result) {
                             CRUDHelperService.stopLoader(servicelbListCtrl);

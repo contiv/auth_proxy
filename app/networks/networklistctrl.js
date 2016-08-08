@@ -16,7 +16,7 @@ angular.module('contiv.networks')
                 NetworksModel.get(reload)
                     .then(function successCallback(result) {
                             CRUDHelperService.stopLoader(networksListCtrl);
-                            networksListCtrl.networks = $filter('orderBy')(result, 'networkName');
+                            networksListCtrl.networks = result;
                         },
                         function errorCallback(result) {
                             CRUDHelperService.stopLoader(networksListCtrl);

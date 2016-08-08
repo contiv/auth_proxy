@@ -28,12 +28,12 @@
     <h4 class="ui header" style="margin-top: 40px">Application Groups</h4>
 
     <div style="margin-top: 20px">
-        <ctv-table items="networkDetailsCtrl.applicationGroups"
+        <ctv-table defaultsortcolumn="groupName" items="networkDetailsCtrl.applicationGroups"
                    filtereditems="networkDetailsCtrl.filteredApplicationGroups" size="5">
             <ctv-thead>
                 <ctv-tr>
-                    <ctv-th> Group name</ctv-th>
-                    <ctv-th> Policies</ctv-th>
+                    <ctv-th sortfield="'groupName'"> Group name</ctv-th>
+                    <ctv-th sortfield="'policies'"> Policies</ctv-th>
                     <ctv-th class="right floated three wide column">
                         <ctv-tsearch placeholder="Search application groups..." size="30"></ctv-tsearch>
                     </ctv-th>

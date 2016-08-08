@@ -41,10 +41,10 @@
 
     <div class="ui section divider"></div>
 
-    <ctv-table items="nodeListCtrl.nodes" filtereditems="nodeListCtrl.filteredNodes" size="12" style="margin-top: 40px">
+    <ctv-table defaultsortcolumn="key" items="nodeListCtrl.nodes" filtereditems="nodeListCtrl.filteredNodes" size="12" style="margin-top: 40px">
         <ctv-thead>
             <ctv-tr>
-                <ctv-th>Name</ctv-th>
+                <ctv-th sortfield="'key'">Name</ctv-th>
                 <ctv-th>Provisioning status</ctv-th>
                 <ctv-th>Health status</ctv-th>
                 <ctv-th class="right floated three wide column">

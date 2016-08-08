@@ -14,11 +14,11 @@
     <div class="ui active inverted dimmer" ng-show="volumeListCtrl.showLoader">
         <div class="ui loader"></div>
     </div>
-    <ctv-table items="volumeListCtrl.volumes" filtereditems="volumeListCtrl.filteredvolumes" size="12">
+    <ctv-table defaultsortcolumn="name" items="volumeListCtrl.volumes" filtereditems="volumeListCtrl.filteredvolumes" size="12">
         <ctv-thead>
             <ctv-tr>
-                <ctv-th>Name</ctv-th>
-                <ctv-th>Policy</ctv-th>
+                <ctv-th sortfield="'name'">Name</ctv-th>
+                <ctv-th sortfield="'policy'">Policy</ctv-th>
                 <ctv-th class="right floated three wide column">
                     <ctv-tsearch placeholder="Search volumes..." size="30"></ctv-tsearch>
                 </ctv-th>

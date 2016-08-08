@@ -10,3 +10,7 @@ tr:nth-child(even) {
 td.ctv-wordwrap {
   word-break: break-all;
 }
+
+table thead th[sortfield] span{
+    cursor: pointer;
+}

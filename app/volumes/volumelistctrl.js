@@ -19,7 +19,7 @@ angular.module('contiv.volumes')
                 VolumesModel.get(reload)
                     .then(function successCallback(result) {
                         CRUDHelperService.stopLoader(volumeListCtrl);
-                        volumeListCtrl.volumes = $filter('orderBy')(result, 'name');
+                        volumeListCtrl.volumes = result;
                     }, function errorCallback(result) {
                         CRUDHelperService.stopLoader(volumeListCtrl);
                     });

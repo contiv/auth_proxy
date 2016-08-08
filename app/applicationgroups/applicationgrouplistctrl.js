@@ -20,7 +20,7 @@ angular.module('contiv.applicationgroups')
                     ApplicationGroupsModel.get(reload)
                         .then(function successCallback(result) {
                             CRUDHelperService.stopLoader(applicationGroupListCtrl);
-                            applicationGroupListCtrl.groups = $filter('orderBy')(result, 'groupName');
+                            applicationGroupListCtrl.groups = result;
                         }, function errorCallback(result) {
                             CRUDHelperService.stopLoader(applicationGroupListCtrl);
                         });

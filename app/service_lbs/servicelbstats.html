@@ -12,19 +12,18 @@
 </table>
 <div class="ui section divider"></div>
 <ctv-collapsible title="Providers">
-    <ctv-table items="servicelbStatsCtrl.providers" filtereditems="servicelbStatsCtrl.filteredproviders" size="12">
+    <ctv-table defaultsortcolumn="name" items="servicelbStatsCtrl.providers" filtereditems="servicelbStatsCtrl.filteredproviders" size="12">
         <ctv-thead>
             <ctv-tr>
-                <ctv-th>
-                    <div class="ui three column grid" style="margin-left:30px">
-                        <div class="column">Container Name</div>
-                        <div class="column">IP Address</div>
-                        <div class="column">Host</div>
+                    <div class="ui grid" style="margin-top: 25px;margin-left: 25px;margin-bottom: 1px;">
+
+                        <ctv-th sortfield="'name'" class="five wide column">Container Name</ctv-th>
+                        <ctv-th sortfield="'ipAddress'" class="four wide column">IP Address</ctv-th>
+                        <ctv-th sortfield="'homingHost'" class="three wide column">Host</ctv-th>
+                        <ctv-th class="four wide column">
+                            <ctv-tsearch placeholder="Search Containers..." size="30"></ctv-tsearch>
+                        </ctv-th>
                     </div>
-                </ctv-th>
-                <ctv-th class="right floated three wide column">
-                    <ctv-tsearch placeholder="Search Containers..." size="30"></ctv-tsearch>
-                </ctv-th>
             </ctv-tr>
         </ctv-thead>
 
@@ -32,10 +31,10 @@
             <ctv-tr ng-repeat="provider in servicelbStatsCtrl.filteredproviders">
                 <ctv-td>
                     <ctv-accordion items="servicelbStatsCtrl.providerDetails[provider.name]">
-                        <div class="ui three column grid" style="margin-top: -35px; margin-left: 30px;">
-                            <div class="column">{{provider.name.substr(0,12)}}</div>
-                            <div class="column">{{provider.ipAddress.join(' ')}}</div>
-                            <div class="column">{{provider.homingHost}}</div>
+                        <div class="ui grid" style="margin-top: -33px; margin-left: 30px;">
+                            <div class="five wide column">{{provider.name.substr(0,12)}}</div>
+                            <div class="four wide column">{{provider.ipAddress.join(' ')}}</div>
+                            <div class="four wide column">{{provider.homingHost}}</div>
                         </div>
                     </ctv-accordion>
                 </ctv-td>

@@ -143,6 +143,12 @@
 .icon.arrow.right:before {
     content: "\e92b";
 }
+.icon.angle.down:before {
+    content: "\e95e";
+}
+.icon.angle.up:before {
+    content: "\e95f";
+}
 .icon.checkmark:before {
     content: "\e92d";
 }

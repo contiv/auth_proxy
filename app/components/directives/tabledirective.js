@@ -1,6 +1,37 @@
 /**
  * Created by vjain3 on 5/4/16.
  */
+
+/*
+Directive Usage :
+
+a) ctvTable -
+   usage : <ctv-table defaultsortcolumn='name' items='tableItems' filtereditems='filtItems' size='size'></ctv-table>
+   attribute details :  defaultsortcolumn - The default column name(corresponding key inside the object of items array) on which the table will be sorted when it is loaded.
+                        items - An array of objects which will be displayed by the ctv-table directive.
+                        size - number of rows to be displayed inside the table. If items.length > size then remaining items
+                               will be displayed in next page.
+                        filtereditems - This is an output field which produces a filtered subset of items specefied by
+                                        the previous attribute, Items are filtered based on search text defined inside ctv-search,
+                                        and by the size mentioned in the ctv-table attribute
+b) ctvTH -
+   usage : <ctv-th sortfield='name'>name</ctv-th>
+   attribute details : sortfield - This is the key of the object present inside items array specefied in ctvTable, for eg :
+                                   if the array object is : [{ip: "20.1.2.3", host: "cluster-1"},{ip: "20.1.2.4", host: "cluster-2"}]
+                                   then directive will be <ctv-th sortfield="'ip'"> Ip Address </ctv-th>
+   Table can only be sorted on columns which has sortfield attribute specefied.
+
+c) ctvTsearch -
+   usage : <ctv-tsearch placeholder='Search' size='30'></ctv-tsearch>
+   attribute details : placeholder - specify the placeholder for the input text field
+                       size - specify the maximum length of the search string
+   Only items matching the search string are displayed inside the table.
+
+d) ctvTpagination -
+   usage : <ctv-tpagination></ctv-tpagination>
+   Provides link for moving back and forth of the result page.
+
+ */
 angular.module("contiv.directives")
     .directive("ctvTable", ['filterFilter', 'limitToFilter', function (filterFilter, limitToFilter) {
         return {
@@ -9,12 +40,14 @@ angular.module("contiv.directives")
             scope: {
                 items: '=',
                 filtereditems: '=',
-                size: '@'
+                size: '@',
+                defaultsortcolumn: '@'
             },
-            controller: ['$scope', '$element', '$attrs', function ($scope, $element, $attrs) {
+            controller: ['$scope', '$element', '$attrs', '$filter', function ($scope, $element, $attrs, $filter) {
                 var tableCtrl = this;
                 tableCtrl.chunks = [];
                 tableCtrl.pageNo = 0;
+                tableCtrl.sortObj=initializeSort($scope.defaultsortcolumn);
 
                 tableCtrl.size = parseInt($scope.size, 10);
                 if (isNaN(tableCtrl.size)) {
@@ -29,12 +62,12 @@ angular.module("contiv.directives")
                  */
                 function showChunk(pageNo, searchText) {
                     tableCtrl.searchText = searchText;
-
                     if (pageNo === undefined || pageNo < 0) pageNo = 0;
                     tableCtrl.pageNo = pageNo;
 
                     if ($scope.items !== undefined) {//TODO: Check why items are undefined during initialization
                         var searchTextFilteredItems = filterFilter($scope.items, tableCtrl.searchText);
+                        searchTextFilteredItems = $filter('orderBy')(searchTextFilteredItems, tableCtrl.sortObj.field, tableCtrl.sortObj.reverse);
                         var noOfChunks = Math.ceil(searchTextFilteredItems.length / tableCtrl.size);
                         if (noOfChunks == 0) {
                             noOfChunks = 1;
@@ -48,7 +81,6 @@ angular.module("contiv.directives")
                         if (pageNo >= tableCtrl.chunks.length) {
                             tableCtrl.pageNo = 0;
                         }
-
                         tableCtrl.chunks[tableCtrl.pageNo].selected = true;
 
                         //Update number of chunks for pagination menu
@@ -72,10 +104,10 @@ angular.module("contiv.directives")
                         tableCtrl.filteredItems = limitToFilter(searchTextFilteredItems,
                             tableCtrl.size,
                             tableCtrl.pageNo * tableCtrl.size);
-                        $scope.filtereditems = tableCtrl.filteredItems;
+                        $scope.filtereditems=tableCtrl.filteredItems;
                     }
                     return false;
-                };
+                }
 
                 function showPrevChunk() {
                     var prevChunk;
@@ -104,10 +136,35 @@ angular.module("contiv.directives")
                     $scope.paginationMenu = menu;
                 }
 
+                function initializeSort(sortfield){
+                    return {
+                        field:sortfield,
+                        reverse: false,
+                        iconDirection: {"angle down icon": true, "angle up icon": false}
+                    }
+                }
+
+                function sort(sortfield){
+                    if (sortfield == tableCtrl.sortObj.field){
+                        tableCtrl.sortObj.field = sortfield;
+                        tableCtrl.sortObj.reverse = !tableCtrl.sortObj.reverse;
+                        tableCtrl.sortObj.iconDirection = {
+                            "angle down icon": !tableCtrl.sortObj.reverse,
+                            "angle up icon": tableCtrl.sortObj.reverse
+                        }
+                    }
+                    else{
+                        tableCtrl.sortObj = initializeSort(sortfield);
+                    }
+                    tableCtrl.showChunk(tableCtrl.pageNo, tableCtrl.searchText);
+                    $scope.$apply();
+                }
+
                 tableCtrl.showChunk = showChunk;
                 tableCtrl.showNextChunk = showNextChunk;
                 tableCtrl.showPrevChunk = showPrevChunk;
                 tableCtrl.addPaginationMenu = addPaginationMenu;
+                tableCtrl.sort = sort;
             }],
             link: function (scope, element, attrs, tableCtrl) {
                 //Watch for items as they will be auto refreshed
@@ -132,10 +189,20 @@ angular.module("contiv.directives")
             restrict: 'E',
             transclude: true,
             replace: true,
+            require: '^^ctvTable',
             scope: {
-                class: '@'
+                class: '@',
+                sortfield: '='
             },
-            template: '<th ng-class="class" ng-transclude></th>'
+            link:function(scope, element, attrs, tableCtrl){
+                scope.tablectrl = tableCtrl;
+                if(scope.sortfield != undefined && scope.sortfield != null){
+                    element.bind('click', function(){
+                        tableCtrl.sort(scope.sortfield);
+                    });
+                }
+            },
+            templateUrl: 'components/directives/tableheader.html'
         }
     })
     .directive("ctvTbody", function () {

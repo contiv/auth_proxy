@@ -15,13 +15,13 @@
     <div class="ui active inverted dimmer" ng-show="servicelbListCtrl.showLoader">
         <div class="ui loader"></div>
     </div>
-    <ctv-table items="servicelbListCtrl.servicelbs" filtereditems="servicelbListCtrl.filteredservicelbs" size="12">
+    <ctv-table defaultsortcolumn="serviceName" items="servicelbListCtrl.servicelbs" filtereditems="servicelbListCtrl.filteredservicelbs" size="12">
         <ctv-thead>
             <ctv-tr>
-                <ctv-th>Name</ctv-th>
-                <ctv-th>Network</ctv-th>
-                <ctv-th>IP Address</ctv-th>
-                <ctv-th>Label Selectors</ctv-th>
+                <ctv-th sortfield="'serviceName'">Name</ctv-th>
+                <ctv-th sortfield="'networkName'">Network</ctv-th>
+                <ctv-th sortfield="'ipAddress'">IP Address</ctv-th>
+                <ctv-th sortfield="'selectors'">Label Selectors</ctv-th>
                 <ctv-th class="right floated three wide column">
                     <ctv-tsearch placeholder="Search services..." size="30"></ctv-tsearch>
                 </ctv-th>

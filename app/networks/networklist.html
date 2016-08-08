@@ -15,13 +15,13 @@
     <div class="ui active inverted dimmer" ng-show="networksListCtrl.showLoader">
         <div class="ui loader"></div>
     </div>
-    <ctv-table items="networksListCtrl.networks" filtereditems="networksListCtrl.filterednetworks" size="12">
+    <ctv-table defaultsortcolumn="networkName" items="networksListCtrl.networks" filtereditems="networksListCtrl.filterednetworks" size="12">
         <ctv-thead>
             <ctv-tr>
-                <ctv-th>Name</ctv-th>
-                <ctv-th>Encapsulation</ctv-th>
-                <ctv-th>Subnet</ctv-th>
-                <ctv-th>Gateway</ctv-th>
+                <ctv-th sortfield="'networkName'">Name</ctv-th>
+                <ctv-th sortfield="'encap'">Encapsulation</ctv-th>
+                <ctv-th sortfield="'subnet'">Subnet</ctv-th>
+                <ctv-th sortfield="'gateway'">Gateway</ctv-th>
                 <ctv-th class="right floated three wide column">
                     <ctv-tsearch placeholder="Search networks..." size="30"></ctv-tsearch>
                 </ctv-th>

@@ -19,7 +19,7 @@ angular.module('contiv.nodes')
             NodesModel.get(reload)
                 .then(function successCallback(result) {
                     CRUDHelperService.stopLoader(nodeListCtrl);
-                    nodeListCtrl.nodes = $filter('orderBy')(result, 'key');
+                    nodeListCtrl.nodes = result;
                 }, function errorCallback(result) {
                     CRUDHelperService.stopLoader(nodeListCtrl);
                 });

@@ -15,10 +15,10 @@
     <div class="ui active inverted dimmer" ng-show="organizationsListCtrl.showLoader">
         <div class="ui loader"></div>
     </div>
-    <ctv-table items="organizationsListCtrl.organizations" filtereditems="organizationsListCtrl.filteredorganizations" size="12">
+    <ctv-table defaultsortcolumn="tenantName" items="organizationsListCtrl.organizations" filtereditems="organizationsListCtrl.filteredorganizations" size="12">
         <ctv-thead>
             <ctv-tr>
-                <ctv-th>Name</ctv-th>
+                <ctv-th sortfield="'tenantName'">Name</ctv-th>
                 <ctv-th class="right floated three wide column">
                     <ctv-tsearch placeholder="Search organizations..." size="30"></ctv-tsearch>
                 </ctv-th>

@@ -3,12 +3,12 @@
         <div class="ui active inverted dimmer" ng-show="bandwidthPolicyListCtrl.showLoader">
             <div class="ui loader"></div>
         </div>
-        <ctv-table items="bandwidthPolicyListCtrl.policies" filtereditems="bandwidthPolicyListCtrl.filteredPolicies" size="12">
+        <ctv-table defaultsortcolumn="profileName" items="bandwidthPolicyListCtrl.policies" filtereditems="bandwidthPolicyListCtrl.filteredPolicies" size="12">
             <ctv-thead>
                 <ctv-tr>
-                    <ctv-th>Name</ctv-th>
-                    <ctv-th>Updated by</ctv-th>
-                    <ctv-th>Last update</ctv-th>
+                    <ctv-th sortfield="'profileName'">Name</ctv-th>
+                    <ctv-th sortfield="'updatedBy'">Updated by</ctv-th>
+                    <ctv-th sortfield="'lastUpdate'">Last update</ctv-th>
                     <ctv-th class="right floated three wide column">
                         <ctv-tsearch placeholder="Search bandwidth policies..." size="30"></ctv-tsearch>
                     </ctv-th>

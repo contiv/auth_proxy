@@ -19,7 +19,7 @@ angular.module('contiv.storagepolicies')
                 StoragePoliciesModel.get(reload)
                     .then(function successCallback(result) {
                         CRUDHelperService.stopLoader(storagePolicyListCtrl);
-                        storagePolicyListCtrl.policies = $filter('orderBy')(result, 'name');
+                        storagePolicyListCtrl.policies = result;
                     }, function errorCallback(result) {
                         CRUDHelperService.stopLoader(storagePolicyListCtrl);
                     });

@@ -16,7 +16,7 @@ angular.module('contiv.organizations')
                 OrganizationsModel.get(reload)
                     .then(function successCallback(result) {
                             CRUDHelperService.stopLoader(organizationsListCtrl);
-                            organizationsListCtrl.organizations = $filter('orderBy')(result, 'tenantName');
+                            organizationsListCtrl.organizations = result;
                         },
                         function errorCallback(result) {
                             CRUDHelperService.stopLoader(organizationsListCtrl);
