@@ -7,10 +7,10 @@ angular.module("contiv.utils")
         /* This function would build the containerDetails object.
          eg :
          containerDetails={
-         ContainerName1 : [{name: "homingHost", value: "cluster-node1", type: "string", format: "none"},
+         ContainerId1 : [{name: "homingHost", value: "cluster-node1", type: "string", format: "none"},
          {name: macAddress, value: "02:02", type:"string", format:"none"}
          ],
-         ContainerName2 : [{name: "homingHost", value: "cluster-node1" type: "string", format: "none"},
+         ContainerId2 : [{name: "homingHost", value: "cluster-node1" type: "string", format: "none"},
          {name: macAddress, value: "02:04", type: "string", format: "none"}
          ]
          }
@@ -37,7 +37,7 @@ angular.module("contiv.utils")
                     }
                     containerAttributes.push(endpointAttribute);
                 }
-                containerDetails[endpoints[i].name] = containerAttributes;
+                containerDetails[endpoints[i].containerID] = containerAttributes;
             }
             return containerDetails
         }

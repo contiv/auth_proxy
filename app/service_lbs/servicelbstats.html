@@ -30,9 +30,9 @@
         <ctv-tbody>
             <ctv-tr ng-repeat="provider in servicelbStatsCtrl.filteredproviders">
                 <ctv-td>
-                    <ctv-accordion items="servicelbStatsCtrl.providerDetails[provider.name]">
+                    <ctv-accordion items="servicelbStatsCtrl.providerDetails[provider.containerID]">
                         <div class="ui grid" style="margin-top: -33px; margin-left: 30px;">
-                            <div class="five wide column">{{provider.name.substr(0,12)}}</div>
+                            <div class="five wide column">{{provider.containerName.substr(1)}}</div>
                             <div class="four wide column">{{provider.ipAddress.join(' ')}}</div>
                             <div class="four wide column">{{provider.homingHost}}</div>
                         </div>

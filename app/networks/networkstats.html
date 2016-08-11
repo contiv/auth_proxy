@@ -45,9 +45,9 @@
         <ctv-tbody>
             <ctv-tr ng-repeat="endpoint in networkStatsCtrl.filteredendpoints">
                 <ctv-td>
-                    <ctv-accordion items="networkStatsCtrl.containerDetails[endpoint.name]">
+                    <ctv-accordion items="networkStatsCtrl.containerDetails[endpoint.containerID]">
                         <div class="ui grid" style="margin-top: -33px; margin-left: 30px;">
-                            <div class="five wide column">{{endpoint.name.substr(0,12)}}</div>
+                            <div class="five wide column">{{endpoint.containerName.substr(1)}}</div>
                             <div class="four wide column">{{endpoint.ipAddress.join(' ')}}</div>
                             <div class="four wide column">{{endpoint.homingHost}}</div>
                         </div>
