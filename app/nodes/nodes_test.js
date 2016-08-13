@@ -113,6 +113,41 @@ describe("contiv.nodes module", function () {
         }
     };
 
+    var config = {
+        "key": "cluster-node1-0",
+        "as": "65002",
+        "hostname": "netplugin-node1",
+        "neighbor": "50.1.1.200",
+        "neighbor-as": "500",
+        "routerip": "50.1.1.2/24"
+    }
+
+    var inspect = {
+      "Config": {
+        "key": "cluster-node1-0",
+        "as": "65002",
+        "hostname": "netplugin-node1",
+        "neighbor": "50.1.1.200",
+        "neighbor-as": "500",
+        "routerip": "50.1.1.2/24"
+      },
+      "Oper": {
+        "adminStatus": "ADMIN_STATE_UP",
+        "neighborStatus": "BGP_FSM_ESTABLISHED",
+        "numRoutes": 8,
+        "routes": [
+          "1.1.1.0/24",
+          "10.0.2.0/24",
+          "50.1.1.0/24",
+          "50.1.1.2/32",
+          "60.1.1.0/24",
+          "70.1.1.0/24",
+          "80.1.1.0/24",
+          "80.1.1.2/32"
+        ]
+      }
+    }
+
     beforeEach(module('ui.router'));
     beforeEach(module('contiv.nodes'));
 
@@ -128,6 +163,10 @@ describe("contiv.nodes module", function () {
         $httpBackend.when('GET', ContivGlobals.NODES_ACTIVE_JOB_ENDPOINT).respond();
         $httpBackend.when('GET', ContivGlobals.NODES_LAST_JOB_ENDPOINT).respond();
         $httpBackend.when('GET', ContivGlobals.NODES_SETTINGS_GET_ENDPOINT).respond(global);
+        $httpBackend.when('GET', ContivGlobals.BGPS_ENDPOINT + config.key + '/').respond(config);
+        $httpBackend.when('POST', ContivGlobals.BGPS_ENDPOINT + config.key + '/').respond();
+        $httpBackend.when('GET', ContivGlobals.BGPS_INSPECT_ENDPOINT).respond();
+        $httpBackend.when('GET', ContivGlobals.BGPS_INSPECT_ENDPOINT + inspect.Config.key + '/').respond(inspect);
     }));
 
     afterEach(function () {

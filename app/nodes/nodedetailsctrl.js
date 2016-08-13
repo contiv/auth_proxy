@@ -24,11 +24,17 @@ angular.module('contiv.nodes')
                 controller: 'NodeDetailsCtrl as nodeDetailsCtrl',
                 templateUrl: 'nodes/nodelogs.html'
             })
-        ;
+            .state('contiv.menu.nodes.details.edit', {
+                url: '/edit',
+                controller: 'NodeDetailsCtrl as nodeDetailsCtrl',
+                templateUrl: 'nodes/nodeinfo.html'
+            });
+
     }])
-    .controller('NodeDetailsCtrl', ['$state', '$stateParams', '$scope', '$interval', 'NodesModel',
-        function ($state, $stateParams, $scope, $interval, NodesModel) {
+    .controller('NodeDetailsCtrl', ['$state', '$stateParams', '$scope', '$interval', 'NodesModel', 'BgpService',
+        function ($state, $stateParams, $scope, $interval, NodesModel, BgpService) {
             var nodeDetailsCtrl = this;
+            nodeDetailsCtrl.numberpattern = ContivGlobals.NUMBER_REGEX;
 
             function decommission() {
                 var nodeOpsObj = {
@@ -105,8 +111,65 @@ angular.module('contiv.nodes')
                     });
             }
 
+            function setMode() {
+                if ($state.is('contiv.menu.nodes.details.edit')) {
+                    nodeDetailsCtrl.mode = 'edit';
+                } else {
+                    nodeDetailsCtrl.mode = 'details';
+                }
+            }
+
+            function returnToInfo() {
+                $state.go('contiv.menu.nodes.details.info');
+            }
+
+            function updateBgpInfo() {
+                if (nodeDetailsCtrl.form.$valid) {
+                    nodeDetailsCtrl.neighbor.key = $stateParams.key;
+
+                    // backend only supports adding one neighbor currently
+                    nodeDetailsCtrl.neighbors.forEach(function (item) {
+                        nodeDetailsCtrl.neighbor['neighbor'] = item.name;
+                        nodeDetailsCtrl.neighbor['neighbor-as'] = item.value;
+                    });
+
+                    BgpService.updateBgp(nodeDetailsCtrl).then(function successCallback(result) {
+                        nodeDetailsCtrl.neighbor = result.config.data;
+                        returnToInfo();
+
+                    }, function errorCallback(result) {
+                    });
+                }
+            }
+
+            function getBgpInfo() {
+                BgpService.getBgp(nodeDetailsCtrl).then(function successCallback(result) {
+                    nodeDetailsCtrl.neighbor = result;
+                }, function errorCallback(result) {
+                });
+            }
+
+            function getBgpInspect() {
+                BgpService.getBgpInspect($stateParams.key).then(function successCallback(result) {
+                    nodeDetailsCtrl.inspect = result;
+                    nodeDetailsCtrl.routes = result.Oper.routes;
+                    nodeDetailsCtrl.filteredroutes = result.Oper.routes;
+                }, function errorCallback(result) {
+                });
+            }
+
             nodeDetailsCtrl.decommission = decommission;
             nodeDetailsCtrl.upgrade = upgrade;
+
+            nodeDetailsCtrl.setMode = setMode;
+            nodeDetailsCtrl.updateBgpInfo = updateBgpInfo;
+            nodeDetailsCtrl.returnToInfo = returnToInfo;
+            nodeDetailsCtrl.neighbors = [];
+            nodeDetailsCtrl.neighbor = {};
+            nodeDetailsCtrl.key = $stateParams.key;
+            getBgpInfo();
+            getBgpInspect();
+            setMode();
 
             //Load from cache for quick display initially
             getNodeInfo(false);
