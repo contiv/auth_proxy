@@ -1,19 +1,24 @@
 exports.config = {
-  allScriptsTimeout: 11000,
-
-  specs: [
-    '*.js'
-  ],
 
   capabilities: {
     'browserName': 'chrome'
   },
+  seleniumServerJar: "../node_modules/protractor/selenium/selenium-server-standalone-2.47.1.jar",
+  
+  baseUrl: 'http://localhost:8080/',
 
-  baseUrl: 'http://localhost:8000/app/',
+  specs: ['./**/*.js'],
 
   framework: 'jasmine',
 
+  params: {
+    globBaseUrl: 'http://localhost:8080/'
+  },
+
   jasmineNodeOpts: {
-    defaultTimeoutInterval: 30000
+    showColors:true,
+    defaultTimeoutInterval: 30000,
+    isVerbose:true,
+    includeStackTrace:true
   }
 };

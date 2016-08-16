@@ -11,6 +11,7 @@
   * [Adding icon](#adding-custom-icons-into-semantic-ui)
   * [Testing](#testing)
     * [Directives] (#writing-directive-tests)
+    * [End to end testing] (#writing-end-to-end-tests)
 
 
 ###Setting up Contiv-ui on Mac and Windows
@@ -170,6 +171,30 @@ You must configure karma to pre-process the linked template html file. To do so:
  ```
  beforeEach(module('contiv.test.directives'));
  ```
+ 
+#### Writing End to end tests
+----------------------------
+Your page interaction test must be organized into two files pageObject.js and pageSpec.js.
+Inside pageObject you would create object references for every page element that the user can interact with. pageSpec.js would use the elements declared in pageObject.js to perform the actual test and verifications. 
+
+######Running End to end tests -
+Protractor along with Standalone selenium web driver is used to execute these test scripts. By default, Contiv UI is expected to run on http://localhost:8080/ for these tests to run.
+
+```
+$ npm run protractor
+```
+
+######Debugging End to end tests using webstorm- 
+
+Follow the below instructions to configure your webstorm for running/debugging end to end tests.
+
+* Click on Run/Edit	Configurations.
+* Add a new node.js module.
+* set the working directory path to contiv-ui/e2e-tests.
+* set the javascript file path to contiv-ui/node_modules/protractor/lib/cli.js.
+* set the Appliation parameters path to contiv-ui/e2e-tests/protractor.conf.js.
+
+You can now set breakpoints and debug your test scripts through webstorm.
 
 
 
