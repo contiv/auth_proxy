@@ -1,73 +1,92 @@
 <form class="ui form" name="nodeCommissionCtrl.form" role="form"
       ng-submit="nodeCommissionCtrl.commission()" novalidate>
+
+    <div class="ui sixteen column grid">
+        <div class="one wide column">
+            <a ui-sref="contiv.menu.nodes.list()">
+                <i class="large arrow left icon"></i>
+            </a>
+        </div>
+        <div class="left floated fifteen wide column">
+            <div class="content" style="font-size: 24px">
+                <span>Nodes</span>
+                <span class="headingfontcolor"> (Commission Node)</span>
+            </div>
+        </div>
+    </div>
+
+
     <div class="ui active inverted dimmer" ng-show="nodeCommissionCtrl.showLoader">
         <div class="ui loader"></div>
     </div>
-    <div class="field">
-        <div ng-show="nodeCommissionCtrl.form.$submitted">
-            <div ng-hide="nodeCommissionCtrl.form.$valid" class="ui negative message">
-                <ul class="list">
-                    <li ng-show="nodeCommissionCtrl.form.hostgroup.$error.required">
-                        Please select host group
-                    </li>
-                    <li ng-show="nodeCommissionCtrl.form.controlInterface.$error.required">
-                        Please enter control interface
-                    </li>
-                    <li ng-show="nodeCommissionCtrl.form.dataInterface.$error.required">
-                        Please enter data interface
-                    </li>
-                    <li ng-show="nodeCommissionCtrl.form.ucpBootstrapNodeName.$error.required">
-                        Please enter node name
-                    </li>
+    <div class="ui basic segment">
+        <div class="field">
+            <div ng-show="nodeCommissionCtrl.form.$submitted">
+                <div ng-hide="nodeCommissionCtrl.form.$valid" class="ui negative message">
+                    <ul class="list">
+                        <li ng-show="nodeCommissionCtrl.form.hostgroup.$error.required">
+                            Please select host group
+                        </li>
+                        <li ng-show="nodeCommissionCtrl.form.controlInterface.$error.required">
+                            Please enter control interface
+                        </li>
+                        <li ng-show="nodeCommissionCtrl.form.dataInterface.$error.required">
+                            Please enter data interface
+                        </li>
+                        <li ng-show="nodeCommissionCtrl.form.ucpBootstrapNodeName.$error.required">
+                            Please enter node name
+                        </li>
 
-                    <ctv-acivalid form="nodeCommissionCtrl.form"></ctv-acivalid>
-                </ul>
+                        <ctv-acivalid form="nodeCommissionCtrl.form"></ctv-acivalid>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="field">
-        <label for="hostgroup">Host group</label>
-        <select id="hostgroup" class="ui dropdown"
-                name="hostgroup"
-                ng-model="nodeCommissionCtrl.nodeOpsObj.host_group" required>
-            <option value="">-- Please select host group --</option>
-            <option value="service-master">Service Master</option>
-            <option value="service-worker">Service Worker</option>
-        </select>
-    </div>
-    <ctv-controlinterface extravars="nodeCommissionCtrl.extra_vars"></ctv-controlinterface>
-    <div class="field" style="margin-top: 15px">
-        <label for="dataInterface">Data interface</label>
-        <input type="text" id="dataInterface" name="dataInterface"
-               ng-model="nodeCommissionCtrl.extra_vars['netplugin_if']"
-               placeholder="Enter data interface" required>
-    </div>
-    <ctv-scheduler ctrl="nodeCommissionCtrl" extravars="nodeCommissionCtrl.extra_vars"></ctv-scheduler>
-    
-    <div class="ui section divider"></div>
-    <ctv-collapsible title="Ansible Variables">
-        <ctv-namevalue items="nodeCommissionCtrl.ansibleVariables"></ctv-namevalue>
-    </ctv-collapsible>
+        <div class="field">
+            <label for="hostgroup">Host group</label>
+            <select id="hostgroup" class="ui dropdown"
+                    name="hostgroup"
+                    ng-model="nodeCommissionCtrl.nodeOpsObj.host_group" required>
+                <option value="">-- Please select host group --</option>
+                <option value="service-master">Service Master</option>
+                <option value="service-worker">Service Worker</option>
+            </select>
+        </div>
+        <ctv-controlinterface extravars="nodeCommissionCtrl.extra_vars"></ctv-controlinterface>
+        <div class="field" style="margin-top: 15px">
+            <label for="dataInterface">Data interface</label>
+            <input type="text" id="dataInterface" name="dataInterface"
+                   ng-model="nodeCommissionCtrl.extra_vars['netplugin_if']"
+                   placeholder="Enter data interface" required>
+        </div>
+        <ctv-scheduler ctrl="nodeCommissionCtrl" extravars="nodeCommissionCtrl.extra_vars"></ctv-scheduler>
 
-    <div class="ui section divider"></div>
+        <div class="ui section divider"></div>
+        <ctv-collapsible title="Ansible Variables">
+            <ctv-namevalue items="nodeCommissionCtrl.ansibleVariables"></ctv-namevalue>
+        </ctv-collapsible>
 
-    <ctv-collapsible title="Environment Variables">
-        <ctv-namevalue items="nodeCommissionCtrl.envVariables"></ctv-namevalue>
-    </ctv-collapsible>
+        <div class="ui section divider"></div>
 
-    <div class="ui sixteen column grid">
-        <div class="right floated five wide column">
-            <div style="margin-top: 40px">
-                <button type="button" class="ui basic button"
-                        ng-click="nodeCommissionCtrl.cancelCommissioningNode()">
-                    Cancel
-                </button>
-                <button type="submit" class="ui blue button">
-                    Commission
-                </button>
+        <ctv-collapsible title="Environment Variables">
+            <ctv-namevalue items="nodeCommissionCtrl.envVariables"></ctv-namevalue>
+        </ctv-collapsible>
+
+        <div class="ui sixteen column grid">
+            <div class="right floated five wide column">
+                <div style="margin-top: 40px">
+                    <button type="button" class="ui basic button"
+                            ng-click="nodeCommissionCtrl.cancelCommissioningNode()">
+                        Cancel
+                    </button>
+                    <button type="submit" class="ui blue button">
+                        Commission
+                    </button>
+                </div>
             </div>
         </div>
+        <ctv-error ng-show="nodeCommissionCtrl.showServerError" header="Error commissioning node"
+                   error="nodeCommissionCtrl.serverErrorMessage">
+        </ctv-error>
     </div>
-    <ctv-error ng-show="nodeCommissionCtrl.showServerError" header="Error commissioning node" error="nodeCommissionCtrl.serverErrorMessage">
-    </ctv-error>
 </form>

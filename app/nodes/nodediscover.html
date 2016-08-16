@@ -1,60 +1,77 @@
-<form class="ui form" name="nodeDiscoverCtrl.form" role="form"
-          ng-submit="nodeDiscoverCtrl.discover()" novalidate>
+<form class="ui form" name="nodeDiscoverCtrl.form" role="form" ng-submit="nodeDiscoverCtrl.discover()" novalidate>
+    <div class="ui sixteen column grid">
+        <div class="one wide column">
+            <a ui-sref="contiv.menu.nodes.list()">
+                <i class="large arrow left icon"></i>
+            </a>
+        </div>
+        <div class="left floated fifteen wide column">
+            <div class="content" style="font-size: 24px">
+                <span>Nodes</span>
+                <span class="headingfontcolor"> (Discover Node)</span>
+            </div>
+        </div>
+    </div>
+
     <div class="ui active inverted dimmer" ng-show="nodeDiscoverCtrl.showLoader">
         <div class="ui loader"></div>
     </div>
-    <div class="field">
-        <div ng-show="nodeDiscoverCtrl.form.$submitted">
-            <div ng-hide="nodeDiscoverCtrl.form.$valid" class="ui negative message">
-                <ul class="list">
-                    <li ng-show="nodeDiscoverCtrl.form.controlInterface.$error.required">
-                        Please enter control interface
-                    </li>
 
-                    <!--Node discovery related validation -->
-                    <li ng-show="nodeDiscoverCtrl.form.ipAddr.$error.required">
-                        Please enter IP address for node
-                    </li>
-                </ul>
+    <div class="ui basic segment">
+        <div class="field">
+            <div ng-show="nodeDiscoverCtrl.form.$submitted">
+                <div ng-hide="nodeDiscoverCtrl.form.$valid" class="ui negative message">
+                    <ul class="list">
+                        <li ng-show="nodeDiscoverCtrl.form.controlInterface.$error.required">
+                            Please enter control interface
+                        </li>
+
+                        <!--Node discovery related validation -->
+                        <li ng-show="nodeDiscoverCtrl.form.ipAddr.$error.required">
+                            Please enter IP address for node
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="field">
-        <label for="ipAddr">IP Addresses</label>
-        <input type="text" id="ipAddr" name="ipAddr"
-               ng-model="nodeDiscoverCtrl.nodeIPAddr"
-               placeholder="Enter IP addresses of nodes, comma separated" required>
-    </div>
-    <ctv-controlinterface extravars="nodeDiscoverCtrl.extra_vars"> </ctv-controlinterface>
-    <div class="field" style="margin-top: 15px">
-        <label for="clusterName">Cluster name</label>
-        <input type="text" id="clusterName" name="clusterName"
-               ng-model="nodeDiscoverCtrl.extra_vars['cluster_name']"
-               placeholder="Enter cluster name">
-    </div>
-    <div class="ui section divider"></div>
-    
-    <ctv-collapsible title="Ansible Variables">
-        <ctv-namevalue items="nodeDiscoverCtrl.ansibleVariables"></ctv-namevalue>
-    </ctv-collapsible>
-    <div class="ui section divider"></div>
-    <ctv-collapsible title="Environment Variables">
-        <ctv-namevalue items="nodeDiscoverCtrl.envVariables"></ctv-namevalue>
-    </ctv-collapsible>
+        <div class="field">
+            <label for="ipAddr">IP Addresses</label>
+            <input type="text" id="ipAddr" name="ipAddr"
+                   ng-model="nodeDiscoverCtrl.nodeIPAddr"
+                   placeholder="Enter IP addresses of nodes, comma separated" required>
+        </div>
+        <ctv-controlinterface extravars="nodeDiscoverCtrl.extra_vars"></ctv-controlinterface>
+        <div class="field" style="margin-top: 15px">
+            <label for="clusterName">Cluster name</label>
+            <input type="text" id="clusterName" name="clusterName"
+                   ng-model="nodeDiscoverCtrl.extra_vars['cluster_name']"
+                   placeholder="Enter cluster name">
+        </div>
+        <div class="ui section divider"></div>
 
-    <div class="ui sixteen column grid">
-        <div class="right floated four wide column">
-            <div style="margin-top: 40px">
-                <button type="button" class="ui basic button"
-                        ng-click="nodeDiscoverCtrl.cancelDiscoveringNode()">
-                    Cancel
-                </button>
-                <button type="submit" class="ui blue button">
-                    Discover
-                </button>
+        <ctv-collapsible title="Ansible Variables">
+            <ctv-namevalue items="nodeDiscoverCtrl.ansibleVariables"></ctv-namevalue>
+        </ctv-collapsible>
+        <div class="ui section divider"></div>
+        <ctv-collapsible title="Environment Variables">
+            <ctv-namevalue items="nodeDiscoverCtrl.envVariables"></ctv-namevalue>
+        </ctv-collapsible>
+
+        <div class="ui sixteen column grid">
+            <div class="right floated four wide column">
+                <div style="margin-top: 40px">
+                    <button type="button" class="ui basic button"
+                            ng-click="nodeDiscoverCtrl.cancelDiscoveringNode()">
+                        Cancel
+                    </button>
+                    <button type="submit" class="ui blue button">
+                        Discover
+                    </button>
+                </div>
             </div>
         </div>
+        <ctv-error ng-show="nodeDiscoverCtrl.showServerError" header="Error discovering nodes"
+                   error="nodeDiscoverCtrl.serverErrorMessage">
+        </ctv-error>
     </div>
-    <ctv-error ng-show="nodeDiscoverCtrl.showServerError" header="Error discovering nodes" error="nodeDiscoverCtrl.serverErrorMessage">
-    </ctv-error>
 </form>

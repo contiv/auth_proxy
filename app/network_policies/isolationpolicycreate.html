@@ -1,39 +1,56 @@
 <form class="ui form" name="isolationPolicyCreateCtrl.form" role="form"
       ng-submit="isolationPolicyCreateCtrl.createPolicy(newPolicy)" novalidate>
+    <div class="ui sixteen column grid">
+        <div class="one wide column">
+            <a ui-sref="contiv.menu.networkpolicies.list.isolation()">
+                <i class="large arrow left icon"></i>
+            </a>
+        </div>
+        <div class="left floated fifteen wide column">
+            <div class="content" style="font-size: 24px">
+                <span>Isolation Policies</span>
+                <span class="headingfontcolor"> (Create Isolation Policy)</span>
+            </div>
+        </div>
+    </div>
+
     <div class="ui active inverted dimmer" ng-show="isolationPolicyCreateCtrl.showLoader">
         <div class="ui loader"></div>
     </div>
-    <div class="field">
-        <div ng-show="isolationPolicyCreateCtrl.form.$submitted">
-            <div ng-hide="isolationPolicyCreateCtrl.form.$valid" class="ui negative message">
-                <ul class="list">
-                    <li ng-show="isolationPolicyCreateCtrl.form.newPolicyName.$error.required">
-                        Please enter policy name
-                    </li>
-                </ul>
+    <div class="ui basic segment">
+        <div class="field">
+            <div ng-show="isolationPolicyCreateCtrl.form.$submitted">
+                <div ng-hide="isolationPolicyCreateCtrl.form.$valid" class="ui negative message">
+                    <ul class="list">
+                        <li ng-show="isolationPolicyCreateCtrl.form.newPolicyName.$error.required">
+                            Please enter policy name
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="newPolicyName">Policy name</label>
+            <input type="text" id="newPolicyName" name="newPolicyName"
+                   ng-model="isolationPolicyCreateCtrl.newPolicy.policyName" placeholder="Enter name" required>
+        </div>
+
+        <div class="ui sixteen column grid">
+            <div class="right floated three wide column">
+                <div style="margin-top: 40px">
+
+                    <button type="button" class="ui basic button" ng-click="isolationPolicyCreateCtrl.cancelCreating()">
+                        Cancel
+                    </button>
+                    <button type="submit" class="ui blue button">
+                        Create
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-    <div class="field">
-        <label for="newPolicyName">Policy name</label>
-        <input type="text" id="newPolicyName" name="newPolicyName"
-               ng-model="isolationPolicyCreateCtrl.newPolicy.policyName" placeholder="Enter name" required>
-    </div>
-
-    <div class="ui sixteen column grid">
-        <div class="right floated three wide column">
-            <div style="margin-top: 40px">
-
-                <button type="button" class="ui basic button" ng-click="isolationPolicyCreateCtrl.cancelCreating()">
-                    Cancel
-                </button>
-                <button type="submit" class="ui blue button">
-                    Create
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <ctv-error ng-show="isolationPolicyCreateCtrl.showServerError" header="Error creating policy" error="isolationPolicyCreateCtrl.serverErrorMessage">
+    <ctv-error ng-show="isolationPolicyCreateCtrl.showServerError" header="Error creating policy"
+               error="isolationPolicyCreateCtrl.serverErrorMessage">
     </ctv-error>
 </form>

@@ -1,80 +1,97 @@
 <form class="ui form" name="servicelbCreateCtrl.form" role="form"
       ng-submit="servicelbCreateCtrl.createServicelb(servicelb)"
       novalidate>
-    <div class="ui active inverted dimmer" ng-show="servicelbCreateCtrl.showLoader">
-        <div class="ui loader"></div>
-    </div>
-    <div class="field">
-        <div ng-show="servicelbCreateCtrl.form.$submitted">
-            <div ng-hide="servicelbCreateCtrl.form.$valid" class="ui negative message">
-                <ul class="list">
-                    <li ng-show="servicelbCreateCtrl.form.servicelbName.$error.required">Please enter service load
-                        balancer name
-                    </li>
-                    <li ng-show="servicelbCreateCtrl.form.servicelbNetwork.$error.required">Please select network</li>
-                </ul>
+    <div class="ui sixteen column grid">
+        <div class="one wide column">
+            <a ui-sref="contiv.menu.servicelbs.list()">
+                <i class="large arrow left icon"></i>
+            </a>
+        </div>
+        <div class="left floated fifteen wide column">
+            <div class="content" style="font-size: 24px">
+                <span>Service Load Balancers</span>
+                <span class="headingfontcolor"> (Create Service Load Balancer)</span>
             </div>
         </div>
     </div>
-    <div class="field">
-        <label for="servicelbName">Service load balancer name</label>
-        <input type="text" id="servicelbName" name="servicelbName"
-               ng-model="servicelbCreateCtrl.servicelb.serviceName" placeholder="Enter name" required>
+    <div class="ui active inverted dimmer" ng-show="servicelbCreateCtrl.showLoader">
+        <div class="ui loader"></div>
     </div>
-    <div class="field">
-        <label for="servicelbNetwork">Network</label>
-        <select id="servicelbNetwork" class="ui dropdown"
-                name="servicelbNetwork"
-                ng-model="servicelbCreateCtrl.servicelb.networkName"
-                ng-options="network.networkName as network.networkName for network in servicelbCreateCtrl.networks"
-                required>
-            <option value="">-- Please select network --</option>
-        </select>
-    </div>
-    <div class="field">
-        <label for="servicelbIP">Service IP address</label>
-        <input type="text" id="servicelbIP" name="servicelbIP"
-               ng-model="servicelbCreateCtrl.servicelb.ipAddress" placeholder="Enter IP address">
-    </div>
-    <div class="ui section divider" style="margin-top: 30px"></div>
-    <div class="field">
-        <div ng-click="servicelbCreateCtrl.labelSelectorsVisible = !servicelbCreateCtrl.labelSelectorsVisible">
-            <h4 class="ui header">
-                <i ng-if="servicelbCreateCtrl.labelSelectorsVisible" class="grey minus circle outline icon"></i>
-                <i ng-if="!servicelbCreateCtrl.labelSelectorsVisible" class="grey plus circle outline icon"></i>
-                Label Selectors
-            </h4>
+    <div class="ui basic segment">
+        <div class="field">
+            <div ng-show="servicelbCreateCtrl.form.$submitted">
+                <div ng-hide="servicelbCreateCtrl.form.$valid" class="ui negative message">
+                    <ul class="list">
+                        <li ng-show="servicelbCreateCtrl.form.servicelbName.$error.required">Please enter service load
+                            balancer name
+                        </li>
+                        <li ng-show="servicelbCreateCtrl.form.servicelbNetwork.$error.required">Please select network
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div ng-show="servicelbCreateCtrl.labelSelectorsVisible">
-            <ctv-namevalue items="servicelbCreateCtrl.labelSelectors"></ctv-namevalue>
-        </div>
-    </div>
 
-    <div class="ui section divider"></div>
-    <div class="field">
-        <div ng-click="servicelbCreateCtrl.portsVisible = !servicelbCreateCtrl.portsVisible">
-            <h4 class="ui header">
-                <i ng-if="servicelbCreateCtrl.portsVisible" class="grey minus circle outline icon"></i>
-                <i ng-if="!servicelbCreateCtrl.portsVisible" class="grey plus circle outline icon"></i>
-                Ports
-            </h4>
+        <div class="field">
+            <label for="servicelbName">Service load balancer name</label>
+            <input type="text" id="servicelbName" name="servicelbName"
+                   ng-model="servicelbCreateCtrl.servicelb.serviceName" placeholder="Enter name" required>
         </div>
-        <div ng-show="servicelbCreateCtrl.portsVisible">
-            <ctv-servicelbports items="servicelbCreateCtrl.servicelb.ports"></ctv-servicelbports>
+        <div class="field">
+            <label for="servicelbNetwork">Network</label>
+            <select id="servicelbNetwork" class="ui dropdown"
+                    name="servicelbNetwork"
+                    ng-model="servicelbCreateCtrl.servicelb.networkName"
+                    ng-options="network.networkName as network.networkName for network in servicelbCreateCtrl.networks"
+                    required>
+                <option value="">-- Please select network --</option>
+            </select>
         </div>
-    </div>
+        <div class="field">
+            <label for="servicelbIP">Service IP address</label>
+            <input type="text" id="servicelbIP" name="servicelbIP"
+                   ng-model="servicelbCreateCtrl.servicelb.ipAddress" placeholder="Enter IP address">
+        </div>
+        <div class="ui section divider" style="margin-top: 30px"></div>
+        <div class="field">
+            <div ng-click="servicelbCreateCtrl.labelSelectorsVisible = !servicelbCreateCtrl.labelSelectorsVisible">
+                <h4 class="ui header">
+                    <i ng-if="servicelbCreateCtrl.labelSelectorsVisible" class="grey minus circle outline icon"></i>
+                    <i ng-if="!servicelbCreateCtrl.labelSelectorsVisible" class="grey plus circle outline icon"></i>
+                    Label Selectors
+                </h4>
+            </div>
+            <div ng-show="servicelbCreateCtrl.labelSelectorsVisible">
+                <ctv-namevalue items="servicelbCreateCtrl.labelSelectors"></ctv-namevalue>
+            </div>
+        </div>
 
-    <div class="ui sixteen column grid" style="margin-top: 40px">
-        <div class="right floated three wide column">
-            <button type="button" class="ui basic button" ng-click="servicelbCreateCtrl.cancelCreating()">Cancel
-            </button>
-            <button type="submit" class="ui blue button">
-                Create
-            </button>
+        <div class="ui section divider"></div>
+        <div class="field">
+            <div ng-click="servicelbCreateCtrl.portsVisible = !servicelbCreateCtrl.portsVisible">
+                <h4 class="ui header">
+                    <i ng-if="servicelbCreateCtrl.portsVisible" class="grey minus circle outline icon"></i>
+                    <i ng-if="!servicelbCreateCtrl.portsVisible" class="grey plus circle outline icon"></i>
+                    Ports
+                </h4>
+            </div>
+            <div ng-show="servicelbCreateCtrl.portsVisible">
+                <ctv-servicelbports items="servicelbCreateCtrl.servicelb.ports"></ctv-servicelbports>
+            </div>
         </div>
-    </div>
 
-    <ctv-error ng-show="servicelbCreateCtrl.showServerError" header="Error creating service load balancer"
-               error="servicelbCreateCtrl.serverErrorMessage">
-    </ctv-error>
+        <div class="ui sixteen column grid" style="margin-top: 40px">
+            <div class="right floated three wide column">
+                <button type="button" class="ui basic button" ng-click="servicelbCreateCtrl.cancelCreating()">Cancel
+                </button>
+                <button type="submit" class="ui blue button">
+                    Create
+                </button>
+            </div>
+        </div>
+
+        <ctv-error ng-show="servicelbCreateCtrl.showServerError" header="Error creating service load balancer"
+                   error="servicelbCreateCtrl.serverErrorMessage">
+        </ctv-error>
+    </div>
 </form>

@@ -6,6 +6,7 @@ angular.module('contiv.servicelbs')
         $stateProvider
             .state('contiv.menu.servicelbs.details', {
                 url: '/details/:key',
+                params: {state:null},       // To reload parent view 
                 controller: 'ServicelbDetailsCtrl as servicelbDetailsCtrl',
                 templateUrl: 'service_lbs/servicelbdetails.html'
             })
@@ -42,7 +43,7 @@ angular.module('contiv.servicelbs')
                 }
 
                 function returnToServicelbDetails() {
-                    $state.go('contiv.menu.servicelbs.details.info', {'key': servicelbDetailsCtrl.servicelb.key});
+                    $state.go('contiv.menu.servicelbs.details.info', {'key': servicelbDetailsCtrl.servicelb.key,'state':'details'});
                 }
 
                 function cancelEditing() {

@@ -1,165 +1,190 @@
-<form class="ui form" name="applicationGroupCreateCtrl.form" role="form" ng-submit="applicationGroupCreateCtrl.createApplicationGroup(applicationGroup)"
+<form class="ui form" name="applicationGroupCreateCtrl.form" role="form"
+      ng-submit="applicationGroupCreateCtrl.createApplicationGroup(applicationGroup)"
       novalidate>
+    <div class="ui sixteen column grid">
+        <div class="one wide column">
+            <a ui-sref="contiv.menu.applicationgroups.list()">
+                <i class="large arrow left icon"></i>
+            </a>
+        </div>
+        <div class="left floated fifteen wide column">
+            <div class="content" style="font-size: 24px">
+                <span>Application Groups</span>
+                <span class="headingfontcolor"> (Create Application Group)</span>
+            </div>
+        </div>
+    </div>
     <div class="ui active inverted dimmer" ng-show="applicationGroupCreateCtrl.showLoader">
         <div class="ui loader"></div>
     </div>
-    <div class="field">
-        <div ng-show="applicationGroupCreateCtrl.form.$submitted">
-            <div ng-hide="applicationGroupCreateCtrl.form.$valid" class="ui negative message">
-                <ul class="list">
-                    <li ng-show="applicationGroupCreateCtrl.form.newApplicationGroupName.$error.required">Please enter application group name</li>
-                    <li ng-show="applicationGroupCreateCtrl.form.newApplicationGroupNetwork.$error.required">Please select network</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="field">
-        <label for="newApplicationGroupName">Application group name</label>
-        <input type="text" id="newApplicationGroupName" name="newApplicationGroupName"
-               ng-model="applicationGroupCreateCtrl.applicationGroup.groupName" placeholder="Enter name" required>
-    </div>
-    <div class="field">
-        <label for="newApplicationGroupNetwork">Network</label>
-        <select id="newApplicationGroupNetwork" class="ui dropdown"
-                name="newApplicationGroupNetwork"
-                ng-model="applicationGroupCreateCtrl.selectedNetwork"
-                ng-options="network.networkName for network in applicationGroupCreateCtrl.networks"
-                required>
-            <option value="">-- Please select network --</option>
-        </select>
-    </div>
-
-    <div class="ui section divider" style="margin-top: 30px"></div>
-    <div class="field">
-        <h4 class="ui header">
-            <i class="grey plus circle outline icon"></i>
-        Labels
-        </h4>
-    </div>
-
-    <div class="ui section divider"></div>
-
-    <ctv-collapsible title="Isolation Policies">
+    <div class="ui basic segment">
         <div class="field">
-            <table class="ui very basic collapsing unstackable table">
-                <tbody>
-                <tr>
-                    <td>
-                        <div class="ui left icon input">
-                            <input type="text" ng-model="isolationPolicySearchText.policyName"
-                                   placeholder="Filter by policy name">
-                            <i class="search icon"></i>
-                        </div>
-                    </td>
-                    <td>
-                        <select class="ui dropdown" ng-model="applicationGroupCreateCtrl.selectedPolicy"
-                                ng-options="policy.policyName for policy in applicationGroupCreateCtrl.isolationPolicies | filter:isolationPolicySearchText">
-                        </select>
-                    </td>
-                    <td>
-                        <button type="button" class="ui icon button"
-                                ng-click="applicationGroupCreateCtrl.addIsolationPolicy()">
-                            <i class="blue add icon"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr ng-repeat="policy in applicationGroupCreateCtrl.applicationGroup.policies">
-                    <td>{{policy}}</td>
-                    <td></td>
-                    <td>
-                        <button type="button" class="ui icon button"
-                                ng-click="applicationGroupCreateCtrl.removeIsolationPolicy(policy)">
-                            <i class="trash icon"></i>
-                        </button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <h5 class="ui header">Incoming rules</h5>
-            <table class="ui very basic unstackable table" style="margin-top: 40px">
-                <thead>
-                <tr>
-                    <th>Priority</th>
-                    <th>Action</th>
-                    <th>From group</th>
-                    <th>From network</th>
-                    <th>From IP address</th>
-                    <th>Protocol</th>
-                    <th>Port</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr ng-repeat="rule in applicationGroupCreateCtrl.incomingRules">
-                    <td>{{rule.priority}}</td>
-                    <td>{{rule.action}}</td>
-                    <td>{{rule.fromEndpointGroup}}</td>
-                    <td>{{rule.fromNetwork}}</td>
-                    <td>{{rule.fromIPAddress}}</td>
-                    <td>{{rule.protocol}}</td>
-                    <td>{{rule.port}}</td>
-                </tr>
-
-                </tbody>
-            </table>
-
-            <h5 class="ui header" style="margin-top: 40px">Outgoing rules</h5>
-            <table class="ui very basic unstackable table" style="margin-top: 40px">
-                <thead>
-                <tr>
-                    <th>Priority</th>
-                    <th>Action</th>
-                    <th>To group</th>
-                    <th>To network</th>
-                    <th>To IP address</th>
-                    <th>Protocol</th>
-                    <th>Port</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr ng-repeat="rule in applicationGroupCreateCtrl.outgoingRules">
-                    <td>{{rule.priority}}</td>
-                    <td>{{rule.action}}</td>
-                    <td>{{rule.toEndpointGroup}}</td>
-                    <td>{{rule.toNetwork}}</td>
-                    <td>{{rule.toIPAddress}}</td>
-                    <td>{{rule.protocol}}</td>
-                    <td>{{rule.port}}</td>
-                </tr>
-                </tbody>
-            </table>
-
-        </div>
-    </ctv-collapsible>
-
-    <div class="ui section divider"></div>
-
-    <ctv-collapsible title="Bandwidth Policies">
-        <ctv-netprofiles type="create" netprofile="applicationGroupCreateCtrl.selectedNetprofile">
-    </ctv-collapsible>
-
-    <div class="ui section divider"></div>
-
-    <div class="field">
-        <h4 class="ui header">
-            <i class="grey plus circle outline icon"></i>
-            Redirection Policies
-        </h4>
-    </div>
-
-    <div class="ui sixteen column grid">
-        <div class="right floated three wide column">
-            <div style="margin-top: 40px">
-                <button type="button" class="ui basic button" ng-click="applicationGroupCreateCtrl.cancelCreating()">Cancel
-                </button>
-                <button type="submit" class="ui blue button">
-                    Create
-                </button>
+            <div ng-show="applicationGroupCreateCtrl.form.$submitted">
+                <div ng-hide="applicationGroupCreateCtrl.form.$valid" class="ui negative message">
+                    <ul class="list">
+                        <li ng-show="applicationGroupCreateCtrl.form.newApplicationGroupName.$error.required">Please
+                            enter application group name
+                        </li>
+                        <li ng-show="applicationGroupCreateCtrl.form.newApplicationGroupNetwork.$error.required">Please
+                            select network
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
 
-    <ctv-error ng-show="applicationGroupCreateCtrl.showServerError" header="Error creating application group" error="applicationGroupCreateCtrl.serverErrorMessage">
-    </ctv-error>
+        <div class="field">
+            <label for="newApplicationGroupName">Application group name</label>
+            <input type="text" id="newApplicationGroupName" name="newApplicationGroupName"
+                   ng-model="applicationGroupCreateCtrl.applicationGroup.groupName" placeholder="Enter name"
+                   required>
+        </div>
+        <div class="field">
+            <label for="newApplicationGroupNetwork">Network</label>
+            <select id="newApplicationGroupNetwork" class="ui dropdown"
+                    name="newApplicationGroupNetwork"
+                    ng-model="applicationGroupCreateCtrl.selectedNetwork"
+                    ng-options="network.networkName for network in applicationGroupCreateCtrl.networks"
+                    required>
+                <option value="">-- Please select network --</option>
+            </select>
+        </div>
+
+        <div class="ui section divider" style="margin-top: 30px"></div>
+        <div class="field">
+            <h4 class="ui header">
+                <i class="grey plus circle outline icon"></i>
+                Labels
+            </h4>
+        </div>
+
+        <div class="ui section divider"></div>
+
+        <ctv-collapsible title="Isolation Policies">
+            <div class="field">
+                <table class="ui very basic collapsing unstackable table">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div class="ui left icon input">
+                                <input type="text" ng-model="isolationPolicySearchText.policyName"
+                                       placeholder="Filter by policy name">
+                                <i class="search icon"></i>
+                            </div>
+                        </td>
+                        <td>
+                            <select class="ui dropdown" ng-model="applicationGroupCreateCtrl.selectedPolicy"
+                                    ng-options="policy.policyName for policy in applicationGroupCreateCtrl.isolationPolicies | filter:isolationPolicySearchText">
+                            </select>
+                        </td>
+                        <td>
+                            <button type="button" class="ui icon button"
+                                    ng-click="applicationGroupCreateCtrl.addIsolationPolicy()">
+                                <i class="blue add icon"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="policy in applicationGroupCreateCtrl.applicationGroup.policies">
+                        <td>{{policy}}</td>
+                        <td></td>
+                        <td>
+                            <button type="button" class="ui icon button"
+                                    ng-click="applicationGroupCreateCtrl.removeIsolationPolicy(policy)">
+                                <i class="trash icon"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <h5 class="ui header">Incoming rules</h5>
+                <table class="ui very basic unstackable table" style="margin-top: 40px">
+                    <thead>
+                    <tr>
+                        <th>Priority</th>
+                        <th>Action</th>
+                        <th>From group</th>
+                        <th>From network</th>
+                        <th>From IP address</th>
+                        <th>Protocol</th>
+                        <th>Port</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr ng-repeat="rule in applicationGroupCreateCtrl.incomingRules">
+                        <td>{{rule.priority}}</td>
+                        <td>{{rule.action}}</td>
+                        <td>{{rule.fromEndpointGroup}}</td>
+                        <td>{{rule.fromNetwork}}</td>
+                        <td>{{rule.fromIPAddress}}</td>
+                        <td>{{rule.protocol}}</td>
+                        <td>{{rule.port}}</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+                <h5 class="ui header" style="margin-top: 40px">Outgoing rules</h5>
+                <table class="ui very basic unstackable table" style="margin-top: 40px">
+                    <thead>
+                    <tr>
+                        <th>Priority</th>
+                        <th>Action</th>
+                        <th>To group</th>
+                        <th>To network</th>
+                        <th>To IP address</th>
+                        <th>Protocol</th>
+                        <th>Port</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr ng-repeat="rule in applicationGroupCreateCtrl.outgoingRules">
+                        <td>{{rule.priority}}</td>
+                        <td>{{rule.action}}</td>
+                        <td>{{rule.toEndpointGroup}}</td>
+                        <td>{{rule.toNetwork}}</td>
+                        <td>{{rule.toIPAddress}}</td>
+                        <td>{{rule.protocol}}</td>
+                        <td>{{rule.port}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </ctv-collapsible>
+
+        <div class="ui section divider"></div>
+
+        <ctv-collapsible title="Bandwidth Policies">
+            <ctv-netprofiles type="create" netprofile="applicationGroupCreateCtrl.selectedNetprofile">
+        </ctv-collapsible>
+
+        <div class="ui section divider"></div>
+
+        <div class="field">
+            <h4 class="ui header">
+                <i class="grey plus circle outline icon"></i>
+                Redirection Policies
+            </h4>
+        </div>
+
+        <div class="ui sixteen column grid">
+            <div class="right floated three wide column">
+                <div style="margin-top: 40px">
+                    <button type="button" class="ui basic button"
+                            ng-click="applicationGroupCreateCtrl.cancelCreating()">Cancel
+                    </button>
+                    <button type="submit" class="ui blue button">
+                        Create
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <ctv-error ng-show="applicationGroupCreateCtrl.showServerError" header="Error creating application group"
+                   error="applicationGroupCreateCtrl.serverErrorMessage">
+        </ctv-error>
+    </div>
 </form>

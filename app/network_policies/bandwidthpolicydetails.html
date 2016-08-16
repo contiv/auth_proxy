@@ -5,7 +5,11 @@
         </a>
     </div>
     <div class="left floated ten wide column">
-        <div class="content" style="font-size: 24px">Bandwidth Policies (Details)</div>
+        <div ng-switch="bandwidthPolicyDetailsCtrl.mode" class="content" style="font-size: 24px">
+            <span>Bandwidth Policies</span>
+            <span ng-switch-when="details" class="headingfontcolor"> (Details)</span>
+            <span ng-switch-when="edit" class="headingfontcolor"> (Edit)</span>
+        </div>
     </div>
 
     <div ng-switch="bandwidthPolicyDetailsCtrl.mode" class="right aligned five wide column">

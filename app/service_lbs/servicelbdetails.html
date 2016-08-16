@@ -5,7 +5,11 @@
         </a>
     </div>
     <div class="left floated ten wide column">
-        <div class="content" style="font-size: 24px">Service Load Balancers (Details)</div>
+        <div ng-switch="servicelbDetailsCtrl.mode" class="content" style="font-size: 24px">
+            <span>Service Load Balancers</span>
+            <span ng-switch-when="details" class="headingfontcolor"> (Details)</span>
+            <span ng-switch-when="edit" class="headingfontcolor"> (Edit)</span>
+        </div>
     </div>
     <div ng-switch="servicelbDetailsCtrl.mode" class="right aligned five wide column">
         <div id="delete-service-modal" class="ui small modal">
@@ -20,13 +24,12 @@
                 </div>
             </div>
         </div>
-        <button ng-switch-when="edit" class="ui disabled button"
-                ui-sref="contiv.menu.servicelbs.details.edit({key:servicelbDetailsCtrl.servicelb.key})">
+        <button ng-switch-when="edit" class="ui disabled button">
             <i class="edit icon"></i>
             Edit
         </button>
         <button ng-switch-when="details" class="ui basic button"
-                ui-sref="contiv.menu.servicelbs.details.edit({key:servicelbDetailsCtrl.servicelb.key})">
+                ui-sref="contiv.menu.servicelbs.details.edit({key:servicelbDetailsCtrl.servicelb.key,state:'edit'})">
             <i class="edit icon"></i>
             Edit
         </button>

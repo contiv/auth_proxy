@@ -14,3 +14,7 @@ td.ctv-wordwrap {
 table thead th[sortfield] span{
     cursor: pointer;
 }
+
+.headingfontcolor {
+    color: #b6b6b8
+}

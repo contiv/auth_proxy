@@ -1,32 +1,54 @@
 <form id="organizationCreationForm" name="organizationCreateCtrl.form" class="ui form" role="form"
       ng-submit="organizationCreateCtrl.createOrganization(newOrganization)" novalidate>
+    <div class="ui sixteen column grid">
+        <div class="one wide column">
+            <a ui-sref="contiv.menu.organizations.list()">
+                <i class="large arrow left icon"></i>
+            </a>
+        </div>
+        <div class="left floated twelve wide column">
+            <div class="content" style="font-size: 24px">
+                <span>Organizations</span>
+                <span class="headingfontcolor"> (Create Organization)</span>
+            </div>
+        </div>
+    </div>
+
     <div class="ui active inverted dimmer" ng-show="organizationCreateCtrl.showLoader">
         <div class="ui loader"></div>
     </div>
-    <div class="field">
-        <div ng-show="organizationCreateCtrl.form.$submitted">
-            <div ng-hide="organizationCreateCtrl.form.$valid" class="ui negative message">
-                <ul class="list">
-                    <li ng-show="organizationCreateCtrl.form.newOrganizationName.$error.required">Please enter organization name</li>
-                </ul>
+    <div class="ui basic segment">
+        <div class="field">
+            <div ng-show="organizationCreateCtrl.form.$submitted">
+                <div ng-hide="organizationCreateCtrl.form.$valid" class="ui negative message">
+                    <ul class="list">
+                        <li ng-show="organizationCreateCtrl.form.newOrganizationName.$error.required">Please enter
+                            organization name
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="field">
-        <label for="newOrganizationName">Organization name</label>
-        <input type="text" id="newOrganizationName" name="newOrganizationName" ng-model="organizationCreateCtrl.newOrganization.tenantName"
-               placeholder="Enter name" required>
-    </div>
+        <div class="field">
+            <label for="newOrganizationName">Organization name</label>
+            <input type="text" id="newOrganizationName" name="newOrganizationName"
+                   ng-model="organizationCreateCtrl.newOrganization.tenantName"
+                   placeholder="Enter name" required>
+        </div>
 
-    <div class="ui sixteen column grid">
-        <div class="right floated three wide column">
-            <div style="margin-top: 40px">
-                <button type="button" class="ui basic button" ng-click="organizationCreateCtrl.cancelCreating()">Cancel</button>
-                <button type="submit" class="ui blue button">Create</button>
+        <div class="ui sixteen column grid">
+            <div class="right floated three wide column">
+                <div style="margin-top: 40px">
+                    <button type="button" class="ui basic button" ng-click="organizationCreateCtrl.cancelCreating()">
+                        Cancel
+                    </button>
+                    <button type="submit" class="ui blue button">Create</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <ctv-error ng-show="organizationCreateCtrl.showServerError" header="Error creating organization" error="organizationCreateCtrl.serverErrorMessage">
-    </ctv-error>
+        <ctv-error ng-show="organizationCreateCtrl.showServerError" header="Error creating organization"
+                   error="organizationCreateCtrl.serverErrorMessage">
+        </ctv-error>
+    </div>
 </form>
