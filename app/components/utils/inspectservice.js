@@ -49,17 +49,14 @@ angular.module("contiv.utils")
             if(contDetailsA == undefined)
                 return true;
             else{
-                if(contDetailsA != undefined && contDetailsB != undefined){
-                    if(Object.keys(contDetailsA).length != Object.keys(contDetailsB).length)
+                if(Object.keys(contDetailsA).length != Object.keys(contDetailsB).length)
+                    return true;
+                for(var key in contDetailsB){
+                    if(!(key in contDetailsA))
                         return true;
-                    for(var key in contDetailsB){
-                        if(!key in contDetailsA)
-                            return true;
-                    }
-                    return false;
                 }
+                return false;
             }
-
         }
         
         return {

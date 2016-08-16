@@ -22,10 +22,17 @@ angular.module('contiv.networks')
                     NetworksModel.getInspectByKey($stateParams.key, ContivGlobals.NETWORKS_INSPECT_ENDPOINT, refresh)
                         .then(function (result) {
                             networkStatsCtrl.networkInspectStats = result.Oper;
-                            var containerDetails = InspectService.buildEndPoints(result.Oper.endpoints);
-                            if(InspectService.checkContainerChanged(networkStatsCtrl.containerDetails,containerDetails)){
-                                networkStatsCtrl.endpoints = result.Oper.endpoints;
-                                networkStatsCtrl.containerDetails = containerDetails;
+                            networkStatsCtrl.config = result.Config;
+                            if(result.Oper.endpoints!=undefined){
+                                var containerDetails = InspectService.buildEndPoints(result.Oper.endpoints);
+                                if(InspectService.checkContainerChanged(networkStatsCtrl.containerDetails,containerDetails)){
+                                    networkStatsCtrl.endpoints = result.Oper.endpoints;
+                                    networkStatsCtrl.containerDetails = containerDetails;
+                                }
+                            }
+                            else{
+                                networkStatsCtrl.endpoints = []
+                                networkStatsCtrl.containerDetails = {};
                             }
                         });
                 }

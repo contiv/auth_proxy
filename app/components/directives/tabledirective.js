@@ -261,7 +261,10 @@ angular.module("contiv.directives")
         return {
             restrict: 'E',
             require: '^^ctvTable',
-            scope: {},
+            scope: {
+                colspan: '@'
+            },
+            replace:true,
             link: function (scope, element, attr, tableCtrl) {
                 tableCtrl.addPaginationMenu(scope);
                 //showChunk() will calculate and set chunks in scope
