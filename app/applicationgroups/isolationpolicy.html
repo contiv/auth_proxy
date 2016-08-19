@@ -1,0 +1,104 @@
+<div ng-switch="mode" class="field">
+    <table ng-switch-when="edit" class="ui very basic collapsing unstackable table">
+        <tbody>
+        <tr>
+            <td>
+                <div class="ui left icon input">
+                    <input type="text" ng-model="isolationPolicySearchText.policyName"
+                           placeholder="Filter by policy name">
+                    <i class="search icon"></i>
+                </div>
+            </td>
+            <td>
+                <select class="ui dropdown" ng-model="selectedPolicy.policy"
+                        ng-options="policy as policy.policyName for policy in isolationPolicies | filter:isolationPolicySearchText">
+                    <option value="">-- Please select policy --</option>
+                </select>
+            </td>
+            <td>
+                <button type="button" class="ui icon button"
+                        ng-click="addIsolationPolicy()">
+                    <i class="blue add icon"></i>
+                </button>
+            </td>
+        </tr>
+        <tr ng-repeat="policy in applicationgroup.policies">
+            <td>{{policy}}</td>
+            <td></td>
+            <td>
+                <button type="button" class="ui icon button"
+                        ng-click="removeIsolationPolicy(policy)">
+                    <i class="trash icon"></i>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table ng-switch-when="details" class="ui very basic unstackable table">
+        <tbody>
+        <tr ng-repeat="policy in applicationgroup.policies">
+            <td>{{policy}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h5 class="ui header">Incoming rules</h5>
+    <table class="ui very basic unstackable table" style="margin-top: 40px">
+        <thead>
+        <tr>
+            <th>Policy Name</th>
+            <th>Priority</th>
+            <th>Action</th>
+            <th>From group</th>
+            <th>From network</th>
+            <th>From IP address</th>
+            <th>Protocol</th>
+            <th>Port</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="rule in incomingRules">
+            <td>{{rule.policyName}}</td>
+            <td>{{rule.priority}}</td>
+            <td>{{rule.action}}</td>
+            <td>{{rule.fromEndpointGroup}}</td>
+            <td>{{rule.fromNetwork}}</td>
+            <td>{{rule.fromIPAddress}}</td>
+            <td>{{rule.protocol}}</td>
+            <td>{{rule.port}}</td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <h5 class="ui header" style="margin-top: 40px">Outgoing rules</h5>
+    <table class="ui very basic unstackable table" style="margin-top: 40px">
+        <thead>
+        <tr>
+            <th>Policy Name</th>
+            <th>Priority</th>
+            <th>Action</th>
+            <th>To group</th>
+            <th>To network</th>
+            <th>To IP address</th>
+            <th>Protocol</th>
+            <th>Port</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="rule in outgoingRules">
+            <td>{{rule.policyName}}</td>
+            <td>{{rule.priority}}</td>
+            <td>{{rule.action}}</td>
+            <td>{{rule.toEndpointGroup}}</td>
+            <td>{{rule.toNetwork}}</td>
+            <td>{{rule.toIPAddress}}</td>
+            <td>{{rule.protocol}}</td>
+            <td>{{rule.port}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

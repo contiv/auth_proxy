@@ -5,7 +5,7 @@ describe('contiv.applicationgroups module', function () {
     beforeEach(module('ui.router'));
 
     beforeEach(module('contiv.applicationgroups'));
-    
+
     beforeEach(module('contiv.test.directives'));
 
     var groupListData = [
@@ -166,6 +166,67 @@ describe('contiv.applicationgroups module', function () {
         }
     ];
 
+    var appGroup = {
+        "key": "",
+        "groupName": "",
+        "netProfile": "",
+        "networkName": "",
+        "policies": [
+            "proxy-net-policy"
+        ],
+        "tenantName": "default",
+        "link-sets": {
+            "Policies": {
+                "default:proxy-net-policy":{
+                    "type":"policy",
+                    "key":"default:proxy-net-policy"
+                }
+            }
+        },
+        "links": {
+            "AppProfile": {},
+            "NetProfile": {},
+            "Network": {
+                "type": "network",
+                "key": "default:net1"
+            },
+            "Tenant": {
+                "type": "tenant",
+                "key": "default"
+            }
+        }
+    };
+
+    var appGroup_edit = {
+        "key": "default:grp1",
+        "groupName": "grp1",
+        "netProfile": "p3",
+        "networkName": "net1",
+        "policies": [
+            "proxy-net-policy"
+        ],
+        "tenantName": "default",
+        "link-sets": {
+            "Policies": {
+                "default:proxy-net-policy":{
+                    "type":"policy",
+                    "key":"default:proxy-net-policy"
+                }
+            }
+        },
+        "links": {
+            "AppProfile": {},
+            "NetProfile": {},
+            "Network": {
+                "type": "network",
+                "key": "default:net1"
+            },
+            "Tenant": {
+                "type": "tenant",
+                "key": "default"
+            }
+        }
+    };
 
     describe('applicationgroupslistctrl', function () {
         var $httpBackend;
@@ -252,20 +313,6 @@ describe('contiv.applicationgroups module', function () {
             $httpBackend.expectGET(ContivGlobals.NETWORKS_ENDPOINT);
             $httpBackend.flush();
         });
-        it('ApplicationGroupCreateCtrl should do a GET on /api/policys/ REST API', function () {
-            $controller('ApplicationGroupCreateCtrl');
-            $httpBackend.expectGET(ContivGlobals.POLICIES_ENDPOINT);
-            $httpBackend.flush();
-        });
-
-        it('ApplicationGroupCreateCtrl.addIsolationPolicy() should do a GET on /api/rules/ REST API', function () {
-            var groupCreateCtrl = $controller('ApplicationGroupCreateCtrl');
-            groupCreateCtrl.selectedPolicy = policyListData[0];
-            groupCreateCtrl.addIsolationPolicy();
-            $httpBackend.expectGET(ContivGlobals.RULES_ENDPOINT);
-            $httpBackend.flush();
-        });
-
         it('ApplicationGroupCreateCtrl.createApplicationGroup should do a POST on /api/v1/endpointGroups/ REST API', function () {
 
             applicationGroupCreateCtrl.form = {'$valid' : true};
@@ -278,7 +325,6 @@ describe('contiv.applicationgroups module', function () {
             $httpBackend.flush();
             expect(applicationGroupCreateCtrl.showLoader).toBeFalsy();
         });
-
     });
 
     describe('applicationgroupsdetailsctrl', function () {
@@ -292,7 +338,6 @@ describe('contiv.applicationgroups module', function () {
             $httpBackend.when('GET', ContivGlobals.POLICIES_ENDPOINT).respond(policyListData);
             $httpBackend.when('GET', ContivGlobals.RULES_ENDPOINT).respond(ruleListData);
             $httpBackend.when('GET', ContivGlobals.NETPROFILES_ENDPOINT).respond(netprofileListData);
-
             $httpBackend.when('PUT', ContivGlobals.APPLICATIONGROUPS_ENDPOINT + groupListData[0].key + '/').respond(groupListData[0]);
             $httpBackend.when('DELETE', ContivGlobals.APPLICATIONGROUPS_ENDPOINT + groupListData[0].key + '/').respond(groupListData[0]);
             $state = _$state_;
@@ -308,7 +353,6 @@ describe('contiv.applicationgroups module', function () {
             $httpBackend.verifyNoOutstandingRequest();
         });
 
-
         it('should be defined', function () {
             //spec body
             expect(groupDetailsCtrl).toBeDefined();
@@ -318,15 +362,6 @@ describe('contiv.applicationgroups module', function () {
             $httpBackend.expectGET(ContivGlobals.APPLICATIONGROUPS_ENDPOINT);
             $httpBackend.flush();
         });
-        it('ApplicationGroupDetailsCtrl should do a GET on /api/policys/ REST API', function () {
-            $httpBackend.expectGET(ContivGlobals.POLICIES_ENDPOINT);
-            $httpBackend.flush();
-        });
-        it('ApplicationGroupDetailsCtrl should do a GET on /api/rules/ REST API', function () {
-            $httpBackend.expectGET(ContivGlobals.RULES_ENDPOINT);
-            $httpBackend.flush();
-        });
-
         it('ApplicationGroupDetailsCtrl.saveApplicationGroup() should do a PUT on /api/endpointGroups/ REST API', function () {
             $httpBackend.expectGET(ContivGlobals.APPLICATIONGROUPS_ENDPOINT);
             $httpBackend.flush();
@@ -348,66 +383,110 @@ describe('contiv.applicationgroups module', function () {
             $httpBackend.flush();
             expect(groupDetailsCtrl.applicationGroup).toEqual(groupListData[0]);
         });
-        it('ApplicationGroupDetailsCtrl should have isolation policies array assigned to isolationPolicies property', function () {
-            $httpBackend.expectGET(ContivGlobals.POLICIES_ENDPOINT);
-            $httpBackend.flush();
-            expect(groupDetailsCtrl.isolationPolicies.length).toEqual(2);
-            expect(groupDetailsCtrl.isolationPolicies[0]).toEqual(policyListData[0]);
-            expect(groupDetailsCtrl.isolationPolicies[1]).toEqual(policyListData[1]);
-        });
-        it('ApplicationGroupDetailsCtrl should have incoming rules array assigned to incomingRules property', function () {
-            $httpBackend.expectGET(ContivGlobals.RULES_ENDPOINT);
-            $httpBackend.flush();
-            expect(Array.isArray(groupDetailsCtrl.incomingRules)).toBeTruthy();
-            expect(groupDetailsCtrl.incomingRules.length).toEqual(2);
-        });
         it('ApplicationGroupDetailsCtrl should have showLoader property set to false after fetch', function () {
             $httpBackend.expectGET(ContivGlobals.APPLICATIONGROUPS_ENDPOINT);
             $httpBackend.flush();
             expect(groupDetailsCtrl.showLoader).toBeFalsy();
         });
-       
+
     });
 
-    describe('netprofile directive', function () {
-
-        var $httpBackend;
-        var $controller,netprofileCtrl,$rootScope,$element;
+    describe('bandwidthpolicy directive', function () {
+        var $httpBackend,rootScope,element,isolateScope;
 
         beforeEach(inject(
-            function (_$httpBackend_) {
+            function (_$httpBackend_,$rootScope,$compile) {
                 $httpBackend = _$httpBackend_;
                 $httpBackend.when('GET', ContivGlobals.NETPROFILES_ENDPOINT).respond(netprofileListData);
-
+                element = $compile("<ctv-bandwidthpolicy mode = 'mode' applicationgroup='appGroup'></ctv-bandwidthpolicy>")($rootScope);
+                $rootScope.mode = 'edit';
+                $rootScope.appGroup = appGroup;
             }));
+        afterEach(function () {
+            $httpBackend.verifyNoOutstandingExpectation();
+            $httpBackend.verifyNoOutstandingRequest();
+        });
+        it('Bandwidthpolicy directive should do a GET on /api/v1/netprofiles/ REST API', function () {
+            $httpBackend.expectGET(ContivGlobals.NETPROFILES_ENDPOINT);
+            $httpBackend.flush();
+        });
+        it('Bandwidthpolicy directive should have netProfiles array assigned to netprofiles property', function() {
+            $httpBackend.expectGET(ContivGlobals.NETPROFILES_ENDPOINT);
+            $httpBackend.flush();
+            isolateScope = element.isolateScope();
+            expect(isolateScope.netProfiles.length).toEqual(1);
+        });
+    });
 
-        beforeEach(inject(function ( _$rootScope_,_$controller_) {
+    describe('isolationpolicy directive', function(){
+        var $httpBackend, $rootScope, $compile;
+        var element,isolateScope;
+
+        beforeEach(inject(function (_$httpBackend_, _$rootScope_, _$compile_) {
+            $httpBackend = _$httpBackend_;
+            $httpBackend.when('GET', ContivGlobals.POLICIES_ENDPOINT).respond(policyListData);
+            $httpBackend.when('GET', ContivGlobals.RULES_ENDPOINT).respond(ruleListData);
+            $httpBackend.when('GET', ContivGlobals.APPLICATIONGROUPS_ENDPOINT).respond(groupListData);
+
             $rootScope = _$rootScope_;
-            $controller = _$controller_;
-            netprofileCtrl = $controller('NetprofileCtrl',{ $scope: $rootScope });
+            $compile = _$compile_;
         }));
-
         afterEach(function () {
             $httpBackend.verifyNoOutstandingExpectation();
             $httpBackend.verifyNoOutstandingRequest();
         });
 
-        it('should be defined', function () {
-            expect(netprofileCtrl).toBeDefined();
+        it('Isolationpolicydirective should do a GET on /api/v1/policys/ REST API', function () {
+            $rootScope.mode = 'details';
+            $rootScope.appGroup = appGroup;
+            element = $compile("<ctv-isolationpolicy mode='mode' applicationgroup='appGroup'></ctv-isolationpolicy>")($rootScope);
+            $httpBackend.expectGET(ContivGlobals.POLICIES_ENDPOINT);
             $httpBackend.flush();
         });
 
-        it('NetprofileCtrl should have netprofiles array assigned to netprofiles property', function() {
-            $httpBackend.expectGET(ContivGlobals.NETPROFILES_ENDPOINT);
+        it('addIsolationPolicy() should add policy to isolation directive scope object applicationgroup.policies', inject(function(){
+            $rootScope.mode = 'edit';
+            $rootScope.appGroup = appGroup_edit;
+            element = $compile("<ctv-isolationpolicy mode='mode' applicationgroup='appGroup'></ctv-isolationpolicy>")($rootScope);
             $httpBackend.flush();
-            expect($rootScope.netProfiles.length).toEqual(1);
-            expect($rootScope.netProfiles[0]).toEqual(netprofileListData[0]);
+            isolateScope = element.isolateScope();
+            isolateScope.selectedPolicy.policy.policyName = policyListData[0].policyName;
+            isolateScope.addIsolationPolicy();
+            expect(isolateScope.applicationgroup.policies.length).toEqual(2);
+        }));
+
+        it('removeIsolationPolicy() should delete policy from isolation directive scope object applicationgroup.policies', inject(function(){
+            $rootScope.mode = 'edit';
+            $rootScope.appGroup = appGroup_edit;
+            element = $compile("<ctv-isolationpolicy mode='mode' applicationgroup='appGroup'></ctv-isolationpolicy>")($rootScope);
+            $httpBackend.flush();
+            isolateScope = element.isolateScope();
+            isolateScope.selectedPolicy.policy.policyName = policyListData[0].policyName;
+            isolateScope.removeIsolationPolicy("middleware_net_policy");
+            expect(isolateScope.applicationgroup.policies.length).toEqual(1);
+        }));
+
+        it('Isolationpolicydirective should have isolation policies array assigned to isolationPolicies property', function () {
+            $rootScope.mode = 'details';
+            $rootScope.appGroup = appGroup;
+            element = $compile("<ctv-isolationpolicy mode='mode' applicationgroup='appGroup'></ctv-isolationpolicy>")($rootScope);
+            $httpBackend.expectGET(ContivGlobals.POLICIES_ENDPOINT);
+            $httpBackend.flush();
+            isolateScope = element.isolateScope();
+            expect(isolateScope.isolationPolicies.length).toEqual(2);
         });
 
-        it('NetprofileCtrl should do a GET on /api/v1/netprofiles/ REST API', function () {
-            $httpBackend.expectGET(ContivGlobals.NETPROFILES_ENDPOINT);
+        it('Isolationpolicydirective should have incoming and outgoing rules array assigned to incomingRules & outgoingRules property', function () {
+            $rootScope.mode = 'edit';
+            $rootScope.appGroup = appGroup_edit;
+            element = $compile("<ctv-isolationpolicy mode='mode' applicationgroup='appGroup'></ctv-isolationpolicy>")($rootScope);
+            $httpBackend.expectGET(ContivGlobals.RULES_ENDPOINT);
             $httpBackend.flush();
+            isolateScope = element.isolateScope();
+            expect(Array.isArray(isolateScope.incomingRules)).toBeTruthy();
+            expect(Array.isArray(isolateScope.outgoingRules)).toBeTruthy();
+            expect(isolateScope.incomingRules.length).toEqual(2);
+            expect(isolateScope.outgoingRules.length).toEqual(0);
         });
     });
-
 });

@@ -19,34 +19,17 @@ angular.module('contiv.applicationgroups')
         '$stateParams',
         'ApplicationGroupsModel',
         'NetworksModel',
-        'PoliciesModel',
-        'NetprofilesModel',
-        'RulesModel',
-        'ApplicationGroupService',
         'CRUDHelperService',
         function ($state,
                   $stateParams,
                   ApplicationGroupsModel,
                   NetworksModel,
-                  PoliciesModel,
-                  NetprofilesModel,
-                  RulesModel,
-                  ApplicationGroupService,
                   CRUDHelperService) {
             var applicationGroupCreateCtrl = this;
             applicationGroupCreateCtrl.networks = [];
-            applicationGroupCreateCtrl.isolationPolicies = [];
             applicationGroupCreateCtrl.applicationGroup = {};
             applicationGroupCreateCtrl.selectedNetwork = {};
-            applicationGroupCreateCtrl.selectedPolicy = {};
-            applicationGroupCreateCtrl.selectedPolicies = [];
-            applicationGroupCreateCtrl.selectedNetprofile = {};
-
-            //To display incoming and outgoing rules for selected policies
-            applicationGroupCreateCtrl.incomingRules = [];
-            applicationGroupCreateCtrl.outgoingRules = [];
-
-            applicationGroupCreateCtrl.isolationPoliciesVisible = false;
+            applicationGroupCreateCtrl.mode = "edit";
 
             function returnToApplicationGroup() {
                 $state.go('contiv.menu.applicationgroups.list');
@@ -67,31 +50,6 @@ angular.module('contiv.applicationgroups')
                 });
             }
 
-            /**
-             * Get policies for the given tenant.
-             */
-            function getIsolationPolicies() {
-                PoliciesModel.get().then(function (result) {
-                    applicationGroupCreateCtrl.isolationPolicies = _.filter(result, {
-                        'tenantName': 'default'//TODO: Remove hardcoded tenant.
-                    });
-                });
-            }
-
-            /**
-             * Add policy to new application group
-             */
-            function addIsolationPolicy() {
-                ApplicationGroupService.addIsolationPolicy(applicationGroupCreateCtrl);
-            }
-
-            /**
-             * Remove policy from new application group
-             */
-            function removeIsolationPolicy(policyName) {
-                ApplicationGroupService.removeIsolationPolicy(applicationGroupCreateCtrl, policyName);
-            }
-
             function createApplicationGroup() {
                 //form controller is injected by the html template
                 //checking if all validations have passed
@@ -100,13 +58,14 @@ angular.module('contiv.applicationgroups')
                     CRUDHelperService.startLoader(applicationGroupCreateCtrl);
                     applicationGroupCreateCtrl.applicationGroup.networkName =
                         applicationGroupCreateCtrl.selectedNetwork.networkName;
-                    
-                    applicationGroupCreateCtrl.applicationGroup.netProfile =
-                        applicationGroupCreateCtrl.selectedNetprofile.profileName;
-                    
+
                     applicationGroupCreateCtrl.applicationGroup.key =
                         ApplicationGroupsModel.generateKey(applicationGroupCreateCtrl.applicationGroup);
 
+                    /**
+                     * applicationGroup consist of Group Name, Network Name, Isolation Policies, Bandwidth Policy
+                     */
+                    
                     ApplicationGroupsModel.create(applicationGroupCreateCtrl.applicationGroup).then(
                         function successCallback(result) {
                             CRUDHelperService.stopLoader(applicationGroupCreateCtrl);
@@ -122,21 +81,18 @@ angular.module('contiv.applicationgroups')
                 CRUDHelperService.stopLoader(applicationGroupCreateCtrl);
                 CRUDHelperService.hideServerError(applicationGroupCreateCtrl);
                 applicationGroupCreateCtrl.applicationGroup = {
-                    groupName: '',
-                    networkName: '',
-                    policies: [],
+                    groupName: '',          // For Group Name
+                    networkName: '',        // For Network Name
+                    policies: [],           // For Isolation policies
+                    netProfile: '',         // For Bandwidth policy Name
                     tenantName: 'default'//TODO: Remove hardcoded tenant.
                 };
             }
 
             getNetworks();
-            getIsolationPolicies();
-            
+
             applicationGroupCreateCtrl.createApplicationGroup = createApplicationGroup;
             applicationGroupCreateCtrl.cancelCreating = cancelCreating;
-            applicationGroupCreateCtrl.addIsolationPolicy = addIsolationPolicy;
-            applicationGroupCreateCtrl.removeIsolationPolicy = removeIsolationPolicy;
-
 
             resetForm();
         }]);

@@ -20,33 +20,15 @@ angular.module('contiv.applicationgroups')
         '$state',
         '$stateParams',
         'ApplicationGroupsModel',
-        'PoliciesModel',
-        'NetprofilesModel',
-        'RulesModel',
-        'ApplicationGroupService',
         'CRUDHelperService',
         function ($state,
                   $stateParams,
                   ApplicationGroupsModel,
-                  PoliciesModel,
-                  NetprofilesModel,
-                  RulesModel,
-                  ApplicationGroupService,
                   CRUDHelperService) {
             var applicationGroupDetailsCtrl = this;
-            applicationGroupDetailsCtrl.isolationPolicies = [];
+
             applicationGroupDetailsCtrl.applicationGroup = {};
             applicationGroupDetailsCtrl.selectedNetwork = {};
-            applicationGroupDetailsCtrl.selectedPolicy = {};
-            applicationGroupDetailsCtrl.selectedPolicies = [];
-            applicationGroupDetailsCtrl.selectedNetprofile = {};
-
-            //To display incoming and outgoing rules for selected policies
-            applicationGroupDetailsCtrl.incomingRules = [];
-            applicationGroupDetailsCtrl.outgoingRules = [];
-
-
-            applicationGroupDetailsCtrl.isolationPoliciesVisible = false;
 
             /**
              * To show edit or details screen based on the route
@@ -71,21 +53,6 @@ angular.module('contiv.applicationgroups')
                 returnToApplicationGroupDetails();
             }
 
-            function getRules() {
-                applicationGroupDetailsCtrl.applicationGroup.policies.forEach(function (policy) {
-                    //To display rules of selected policies
-                    RulesModel.getIncomingRules(policy, 'default')
-                        .then(function (rules) {
-                            Array.prototype.push.apply(applicationGroupDetailsCtrl.incomingRules, rules);
-                        });
-                    RulesModel.getOutgoingRules(policy, 'default')
-                        .then(function (rules) {
-                            Array.prototype.push.apply(applicationGroupDetailsCtrl.outgoingRules, rules);
-                        });
-                });
-
-            }
-
             function deleteApplicationGroup() {
                 CRUDHelperService.hideServerError(applicationGroupDetailsCtrl);
                 CRUDHelperService.startLoader(applicationGroupDetailsCtrl);
@@ -99,37 +66,9 @@ angular.module('contiv.applicationgroups')
                     });
             }
 
-            /**
-             * Get policies for the given tenant.
-             */
-            function getIsolationPolicies() {
-
-                PoliciesModel.get().then(function (result) {
-                    applicationGroupDetailsCtrl.isolationPolicies = _.filter(result, {
-                        'tenantName': 'default'//TODO: Remove hardcoded tenant.
-                    })
-                });
-            }
-
-            /**
-             * Add policy to application group
-             */
-            function addIsolationPolicy() {
-                ApplicationGroupService.addIsolationPolicy(applicationGroupDetailsCtrl);
-            }
-
-            /**
-             * Remove policy from application group
-             */
-            function removeIsolationPolicy(policyName) {
-                ApplicationGroupService.removeIsolationPolicy(applicationGroupDetailsCtrl, policyName);
-            }
-
             function saveApplicationGroup() {
                 CRUDHelperService.hideServerError(applicationGroupDetailsCtrl);
                 CRUDHelperService.startLoader(applicationGroupDetailsCtrl);
-
-                applicationGroupDetailsCtrl.applicationGroup.netProfile = applicationGroupDetailsCtrl.selectedNetprofile.profileName;
 
                 ApplicationGroupsModel.save(applicationGroupDetailsCtrl.applicationGroup).then(function successCallback(result) {
                     CRUDHelperService.stopLoader(applicationGroupDetailsCtrl);
@@ -146,19 +85,10 @@ angular.module('contiv.applicationgroups')
             ApplicationGroupsModel.getModelByKey($stateParams.key)
                 .then(function (group) {
                     applicationGroupDetailsCtrl.applicationGroup = group;
-                    //Application Groups might not have any policies associated with them so define an empty array
-                    if (applicationGroupDetailsCtrl.applicationGroup.policies === undefined) {
-                        applicationGroupDetailsCtrl.applicationGroup.policies = [];
-                    }
-                    getRules();
                 });
-            
-            getIsolationPolicies();
 
             applicationGroupDetailsCtrl.saveApplicationGroup = saveApplicationGroup;
             applicationGroupDetailsCtrl.cancelEditing = cancelEditing;
-            applicationGroupDetailsCtrl.addIsolationPolicy = addIsolationPolicy;
-            applicationGroupDetailsCtrl.removeIsolationPolicy = removeIsolationPolicy;
             applicationGroupDetailsCtrl.deleteApplicationGroup = deleteApplicationGroup;
 
             setMode();

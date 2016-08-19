@@ -60,7 +60,6 @@
         </tbody>
     </table>
 
-
     <div class="ui section divider" style="margin-top: 30px"></div>
     <h4 class="ui header">
         <i class="grey plus circle outline icon"></i>
@@ -71,127 +70,13 @@
     <div class="ui section divider"></div>
 
     <ctv-collapsible title="Isolation Policies">
-        <div ng-switch="applicationGroupDetailsCtrl.mode">
-            <table ng-switch-when="edit" class="ui very basic collapsing unstackable table">
-                <tbody>
-                <tr>
-                    <td>
-                        <div class="ui left icon input">
-                            <input type="text" ng-model="isolationPolicySearchText.policyName"
-                                   placeholder="Filter by policy name">
-                            <i class="search icon"></i>
-                        </div>
-                    </td>
-                    <td>
-                        <select class="ui dropdown" ng-model="applicationGroupDetailsCtrl.selectedPolicy"
-                                ng-options="policy.policyName for policy in applicationGroupDetailsCtrl.isolationPolicies | filter:isolationPolicySearchText">
-                        </select>
-                    </td>
-                    <td>
-                        <button type="button" class="ui icon button"
-                                ng-click="applicationGroupDetailsCtrl.addIsolationPolicy()">
-                            <i class="blue add icon"></i>
-                        </button>
-                    </td>
-                </tr>
-                <tr ng-repeat="policy in applicationGroupDetailsCtrl.applicationGroup.policies">
-                    <td>{{policy}}</td>
-                    <td></td>
-                    <td>
-                        <button type="button" class="ui icon button"
-                                ng-click="applicationGroupDetailsCtrl.removeIsolationPolicy(policy)">
-                            <i class="trash icon"></i>
-                        </button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
-            <table ng-switch-when="details" class="ui very basic unstackable table">
-                <tbody>
-                <tr ng-repeat="policy in applicationGroupDetailsCtrl.applicationGroup.policies">
-                    <td>{{policy}}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-
-
-        <h5 class="ui header">Incoming rules</h5>
-        <table class="ui very basic unstackable table" style="margin-top: 40px">
-            <thead>
-            <tr>
-                <th>Priority</th>
-                <th>Action</th>
-                <th>From group</th>
-                <th>From network</th>
-                <th>From IP address</th>
-                <th>Protocol</th>
-                <th>Port</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            <tr ng-repeat="rule in applicationGroupDetailsCtrl.incomingRules">
-                <td>{{rule.priority}}</td>
-                <td>{{rule.action}}</td>
-                <td>{{rule.fromEndpointGroup}}</td>
-                <td>{{rule.fromNetwork}}</td>
-                <td>{{rule.fromIPAddress}}</td>
-                <td>{{rule.protocol}}</td>
-                <td>{{rule.port}}</td>
-            </tr>
-
-            </tbody>
-        </table>
-
-        <h5 class="ui header" style="margin-top: 40px">Outgoing rules</h5>
-        <table class="ui very basic unstackable table" style="margin-top: 40px">
-            <thead>
-            <tr>
-                <th>Priority</th>
-                <th>Action</th>
-                <th>To group</th>
-                <th>To network</th>
-                <th>To IP address</th>
-                <th>Protocol</th>
-                <th>Port</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            <tr ng-repeat="rule in applicationGroupDetailsCtrl.outgoingRules">
-                <td>{{rule.priority}}</td>
-                <td>{{rule.action}}</td>
-                <td>{{rule.toEndpointGroup}}</td>
-                <td>{{rule.toNetwork}}</td>
-                <td>{{rule.toIPAddress}}</td>
-                <td>{{rule.protocol}}</td>
-                <td>{{rule.port}}</td>
-            </tr>
-            </tbody>
-        </table>
-
+        <ctv-isolationpolicy mode="applicationGroupDetailsCtrl.mode" applicationgroup="applicationGroupDetailsCtrl.applicationGroup"></ctv-isolationpolicy>
     </ctv-collapsible>
 
     <div class="ui section divider"></div>
 
     <ctv-collapsible title="Bandwidth Policies">
-        <div ng-switch="applicationGroupDetailsCtrl.mode">
-            <div ng-switch-when="edit">
-                <ctv-netprofiles type="edit" netprofile="applicationGroupDetailsCtrl.selectedNetprofile">
-            </div>
-
-            <table ng-switch-when="details" class="ui very basic unstackable table">
-                <tbody>
-                    <tr>
-                        <td class="ctv-header three wide column">Profile Name</td>
-                        <td>{{applicationGroupDetailsCtrl.applicationGroup.netProfile}}</td>
-                    </tr>
-                </tbody>
-
-            </table>
-        </div>
+        <ctv-bandwidthpolicy mode="applicationGroupDetailsCtrl.mode" applicationgroup="applicationGroupDetailsCtrl.applicationGroup"></ctv-bandwidthpolicy>
     </ctv-collapsible>
 
 
