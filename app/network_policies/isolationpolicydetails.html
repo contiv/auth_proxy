@@ -57,6 +57,13 @@
 
     <form class="ui form" role="form">
         <h4 class="ui header">Incoming rules</h4>
+        <div class="field">
+            <div ng-show="isolationPolicyDetailsCtrl.incorrectCIDR" class="ui negative message">
+                <ul class="list">
+                    <li>Please enter IP address in CIDR notation</li>
+                </ul>
+            </div>
+        </div>
         <table class="ui very basic unstackable table" style="margin-top: 40px">
             <thead>
             <tr>
@@ -92,7 +99,7 @@
                     </select>
                 </td>
                 <td>
-                    <select class="ui dropdown" ng-model="isolationPolicyDetailsCtrl.newIncomingRule.fromNetwork"
+                    <select class="ui dropdown" ng-model="isolationPolicyDetailsCtrl.newIncomingSelectedNetwork"
                             ng-options="network.networkName as network.networkName for network in isolationPolicyDetailsCtrl.networks"
                             ng-change="isolationPolicyDetailsCtrl.onChangeIncomingNetworkSelection()"
                             ng-disabled="isolationPolicyDetailsCtrl.disableIncomingNetworkSelection">
@@ -100,8 +107,9 @@
                     </select>
                 </td>
                 <td>
-                    <div class="ui input"><input name=""
-                                                 ng-model="isolationPolicyDetailsCtrl.newIncomingRule.fromIPAddress"
+                    <div class="ui input"><input ng-model="isolationPolicyDetailsCtrl.newIncomingRule.fromIpAddress"
+                                                 ng-disabled="isolationPolicyDetailsCtrl.disableIncomingIPAddressSelection"
+                                                 ng-change="isolationPolicyDetailsCtrl.onChangeIncomingIPAddress()"
                                                  placeholder="0.0.0.0/0">
                     </div>
                 </td>
@@ -127,7 +135,7 @@
                 <td>{{rule.action}}</td>
                 <td>{{rule.fromEndpointGroup}}</td>
                 <td>{{rule.fromNetwork}}</td>
-                <td>{{rule.fromIPAddress}}</td>
+                <td>{{rule.fromIpAddress}}</td>
                 <td>{{rule.protocol}}</td>
                 <td>{{rule.port}}</td>
                 <td ng-if="isolationPolicyDetailsCtrl.mode == 'edit'">
@@ -176,7 +184,7 @@
                     </select>
                 </td>
                 <td>
-                    <select class="ui dropdown" ng-model="isolationPolicyDetailsCtrl.newOutgoingRule.toNetwork"
+                    <select class="ui dropdown" ng-model="isolationPolicyDetailsCtrl.newOutgoingSelectedNetwork"
                             ng-options="network.networkName as network.networkName for network in isolationPolicyDetailsCtrl.networks"
                             ng-change="isolationPolicyDetailsCtrl.onChangeOutgoingNetworkSelection()"
                             ng-disabled="isolationPolicyDetailsCtrl.disableOutgoingNetworkSelection">
@@ -184,8 +192,9 @@
                     </select>
                 </td>
                 <td>
-                    <div class="ui input"><input name=""
-                                                 ng-model="isolationPolicyDetailsCtrl.newOutgoingRule.toIPAddress"
+                    <div class="ui input"><input ng-model="isolationPolicyDetailsCtrl.newOutgoingRule.toIpAddress"
+                                                 ng-disabled="isolationPolicyDetailsCtrl.disableOutgoingIPAddressSelection"
+                                                 ng-change="isolationPolicyDetailsCtrl.onChangeOutgoingIPAddress()"
                                                  placeholder="0.0.0.0/0">
                     </div>
                 </td>
@@ -213,7 +222,7 @@
                 <td>{{rule.action}}</td>
                 <td>{{rule.toEndpointGroup}}</td>
                 <td>{{rule.toNetwork}}</td>
-                <td>{{rule.toIPAddress}}</td>
+                <td>{{rule.toIpAddress}}</td>
                 <td>{{rule.protocol}}</td>
                 <td>{{rule.port}}</td>
                 <td ng-if="isolationPolicyDetailsCtrl.mode == 'edit'">
