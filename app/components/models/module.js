@@ -18,6 +18,7 @@ var ContivGlobals = (function () {
         'NETPROFILES_ENDPOINT': '/netmaster/api/v1/netprofiles/',
         'BGPS_ENDPOINT': '/netmaster/api/v1/Bgps/',
         'BGPS_INSPECT_ENDPOINT': '/netmaster/api/v1/inspect/Bgps/',
+        'VISUALIZATION_ENDPOINT': '/visualization/',
 
         //REST endpoints for VOLMASTER
         'VOLUMES_ENDPOINT': '/volmaster/volumes/',

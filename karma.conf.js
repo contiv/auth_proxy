@@ -6,13 +6,15 @@ module.exports = function (config) {
             'app/network_policies/bandwidth.html': ['ng-html2js'],
             'app/applicationgroups/bandwidthpolicy.html': ['ng-html2js'],
             'app/applicationgroups/isolationpolicy.html': ['ng-html2js'],
-            'app/components/directives/nodes/*.html': ['ng-html2js']
+            'app/components/directives/nodes/*.html': ['ng-html2js'],
+            'app/visualization/*.html' : ['ng-html2js']
         },
 
         basePath: './',
 
         files: [
             'app/bower_components/jquery/dist/jquery.js',
+            'http://d3js.org/d3.v3.min.js',
             'app/bower_components/angular/angular.js',
             'app/bower_components/angular-route/angular-route.js',
             'app/bower_components/angular-ui-router/release/angular-ui-router.js',
@@ -24,6 +26,11 @@ module.exports = function (config) {
             'app/components/directives/*.html',
             'app/components/directives/**/*.html',
             'app/components/utils/module.js',
+            'app/components/graphobjects/**/module.js',//graph objects
+            'app/components/graphobjects/**/*.js',
+            'app/visualization/module.js', //visualization tab
+            'app/visualization/**/*.js',
+            'app/visualization/*.html',
             'app/components/**/*.js',
             'app/networks/module.js',//Needed because jasmine is unable to locate the contiv.networks module which is defined here
             'app/networks/**/*.js',
@@ -41,7 +48,6 @@ module.exports = function (config) {
             'app/organizations/**/*.js',
             'app/settings/module.js',
             'app/settings/**/*.js',
-
         ],
 
         autoWatch: true,
