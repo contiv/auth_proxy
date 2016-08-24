@@ -24,7 +24,7 @@ var ContivGlobals = (function () {
         'VOLUMES_ENDPOINT': '/volmaster/volumes/',
         'VOLUMES_CREATE_ENDPOINT': '/volmaster/volumes/create/',
         'VOLUMES_DELETE_ENDPOINT': '/volmaster/volumes/remove/',
-        'VOLUMES_COPYSNAPSHOTS_ENDPOINT': '/volmaster/volumes/copy/',
+        'VOLUMES_COPYSNAPSHOTS_ENDPOINT': '/volmaster/volumes/copy',
         'VOLUMES_USES_ENDPOINT': '/volmaster/uses/mounts/',
         'VOLUMES_SNAPSHOTS_ENDPOINT': '/volmaster/snapshots/',
         'STORAGEPOLICIES_ENDPOINT': '/volmaster/policies/',

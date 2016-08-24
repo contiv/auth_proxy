@@ -1,0 +1,58 @@
+<div class="ui sixteen column grid">
+    <div class="one wide column">
+        <a ui-sref="contiv.menu.volumes.details({key:volumeSnapshotCopyCtrl.policy+'/'+volumeSnapshotCopyCtrl.volume})">
+            <i class="large arrow left icon"></i>
+        </a>
+    </div>
+
+    <div class="left floated seven wide column">
+        <div class="content" style="font-size: 24px">
+            <span>Volumes</span>
+            <span class="headingfontcolor"> (Copy)</span>
+        </div>
+    </div>
+</div>
+<div class="ui basic segment">
+    <div class="ui active inverted dimmer" ng-show="volumeSnapshotCopyCtrl.showLoader">
+        <div class="ui loader"></div>
+    </div>
+    <table class="ui very basic selectable table">
+        <tbody>
+        <tr>
+            <td class="ctv-header three wide column">Snapshot</td>
+            <td>{{volumeSnapshotCopyCtrl.snapshot}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <form class="ui form" id="volumeSnapshotCopyCtrl.form" name="volumeSnapshotCopyCtrl.form" ng-submit="volumeSnapshotCopyCtrl.copySnapshot();" novalidate>
+        <div class="field">
+            <label for="newvolume">Volume name</label>
+            <input type="text" id="newvolume" name="newvolume"
+                   ng-model="volumeSnapshotCopyCtrl.newvolume" placeholder="Enter name" required>
+        </div>
+        <div class="ui grid">
+            <div class="right aligned sixteen wide column">
+                <div style="margin-top: 40px">
+                    <button type="button" class="ui basic button" ng-click="volumeSnapshotCopyCtrl.cancelCopy()">
+                        Cancel
+                    </button>
+                    <button type="submit" class="ui blue button">
+                        Copy
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="field" style="margin-top: 20px;">
+            <div ng-show="volumeSnapshotCopyCtrl.form.$submitted">
+                <div ng-hide="volumeSnapshotCopyCtrl.form.$valid" class="ui negative message">
+                    <ul class="list">
+                        <li ng-show="volumeSnapshotCopyCtrl.form.newvolume.$error.required">Please enter volume name</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <ctv-error ng-show="volumeSnapshotCopyCtrl.showServerError" header="Error copying volume"
+                   error="volumeSnapshotCopyCtrl.serverErrorMessage">
+        </ctv-error>
+    </form>
+</div>

@@ -11,15 +11,18 @@ angular.module('contiv.volumes')
             });
     }])
     .controller('VolumeDetailsCtrl',
-        ['$state', '$stateParams', '$scope', '$interval', '$http', 'VolumesModel', 'VolumeService',
-        function ($state, $stateParams, $scope, $interval, $http, VolumesModel, VolumeService) {
+        ['$state', '$stateParams', '$scope', '$interval', '$http', 'VolumesModel', 'VolumeService', 'CRUDHelperService',
+        function ($state, $stateParams, $scope, $interval, $http, VolumesModel, VolumeService, CRUDHelperService) {
             var volumeDetailsCtrl = this;
 
             function returnToVolumes() {
                 $state.go('contiv.menu.volumes.list');
             }
             function deleteVolume() {
+                CRUDHelperService.hideServerError(volumeDetailsCtrl);
+                CRUDHelperService.startLoader(volumeDetailsCtrl);
                 VolumesModel.delete(volumeDetailsCtrl.volume).then(function (result) {
+                    CRUDHelperService.stopLoader(volumeDetailsCtrl);
                     returnToVolumes();
                 });
             }
@@ -49,23 +52,28 @@ angular.module('contiv.volumes')
                 VolumeService.getVolumeSnapshots(volumeDetailsCtrl.volume).then(function successCallback(result) {
                     volumeDetailsCtrl.snapshots = result;
                 }, function errorCallback(result) {
-                })
+                });
             }
 
-            function copySnapshot(snapshot, newVolume) {
-                VolumesModel.copy(model, snapshot, newVolume)
-                    .then(function successCallback(result) {
-
-                    }, function errorCallback(result) {
-
-                    })
+            function triggerVolumeSnapshot(){
+                volumeDetailsCtrl.snapshotSuccess=false;
+                CRUDHelperService.hideServerError(volumeDetailsCtrl);
+                CRUDHelperService.startLoader(volumeDetailsCtrl);
+                VolumeService.triggerSnapshot(volumeDetailsCtrl.volume).then(function successCallback(result) {
+                    CRUDHelperService.stopLoader(volumeDetailsCtrl);
+                    volumeDetailsCtrl.snapshotSuccess=true;
+                },  function errorCallback(result){
+                    CRUDHelperService.stopLoader(volumeDetailsCtrl);
+                    CRUDHelperService.showServerError(volumeDetailsCtrl, result);
+                });
             }
 
             volumeDetailsCtrl.deleteVolume = deleteVolume;
-            volumeDetailsCtrl.copySnapshot = copySnapshot;
+            volumeDetailsCtrl.triggerVolumeSnapshot = triggerVolumeSnapshot;
 
             //Load from cache for quick display initially
             getVolumeInfo(false);
+
 
             var promise;
             //Don't do auto-refresh if one is already in progress

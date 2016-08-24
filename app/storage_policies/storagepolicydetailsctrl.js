@@ -104,10 +104,9 @@ angular.module('contiv.storagepolicies')
                     .then(function (policy) {
                         storagePolicyDetailsCtrl.policy = policy;
                         initializeFilesystemCmdsArray();
-                        //getVolumes(false);
+                        getVolumes(false);
                     });
-
-
+                
                 storagePolicyDetailsCtrl.deletePolicy = deletePolicy;
                 storagePolicyDetailsCtrl.savePolicy = savePolicy;
                 storagePolicyDetailsCtrl.cancelEditing = cancelEditing;
@@ -118,7 +117,7 @@ angular.module('contiv.storagepolicies')
                 //Don't do autorefresh if one is already in progress
                 if (!angular.isDefined(promise)) {
                     promise = $interval(function () {
-                        //getVolumes(true);
+                        getVolumes(true);
                     }, ContivGlobals.REFRESH_INTERVAL);
                 }
 

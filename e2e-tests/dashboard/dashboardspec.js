@@ -14,39 +14,27 @@ describe("Testing Dashboard Page", function(){
     });
 
     it("Verify nodes link",function(){
-        var nodeshref = dashboardPage.nodes.getAttribute("href");
-        dashboardPage.nodes.click();
-        expect(browser.getCurrentUrl()).toEqual(nodeshref);
+        testConfig.clickLink(dashboardPage.nodes);
     });
 
     it("Verify networks link",function(){
-        var networkshref = dashboardPage.networks.getAttribute("href");
-        dashboardPage.networks.click();
-        expect(browser.getCurrentUrl()).toEqual(networkshref);
+        testConfig.clickLink(dashboardPage.networks);
     });
 
     it("Verify volumes link",function(){
-        var volumeshref = dashboardPage.volumes.getAttribute("href");
-        dashboardPage.volumes.click();
-        expect(browser.getCurrentUrl()).toEqual(volumeshref);
+        testConfig.clickLink(dashboardPage.volumes);
     });
 
     it("Verify applicationGroup link",function(){
-        var applicationGrouphref = dashboardPage.applicationGroup.getAttribute("href");
-        dashboardPage.applicationGroup.click();
-        expect(browser.getCurrentUrl()).toEqual(applicationGrouphref);
+        testConfig.clickLink(dashboardPage.applicationGroup);
     });
 
     it("Verify networkPolicies link",function(){
-        var networkPolicieshref = dashboardPage.networkPolicies.getAttribute("href");
-        dashboardPage.networkPolicies.click();
-        expect(browser.getCurrentUrl()).toEqual(networkPolicieshref);
+        testConfig.clickLink(dashboardPage.networkPolicies);
     });
 
     it("Verify storagePolicies link",function(){
-        var storagePolicieshref = dashboardPage.storagePolicies.getAttribute("href");
-        dashboardPage.storagePolicies.click();
-        expect(browser.getCurrentUrl()).toEqual(storagePolicieshref);
+        testConfig.clickLink(dashboardPage.storagePolicies);
     });
 
     it("Verifying Dashboard groups", function(){

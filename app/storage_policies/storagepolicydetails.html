@@ -143,6 +143,37 @@
                 </tbody>
             </table>
         </ctv-collapsible>
+
+        <div class="ui section divider"></div>
+        <ctv-collapsible title="Volumes">
+            <ctv-table defaultsortcolumn="name" items="storagePolicyDetailsCtrl.volumes" filtereditems="storagePolicyDetailsCtrl.filteredVolumes" size="12">
+                <ctv-thead>
+                    <ctv-tr>
+                        <ctv-th sortfield="'name'">Name</ctv-th>
+                        <ctv-th class="right floated three wide column">
+                            <ctv-tsearch placeholder="Search volumes..." size="30">
+                        </ctv-th>
+                    </ctv-tr>
+                </ctv-thead>
+
+                <ctv-tbody>
+                    <ctv-tr ng-repeat="volume in storagePolicyDetailsCtrl.filteredVolumes">
+                        <ctv-td>
+                            <a ui-sref="contiv.menu.volumes.details({key:volume.policy + '/' + volume.name})">{{volume.name}}</a>
+                        </ctv-td>
+                        <ctv-td></ctv-td>
+                    </ctv-tr>
+                </ctv-tbody>
+
+                <ctv-tfoot>
+                    <ctv-tr>
+                        <ctv-th colspan="2">
+                            <ctv-tpagination></ctv-tpagination>
+                        </ctv-th>
+                    </ctv-tr>
+                </ctv-tfoot>
+            </ctv-table>
+        </ctv-collapsible>
     </div>
     <div ng-switch-when="edit">
         <form class="ui form" name="storagePolicyDetailsCtrl.form" role="form"
@@ -179,7 +210,7 @@
                        ng-model="storagePolicyDetailsCtrl.policy.driver.pool" placeholder="Enter pool" required>
             </div>
             <div class="field">
-                <label for="newStoragePolicyPool">Size</label>
+                <label for="newStoragePolicySize">Size</label>
                 <input type="text" id="newStoragePolicySize" name="newStoragePolicySize"
                        ng-model="storagePolicyDetailsCtrl.policy.create.size" placeholder="Enter size" required>
             </div>
