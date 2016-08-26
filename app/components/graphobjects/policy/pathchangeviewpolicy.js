@@ -30,7 +30,7 @@ angular.module('contiv.graph')
                     } else {
                         retList.push(childId);
                     }
-                })
+                });
                 return retList
             }
 
@@ -67,7 +67,7 @@ angular.module('contiv.graph')
 
         }
         return {
-            Policy: PathChangeViewPolicy,
+            Policy: PathChangeViewPolicy
         }
 }]);
 

@@ -42,7 +42,7 @@ describe('link', function(){
             destroy: function(){
                 this.destroyed = true;
             }
-        }
+        };
         link.initialize("testGraph");
         link.installPathPolicy(policy);
         expect(link.hasPolicy).toBe(true);

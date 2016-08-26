@@ -8,7 +8,7 @@ describe('PathChangeViewPolicy', function(){
         inject( function($injector){
             policyFactory = $injector.get('PathChangeViewPolicy');
         });
-        $state = {go:function() {return;}};
+        $state = {go:function() {}};
     });
 
     it('Checking inital values', function(){

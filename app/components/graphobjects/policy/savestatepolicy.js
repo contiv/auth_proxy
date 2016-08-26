@@ -39,7 +39,7 @@ angular.module('contiv.graph')
     			var thisPolicy = this;
     			graph.destroy = function() {
     				thisPolicy.graphDestroy.call(graph, thisPolicy.savedState);
-    			}
+    			};
 
     			graph.load = function(savedState) {
     				thisPolicy.graphLoad.call(graph, savedState);
@@ -87,7 +87,7 @@ angular.module('contiv.graph')
             }
     	}
     	return {
-    		Policy: SaveStatePolicy,
+    		Policy: SaveStatePolicy
     	}
 }]);
 

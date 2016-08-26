@@ -28,7 +28,7 @@ angular.module('contiv.graph')
                 if (this.initialized) {
                     return;
                 }
-                super.initialize(graph)
+                super.initialize(graph);
                 var state = graph.state.SplitJoinViewPolicy = {};
                 state.savedStates = [];
                 // state.focusGroup = null;
@@ -81,7 +81,6 @@ angular.module('contiv.graph')
              */
             installTitle(elem) {
                 var thisGraph = this.graph,
-                    thisPolicy = this,
                     state = thisGraph.state.SplitJoinViewPolicy;
 
                 state.titleElem = elem;
@@ -178,7 +177,7 @@ angular.module('contiv.graph')
                     } else {
                         d.SplitJoinViewPolicy.type = "connected";
                     }
-                })
+                });
 
                 //loading a previous layout
                 var layout;
@@ -202,7 +201,7 @@ angular.module('contiv.graph')
                     }
                     n.x = pos.x;
                     n.y = pos.y;
-                })
+                });
                 thisGraph.state.initForce = true;
                 thisGraph.updateGraph.call(thisGraph, function() {
                     thisPolicy.updateGraphCallback.call(thisPolicy);
@@ -234,8 +233,7 @@ angular.module('contiv.graph')
              */
             dblclick(d3node, d) {
                 var thisGraph = this.graph,
-                    state = thisGraph.state.SplitJoinViewPolicy,
-                    consts = thisGraph.consts.SplitJoinViewPolicy;
+                    state = thisGraph.state.SplitJoinViewPolicy;
 
                 //check if can split
                 var name = d.id;
@@ -244,7 +242,7 @@ angular.module('contiv.graph')
                     return;
                 }
 
-                var originalFocusGroups = state.focusGroups.slice();
+                state.focusGroups.slice();
 
                 if (state.focusGroups.length === 0) { //toplevel split
                     state.focusGroups.push(d.id);
@@ -270,7 +268,7 @@ angular.module('contiv.graph')
                         if (_.includes(groupOneNodes, node.id)) {
                             nodeIdsToReshow.push(node.id);
                             nodesToKeep.push(node);
-                        };
+                        }
                     });
                 } else {
                     //Make split nodes the focus and keep nodes that are connected
@@ -349,8 +347,7 @@ angular.module('contiv.graph')
              */
             updateGraphCallback() {
                 var thisGraph = this.graph,
-                    state = thisGraph.state.SplitJoinViewPolicy,
-                    consts = thisGraph.consts.SplitJoinViewPolicy;
+                    state = thisGraph.state.SplitJoinViewPolicy;
 
                     thisGraph.circles.each(function(node) {
                         d3.select(this).transition().duration(400).style("opacity", 1);
@@ -377,8 +374,7 @@ angular.module('contiv.graph')
             setPositions() {
                 var thisGraph = this.graph,
                     thisPolicy = this,
-                    graphConsts = thisGraph.consts,
-                    graphState = thisGraph.state;
+                    graphConsts = thisGraph.consts;
 
                 var offset = graphConsts.displayOffset;
                 var nodes = thisGraph.nodes;
@@ -386,7 +382,7 @@ angular.module('contiv.graph')
 
                 function getRandomInt(min, max) {
                     return Math.floor(Math.random() * (max - min + 1)) + min;
-                };
+                }
 
                 _.forEach(nodes, function(node) {
                     if (node.x == null || node.y == null) {
@@ -434,14 +430,12 @@ angular.module('contiv.graph')
             d3ForceEnd() {
                 var thisGraph = this,
                     state = thisGraph.state,
-                    consts = thisGraph.consts,
-                    constsPolicy = consts.SplitJoinViewPolicy,
                     statePolicy = state.SplitJoinViewPolicy;
                 if (statePolicy.layoutDefault == null) {
                     var defaultLayout = {};
                     _.forEach(thisGraph.nodes, function(n) {
                         defaultLayout[n.id] = {x:n.x, y:n.y};
-                    })
+                    });
                     statePolicy.layoutDefault = defaultLayout;
                     var scale = thisGraph.dragSvg.scale();
                     var translate = thisGraph.dragSvg.translate();
@@ -473,7 +467,6 @@ angular.module('contiv.graph')
 
                 var offset = consts.displayOffset;
                 var scale = thisGraph.dragSvg.scale();
-                var nodes = thisGraph.nodes;
 
                 // Move nodes toward cluster focus.
                 var foci = statePolicy.foci;
@@ -609,8 +602,7 @@ angular.module('contiv.graph')
             splitNodeEvent(newNodes) {
                 var thisPolicy = this;
                 var thisGraph = this.graph,
-                    state = thisGraph.state.SplitJoinViewPolicy,
-                    consts = thisGraph.consts.SplitJoinViewPolicy;
+                    state = thisGraph.state.SplitJoinViewPolicy;
 
                 var children_struct = thisGraph.dataSource.children_struct;
                 _.forEach(newNodes, function(d){
@@ -666,8 +658,7 @@ angular.module('contiv.graph')
             setLayout() {
                 var thisPolicy = this;
                 var thisGraph = this.graph,
-                    state = thisGraph.state.SplitJoinViewPolicy,
-                    consts = thisGraph.consts.SplitJoinViewPolicy; 
+                    state = thisGraph.state.SplitJoinViewPolicy;
                 var layout;
                 if (state.focusGroups.length === 0) {
                     layout = state.layoutDefault;
@@ -689,7 +680,7 @@ angular.module('contiv.graph')
                         }
                         n.x = pos.x;
                         n.y = pos.y;
-                    })
+                    });
                     thisGraph.updateGraph.call(thisGraph, function() {
                         thisPolicy.updateGraphCallback.call(thisPolicy);
                     });
@@ -706,7 +697,7 @@ angular.module('contiv.graph')
                     var layout = {};
                     _.forEach(thisGraph.nodes, function(n) {
                         layout[n.id] = {x:n.x, y:n.y};
-                    })
+                    });
                     state.layout[state.focusGroups] = layout;
                 } 
             }
@@ -721,7 +712,6 @@ angular.module('contiv.graph')
              */
             __joinNode(node) {
                 var thisGraph = this.graph,
-                    consts = thisGraph.consts.SplitJoinNodePolicy,
                     stateSuper = thisGraph.state.SplitJoinNodePolicy,
                     state = thisGraph.state.SplitJoinViewPolicy;
 
@@ -731,7 +721,7 @@ angular.module('contiv.graph')
                 }
 
                 var children_struct = thisGraph.dataSource.children_struct;
-                var name = node.id
+                var name = node.id;
                 //if it has no ancestor, nothing to join
                 if (children_struct.topLevel.indexOf(name) > -1) {
                     return;
@@ -787,7 +777,7 @@ angular.module('contiv.graph')
                                 nodeNameSet.indexOf(n) == -1) {
                             nameToAdd.push(n);
                         }
-                    })
+                    });
                     nodeNameSet = nodeNameSet.concat(nameToAdd);
                 } else if (state.focusGroups.length === 0) {
                     //no focus groups means we are at top level
@@ -797,7 +787,7 @@ angular.module('contiv.graph')
                         if (nodeNameSet.indexOf(n) == -1) {
                             nameToAdd.push(n);
                         }
-                    })
+                    });
                     nodeNameSet = nodeNameSet.concat(nameToAdd);
                 }
 
@@ -812,7 +802,7 @@ angular.module('contiv.graph')
 
                 //remove all nodes that will be joined
                 for (var i = 0; i < to_be_deleted.length; i++) {
-                    var node_to_delete = to_be_deleted[i]
+                    var node_to_delete = to_be_deleted[i];
                     thisGraph.nodes.splice(thisGraph.nodes.indexOf(node_to_delete), 1);
                     thisGraph.spliceLinksForNode(node_to_delete);
                 }
@@ -833,7 +823,7 @@ angular.module('contiv.graph')
                 var newNodes = thisGraph.dataSource.processNodeData(nodesToProcess);
                 _.forEach(newNodes, function(n) {
                     n.radius = n.radius || thisGraph.consts.startRadius;
-                })
+                });
                 thisGraph.nodes = thisGraph.nodes.concat(newNodes);
 
                 thisGraph.links = thisGraph.dataSource.processLinkData(retData.linkData, thisGraph.nodes);
@@ -878,7 +868,7 @@ angular.module('contiv.graph')
                 }
                 _.forEach(nodeToRemove, function(n) {
                     thisGraph.nodes.splice(thisGraph.nodes.indexOf(n), 1);
-                })
+                });
 
                 thisGraph.initNodes();
                 thisGraph.initLinks();
@@ -923,7 +913,7 @@ angular.module('contiv.graph')
                     } else {
                         d.SplitJoinViewPolicy.type = "connected";
                     }
-                })
+                });
 
                 //setting back button
                 if (state.backButtonElem != null &&

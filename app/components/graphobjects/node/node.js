@@ -22,7 +22,7 @@ angular.module('contiv.graph')
 			constructor(x, y, id, text, radius) {
 				this.x = x;
 				this.y = y;
-				this.radius = radius,
+				this.radius = radius;
 				this.id = id;
 				this.text = text;
 				this.radius = radius;
@@ -103,7 +103,6 @@ angular.module('contiv.graph')
 						policy.destroy();
 						thisNode.nodePolicies.splice(index, 1);
 					}
-					return;
 				});
 				if (thisNode.nodePolicies.length === 0) {
 					thisNode.hasPolicy = false;

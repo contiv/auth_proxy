@@ -42,7 +42,7 @@ angular.module('contiv.graph')
                             d.x += d3.event.dx;
                             d.y += d3.event.dy;
                             return "translate(" + [ d.x,d.y ] + ")"
-                        })
+                        });
                         thisGraph.updateGraph();	
                     })
                     .on("dragend", function() {
@@ -88,7 +88,7 @@ angular.module('contiv.graph')
                     var zoomSetCallback = function() {
                     	zoom.scale(scale);
                     	zoom.translate(translate);
-                    }
+                    };
                     var translate_name = "zoom" + translate;
                     d3.select("." + this.consts.graphClass).transition(translate_name).delay(100).duration(750)
                         .attr('transform', 'translate(' + zoom.translate() + ') scale(' + zoom.scale() + ')').each("end", zoomSetCallback);
@@ -106,12 +106,9 @@ angular.module('contiv.graph')
              * @param      {HTML SVG}  svg    The svg to resize
              */
             onWindowResize(svg) {
-                var thisGraph = this;
-                var docEl = document.documentElement,
-                    bodyEl = document.getElementsByTagName('body')[0];
+                var bodyEl = document.getElementsByTagName('body')[0];
                 var offset = $('#visualization-graph').offset();
                 var divWidth = $('#visualization-graph').width();
-                var divHeight = $('#visualization-graph').height();
                 var height = bodyEl.clientHeight;
                 svg.attr("width", divWidth).attr("height", height - offset.top - 20);
 

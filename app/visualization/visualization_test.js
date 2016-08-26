@@ -6,65 +6,65 @@ describe('contiv.visualization module', function () {
 		"nodes": [
 			{
 				"name":"Web",
-				"id": 0,
+				"id": 0
 			},
 			{
 				"name":"Passenger App Container",
-				"id": 1,
+				"id": 1
 			},
 			{
 				"name":"Passenger App Container",
-				"id": 2,
+				"id": 2
 			},
 			{
 				"name":"Passenger Db Container",
-				"id": 3,
+				"id": 3
 			},
 			{
 				"name":"Driver App Container",
-				"id": 4,
+				"id": 4
 			},
 			{
 				"name":"Driver Db Container",
-				"id": 5,
-			},
+				"id": 5
+			}
 		],
 		"links": [
 			{
 				"source": 0,
 				"target": 1,
-				"weight": 5,
+				"weight": 5
 			},
 			{
 				"source": 1,
 				"target": 0,
-				"weight": 5,
+				"weight": 5
 			},
 			{
 				"source": 0,
 				"target": 2,
-				"weight": 3,
+				"weight": 3
 			},
 			{
 				"source": 1,
 				"target": 3,
-				"weight": 2,
+				"weight": 2
 			},
 			{
 				"source": 2,
 				"target": 3,
-				"weight": 3,
+				"weight": 3
 			},
 			{
 				"source": 0,
 				"target": 4,
-				"weight": 6,
+				"weight": 6
 			},
 			{
 				"source": 4,
 				"target": 5,
-				"weight": 10,
-			},
+				"weight": 10
+			}
 		]
 	};
 	var children_struct = {};
@@ -73,8 +73,8 @@ describe('contiv.visualization module', function () {
 	children_struct["Driver"] = ["Driver App", "Driver Db"];
 	children_struct["Passenger App"] = [1, 2];
 	children_struct["Passenger Db"] = [3];
-	children_struct["Driver App"] = [4]
-	children_struct["Driver Db"] = [5]
+	children_struct["Driver App"] = [4];
+	children_struct["Driver Db"] = [5];
 
 	var ancestors_struct = {};
 	ancestors_struct["Passenger App Container"] = ["Passenger App", "Passenger"];
@@ -147,7 +147,7 @@ describe('contiv.visualization module', function () {
 		var destroyFired = false;
 		graph.destroy = function() {
 			destroyFired = true;
-		}
+		};
 		$rootScope.$destroy();
 		expect(destroyFired).toBe(true);
 	});

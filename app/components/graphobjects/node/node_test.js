@@ -43,7 +43,7 @@ describe('node', function(){
                     expect(func(node)).toBe("translate(1,2)");
                 }
             }
-        }
+        };
         node.updateAttr(d3node, node);
     });
 
@@ -59,7 +59,7 @@ describe('node', function(){
             destroy: function(){
                 this.destroyed = true;
             }
-        }
+        };
         node.initialize("testGraph");
         node.installNodePolicy(policy);
         expect(node.hasPolicy).toBe(true);

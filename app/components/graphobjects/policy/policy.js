@@ -43,7 +43,7 @@ angular.module('contiv.graph')
                 if (this.initialized) {
                     return; 
                 }
-                this.initialized = true
+                this.initialized = true;
                 this.graph = graph;
             }
 
@@ -69,7 +69,7 @@ angular.module('contiv.graph')
             destroy() {}
         }
          return {
-            Policy: Policy,
+            Policy: Policy
         }
 }]);
 

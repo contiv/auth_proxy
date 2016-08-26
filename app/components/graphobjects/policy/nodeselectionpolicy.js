@@ -48,7 +48,7 @@ angular.module('contiv.graph')
                             d.x += d3.event.dx;
                             d.y += d3.event.dy;
                             return "translate(" + [ d.x,d.y ] + ")"
-                        })
+                        });
                         thisGraph.updateGraph();
                 	}
 
@@ -109,8 +109,7 @@ angular.module('contiv.graph')
              */
             mousedown(d3node, d) {
                 var thisGraph = this.graph,
-                    state = thisGraph.state.NodeSelectionPolicy,
-                    consts = thisGraph.consts.NodeSelectionPolicy;
+                    state = thisGraph.state.NodeSelectionPolicy;
                 d3.event.stopPropagation();
                 if (d3.event.ctrlKey) {
                     if (state.selectedNodes.indexOf(d) > -1) {
@@ -134,8 +133,7 @@ angular.module('contiv.graph')
              */
             mouseup(d3node, d) {
                 var thisGraph = this.graph,
-                    state = thisGraph.state.NodeSelectionPolicy,
-                    consts = thisGraph.consts.NodeSelectionPolicy;
+                    state = thisGraph.state.NodeSelectionPolicy;
                 if (!d3.event.ctrlKey) {
                     //if length is greater than 1, then we are moving multiple nodes
                     //leave them all highlighted
@@ -144,11 +142,10 @@ angular.module('contiv.graph')
                         this.removeSelectFromNode(d3node, d);
                     }
                 }
-                return;
             }
         }
         return {
-            Policy: NodeSelectionPolicy,
+            Policy: NodeSelectionPolicy
         }
 }]);
 

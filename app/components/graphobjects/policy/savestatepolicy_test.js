@@ -23,7 +23,7 @@ describe('SaveStatePolicy', function(){
                     destroy:function(state){
                         state.node[i.toString()] = this.stateVal;
                     }
-                }
+                };
 
             defaultNodePolicies.push(p) 
         }
@@ -37,7 +37,7 @@ describe('SaveStatePolicy', function(){
                     destroy:function(state){
                         state.path[i.toString()] = this.stateVal;
                     }
-                }
+                };
 
             defaultPathPolicies.push(p) 
         }
@@ -70,25 +70,25 @@ describe('SaveStatePolicy', function(){
         //testing saving value on destroy
         _.forEach(defaultNodePolicies, function(p) {
             p.stateVal = 2;
-        }) 
+        });
         _.forEach(defaultPathPolicies, function(p) {
             p.stateVal = 3;
-        }) 
+        });
 
         graph.destroy();
 
         _.forEach(defaultNodePolicies, function(p) {
             p.stateVal = 0;
-        }) 
+        });
         _.forEach(defaultPathPolicies, function(p) {
             p.stateVal = 0;
-        }) 
+        });
 
         graph.load(savestate);
 
         _.forEach(defaultNodePolicies, function(p) {
             expect(p.stateVal).toBe(2);
-        }) 
+        });
         _.forEach(defaultPathPolicies, function(p) {
             expect(p.stateVal).toBe(3);
         }) 

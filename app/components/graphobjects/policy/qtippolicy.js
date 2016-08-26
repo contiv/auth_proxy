@@ -34,13 +34,13 @@ angular.module('contiv.graph')
 
                 state.mousedown = false;
 
-                var consts = graph.consts.QTipPolicy = {};
+                graph.consts.QTipPolicy = {};
 
                 //Tracking mouse click state to make tooltip
                 //disappear if the node is being dragged.
                 $('#visualization-graph').mouseup(function(e) {
                     state.mouseup = false;
-                })
+                });
 
                 //override updateNewNodes and updateNewPaths
                 //to install qtip
@@ -48,7 +48,7 @@ angular.module('contiv.graph')
                 graph.updateNewNodes = function(newNodes) {
                     graphUpdateNewNodes.call(graph, newNodes);
                     thisPolicy.updateNewNodes(newNodes);
-                }
+                };
 
                 var graphUpdateNewPaths = graph.updateNewPaths;
                 graph.updateNewPaths = function(newPaths) {
@@ -117,8 +117,7 @@ angular.module('contiv.graph')
                 function attachQTip() {
                     //attaching qtip
                     newNodes.each(function(d) {
-                        var thisNode = this,
-                            nodeState = d.state;
+                        var thisNode = this;
 
                         var text;
 
@@ -128,7 +127,7 @@ angular.module('contiv.graph')
                             var selectorMap = thisGraph.dataSource.selectors[d.id];
                             var hasKeys = false;
                             for (var key in selectorMap) {
-                                var hasKeys = true;
+                                hasKeys = true;
                                 text += key + " : <i>"+ selectorMap[key] + "</i>,\n ";
                             }
                             if (hasKeys === false) {
@@ -141,7 +140,7 @@ angular.module('contiv.graph')
                             var labelsMap = thisGraph.dataSource.labels[d.id];
                             var hasKeys = false;
                             for (var key in labelsMap) {
-                                var hasKeys = true;
+                                hasKeys = true;
                                 text += key + " : <i>"+ labelsMap[key] + "</i>,\n ";
                             }
                             if (hasKeys === false) {
@@ -162,7 +161,7 @@ angular.module('contiv.graph')
                                     var api = $(thisNode).qtip('api');
                                     var offset = $('#graphContainer').offset();
                                     var position = [offset.left + ((d.x * thisGraph.dragSvg.scale()) + thisGraph.dragSvg.translate()[0]), 
-                                            offset.top + ((d.y +d.radius) * thisGraph.dragSvg.scale())  + thisGraph.dragSvg.translate()[1]]
+                                            offset.top + ((d.y +d.radius) * thisGraph.dragSvg.scale())  + thisGraph.dragSvg.translate()[1]];
                                     api.set('position.target', position);
                                     return !state.mousedown;
                                 }
@@ -172,11 +171,11 @@ angular.module('contiv.graph')
                                 solo: $('#visualization-graph')
                             },
                             style: {
-                                classes: 'qtip-blue qtip-shadow',
+                                classes: 'qtip-blue qtip-shadow'
                             },
                             position: {
                                 my: 'top center',
-                                at: 'bottom center', 
+                                at: 'bottom center'
                                 // target: position
                             },
                             hide: {
@@ -248,7 +247,7 @@ angular.module('contiv.graph')
 
         }
         return {
-            Policy: QTipPolicy,
+            Policy: QTipPolicy
         }
 }]);
 

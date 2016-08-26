@@ -131,7 +131,6 @@ angular.module('contiv.graph')
 		        //creating the nodeData
 		        var nodeData = [];
 		        for (var i = 0; i < node_names.length; i++) {
-		        	var newNode;
 		            var node_to_add = [];
 		            node_to_add.id = node_names[i];
 		            node_to_add.text = this.nodeIdToName(node_names[i]) || node_names[i];
@@ -157,13 +156,12 @@ angular.module('contiv.graph')
 		     * @return     {Array}  Node objects
 		     */
 		    processNodeData(nodeData) {
-		    	var thisDataSource = this;
 		        var nodes = [];
 		        _.forEach(nodeData, function(data) {
 		            var newNode = new VisualizerNode.Node(null, null, data.id, data.text,
 		                null, data.parent, data.ancestors, null, null);
 		            nodes.push(newNode);
-		        })
+		        });
 		        return nodes;
 		    }
 
@@ -187,7 +185,7 @@ angular.module('contiv.graph')
 			                return nodes[i];
 			            }
 			        }
-			    };
+			    }
 
 		        var links = [];
 		        //a mapping from source.id-target.id to the link added

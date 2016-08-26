@@ -54,7 +54,6 @@ angular.module('contiv.graph')
 		                        var yStart = d.yStart;
 		                        d.xStart = d.x;
 		                        d.yStart = d.y;
-		                        var zoom = thisGraph.dragSvg;
 		                        return d3.interpolateString("translate(" + xStart + "," + yStart + ")", "translate(" + d.x + "," + d.y + ")");
 		                    }
 		                    return d3.interpolateString("translate(" + d.x + "," + d.y + ")", "translate(" + d.x + "," + d.y + ")");
@@ -63,7 +62,7 @@ angular.module('contiv.graph')
 		}
 
 		return {
-			Node: VisualizerNode,
+			Node: VisualizerNode
 		}
 
 }]);

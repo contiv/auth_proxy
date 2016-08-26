@@ -5,7 +5,7 @@ angular.module('contiv.visualization')
     })
     .directive("visualizationGraph", ['$window', '$state', 'VisualizerGraph', 'PolicyService', 'VisualizerDataSource', 'StateSave',
         function($window, $state, VisualizerGraph, PolicyService, VisualizerDataSource, StateSave) {
-            function visualizationlistd3(scope, elem, attrs, VisualizerGraph, PolicyService, VisualizerDataSource, StateSave) {
+            function visualizationlistd3(scope, elem, VisualizerGraph, PolicyService, VisualizerDataSource, StateSave) {
                 //don't run until all initialization calls have returned
                 if (scope.nodes === undefined || scope.links === undefined || scope.children_struct === undefined ||
                     scope.ancestors_struct === undefined) {
@@ -23,8 +23,7 @@ angular.module('contiv.visualization')
                 nodes = dataSource.processNodeData(topData.nodeData);
                 links = dataSource.processLinkData(topData.linkData, nodes);
 
-                var docEl = document.documentElement,
-                    bodyEl = document.getElementsByTagName('body')[0];
+                var bodyEl = document.getElementsByTagName('body')[0];
               
                 var width = bodyEl.clientWidth,
                     height =  bodyEl.clientHeight;
@@ -67,10 +66,10 @@ angular.module('contiv.visualization')
                 restrict:'EA',
                 replace: false,
                 templateUrl: 'visualization/visualizationtemplate.html',
-                link: function(scope, elem, attrs){
+                link: function(scope, elem){
                     scope.$on('$destroy', function () { 
                         $('#visualization-graph').unbind();
-                        scope.visualizationGraph.destroy();})
+                        scope.visualizationGraph.destroy();});
                     scope.$watchGroup(['nodes', 'links', 'children_struct', 'ancestors_struct'],
                             function() {
                         if (scope.nodes != null &&
@@ -79,7 +78,7 @@ angular.module('contiv.visualization')
                                 scope.ancestors_struct != null) {
                             if (!scope.initialized) {
                                 scope.initialized = true;
-                                visualizationlistd3(scope, elem, attrs, VisualizerGraph, PolicyService, VisualizerDataSource, StateSave);
+                                visualizationlistd3(scope, elem, VisualizerGraph, PolicyService, VisualizerDataSource, StateSave);
                             } else {
                                 scope.visualizationGraph.dataSource.links = scope.links;
                                 scope.visualizationGraph.updateLinkData();

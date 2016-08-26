@@ -100,7 +100,6 @@ angular.module('contiv.graph')
 					if (policy.policyName === policyRemoveName) {
 						policy.destroy();
 						thisPath.pathPolicies.splice(index, 1);
-						return;
 					}
 				});
 				if (thisPath.pathPolicies.length === 0) {
@@ -116,14 +115,13 @@ angular.module('contiv.graph')
 			 * @param      {Object}  d         The matching link object
 			 */
 			pathPolicyEvent(event, d3path, d) {
-				var thisGraph = this;
 				_(d.pathPolicies).forEach(function(policy) {
 					policy[event](d3path, d);
 				})
 			}
 		}
 		return {
-			Link: Link,
+			Link: Link
 		}
 }]);
 

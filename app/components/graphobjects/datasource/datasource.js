@@ -75,12 +75,11 @@ angular.module('contiv.graph')
 		     * @return     {Array}  Node objects
 		     */
 		    processNodeData(nodeData) {
-		    	var thisDataSource = this;
 		        var nodes = [];
 		        _.forEach(nodeData, function(data) {
 		            var newNode = new Node.Node(null, null, data.id, data.text, null);
 		            nodes.push(newNode);
-		        })
+		        });
 		        return nodes;
 		    }
 
@@ -104,7 +103,7 @@ angular.module('contiv.graph')
 			                return nodes[i];
 			            }
 			        }
-			    };
+			    }
 
 		        var links = [];
 		        //transforming link data

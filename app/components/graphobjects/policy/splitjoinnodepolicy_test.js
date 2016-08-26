@@ -13,75 +13,75 @@ describe('SplitJoinNodePolicy', function(){
                 {
                     "name":"Web",
                     "id": 0,
-                    "ancestors": null,
+                    "ancestors": null
                 },
                 {
                     "name":"Passenger App Container",
                     "id": 1,
                     "parent": "Passenger App",
-                    "ancestors":"Passenger App, Passenger",
+                    "ancestors":"Passenger App, Passenger"
                 },
                 {
                     "name":"Passenger App Container",
                     "id": 2,
                     "parent": "Passenger App",
-                    "ancestors":"Passenger App, Passenger",
+                    "ancestors":"Passenger App, Passenger"
                 },
                 {
                     "name":"Passenger Db Container",
                     "id": 3,
                     "parent": "Passenger Db",
-                    "ancestors":"Passenger Db, Passenger",
+                    "ancestors":"Passenger Db, Passenger"
                 },
                 {
                     "name":"Driver App Container",
                     "id": 4,
                     "parent": "Driver App",
-                    "ancestors":"Driver App, Driver",
+                    "ancestors":"Driver App, Driver"
                 },
                 {
                     "name":"Driver Db Container",
                     "id": 5,
                     "parent": "Driver Db",
-                     "ancestors":"Driver Db, Driver",
-                },
+                     "ancestors":"Driver Db, Driver"
+                }
             ],
             "links": [
                 {
                     "source": 0,
                     "target": 1,
-                    "weight": 5,
+                    "weight": 5
                 },
                 {
                     "source": 1,
                     "target": 0,
-                    "weight": 5,
+                    "weight": 5
                 },
                 {
                     "source": 0,
                     "target": 2,
-                    "weight": 3,
+                    "weight": 3
                 },
                 {
                     "source": 1,
                     "target": 3,
-                    "weight": 2,
+                    "weight": 2
                 },
                 {
                     "source": 2,
                     "target": 3,
-                    "weight": 3,
+                    "weight": 3
                 },
                 {
                     "source": 0,
                     "target": 4,
-                    "weight": 6,
+                    "weight": 6
                 },
                 {
                     "source": 4,
                     "target": 5,
-                    "weight": 10,
-                },
+                    "weight": 10
+                }
             ]
         };
         children_struct = {};
@@ -90,8 +90,8 @@ describe('SplitJoinNodePolicy', function(){
         children_struct["Driver"] = ["Driver App", "Driver Db"];
         children_struct["Passenger App"] = [1, 2];
         children_struct["Passenger Db"] = [3];
-        children_struct["Driver App"] = [4]
-        children_struct["Driver Db"] = [5]
+        children_struct["Driver App"] = [4];
+        children_struct["Driver Db"] = [5];
 
         ancestors_struct = {};
         ancestors_struct["Passenger App Container"] = ["Passenger App", "Passenger"];
@@ -188,14 +188,13 @@ describe('SplitJoinNodePolicy', function(){
                     initNodes: function(){},
                     initLinks: function(){},
                     drag: {
-                        on: function(){return;}
+                        on: function(){}
                     },
                     
                     circles:{
                         nodes : [],
                         filter:function(f){
                             var nodematch = _.filter(this.nodes, f);
-                            var obj = this;
                             return {
                                 classed: function(className, set) {
                                     _.forEach(nodematch, function(n){
@@ -208,7 +207,7 @@ describe('SplitJoinNodePolicy', function(){
                             _.forEach(this.nodes, function(n){
                                 n.classed(className, set); 
                             })
-                        },
+                        }
                     }
                     
                 };
@@ -294,7 +293,7 @@ describe('SplitJoinNodePolicy', function(){
         policy.joinMultipleNodesEvent = function(){};
         graph.nodes = [{id:'Web', ancestors:[]}, 
                         {id:'Passenger', ancestors:[]},
-                        {id:'Driver', ancestors:[]}]
+                        {id:'Driver', ancestors:[]}];
 
         // basic splitting
         node = graph.findNodeById("Passenger");

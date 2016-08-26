@@ -26,7 +26,7 @@ angular.module('contiv.graph')
                 if (this.initialized) {
                     return;
                 }
-                super.initialize(graph)
+                super.initialize(graph);
                 var state = graph.state.SplitJoinNodePolicy = {};
                 state.splitNodes = []; 
             }
@@ -39,8 +39,7 @@ angular.module('contiv.graph')
              */
             dblclick(d3node, d) {
                 var thisGraph = this.graph,
-                    superState = thisGraph.state.SplitJoinNodePolicy,
-                    superConsts = thisGraph.consts.SplitJoinNodePolicy;
+                    superState = thisGraph.state.SplitJoinNodePolicy;
 
                 if (!d3.event.ctrlKey) {
                     if (superState.selectedNodes.indexOf(d) > -1) {
@@ -49,7 +48,7 @@ angular.module('contiv.graph')
                         this.removeAllSelectedNodes();
                         this.splitNode(d);
                     }
-                };
+                }
             }
 
             /**
@@ -60,10 +59,7 @@ angular.module('contiv.graph')
              */
             contextmenu(d3node, d) {
                 var thisGraph = this.graph,
-                    superState = thisGraph.state.NodeSelectionPolicy,
-                    superConsts = thisGraph.consts.NodeSelectionPolicy;
-
-                var thisGraph = this.graph;
+                    superState = thisGraph.state.NodeSelectionPolicy;
                 d3.event.preventDefault();
                 if (!d3.event.ctrlKey) {
                     //if try to join a highlighted node while multiple nodes are selected,
@@ -93,7 +89,7 @@ angular.module('contiv.graph')
             __splitNode(node) {
                 var thisGraph = this.graph,
                     state = thisGraph.state.SplitJoinNodePolicy;
-                var name = node.id
+                var name = node.id;
                 var children_struct = thisGraph.dataSource.children_struct;
                 //if it has no children to split into
                 if (children_struct[name] === undefined || _.isEmpty(children_struct[name])) {
@@ -134,7 +130,7 @@ angular.module('contiv.graph')
                 for (var i = 0; i < nodeData.length; i++) {
                     //calculating which of the nodes in retData[0] are new
                     if (new_nodes.indexOf(nodeData[i].id) > -1) {
-                        var id = nodeData[i].id
+                        var id = nodeData[i].id;
                         var text = nodeData[i].text;
                         var new_node = new VisualizerNode.Node(null, null, id, text, radius, parent, ancestors, xLoc, yLoc);
                         new_node.initialize(thisGraph);
@@ -156,9 +152,6 @@ angular.module('contiv.graph')
              * @param      {Node}  node    The node being split
              */
             splitNode(node) {
-                var thisGraph = this.graph,
-                    state = thisGraph.state.SplitJoinNodePolicy;
-                
                 var res = this.__splitNode(node);
                 if (res == null) {
                     return;
@@ -173,8 +166,7 @@ angular.module('contiv.graph')
              * @param      {Array}  nodes   Array of nodes to be split
              */
             splitMultipleNodes(nodes) {
-                var thisGraph = this.graph,
-                    state = thisGraph.state.SplitJoinNodePolicy;
+                var thisGraph = this.graph;
                 var resNodes = [];
                 for (var i = 0; i < nodes.length; i++) {
                     var res = this.__splitNode(nodes[i]);
@@ -215,7 +207,6 @@ angular.module('contiv.graph')
              */
             __joinNode(node) {
                 var thisGraph = this.graph,
-                    consts = thisGraph.consts.SplitJoinNodePolicy,
                     state = thisGraph.state.SplitJoinNodePolicy;
 
                 //check that node still exists
@@ -224,13 +215,12 @@ angular.module('contiv.graph')
                 }
 
                 var children_struct = thisGraph.dataSource.children_struct;
-                var name = node.id
+                var name = node.id;
                 //if it has no ancestor, nothing to join
                 if (children_struct.topLevel.indexOf(name) > -1) {
                     return;
                 }
 
-                var parent = node.parent;
                 var to_be_deleted = [];
                 var node_names_set = [];
                 for (var i = 0; i < thisGraph.nodes.length; i++) {
@@ -256,7 +246,7 @@ angular.module('contiv.graph')
                 var retData = thisGraph.dataSource.getFlowBetweenSet(node_names_set);
                 //remove all nodes that will be joined
                 for (var i = 0; i < to_be_deleted.length; i++) {
-                    var node_to_delete = to_be_deleted[i]
+                    var node_to_delete = to_be_deleted[i];
                     thisGraph.nodes.splice(thisGraph.nodes.indexOf(node_to_delete), 1);
                     thisGraph.spliceLinksForNode(node_to_delete);
                 }
@@ -275,9 +265,6 @@ angular.module('contiv.graph')
              * @param      {Node}  node    The node to join
              */
             joinNode(node) {
-                var thisGraph = this.graph,
-                    state = thisGraph.state.SplitJoinNodePolicy;
-
                 var newNode = this.__joinNode(node);
                 if (newNode != null) {
                 	this.joinNodeEvent(newNode);
@@ -290,9 +277,6 @@ angular.module('contiv.graph')
              * @param      {Array}  nodes   The nodes to join
              */
             joinMultipleNode(nodes) {
-                var thisGraph = this.graph,
-                    state = thisGraph.state.SplitJoinNodePolicy;
-
                 var new_nodes = [];
                 for (var i = 0; i < nodes.length; i++) {
                     var res = this.__joinNode(nodes[i]);
@@ -323,7 +307,7 @@ angular.module('contiv.graph')
             
         }
         return {
-            Policy: SplitJoinNodePolicy,
+            Policy: SplitJoinNodePolicy
         }
 }]);
 

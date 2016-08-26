@@ -17,6 +17,6 @@ angular.module('contiv.graph')
                     NodeSelectionPolicy: NodeSelectionPolicy.Policy,
                     SplitJoinNodePolicy: SplitJoinNodePolicy.Policy,
                     SplitJoinViewPolicy: SplitJoinViewPolicy.Policy,
-                    SaveStatePolicy: SaveStatePolicy.Policy,
+                    SaveStatePolicy: SaveStatePolicy.Policy
                 }
 }]);

@@ -70,7 +70,7 @@ angular.module('contiv.visualization')
                 },
                 transformRequest: [function(data) {
                     return angular.isObject(data) && String(data) !== '[object File]' ? param(data) : data;
-                  }],
+                  }]
             })
             .then(function successCallback(result) {
                 deferred.resolve(result.data);
@@ -81,31 +81,31 @@ angular.module('contiv.visualization')
         }
 
         function getGraphData() {
-            var url = ContivGlobals.VISUALIZATION_ENDPOINT
+            var url = ContivGlobals.VISUALIZATION_ENDPOINT;
             url += 'influx/query';
             var config = {
                 params: {
                     db:"telegraf",
-                    q:"SELECT BytesIn, BytesOut, EndpointIP, ProviderIP FROM httpjson_svcstats WHERE time > now() - 1m GROUP BY * LIMIT 1",
+                    q:"SELECT BytesIn, BytesOut, EndpointIP, ProviderIP FROM httpjson_svcstats WHERE time > now() - 1m GROUP BY * LIMIT 1"
                 }
-            }
+            };
             return makeGet(url, config);
         }
 
         function getStructureData() {
-            var url = ContivGlobals.VISUALIZATION_ENDPOINT
+            var url = ContivGlobals.VISUALIZATION_ENDPOINT;
             url += 'services';
             return makeGet(url);
         }
 
         function buildWhereQuery(points, type) {
             var query = "(";
-            query += type + "="
+            query += type + "=";
             query += "'" + points[0] + "' ";
             //starts at 1, so will not run if length is 1
             for (var i = 1; i < points.length; i++) {
                 query += 'OR ';
-                query += type + "="
+                query += type + "=";
                 query += "'" + points[i] + "' ";
             }
             query += ")";
@@ -113,10 +113,8 @@ angular.module('contiv.visualization')
         }
 
         function getEdgeData(sourceList, targetList, time) {
-            var direction;
-            var url = ContivGlobals.VISUALIZATION_ENDPOINT
+            var url = ContivGlobals.VISUALIZATION_ENDPOINT;
             url += 'influx/query';
-            if (sourceList == null || targetList == null);
 
             var data = {
                     db : "telegraf",
@@ -134,8 +132,7 @@ angular.module('contiv.visualization')
         
 
         function getOldEdgeData(sourceList, targetList) {
-            var direction;
-            var url = ContivGlobals.VISUALIZATION_ENDPOINT
+            var url = ContivGlobals.VISUALIZATION_ENDPOINT;
             url += 'influx/query';
             var data = {
                     db : "telegraf",
@@ -145,7 +142,7 @@ angular.module('contiv.visualization')
                          + " GROUP BY time(10s) fill(0) LIMIT 6; SELECT sum(" + 'BytesIn' + ") FROM httpjson_svcstats WHERE time > now() - 1m AND "
                          + buildWhereQuery(sourceList, "ProviderIP") +" AND " 
                          + buildWhereQuery(targetList, "EndpointIP") 
-                         + " GROUP BY time(10s) fill(0) LIMIT 6",
+                         + " GROUP BY time(10s) fill(0) LIMIT 6"
                      };
             return makePost(url, data);
         }
@@ -156,7 +153,7 @@ angular.module('contiv.visualization')
             getEdgeData: getEdgeData,
             getOldEdgeData: getOldEdgeData
         }
-    }])
+    }]);
 
 
 

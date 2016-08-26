@@ -1,11 +1,10 @@
 
 
 angular.module('contiv.visualization')
-    .directive("visualizationEdge", ['$window', '$state', 'VisualizationService',
-        function($window, $state, VisualizationService) {
-            function visualizationEdgeD3(scope, elem, attrs, d3, VisualizationService) {
-                var docEl = document.documentElement,
-                    bodyEl = document.getElementsByTagName('body')[0];
+    .directive("visualizationEdge", ['$window',
+        function($window) {
+            function visualizationEdgeD3(scope, d3) {
+                var bodyEl = document.getElementsByTagName('body')[0];
               
                 var width = bodyEl.clientWidth - 400,
                     height =  bodyEl.clientHeight - 400;
@@ -15,7 +14,7 @@ angular.module('contiv.visualization')
                 // /** MAIN SVG **/
                 var limit = 59,
                 duration = 750,
-                now = new Date(Date.now() - duration)
+                now = new Date(Date.now() - duration);
 
                 var groups = {
                     current: {
@@ -25,14 +24,14 @@ angular.module('contiv.visualization')
                             return scope.oldEdgeData[Math.floor(d/10)] || 0;
                         })
                     }
-                }
+                };
                 var x = d3.time.scale()
                     .domain([now - (limit - 2), now - duration])
-                    .range([0, width])
+                    .range([0, width]);
 
                 var y = d3.scale.linear()
                     .domain([0, d3.max(groups.current.data, function (d) { return d + 10; })])
-                    .range([height, 0])
+                    .range([height, 0]);
 
                 var line = d3.svg.line()
                     .interpolate('basis')
@@ -41,7 +40,7 @@ angular.module('contiv.visualization')
                     })
                     .y(function(d) {
                         return y(d)
-                    })
+                    });
 
                 var xSvg = d3.select('.graph').append('svg')
                     .attr('width', 25)
@@ -64,12 +63,12 @@ angular.module('contiv.visualization')
                 var axis = svg.append('g')
                     .attr('class', 'x axis')
                     .attr('transform', 'translate(0,' + height + ')')
-                    .call(x.axis = d3.svg.axis().scale(x).orient('bottom'))
+                    .call(x.axis = d3.svg.axis().scale(x).orient('bottom'));
 
                 var paths = svg.append('g');
 
                 for (var name in groups) {
-                    var group = groups[name]
+                    var group = groups[name];
                     group.path = paths.append('path')
                         .data([group.data])
                         .attr('class', name + ' group')
@@ -77,17 +76,17 @@ angular.module('contiv.visualization')
                 }
 
                 function tick() {
-                    now = new Date()
+                    now = new Date();
 
                     // Add new values
                     for (var name in groups) {
-                        var group = groups[name]
-                        group.data.push(scope.edgeData || 0)
+                        var group = groups[name];
+                        group.data.push(scope.edgeData || 0);
                         group.path.attr('d', line)
                     }
 
                     // Shift domain
-                    x.domain([now - (limit - 2) * duration, now - duration])
+                    x.domain([now - (limit - 2) * duration, now - duration]);
 
                     // Slide x-axis left
                     axis.transition()
@@ -107,14 +106,12 @@ angular.module('contiv.visualization')
                         .ease('linear')
                         .attr('transform', 'translate(' + x(now - (limit - 1) * duration) + ')')
                         .each('end', function() {
-                            var d = new Date();
-                            var t = d.getSeconds();
                             tick()
-                        })
+                        });
 
                     // Remove oldest data point from each group
                     for (var name in groups) {
-                        var group = groups[name]
+                        var group = groups[name];
                         group.data.shift()
                     }
                 }
@@ -125,15 +122,15 @@ angular.module('contiv.visualization')
                 restrict:'EA',
                 replace: false,
                 templateUrl: 'visualization/visualizationedgetemplate.html',
-                link: function(scope, elem, attrs){
+                link: function(scope){
                     scope.$watchGroup(['edgeData', 'oldEdgeData'],
                         function() {
                             if (scope.edgeData != null &&
                                     scope.oldEdgeData != null ) {
                                 if (!scope.initialize) {
-                                    scope.initialize = true
+                                    scope.initialize = true;
                                     var d3 = $window.d3;  
-                                    visualizationEdgeD3(scope, elem, attrs, d3, VisualizationService);
+                                    visualizationEdgeD3(scope, d3);
                                 }
                             } 
                         });

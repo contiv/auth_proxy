@@ -14,15 +14,13 @@ describe('NodeSelectionPolicy', function(){
                     consts:{},
                     nodes: [],
                     drag: {
-                        on: function(){return;}
+                        on: function(){}
                     },
                     
                     circles:{
                         nodes : [],
                         filter:function(f){
                             var nodematch = _.filter(this.nodes, f);
-                            // console.log(this.nodes, nodematch);
-                            var obj = this;
                             return {
                                 classed: function(className, set) {
                                     _.forEach(nodematch, function(n){
@@ -35,7 +33,7 @@ describe('NodeSelectionPolicy', function(){
                             _.forEach(this.nodes, function(n){
                                 n.classed(className, set); 
                             })
-                        },
+                        }
                     }
                 };
     });
@@ -64,7 +62,7 @@ describe('NodeSelectionPolicy', function(){
                     } else {
                         this.className = null;
                     }
-                },
+                }
             }
         }
         var state = graph.state.NodeSelectionPolicy;

@@ -46,8 +46,8 @@ angular.module('contiv.graph')
                     startRadius: 50,
                     maxRadius: 60,
                     padding: 5,
-                    displayOffset: 60,
-                }
+                    displayOffset: 60
+                };
 
                 svg.on("mouseover", function(d){
                         thisGraph.svgPolicy["mouseover"].call(this, d);    
@@ -66,7 +66,7 @@ angular.module('contiv.graph')
                     })
                     .on("mouseup", function(d){
                         thisGraph.svgPolicy["mouseup"].call(this, d);    
-                    })
+                    });
 
                 // define arrow markers for graph links
                 var defs = svg.append('svg:defs');
@@ -106,11 +106,11 @@ angular.module('contiv.graph')
                 thisGraph.setPositions();
                 var resizeFunc = function() {
                     thisGraph.onWindowResize(svg);
-                }
+                };
 
                 thisGraph.bindings = {
                     resize:resizeFunc
-                }
+                };
                 $(window).resize(resizeFunc);
             }
 
@@ -181,7 +181,7 @@ angular.module('contiv.graph')
                     if (d.id === id) {
                         d3Node = d3.select(this);
                     }
-                })
+                });
                 return d3Node;
             }
 
@@ -234,7 +234,6 @@ angular.module('contiv.graph')
                     if (policy.policyName === policyRemoveName) {
                         policy.destroy();
                         thisGraph.defaultNodePolicies.splice(index, 1);
-                        return;
                     }
                 });
             }
@@ -284,7 +283,6 @@ angular.module('contiv.graph')
                     if (policy.policyName === policyRemoveName) {
                         policy.destroy();
                         thisGraph.defaultPathPolicies.splice(index, 1);
-                        return;
                     }
                 });
             }
@@ -383,7 +381,7 @@ angular.module('contiv.graph')
             addNode(node) {
                 var thisGraph = this;
                 thisGraph.nodes.push(node);
-                node.initialize(thisGraph)
+                node.initialize(thisGraph);
                 thisGraph.updateGraph();
             };
 
@@ -408,7 +406,7 @@ angular.module('contiv.graph')
             addLink(link) {
                 var thisGraph = this;
                 thisGraph.links.push(link);
-                link.initialize(thisGraph)
+                link.initialize(thisGraph);
                 thisGraph.updateGraph();
             };
 
@@ -420,7 +418,7 @@ angular.module('contiv.graph')
             removeLink(link) {
                 var thisGraph = this;
                 thisGraph.links.splice(thisGraph.links.indexOf(link), 1);
-                link.initialize(thisGraph)
+                link.initialize(thisGraph);
                 thisGraph.updateGraph();
             }
 
@@ -430,7 +428,6 @@ angular.module('contiv.graph')
              * @param      {Path}  paths   List of paths
              */
             updateExistingPaths(paths) {
-                var thisGraph = this;
                 paths.each(function(d) {
                     d.updateAttr(d3.select(this), d);
                 });
@@ -448,7 +445,7 @@ angular.module('contiv.graph')
 
                 newPaths.each(function(d) {
                     d.newPathAttr(d3.select(this), d);
-                })
+                });
 
                 //if node doesn't have its own policy, use default for the graph
                 newPaths.on("mouseover", function(d){
@@ -682,7 +679,6 @@ angular.module('contiv.graph')
              * @return     {Object}  width and height as properties 
              */
             d3ForceBounds() {
-                var offset = consts.displayOffset;
                 var svgWidth = $('#visualization-graph').width();
                 var svgHeight = $('#visualization-graph').height();
 
@@ -697,8 +693,7 @@ angular.module('contiv.graph')
              * @param      {Function}  callback  The callback
              */
             setForce(callback) {
-                var thisGraph = this,
-                    consts = thisGraph.consts;
+                var thisGraph = this;
 
                 var nodes = thisGraph.nodes;
                 var links = thisGraph.links;
@@ -737,7 +732,7 @@ angular.module('contiv.graph')
                 force.start();
                 var k = 0;
                 while ((force.alpha() > 1e-2) && (k < 150)) {
-                    force.tick(),
+                    force.tick();
                     k = k + 1;
                 }
                 force.stop();
@@ -753,9 +748,7 @@ angular.module('contiv.graph')
              * also sets the radius of the nodes
              */
             setPositions() {
-                var thisGraph = this,
-                    consts = thisGraph.consts,
-                    state = thisGraph.state;
+                var thisGraph = this;
 
                 var offset = thisGraph.consts.displayOffset;
                 var svgWidth = $('#visualization-graph').width();
@@ -770,7 +763,7 @@ angular.module('contiv.graph')
                     nodes[i].radius = nodes[i].radius || thisGraph.consts.startRadius;
                     if (nodes[i].x == null || nodes[i].y == null) {
                         // nodes[i].xStart = width/2  + nodes[i].radius + offset
-                        nodes[i].x = width/2  + nodes[i].radius + offset
+                        nodes[i].x = width/2  + nodes[i].radius + offset;
                         // nodes[i].yStart = height/2 + nodes[i].radius + offset
                         nodes[i].y = height/2 + nodes[i].radius + offset
                     }

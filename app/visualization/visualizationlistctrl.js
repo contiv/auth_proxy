@@ -26,7 +26,7 @@ angular.module('contiv.visualization')
                             name: endpoint,
                             id: endpoint,
                             parent: null,
-                            ancestors: null,
+                            ancestors: null
                         };
                         nodes.push(node);
                         nodeIds.push(endpoint);
@@ -36,7 +36,7 @@ angular.module('contiv.visualization')
                             name: provider,
                             id: provider,
                             parent: null,
-                            ancestors: null,
+                            ancestors: null
                         };
                         nodes.push(node);
                         nodeIds.push(provider);
@@ -46,18 +46,18 @@ angular.module('contiv.visualization')
                         source: endpoint,
                         target: provider,
                         weight: series.values[0][2]
-                    }
+                    };
                     links.push(linkOut);
                     var linkIn = {
                         source: provider,
                         target: endpoint,
                         weight: series.values[0][1]
-                    }
+                    };
                     links.push(linkIn);
-                })
+                });
                 $scope.nodes = nodes;
                 $scope.links = links;
-            }
+            };
             //initial call
             VisualizationService.getGraphData().then(successGraphDataCallback, function errorCallback(result) {
                 //will fail silently, graph won't be displayed

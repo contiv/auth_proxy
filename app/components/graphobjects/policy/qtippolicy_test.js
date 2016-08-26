@@ -15,11 +15,9 @@ describe('policy', function(){
                 consts:{}, 
                 updateNewNodes:function(n){
                     this.state.testNodesOld = 'oldNewNodes';
-                    return;
                 },
                 updateNewPaths:function(n) {
                     this.state.testPathsOld = 'oldNewPaths';
-                    return;
                 } 
             };
     });
@@ -36,12 +34,10 @@ describe('policy', function(){
         var policy = new policyFactory.Policy();
         policy.updateNewNodes = function(n){
             state.testNodesNew = 'qtip';
-            return;
-        },
+        };
         policy.updateNewPaths = function() {
             state.testPathsNew = 'qtip';
-            return;
-        }
+        };
         policy.initialize(graph);
         //checking policy is only modifying state and consts
         //and graph functions
@@ -52,7 +48,7 @@ describe('policy', function(){
         var keys = 0;
         for (var k in graph) {
             keys++;
-        };
+        }
         expect(keys).toBe(4);
         var state = graph.state.QTipPolicy;
         var graphState = graph.state;
@@ -67,7 +63,7 @@ describe('policy', function(){
         expect(graphState.testPathsOld != null).toBe(true);
         expect(state.testPathsNew != null).toBe(true);
 
-    })
+    });
 
     it('checking mouse up and down trigger', function() {
         var policy = new policyFactory.Policy();

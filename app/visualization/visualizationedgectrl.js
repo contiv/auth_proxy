@@ -9,7 +9,7 @@ angular.module('contiv.visualization')
                     sourceName: null,
                     targetName: null,
                     sourceList: null,
-                    targetList: null,
+                    targetList: null
                 },
                 controller: 'VisualizationEdgeCtrl as visualizationedgeCtrl',
                 templateUrl: 'visualization/visualizationedge.html'
@@ -48,7 +48,6 @@ angular.module('contiv.visualization')
                             $scope.edgeData = data;
                             $scope.edgeDataTime = t;
                         }, function errorCallback(result) {
-                            console.log("couldn't load current link data");
                         });
                     }, 3000);
 
@@ -83,7 +82,6 @@ angular.module('contiv.visualization')
                     $scope.targetList = targetList;
                     $scope.oldEdgeData = edgeData;
                 }, function errorCallback(result) {
-                    console.log("couldn't load last minute of link data");
                 });
     }]);
 
