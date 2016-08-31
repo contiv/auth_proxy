@@ -12,7 +12,8 @@ def extract(arg):
 	url = arg + ":9090/svcstats"
 	res = urllib2.urlopen(url).read()
 	parsed = json.loads(str(res))
-	for key in parsed:
+	for item in parsed:
+		key = item['EndpointIP']
 		print('"' + arg + ':4000/' + key + '",')
 	return
 # print sys.stdin.read()

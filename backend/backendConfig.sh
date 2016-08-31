@@ -29,7 +29,7 @@ echo 'tag_keys = ["EndpointIP","ProviderIP","ServiceIP"]' >> $filename
 
 nohup docker run --net=host influxdb &
 wget https://dl.influxdata.com/telegraf/releases/telegraf-0.13.1.x86_64.rpm
-yes | sudo yum localinstall telegraf-0.13.1.x86_64.rpm
+yes | yum localinstall telegraf-0.13.1.x86_64.rpm
 nohup telegraf -config telegrafGen.conf &
 
 

@@ -25,19 +25,12 @@ class myHandler(BaseHTTPRequestHandler):
 
 	#Handler for the GET requests
 	def do_GET(self):
-		# print(self.path)
 		svcstats = urllib2.urlopen("http://localhost:9090/svcstats").read()
 		svcstatsjson = json.loads(str(svcstats))
 		self.send_response(200)
 		self.send_header('Content-type','application/json')
 		self.end_headers()
-		# Send the html message
-		# self.wfile.write("Hello World !")
-		# print(self.path)
-		# print(svcstatsjson)
-		# print(svcstats)
 		if ('/services' in self.path):
-			# containers = [key for key in svcstatsjson]
 			serviceInspectNames = []
 
 			services = urllib2.urlopen("http://localhost:9999/api/v1/serviceLBs/").read()
@@ -85,17 +78,31 @@ class myHandler(BaseHTTPRequestHandler):
 			ret["serviceSelectors"] = selectorMap
 			self.wfile.write(json.dumps(ret))
 		else:
-			path = self.path[1:];
-			svcstat = svcstatsjson[path]
+			endpointKey = self.path[1:];
+			endpointItem = None
+			for item in svcstatsjson:
+				if item['EndpointIP'] == endpointKey:
+					endpointItem = item
+					break
 			ret = {}
-			ret["EndpointIP"] = str(svcstat["EndpointIP"])
-			ret["ServiceIP"] = str(svcstat["SvcStats"].keys()[0])
+			ret["EndpointIP"] = str(endpointItem["EndpointIP"])
+			#no point in checking for more services right now, as
+			#telegraf http-json plugin can't handle multiple writes for a single 
+			#scrape
+			ret["ServiceIP"] = str(endpointItem["SvcStats"].keys()[0])
 			service = ret["ServiceIP"];
-			ret["ProviderIP"] = str(svcstat["SvcStats"][service]["ProviderIP"])
-			ret["BytesIn"] = int(svcstat["SvcStats"][service]["Stats"]["BytesIn"])
-			ret["BytesOut"] = int(svcstat["SvcStats"][service]["Stats"]["BytesOut"]) 
-			ret["PacketsIn"] = int(svcstat["SvcStats"][service]["Stats"]["PacketsIn"]) 
-			ret["PacketsOut"] = int(svcstat["SvcStats"][service]["Stats"]["PacketsOut"]) 
+			providerStats = endpointItem["SvcStats"][service]["ProvStats"]
+			#finding which of the two keys is provider key
+			#currently merging the stats to create bytes in and bytes out
+			#for a pair, not individually
+			providerKeys = providerStats.keys()
+			ret['ProviderIP'] = str(providerKeys[0]);
+			if ret['ProviderIP'] == ret['EndpointIP']:
+				ret['ProviderIP'] = str(providerKeys[1])
+			ret["BytesIn"] = int(providerStats[ret['ProviderIP']]['BytesIn'])
+			ret["PacketsIn"] = int(providerStats[ret['ProviderIP']]['PacketsIn'])
+			ret["BytesOut"] = int(providerStats[ret['EndpointIP']]['BytesOut'])
+			ret["PacketsOut"] = int(providerStats[ret['EndpointIP']]['PacketsOut'])
 			self.wfile.write(json.dumps(ret))
 		return
 

@@ -14,6 +14,8 @@ angular.module('contiv.graph')
                 this.$state = $state;
             }
 
+
+
             /**
              * Generates a list of all child containers of the service
              * Can handle nested services.
@@ -23,14 +25,19 @@ angular.module('contiv.graph')
             generateList(id) {
                 var thisPolicy = this;
                 var retList = [];
-                var nodeIds = this.graph.dataSource.children_struct[id];
-                _.forEach(nodeIds, function(childId) {
-                    if (thisPolicy.graph.dataSource.hasChild(childId) === true) {
-                        retList.concat(thisPolicy.generateList(childId));
-                    } else {
-                        retList.push(childId);
+                var generateListHelper = function(id, retList) {
+                    var nodeIds = thisPolicy.graph.dataSource.children_struct[id];
+                    for (var i = 0; i < nodeIds.length; i++) {
+                        var childId = nodeIds[i];
+                        if (thisPolicy.graph.dataSource.hasChild(childId) === true) {
+                            var subRetList = generateListHelper(childId, retList);
+                            retList.concat(subRetList);
+                        } else {
+                            retList.push(childId);
+                        }
                     }
-                });
+                }
+                generateListHelper(id, retList);
                 return retList
             }
 

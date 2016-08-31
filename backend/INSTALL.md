@@ -20,11 +20,11 @@ location /visualization/service {
 If you have no containers running, you can run serviceInit.sh to start some sample services.
 On Node 1:
 ```
-$ sudo ./serviceInit.sh
+$ ./serviceInit.sh
 ```
 And to add endpoint containers on other nodes:
 ```
-sudo ./serviceInit.sh -c
+./serviceInit.sh -c
 ```
 
 ##Step 3: Setting up the python servers
@@ -36,5 +36,5 @@ $ python telegrafdatasource.py
 ##Step 4: Installing and Running telegraf and InfluxDB:
 On Node 1:
 ```
-$ ./backendConfig.sh
+$ sudo ./backendConfig.sh
 ```
