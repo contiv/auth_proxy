@@ -43,6 +43,14 @@
         <label for="allowedVxlanRange">Allowed vxlan range</label>
         <input type="text" id="allowedVxlanRange" name="allowedVxlanRange" ng-model="networkSettingCtrl.setting['vxlans']" placeholder="1-10000" required ng-pattern="networkSettingCtrl.vxlanPattern">
     </div>
+    <div class="field">
+        <label for="forwardingmode">Forwarding mode</label>
+        <select id="forwardingmode" name="forwardingmode" class="ui dropdown" ng-model="networkSettingCtrl.setting['fwdMode']" required>
+            <option value="">-- Please select the network forwarding mode --</option>
+            <option value="bridge">bridge</option>
+            <option value="routing">routing</option>
+        </select>
+    </div>
 
     <div class="ui grid">
         <div class="right aligned sixteen wide column">

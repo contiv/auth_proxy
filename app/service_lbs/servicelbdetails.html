@@ -39,7 +39,7 @@
         </button>
     </div>
 </div>
-<div class="ui secondary pointing menu">
+<div class="ui secondary pointing menu" ng-if="servicelbDetailsCtrl.mode=='details'">
     <div class="ui container">
         <a class="blue item" ui-sref="contiv.menu.servicelbs.details.info({key:servicelbDetailsCtrl.servicelb.key})" ui-sref-active="active">
             <i class="details icon"></i>

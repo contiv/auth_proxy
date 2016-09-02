@@ -23,7 +23,7 @@ angular.module('contiv.settings')
 
                     }, function errorCallback(result) {
                         CRUDHelperService.stopLoader(networkSettingCtrl);
-                        CRUDHelperService.showServerError(networkSettingCtrl, result);
+                        CRUDHelperService.showServerError(networkSettingCtrl, result.data);
                     });
                 }
             }
