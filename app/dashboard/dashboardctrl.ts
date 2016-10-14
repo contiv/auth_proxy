@@ -1,79 +1,84 @@
 /**
  * Created by vjain3 on 3/11/16.
  */
-angular.module('contiv.dashboard')
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider
-            .state('contiv.menu.dashboard', {
-                url: '/dashboard',
-                controller: 'DashboardCtrl as dashboardCtrl',
-                templateUrl: 'dashboard/dashboard.html'
-            });
-    }])
-    .controller('DashboardCtrl',
-        [
-            '$scope',
-            '$interval',
-            'NodesModel',
-            'NetworksModel',
-            'VolumesModel',
-            'ApplicationGroupsModel',
-            'PoliciesModel',
-            'StoragePoliciesModel',
-            function ($scope,
-                      $interval,
-                      NodesModel,
-                      NetworksModel,
-                      VolumesModel,
-                      ApplicationGroupsModel,
-                      PoliciesModel,
-                      StoragePoliciesModel) {
-                var dashboardCtrl = this;
+import { Component, OnDestroy } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { ApplicationGroupsModel } from "../components/models/applicationgroupsmodel";
+import { PoliciesModel } from "../components/models/policiesmodel";
+import { StoragePoliciesModel } from "../components/models/storagepoliciesmodel";
+import { NodesModel } from "../components/models/nodesmodel";
+import { NetworksModel } from "../components/models/networksmodel";
+import { VolumesModel } from "../components/models/volumesmodel";
 
-                function getDashboardInfo(reload) {
-                    NodesModel.get(reload)
-                        .then(function (result) {
-                            dashboardCtrl.nodes = result.length;
-                        });
-                    NetworksModel.get(reload)
-                        .then(function (result) {
-                            dashboardCtrl.networks = result.length;
-                        });
-                    VolumesModel.get(reload)
-                        .then(function (result) {
-                            dashboardCtrl.volumes = result.length;
-                        });
-                    ApplicationGroupsModel.get(reload)
-                        .then(function (result) {
-                            dashboardCtrl.groups = result.length;
-                        });
-                    PoliciesModel.get(reload)
-                        .then(function (result) {
-                            dashboardCtrl.networkpolicies = result.length;
-                        });
-                    StoragePoliciesModel.get(reload)
-                        .then(function (result) {
-                            dashboardCtrl.storagepolicies = result.length;
-                        });
-                }
+@Component({
+    selector: 'dashboard',
+    templateUrl: 'dashboard/dashboard.html'
 
-                //Will display 0 if there is error fetching data
-                dashboardCtrl.nodes = 0;
-                dashboardCtrl.networks = 0;
-                dashboardCtrl.volumes = 0;
-                dashboardCtrl.groups = 0;
-                dashboardCtrl.networkpolicies = 0;
-                dashboardCtrl.storagepolicies = 0;
+})
+export class DashboardComponent implements OnDestroy {
+    nodes: number = 0;
+    networks: number = 0;
+    volumes: number = 0;
+    groups: number = 0;
+    networkpolicies: number = 0;
+    storagepolicies: number = 0;
+    observable: Observable<any>;
+    subscription: Subscription;
 
-                //Load from cache for quick display initially
-                getDashboardInfo(false);
+    constructor(private nodesModel:NodesModel,
+                private networksModel:NetworksModel,
+                private volumesModel:VolumesModel,
+                private applicationGroupsModel:ApplicationGroupsModel,
+                private policiesModel:PoliciesModel,
+                private storagePoliciesModel:StoragePoliciesModel) {
+        var dashboardComponent = this;
 
-                var promise = $interval(function () {
-                    getDashboardInfo(true);
-                }, 5000);
-
-                //stop polling when user moves away from the page
-                $scope.$on('$destroy', function () {
-                    $interval.cancel(promise);
+        function getDashboardInfo(reload) {
+            nodesModel.get(reload)
+                .then(function (result) {
+                    dashboardComponent.nodes = result.length;
                 });
-            }]);
+            networksModel.get(reload)
+                .then(function (result) {
+                    dashboardComponent.networks = result.length;
+                });
+            volumesModel.get(reload)
+                .then(function (result) {
+                    dashboardComponent.volumes = result.length;
+                });
+            applicationGroupsModel.get(reload)
+                .then(function (result) {
+                    dashboardComponent.groups = result.length;
+                });
+            policiesModel.get(reload)
+                .then(function (result) {
+                    dashboardComponent.networkpolicies = result.length;
+                });
+            storagePoliciesModel.get(reload)
+                .then(function (result) {
+                    dashboardComponent.storagepolicies = result.length;
+                });
+        }
+
+        //Load from cache for quick display initially
+        getDashboardInfo(false);
+
+        dashboardComponent.observable = Observable.create(function subscribe(observer) {
+            var id = setInterval(() => {
+                observer.next();
+            }, 5000);
+            return function unsubscribe() {
+                clearInterval(id);
+            }
+        });
+        dashboardComponent.subscription = dashboardComponent.observable.subscribe(() => {
+            getDashboardInfo(true);
+        });
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+    }
+
+}

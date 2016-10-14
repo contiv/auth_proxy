@@ -1,4 +1,10 @@
-angular.module('contiv.models')
-    .factory('OrganizationsModel', ['$http', '$q', function ($http, $q) {
-        return new Collection($http, $q, ContivGlobals.ORGANIZATIONS_ENDPOINT);
-    }]);
+import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
+import {Collection} from "./collection";
+
+@Injectable()
+export class OrganizationsModel extends Collection {
+    constructor(http: Http) {
+        super(http, ContivGlobals.ORGANIZATIONS_ENDPOINT);
+    }
+}

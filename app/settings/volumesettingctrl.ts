@@ -4,7 +4,7 @@ angular.module('contiv.settings')
             .state('contiv.menu.settings.details.volumes', {
                 url: '/volumes',
                 controller: 'VolumeSettingCtrl as volumeSettingCtrl',
-                templateUrl: '/settings/volumesettings.html'
+                templateUrl: 'settings/volumesettings.html'
             })
         ;
     }])

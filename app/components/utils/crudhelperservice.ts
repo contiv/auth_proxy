@@ -1,30 +1,25 @@
 /**
  * Created by vjain3 on 4/29/16.
  */
-angular.module('contiv.utils')
-    .factory('CRUDHelperService', function () {
-            function startLoader(controller) {
-                controller.showLoader = true;
-            }
+import { Injectable } from '@angular/core';
 
-            function stopLoader(controller) {
-                controller.showLoader = false;
-            }
+@Injectable()
+export class CRUDHelperService {
 
-            function showServerError(controller, message) {
-                controller.showServerError = true;
-                controller.serverErrorMessage = message;
-            }
+    startLoader(controller) {
+        controller.showLoader = true;
+    }
 
-            function hideServerError(controller) {
-                controller.showServerError = false;
-            }
+    stopLoader(controller) {
+        controller.showLoader = false;
+    }
 
-            return {
-                startLoader: startLoader,
-                stopLoader: stopLoader,
-                showServerError: showServerError,
-                hideServerError: hideServerError
-            }
-        }
-    );
+    showServerError(controller, message) {
+        controller.showServerError = true;
+        controller.serverErrorMessage = message;
+    }
+
+    hideServerError(controller) {
+        controller.showServerError = false;
+    }
+}

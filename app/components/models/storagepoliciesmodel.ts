@@ -1,42 +1,39 @@
 /**
  * Created by vjain3 on 4/18/16.
  */
-angular.module('contiv.models')
-    .factory('StoragePoliciesModel', ['$http', '$q', function ($http, $q) {
-        /**
-         * StoragePoliciesCollection extends from BaseCollection
-         * @param $http
-         * @param $q
-         * @constructor
-         */
-        function StoragePoliciesCollection($http, $q) {
-            Collection.call(this, $http, $q, ContivGlobals.STORAGEPOLICIES_ENDPOINT);
-        }
+import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
+import { Collection } from "./collection";
+import * as _ from 'lodash';
 
-        StoragePoliciesCollection.prototype = Object.create(Collection.prototype);
+@Injectable()
+export class StoragePoliciesModel extends Collection {
+    constructor(http: Http) {
+        super(http, ContivGlobals.STORAGEPOLICIES_ENDPOINT);
+    }
 
-        StoragePoliciesCollection.prototype.create = function (model) {
-            var collection = this;
+    create(model) {
+        var collection = this;
+        var url = collection.url + model.name;
+        return super.create(model, url);
+    }
+
+    save(model) {
+        var collection = this;
+        var promise = new Promise(function (resolve, reject) {
             var url = collection.url + model.name;
-            return Collection.prototype.create.call(collection, model, url);
-        };
-
-        StoragePoliciesCollection.prototype.save = function (model) {
-            var collection = this;
-            var deferred = collection.$q.defer();
-            var url = collection.url + model.name;
-            collection.$http.post(url, model)
+            collection.http.post(url, model).map((res: Response) => res.json()).toPromise()
                 .then(function successCallback(response) {
                     _.remove(collection.models, function (n) {
                         return n.name == model.name;
                     });
                     collection.models.push(model);
-                    deferred.resolve(collection.extract(response));
+                    resolve(response);
                 }, function errorCallback(response) {
-                    deferred.reject(collection.extract(response));
+                    reject(response);
                 });
-            return deferred.promise;
-        };
-        var policiesmodel = new StoragePoliciesCollection($http, $q);
-        return policiesmodel;
-    }]);
+        });
+        return promise;
+    }
+
+}

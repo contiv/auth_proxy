@@ -1,15 +1,19 @@
-angular.module('contiv.models')
-    .factory('PoliciesModel', ['$http', '$q', function ($http, $q) {
-        var policiesmodel = new Collection($http, $q, ContivGlobals.POLICIES_ENDPOINT);
+import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
+import { Collection } from "./collection";
 
-        /**
-         * Generate policy key to save policy on server
-         * @param policy
-         * @returns {string}
-         */
-        policiesmodel.generateKey = function (policy) {
-            return policy.tenantName + ':' + policy.policyName;
-        };
+@Injectable()
+export class PoliciesModel extends Collection {
+    constructor(http: Http) {
+        super(http, ContivGlobals.POLICIES_ENDPOINT);
+    }
 
-        return policiesmodel;
-    }]);
+    /**
+     * Generate policy key to save policy on server
+     * @param policy
+     * @returns {string}
+     */
+    generateKey(policy) {
+        return policy.tenantName + ':' + policy.policyName;
+    }
+}

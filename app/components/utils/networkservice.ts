@@ -1,24 +1,30 @@
-angular.module('contiv.utils')
-    .factory('NetworkService', ['$http', '$q', function ($http, $q) {
+import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
+import 'rxjs/add/operator/map';
 
-        function getSettings() {
-            var deferred = $q.defer();
-            var url = ContivGlobals.NETWORK_SETTINGS_ENDPOINT;
-            $http.get(url).then(function successCallback(result) {
-                deferred.resolve(result.data[0]);
-            }, function errorCallback(result) {
-                deferred.reject(result.data);
-            });
-            return deferred.promise;
-        }
+@Injectable()
+export class NetworkService {
 
-        function updateSettings(setting) {
-            return $http.post(ContivGlobals.NETWORK_SETTINGS_ENDPOINT 
-                + 'global/', setting);
-        };
+    constructor(private http: Http) {}
 
-        return {
-            getSettings: getSettings,
-            updateSettings: updateSettings
-        }
-    }]);
+    getSettings() {
+        var networkservice = this;
+        let promise = new Promise(function (resolve, reject) {
+            let url = ContivGlobals.NETWORK_SETTINGS_ENDPOINT;
+            networkservice.http.get(url).map((res: Response) => res.json()).toPromise()
+                .then(function successCallback(result) {
+                    resolve(result[0]);
+                }, function errorCallback(result) {
+                    reject(result);
+                });
+        });
+
+        return promise;
+    }
+
+    updateSettings(setting) {
+        return this.http.post(ContivGlobals.NETWORK_SETTINGS_ENDPOINT
+            + 'global/', setting).map((res: Response) => res.json()).toPromise();
+    }
+
+}

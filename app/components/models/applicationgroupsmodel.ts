@@ -1,17 +1,21 @@
 /**
  * Created by vjain3 on 3/11/16.
  */
-angular.module('contiv.models')
-    .factory('ApplicationGroupsModel', ['$http', '$q', function ($http, $q) {
-        var groupsmodel = new Collection($http, $q, ContivGlobals.APPLICATIONGROUPS_ENDPOINT);
+import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
+import { Collection } from "./collection";
 
-        /**
-         * Generate key for application group
-         * @param group
-         */
-        groupsmodel.generateKey = function (group) {
-            return group.tenantName + ':' + group.groupName;
-        };
+@Injectable()
+export class ApplicationGroupsModel extends Collection {
+    constructor(http: Http) {
+        super(http, ContivGlobals.APPLICATIONGROUPS_ENDPOINT);
+    }
 
-        return groupsmodel;
-    }]);
+    /**
+     * Generate key for application group
+     * @param group
+     */
+    generateKey(group) {
+        return group.tenantName + ':' + group.groupName;
+    }
+}
