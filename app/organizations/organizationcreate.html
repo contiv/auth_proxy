@@ -48,7 +48,7 @@
         </div>
 
         <ctv-error ng-show="organizationCreateCtrl.showServerError" header="Error creating organization"
-                   error="organizationCreateCtrl.serverErrorMessage">
+                   [error]="organizationCreateCtrl.serverErrorMessage">
         </ctv-error>
     </div>
 </form>

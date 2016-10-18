@@ -1,8 +1,8 @@
 /**
  * Created by vjain3 on 10/6/16.
  */
-import { UpgradeAdapter } from '@angular/upgrade';
 import { AppModule } from './app.module';
+import { upgradeAdapter } from "./upgradeadapter";
 import { NetworksModel } from "./components/models/networksmodel";
 import { OrganizationsModel } from "./components/models/organizationsmodel";
 import { ServicelbsModel } from "./components/models/servicelbsmodel";
@@ -19,8 +19,10 @@ import { NetworkService } from "./components/utils/networkservice";
 import { VolumeSettingService } from "./components/utils/volumesettingservice";
 import { NodesService } from "./components/utils/nodesservice";
 import { DashboardComponent } from "./dashboard/dashboardctrl";
+import { IsolationPolicyCreateComponent } from "./network_policies/isolationpolicycreatectrl";
+import { ErrorMessageComponent } from "./components/directives/errormessagedirective";
 
-let upgradeAdapter = new UpgradeAdapter(AppModule);
+upgradeAdapter.upgradeNg1Provider('$state');
 
 angular.module('contiv.models')
     .factory('NetworksModel', upgradeAdapter.downgradeNg2Provider(NetworksModel));
@@ -56,5 +58,13 @@ angular.module('contiv.dashboard')
     .directive(
         'dashboard',
         upgradeAdapter.downgradeNg2Component(DashboardComponent) as angular.IDirectiveFactory
+    );
+angular.module('contiv.networkpolicies')
+    .directive(
+        'isolationpolicycreate',
+        upgradeAdapter.downgradeNg2Component(IsolationPolicyCreateComponent) as angular.IDirectiveFactory
+    );
+angular.module("contiv.directives")
+    .directive("ctvError", upgradeAdapter.downgradeNg2Component(ErrorMessageComponent) as angular.IDirectiveFactory
     );
 upgradeAdapter.bootstrap(document.documentElement, ['contivApp']);

@@ -61,6 +61,6 @@
             </div>
         </div>
     </div>
-    <ctv-error ng-show="networkSettingCtrl.showServerError" header="Error updating network settings" error="networkSettingCtrl.serverErrorMessage">
+    <ctv-error ng-show="networkSettingCtrl.showServerError" header="Error updating network settings" [error]="networkSettingCtrl.serverErrorMessage">
     </ctv-error>
 </form>

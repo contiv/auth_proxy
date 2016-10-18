@@ -166,7 +166,7 @@
         </div>
 
         <ctv-error ng-show="volumeCreateCtrl.showServerError" header="Error creating volume"
-                   error="volumeCreateCtrl.serverErrorMessage">
+                   [error]="volumeCreateCtrl.serverErrorMessage">
         </ctv-error>
     </div>
 </form>

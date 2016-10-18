@@ -86,7 +86,7 @@
             </div>
         </div>
         <ctv-error ng-show="nodeCommissionCtrl.showServerError" header="Error commissioning node"
-                   error="nodeCommissionCtrl.serverErrorMessage">
+                   [error]="nodeCommissionCtrl.serverErrorMessage">
         </ctv-error>
     </div>
 </form>

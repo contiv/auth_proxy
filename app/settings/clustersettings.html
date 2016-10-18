@@ -67,6 +67,6 @@
             </div>
         </div>
     </div>
-    <ctv-error ng-show="clusterSettingCtrl.showServerError" header="Error updating cluster settings" error="clusterSettingCtrl.serverErrorMessage">
+    <ctv-error ng-show="clusterSettingCtrl.showServerError" header="Error updating cluster settings" [error]="clusterSettingCtrl.serverErrorMessage">
     </ctv-error>
 </form>

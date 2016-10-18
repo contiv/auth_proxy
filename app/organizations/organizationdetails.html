@@ -46,6 +46,6 @@
     </div>
 
     <ctv-error ng-show="organizationDetailsCtrl.showServerError" header="Error deleting organization"
-               error="organizationDetailsCtrl.serverErrorMessage">
+               [error]="organizationDetailsCtrl.serverErrorMessage">
     </ctv-error>
 </div>

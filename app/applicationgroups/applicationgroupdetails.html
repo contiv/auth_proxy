@@ -106,7 +106,7 @@
         </ctv-error>
         <ctv-error ng-switch-when="details" ng-show="applicationGroupDetailsCtrl.showServerError"
                    header="Error deleting application group"
-                   error="applicationGroupDetailsCtrl.serverErrorMessage">
+                   [error]="applicationGroupDetailsCtrl.serverErrorMessage">
         </ctv-error>
     </div>
 

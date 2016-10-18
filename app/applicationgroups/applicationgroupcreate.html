@@ -91,7 +91,7 @@
         </div>
 
         <ctv-error ng-show="applicationGroupCreateCtrl.showServerError" header="Error creating application group"
-                   error="applicationGroupCreateCtrl.serverErrorMessage">
+                   [error]="applicationGroupCreateCtrl.serverErrorMessage">
         </ctv-error>
     </div>
 </form>

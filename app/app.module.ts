@@ -4,6 +4,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from "@angular/http";
+import { NetworkPoliciesModule } from "./network_policies/networkpolicies.module";
 import { NetprofilesModel } from "./components/models/netprofilesmodel";
 import { ApplicationGroupsModel } from "./components/models/applicationgroupsmodel";
 import { NetworksModel } from "./components/models/networksmodel";
@@ -23,10 +24,12 @@ import { DashboardComponent } from "./dashboard/dashboardctrl";
 
 @NgModule({
     imports: [
-        BrowserModule, HttpModule
+        BrowserModule,
+        HttpModule,
+        NetworkPoliciesModule
     ],
     declarations: [
-        DashboardComponent,
+        DashboardComponent
     ],
     providers: [
         ApplicationGroupsModel,

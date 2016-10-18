@@ -1,55 +1,56 @@
 /**
  * Created by vjain3 on 3/10/16.
  */
-angular.module('contiv.networkpolicies')
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider
-            .state('contiv.menu.networkpolicies.isolation.create', {
-                url: '/create',
-                controller: 'IsolationPolicyCreateCtrl as isolationPolicyCreateCtrl',
-                templateUrl: 'network_policies/isolationpolicycreate.html'
-            })
-        ;
-    }])
-    .controller('IsolationPolicyCreateCtrl', ['$state', 'PoliciesModel', 'CRUDHelperService',
-        function ($state, PoliciesModel, CRUDHelperService) {
+import { Component, Inject } from '@angular/core';
+import { PoliciesModel } from "../components/models/policiesmodel";
+import { CRUDHelperService } from "../components/utils/crudhelperservice";
+import { StateService } from "angular-ui-router/commonjs/ng1";
+
+@Component({
+    selector: 'isolationpolicycreate',
+    templateUrl: 'network_policies/isolationpolicycreate.html'
+})
+export class IsolationPolicyCreateComponent {
+    newPolicy;
+
+    constructor(@Inject('$state') private $state: StateService,
+                private policiesModel: PoliciesModel,
+                private crudHelperService: CRUDHelperService) {
         var isolationPolicyCreateCtrl = this;
-
-        function returnToPolicies() {
-            $state.go('contiv.menu.networkpolicies.list.isolation');
-        }
-
-        function cancelCreating() {
-            returnToPolicies();
-        }
-
-        function createPolicy() {
-            if (isolationPolicyCreateCtrl.form.$valid) {
-                CRUDHelperService.hideServerError(isolationPolicyCreateCtrl);
-                CRUDHelperService.startLoader(isolationPolicyCreateCtrl);
-                isolationPolicyCreateCtrl.newPolicy.key =
-                    PoliciesModel.generateKey(isolationPolicyCreateCtrl.newPolicy);
-                PoliciesModel.create(isolationPolicyCreateCtrl.newPolicy).then(function successCallback(result) {
-                    CRUDHelperService.stopLoader(isolationPolicyCreateCtrl);
-                    returnToPolicies();
-                }, function errorCallback(result) {
-                    CRUDHelperService.stopLoader(isolationPolicyCreateCtrl);
-                    CRUDHelperService.showServerError(isolationPolicyCreateCtrl, result);
-                });
-            }
-        }
-
         function resetForm() {
-            CRUDHelperService.stopLoader(isolationPolicyCreateCtrl);
-            CRUDHelperService.hideServerError(isolationPolicyCreateCtrl);
+            crudHelperService.stopLoader(isolationPolicyCreateCtrl);
+            crudHelperService.hideServerError(isolationPolicyCreateCtrl);
             isolationPolicyCreateCtrl.newPolicy = {
                 policyName: '',
                 tenantName: 'default'//TODO: Remove hardcoded tenant.
             };
         }
 
-        isolationPolicyCreateCtrl.createPolicy = createPolicy;
-        isolationPolicyCreateCtrl.cancelCreating = cancelCreating;
-
         resetForm();
-    }]);
+    }
+
+    returnToPolicies() {
+        this.$state.go('contiv.menu.networkpolicies.list.isolation');
+    }
+
+    cancelCreating() {
+        this.returnToPolicies();
+    }
+
+    createPolicy(validform: boolean) {
+        var isolationPolicyCreateCtrl = this;
+        if (validform) {
+            isolationPolicyCreateCtrl.crudHelperService.hideServerError(isolationPolicyCreateCtrl);
+            isolationPolicyCreateCtrl.crudHelperService.startLoader(isolationPolicyCreateCtrl);
+            isolationPolicyCreateCtrl.newPolicy.key =
+                isolationPolicyCreateCtrl.policiesModel.generateKey(isolationPolicyCreateCtrl.newPolicy);
+            isolationPolicyCreateCtrl.policiesModel.create(isolationPolicyCreateCtrl.newPolicy).then(function successCallback(result) {
+                isolationPolicyCreateCtrl.crudHelperService.stopLoader(isolationPolicyCreateCtrl);
+                isolationPolicyCreateCtrl.returnToPolicies();
+            }, function errorCallback(result) {
+                isolationPolicyCreateCtrl.crudHelperService.stopLoader(isolationPolicyCreateCtrl);
+                isolationPolicyCreateCtrl.crudHelperService.showServerError(isolationPolicyCreateCtrl, result);
+            });
+        }
+    }
+}

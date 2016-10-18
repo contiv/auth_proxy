@@ -32,6 +32,6 @@
             </div>
         </div>
     </div>
-    <ctv-error ng-show="volumeSettingCtrl.showServerError" header="Error updating volume settings" error="volumeSettingCtrl.serverErrorMessage">
+    <ctv-error ng-show="volumeSettingCtrl.showServerError" header="Error updating volume settings" [error]="volumeSettingCtrl.serverErrorMessage">
     </ctv-error>
 </form>

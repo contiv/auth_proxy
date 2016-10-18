@@ -245,11 +245,11 @@
         </div>
         <ctv-error ng-switch-when="edit" ng-show="isolationPolicyDetailsCtrl.showServerError"
                    header="Error editing isolation policy"
-                   error="isolationPolicyDetailsCtrl.serverErrorMessage">
+                   [error]="isolationPolicyDetailsCtrl.serverErrorMessage">
         </ctv-error>
         <ctv-error ng-switch-when="details" ng-show="isolationPolicyDetailsCtrl.showServerError"
                    header="Error deleting isolation policy"
-                   error="isolationPolicyDetailsCtrl.serverErrorMessage">
+                   [error]="isolationPolicyDetailsCtrl.serverErrorMessage">
         </ctv-error>
     </div>
 </div>

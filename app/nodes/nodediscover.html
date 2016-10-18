@@ -71,7 +71,7 @@
             </div>
         </div>
         <ctv-error ng-show="nodeDiscoverCtrl.showServerError" header="Error discovering nodes"
-                   error="nodeDiscoverCtrl.serverErrorMessage">
+                   [error]="nodeDiscoverCtrl.serverErrorMessage">
         </ctv-error>
     </div>
 </form>

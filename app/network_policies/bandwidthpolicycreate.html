@@ -52,7 +52,7 @@
         </div>
 
         <ctv-error ng-show="bandwidthPolicyCreateCtrl.showServerError" header="Error creating policy"
-                   error="bandwidthPolicyCreateCtrl.serverErrorMessage">
+                   [error]="bandwidthPolicyCreateCtrl.serverErrorMessage">
         </ctv-error>
     </div>
 </form>

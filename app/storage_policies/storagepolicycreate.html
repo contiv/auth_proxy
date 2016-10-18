@@ -85,7 +85,7 @@
         </div>
 
         <ctv-error ng-show="storagePolicyCreateCtrl.showServerError" header="Error creating storage policy"
-                   error="storagePolicyCreateCtrl.serverErrorMessage">
+                   [error]="storagePolicyCreateCtrl.serverErrorMessage">
         </ctv-error>
     </div>
 </form>

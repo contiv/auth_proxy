@@ -246,7 +246,7 @@
                 </div>
             </div>
             <ctv-error ng-show="storagePolicyDetailsCtrl.showServerError" header="Error saving storage policy"
-                       error="storagePolicyDetailsCtrl.serverErrorMessage">
+                       [error]="storagePolicyDetailsCtrl.serverErrorMessage">
             </ctv-error>
         </form>
     </div>

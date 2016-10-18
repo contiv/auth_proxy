@@ -107,7 +107,7 @@
         </div>
 
         <ctv-error ng-show="nodeDetailsCtrl.showServerError" header="Error deleting neighbor"
-                   error="nodeDetailsCtrl.serverErrorMessage">
+                   [error]="nodeDetailsCtrl.serverErrorMessage">
         </ctv-error>
     </div>
 </ctv-collapsible>

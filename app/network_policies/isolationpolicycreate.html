@@ -1,5 +1,5 @@
-<form class="ui form" name="isolationPolicyCreateCtrl.form" role="form"
-      ng-submit="isolationPolicyCreateCtrl.createPolicy(newPolicy)" novalidate>
+<form class="ui form" role="form" #formRef="ngForm"
+      (ngSubmit)="createPolicy(formRef.valid)" novalidate>
     <div class="ui sixteen column grid">
         <div class="one wide column">
             <a ui-sref="contiv.menu.networkpolicies.list.isolation()">
@@ -14,15 +14,15 @@
         </div>
     </div>
 
-    <div class="ui active inverted dimmer" ng-show="isolationPolicyCreateCtrl.showLoader">
+    <div class="ui active inverted dimmer" *ngIf="showLoader">
         <div class="ui loader"></div>
     </div>
     <div class="ui basic segment">
         <div class="field">
-            <div ng-show="isolationPolicyCreateCtrl.form.$submitted">
-                <div ng-hide="isolationPolicyCreateCtrl.form.$valid" class="ui negative message">
+            <div [hidden]="!formRef.submitted">
+                <div [hidden]="formRef.valid" class="ui negative message">
                     <ul class="list">
-                        <li ng-show="isolationPolicyCreateCtrl.form.newPolicyName.$error.required">
+                        <li [hidden]="!policyNameRef.errors?.required">
                             Please enter policy name
                         </li>
                     </ul>
@@ -32,15 +32,15 @@
 
         <div class="field">
             <label for="newPolicyName">Policy name</label>
-            <input type="text" id="newPolicyName" name="newPolicyName"
-                   ng-model="isolationPolicyCreateCtrl.newPolicy.policyName" placeholder="Enter name" required>
+            <input #policyNameRef="ngModel" type="text" id="newPolicyName" name="newPolicyName"
+                   [(ngModel)]="newPolicy.policyName" placeholder="Enter name" required>
         </div>
 
         <div class="ui grid">
             <div class="right aligned sixteen wide column">
                 <div style="margin-top: 40px">
 
-                    <button type="button" class="ui basic button" ng-click="isolationPolicyCreateCtrl.cancelCreating()">
+                    <button type="button" class="ui basic button" (click)="cancelCreating()">
                         Cancel
                     </button>
                     <button type="submit" class="ui blue button">
@@ -50,7 +50,9 @@
             </div>
         </div>
     </div>
-    <ctv-error ng-show="isolationPolicyCreateCtrl.showServerError" header="Error creating policy"
-               error="isolationPolicyCreateCtrl.serverErrorMessage">
+
+    <ctv-error *ngIf="showServerError" header="Error creating policy"
+               [error]="serverErrorMessage">
     </ctv-error>
+
 </form>

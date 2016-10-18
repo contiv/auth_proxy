@@ -52,7 +52,7 @@
             </div>
         </div>
         <ctv-error ng-show="volumeSnapshotCopyCtrl.showServerError" header="Error copying volume"
-                   error="volumeSnapshotCopyCtrl.serverErrorMessage">
+                   [error]="volumeSnapshotCopyCtrl.serverErrorMessage">
         </ctv-error>
     </form>
 </div>

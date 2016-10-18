@@ -91,7 +91,7 @@
         </div>
 
         <ctv-error ng-show="servicelbCreateCtrl.showServerError" header="Error creating service load balancer"
-                   error="servicelbCreateCtrl.serverErrorMessage">
+                   [error]="servicelbCreateCtrl.serverErrorMessage">
         </ctv-error>
     </div>
 </form>
