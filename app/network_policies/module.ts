@@ -24,6 +24,10 @@ angular.module('contiv.networkpolicies', ['contiv.models', 'contiv.directives', 
                 abstract: true,
                 template: '<ui-view/>'
             })
+            .state('contiv.menu.networkpolicies.bandwidth.create', {
+                url: '/create',
+                component: 'bandwidthpolicycreate'
+            })
             .state('contiv.menu.networkpolicies.redirection', {
                 url: '/redirection',
                 abstract: true,

@@ -2,7 +2,7 @@
       (ngSubmit)="createPolicy(formRef.valid)" novalidate>
     <div class="ui sixteen column grid">
         <div class="one wide column">
-            <a ui-sref="contiv.menu.networkpolicies.list.isolation()">
+            <a href="/#/m/networkpolicies/list/isolation">
                 <i class="large arrow left icon"></i>
             </a>
         </div>
@@ -19,10 +19,10 @@
     </div>
     <div class="ui basic segment">
         <div class="field">
-            <div [hidden]="!formRef.submitted">
-                <div [hidden]="formRef.valid" class="ui negative message">
+            <div *ngIf="formRef.submitted">
+                <div *ngIf="!formRef.valid" class="ui negative message">
                     <ul class="list">
-                        <li [hidden]="!policyNameRef.errors?.required">
+                        <li *ngIf="policyNameRef.errors?.required">
                             Please enter policy name
                         </li>
                     </ul>

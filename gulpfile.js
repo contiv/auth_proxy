@@ -32,7 +32,8 @@ gulp.task('build', function () {
             '!app/components/directives/errormessagedirective.js',
             '!app/dashboard/dashboardctrl.js',
             '!app/network_policies/networkpolicies.module.js',
-            '!app/network_policies/isolationpolicycreatectrl.js'
+            '!app/network_policies/isolationpolicycreatectrl.js',
+            '!app/network_policies/bandwidthpolicycreatectrl.js'
             ])//Exclude vendor libraries
         .pipe(sourcemaps.init());
     //ES6 code
@@ -78,7 +79,8 @@ gulp.task('dev-build', function () {
             '!app/components/directives/errormessagedirective.js',
             '!app/dashboard/dashboardctrl.js',
             '!app/network_policies/networkpolicies.module.js',
-            '!app/network_policies/isolationpolicycreatectrl.js'
+            '!app/network_policies/isolationpolicycreatectrl.js',
+            '!app/network_policies/bandwidthpolicycreatectrl.js'
             ])//Exclude vendor libraries
         .pipe(sourcemaps.init());
     //ES6 code

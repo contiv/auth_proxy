@@ -1,8 +1,8 @@
-<form class="ui form" name="bandwidthPolicyCreateCtrl.form" role="form"
-      ng-submit="bandwidthPolicyCreateCtrl.createPolicy(newPolicy)" novalidate>
+<form class="ui form" role="form" #formRef="ngForm"
+      (ngSubmit)="createPolicy(formRef.valid)" novalidate>
     <div class="ui sixteen column grid">
         <div class="one wide column">
-            <a ui-sref="contiv.menu.networkpolicies.list.bandwidth()">
+            <a href="/#/m/networkpolicies/list/bandwidth">
                 <i class="large arrow left icon"></i>
             </a>
         </div>
@@ -13,35 +13,66 @@
             </div>
         </div>
     </div>
-    <div class="ui active inverted dimmer" ng-show="bandwidthPolicyCreateCtrl.showLoader">
+    <div class="ui active inverted dimmer" *ngIf="showLoader">
         <div class="ui loader"></div>
     </div>
     <div class="ui basic segment">
         <div class="field">
-            <div ng-show="bandwidthPolicyCreateCtrl.form.$submitted">
-                <div ng-hide="bandwidthPolicyCreateCtrl.form.$valid" class="ui negative message">
+            <div *ngIf="formRef.submitted">
+                <div *ngIf="!formRef.valid" class="ui negative message">
                     <ul class="list">
-                        <li ng-show="bandwidthPolicyCreateCtrl.form.newProfileName.$error.required">Please enter profile
+                        <li *ngIf="profileNameRef.control.errors?.required">Please enter profile
                             name
                         </li>
-                        <li ng-show="bandwidthPolicyCreateCtrl.form.newBandwidthNumber.$error.required">Please enter
+                        <li *ngIf="bandwidthNumberRef.errors?.required">Please enter
                             bandwidth
                         </li>
-                        <li ng-show="bandwidthPolicyCreateCtrl.form.newBandwidthUnit.$error.required">Please select
+                        <li *ngIf="bandwidthUnitRef.errors?.required">Please select
                             bandwidth Unit
                         </li>
-                        <li ng-show="bandwidthPolicyCreateCtrl.form.newDSCP.$error.required">Please enter DSCP</li>
+                        <li *ngIf="DSCPRef.errors?.required">Please enter DSCP</li>
                     </ul>
                 </div>
+
             </div>
         </div>
 
-        <ctv-bandwidth mode="create" bandwidth-policy="bandwidthPolicyCreateCtrl.newPolicy"></ctv-bandwidth>
+
+        <div class="field">
+            <label for="newProfileName">Profile name</label>
+            <input #profileNameRef="ngModel" type="text" id="newProfileName" name="newProfileName"
+                   [ngModel]="newPolicy.profileName" placeholder="Enter profile name" required>
+        </div>
+
+
+        <div style="margin-top: 20px" class="fields">
+            <div class="thirteen wide field">
+                <label for="newBandwidthNumber">Bandwidth </label>
+                <input #bandwidthNumberRef="ngModel" type="number" id="newBandwidthNumber" name="newBandwidthNumber"
+                       [(ngModel)]="newPolicy.bandwidthNumber" placeholder="Enter bandwidth" required>
+            </div>
+            <div class="three wide field">
+                <label for="newBandwidthUnit">Unit</label>
+                <select #bandwidthUnitRef="ngModel" name="newBandwidthUnit" id="newBandwidthUnit" class="ui dropdown"
+                        [(ngModel)]="newPolicy.bandwidthUnit" required>
+                    <option value="">-- Please select unit --</option>
+                    <option value="kbps">kbps</option>
+                    <option value="mbps">mbps</option>
+                    <option value="gbps">gbps</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="newDSCP">DSCP</label>
+            <input #DSCPRef="ngModel" type="number" id="newDSCP" name="newDSCP"
+                   [(ngModel)]="newPolicy.DSCP" placeholder="Enter DSCP" required/>
+        </div>
 
         <div class="ui grid">
             <div class="right aligned sixteen wide column">
                 <div style="margin-top: 40px">
-                    <button type="button" class="ui basic button" ng-click="bandwidthPolicyCreateCtrl.cancelCreating()">
+                    <button type="button" class="ui basic button" (click)="cancelCreating()">
                         Cancel
                     </button>
                     <button type="submit" class="ui blue button">
@@ -51,8 +82,9 @@
             </div>
         </div>
 
-        <ctv-error ng-show="bandwidthPolicyCreateCtrl.showServerError" header="Error creating policy"
-                   [error]="bandwidthPolicyCreateCtrl.serverErrorMessage">
+        <ctv-error *ngIf="showServerError" header="Error creating policy"
+                   [error]="serverErrorMessage">
         </ctv-error>
     </div>
 </form>
+
