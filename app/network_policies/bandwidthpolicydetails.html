@@ -1,39 +1,39 @@
 <div class="ui sixteen column grid">
     <div class="one wide column">
-        <a ui-sref="contiv.menu.networkpolicies.list.bandwidth()">
+        <a href="/#/m/networkpolicies/list/bandwidth">
             <i class="large arrow left icon"></i>
         </a>
     </div>
     <div class="left floated ten wide column">
-        <div ng-switch="bandwidthPolicyDetailsCtrl.mode" class="content" style="font-size: 24px">
+        <div [ngSwitch]="mode" class="content" style="font-size: 24px">
             <span>Bandwidth Policies</span>
-            <span ng-switch-when="details" class="headingfontcolor"> (Details)</span>
-            <span ng-switch-when="edit" class="headingfontcolor"> (Edit)</span>
+            <span *ngSwitchCase="'details'" class="headingfontcolor"> (Details)</span>
+            <span *ngSwitchCase="'edit'" class="headingfontcolor"> (Edit)</span>
         </div>
     </div>
 
-    <div ng-switch="bandwidthPolicyDetailsCtrl.mode" class="right aligned five wide column">
+    <div [ngSwitch]="mode" class="right aligned five wide column">
         <div id="delete-policy-modal" class="ui small modal">
-            <div class="header">Remove Policy: {{bandwidthPolicyDetailsCtrl.policy.profileName}}</div>
+            <div class="header">Remove Policy: {{policy.profileName}}</div>
             <div class="content">
                 <p>Are you sure you want to remove this bandwidth policy?</p>
             </div>
             <div class="actions">
                 <div class="ui negative button">No</div>
-                <div class="ui positive blue button" ng-click="bandwidthPolicyDetailsCtrl.deletePolicy()">
+                <div class="ui positive blue button" (click)="deletePolicy()">
                     Yes
                 </div>
             </div>
         </div>
 
-        <button ng-switch-when="edit" class="ui disabled button"
-                ui-sref="contiv.menu.networkpolicies.bandwidth.edit({key:bandwidthPolicyDetailsCtrl.policy.key})">
+        <button *ngSwitchCase="'edit'" class="ui disabled button"
+                (click)="editPolicy()">
             <i class="edit icon"></i>
             Edit
         </button>
 
-        <button ng-switch-when="details" class="ui basic button"
-                ui-sref="contiv.menu.networkpolicies.bandwidth.edit({key:bandwidthPolicyDetailsCtrl.policy.key})">
+        <button *ngSwitchCase="'details'" class="ui basic button"
+                (click)="editPolicy()">
             <i class="edit icon"></i>
             Edit
         </button>
@@ -45,48 +45,48 @@
     </div>
 </div>
 
-<div ng-switch="bandwidthPolicyDetailsCtrl.mode" class="ui basic segment">
-    <div class="ui active inverted dimmer" ng-show="bandwidthPolicyDetailsCtrl.showLoader">
+<div [ngSwitch]="mode" class="ui basic segment">
+    <div class="ui active inverted dimmer" *ngIf="showLoader">
         <div class="ui loader"></div>
     </div>
 
-    <div ng-switch-when="details">
+    <div *ngSwitchCase="'details'">
         <h4 class="ui header">Basic Settings</h4>
         <table class="ui very basic selectable table">
             <tbody>
             <tr>
                 <td class="ctv-header three wide column">Profile Name</td>
-                <td>{{bandwidthPolicyDetailsCtrl.policy.profileName}}</td>
+                <td>{{policy.profileName}}</td>
             </tr>
             <tr>
                 <td class="ctv-header three wide column">Bandwidth</td>
-                <td>{{bandwidthPolicyDetailsCtrl.policy.bandwidth}}</td>
+                <td>{{policy.bandwidth}}</td>
             </tr>
             <tr>
                 <td class="ctv-header three wide column">DSCP</td>
-                <td>{{bandwidthPolicyDetailsCtrl.policy.DSCP}}</td>
+                <td>{{policy.DSCP}}</td>
             </tr>
             </tbody>
         </table>
     </div>
 
-    <div ng-switch-when="edit">
-        <form class="ui form" name="bandwidthPolicyDetailsCtrl.form" role="form"
-              ng-submit="bandwidthPolicyDetailsCtrl.savePolicy(newpolicy)" novalidate>
-            <div class="ui active inverted dimmer" ng-show="bandwidthPolicyDetailsCtrl.showLoader">
+    <div *ngSwitchCase="'edit'">
+        <form class="ui form" role="form" #formRef="ngForm"
+              (ngSubmit)="savePolicy(formRef.valid)" novalidate>
+            <div class="ui active inverted dimmer" *ngIf="showLoader">
                 <div class="ui loader"></div>
             </div>
             <div class="field">
-                <div ng-show="bandwidthPolicyDetailsCtrl.form.$submitted">
-                    <div ng-hide="bandwidthPolicyDetailsCtrl.form.$valid" class="ui negative message">
+                <div *ngIf="formRef.submitted">
+                    <div *ngIf="!formRef.valid" class="ui negative message">
                         <ul class="list">
-                            <li ng-show="bandwidthPolicyDetailsCtrl.form.newBandwidthNumber.$error.required">
+                            <li *ngIf="bandwidthNumberRef.errors?.required">
                                 Please enter bandwidth
                             </li>
-                            <li ng-show="bandwidthPolicyDetailsCtrl.form.newBandwidthUnit.$error.required">
+                            <li *ngIf="bandwidthUnitRef.errors?.required">
                                 Please select bandwidth Unit
                             </li>
-                            <li ng-show="bandwidthPolicyDetailsCtrl.form.newDSCP.$error.required">
+                            <li *ngIf="DSCPRef.errors?.required">
                                 Please enter DSCP
                             </li>
                         </ul>
@@ -95,12 +95,43 @@
             </div>
             <h4 class="ui header">Basic Settings</h4>
 
-            <ctv-bandwidth mode="edit" bandwidth-policy="bandwidthPolicyDetailsCtrl.policy"></ctv-bandwidth>
+            <table class="ui very basic selectable table">
+                <tbody>
+                <tr>
+                    <td class="ctv-header three wide column">Profile Name</td>
+                    <td>{{policy.profileName}}</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div style="margin-top: 20px" class="fields">
+                <div class="thirteen wide field">
+                    <label for="bandwidthNumber">Bandwidth </label>
+                    <input #bandwidthNumberRef="ngModel" type="number" id="bandwidthNumber" name="bandwidthNumber"
+                           [(ngModel)]="policy.bandwidthNumber" placeholder="Enter bandwidth" required>
+                </div>
+                <div class="three wide field">
+                    <label for="bandwidthUnit">Unit</label>
+                    <select #bandwidthUnitRef="ngModel" name="bandwidthUnit" id="bandwidthUnit" class="ui dropdown"
+                            [(ngModel)]="policy.bandwidthUnit" required>
+                        <option value="">-- Please select unit --</option>
+                        <option value="kbps">kbps</option>
+                        <option value="mbps">mbps</option>
+                        <option value="gbps">gbps</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="DSCP">DSCP</label>
+                <input #DSCPRef="ngModel" type="number" id="DSCP" name="DSCP"
+                       [(ngModel)]="policy.DSCP" placeholder="Enter DSCP" required/>
+            </div>
 
             <div class="ui grid" style="margin-top: 40px">
                 <div class="right aligned sixteen wide column">
                     <button type="button" class="ui basic button"
-                            ng-click="bandwidthPolicyDetailsCtrl.cancelEditing()">Cancel
+                            (click)="cancelEditing()">Cancel
                     </button>
 
                     <button type="submit" class="ui blue button">

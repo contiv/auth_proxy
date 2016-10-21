@@ -23,6 +23,7 @@ import { IsolationPolicyCreateComponent } from "./network_policies/isolationpoli
 import { ErrorMessageComponent } from "./components/directives/errormessagedirective";
 import { BandwidthPolicyCreateComponent } from "./network_policies/bandwidthpolicycreatectrl";
 import { IsolationPolicyDetailsComponent } from "./network_policies/isolationpolicydetailsctrl";
+import { BandwidthPolicyDetailsComponent } from "./network_policies/bandwidthpolicydetailsctrl";
 
 upgradeAdapter.upgradeNg1Provider('$state');
 upgradeAdapter.upgradeNg1Provider('$stateParams');
@@ -49,6 +50,7 @@ angular.module('contiv.models')
     .factory('NetprofilesModel', upgradeAdapter.downgradeNg2Provider(NetprofilesModel));
 angular.module('contiv.utils')
     .factory('CRUDHelperService', upgradeAdapter.downgradeNg2Provider(CRUDHelperService));
+
 angular.module("contiv.utils")
     .factory("InspectService", upgradeAdapter.downgradeNg2Provider(InspectService));
 angular.module('contiv.utils')
@@ -57,25 +59,33 @@ angular.module('contiv.utils')
     .factory('VolumeSettingService', upgradeAdapter.downgradeNg2Provider(VolumeSettingService));
 angular.module('contiv.utils')
     .factory('NodesService', upgradeAdapter.downgradeNg2Provider(NodesService));
+
 angular.module('contiv.dashboard')
     .directive(
         'dashboard',
         upgradeAdapter.downgradeNg2Component(DashboardComponent) as angular.IDirectiveFactory
     );
+
 angular.module('contiv.networkpolicies')
     .directive(
         'isolationpolicycreate',
         upgradeAdapter.downgradeNg2Component(IsolationPolicyCreateComponent) as angular.IDirectiveFactory
     )
     .directive(
+        'isolationpolicydetails',
+        upgradeAdapter.downgradeNg2Component(IsolationPolicyDetailsComponent) as angular.IDirectiveFactory
+    )
+    .directive(
         'bandwidthpolicycreate',
         upgradeAdapter.downgradeNg2Component(BandwidthPolicyCreateComponent) as angular.IDirectiveFactory
     )
     .directive(
-        'isolationpolicydetails',
-        upgradeAdapter.downgradeNg2Component(IsolationPolicyDetailsComponent) as angular.IDirectiveFactory
+        'bandwidthpolicydetails',
+        upgradeAdapter.downgradeNg2Component(BandwidthPolicyDetailsComponent) as angular.IDirectiveFactory
     );
+
 angular.module("contiv.directives")
     .directive("ctvError", upgradeAdapter.downgradeNg2Component(ErrorMessageComponent) as angular.IDirectiveFactory
     );
+
 upgradeAdapter.bootstrap(document.documentElement, ['contivApp']);

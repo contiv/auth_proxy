@@ -21,7 +21,7 @@
             <div *ngIf="formRef.submitted">
                 <div *ngIf="!formRef.valid" class="ui negative message">
                     <ul class="list">
-                        <li *ngIf="profileNameRef.control.errors?.required">Please enter profile
+                        <li *ngIf="profileNameRef.errors?.required">Please enter profile
                             name
                         </li>
                         <li *ngIf="bandwidthNumberRef.errors?.required">Please enter

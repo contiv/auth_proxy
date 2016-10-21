@@ -36,6 +36,16 @@ angular.module('contiv.networkpolicies', ['contiv.models', 'contiv.directives', 
                 url: '/create',
                 component: 'bandwidthpolicycreate'
             })
+            .state('contiv.menu.networkpolicies.bandwidth.details', {
+                url: '/details/:key',
+                controller: 'BandwidthPolicyDetailsCtrl as bandwidthPolicyDetailsCtrl',
+                templateUrl: 'network_policies/bandwidthpolicydetails.html'
+            })
+            .state('contiv.menu.networkpolicies.bandwidth.edit', {
+                url: '/edit/:key',
+                controller: 'BandwidthPolicyDetailsCtrl as bandwidthPolicyDetailsCtrl',
+                templateUrl: 'network_policies/bandwidthpolicydetails.html'
+            })
             .state('contiv.menu.networkpolicies.redirection', {
                 url: '/redirection',
                 abstract: true,

@@ -8,6 +8,7 @@ import { DirectivesModule } from "../components/directives/directives.module";
 import { IsolationPolicyCreateComponent } from "./isolationpolicycreatectrl";
 import { IsolationPolicyDetailsComponent } from "./isolationpolicydetailsctrl";
 import { BandwidthPolicyCreateComponent } from "./bandwidthpolicycreatectrl";
+import { BandwidthPolicyDetailsComponent } from "./bandwidthpolicydetailsctrl";
 
 @NgModule({
     imports: [
@@ -18,12 +19,14 @@ import { BandwidthPolicyCreateComponent } from "./bandwidthpolicycreatectrl";
     declarations: [
         IsolationPolicyCreateComponent,
         IsolationPolicyDetailsComponent,
-        BandwidthPolicyCreateComponent
+        BandwidthPolicyCreateComponent,
+        BandwidthPolicyDetailsComponent
     ],
     exports: [
         IsolationPolicyCreateComponent,
         IsolationPolicyDetailsComponent,
         BandwidthPolicyCreateComponent,
+        BandwidthPolicyDetailsComponent,
         FormsModule,
         CommonModule,
         DirectivesModule
