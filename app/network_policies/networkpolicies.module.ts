@@ -6,6 +6,7 @@ import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { DirectivesModule } from "../components/directives/directives.module";
 import { IsolationPolicyCreateComponent } from "./isolationpolicycreatectrl";
+import { IsolationPolicyDetailsComponent } from "./isolationpolicydetailsctrl";
 import { BandwidthPolicyCreateComponent } from "./bandwidthpolicycreatectrl";
 
 @NgModule({
@@ -16,10 +17,12 @@ import { BandwidthPolicyCreateComponent } from "./bandwidthpolicycreatectrl";
     ],
     declarations: [
         IsolationPolicyCreateComponent,
+        IsolationPolicyDetailsComponent,
         BandwidthPolicyCreateComponent
     ],
     exports: [
         IsolationPolicyCreateComponent,
+        IsolationPolicyDetailsComponent,
         BandwidthPolicyCreateComponent,
         FormsModule,
         CommonModule,

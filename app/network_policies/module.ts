@@ -19,6 +19,14 @@ angular.module('contiv.networkpolicies', ['contiv.models', 'contiv.directives', 
                 url: '/create',
                 component: 'isolationpolicycreate'
             })
+            .state('contiv.menu.networkpolicies.isolation.details', {
+                url: '/details/:key',
+                component: 'isolationpolicydetails'
+            })
+            .state('contiv.menu.networkpolicies.isolation.edit', {
+                url: '/edit/:key',
+                component: 'isolationpolicydetails'
+            })
             .state('contiv.menu.networkpolicies.bandwidth', {
                 url: '/bandwidth',
                 abstract: true,

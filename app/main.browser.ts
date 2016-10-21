@@ -22,8 +22,10 @@ import { DashboardComponent } from "./dashboard/dashboardctrl";
 import { IsolationPolicyCreateComponent } from "./network_policies/isolationpolicycreatectrl";
 import { ErrorMessageComponent } from "./components/directives/errormessagedirective";
 import { BandwidthPolicyCreateComponent } from "./network_policies/bandwidthpolicycreatectrl";
+import { IsolationPolicyDetailsComponent } from "./network_policies/isolationpolicydetailsctrl";
 
 upgradeAdapter.upgradeNg1Provider('$state');
+upgradeAdapter.upgradeNg1Provider('$stateParams');
 
 angular.module('contiv.models')
     .factory('NetworksModel', upgradeAdapter.downgradeNg2Provider(NetworksModel));
@@ -68,6 +70,10 @@ angular.module('contiv.networkpolicies')
     .directive(
         'bandwidthpolicycreate',
         upgradeAdapter.downgradeNg2Component(BandwidthPolicyCreateComponent) as angular.IDirectiveFactory
+    )
+    .directive(
+        'isolationpolicydetails',
+        upgradeAdapter.downgradeNg2Component(IsolationPolicyDetailsComponent) as angular.IDirectiveFactory
     );
 angular.module("contiv.directives")
     .directive("ctvError", upgradeAdapter.downgradeNg2Component(ErrorMessageComponent) as angular.IDirectiveFactory
