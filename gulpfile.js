@@ -40,6 +40,7 @@ gulp.task('build', function () {
             '!app/network_policies/bandwidthpolicydetailsctrl.js',
             '!app/applicationgroups/applicationgroups.module.js',
             '!app/applicationgroups/applicationgroupcreatectrl.js',
+            '!app/applicationgroups/applicationgroupdetailsctrl.js',
             '!app/applicationgroups/isolationpolicydirective.js',
             '!app/applicationgroups/bandwidthpolicydirective.js'
             ])//Exclude vendor libraries
@@ -95,6 +96,7 @@ gulp.task('dev-build', function () {
             '!app/network_policies/bandwidthpolicydetailsctrl.js',
             '!app/applicationgroups/applicationgroups.module.js',
             '!app/applicationgroups/applicationgroupcreatectrl.js',
+            '!app/applicationgroups/applicationgroupdetailsctrl.js',
             '!app/applicationgroups/isolationpolicydirective.js',
             '!app/applicationgroups/bandwidthpolicydirective.js'
             ])//Exclude vendor libraries

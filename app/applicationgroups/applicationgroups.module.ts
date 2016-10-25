@@ -7,9 +7,9 @@ import { CommonModule } from "@angular/common";
 import { DirectivesModule } from "../components/directives/directives.module";
 import { PipesModule } from "../components/pipes/pipes.module";
 import { ApplicationGroupCreateComponent } from "./applicationgroupcreatectrl";
+import { ApplicationGroupDetailsComponent } from "./applicationgroupdetailsctrl";
 import { IsolationPolicySelectionComponent } from "./isolationpolicydirective";
 import { BandwidthPolicySelectionComponent } from "./bandwidthpolicydirective";
-
 
 @NgModule({
     imports: [
@@ -20,11 +20,13 @@ import { BandwidthPolicySelectionComponent } from "./bandwidthpolicydirective";
     ],
     declarations: [
         ApplicationGroupCreateComponent,
+        ApplicationGroupDetailsComponent,
         IsolationPolicySelectionComponent,
         BandwidthPolicySelectionComponent
     ],
     exports: [
         ApplicationGroupCreateComponent,
+        ApplicationGroupDetailsComponent,
         IsolationPolicySelectionComponent,
         BandwidthPolicySelectionComponent,
         FormsModule,

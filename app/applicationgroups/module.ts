@@ -13,4 +13,12 @@ angular.module('contiv.applicationgroups', ['contiv.models', 'contiv.directives'
                 url: '/create',
                 component: 'applicationgroupcreate'
             })
+            .state('contiv.menu.applicationgroups.details', {
+                url: '/details/:key',
+                component: 'applicationgroupdetails'
+            })
+            .state('contiv.menu.applicationgroups.edit', {
+                url: '/edit/:key',
+                component: 'applicationgroupdetails'
+            });
     }]);

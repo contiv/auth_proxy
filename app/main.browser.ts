@@ -26,8 +26,7 @@ import { IsolationPolicyDetailsComponent } from "./network_policies/isolationpol
 import { BandwidthPolicyCreateComponent } from "./network_policies/bandwidthpolicycreatectrl";
 import { BandwidthPolicyDetailsComponent } from "./network_policies/bandwidthpolicydetailsctrl";
 import { ApplicationGroupCreateComponent } from "./applicationgroups/applicationgroupcreatectrl";
-import { IsolationPolicySelectionComponent } from "./applicationgroups/isolationpolicydirective";
-import { BandwidthPolicySelectionComponent } from "./applicationgroups/bandwidthpolicydirective";
+import { ApplicationGroupDetailsComponent } from "./applicationgroups/applicationgroupdetailsctrl";
 
 
 upgradeAdapter.upgradeNg1Provider('$state');
@@ -95,12 +94,8 @@ angular.module('contiv.applicationgroups')
         upgradeAdapter.downgradeNg2Component(ApplicationGroupCreateComponent) as angular.IDirectiveFactory
     )
     .directive(
-        'ctvIsolationpolicy',
-        upgradeAdapter.downgradeNg2Component(IsolationPolicySelectionComponent) as angular.IDirectiveFactory
-    )
-    .directive(
-        'ctvBandwidthpolicy',
-        upgradeAdapter.downgradeNg2Component(BandwidthPolicySelectionComponent) as angular.IDirectiveFactory
+        'applicationgroupdetails',
+        upgradeAdapter.downgradeNg2Component(ApplicationGroupDetailsComponent) as angular.IDirectiveFactory
     );
 
 angular.module("contiv.directives")

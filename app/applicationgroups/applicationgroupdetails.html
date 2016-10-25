@@ -1,37 +1,37 @@
 <div class="ui sixteen column grid">
     <div class="one wide column">
-        <a ui-sref="contiv.menu.applicationgroups.list()">
+        <a href="/#/m/applicationgroups/list">
             <i class="large arrow left icon"></i>
         </a>
     </div>
     <div class="left floated ten wide column">
-        <div ng-switch="applicationGroupDetailsCtrl.mode" class="content" style="font-size: 24px">
+        <div [ngSwitch]="mode" class="content" style="font-size: 24px">
             <span>Application Groups</span>
-            <span ng-switch-when="details" class="headingfontcolor"> (Details)</span>
-            <span ng-switch-when="edit" class="headingfontcolor"> (Edit)</span>
+            <span *ngSwitchCase="'details'" class="headingfontcolor"> (Details)</span>
+            <span *ngSwitchCase="'edit'" class="headingfontcolor"> (Edit)</span>
         </div>
     </div>
-    <div ng-switch="applicationGroupDetailsCtrl.mode" class="right aligned five wide column">
+    <div [ngSwitch]="mode" class="right aligned five wide column">
         <div id="delete-group-modal" class="ui small modal">
-            <div class="header">Remove Application Group: {{applicationGroupDetailsCtrl.applicationGroup.groupName}}
+            <div class="header">Remove Application Group: {{applicationGroup.groupName}}
             </div>
             <div class="content">
                 <p>Are you sure you want to remove this application group?</p>
             </div>
             <div class="actions">
                 <div class="ui negative button">No</div>
-                <div class="ui positive button" ng-click="applicationGroupDetailsCtrl.deleteApplicationGroup()">
+                <div class="ui positive button" (click)="deleteApplicationGroup()">
                     Yes
                 </div>
             </div>
         </div>
-        <button ng-switch-when="edit" class="ui disabled button"
-                ui-sref="contiv.menu.applicationgroups.edit({key:applicationGroupDetailsCtrl.applicationGroup.key})">
+        <button *ngSwitchCase="'edit'" class="ui disabled button"
+                (click)="editApplicationGroup()">
             <i class="edit icon"></i>
             Edit
         </button>
-        <button ng-switch-when="details" class="ui basic button"
-                ui-sref="contiv.menu.applicationgroups.edit({key:applicationGroupDetailsCtrl.applicationGroup.key})">
+        <button *ngSwitchCase="'details'" class="ui basic button"
+                (click)="editApplicationGroup()">
             <i class="edit icon"></i>
             Edit
         </button>
@@ -43,7 +43,7 @@
 </div>
 
 <div class="ui basic segment">
-    <div class="ui active inverted dimmer" ng-show="applicationGroupDetailsCtrl.showLoader">
+    <div class="ui active inverted dimmer" *ngIf="showLoader">
         <div class="ui loader"></div>
     </div>
     <div><h4 class="ui header">Basic Settings</h4></div>  <!-- Top Margin is less,When h4 is first child in div -->
@@ -51,11 +51,11 @@
         <tbody>
         <tr>
             <td class="three wide column">Name</td>
-            <td>{{applicationGroupDetailsCtrl.applicationGroup.groupName}}</td>
+            <td>{{applicationGroup.groupName}}</td>
         </tr>
         <tr>
             <td class="three wide column">Network</td>
-            <td>{{applicationGroupDetailsCtrl.applicationGroup.networkName}}</td>
+            <td>{{applicationGroup.networkName}}</td>
         </tr>
         </tbody>
     </table>
@@ -70,13 +70,13 @@
     <div class="ui section divider"></div>
 
     <ctv-collapsible title="Isolation Policies">
-        <ctv-isolationpolicy [mode]="applicationGroupDetailsCtrl.mode" [applicationgroup]="applicationGroupDetailsCtrl.applicationGroup"></ctv-isolationpolicy>
+        <ctv-isolationpolicy [mode]="mode" [applicationgroup]="applicationGroup"></ctv-isolationpolicy>
     </ctv-collapsible>
 
     <div class="ui section divider"></div>
 
     <ctv-collapsible title="Bandwidth Policies">
-        <ctv-bandwidthpolicy [mode]="applicationGroupDetailsCtrl.mode" [applicationgroup]="applicationGroupDetailsCtrl.applicationGroup"></ctv-bandwidthpolicy>
+        <ctv-bandwidthpolicy [mode]="mode" [applicationgroup]="applicationGroup"></ctv-bandwidthpolicy>
     </ctv-collapsible>
 
 
@@ -88,25 +88,25 @@
     </h4>
 
 
-    <div ng-switch="applicationGroupDetailsCtrl.mode" style="margin-top: 40px">
+    <div [ngSwitch]="mode" style="margin-top: 40px">
         <div class="ui grid">
             <div class="right aligned sixteen wide column">
-                <button ng-switch-when="edit" type="button" class="ui basic button"
-                        ng-click="applicationGroupDetailsCtrl.cancelEditing()">Cancel
+                <button *ngSwitchCase="'edit'" type="button" class="ui basic button"
+                        (click)="cancelEditing()">Cancel
                 </button>
-                <button ng-switch-when="edit" type="button" class="ui blue button"
-                        ng-click="applicationGroupDetailsCtrl.saveApplicationGroup()">
+                <button *ngSwitchCase="'edit'" type="button" class="ui blue button"
+                        (click)="saveApplicationGroup()">
                     Save
                 </button>
             </div>
         </div>
-        <ctv-error ng-switch-when="edit" ng-show="applicationGroupDetailsCtrl.showServerError"
+        <ctv-error *ngIf="((showServerError) && (mode === 'edit'))"
                    header="Error saving application group"
-                   [error]="applicationGroupDetailsCtrl.serverErrorMessage">
+                   [error]="serverErrorMessage">
         </ctv-error>
-        <ctv-error ng-switch-when="details" ng-show="applicationGroupDetailsCtrl.showServerError"
+        <ctv-error *ngIf="((showServerError) && (mode === 'details'))"
                    header="Error deleting application group"
-                   [error]="applicationGroupDetailsCtrl.serverErrorMessage">
+                   [error]="serverErrorMessage">
         </ctv-error>
     </div>
 

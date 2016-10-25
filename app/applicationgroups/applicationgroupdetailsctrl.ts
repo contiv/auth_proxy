@@ -1,96 +1,89 @@
- /**
+/**
  * Created by vjain3 on 3/15/16.
  */
-angular.module('contiv.applicationgroups')
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider
-            .state('contiv.menu.applicationgroups.details', {
-                url: '/details/:key',
-                controller: 'ApplicationGroupDetailsCtrl as applicationGroupDetailsCtrl',
-                templateUrl: 'applicationgroups/applicationgroupdetails.html'
-            })
-            .state('contiv.menu.applicationgroups.edit', {
-                url: '/edit/:key',
-                controller: 'ApplicationGroupDetailsCtrl as applicationGroupDetailsCtrl',
-                templateUrl: 'applicationgroups/applicationgroupdetails.html'
-            })
-        ;
-    }])
-    .controller('ApplicationGroupDetailsCtrl', [
-        '$state',
-        '$stateParams',
-        'ApplicationGroupsModel',
-        'CRUDHelperService',
-        function ($state,
-                  $stateParams,
-                  ApplicationGroupsModel,
-                  CRUDHelperService) {
-            var applicationGroupDetailsCtrl = this;
+import { Component, Inject } from '@angular/core';
+import { StateService, StateParams } from "angular-ui-router/commonjs/ng1";
+import { ApplicationGroupsModel } from "../components/models/applicationgroupsmodel";
+import { CRUDHelperService } from "../components/utils/crudhelperservice";
 
-            applicationGroupDetailsCtrl.applicationGroup = {};
-            applicationGroupDetailsCtrl.selectedNetwork = {};
+@Component({
+    selector: 'applicationgroupdetails',
+    templateUrl: 'applicationgroups/applicationgroupdetails.html'
+})
+export class ApplicationGroupDetailsComponent {
+    applicationGroup:any = {};
+    mode:string = 'details';
 
-            /**
-             * To show edit or details screen based on the route
-             */
-            function setMode() {
-                if ($state.is('contiv.menu.applicationgroups.edit')) {
-                    applicationGroupDetailsCtrl.mode = 'edit';
-                } else {
-                    applicationGroupDetailsCtrl.mode = 'details';
-                }
+    constructor(@Inject('$state') private $state:StateService,
+                @Inject('$stateParams') private $stateParams:StateParams,
+                private applicationGroupsModel:ApplicationGroupsModel,
+                private crudHelperService:CRUDHelperService) {
+        var applicationGroupDetailsCtrl = this;
+
+        /**
+         * To show edit or details screen based on the route
+         */
+        function setMode() {
+            if ($state.is('contiv.menu.applicationgroups.edit')) {
+                applicationGroupDetailsCtrl.mode = 'edit';
+            } else {
+                applicationGroupDetailsCtrl.mode = 'details';
             }
+        }
 
-            function returnToApplicationGroup() {
-                $state.go('contiv.menu.applicationgroups.list');
-            }
+        applicationGroupDetailsCtrl.crudHelperService.stopLoader(applicationGroupDetailsCtrl);
+        applicationGroupDetailsCtrl.crudHelperService.hideServerError(applicationGroupDetailsCtrl);
 
-            function returnToApplicationGroupDetails() {
-                $state.go('contiv.menu.applicationgroups.details', {'key': applicationGroupDetailsCtrl.applicationGroup.key});
-            }
+        applicationGroupDetailsCtrl.applicationGroupsModel.getModelByKey($stateParams.key)
+            .then(function (group) {
+                applicationGroupDetailsCtrl.applicationGroup = group;
+            });
 
-            function cancelEditing() {
-                returnToApplicationGroupDetails();
-            }
+        setMode();
+    }
 
-            function deleteApplicationGroup() {
-                CRUDHelperService.hideServerError(applicationGroupDetailsCtrl);
-                CRUDHelperService.startLoader(applicationGroupDetailsCtrl);
-                ApplicationGroupsModel.delete(applicationGroupDetailsCtrl.applicationGroup).then(
-                    function successCallback(result) {
-                        CRUDHelperService.stopLoader(applicationGroupDetailsCtrl);
-                        returnToApplicationGroup();
-                    }, function errorCallback(result) {
-                        CRUDHelperService.stopLoader(applicationGroupDetailsCtrl);
-                        CRUDHelperService.showServerError(applicationGroupDetailsCtrl, result);
-                    });
-            }
+    returnToApplicationGroup() {
+        this.$state.go('contiv.menu.applicationgroups.list');
+    }
 
-            function saveApplicationGroup() {
-                CRUDHelperService.hideServerError(applicationGroupDetailsCtrl);
-                CRUDHelperService.startLoader(applicationGroupDetailsCtrl);
+    returnToApplicationGroupDetails() {
+        this.$state.go('contiv.menu.applicationgroups.details', {'key': this.applicationGroup.key});
+    }
 
-                ApplicationGroupsModel.save(applicationGroupDetailsCtrl.applicationGroup).then(function successCallback(result) {
-                    CRUDHelperService.stopLoader(applicationGroupDetailsCtrl);
-                    returnToApplicationGroupDetails();
-                }, function errorCallback(result) {
-                    CRUDHelperService.stopLoader(applicationGroupDetailsCtrl);
-                    CRUDHelperService.showServerError(applicationGroupDetailsCtrl, result);
-                });
-            }
+    editApplicationGroup() {
+        this.$state.go('contiv.menu.applicationgroups.edit', {key:this.applicationGroup.key});
+    }
 
-            CRUDHelperService.stopLoader(applicationGroupDetailsCtrl);
-            CRUDHelperService.hideServerError(applicationGroupDetailsCtrl);
+    cancelEditing() {
+        this.returnToApplicationGroupDetails();
+    }
 
-            ApplicationGroupsModel.getModelByKey($stateParams.key)
-                .then(function (group) {
-                    applicationGroupDetailsCtrl.applicationGroup = group;
-                });
+    deleteApplicationGroup() {
+        var applicationGroupDetailsCtrl = this;
+        applicationGroupDetailsCtrl.crudHelperService.hideServerError(applicationGroupDetailsCtrl);
+        applicationGroupDetailsCtrl.crudHelperService.startLoader(applicationGroupDetailsCtrl);
+        applicationGroupDetailsCtrl.applicationGroupsModel.delete(applicationGroupDetailsCtrl.applicationGroup).then(
+            function successCallback(result) {
+                applicationGroupDetailsCtrl.crudHelperService.stopLoader(applicationGroupDetailsCtrl);
+                applicationGroupDetailsCtrl.returnToApplicationGroup();
+            }, function errorCallback(result) {
+                applicationGroupDetailsCtrl.crudHelperService.stopLoader(applicationGroupDetailsCtrl);
+                applicationGroupDetailsCtrl.crudHelperService.showServerError(applicationGroupDetailsCtrl, result);
+            });
+    }
 
-            applicationGroupDetailsCtrl.saveApplicationGroup = saveApplicationGroup;
-            applicationGroupDetailsCtrl.cancelEditing = cancelEditing;
-            applicationGroupDetailsCtrl.deleteApplicationGroup = deleteApplicationGroup;
+    saveApplicationGroup() {
+        var applicationGroupDetailsCtrl = this;
+        applicationGroupDetailsCtrl.crudHelperService.hideServerError(applicationGroupDetailsCtrl);
+        applicationGroupDetailsCtrl.crudHelperService.startLoader(applicationGroupDetailsCtrl);
 
-            setMode();
-
-        }]);
+        applicationGroupDetailsCtrl.applicationGroupsModel.save(applicationGroupDetailsCtrl.applicationGroup).then(
+            function successCallback(result) {
+                applicationGroupDetailsCtrl.crudHelperService.stopLoader(applicationGroupDetailsCtrl);
+                applicationGroupDetailsCtrl.returnToApplicationGroupDetails();
+            }, function errorCallback(result) {
+                applicationGroupDetailsCtrl.crudHelperService.stopLoader(applicationGroupDetailsCtrl);
+                applicationGroupDetailsCtrl.crudHelperService.showServerError(applicationGroupDetailsCtrl, result);
+            });
+    }
+}
