@@ -38,13 +38,11 @@ angular.module('contiv.networkpolicies', ['contiv.models', 'contiv.directives', 
             })
             .state('contiv.menu.networkpolicies.bandwidth.details', {
                 url: '/details/:key',
-                controller: 'BandwidthPolicyDetailsCtrl as bandwidthPolicyDetailsCtrl',
-                templateUrl: 'network_policies/bandwidthpolicydetails.html'
+                component: 'bandwidthpolicydetails'
             })
             .state('contiv.menu.networkpolicies.bandwidth.edit', {
                 url: '/edit/:key',
-                controller: 'BandwidthPolicyDetailsCtrl as bandwidthPolicyDetailsCtrl',
-                templateUrl: 'network_policies/bandwidthpolicydetails.html'
+                component: 'bandwidthpolicydetails'
             })
             .state('contiv.menu.networkpolicies.redirection', {
                 url: '/redirection',

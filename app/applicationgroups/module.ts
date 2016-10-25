@@ -9,4 +9,8 @@ angular.module('contiv.applicationgroups', ['contiv.models', 'contiv.directives'
                 abstract: true,
                 template: '<div ui-view class="ui container"/>'
             })
+            .state('contiv.menu.applicationgroups.create', {
+                url: '/create',
+                component: 'applicationgroupcreate'
+            })
     }]);

@@ -70,13 +70,13 @@
     <div class="ui section divider"></div>
 
     <ctv-collapsible title="Isolation Policies">
-        <ctv-isolationpolicy mode="applicationGroupDetailsCtrl.mode" applicationgroup="applicationGroupDetailsCtrl.applicationGroup"></ctv-isolationpolicy>
+        <ctv-isolationpolicy [mode]="applicationGroupDetailsCtrl.mode" [applicationgroup]="applicationGroupDetailsCtrl.applicationGroup"></ctv-isolationpolicy>
     </ctv-collapsible>
 
     <div class="ui section divider"></div>
 
     <ctv-collapsible title="Bandwidth Policies">
-        <ctv-bandwidthpolicy mode="applicationGroupDetailsCtrl.mode" applicationgroup="applicationGroupDetailsCtrl.applicationGroup"></ctv-bandwidthpolicy>
+        <ctv-bandwidthpolicy [mode]="applicationGroupDetailsCtrl.mode" [applicationgroup]="applicationGroupDetailsCtrl.applicationGroup"></ctv-bandwidthpolicy>
     </ctv-collapsible>
 
 
@@ -102,7 +102,7 @@
         </div>
         <ctv-error ng-switch-when="edit" ng-show="applicationGroupDetailsCtrl.showServerError"
                    header="Error saving application group"
-                   error="applicationGroupDetailsCtrl.serverErrorMessage">
+                   [error]="applicationGroupDetailsCtrl.serverErrorMessage">
         </ctv-error>
         <ctv-error ng-switch-when="details" ng-show="applicationGroupDetailsCtrl.showServerError"
                    header="Error deleting application group"

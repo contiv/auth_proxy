@@ -21,12 +21,14 @@ import { NetworkService } from "./components/utils/networkservice";
 import { VolumeSettingService } from "./components/utils/volumesettingservice";
 import { NodesService } from "./components/utils/nodesservice";
 import { DashboardComponent } from "./dashboard/dashboardctrl";
+import { ApplicationGroupsModule } from "./applicationgroups/applicationgroups.module.ts";
 
 @NgModule({
     imports: [
         BrowserModule,
         HttpModule,
-        NetworkPoliciesModule
+        NetworkPoliciesModule,
+        ApplicationGroupsModule
     ],
     declarations: [
         DashboardComponent

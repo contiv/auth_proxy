@@ -4,95 +4,89 @@
 /**
  * Created by vjain3 on 3/10/16.
  */
-angular.module('contiv.applicationgroups')
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider
-            .state('contiv.menu.applicationgroups.create', {
-                url: '/create',
-                controller: 'ApplicationGroupCreateCtrl as applicationGroupCreateCtrl',
-                templateUrl: 'applicationgroups/applicationgroupcreate.html'
-            })
-        ;
-    }])
-    .controller('ApplicationGroupCreateCtrl', [
-        '$state',
-        '$stateParams',
-        'ApplicationGroupsModel',
-        'NetworksModel',
-        'CRUDHelperService',
-        function ($state,
-                  $stateParams,
-                  ApplicationGroupsModel,
-                  NetworksModel,
-                  CRUDHelperService) {
-            var applicationGroupCreateCtrl = this;
-            applicationGroupCreateCtrl.networks = [];
-            applicationGroupCreateCtrl.applicationGroup = {};
-            applicationGroupCreateCtrl.selectedNetwork = {};
-            applicationGroupCreateCtrl.mode = "edit";
+import { Component, Inject } from '@angular/core';
+import { StateService } from "angular-ui-router/commonjs/ng1";
+import { NetworksModel } from "../components/models/networksmodel";
+import { ApplicationGroupsModel } from "../components/models/applicationgroupsmodel";
+import { CRUDHelperService } from "../components/utils/crudhelperservice";
 
-            function returnToApplicationGroup() {
-                $state.go('contiv.menu.applicationgroups.list');
-            }
+@Component({
+    selector: 'applicationgroupcreate',
+    templateUrl: 'applicationgroups/applicationgroupcreate.html'
+})
+export class ApplicationGroupCreateComponent {
+    networks:any[] = [];
+    applicationGroup:any = {};
+    selectedNetwork:string = '';
 
-            function cancelCreating() {
-                returnToApplicationGroup();
-            }
+    constructor(@Inject('$state') private $state:StateService,
+                private networksModel:NetworksModel,
+                private applicationGroupsModel:ApplicationGroupsModel,
+                private crudHelperService:CRUDHelperService) {
+
+        var applicationGroupCreateCtrl = this;
+        /**
+         * Get networks for the given tenant.
+         */
+        function getNetworks() {
+            networksModel.get(false).then(function (result) {
+                applicationGroupCreateCtrl.networks = _.filter(result, {
+                    'tenantName': 'default'//TODO: Remove hardcoded tenant.
+                });
+            });
+        }
+
+        function resetForm() {
+            crudHelperService.stopLoader(applicationGroupCreateCtrl);
+            crudHelperService.hideServerError(applicationGroupCreateCtrl);
+            applicationGroupCreateCtrl.applicationGroup = {
+                groupName: '',          // For Group Name
+                networkName: '',        // For Network Name
+                policies: [],           // For Isolation policies
+                netProfile: '',         // For Bandwidth policy Name
+                tenantName: 'default'//TODO: Remove hardcoded tenant.
+            };
+        }
+
+        getNetworks();
+        resetForm();
+    }
+
+    returnToApplicationGroup() {
+        this.$state.go('contiv.menu.applicationgroups.list');
+    }
+
+    cancelCreating() {
+        this.returnToApplicationGroup();
+    }
+
+    createApplicationGroup(validform: boolean) {
+        var applicationGroupCreateCtrl = this;
+        if (validform) {
+            applicationGroupCreateCtrl.crudHelperService.hideServerError(applicationGroupCreateCtrl);
+            applicationGroupCreateCtrl.crudHelperService.startLoader(applicationGroupCreateCtrl);
+            applicationGroupCreateCtrl.applicationGroup.networkName =
+                applicationGroupCreateCtrl.selectedNetwork;
+
+            applicationGroupCreateCtrl.applicationGroup.key =
+                applicationGroupCreateCtrl.applicationGroupsModel.generateKey(applicationGroupCreateCtrl.applicationGroup);
 
             /**
-             * Get networks for the given tenant.
+             * applicationGroup consist of Group Name, Network Name, Isolation Policies, Bandwidth Policy
              */
-            function getNetworks() {
-                NetworksModel.get().then(function (result) {
-                    applicationGroupCreateCtrl.networks = _.filter(result, {
-                        'tenantName': 'default'//TODO: Remove hardcoded tenant.
-                    });
+
+            applicationGroupCreateCtrl.applicationGroupsModel.create(applicationGroupCreateCtrl.applicationGroup).then(
+                function successCallback(result) {
+                    applicationGroupCreateCtrl.crudHelperService.stopLoader(applicationGroupCreateCtrl);
+                    applicationGroupCreateCtrl.returnToApplicationGroup();
+                }, function errorCallback(result) {
+                    applicationGroupCreateCtrl.crudHelperService.stopLoader(applicationGroupCreateCtrl);
+                    applicationGroupCreateCtrl.crudHelperService.showServerError(applicationGroupCreateCtrl, result);
                 });
-            }
+        }
+    }
 
-            function createApplicationGroup() {
-                //form controller is injected by the html template
-                //checking if all validations have passed
-                if (applicationGroupCreateCtrl.form.$valid) {
-                    CRUDHelperService.hideServerError(applicationGroupCreateCtrl);
-                    CRUDHelperService.startLoader(applicationGroupCreateCtrl);
-                    applicationGroupCreateCtrl.applicationGroup.networkName =
-                        applicationGroupCreateCtrl.selectedNetwork.networkName;
-
-                    applicationGroupCreateCtrl.applicationGroup.key =
-                        ApplicationGroupsModel.generateKey(applicationGroupCreateCtrl.applicationGroup);
-
-                    /**
-                     * applicationGroup consist of Group Name, Network Name, Isolation Policies, Bandwidth Policy
-                     */
-                    
-                    ApplicationGroupsModel.create(applicationGroupCreateCtrl.applicationGroup).then(
-                        function successCallback(result) {
-                            CRUDHelperService.stopLoader(applicationGroupCreateCtrl);
-                            returnToApplicationGroup();
-                        }, function errorCallback(result) {
-                            CRUDHelperService.stopLoader(applicationGroupCreateCtrl);
-                            CRUDHelperService.showServerError(applicationGroupCreateCtrl, result);
-                        });
-                }
-            }
-            
-            function resetForm() {
-                CRUDHelperService.stopLoader(applicationGroupCreateCtrl);
-                CRUDHelperService.hideServerError(applicationGroupCreateCtrl);
-                applicationGroupCreateCtrl.applicationGroup = {
-                    groupName: '',          // For Group Name
-                    networkName: '',        // For Network Name
-                    policies: [],           // For Isolation policies
-                    netProfile: '',         // For Bandwidth policy Name
-                    tenantName: 'default'//TODO: Remove hardcoded tenant.
-                };
-            }
-
-            getNetworks();
-
-            applicationGroupCreateCtrl.createApplicationGroup = createApplicationGroup;
-            applicationGroupCreateCtrl.cancelCreating = cancelCreating;
-
-            resetForm();
-        }]);
+    updateNetwork(networkName) {
+        this.selectedNetwork = networkName;
+    }
+}

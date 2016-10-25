@@ -1,19 +1,27 @@
-<div ng-if="mode=='edit'" class="field">
+<div *ngIf="mode=='edit'" class="field">
     <table class="ui very basic collapsing unstackable table">
         <tbody>
         <tr>
             <td>
                 <div class="ui left icon input">
-                    <input type="text" ng-model="netProfileSearchText"
+                    <input name="netProfileSearchText"
+                           type="text"
+                           [(ngModel)]="netProfileSearchText"
                            placeholder="Filter by profile name">
                     <i class="search icon"></i>
                 </div>
             </td>
             <td>
-                <select class="ui dropdown" ng-model="selectedNetprofile.policy"
-                        ng-options="policy as policy.profileName for policy in netProfiles | filter:netProfileSearchText"
-                        ng-change="updateApplicationgroup()">
+                <select class="ui dropdown"
+                        name="selectNetprofile"
+                        #selectedNetprofile
+                        ngModel
+                        (change)="updateApplicationgroup($event.target.value)">
                     <option value="">-- Please select bandwidth --</option>
+                    <option *ngFor="let policy of (netProfiles | filter:netProfileSearchText)"
+                            [ngValue]="policy">
+                        {{policy.profileName}}
+                    </option>
                 </select>
             </td>
 
@@ -33,16 +41,16 @@
 
         <tbody>
         <tr>
-            <td>{{selectedNetprofile.policy.profileName}}</td>
-            <td>{{selectedNetprofile.policy.tenantName}}</td>
-            <td>{{selectedNetprofile.policy.bandwidth}}</td>
-            <td>{{selectedNetprofile.policy.DSCP}}</td>
+            <td>{{selectedNetprofile.profileName}}</td>
+            <td>{{selectedNetprofile.tenantName}}</td>
+            <td>{{selectedNetprofile.bandwidth}}</td>
+            <td>{{selectedNetprofile.DSCP}}</td>
         </tr>
         </tbody>
     </table>
 </div>
 
-<table ng-if="mode == 'details'" class="ui very basic unstackable table">
+<table *ngIf="mode == 'details'" class="ui very basic unstackable table">
     <tbody>
     <tr>
         <td class="ctv-header three wide column">Profile Name</td>

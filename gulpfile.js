@@ -30,12 +30,18 @@ gulp.task('build', function () {
             '!app/components/utils/*service.js',
             '!app/components/directives/directives.module.js',
             '!app/components/directives/errormessagedirective.js',
+            '!app/components/directives/collapsibledirective.js',
+            '!app/components/pipes/*.js',
             '!app/dashboard/dashboardctrl.js',
             '!app/network_policies/networkpolicies.module.js',
             '!app/network_policies/isolationpolicycreatectrl.js',
             '!app/network_policies/isolationpolicydetailsctrl.js',
             '!app/network_policies/bandwidthpolicycreatectrl.js',
-            '!app/network_policies/bandwidthpolicydetailsctrl.js'
+            '!app/network_policies/bandwidthpolicydetailsctrl.js',
+            '!app/applicationgroups/applicationgroups.module.js',
+            '!app/applicationgroups/applicationgroupcreatectrl.js',
+            '!app/applicationgroups/isolationpolicydirective.js',
+            '!app/applicationgroups/bandwidthpolicydirective.js'
             ])//Exclude vendor libraries
         .pipe(sourcemaps.init());
     //ES6 code
@@ -79,12 +85,18 @@ gulp.task('dev-build', function () {
             '!app/components/utils/*service.js',
             '!app/components/directives/directives.module.js',
             '!app/components/directives/errormessagedirective.js',
+            '!app/components/directives/collapsibledirective.js',
+            '!app/components/pipes/*.js',
             '!app/dashboard/dashboardctrl.js',
             '!app/network_policies/networkpolicies.module.js',
             '!app/network_policies/isolationpolicycreatectrl.js',
             '!app/network_policies/isolationpolicydetailsctrl.js',
             '!app/network_policies/bandwidthpolicycreatectrl.js',
-            '!app/network_policies/bandwidthpolicydetailsctrl.js'
+            '!app/network_policies/bandwidthpolicydetailsctrl.js',
+            '!app/applicationgroups/applicationgroups.module.js',
+            '!app/applicationgroups/applicationgroupcreatectrl.js',
+            '!app/applicationgroups/isolationpolicydirective.js',
+            '!app/applicationgroups/bandwidthpolicydirective.js'
             ])//Exclude vendor libraries
         .pipe(sourcemaps.init());
     //ES6 code

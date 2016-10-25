@@ -1,33 +1,41 @@
-<div ng-switch="mode" class="field">
-    <table ng-switch-when="edit" class="ui very basic collapsing unstackable table">
+<div [ngSwitch]="mode" class="field">
+    <table *ngSwitchCase="'edit'" class="ui very basic collapsing unstackable table">
         <tbody>
         <tr>
             <td>
                 <div class="ui left icon input">
-                    <input type="text" ng-model="isolationPolicySearchText.policyName"
+                    <input name="isolationPolicySearchText"
+                           type="text"
+                           [(ngModel)]="isolationPolicySearchText"
                            placeholder="Filter by policy name">
                     <i class="search icon"></i>
                 </div>
             </td>
             <td>
-                <select class="ui dropdown" ng-model="selectedPolicy.policy"
-                        ng-options="policy as policy.policyName for policy in isolationPolicies | filter:isolationPolicySearchText">
+                <select #selectIsolationPolicyRef
+                        name="selectIsolationPolicies"
+                        class="ui dropdown"
+                        ngModel>
                     <option value="">-- Please select policy --</option>
+                    <option *ngFor="let policy of (isolationPolicies | filter:isolationPolicySearchText)"
+                            [value]="policy.policyName">
+                        {{policy.policyName}}
+                    </option>
                 </select>
             </td>
             <td>
                 <button type="button" class="ui icon button"
-                        ng-click="addIsolationPolicy()">
+                        (click)="addIsolationPolicy(selectIsolationPolicyRef.value)">
                     <i class="blue add icon"></i>
                 </button>
             </td>
         </tr>
-        <tr ng-repeat="policy in applicationgroup.policies">
+        <tr *ngFor="let policy of applicationgroup.policies">
             <td>{{policy}}</td>
             <td></td>
             <td>
                 <button type="button" class="ui icon button"
-                        ng-click="removeIsolationPolicy(policy)">
+                        (click)="removeIsolationPolicy(policy)">
                     <i class="trash icon"></i>
                 </button>
             </td>
@@ -35,9 +43,9 @@
         </tbody>
     </table>
 
-    <table ng-switch-when="details" class="ui very basic unstackable table">
+    <table *ngSwitchCase="'details'" class="ui very basic unstackable table">
         <tbody>
-        <tr ng-repeat="policy in applicationgroup.policies">
+        <tr *ngFor="let policy of applicationgroup.policies">
             <td>{{policy}}</td>
         </tr>
         </tbody>
@@ -59,7 +67,7 @@
         </thead>
 
         <tbody>
-        <tr ng-repeat="rule in incomingRules">
+        <tr *ngFor="let rule of incomingRules">
             <td>{{rule.policyName}}</td>
             <td>{{rule.priority}}</td>
             <td>{{rule.action}}</td>
@@ -89,7 +97,7 @@
         </thead>
 
         <tbody>
-        <tr ng-repeat="rule in outgoingRules">
+        <tr *ngFor="let rule of outgoingRules">
             <td>{{rule.policyName}}</td>
             <td>{{rule.priority}}</td>
             <td>{{rule.action}}</td>

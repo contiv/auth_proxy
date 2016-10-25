@@ -4,15 +4,19 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ErrorMessageComponent } from "./errormessagedirective";
+import { CollapsibleComponent } from "./collapsibledirective";
+
 @NgModule({
     imports: [
         CommonModule
     ],
     declarations: [
-        ErrorMessageComponent
+        ErrorMessageComponent,
+        CollapsibleComponent
     ],
     exports: [
-        ErrorMessageComponent
+        ErrorMessageComponent,
+        CollapsibleComponent
     ]
 })
 export class DirectivesModule {}

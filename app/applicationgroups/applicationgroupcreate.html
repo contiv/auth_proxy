@@ -1,9 +1,9 @@
-<form class="ui form" name="applicationGroupCreateCtrl.form" role="form"
-      ng-submit="applicationGroupCreateCtrl.createApplicationGroup(applicationGroup)"
+<form class="ui form" role="form" #formRef="ngForm"
+      (ngSubmit)="createApplicationGroup(formRef.valid)"
       novalidate>
     <div class="ui sixteen column grid">
         <div class="one wide column">
-            <a ui-sref="contiv.menu.applicationgroups.list()">
+            <a href="/#/m/applicationgroups/list">
                 <i class="large arrow left icon"></i>
             </a>
         </div>
@@ -14,18 +14,18 @@
             </div>
         </div>
     </div>
-    <div class="ui active inverted dimmer" ng-show="applicationGroupCreateCtrl.showLoader">
+    <div class="ui active inverted dimmer" *ngIf="showLoader">
         <div class="ui loader"></div>
     </div>
     <div class="ui basic segment">
         <div class="field">
-            <div ng-show="applicationGroupCreateCtrl.form.$submitted">
-                <div ng-hide="applicationGroupCreateCtrl.form.$valid" class="ui negative message">
+            <div *ngIf="formRef.submitted">
+                <div *ngIf="!formRef.valid" class="ui negative message">
                     <ul class="list">
-                        <li ng-show="applicationGroupCreateCtrl.form.newApplicationGroupName.$error.required">Please
+                        <li *ngIf="newApplicationGroupNameRef.errors?.required">Please
                             enter application group name
                         </li>
-                        <li ng-show="applicationGroupCreateCtrl.form.newApplicationGroupNetwork.$error.required">Please
+                        <li *ngIf="newApplicationGroupNetworkRef.errors?.required">Please
                             select network
                         </li>
                     </ul>
@@ -34,17 +34,27 @@
         </div>
         <div class="field">
             <label for="newApplicationGroupName">Application group name</label>
-            <input type="text" id="newApplicationGroupName" name="newApplicationGroupName"
-                   ng-model="applicationGroupCreateCtrl.applicationGroup.groupName" placeholder="Enter name" required>
+            <input #newApplicationGroupNameRef="ngModel"
+                   type="text"
+                   id="newApplicationGroupName"
+                   name="newApplicationGroupName"
+                   [(ngModel)]="applicationGroup.groupName"
+                   placeholder="Enter name" required>
         </div>
         <div class="field">
             <label for="newApplicationGroupNetwork">Network</label>
-            <select id="newApplicationGroupNetwork" class="ui dropdown"
+            <select id="newApplicationGroupNetwork"
+                    class="ui dropdown"
+                    #newApplicationGroupNetworkRef="ngModel"
                     name="newApplicationGroupNetwork"
-                    ng-model="applicationGroupCreateCtrl.selectedNetwork"
-                    ng-options="network.networkName for network in applicationGroupCreateCtrl.networks"
+                    ngModel
+                    (change)="updateNetwork($event.target.value)"
                     required>
                 <option value="">-- Please select network --</option>
+                <option *ngFor="let network of networks"
+                        [value]="network.networkName">
+                    {{network.networkName}}
+                </option>
             </select>
         </div>
 
@@ -59,13 +69,13 @@
         <div class="ui section divider"></div>
 
         <ctv-collapsible title="Isolation Policies">
-            <ctv-isolationpolicy mode="applicationGroupCreateCtrl.mode" applicationgroup="applicationGroupCreateCtrl.applicationGroup"></ctv-isolationpolicy>
+            <ctv-isolationpolicy mode="edit" [applicationgroup]="applicationGroup"></ctv-isolationpolicy>
         </ctv-collapsible>
 
         <div class="ui section divider"></div>
 
         <ctv-collapsible title="Bandwidth Policies">
-            <ctv-bandwidthpolicy mode="applicationGroupCreateCtrl.mode" applicationgroup="applicationGroupCreateCtrl.applicationGroup"></ctv-bandwidthpolicy>
+            <ctv-bandwidthpolicy mode="edit" [applicationgroup]="applicationGroup"></ctv-bandwidthpolicy>
         </ctv-collapsible>
 
         <div class="ui section divider"></div>
@@ -81,7 +91,7 @@
             <div class="right aligned sixteen wide column">
                 <div style="margin-top: 40px">
                     <button type="button" class="ui basic button"
-                            ng-click="applicationGroupCreateCtrl.cancelCreating()">Cancel
+                            (click)="cancelCreating()">Cancel
                     </button>
                     <button type="submit" class="ui blue button">
                         Create
@@ -90,8 +100,8 @@
             </div>
         </div>
 
-        <ctv-error ng-show="applicationGroupCreateCtrl.showServerError" header="Error creating application group"
-                   [error]="applicationGroupCreateCtrl.serverErrorMessage">
+        <ctv-error *ngIf="showServerError" header="Error creating application group"
+                   [error]="serverErrorMessage">
         </ctv-error>
     </div>
 </form>

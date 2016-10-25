@@ -18,12 +18,17 @@ import { InspectService } from "./components/utils/inspectservice";
 import { NetworkService } from "./components/utils/networkservice";
 import { VolumeSettingService } from "./components/utils/volumesettingservice";
 import { NodesService } from "./components/utils/nodesservice";
+import { ErrorMessageComponent } from "./components/directives/errormessagedirective";
+import { CollapsibleComponent } from "./components/directives/collapsibledirective";
 import { DashboardComponent } from "./dashboard/dashboardctrl";
 import { IsolationPolicyCreateComponent } from "./network_policies/isolationpolicycreatectrl";
-import { ErrorMessageComponent } from "./components/directives/errormessagedirective";
-import { BandwidthPolicyCreateComponent } from "./network_policies/bandwidthpolicycreatectrl";
 import { IsolationPolicyDetailsComponent } from "./network_policies/isolationpolicydetailsctrl";
+import { BandwidthPolicyCreateComponent } from "./network_policies/bandwidthpolicycreatectrl";
 import { BandwidthPolicyDetailsComponent } from "./network_policies/bandwidthpolicydetailsctrl";
+import { ApplicationGroupCreateComponent } from "./applicationgroups/applicationgroupcreatectrl";
+import { IsolationPolicySelectionComponent } from "./applicationgroups/isolationpolicydirective";
+import { BandwidthPolicySelectionComponent } from "./applicationgroups/bandwidthpolicydirective";
+
 
 upgradeAdapter.upgradeNg1Provider('$state');
 upgradeAdapter.upgradeNg1Provider('$stateParams');
@@ -84,7 +89,23 @@ angular.module('contiv.networkpolicies')
         upgradeAdapter.downgradeNg2Component(BandwidthPolicyDetailsComponent) as angular.IDirectiveFactory
     );
 
+angular.module('contiv.applicationgroups')
+    .directive(
+        'applicationgroupcreate',
+        upgradeAdapter.downgradeNg2Component(ApplicationGroupCreateComponent) as angular.IDirectiveFactory
+    )
+    .directive(
+        'ctvIsolationpolicy',
+        upgradeAdapter.downgradeNg2Component(IsolationPolicySelectionComponent) as angular.IDirectiveFactory
+    )
+    .directive(
+        'ctvBandwidthpolicy',
+        upgradeAdapter.downgradeNg2Component(BandwidthPolicySelectionComponent) as angular.IDirectiveFactory
+    );
+
 angular.module("contiv.directives")
+    .directive("ctvCollapsible", upgradeAdapter.downgradeNg2Component(CollapsibleComponent) as angular.IDirectiveFactory
+    )
     .directive("ctvError", upgradeAdapter.downgradeNg2Component(ErrorMessageComponent) as angular.IDirectiveFactory
     );
 

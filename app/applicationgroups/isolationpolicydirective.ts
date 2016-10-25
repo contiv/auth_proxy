@@ -1,122 +1,118 @@
 /**
  * Created by hardik gandhi on 7/8/16.
  */
+import { Component, Input, OnChanges } from '@angular/core';
+import * as _ from 'lodash';
+import { ApplicationGroupsModel } from "../components/models/applicationgroupsmodel";
+import { PoliciesModel } from "../components/models/policiesmodel";
+import { RulesModel } from "../components/models/rulesmodel";
 
-angular.module("contiv.applicationgroups")
-    .directive("ctvIsolationpolicy",function(){
-        return{
-            restrict:'E',
-            scope:{
-                mode:'=',
-                applicationgroup:'='
-            },
-            controller: [
-                '$scope',
-                '$stateParams',
-                'ApplicationGroupsModel',
-                'PoliciesModel',
-                'RulesModel',
-                function($scope,
-                         $stateParams,
-                         ApplicationGroupsModel,
-                         PoliciesModel,
-                         RulesModel){
+@Component({
+    selector: 'ctv-isolationpolicy',
+    templateUrl: 'applicationgroups/isolationpolicy.html'
+})
+export class IsolationPolicySelectionComponent implements OnChanges {
+    @Input() mode:string;
+    @Input() applicationgroup:any;
 
-                    $scope.incomingRules = [];
-                    $scope.outgoingRules = [];
-                    $scope.selectedPolicy = {
-                        policy:{}
-                    };
-                    $scope.selectedPolicies = [];           // To Store policies selected by user to display
-                    $scope.isolationPolicies = [];          // To Get all isolation policies of tenant
+    incomingRules:any[] = [];
+    outgoingRules:any[] = [];
+    selectedPolicies:any[] = [];           // To Store policies selected by user to display
+    isolationPolicies:any[] = [];          // To Get all isolation policies of tenant
+    isolationPolicySearchText:string = '';
 
+    constructor(private policiesModel:PoliciesModel,
+                private rulesModel:RulesModel) {
+        var component = this;
 
-                    /**
-                     * Get incoming and outgoing rules for each policy present in applicationgroup
-                     */
-                    function getRules() {
-                        $scope.applicationgroup.policies.forEach(function (policy) {
-                            //To display rules of selected policies
-                            RulesModel.getIncomingRules(policy, 'default')
-                                .then(function (rules) {
-                                    Array.prototype.push.apply($scope.incomingRules, rules);
-                                });
-                            RulesModel.getOutgoingRules(policy, 'default')
-                                .then(function (rules) {
-                                    Array.prototype.push.apply($scope.outgoingRules, rules);
-                                });
-                        });
-                    }
-
-                    /**
-                     * Get policies for the given tenant.
-                     */
-                    function getIsolationPolicies() {
-                        PoliciesModel.get().then(function (result) {
-                            $scope.isolationPolicies = _.filter(result, {
-                                'tenantName': 'default'//TODO: Remove hardcoded tenant.
-                            })
-                        });
-                    }
-                    /**
-                     * Add policy to application group
-                     */
-                    $scope.addIsolationPolicy = function() {
-                        var currentPolicyName = $scope.selectedPolicy.policy.policyName;
-
-                        if (currentPolicyName !== undefined && _.includes($scope.selectedPolicies, currentPolicyName) == false) {
-                            //To display selected policies
-                            $scope.selectedPolicies.push(currentPolicyName);
-
-                            //To display rules of selected policies
-                            RulesModel.getIncomingRules(currentPolicyName, 'default')
-                                .then(function (rules) {
-                                    Array.prototype.push.apply($scope.incomingRules, rules);
-                                });
-                            RulesModel.getOutgoingRules(currentPolicyName, 'default')
-                                .then(function (rules) {
-                                    Array.prototype.push.apply($scope.outgoingRules, rules);
-                                });
-
-                            //To be added to application group and saved to the server
-                            $scope.applicationgroup.policies
-                                .push(currentPolicyName);
-                        }
-                    };
-
-                    /**
-                     * Remove policy from application group
-                     */
-                    $scope.removeIsolationPolicy = function(policyName) {
-                        _.remove($scope.selectedPolicies,function (policy) {
-                            return policy === policyName;
-                        });
-                        _.remove($scope.applicationgroup.policies, function (policy) {
-                            return policy === policyName;
-                        });
-                        _.remove($scope.incomingRules, function (rule) {
-                            return rule.policyName === policyName;
-                        });
-                        _.remove($scope.outgoingRules, function (rule) {
-                            return rule.policyName === policyName;
-                        });
-                    };
-
-                    /**
-                     *  To check 'details' or 'edit' mode (not create mode)
-                     */
-                    if($scope.mode == 'details' || ($scope.mode == 'edit' && $scope.applicationgroup.groupName != "")) {
-                        //Application Groups might not have any policies associated with them so define an empty array
-                        if ($scope.applicationgroup.policies === undefined) {
-                            $scope.applicationgroup.policies = [];
-                        }
-                        getRules();
-                    }
-                    getIsolationPolicies();
-                }],
-            templateUrl:'applicationgroups/isolationpolicy.html'
+        /**
+         * Get policies for the given tenant.
+         */
+        function getIsolationPolicies() {
+            component.policiesModel.get(false).then(function (result) {
+                component.isolationPolicies = _.filter(result, {
+                    'tenantName': 'default'//TODO: Remove hardcoded tenant.
+                });
+            });
         }
-    });
 
+        getIsolationPolicies();
+    }
+
+    ngOnChanges() {
+        var component = this;
+        /**
+         * Get incoming and outgoing rules for each policy present in applicationgroup
+         */
+        function getRules() {
+            component.applicationgroup.policies.forEach(function (policy) {
+                //To display rules of selected policies
+                component.rulesModel.getIncomingRules(policy, 'default')
+                    .then(function (rules) {
+                        Array.prototype.push.apply(component.incomingRules, rules);
+                    });
+                component.rulesModel.getOutgoingRules(policy, 'default')
+                    .then(function (rules) {
+                        Array.prototype.push.apply(component.outgoingRules, rules);
+                    });
+            });
+        }
+        /**
+         *  To check 'details' or 'edit' mode (not create mode)
+         */
+        if (component.mode === 'details' || (component.mode === 'edit' && component.applicationgroup.groupName != "")) {
+            //Application Groups might not have any policies associated with them so define an empty array
+            if (component.applicationgroup.policies === undefined) {
+                component.applicationgroup.policies = [];
+            }
+            getRules();
+        }
+    }
+
+    /**
+     * Add policy to application group
+     */
+    addIsolationPolicy(policyName) {
+        var component = this;
+        var currentPolicyName = policyName;
+
+        if (currentPolicyName !== undefined && _.includes(component.selectedPolicies, currentPolicyName) == false) {
+            //To display selected policies
+            component.selectedPolicies.push(currentPolicyName);
+
+            //To display rules of selected policies
+            component.rulesModel.getIncomingRules(currentPolicyName, 'default')
+                .then(function (rules) {
+                    Array.prototype.push.apply(component.incomingRules, rules);
+                });
+            component.rulesModel.getOutgoingRules(currentPolicyName, 'default')
+                .then(function (rules) {
+                    Array.prototype.push.apply(component.outgoingRules, rules);
+                });
+
+            //To be added to application group and saved to the server
+            component.applicationgroup.policies
+                .push(currentPolicyName);
+        }
+    };
+
+    /**
+     * Remove policy from application group
+     */
+    removeIsolationPolicy(policyName) {
+        _.remove(this.selectedPolicies, function (policy) {
+            return policy === policyName;
+        });
+        _.remove(this.applicationgroup.policies, function (policy) {
+            return policy === policyName;
+        });
+        _.remove(this.incomingRules, function (rule) {
+            return rule.policyName === policyName;
+        });
+        _.remove(this.outgoingRules, function (rule) {
+            return rule.policyName === policyName;
+        });
+    };
+}
 
 

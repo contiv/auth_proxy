@@ -1,10 +1,12 @@
-<div ng-click="collapsed = !collapsed">
+<div (click)="collapsed = !collapsed">
     <h4 class="ui header">
-        <i ng-if="!collapsed" class="grey minus circle outline icon"></i>
-        <i ng-if="collapsed" class="grey plus circle outline icon"></i>
+        <i *ngIf="!collapsed" class="grey minus circle outline icon"></i>
+        <i *ngIf="collapsed" class="grey plus circle outline icon"></i>
         {{title}}
     </h4>
 </div>
 
-<div ng-transclude ng-show="!collapsed" style="margin-top: 12px">
+
+<div style="margin-top: 12px" [hidden]="collapsed">
+    <ng-content></ng-content>
 </div>
