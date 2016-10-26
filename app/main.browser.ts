@@ -15,8 +15,6 @@ import { RulesModel } from "./components/models/rulesmodel";
 import { NetprofilesModel } from "./components/models/netprofilesmodel";
 import { CRUDHelperService } from "./components/utils/crudhelperservice";
 import { InspectService } from "./components/utils/inspectservice";
-import { NetworkService } from "./components/utils/networkservice";
-import { VolumeSettingService } from "./components/utils/volumesettingservice";
 import { NodesService } from "./components/utils/nodesservice";
 import { ErrorMessageComponent } from "./components/directives/errormessagedirective";
 import { CollapsibleComponent } from "./components/directives/collapsibledirective";
@@ -28,6 +26,7 @@ import { BandwidthPolicyDetailsComponent } from "./network_policies/bandwidthpol
 import { ApplicationGroupCreateComponent } from "./applicationgroups/applicationgroupcreatectrl";
 import { ApplicationGroupDetailsComponent } from "./applicationgroups/applicationgroupdetailsctrl";
 import { NetworkSettingsComponent } from "./settings/networksettingctrl";
+import { VolumeSettingsComponent } from "./settings/volumesettingctrl";
 
 
 upgradeAdapter.upgradeNg1Provider('$state');
@@ -57,12 +56,7 @@ angular.module('contiv.utils')
     .factory('CRUDHelperService', upgradeAdapter.downgradeNg2Provider(CRUDHelperService));
 
 angular.module("contiv.utils")
-    .factory("InspectService", upgradeAdapter.downgradeNg2Provider(InspectService));
-angular.module('contiv.utils')
-    .factory('NetworkService', upgradeAdapter.downgradeNg2Provider(NetworkService));
-angular.module('contiv.utils')
-    .factory('VolumeSettingService', upgradeAdapter.downgradeNg2Provider(VolumeSettingService));
-angular.module('contiv.utils')
+    .factory("InspectService", upgradeAdapter.downgradeNg2Provider(InspectService))
     .factory('NodesService', upgradeAdapter.downgradeNg2Provider(NodesService));
 
 angular.module('contiv.dashboard')
@@ -106,6 +100,7 @@ angular.module("contiv.directives")
     );
 
 angular.module('contiv.settings')
-    .directive('networksetting', upgradeAdapter.downgradeNg2Component(NetworkSettingsComponent) as angular.IDirectiveFactory);
+    .directive('networksetting', upgradeAdapter.downgradeNg2Component(NetworkSettingsComponent) as angular.IDirectiveFactory)
+    .directive('volumesetting', upgradeAdapter.downgradeNg2Component(VolumeSettingsComponent) as angular.IDirectiveFactory);
 
 upgradeAdapter.bootstrap(document.documentElement, ['contivApp']);

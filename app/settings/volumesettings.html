@@ -1,24 +1,24 @@
-<form class="ui form" name="volumeSettingCtrl.form" role="form"
-      ng-submit="volumeSettingCtrl.updateVolumeSettings()" novalidate> 
-    <div class="ui active inverted dimmer" ng-show="volumeSettingCtrl.showLoader">
+<form class="ui form" role="form" #formRef="ngForm"
+      (ngSubmit)="updateVolumeSettings(formRef.valid)" novalidate>
+    <div class="ui active inverted dimmer" *ngIf="showLoader">
         <div class="ui loader"></div>
     </div>
 
     <div class="field">
         <label for="timeout">Timeout</label>
-        <input type="number" id="timeout" name="timeout" ng-model="volumeSettingCtrl.setting.Timeout" placeholder="10">
+        <input type="number" id="timeout" name="timeout" [(ngModel)]="setting.Timeout" placeholder="10">
     </div>
     <div class="field">
         <label for="ttl">Time to Live (TTL)</label>
-        <input type="number" id="ttl" name="ttl" ng-model="volumeSettingCtrl.setting.TTL" placeholder="30">
+        <input type="number" id="ttl" name="ttl" [(ngModel)]="setting.TTL" placeholder="30">
     </div>
     <div class="field">
         <label for="mountpath">Mount Path</label>
-        <input type="text" id="mountpath" name="mountpath" ng-model="volumeSettingCtrl.setting.MountPath" placeholder="/mnt/ceph" required>
+        <input type="text" id="mountpath" name="mountpath" [(ngModel)]="setting.MountPath" placeholder="/mnt/ceph" required>
     </div>
     <div class="field">
         <div class="ui checkbox">
-            <input type="checkbox" name="debug" tabindex="0" ng-model="volumeSettingCtrl.setting.Debug">
+            <input type="checkbox" name="debug" tabindex="0" [(ngModel)]="setting.Debug">
             <label>Debug</label>
         </div>
     </div>
@@ -32,6 +32,6 @@
             </div>
         </div>
     </div>
-    <ctv-error ng-show="volumeSettingCtrl.showServerError" header="Error updating volume settings" [error]="volumeSettingCtrl.serverErrorMessage">
+    <ctv-error *ngIf="showServerError" header="Error updating volume settings" [error]="serverErrorMessage">
     </ctv-error>
 </form>

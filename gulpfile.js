@@ -44,7 +44,8 @@ gulp.task('build', function () {
             '!app/applicationgroups/isolationpolicydirective.js',
             '!app/applicationgroups/bandwidthpolicydirective.js',
             '!app/settings/settings.module.js',
-            '!app/settings/networksettingctrl.js'
+            '!app/settings/networksettingctrl.js',
+            '!app/settings/volumesettingctrl.js'
             ])//Exclude vendor libraries
         .pipe(sourcemaps.init());
     //ES6 code
@@ -102,7 +103,8 @@ gulp.task('dev-build', function () {
             '!app/applicationgroups/isolationpolicydirective.js',
             '!app/applicationgroups/bandwidthpolicydirective.js',
             '!app/settings/settings.module.js',
-            '!app/settings/networksettingctrl.js'
+            '!app/settings/networksettingctrl.js',
+            '!app/settings/volumesettingctrl.js'
             ])//Exclude vendor libraries
         .pipe(sourcemaps.init());
     //ES6 code

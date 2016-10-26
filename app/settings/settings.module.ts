@@ -6,6 +6,7 @@ import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { DirectivesModule } from "../components/directives/directives.module";
 import { NetworkSettingsComponent } from "./networksettingctrl";
+import { VolumeSettingsComponent } from "./volumesettingctrl";
 
 @NgModule({
     imports: [
@@ -14,10 +15,12 @@ import { NetworkSettingsComponent } from "./networksettingctrl";
         DirectivesModule
     ],
     declarations: [
-        NetworkSettingsComponent
+        NetworkSettingsComponent,
+        VolumeSettingsComponent
     ],
     exports: [
         NetworkSettingsComponent,
+        VolumeSettingsComponent,
         FormsModule,
         CommonModule,
         DirectivesModule

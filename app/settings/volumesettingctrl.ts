@@ -1,40 +1,45 @@
-angular.module('contiv.settings')
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider
-            .state('contiv.menu.settings.details.volumes', {
-                url: '/volumes',
-                controller: 'VolumeSettingCtrl as volumeSettingCtrl',
-                templateUrl: 'settings/volumesettings.html'
-            })
-        ;
-    }])
-    .controller('VolumeSettingCtrl', ['CRUDHelperService', 'VolumeSettingService',
-        function (CRUDHelperService, VolumeSettingService) {
-            var volumeSettingCtrl = this;
+import { Component } from '@angular/core';
+import { CRUDHelperService } from "../components/utils/crudhelperservice";
+import { VolumeSettingService } from "../components/utils/volumesettingservice";
 
-            function updateVolumeSettings() {
-                if (volumeSettingCtrl.form.$valid) {
-                    CRUDHelperService.hideServerError(volumeSettingCtrl);
-                    CRUDHelperService.startLoader(volumeSettingCtrl);
-                    VolumeSettingService.updateSettings(volumeSettingCtrl.setting).then(function successCallback(result) {
-                        CRUDHelperService.stopLoader(volumeSettingCtrl);
+@Component({
+    selector: 'volumesetting',
+    templateUrl: 'settings/volumesettings.html'
+})
+export class VolumeSettingsComponent {
 
-                    }, function errorCallback(result) {
-                        CRUDHelperService.stopLoader(volumeSettingCtrl);
-                        CRUDHelperService.showServerError(volumeSettingCtrl, result);
-                    });
-                }
-            }
+    setting:any = {};
 
-            function getVolumeSettings() {
-                VolumeSettingService.getSettings().then(function successCallback(result) {
-                    volumeSettingCtrl.setting = result;
-                }, function errorCallback(result) {
-                });
-            }
-            getVolumeSettings();
-            volumeSettingCtrl.updateVolumeSettings = updateVolumeSettings;
+    constructor(private crudHelperService:CRUDHelperService,
+                private volumeSettingService:VolumeSettingService) {
+        var volumeSettingCtrl = this;
 
-            CRUDHelperService.stopLoader(volumeSettingCtrl);
-            CRUDHelperService.hideServerError(volumeSettingCtrl);
-        }]);
+        function getVolumeSettings() {
+            volumeSettingCtrl.volumeSettingService.getSettings().then(function successCallback(result) {
+                volumeSettingCtrl.setting = result;
+            }, function errorCallback(result) {
+            });
+        }
+
+        getVolumeSettings();
+
+        volumeSettingCtrl.crudHelperService.stopLoader(volumeSettingCtrl);
+        volumeSettingCtrl.crudHelperService.hideServerError(volumeSettingCtrl);
+    }
+
+    updateVolumeSettings(validform:boolean) {
+        var volumeSettingCtrl = this;
+        if (validform) {
+            volumeSettingCtrl.crudHelperService.hideServerError(volumeSettingCtrl);
+            volumeSettingCtrl.crudHelperService.startLoader(volumeSettingCtrl);
+            volumeSettingCtrl.volumeSettingService.updateSettings(volumeSettingCtrl.setting).then(function successCallback(result) {
+                volumeSettingCtrl.crudHelperService.stopLoader(volumeSettingCtrl);
+
+            }, function errorCallback(result) {
+                volumeSettingCtrl.crudHelperService.stopLoader(volumeSettingCtrl);
+                volumeSettingCtrl.crudHelperService.showServerError(volumeSettingCtrl, result);
+            });
+        }
+    }
+
+}

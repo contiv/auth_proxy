@@ -34,4 +34,8 @@ angular.module('contiv.settings', ['contiv.models', 'contiv.directives', 'contiv
                 url: '/networks',
                 component: 'networksetting'
             })
+            .state('contiv.menu.settings.details.volumes', {
+                url: '/volumes',
+                component: 'volumesetting'
+            })
     }]);
