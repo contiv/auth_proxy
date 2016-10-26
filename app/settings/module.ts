@@ -30,4 +30,8 @@ angular.module('contiv.settings', ['contiv.models', 'contiv.directives', 'contiv
                 controller: '',
                 templateUrl: ''
             })
+            .state('contiv.menu.settings.details.networks', {
+                url: '/networks',
+                component: 'networksetting'
+            })
     }]);

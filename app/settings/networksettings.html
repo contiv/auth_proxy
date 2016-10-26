@@ -1,25 +1,28 @@
-<form class="ui form" name="networkSettingCtrl.form" role="form"
-      ng-submit="networkSettingCtrl.updateNetworkSettings()" novalidate> 
-    <div class="ui active inverted dimmer" ng-show="networkSettingCtrl.showLoader">
+<form class="ui form" role="form" #formRef="ngForm"
+      (ngSubmit)="updateNetworkSettings(formRef.valid)" novalidate>
+    <div class="ui active inverted dimmer" *ngIf="showLoader">
         <div class="ui loader"></div>
     </div>
     <div class="field">
-        <div ng-show="networkSettingCtrl.form.$submitted">
-            <div ng-hide="networkSettingCtrl.form.$valid" class="ui negative message">
+        <div *ngIf="formRef.submitted">
+            <div *ngIf="!formRef.valid" class="ui negative message">
                 <ul class="list">
-                    <li ng-show="networkSettingCtrl.form.networkInfrastructure.$error.required">
+                    <li *ngIf="networkInfrastructureRef.errors?.required">
                         Please enter network infrastructure type
                     </li>
-                    <li ng-show="networkSettingCtrl.form.allowedVlanRange.$error.required">
+                    <li *ngIf="allowedVlanRangeRef.errors?.required">
                         Please enter allowed vlan range
                     </li>
-                    <li ng-show="networkSettingCtrl.form.allowedVxlanRange.$error.required">
+                    <li *ngIf="allowedVxlanRangeRef.errors?.required">
                         Please enter allowed vxlan range
                     </li>
-                    <li ng-show="networkSettingCtrl.form.allowedVlanRange.$error.pattern">
+                    <li *ngIf="forwardingmodeRef.errors?.required">
+                        Please enter forwarding mode
+                    </li>
+                    <li *ngIf="allowedVlanRangeRef.errors?.pattern">
                         Please enter vlan in range in the correct notation
                     </li>
-                    <li ng-show="networkSettingCtrl.form.allowedVxlanRange.$error.pattern">
+                    <li *ngIf="allowedVxlanRangeRef.errors?.pattern">
                         Please enter vxlan in range in the correct notation
                     </li>
                 </ul>
@@ -29,7 +32,11 @@
 
     <div class="field">
         <label for="networkInfrastructure">Network infrastructure type</label>
-        <select id="networkInfrastructure" name="networkInfrastructure" class="ui dropdown" ng-model="networkSettingCtrl.setting['networkInfraType']" required>
+        <select #networkInfrastructureRef="ngModel"
+                id="networkInfrastructure"
+                name="networkInfrastructure"
+                class="ui dropdown"
+                [(ngModel)]="setting['networkInfraType']" required>
             <option value="">-- Please select network infrastructure type --</option>
             <option value="default">default</option>
             <option value="aci">aci</option>
@@ -37,15 +44,27 @@
     </div>
     <div class="field">
         <label for="allowedVlanRange">Allowed vlan range</label>
-        <input type="text" id="allowedVlanRange" name="allowedVlanRange" ng-model="networkSettingCtrl.setting['vlans']" placeholder="1-4094" required ng-pattern="networkSettingCtrl.vlanPattern">
+        <input #allowedVlanRangeRef="ngModel"
+               type="text"
+               id="allowedVlanRange"
+               name="allowedVlanRange"
+               [(ngModel)]="setting['vlans']" placeholder="1-4094" required [pattern]="vlanPattern">
     </div>
     <div class="field">
         <label for="allowedVxlanRange">Allowed vxlan range</label>
-        <input type="text" id="allowedVxlanRange" name="allowedVxlanRange" ng-model="networkSettingCtrl.setting['vxlans']" placeholder="1-10000" required ng-pattern="networkSettingCtrl.vxlanPattern">
+        <input #allowedVxlanRangeRef="ngModel"
+               type="text"
+               id="allowedVxlanRange"
+               name="allowedVxlanRange"
+               [(ngModel)]="setting['vxlans']" placeholder="1-10000" required [pattern]="vxlanPattern">
     </div>
     <div class="field">
         <label for="forwardingmode">Forwarding mode</label>
-        <select id="forwardingmode" name="forwardingmode" class="ui dropdown" ng-model="networkSettingCtrl.setting['fwdMode']" required>
+        <select #forwardingmodeRef="ngModel"
+                id="forwardingmode"
+                name="forwardingmode"
+                class="ui dropdown"
+                [(ngModel)]="setting['fwdMode']" required>
             <option value="">-- Please select the network forwarding mode --</option>
             <option value="bridge">bridge</option>
             <option value="routing">routing</option>
@@ -61,6 +80,6 @@
             </div>
         </div>
     </div>
-    <ctv-error ng-show="networkSettingCtrl.showServerError" header="Error updating network settings" [error]="networkSettingCtrl.serverErrorMessage">
+    <ctv-error *ngIf="showServerError" header="Error updating network settings" [error]="serverErrorMessage">
     </ctv-error>
 </form>

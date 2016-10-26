@@ -27,6 +27,7 @@ import { BandwidthPolicyCreateComponent } from "./network_policies/bandwidthpoli
 import { BandwidthPolicyDetailsComponent } from "./network_policies/bandwidthpolicydetailsctrl";
 import { ApplicationGroupCreateComponent } from "./applicationgroups/applicationgroupcreatectrl";
 import { ApplicationGroupDetailsComponent } from "./applicationgroups/applicationgroupdetailsctrl";
+import { NetworkSettingsComponent } from "./settings/networksettingctrl";
 
 
 upgradeAdapter.upgradeNg1Provider('$state');
@@ -103,5 +104,8 @@ angular.module("contiv.directives")
     )
     .directive("ctvError", upgradeAdapter.downgradeNg2Component(ErrorMessageComponent) as angular.IDirectiveFactory
     );
+
+angular.module('contiv.settings')
+    .directive('networksetting', upgradeAdapter.downgradeNg2Component(NetworkSettingsComponent) as angular.IDirectiveFactory);
 
 upgradeAdapter.bootstrap(document.documentElement, ['contivApp']);

@@ -1,42 +1,45 @@
-angular.module('contiv.settings')
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider
-            .state('contiv.menu.settings.details.networks', {
-                url: '/networks',
-                controller: 'NetworkSettingCtrl as networkSettingCtrl',
-                templateUrl: 'settings/networksettings.html'
-            })
-        ;
-    }])
-    .controller('NetworkSettingCtrl', ['CRUDHelperService', 'NetworkService',
-        function (CRUDHelperService, NetworkService) {
-            var networkSettingCtrl = this;
-            networkSettingCtrl.vlanPattern = ContivGlobals.VLAN_REGEX;
-            networkSettingCtrl.vxlanPattern = ContivGlobals.VXLAN_REGEX;
+import { Component } from '@angular/core';
+import { CRUDHelperService } from "../components/utils/crudhelperservice";
+import { NetworkService } from "../components/utils/networkservice";
 
-            function updateNetworkSettings() {
-                if (networkSettingCtrl.form.$valid) {
-                    CRUDHelperService.hideServerError(networkSettingCtrl);
-                    CRUDHelperService.startLoader(networkSettingCtrl);
-                    NetworkService.updateSettings(networkSettingCtrl.setting).then(function successCallback(result) {
-                        CRUDHelperService.stopLoader(networkSettingCtrl);
+@Component({
+    selector: 'networksetting',
+    templateUrl: 'settings/networksettings.html'
+})
+export class NetworkSettingsComponent {
+    setting:any = {};
+    vlanPattern:string = ContivGlobals.VLAN_REGEX;
+    vxlanPattern:string = ContivGlobals.VXLAN_REGEX;
 
-                    }, function errorCallback(result) {
-                        CRUDHelperService.stopLoader(networkSettingCtrl);
-                        CRUDHelperService.showServerError(networkSettingCtrl, result.data);
-                    });
-                }
-            }
+    constructor(private crudHelperService:CRUDHelperService,
+                private networkService:NetworkService) {
+        var networkSettingCtrl = this;
 
-            function getNetworkSettings() {
-                NetworkService.getSettings().then(function successCallback(result) {
-                    networkSettingCtrl.setting = result;
-                }, function errorCallback(result) {
-                });
-            }
-            getNetworkSettings();
-            networkSettingCtrl.updateNetworkSettings = updateNetworkSettings;
+        function getNetworkSettings() {
+            networkSettingCtrl.networkService.getSettings().then(function successCallback(result) {
+                networkSettingCtrl.setting = result;
+            }, function errorCallback(result) {
+            });
+        }
 
-            CRUDHelperService.stopLoader(networkSettingCtrl);
-            CRUDHelperService.hideServerError(networkSettingCtrl);
-        }]);
+        getNetworkSettings();
+
+        networkSettingCtrl.crudHelperService.stopLoader(networkSettingCtrl);
+        networkSettingCtrl.crudHelperService.hideServerError(networkSettingCtrl);
+    }
+
+    updateNetworkSettings(validform:boolean) {
+        var networkSettingCtrl = this;
+        if (validform) {
+            networkSettingCtrl.crudHelperService.hideServerError(networkSettingCtrl);
+            networkSettingCtrl.crudHelperService.startLoader(networkSettingCtrl);
+            networkSettingCtrl.networkService.updateSettings(networkSettingCtrl.setting).then(function successCallback(result) {
+                networkSettingCtrl.crudHelperService.stopLoader(networkSettingCtrl);
+
+            }, function errorCallback(result) {
+                networkSettingCtrl.crudHelperService.stopLoader(networkSettingCtrl);
+                networkSettingCtrl.crudHelperService.showServerError(networkSettingCtrl, result._body);
+            });
+        }
+    }
+}

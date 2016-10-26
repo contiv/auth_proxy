@@ -5,6 +5,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from "@angular/http";
 import { NetworkPoliciesModule } from "./network_policies/networkpolicies.module";
+import { ApplicationGroupsModule } from "./applicationgroups/applicationgroups.module.ts";
+import { SettingsModule } from "./settings/settings.module";
 import { NetprofilesModel } from "./components/models/netprofilesmodel";
 import { ApplicationGroupsModel } from "./components/models/applicationgroupsmodel";
 import { NetworksModel } from "./components/models/networksmodel";
@@ -21,14 +23,14 @@ import { NetworkService } from "./components/utils/networkservice";
 import { VolumeSettingService } from "./components/utils/volumesettingservice";
 import { NodesService } from "./components/utils/nodesservice";
 import { DashboardComponent } from "./dashboard/dashboardctrl";
-import { ApplicationGroupsModule } from "./applicationgroups/applicationgroups.module.ts";
 
 @NgModule({
     imports: [
         BrowserModule,
         HttpModule,
         NetworkPoliciesModule,
-        ApplicationGroupsModule
+        ApplicationGroupsModule,
+        SettingsModule
     ],
     declarations: [
         DashboardComponent
