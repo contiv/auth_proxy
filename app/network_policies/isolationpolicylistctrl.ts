@@ -1,40 +1,51 @@
-angular.module('contiv.networkpolicies')
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider
-            .state('contiv.menu.networkpolicies.list.isolation', {
-                url: '/isolation',
-                controller: 'IsolationPolicyListCtrl as isolationPolicyListCtrl',
-                templateUrl: 'network_policies/isolationpolicylist.html'
-            })
-        ;
-    }])
-    .controller('IsolationPolicyListCtrl', ['$scope', '$interval', '$filter', 'PoliciesModel', 'CRUDHelperService',
-        function ($scope, $interval, $filter, PoliciesModel, CRUDHelperService) {
-            var policiesListCtrl = this;
+/**
+ * Created by cshampur on 10/19/16.
+ */
 
-            function getPolicies(reload) {
-                PoliciesModel.get(reload)
-                    .then(function successCallback(result) {
-                        
-                        CRUDHelperService.stopLoader(policiesListCtrl);
-                        policiesListCtrl.policies = $filter('orderBy')(result, 'policyName');
-                    }, function errorCallback(result) {
-                        CRUDHelperService.stopLoader(policiesListCtrl);
-                    });
-            }
 
-            //Load from cache for quick display initially
-            getPolicies(false);
+import {Component, OnInit, OnDestroy} from "@angular/core";
+import {PoliciesModel} from "../components/models/policiesmodel";
+import {CRUDHelperService} from "../components/utils/crudhelperservice";
+import {Subscription, Observable} from "rxjs";
+@Component({
+    selector: 'isolationpolicylist',
+    templateUrl: 'network_policies/isolationpolicylist.html'
+})
 
-            var promise;
-            //Don't start auto-refresh if one is already in progress
-            if (!angular.isDefined(promise)) {
-                promise = $interval(function () {
-                    getPolicies(true);
-                }, ContivGlobals.REFRESH_INTERVAL);
-            }
-            //stop polling when user moves away from the page
-            $scope.$on('$destroy', function () {
-                $interval.cancel(promise);
-            });
-        }]);
+export class IsolationListComponent implements OnInit, OnDestroy{
+    private policiesModel: PoliciesModel;
+    private crudHelperService: CRUDHelperService;
+    public isolationPolicyListCtrl: any;
+    private refresh: Subscription;
+    constructor(policiesModel: PoliciesModel,
+                crudHelperService: CRUDHelperService){
+        this.crudHelperService = crudHelperService;
+        this.policiesModel = policiesModel;
+        this.isolationPolicyListCtrl = this;
+        this['showloader'] = true;
+        this.refresh = Observable.interval(5000).subscribe(() => {
+            this.getPolicies(true);
+        })
+    }
+
+    ngOnInit(){
+        this.crudHelperService.startLoader(this);
+        this.getPolicies(false);
+    }
+
+    getPolicies(reload: boolean){
+        var isolationPolicyListCtrl = this;
+        this.policiesModel.get(reload)
+            .then(  (result) => {
+                    isolationPolicyListCtrl['policies'] = result;
+                    isolationPolicyListCtrl.crudHelperService.stopLoader(isolationPolicyListCtrl);
+                },
+                (error) => {
+                    isolationPolicyListCtrl.crudHelperService.stopLoader(isolationPolicyListCtrl);
+                });
+    }
+
+    ngOnDestroy(){
+        this.refresh.unsubscribe();
+    }
+}

@@ -34,7 +34,7 @@ export class ApplicationGroupDetailsComponent {
         applicationGroupDetailsCtrl.crudHelperService.stopLoader(applicationGroupDetailsCtrl);
         applicationGroupDetailsCtrl.crudHelperService.hideServerError(applicationGroupDetailsCtrl);
 
-        applicationGroupDetailsCtrl.applicationGroupsModel.getModelByKey($stateParams.key)
+        applicationGroupDetailsCtrl.applicationGroupsModel.getModelByKey($stateParams['key'], false, 'key')
             .then(function (group) {
                 applicationGroupDetailsCtrl.applicationGroup = group;
             });

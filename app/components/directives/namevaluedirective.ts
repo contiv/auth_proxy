@@ -1,61 +1,64 @@
 /**
- * Created by vjain3 on 5/11/16.
+ * Created by cshampur on 10/17/16.
  */
-angular.module("contiv.directives")
-    .directive("ctvNamevalue", function() {
-       return {
-           restrict: 'E',
-           scope: {
-               items: '=',
-               nameheader: '@',//Field name to display for key
-               valueheader: '@',//Field name to display for value
-               type: '@',//'text' or 'select' to choose input or select html tag for key
-               options: '='//To be used when type is 'select'
-           },
-           link: function(scope) {
-               /**
-                * Compare if two items have same name
-                * @param val1
-                * @param val2
-                * @returns {boolean}
-                */
-               function compare(val1, val2) {
-                   return val1.name == val2.name;
-               }
 
-               function resetNewItem() {
-                   scope.newItem = {
-                       name: '',
-                       value: ''
-                   };
-               }
 
-               function isEmptyItem(item) {
-                   return (item.name === '' && item.value === '');
-               }
+import {Component, Input, Output, EventEmitter, OnInit} from "@angular/core";
+var _ = require('lodash');
 
-               scope.add = function() {
-                   if (isEmptyItem(scope.newItem)) return;
-                   if (scope.item === undefined) {
-                       scope.item = [];
-                   }
-                   //Removes existing item with the same name first if it exists.
-                   _.pullAllWith(scope.items, [scope.newItem], compare);
-                   scope.items.push(scope.newItem);
-                   resetNewItem();
-               };
+export interface Item{
+    name: string;
+    value: string;
+}
 
-               scope.remove = function(passedItem) {
-                   _.remove(scope.items, function (item) {
-                       return item.name == passedItem.name;
-                   });
-               };
-               resetNewItem();
+@Component({
+    selector:'ctv-namevalue',
+    templateUrl:'components/directives/namevalue.html'
+})
 
-               if (scope.nameheader === undefined) scope.nameheader = 'Name';
-               if (scope.valueheader === undefined) scope.valueheader = 'Value';
-               if (scope.type === undefined) scope.type = 'text';
-           },
-           templateUrl: 'components/directives/namevalue.html'
-       }
-    });
+export class CtvNamevalueComponent{
+    @Input('items') items: Item[];
+    @Input('nameheader') nameheader: string;
+    @Input('options') options:string[];
+    @Input('valueheader') valueheader: string;
+    @Output('itemsChange') itemsChange: EventEmitter<any>;
+    @Input('type') type: string;
+    public newItem:Item;
+    constructor(){
+        this.itemsChange = new EventEmitter<any>();
+        this.items=[];
+        this.nameheader = 'Name';
+        this.valueheader = 'Value';
+        this.type = 'text';
+        this.newItem = {name: '', value: ''};
+        this.options=[];
+    }
+
+    public resetItem(): void{
+        this.newItem = {name:'',value:''};
+    }
+
+
+    public add(): void{
+        function compare(val1, val2){
+            return val1.name == val2.name;
+        }
+
+        if (this.newItem.name == '' && this.newItem.value == ''){
+            return;
+        }
+
+        _.pullAllWith(this.items, [this.newItem], compare);
+
+        this.items.push(this.newItem);
+        this.itemsChange.emit(this.items);
+        this.resetItem();
+    }
+
+    public remove(passedItem: Item): void{
+        _.remove(this.items, function(item){
+            return item.name == passedItem.name;
+        });
+    }
+
+}

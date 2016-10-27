@@ -9,6 +9,8 @@ import { IsolationPolicyCreateComponent } from "./isolationpolicycreatectrl";
 import { IsolationPolicyDetailsComponent } from "./isolationpolicydetailsctrl";
 import { BandwidthPolicyCreateComponent } from "./bandwidthpolicycreatectrl";
 import { BandwidthPolicyDetailsComponent } from "./bandwidthpolicydetailsctrl";
+import {IsolationListComponent} from "./isolationpolicylistctrl";
+import {BandwidthListComponent} from "./bandwidthpolicylistctrl";
 
 @NgModule({
     imports: [
@@ -20,13 +22,18 @@ import { BandwidthPolicyDetailsComponent } from "./bandwidthpolicydetailsctrl";
         IsolationPolicyCreateComponent,
         IsolationPolicyDetailsComponent,
         BandwidthPolicyCreateComponent,
-        BandwidthPolicyDetailsComponent
+        BandwidthPolicyDetailsComponent,
+        BandwidthPolicyCreateComponent,
+        IsolationListComponent,
+        BandwidthListComponent
     ],
     exports: [
         IsolationPolicyCreateComponent,
         IsolationPolicyDetailsComponent,
         BandwidthPolicyCreateComponent,
         BandwidthPolicyDetailsComponent,
+        IsolationListComponent,
+        BandwidthListComponent,
         FormsModule,
         CommonModule,
         DirectivesModule

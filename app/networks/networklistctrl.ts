@@ -1,86 +1,61 @@
-class NetworksListCtrl {
-    networks: any;
+/**
+ * Created by cshampur on 10/14/16.
+ */
 
-    static $inject = ['$scope', '$interval', 'NetworksModel', 'CRUDHelperService'];
+import {Component, OnInit, OnDestroy, Inject} from "@angular/core";
+import {NetworksModel} from "../components/models/networksmodel";
+import {CRUDHelperService} from "../components/utils/crudhelperservice";
+import {Observable, Subscription} from "rxjs";
+import { StateService } from "angular-ui-router/commonjs/ng1";
 
-    constructor ($scope, $interval, NetworksModel, CRUDHelperService) {
-        var networksListCtrl = this;
 
-        function getNetworks(reload) {
-            NetworksModel.get(reload)
-                .then(function successCallback(result) {
-                        CRUDHelperService.stopLoader(networksListCtrl);
-                        networksListCtrl.networks = result;
-                    },
-                    function errorCallback(result) {
-                        CRUDHelperService.stopLoader(networksListCtrl);
-                    });
-        }
+@Component({
+    selector: 'networkList',
+    template: require("./networklist.html")
+})
 
-        //Load from cache for quick display initially
-        getNetworks(false);
+export class NetworkListComponent implements OnInit, OnDestroy{
+    private networksModel:NetworksModel;
+    private crudHelperService: CRUDHelperService;
+    public networkListComp: any;
+    private refresh: Subscription;
 
-        var promise;
-        //Don't do autorefresh if one is already in progress
-        if (!angular.isDefined(promise)) {
-            promise = $interval(function () {
-                getNetworks(true);
-            }, ContivGlobals.REFRESH_INTERVAL);
-        }
+    constructor(@Inject('$state') private $state: StateService,
+                networksModel: NetworksModel,
+                crudHelperService: CRUDHelperService){
+        this.networksModel = networksModel;
+        this.crudHelperService = crudHelperService;
+        this.networkListComp = this;
+        this['showLoader']=true;
+        this.refresh=Observable.interval(5000).subscribe(() => {
+            this.getNetworks(true);
+        })
+    }
 
-        //stop polling when user moves away from the page
-        $scope.$on('$destroy', function () {
-            $interval.cancel(promise);
-        });
+    ngOnInit(){
+        this.crudHelperService.startLoader(this);
+        this.getNetworks(false);
+    }
+
+    getNetworks(reload: boolean){
+        var networkListComp = this;
+        this.networksModel.get(reload)
+            .then(function successCallback(result){
+                    networkListComp['networks'] = result;
+                    networkListComp.crudHelperService.stopLoader(networkListComp);
+                },
+                function errorCallback(result){
+                    networkListComp.crudHelperService.stopLoader(networkListComp);
+                })
+    }
+
+    create(){
+        this.$state.go('contiv.menu.networks.create');
+    }
+
+    ngOnDestroy(){
+     this.refresh.unsubscribe();
     }
 }
 
-angular.module('contiv.networks')
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider
-            .state('contiv.menu.networks.list', {
-                url: '/list',
-                component: 'networkList'
-                //controller: 'NetworksListCtrl as networksListCtrl',
-                //templateUrl: 'networks/networklist.html'
-            })
-        ;
-    }])
-    .component('networkList', {
-        templateUrl: 'networks/networklist.html',
-        controller: NetworksListCtrl,
-        controllerAs: 'networksListCtrl'
-    });
-/*
-    .controller('NetworksListCtrl', ['$scope', '$interval', '$filter', 'NetworksModel', 'CRUDHelperService',
-        function ($scope, $interval, $filter, NetworksModel, CRUDHelperService) {
-            var networksListCtrl = this;
 
-            function getNetworks(reload) {
-                NetworksModel.get(reload)
-                    .then(function successCallback(result) {
-                            CRUDHelperService.stopLoader(networksListCtrl);
-                            networksListCtrl.networks = result;
-                        },
-                        function errorCallback(result) {
-                            CRUDHelperService.stopLoader(networksListCtrl);
-                        });
-            }
-
-            //Load from cache for quick display initially
-            getNetworks(false);
-
-            var promise;
-            //Don't do autorefresh if one is already in progress
-            if (!angular.isDefined(promise)) {
-                promise = $interval(function () {
-                    getNetworks(true);
-                }, ContivGlobals.REFRESH_INTERVAL);
-            }
-
-            //stop polling when user moves away from the page
-            $scope.$on('$destroy', function () {
-                $interval.cancel(promise);
-            });
-        }]);
-*/

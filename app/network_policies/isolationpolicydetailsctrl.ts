@@ -72,7 +72,7 @@ export class IsolationPolicyDetailsComponent {
          * Get application group names for the given tenant.
          */
         function getApplicationGroups() {
-            isolationPolicyDetailsCtrl.applicationGroupsModel.get()
+            isolationPolicyDetailsCtrl.applicationGroupsModel.get(false)
                 .then(function (result) {
                     //_.filter() returns a new array
                     isolationPolicyDetailsCtrl.applicationGroups = _.filter(result, {
@@ -84,7 +84,7 @@ export class IsolationPolicyDetailsComponent {
         isolationPolicyDetailsCtrl.crudHelperService.stopLoader(isolationPolicyDetailsCtrl);
         isolationPolicyDetailsCtrl.crudHelperService.hideServerError(isolationPolicyDetailsCtrl);
 
-        isolationPolicyDetailsCtrl.policiesModel.getModelByKey($stateParams.key)
+        isolationPolicyDetailsCtrl.policiesModel.getModelByKey($stateParams['key'], false, 'key')
             .then(function (policy) {
                 isolationPolicyDetailsCtrl.policy = policy;
                 isolationPolicyDetailsCtrl.rulesModel.getIncomingRules(policy.policyName, 'default').then(function (result) {
@@ -322,7 +322,7 @@ export class IsolationPolicyDetailsComponent {
             isolationPolicyDetailsCtrl.crudHelperService.startLoader(isolationPolicyDetailsCtrl);
             isolationPolicyDetailsCtrl.generateRuleId(isolationPolicyDetailsCtrl.newIncomingRule);
             isolationPolicyDetailsCtrl.newIncomingRule.key = isolationPolicyDetailsCtrl.rulesModel.generateKey(isolationPolicyDetailsCtrl.newIncomingRule);
-            isolationPolicyDetailsCtrl.rulesModel.create(isolationPolicyDetailsCtrl.newIncomingRule).then(function successCallback(result) {
+            isolationPolicyDetailsCtrl.rulesModel.create(isolationPolicyDetailsCtrl.newIncomingRule, undefined).then(function successCallback(result) {
                 isolationPolicyDetailsCtrl.crudHelperService.stopLoader(isolationPolicyDetailsCtrl);
                 isolationPolicyDetailsCtrl.incomingRules.push(result);
                 isolationPolicyDetailsCtrl.resetNewIncomingRule();
@@ -343,7 +343,7 @@ export class IsolationPolicyDetailsComponent {
             isolationPolicyDetailsCtrl.crudHelperService.startLoader(isolationPolicyDetailsCtrl);
             isolationPolicyDetailsCtrl.generateRuleId(isolationPolicyDetailsCtrl.newOutgoingRule);
             isolationPolicyDetailsCtrl.newOutgoingRule.key = isolationPolicyDetailsCtrl.rulesModel.generateKey(isolationPolicyDetailsCtrl.newOutgoingRule);
-            isolationPolicyDetailsCtrl.rulesModel.create(isolationPolicyDetailsCtrl.newOutgoingRule).then(function successCallback(result) {
+            isolationPolicyDetailsCtrl.rulesModel.create(isolationPolicyDetailsCtrl.newOutgoingRule, undefined).then(function successCallback(result) {
                 isolationPolicyDetailsCtrl.crudHelperService.stopLoader(isolationPolicyDetailsCtrl);
                 isolationPolicyDetailsCtrl.outgoingRules.push(result);
                 isolationPolicyDetailsCtrl.resetNewOutgoingRule();
@@ -361,7 +361,7 @@ export class IsolationPolicyDetailsComponent {
         var isolationPolicyDetailsCtrl = this;
         isolationPolicyDetailsCtrl.crudHelperService.hideServerError(isolationPolicyDetailsCtrl);
         isolationPolicyDetailsCtrl.crudHelperService.startLoader(isolationPolicyDetailsCtrl);
-        isolationPolicyDetailsCtrl.rulesModel.deleteUsingKey(key).then(function successCallback(result) {
+        isolationPolicyDetailsCtrl.rulesModel.deleteUsingKey(key,'key', undefined).then(function successCallback(result) {
             isolationPolicyDetailsCtrl.crudHelperService.stopLoader(isolationPolicyDetailsCtrl);
             _.remove(isolationPolicyDetailsCtrl.incomingRules, function (n) {
                 return n.key == key;
@@ -379,7 +379,7 @@ export class IsolationPolicyDetailsComponent {
         var isolationPolicyDetailsCtrl = this;
         isolationPolicyDetailsCtrl.crudHelperService.hideServerError(isolationPolicyDetailsCtrl);
         isolationPolicyDetailsCtrl.crudHelperService.startLoader(isolationPolicyDetailsCtrl);
-        isolationPolicyDetailsCtrl.rulesModel.deleteUsingKey(key).then(function successCallback(result) {
+        isolationPolicyDetailsCtrl.rulesModel.deleteUsingKey(key, 'key', undefined).then(function successCallback(result) {
             isolationPolicyDetailsCtrl.crudHelperService.stopLoader(isolationPolicyDetailsCtrl);
             _.remove(isolationPolicyDetailsCtrl.outgoingRules, function (n) {
                 return n.key == key;

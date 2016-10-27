@@ -4,7 +4,7 @@
     </div>
 
     <div class="center aligned four wide column">
-        <button class="ui blue button" ui-sref="contiv.menu.applicationgroups.create">
+        <button class="ui blue button" (click)="create()">
             <i class="add icon"></i>
             Create Application Group
         </button>
@@ -12,34 +12,44 @@
 </div>
 
 <div class="ui basic segment">
-    <div class="ui active inverted dimmer" ng-show="applicationGroupListCtrl.showLoader">
+    <div class="ui active inverted dimmer" *ngIf="applicationGroupListCtrl.showLoader">
         <div class="ui loader"></div>
     </div>
-    <ctv-table defaultsortcolumn="groupName" items="applicationGroupListCtrl.groups" filtereditems="applicationGroupListCtrl.filteredgroups" size="12">
-        <ctv-thead>
-            <ctv-tr>
-                <ctv-th sortfield="'groupName'">Name</ctv-th>
-                <ctv-th sortfield="'networkName'">Network</ctv-th>
-                <ctv-th sortfield="'policies'">Policies</ctv-th>
-                <ctv-th class="right floated three wide column">
-                    <ctv-tsearch placeholder="Search application groups..." size="30"></ctv-tsearch>
-                </ctv-th>
-            </ctv-tr>
-        </ctv-thead>
+    <ctv-table #tableRef [defaultSortColumn]="'groupName'"
+               [items]="applicationGroupListCtrl['groups']"
+               (filtereditems)="applicationGroupListCtrl['filteredgroups']=$event;"
+               [size]="12">
+        <thead>
+            <tr>
+                <th><ctv-th [sortfield]="'groupName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Name</ctv-th></th>
+                <th><ctv-th [sortfield]="'networkName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Network</ctv-th></th>
+                <th><ctv-th [sortfield]="'policies'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Policies</ctv-th></th>
+                <th class="right floated three wide column">
+                    <ctv-search (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [placeholder]="'Search application groups...'"></ctv-search>
+                </th>
+            </tr>
+        </thead>
 
-        <ctv-tbody>
-            <ctv-tr ng-repeat="group in applicationGroupListCtrl.filteredgroups">
-                <ctv-td><a ui-sref="contiv.menu.applicationgroups.details({key:group.key})">{{group.groupName}}</a></ctv-td>
-                <ctv-td>{{group.networkName}}</ctv-td>
-                <ctv-td>{{group.policies.join(", ")}}</ctv-td>
-                <ctv-td></ctv-td>
-            </ctv-tr>
-        </ctv-tbody>
+        <tbody>
+            <tr *ngFor="let group of applicationGroupListCtrl['filteredgroups']">
+                <td><a href="/#/m/applicationgroups/details/{{group.key}}">{{group.groupName}}</a></td>
+                <td>{{group.networkName}}</td>
+                <td>{{group.policies.join(", ")}}</td>
+                <td></td>
+            </tr>
+        </tbody>
 
-        <ctv-tfoot>
-            <ctv-tr>
-                <ctv-tpagination colspan="4"></ctv-tpagination>
-            </ctv-tr>
-        </ctv-tfoot>
+        <tfoot>
+            <tr>
+                <td colspan="4">
+                    <ctv-tpagination [chunks]="tableRef.pageChunks"
+                                     (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
+                                     (prevChunk)="tableRef.showPrevChunk()"
+                                     (nextChunk)="tableRef.showNextChunk()">
+
+                    </ctv-tpagination>
+                </td>
+            </tr>
+        </tfoot>
     </ctv-table>
 </div>

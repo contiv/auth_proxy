@@ -1,4 +1,6 @@
-<th class={{class}}>
-    <i ng-if="(tablectrl.sortObj.field==sortfield && sortfield!=undefined)" ng-class="tablectrl.sortObj.iconDirection"></i>
-    <span ng-transclude></span>
-</th>
+<div (click)="sortColumn()">
+    <i  class="angle icon"[ngClass]="sortobject.iconDirection"
+        *ngIf="sortobject.field==sortfield && sortfield!=''">
+    </i>
+    <ng-content></ng-content>
+</div>

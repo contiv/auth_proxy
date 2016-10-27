@@ -1,44 +1,61 @@
 /**
- * Created by vjain3 on 5/11/16.
+ * Created by cshampur on 10/14/16.
  */
-angular.module('contiv.servicelbs')
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider
-            .state('contiv.menu.servicelbs.list', {
-                url: '/list',
-                controller: 'ServicelbListCtrl as servicelbListCtrl',
-                templateUrl: 'service_lbs/servicelblist.html'
-            })
-        ;
-    }])
-    .controller('ServicelbListCtrl', ['$scope', '$interval', '$filter', 'ServicelbsModel', 'CRUDHelperService',
-        function ($scope, $interval, $filter, ServicelbsModel, CRUDHelperService) {
-            var servicelbListCtrl = this;
 
-            function getServicelbs(reload) {
-                ServicelbsModel.get(reload)
-                    .then(function successCallback(result) {
-                            CRUDHelperService.stopLoader(servicelbListCtrl);
-                            servicelbListCtrl.servicelbs = result;
-                        },
-                        function errorCallback(result) {
-                            CRUDHelperService.stopLoader(servicelbListCtrl);
-                        });
-            }
+import {Component, OnInit, OnDestroy, Inject} from "@angular/core";
+import {CRUDHelperService} from "../components/utils/crudhelperservice";
+import {Observable, Subscription} from "rxjs";
+import { StateService } from "angular-ui-router/commonjs/ng1";
+import {ServicelbsModel} from "../components/models/servicelbsmodel";
 
-            //Load from cache for quick display initially
-            getServicelbs(false);
 
-            var promise;
-            //Don't do autorefresh if one is already in progress
-            if (!angular.isDefined(promise)) {
-                promise = $interval(function () {
-                    getServicelbs(true);
-                }, ContivGlobals.REFRESH_INTERVAL);
-            }
+@Component({
+    selector: 'servicelbList',
+    templateUrl: 'service_lbs/servicelblist.html'
+})
 
-            //stop polling when user moves away from the page
-            $scope.$on('$destroy', function () {
-                $interval.cancel(promise);
-            });
-        }]);
+export class ServicelbListComponent implements OnInit, OnDestroy{
+    private servicelbsModel:ServicelbsModel;
+    private crudHelperService: CRUDHelperService;
+    public servicelbListCtrl: any;
+    private refresh: Subscription;
+
+    constructor(@Inject('$state') private $state: StateService,
+                servicelbsModel: ServicelbsModel,
+                crudHelperService: CRUDHelperService){
+        this.servicelbsModel = servicelbsModel;
+        this.crudHelperService = crudHelperService;
+        this.servicelbListCtrl = this;
+        this['showLoader']=true;
+        this.refresh=Observable.interval(5000).subscribe(() => {
+            this.getServicelbs(true);
+        })
+    }
+
+    ngOnInit(){
+        this.crudHelperService.startLoader(this);
+        this.getServicelbs(false);
+    }
+
+    getServicelbs(reload: boolean){
+        var servicelbListCtrl = this;
+        this.servicelbsModel.get(reload)
+            .then(function successCallback(result){
+                    servicelbListCtrl['servicelbs'] = result;
+                    servicelbListCtrl.crudHelperService.stopLoader(servicelbListCtrl);
+                },
+                function errorCallback(result){
+                    servicelbListCtrl.crudHelperService.stopLoader(servicelbListCtrl);
+                })
+    }
+
+    create(){
+        this.$state.go('contiv.menu.servicelbs.create');
+    }
+
+    ngOnDestroy(){
+        this.refresh.unsubscribe();
+    }
+}
+
+

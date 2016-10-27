@@ -1,18 +1,20 @@
 /**
  * Created by vjain3 on 6/2/16.
  */
-import { Component, Input } from "@angular/core";
+
+import {Component, Input} from "@angular/core";
 
 @Component({
-    selector: 'ctv-collapsible',
+    selector:'ctv-collapsible',
     templateUrl: 'components/directives/collapsible.html'
 })
-export class CollapsibleComponent{
+
+export class CtvCollapsibleComponent{
     @Input('title') title: string;
     @Input('collapsed') collapsed: boolean;
 
-    constructor(){
-        this.title='';
+    constructor() {
+        this.title=''
         this.collapsed=true;
     }
 }

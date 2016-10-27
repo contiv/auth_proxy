@@ -49,5 +49,12 @@ angular.module('contiv.networkpolicies', ['contiv.models', 'contiv.directives', 
                 abstract: true,
                 template: '<ui-view/>'
             })
-        ;
+            .state('contiv.menu.networkpolicies.list.isolation', {
+                url: '/isolation',
+                component: 'isolationpolicylist'
+            })
+            .state('contiv.menu.networkpolicies.list.bandwidth', {
+            url: '/bandwidth',
+            component: 'bandwidthpolicylist'
+        });
     }]);

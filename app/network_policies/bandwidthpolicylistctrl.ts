@@ -1,45 +1,52 @@
 /**
- * Created by hardik gandhi on 6/14/16.
+ * Created by cshampur on 10/19/16.
  */
 
-angular.module('contiv.networkpolicies')
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider
-            .state('contiv.menu.networkpolicies.list.bandwidth', {
-                url: '/bandwidth',
-                controller: 'BandwidthPolicyListCtrl as bandwidthPolicyListCtrl',
-                templateUrl: 'network_policies/bandwidthpolicylist.html'
-            })
-        ;
-    }])
-    .controller('BandwidthPolicyListCtrl', ['$scope', '$interval', '$filter', 'NetprofilesModel', 'CRUDHelperService',
-        function ($scope, $interval, $filter, NetprofilesModel, CRUDHelperService) {
-            var policiesListCtrl = this;
 
-            function getPolicies(reload) {
-                NetprofilesModel.get(reload)
-                    .then(function successCallback(result) {
-                        CRUDHelperService.stopLoader(policiesListCtrl);
-                        policiesListCtrl.policies = $filter('orderBy')(result, 'profileName');
-                    }, function errorCallback(result) {
-                        CRUDHelperService.stopLoader(policiesListCtrl);
-                    });
-            }
+import {Component, OnInit, OnDestroy} from "@angular/core";
+import {CRUDHelperService} from "../components/utils/crudhelperservice";
+import {Subscription, Observable} from "rxjs";
+import {NetprofilesModel} from "../components/models/netprofilesmodel";
 
-            //Load from cache for quick display initially
-            getPolicies(true);
+@Component({
+    selector: 'bandwidthpolicylist',
+    templateUrl: 'network_policies/bandwidthpolicylist.html'
+})
 
-            var promise;
-            //Don't start auto-refresh if one is already in progress
-            if (!angular.isDefined(promise)) {
-                promise = $interval(function () {
-                    getPolicies(true);
-                }, ContivGlobals.REFRESH_INTERVAL);
-            }
-            //stop polling when user moves away from the page
-            $scope.$on('$destroy', function () {
-                $interval.cancel(promise);
-            });
+export class BandwidthListComponent implements OnInit, OnDestroy{
+    private netprofilesModel: NetprofilesModel;
+    private crudHelperService: CRUDHelperService;
+    public bandwidthPolicyListCtrl: any;
+    private refresh: Subscription;
+    constructor(netprofilesModel: NetprofilesModel,
+                crudHelperService: CRUDHelperService){
+        this.crudHelperService = crudHelperService;
+        this.netprofilesModel = netprofilesModel;
+        this.bandwidthPolicyListCtrl = this;
+        this['showloader'] = true;
+        this.refresh = Observable.interval(5000).subscribe(() => {
+            this.getPolicies(true);
+        })
+    }
 
+    ngOnInit(){
+        this.crudHelperService.startLoader(this);
+        this.getPolicies(false);
+    }
 
-        }]);
+    getPolicies(reload: boolean){
+        var bandwidthPolicyListCtrl = this;
+        this.netprofilesModel.get(reload)
+            .then(  (result) => {
+                    bandwidthPolicyListCtrl['policies'] = result;
+                    bandwidthPolicyListCtrl.crudHelperService.stopLoader(bandwidthPolicyListCtrl);
+                },
+                (error) => {
+                    bandwidthPolicyListCtrl.crudHelperService.stopLoader(bandwidthPolicyListCtrl);
+                });
+    }
+
+    ngOnDestroy(){
+        this.refresh.unsubscribe();
+    }
+}

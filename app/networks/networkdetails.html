@@ -1,6 +1,6 @@
 <div class="ui sixteen column grid">
     <div class="one wide column">
-        <a ui-sref="contiv.menu.networks.list()">
+        <a href="/#/m/networks/list">
             <i class="large arrow left icon"></i>
         </a>
     </div>
@@ -18,7 +18,7 @@
             </div>
             <div class="actions">
                 <div class="ui negative button">No</div>
-                <div class="ui positive button" ng-click="networkDetailsCtrl.deleteNetwork()">
+                <div class="ui positive button" (click)="deleteNetwork()">
                     Yes
                 </div>
             </div>
@@ -31,17 +31,20 @@
 </div>
 <div class="ui secondary pointing menu">
     <div class="ui container">
-        <a class="blue item" ui-sref="contiv.menu.networks.details.info({key:networkDetailsCtrl.network.key})" ui-sref-active="active">
+        <a class="blue item" [ngClass]="{active: infoselected}" (click)="infoselected=true">
             <i class="details icon"></i>
             DETAILS
         </a>
-        <a class="blue item" ui-sref="contiv.menu.networks.details.stats({key:networkDetailsCtrl.network.key})" ui-sref-active="active">
+        <a class="blue item" [ngClass]="{active: !infoselected}" (click)="infoselected=false">
             <i class="area chart icon"></i>
             STATS
         </a>
     </div>
 </div>
-<div ui-view style="margin-top:30px"></div>
-<ctv-error ng-show="networkDetailsCtrl.showServerError" header="Error deleting network"
+
+<network-info [networkDetailsCtrl]="networkDetailsCtrl" *ngIf="infoselected"></network-info>
+<network-stat [statKey]="statskey" *ngIf="!infoselected"></network-stat>
+
+<ctv-error *ngIf="networkDetailsCtrl.showServerError" [header]="'Error deleting network'"
            [error]="networkDetailsCtrl.serverErrorMessage">
 </ctv-error>

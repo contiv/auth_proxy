@@ -4,7 +4,7 @@
     </div>
 
     <div class="left aligned four wide column">
-        <button class="ui blue button" ui-sref="contiv.menu.servicelbs.create()">
+        <button class="ui blue button" (click)="create()">
             <i class="add icon"></i>
             Create Service Load Balancer
         </button>
@@ -12,38 +12,47 @@
 </div>
 
 <div class="ui basic segment">
-    <div class="ui active inverted dimmer" ng-show="servicelbListCtrl.showLoader">
+    <div class="ui active inverted dimmer" *ngIf="servicelbListCtrl.showLoader">
         <div class="ui loader"></div>
     </div>
-    <ctv-table defaultsortcolumn="serviceName" items="servicelbListCtrl.servicelbs" filtereditems="servicelbListCtrl.filteredservicelbs" size="12">
-        <ctv-thead>
-            <ctv-tr>
-                <ctv-th sortfield="'serviceName'">Name</ctv-th>
-                <ctv-th sortfield="'networkName'">Network</ctv-th>
-                <ctv-th sortfield="'ipAddress'">IP Address</ctv-th>
-                <ctv-th sortfield="'selectors'">Label Selectors</ctv-th>
-                <ctv-th class="right floated three wide column">
-                    <ctv-tsearch placeholder="Search services..." size="30"></ctv-tsearch>
-                </ctv-th>
-            </ctv-tr>
-        </ctv-thead>
+    <ctv-table #tableRef [defaultSortColumn]="'serviceName'"
+               [items]="servicelbListCtrl.servicelbs"
+               (filtereditems)="servicelbListCtrl.filteredservicelbs=$event"
+               [size]="12">
+        <thead>
+            <tr>
+                <th><ctv-th [sortfield]="'serviceName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Name</ctv-th></th>
+                <th><ctv-th [sortfield]="'networkName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Network</ctv-th></th>
+                <th><ctv-th [sortfield]="'ipAddress'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">IP Address</ctv-th></th>
+                <th><ctv-th [sortfield]="'selectors'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Label Selectors</ctv-th></th>
+                <th class="right floated three wide column">
+                    <ctv-search (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [placeholder]="'Search services...'"></ctv-search>
+                </th>
+            </tr>
+        </thead>
 
-        <ctv-tbody>
-            <ctv-tr ng-repeat="servicelb in servicelbListCtrl.filteredservicelbs">
-                <ctv-td><a ui-sref="contiv.menu.servicelbs.details.info({key:servicelb.key})">{{servicelb.serviceName}}</a></ctv-td>
-                <ctv-td>{{servicelb.networkName}}</ctv-td>
-                <ctv-td>{{servicelb.ipAddress}}</ctv-td>
-                <ctv-td>
-                    <div class="ui label tiny" ng-repeat="selector in servicelb.selectors">{{selector}}</div>
-                </ctv-td>
-                <ctv-td></ctv-td>
-            </ctv-tr>
-        </ctv-tbody>
+        <tbody>
+            <tr *ngFor="let servicelb of servicelbListCtrl.filteredservicelbs">
+                <td><a href="/#/m/servicelbs/details/{{servicelb.key}}/info">{{servicelb.serviceName}}</a></td>
+                <td>{{servicelb.networkName}}</td>
+                <td>{{servicelb.ipAddress}}</td>
+                <td>
+                    <div class="ui label tiny" *ngFor="let selector of servicelb.selectors">{{selector}}</div>
+                </td>
+                <td></td>
+            </tr>
+        </tbody>
 
-        <ctv-tfoot>
-            <ctv-tr>
-                <ctv-tpagination colspan="5"></ctv-tpagination>
-            </ctv-tr>
-        </ctv-tfoot>
+        <tfoot>
+            <tr>
+                <td colspan="5">
+                    <ctv-tpagination  [chunks]="tableRef.pageChunks"
+                                      (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
+                                      (prevChunk)="tableRef.showPrevChunk()"
+                                      (nextChunk)="tableRef.showNextChunk()">
+                    </ctv-tpagination>
+                </td>
+            </tr>
+        </tfoot>
     </ctv-table>
 </div>

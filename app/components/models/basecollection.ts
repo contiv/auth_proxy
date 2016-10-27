@@ -27,7 +27,7 @@ export class BaseCollection {
      * @param reload Optional. Default is false
      * @returns {*}
      */
-    get(reload) {
+    get(reload):Promise<any> {
         var collection = this;
         if (reload === undefined) reload = false;
         return (!reload && collection.models.length > 0) ?
@@ -47,7 +47,7 @@ export class BaseCollection {
      * @param keyname
      * @returns {*}
      */
-    getModelByKey(key, reload, keyname) {
+    getModelByKey(key, reload, keyname):Promise<any> {
         var collection = this;
         if (reload === undefined) reload = false;
         if (keyname === undefined) keyname = 'key';
@@ -78,7 +78,7 @@ export class BaseCollection {
      * @param reload Optional. Default is false
      * @returns {*}
      */
-    getModel(model, reload) {
+    getModel(model, reload):Promise<any> {
         var collection = this;
         if (reload === undefined) reload = false;
 

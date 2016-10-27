@@ -1,54 +1,83 @@
-/**
- * Created by cshampur on 6/23/16.
- */
-angular.module('contiv.networks')
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider
-            .state('contiv.menu.networks.details.stats', {
-                url: '/stats',
-                controller: 'NetworkStatsCtrl as networkStatsCtrl',
-                templateUrl: 'networks/networkstats.html'
-            })
-        ;
-    }])
-    .controller('NetworkStatsCtrl',
-        ['$state', '$stateParams', '$scope', '$interval', '$filter', 'NetworksModel', 'InspectService',
-            function ($state, $stateParams, $scope, $interval, $filter, NetworksModel, InspectService) {
+import {Component, OnInit, OnDestroy, Input} from "@angular/core";
+import {CRUDHelperService} from "../components/utils/crudhelperservice";
+import {Subscription, Observable} from "rxjs";
+import {NetworksModel} from "../components/models/networksmodel";
+import {InspectService} from "../components/utils/inspectservice";
+import {isUndefined} from "util";
 
-                var networkStatsCtrl = this;
+@Component({
+    selector: 'network-stat',
+    templateUrl: 'networks/networkstats.html'
+})
+export class NetworkStatComponent implements OnInit, OnDestroy{
 
-                /* Gets the Network Operational state from the server */
-                function getNetworkInspect(refresh){
-                    NetworksModel.getInspectByKey($stateParams.key, ContivGlobals.NETWORKS_INSPECT_ENDPOINT, refresh)
-                        .then(function (result) {
-                            networkStatsCtrl.networkInspectStats = result.Oper;
-                            networkStatsCtrl.config = result.Config;
-                            if(result.Oper.endpoints!=undefined){
-                                var containerDetails = InspectService.buildEndPoints(result.Oper.endpoints);
-                                if(InspectService.checkContainerChanged(networkStatsCtrl.containerDetails,containerDetails)){
-                                    networkStatsCtrl.endpoints = result.Oper.endpoints;
-                                    networkStatsCtrl.containerDetails = containerDetails;
-                                }
-                            }
-                            else{
-                                networkStatsCtrl.endpoints = []
-                                networkStatsCtrl.containerDetails = {};
-                            }
-                        });
-                }
+    public networkStatsCtrl: any;
+    @Input('statKey') statKey: string;
+    private crudHelperService: CRUDHelperService;
+    private refresh: Subscription;
+    private networksModel: NetworksModel;
+    private inspectSerrvice: InspectService;
+    networkInspectStats:any; config:any; endpoints:any; filteredendpoints:any; containerDetails:any;
+    constructor(networksModel: NetworksModel,
+                crudHelperService: CRUDHelperService,
+                inspectSerrvice: InspectService){
+        this.crudHelperService = crudHelperService;
+        this.networksModel = networksModel;
+        this.inspectSerrvice = inspectSerrvice;
+        this.statKey = '';
+        this['showloader'] = true;
+        this.refresh = Observable.interval(5000).subscribe(() => {
+            if(this.statKey!='')
+                this.getNetworkInspect(true);
+        })
+        this.networkInspectStats= {
+                    allocatedAddressesCount: '',
+                    allocatedIPAddresses: '',
+                    dnsServerIP: '',
+                    externalPktTag: '',
+                    numEndpoints: '',
+                    pktTag: ''
+            }
+        this.config = {networkName: '',}
+        this.endpoints = []
+        this.filteredendpoints = []
+        this.containerDetails= {}
+        this.networkStatsCtrl = this;
 
-                getNetworkInspect(false);
-                
-                var promise;
-                //Don't do autorefresh if one is already in progress
-                if (!angular.isDefined(promise)) {
-                    promise = $interval(function () {
-                        getNetworkInspect(true);
-                    }, ContivGlobals.REFRESH_INTERVAL);
-                }
+    }
 
-                //stop polling when user moves away from the page
-                $scope.$on('$destroy', function () {
-                    $interval.cancel(promise);
+    ngOnInit(){
+        this.crudHelperService.startLoader(this);
+        if(this.statKey!='')
+            this.getNetworkInspect(false);
+    }
+
+    getNetworkInspect(reload: boolean){
+        var networkStatsCtrl = this;
+        this.networksModel.getInspectByKey(this.statKey,
+            ContivGlobals.NETWORKS_INSPECT_ENDPOINT, reload)
+            .then((result) => {
+                    networkStatsCtrl['networkInspectStats'] = result['Oper'];
+                    networkStatsCtrl['config'] = result['Config'];
+                    if(!isUndefined(result['Oper'].endpoints)){
+                        var containerDetails = networkStatsCtrl.inspectSerrvice.buildEndPoints(result['Oper'].endpoints);
+                        if(networkStatsCtrl.inspectSerrvice.checkContainerChanged(networkStatsCtrl['containerDetails'],containerDetails)){
+                            networkStatsCtrl['endpoints'] = result['Oper'].endpoints;
+                            networkStatsCtrl['containerDetails'] = containerDetails;
+                        }
+                    }
+                    else{
+                        networkStatsCtrl['endpoints'] = []
+                        networkStatsCtrl['containerDetails'] = {};
+                    }
+                    networkStatsCtrl.crudHelperService.stopLoader(networkStatsCtrl);
+                },
+                (error) => {
+                    networkStatsCtrl.crudHelperService.stopLoader(networkStatsCtrl);
                 });
-            }]);
+    }
+
+    ngOnDestroy(){
+        this.refresh.unsubscribe();
+    }
+}

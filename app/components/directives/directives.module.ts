@@ -4,19 +4,34 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ErrorMessageComponent } from "./errormessagedirective";
-import { CollapsibleComponent } from "./collapsibledirective";
-
+import {CtvTableComponent, CtvThComponent, CtvSearchComponent, CtvTpaginationComponent} from "./tabledirective";
+import {FormsModule} from "@angular/forms";
+import {CtvAccordionComponent} from "./accordiondirective";
+import {CtvCollapsibleComponent} from "./collapsibledirective";
+import {CtvNamevalueComponent} from "./namevaluedirective";
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule, FormsModule
     ],
     declarations: [
         ErrorMessageComponent,
-        CollapsibleComponent
+        CtvTableComponent,
+        CtvThComponent,
+        CtvSearchComponent,
+        CtvTpaginationComponent,
+        CtvAccordionComponent,
+        CtvCollapsibleComponent,
+        CtvNamevalueComponent
     ],
     exports: [
         ErrorMessageComponent,
-        CollapsibleComponent
+        CtvTableComponent,
+        CtvThComponent,
+        CtvSearchComponent,
+        CtvTpaginationComponent,
+        CtvAccordionComponent,
+        CtvCollapsibleComponent,
+        CtvNamevalueComponent
     ]
 })
 export class DirectivesModule {}

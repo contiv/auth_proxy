@@ -4,7 +4,7 @@
     </div>
 
     <div class="center aligned three wide column">
-        <button class="ui blue button" ui-sref="contiv.menu.networks.create">
+        <button class="ui blue button" (click)="create()">
             <i class="add icon"></i>
             Create Network
         </button>
@@ -12,36 +12,46 @@
 </div>
 
 <div class="ui basic segment">
-    <div class="ui active inverted dimmer" ng-show="networksListCtrl.showLoader">
+
+    <div class="ui active inverted dimmer" *ngIf="networkListComp.showLoader">
         <div class="ui loader"></div>
     </div>
-    <ctv-table defaultsortcolumn="networkName" items="networksListCtrl.networks" filtereditems="networksListCtrl.filterednetworks" size="12">
-        <ctv-thead>
-            <ctv-tr>
-                <ctv-th sortfield="'networkName'">Name</ctv-th>
-                <ctv-th sortfield="'encap'">Encapsulation</ctv-th>
-                <ctv-th sortfield="'subnet'">Subnet</ctv-th>
-                <ctv-th sortfield="'gateway'">Gateway</ctv-th>
-                <ctv-th class="right floated three wide column">
-                    <ctv-tsearch placeholder="Search networks..." size="30"></ctv-tsearch>
-                </ctv-th>
-            </ctv-tr>
-        </ctv-thead>
 
-        <ctv-tbody>
-            <ctv-tr ng-repeat="network in networksListCtrl.filterednetworks">
-                <ctv-td><a ui-sref="contiv.menu.networks.details.info({key:network.key})">{{network.networkName}}</a></ctv-td>
-                <ctv-td>{{network.encap}}</ctv-td>
-                <ctv-td>{{network.subnet}}</ctv-td>
-                <ctv-td>{{network.gateway}}</ctv-td>
-                <ctv-td></ctv-td>
-            </ctv-tr>
-        </ctv-tbody>
+    <ctv-table #tableRef [defaultSortColumn]="'networkName'"
+               [items]="networkListComp['networks']"
+               (filtereditems)="networkListComp['filterednetworks']=$event;"
+               [size]="12">
+        <thead>
+        <tr>
+            <th><ctv-th [sortfield]="'networkName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Name</ctv-th></th>
+            <th><ctv-th [sortfield]="'encap'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Encapsulation</ctv-th></th>
+            <th><ctv-th [sortfield]="'subnet'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Subnet</ctv-th></th>
+            <th><ctv-th [sortfield]="'gateway'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Gateway</ctv-th></th>
+            <th class="right floated three wide column">
+                <ctv-search (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [placeholder]="'Search networks...'"></ctv-search>
+            </th>
+        </tr>
+        </thead>
 
-        <ctv-tfoot>
-            <ctv-tr>
-                <ctv-tpagination colspan="5"></ctv-tpagination>
-            </ctv-tr>
-        </ctv-tfoot>
+        <tbody>
+        <tr *ngFor="let network of networkListComp['filterednetworks']">
+            <td><a href="/#/m/networks/details/{{network.key}}">{{network.networkName}}</a></td>
+            <td>{{network.encap}}</td>
+            <td>{{network.subnet}}</td>
+            <td>{{network.gateway}}</td>
+            <td></td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="5">
+                <ctv-tpagination [chunks]="tableRef.pageChunks"
+                                 (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
+                                 (prevChunk)="tableRef.showPrevChunk()"
+                                 (nextChunk)="tableRef.showNextChunk()">
+                </ctv-tpagination>
+            </td>
+        </tr>
+        </tfoot>
     </ctv-table>
 </div>

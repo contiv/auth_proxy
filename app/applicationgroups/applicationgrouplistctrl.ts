@@ -1,43 +1,60 @@
 /**
  * Created by vjain3 on 3/11/16.
  */
-angular.module('contiv.applicationgroups')
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider
-            .state('contiv.menu.applicationgroups.list', {
-                url: '/list',
-                controller: 'ApplicationGroupListCtrl as applicationGroupListCtrl',
-                templateUrl: 'applicationgroups/applicationgrouplist.html'
-            })
-        ;
-    }])
-    .controller('ApplicationGroupListCtrl',
-        ['$scope', '$interval', '$filter', 'ApplicationGroupsModel', 'CRUDHelperService',
-            function ($scope, $interval, $filter, ApplicationGroupsModel, CRUDHelperService) {
-                var applicationGroupListCtrl = this;
 
-                function getApplicationGroups(reload) {
-                    ApplicationGroupsModel.get(reload)
-                        .then(function successCallback(result) {
-                            CRUDHelperService.stopLoader(applicationGroupListCtrl);
-                            applicationGroupListCtrl.groups = result;
-                        }, function errorCallback(result) {
-                            CRUDHelperService.stopLoader(applicationGroupListCtrl);
-                        });
-                }
+import {Component, OnInit, OnDestroy, Inject} from "@angular/core";
+import {ApplicationGroupsModel} from "../components/models/applicationgroupsmodel";
+import {CRUDHelperService} from "../components/utils/crudhelperservice";
+import {Observable, Subscription} from "rxjs";
+import { StateService } from "angular-ui-router/commonjs/ng1";
 
-                //Load from cache for quick display initially
-                getApplicationGroups(false);
+@Component({
+    selector:'app-group',
+    template: require("./applicationgrouplist.html")
+})
 
-                var promise;
-                //Don't start auto-refresh if one is already in progress
-                if (!angular.isDefined(promise)) {
-                    promise = $interval(function () {
-                        getApplicationGroups(true);
-                    }, 5000);
-                }
-                //stop polling when user moves away from the page
-                $scope.$on('$destroy', function () {
-                    $interval.cancel(promise);
-                });
-            }]);
+export class AppGrouplistComponent implements OnInit, OnDestroy{
+    public applicationGroupListCtrl: any;
+    private appGroupModel: ApplicationGroupsModel;
+    private crudHelperService: CRUDHelperService;
+    private refresh: Subscription;
+
+    constructor(@Inject('$state') private $state: StateService,
+                appGroupModel: ApplicationGroupsModel,
+                crudHelperService:CRUDHelperService){
+        this.appGroupModel = appGroupModel;
+        this.crudHelperService = crudHelperService;
+        this.applicationGroupListCtrl = this;
+        this['showLoader'] = true;
+
+        this.refresh = Observable.interval(5000).subscribe(() => {
+            this.getApplicationGroup(true);
+        });
+    }
+
+    ngOnInit(){
+        this.crudHelperService.startLoader(this);
+        this.getApplicationGroup(false);
+    }
+
+    getApplicationGroup(reload: boolean){
+        var applicationGroupListCtrl = this;
+        this.appGroupModel.get(reload)
+            .then((result) => {
+                applicationGroupListCtrl['groups']=result;
+                applicationGroupListCtrl.crudHelperService.stopLoader(applicationGroupListCtrl);
+            }, (error) => {
+                applicationGroupListCtrl.crudHelperService.stopLoader(applicationGroupListCtrl);
+            });
+    }
+
+    create(){
+        this.$state.go('contiv.menu.applicationgroups.create');
+    }
+
+    ngOnDestroy(){
+        this.refresh.unsubscribe();
+    }
+
+}
+

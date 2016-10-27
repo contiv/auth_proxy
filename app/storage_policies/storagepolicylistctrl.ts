@@ -1,42 +1,63 @@
 /**
- * Created by vjain3 on 4/18/16.
+ * Created by cshampur on 10/14/16.
  */
-angular.module('contiv.storagepolicies')
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider
-            .state('contiv.menu.storagepolicies.list', {
-                url: '/list',
-                controller: 'StoragePolicyListCtrl as storagePolicyListCtrl',
-                templateUrl: 'storage_policies/storagepolicylist.html'
-            })
-        ;
-    }])
-    .controller('StoragePolicyListCtrl', ['$scope', '$interval', '$filter', 'StoragePoliciesModel', 'CRUDHelperService',
-        function ($scope, $interval, $filter, StoragePoliciesModel, CRUDHelperService) {
-            var storagePolicyListCtrl = this;
 
-            function getPolicies(reload) {
-                StoragePoliciesModel.get(reload)
-                    .then(function successCallback(result) {
-                        CRUDHelperService.stopLoader(storagePolicyListCtrl);
-                        storagePolicyListCtrl.policies = result;
-                    }, function errorCallback(result) {
-                        CRUDHelperService.stopLoader(storagePolicyListCtrl);
-                    });
-            }
+import {Component, OnInit, OnDestroy, Inject} from "@angular/core";
 
-            //Load from cache for quick display initially
-            getPolicies(false);
+import {CRUDHelperService} from "../components/utils/crudhelperservice";
+import {Observable, Subscription} from "rxjs";
+import { StateService } from "angular-ui-router/commonjs/ng1";
+import {StoragePoliciesModel} from "../components/models/storagepoliciesmodel";
 
-            var promise;
-            //Don't do auto-refresh if one is already in progress
-            if (!angular.isDefined(promise)) {
-                promise = $interval(function () {
-                    getPolicies(true);
-                }, ContivGlobals.REFRESH_INTERVAL);
-            }
-            //stop polling when user moves away from the page
-            $scope.$on('$destroy', function () {
-                $interval.cancel(promise);
-            });
-        }]);
+
+
+@Component({
+    selector: 'storagepolicylist',
+    templateUrl: 'storage_policies/storagepolicylist.html'
+})
+
+export class StoragepolicyListComponent implements OnInit, OnDestroy{
+    private storagePoliciesModel:StoragePoliciesModel;
+    private crudHelperService: CRUDHelperService;
+    public storagePolicyListCtrl: any;
+    private refresh: Subscription;
+
+    constructor(@Inject('$state') private $state: StateService,
+                storagePoliciesModel: StoragePoliciesModel,
+                crudHelperService: CRUDHelperService){
+        this.storagePoliciesModel = storagePoliciesModel;
+        this.crudHelperService = crudHelperService;
+        this.storagePolicyListCtrl = this;
+        this['showLoader']=true;
+        this.refresh=Observable.interval(5000).subscribe(() => {
+            this.getPolicies(true);
+        })
+    }
+
+    ngOnInit(){
+        this.crudHelperService.startLoader(this);
+        this.getPolicies(false);
+    }
+
+    getPolicies(reload: boolean){
+        var storagePolicyListCtrl = this;
+        this.storagePoliciesModel.get(reload)
+            .then(function successCallback(result){
+                    storagePolicyListCtrl['policies'] = result;
+                    storagePolicyListCtrl.crudHelperService.stopLoader(storagePolicyListCtrl);
+                },
+                function errorCallback(result){
+                    storagePolicyListCtrl.crudHelperService.stopLoader(storagePolicyListCtrl);
+                })
+    }
+
+    create(){
+        this.$state.go('contiv.menu.storagepolicies.create');
+    }
+
+    ngOnDestroy(){
+        this.refresh.unsubscribe();
+    }
+}
+
+

@@ -62,7 +62,7 @@
             <div class="ui section divider" style="margin-top: 30px"></div>
             <div class="field">
                 <ctv-collapsible title="Label Selectors">
-                    <ctv-namevalue items="servicelbDetailsCtrl.labelSelectors"></ctv-namevalue>
+                    <ctv-namevalue [items]="servicelbDetailsCtrl.labelSelectors" (itemsChange)="servicelbDetailsCtrl.labelSelectors=$event"></ctv-namevalue>
                 </ctv-collapsible>
             </div>
             <div class="ui section divider"></div>

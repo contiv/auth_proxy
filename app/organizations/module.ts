@@ -5,4 +5,8 @@ angular.module('contiv.organizations', ['contiv.models', 'contiv.directives', 'c
             abstract: true,
             template: '<div ui-view class="ui container"/>'
         })
+            .state('contiv.menu.organizations.list', {
+                url:'/list',
+                component: 'organizationlist'
+            })
     }]);

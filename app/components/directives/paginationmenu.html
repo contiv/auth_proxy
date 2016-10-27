@@ -1,12 +1,13 @@
-<th ng-show="chunks.length > 1" colspan={{colspan}}>
+<div *ngIf="chunks.length > 1">
     <div class="ui right floated pagination borderless menu" style="margin-top: 30px">
-        <a class="icon item" ng-click="showPrevChunk()">
+        <a class="icon item" (click)="showPrevChunk()">
             <i class="chevron left icon"></i>
         </a>
-        <a ng-repeat="chunk in chunks track by $index" class="item"
-        ng-class="{active: chunk.selected}" ng-click="showChunk(chunk.pageNo)">{{chunk.pageNo + 1}}</a>
-        <a class="icon item" ng-click="showNextChunk()">
+        <a *ngFor="let chunk of chunks" class="item"
+           [ngClass]="{'active': chunk.selected}" (click)="showClickedPage(chunk.pageNo)">{{chunk.pageNo + 1}}
+        </a>
+        <a class="icon item" (click)="showNextChunk()">
             <i class="chevron right icon"></i>
         </a>
     </div>
-</th>
+</div>

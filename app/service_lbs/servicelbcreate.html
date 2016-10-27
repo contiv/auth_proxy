@@ -62,7 +62,7 @@
                 </h4>
             </div>
             <div ng-show="servicelbCreateCtrl.labelSelectorsVisible">
-                <ctv-namevalue items="servicelbCreateCtrl.labelSelectors"></ctv-namevalue>
+                <ctv-namevalue [items]="servicelbCreateCtrl.labelSelectors" (itemsChange)="servicelbCreateCtrl.labelSelectors=$event"></ctv-namevalue>
             </div>
         </div>
 

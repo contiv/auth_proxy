@@ -9,4 +9,8 @@ angular.module('contiv.storagepolicies', ['contiv.models', 'contiv.directives', 
                 abstract: true,
                 template: '<div ui-view class="ui container"/>'
             })
+            .state('contiv.menu.storagepolicies.list', {
+                url: '/list',
+                component: 'storagepolicylist'
+            })
     }]);

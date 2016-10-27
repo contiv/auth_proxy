@@ -1,6 +1,6 @@
 <div class="ui sixteen column grid">
     <div class="one wide column">
-        <a ui-sref="contiv.menu.volumes.list()">
+        <a href="/#/m/volumes/list">
             <i class="large arrow left icon"></i>
         </a>
     </div>
@@ -18,12 +18,12 @@
             </div>
             <div class="actions">
                 <div class="ui negative button">No</div>
-                <div class="ui positive button" ng-click="volumeDetailsCtrl.deleteVolume()">
+                <div class="ui positive button" (click)="deleteVolume()">
                     Yes
                 </div>
             </div>
         </div>
-        <button class="ui basic button" ng-click="volumeDetailsCtrl.triggerVolumeSnapshot()">
+        <button class="ui basic button" (click)="volumeDetailsCtrl.triggerVolumeSnapshot()">
             <i class="icon snapshot"></i>
             Snapshot
         </button>
@@ -34,7 +34,7 @@
     </div>
 </div>
 <div class="ui basic segment">
-    <div class="ui active inverted dimmer" ng-show="volumeDetailsCtrl.showLoader">
+    <div class="ui active inverted dimmer" *ngIf="volumeDetailsCtrl.showLoader">
         <div class="ui loader"></div>
     </div>
     <table class="ui very basic selectable table">
@@ -45,7 +45,7 @@
         </tr>
         <tr>
             <td class="ctv-header three wide column">In use on host</td>
-            <td>{{volumeDetailsCtrl.volumeUse.Hostname}}</td>
+            <td>{{volumeDetailsCtrl['volumeUse']['Hostname']}}</td>
         </tr>
         <tr>
             <td class="ctv-header three wide column">Status</td>
@@ -53,49 +53,56 @@
         </tr>
         </tbody>
     </table>
-    <div ng-show="volumeDetailsCtrl.snapshotSuccess" class="ui positive message">
-        <i class="close icon" ng-click="volumeDetailsCtrl.snapshotSuccess=false"></i>
+    <div *ngIf="volumeDetailsCtrl.snapshotSuccess" class="ui positive message">
+        <i class="close icon" (click)="volumeDetailsCtrl.snapshotSuccess=false"></i>
         <div class="header">
             Snapshot triggered
         </div>
     </div>
-    <ctv-error ng-show="volumeDetailsCtrl.showServerError" header="Error creating Snapshot"
-           error="volumeDetailsCtrl.serverErrorMessage">
+    <ctv-error *ngIf="volumeDetailsCtrl.showServerError" [header]="'Error creating Snapshot'"
+           [error]="volumeDetailsCtrl.serverErrorMessage">
     </ctv-error>
 
     <div class="ui section divider" style="margin-top: 30px"></div>
     <ctv-collapsible title="Snapshots">
-        <ctv-table defaultsortcolumn="key" items="volumeDetailsCtrl.snapshots" filtereditems="volumeDetailsCtrl.filteredsnapshots" size="12">
-            <ctv-thead>
-                <ctv-tr>
-                    <ctv-th sortfield="'key'">Name</ctv-th>
-                    <ctv-th class="right floated three wide column">
-                        <ctv-tsearch placeholder="Search snapshots..." size="30">
-                    </ctv-th>
-                </ctv-tr>
-            </ctv-thead>
+        <ctv-table #tableRef [defaultSortColumn]="'key'"
+                   [items]="volumeDetailsCtrl.snapshots"
+                   (filtereditems)="volumeDetailsCtrl.filteredsnapshots=$event"
+                   [size]="12">
+            <thead>
+                <tr>
+                    <th><ctv-th [sortfield]="'key'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Name</ctv-th></th>
+                    <th class="right floated three wide column">
+                        <ctv-search (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [placeholder]="'Search snapshots...'" size="30"></ctv-search>
+                    </th>
+                </tr>
+            </thead>
 
-            <ctv-tbody>
-                <ctv-tr ng-repeat="snapshot in volumeDetailsCtrl.filteredsnapshots">
-                    <ctv-td>
+            <tbody>
+                <tr *ngFor="let snapshot of volumeDetailsCtrl.filteredsnapshots">
+                    <td>
                         {{snapshot}}
-                    </ctv-td>
-                    <ctv-td>
-                        <a ui-sref="contiv.menu.volumes.copy({snapshot:snapshot, policy:volumeDetailsCtrl.volume.policy, volume:volumeDetailsCtrl.volume.name})">
-                            <i class="icon copysnapshot" ng-click="volumeDetailsCtrl.selectedsnapshot=snapshot"></i>
+                    </td>
+                    <td>
+                        <a (click)="copysnapshot(snapshot, volumeDetailsCtrl.volume.policy, volumeDetailsCtrl.volume.name)">
+                            <i class="icon copysnapshot"></i>
                         </a>
-                    </ctv-td>
-                    <ctv-td></ctv-td>
-                </ctv-tr>
-            </ctv-tbody>
+                    </td>
+                    <td></td>
+                </tr>
+            </tbody>
 
-            <ctv-tfoot>
-                <ctv-tr>
-                    <ctv-th colspan="2">
-                        <ctv-tpagination></ctv-tpagination>
-                    </ctv-th>
-                </ctv-tr>
-            </ctv-tfoot>
+            <tfoot>
+                <tr>
+                    <td colspan="2">
+                        <ctv-tpagination [chunks]="tableRef.pageChunks"
+                                         (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
+                                         (prevChunk)="tableRef.showPrevChunk()"
+                                         (nextChunk)="tableRef.showNextChunk()">
+                        </ctv-tpagination>
+                    </td>
+                </tr>
+            </tfoot>
         </ctv-table>
     </ctv-collapsible>
     <div class="ui section divider"></div>

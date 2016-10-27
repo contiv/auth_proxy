@@ -1,42 +1,62 @@
 /**
- * Created by vjain3 on 3/22/16.
+ * Created by cshampur on 10/14/16.
  */
-angular.module('contiv.volumes')
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider
-            .state('contiv.menu.volumes.list', {
-                url: '/list',
-                controller: 'VolumeListCtrl as volumeListCtrl',
-                templateUrl: 'volumes/volumelist.html'
-            })
-        ;
-    }])
-    .controller('VolumeListCtrl', ['$scope', '$interval', '$filter', 'VolumesModel', 'CRUDHelperService',
-        function ($scope, $interval, $filter, VolumesModel, CRUDHelperService) {
-            var volumeListCtrl = this;
 
-            function getVolumes(reload) {
-                VolumesModel.get(reload)
-                    .then(function successCallback(result) {
-                        CRUDHelperService.stopLoader(volumeListCtrl);
-                        volumeListCtrl.volumes = result;
-                    }, function errorCallback(result) {
-                        CRUDHelperService.stopLoader(volumeListCtrl);
-                    });
-            }
+import {Component, OnInit, OnDestroy, Inject} from "@angular/core";
 
-            //Load from cache for quick display initially
-            getVolumes(false);
+import {CRUDHelperService} from "../components/utils/crudhelperservice";
+import {Observable, Subscription} from "rxjs";
+import { StateService } from "angular-ui-router/commonjs/ng1";
+import {VolumesModel} from "../components/models/volumesmodel";
 
-            var promise;
-            //Don't do auto-refresh if one is already in progress
-            if (!angular.isDefined(promise)) {
-                promise = $interval(function () {
-                    getVolumes(true);
-                }, ContivGlobals.REFRESH_INTERVAL);
-            }
-            //stop polling when user moves away from the page
-            $scope.$on('$destroy', function () {
-                $interval.cancel(promise);
-            });
-        }]);
+
+@Component({
+    selector: 'volumelist',
+    templateUrl: "volumes/volumelist.html"
+})
+
+export class VolumeListComponent implements OnInit, OnDestroy{
+    private volumesModel:VolumesModel;
+    private crudHelperService: CRUDHelperService;
+    public volumeListCtrl: any;
+    private refresh: Subscription;
+
+    constructor(@Inject('$state') private $state: StateService,
+                volumesModel: VolumesModel,
+                crudHelperService: CRUDHelperService){
+        this.volumesModel = volumesModel;
+        this.crudHelperService = crudHelperService;
+        this.volumeListCtrl = this;
+        this['showLoader']=true;
+        this.refresh=Observable.interval(5000).subscribe(() => {
+            this.getVolumes(true);
+        })
+    }
+
+    ngOnInit(){
+        this.crudHelperService.startLoader(this);
+        this.getVolumes(false);
+    }
+
+    getVolumes(reload: boolean){
+        var volumeListCtrl = this;
+        this.volumesModel.get(reload)
+            .then(function successCallback(result){
+                    volumeListCtrl['volumes'] = result;
+                    volumeListCtrl.crudHelperService.stopLoader(volumeListCtrl);
+                },
+                function errorCallback(result){
+                    volumeListCtrl.crudHelperService.stopLoader(volumeListCtrl);
+                })
+    }
+
+    create(){
+        this.$state.go('contiv.menu.volumes.create');
+    }
+
+    ngOnDestroy(){
+        this.refresh.unsubscribe();
+    }
+}
+
+

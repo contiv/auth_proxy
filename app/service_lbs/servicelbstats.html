@@ -1,3 +1,8 @@
+<div class="ui basic segment">
+<div class="ui active inverted dimmer" *ngIf="servicelbStatsCtrl.showLoader">
+    <div class="ui loader"></div>
+</div>
+
 <table class="ui very basic selectable table">
     <tbody>
     <tr>
@@ -16,38 +21,48 @@
 </table>
 <div class="ui section divider"></div>
 <ctv-collapsible title="Providers">
-    <ctv-table defaultsortcolumn="containerName" items="servicelbStatsCtrl.providers" filtereditems="servicelbStatsCtrl.filteredproviders" size="12">
-        <ctv-thead>
-            <ctv-tr>
-                    <div class="ui grid" style="margin-top: 25px;margin-left: 25px;margin-bottom: 1px;">
-                        <ctv-th sortfield="'containerName'" class="five wide column">Container Name</ctv-th>
-                        <ctv-th sortfield="'ipAddress'" class="four wide column">IP Address</ctv-th>
-                        <ctv-th sortfield="'homingHost'" class="three wide column">Host</ctv-th>
-                        <ctv-th class="four wide column">
-                            <ctv-tsearch placeholder="Search Containers..." size="30"></ctv-tsearch>
-                        </ctv-th>
-                    </div>
-            </ctv-tr>
-        </ctv-thead>
+    <ctv-table #tableRef [defaultSortColumn]="'containerName'"
+               [items]="servicelbStatsCtrl.providers"
+               (filtereditems)="servicelbStatsCtrl.filteredproviders=$event"
+               [size]="12">
+        <thead>
+            <tr>
+                <div class="ui grid" style="margin-top: 25px;margin-left: 25px;margin-bottom: 1px;">
+                    <th class="five wide column"><ctv-th [sortfield]="'containerName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Container Name</ctv-th></th>
+                    <th class="four wide column"><ctv-th [sortfield]="'ipAddress'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">IP Address</ctv-th></th>
+                    <th class="three wide column"><ctv-th [sortfield]="'homingHost'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Host</ctv-th></th>
+                    <th class="four wide column">
+                            <ctv-search (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [placeholder]="'Search Containers...'"></ctv-search>
+                    </th>
+                </div>
+            </tr>
+        </thead>
 
-        <ctv-tbody>
-            <ctv-tr ng-repeat="provider in servicelbStatsCtrl.filteredproviders">
-                <ctv-td>
-                    <ctv-accordion items="servicelbStatsCtrl.providerDetails[provider.containerID]">
+        <tbody>
+            <tr *ngFor="let provider of servicelbStatsCtrl.filteredproviders">
+                <td>
+                    <ctv-accordion [items]="servicelbStatsCtrl.providerDetails[provider.containerID]">
                         <div class="ui grid" style="margin-top: -33px; margin-left: 30px;">
                             <div class="five wide column">{{provider.containerName.substr(1)}}</div>
                             <div class="four wide column">{{provider.ipAddress.join(' ')}}</div>
                             <div class="four wide column">{{provider.homingHost}}</div>
                         </div>
                     </ctv-accordion>
-                </ctv-td>
-            </ctv-tr>
-        </ctv-tbody>
+                </td>
+            </tr>
+        </tbody>
 
-        <ctv-tfoot>
-            <ctv-tr>
-                <ctv-tpagination colspan="2"></ctv-tpagination>
-            </ctv-tr>
-        </ctv-tfoot>
+        <tfoot>
+            <tr>
+                <td colspan="5">
+                    <ctv-tpagination [chunks]="tableRef.pageChunks"
+                                     (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
+                                     (prevChunk)="tableRef.showPrevChunk()"
+                                     (nextChunk)="tableRef.showNextChunk()">
+                    </ctv-tpagination>
+                </td>
+            </tr>
+        </tfoot>
     </ctv-table>
 </ctv-collapsible>
+</div>

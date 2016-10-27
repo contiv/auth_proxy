@@ -7,31 +7,28 @@
     <tr>
         <td>
             <div class="ui input">
-                <div ng-switch="type">
-                    <input ng-switch-when="text" type="text" ng-model="newItem.name" placeholder="">
-                    <select ng-switch-when="select" class="ui dropdown" ng-model="newItem.name">
-                        <option ng-repeat="option in options" value="{{option}}">{{option}}</option>
-                    </select>
-                </div>
+                <input *ngIf="type=='text'" type="text" [(ngModel)]="newItem.name">
+                <select class="ui dropdown" *ngIf="type=='select'" [(ngModel)]="newItem.name">
+                    <option *ngFor="let option of options" [value]="option">{{option}}</option>
+                </select>
             </div>
         </td>
         <td>
             <div class="ui input">
-                <input type="text" ng-model="newItem.value" placeholder="">
+                <input type="text" [(ngModel)]="newItem.value">
             </div>
         </td>
         <td>
-            <button type="button" class="ui icon button" ng-click="add()">
+            <button type="button" class="ui icon button" (click)="add()">
                 <i class="blue add icon"></i>
             </button>
         </td>
     </tr>
-    <tr ng-repeat="item in items">
+    <tr *ngFor="let item of items">
         <td>{{item.name}}</td>
         <td>{{item.value}}</td>
         <td>
-            <button type="button" class="ui icon button"
-                    ng-click="remove(item)">
+            <button type="button" class="ui icon button" (click)="remove(item);">
                 <i class="trash icon"></i>
             </button>
         </td>

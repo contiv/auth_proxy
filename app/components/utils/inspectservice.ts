@@ -2,6 +2,7 @@
  * Created by cshampur on 7/17/16.
  */
 import { Injectable } from '@angular/core';
+import {isUndefined} from "util";
 
 @Injectable()
 export class InspectService {
@@ -23,18 +24,18 @@ export class InspectService {
             var containerAttributes = [];
             for(var key in endpoints[i]){
                 var endpointAttribute = {};
-                endpointAttribute.name = key;
-                endpointAttribute.format = 'none';
-                endpointAttribute.type = 'string';
+                endpointAttribute['name'] = key;
+                endpointAttribute['format'] = 'none';
+                endpointAttribute['type'] = 'string';
                 switch (key){
-                    case "ipAddress" :  endpointAttribute.value = endpoints[i][key].filter(function(ipAddress){return ipAddress.length > 0;}).join();
+                    case "ipAddress" :  endpointAttribute['value'] = endpoints[i][key].filter(function(ipAddress){return ipAddress.length > 0;}).join();
                         break;
-                    case "labels" :     endpointAttribute.value = endpoints[i][key].replace(/(map\[|\])/gi,'').replace(/(:)/gi, '=').split(' ')
+                    case "labels" :     endpointAttribute['value'] = endpoints[i][key].replace(/(map\[|\])/gi,'').replace(/(:)/gi, '=').split(' ')
                         .filter(function(v){return v.length > 0});
-                        endpointAttribute.format = 'label';
-                        endpointAttribute.type = 'array';
+                        endpointAttribute['format'] = 'label';
+                        endpointAttribute['type'] = 'array';
                         break;
-                    default :           endpointAttribute.value = endpoints[i][key];
+                    default :           endpointAttribute['value'] = endpoints[i][key];
                 }
                 containerAttributes.push(endpointAttribute);
             }
@@ -47,7 +48,7 @@ export class InspectService {
      View is updated only when there is a change in container configuration
      */
     checkContainerChanged(contDetailsA, contDetailsB){
-        if(contDetailsA == undefined)
+        if(isUndefined(contDetailsA))
             return true;
         else{
             if(Object.keys(contDetailsA).length != Object.keys(contDetailsB).length)

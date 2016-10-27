@@ -1,5 +1,5 @@
 <div class="ui left icon input">
-    <input type="text" ng-model="searchText" ng-change="showChunk()"
-           placeholder="{{placeholder}}" size="{{size}}">
+    <input type="text" [ngModel]="searchText"(ngModelChange)="showChunk($event)"
+           size='{{size}}' [placeholder]="placeholder">
     <i class="search icon"></i>
 </div>

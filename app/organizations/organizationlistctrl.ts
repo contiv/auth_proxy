@@ -1,41 +1,60 @@
-angular.module('contiv.organizations')
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider
-            .state('contiv.menu.organizations.list', {
-                url: '/list',
-                controller: 'OrganizationsListCtrl as organizationsListCtrl',
-                templateUrl: 'organizations/organizationlist.html'
-            })
-        ;
-    }])
-    .controller('OrganizationsListCtrl', ['$scope', '$interval', '$filter', 'OrganizationsModel', 'CRUDHelperService',
-        function ($scope, $interval, $filter, OrganizationsModel, CRUDHelperService) {
-            var organizationsListCtrl = this;
+/**
+ * Created by cshampur on 10/14/16.
+ */
 
-            function getOrganizations(reload) {
-                OrganizationsModel.get(reload)
-                    .then(function successCallback(result) {
-                            CRUDHelperService.stopLoader(organizationsListCtrl);
-                            organizationsListCtrl.organizations = result;
-                        },
-                        function errorCallback(result) {
-                            CRUDHelperService.stopLoader(organizationsListCtrl);
-                        });
-            }
+import {Component, OnInit, OnDestroy, Inject} from "@angular/core";
 
-            //Load from cache for quick display initially
-            getOrganizations(false);
+import {CRUDHelperService} from "../components/utils/crudhelperservice";
+import {Observable, Subscription} from "rxjs";
+import { StateService } from "angular-ui-router/commonjs/ng1";
+import {OrganizationsModel} from "../components/models/organizationsmodel";
 
-            var promise;
-            //Don't do autorefresh if one is already in progress
-            if (!angular.isDefined(promise)) {
-                promise = $interval(function () {
-                    getOrganizations(true);
-                }, ContivGlobals.REFRESH_INTERVAL);
-            }
 
-            //stop polling when user moves away from the page
-            $scope.$on('$destroy', function () {
-                $interval.cancel(promise);
-            });
-        }]);
+@Component({
+    selector: 'organizationlist',
+    templateUrl: 'organizations/organizationlist.html'
+})
+
+export class OrganizationListComponent implements OnInit, OnDestroy{
+    private organizationsModel:OrganizationsModel;
+    private crudHelperService: CRUDHelperService;
+    public organizationsListCtrl: any;
+    private refresh: Subscription;
+
+    constructor(@Inject('$state') private $state: StateService,
+                organizationsModel: OrganizationsModel,
+                crudHelperService: CRUDHelperService){
+        this.organizationsModel = organizationsModel;
+        this.crudHelperService = crudHelperService;
+        this.organizationsListCtrl = this;
+        this['showLoader']=true;
+        this.refresh=Observable.interval(5000).subscribe(() => {
+            this.getOrganizations(true);
+        })
+    }
+
+    ngOnInit(){
+        this.crudHelperService.startLoader(this);
+        this.getOrganizations(false);
+    }
+
+    getOrganizations(reload: boolean){
+        var organizationsListCtrl = this;
+        this.organizationsModel.get(reload)
+            .then(function successCallback(result){
+                    organizationsListCtrl['organizations'] = result;
+                    organizationsListCtrl.crudHelperService.stopLoader(organizationsListCtrl);
+                },
+                function errorCallback(result){
+                    organizationsListCtrl.crudHelperService.stopLoader(organizationsListCtrl);
+                })
+    }
+
+    create(){
+        this.$state.go('contiv.menu.organizations.create');
+    }
+
+    ngOnDestroy(){
+        this.refresh.unsubscribe();
+    }
+}

@@ -20,5 +20,10 @@ angular.module('contiv.applicationgroups', ['contiv.models', 'contiv.directives'
             .state('contiv.menu.applicationgroups.edit', {
                 url: '/edit/:key',
                 component: 'applicationgroupdetails'
-            });
+            })
+            .state('contiv.menu.applicationgroups.list',{
+                url: '/list',
+                component: 'applicationGrouplist'
+            })
+
     }]);

@@ -9,4 +9,12 @@ angular.module('contiv.volumes', ['contiv.models', 'contiv.directives', 'contiv.
                 abstract: true,
                 template: '<div ui-view class="ui container"/>'
             })
+            .state('contiv.menu.volumes.list', {
+                url: '/list',
+                component: 'volumelist'
+            })
+            .state('contiv.menu.volumes.details', {
+                url: '/details/:key',
+                component: 'volumedetails'
+            })
     }]);

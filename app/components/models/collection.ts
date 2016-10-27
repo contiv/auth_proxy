@@ -23,7 +23,7 @@ export class Collection extends BaseCollection {
      * @param url Optional if not passed it is constructed using key and url passed in constructor
      * @returns {*}
      */
-    create(model, url) {
+    create(model, url):Promise<any> {
         var collection = this;
         var promise = new Promise(function (resolve, reject) {
             if (url === undefined) url = collection.url + model.key + '/';
@@ -52,7 +52,7 @@ export class Collection extends BaseCollection {
      * @param url Optional
      * @returns {*}
      */
-    save(model) {
+    save(model):Promise<any> {
         var collection = this;
         var promise = new Promise(function (resolve, reject) {
             var url = collection.url + model.key + '/';
@@ -76,7 +76,7 @@ export class Collection extends BaseCollection {
      * @param model
      * @returns {*}
      */
-    delete(model) {
+    delete(model):Promise<any> {
         var collection = this;
         var promise = new Promise(function (resolve, reject) {
             var url = collection.url + model.key + '/';
@@ -100,7 +100,7 @@ export class Collection extends BaseCollection {
      * @param url Optional if not passed it is constructed using key and url passed in constructor
      * @returns {*}
      */
-    deleteUsingKey(key, keyname, url) {
+    deleteUsingKey(key, keyname, url):Promise<any> {
         var collection = this;
         if (keyname === undefined) keyname = 'key';
         var promise = new Promise(function (resolve, reject) {
@@ -119,7 +119,7 @@ export class Collection extends BaseCollection {
     };
 
 
-    getInspectByKey(key, url, refresh){
+    getInspectByKey(key, url, refresh): Promise<any>{
         var collection = this;
         var promise = new Promise(function (resolve, reject) {
             if(key in collection.inspectStats && refresh == false){

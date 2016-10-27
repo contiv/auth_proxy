@@ -1,5 +1,5 @@
 <div class="ui basic segment">
-    <div class="ui active inverted dimmer" ng-show="networkDetailsCtrl.showLoader">
+    <div class="ui active inverted dimmer" *ngIf="networkDetailsCtrl.showLoader">
         <div class="ui loader"></div>
     </div>
     <table class="ui very basic selectable table">
@@ -28,31 +28,40 @@
     <h4 class="ui header" style="margin-top: 40px">Application Groups</h4>
 
     <div style="margin-top: 20px">
-        <ctv-table defaultsortcolumn="groupName" items="networkDetailsCtrl.applicationGroups"
-                   filtereditems="networkDetailsCtrl.filteredApplicationGroups" size="5">
-            <ctv-thead>
-                <ctv-tr>
-                    <ctv-th sortfield="'groupName'"> Group name</ctv-th>
-                    <ctv-th sortfield="'policies'"> Policies</ctv-th>
-                    <ctv-th class="right floated three wide column">
-                        <ctv-tsearch placeholder="Search application groups..." size="30"></ctv-tsearch>
-                    </ctv-th>
-                </ctv-tr>
-            </ctv-thead>
-            <ctv-tbody>
-                <ctv-tr ng-repeat="group in networkDetailsCtrl.filteredApplicationGroups">
-                    <ctv-td class="three wide column">
-                        <a ui-sref="contiv.menu.applicationgroups.details({key:group.key})">{{group.groupName}}</a>
-                    </ctv-td>
-                    <ctv-td>{{group.policies.join(", ")}}</ctv-td>
-                    <ctv-td></ctv-td>
-                </ctv-tr>
-            </ctv-tbody>
-            <ctv-tfoot>
-                <ctv-tr>
-                    <ctv-tpagination colspan="3"></ctv-tpagination>
-                </ctv-tr>
-            </ctv-tfoot>
+        <ctv-table #tableRef
+                   [defaultSortColumn]="'groupName'"
+                   [items]="networkDetailsCtrl.applicationGroups"
+                   (filtereditems)="networkDetailsCtrl.filteredApplicationGroups=$event"
+                   [size]="5">
+            <thead>
+            <tr>
+                <th><ctv-th [sortfield]="'groupName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj"> Group name</ctv-th></th>
+                <th><ctv-th [sortfield]="'policies'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj"> Policies</ctv-th></th>
+                <th class="right floated three wide column">
+                    <ctv-search (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [placeholder]="'Search application groups...'"></ctv-search>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let group of networkDetailsCtrl.filteredApplicationGroups">
+                <td class="three wide column">
+                    <a href="/#/m/applicationgroups/details/{{group.key}}">{{group.groupName}}</a>
+                </td>
+                <td>{{group.policies.join(", ")}}</td>
+                <td></td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="5">
+                    <ctv-tpagination [chunks]="tableRef.pageChunks"
+                                     (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
+                                     (prevChunk)="tableRef.showPrevChunk()"
+                                     (nextChunk)="tableRef.showNextChunk()">
+                    </ctv-tpagination>
+                </td>
+            </tr>
+            </tfoot>
         </ctv-table>
     </div>
 </div>

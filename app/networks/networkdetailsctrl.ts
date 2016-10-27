@@ -1,69 +1,105 @@
-angular.module('contiv.networks')
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider
-            .state('contiv.menu.networks.details', {
-                url: '/details/:key',
-                controller: 'NetworkDetailsCtrl as networkDetailsCtrl',
-                templateUrl: 'networks/networkdetails.html'
+/**
+ * Created by cshampur on 10/14/16.
+ */
+
+import {Component, OnInit, OnDestroy, Inject} from "@angular/core";
+import {CRUDHelperService} from "../components/utils/crudhelperservice";
+import {Observable, Subscription} from "rxjs";
+import { StateService } from "angular-ui-router/commonjs/ng1";
+import {ApplicationGroupsModel} from "../components/models/applicationgroupsmodel";
+import {NetworksModel} from "../components/models/networksmodel";
+import {isUndefined} from "util";
+var _ = require('lodash');
+
+
+@Component({
+    selector: 'networkdetails',
+    templateUrl: "networks/networkdetails.html"
+})
+
+export class NetworkdetailsComponent implements OnInit, OnDestroy{
+    private applicationGroupsModel:ApplicationGroupsModel;
+    private networksModel: NetworksModel;
+    private crudHelperService: CRUDHelperService;
+    public networkDetailsCtrl: any;
+    private refresh: Subscription;
+    public network: any;
+    public infoselected: boolean
+    public statskey: string;
+
+    constructor(@Inject('$state') private $state: StateService,
+                applicationGroupsModel: ApplicationGroupsModel,
+                networksModel: NetworksModel,
+                crudHelperService: CRUDHelperService){
+        this.applicationGroupsModel = applicationGroupsModel;
+        this.networksModel = networksModel;
+        this.crudHelperService = crudHelperService;
+        this.infoselected = true;
+        this.statskey=''
+        this['showLoader'] = true;
+        this['showServerError'] = false;
+        this['serverErrorMessage'] = '';
+        this.network = {networkName: '', encap: '', subnet: '', gateway: ''};
+        this.refresh=Observable.interval(5000).subscribe(() => {
+            this.getApplicationGroups(true);
+        })
+        this.networkDetailsCtrl = this;
+    }
+
+    ngOnInit(){
+        this.crudHelperService.startLoader(this);
+        this.statskey = this.$state.params['key'];
+        this.getNetworksModel(false);
+    }
+
+    getApplicationGroups(reload: boolean){
+        var networkDetailsCtrl = this;
+        if(!isUndefined(networkDetailsCtrl['network'])){
+            this.applicationGroupsModel.get(reload)
+                .then(function successCallback(result){
+                        networkDetailsCtrl['applicationGroups'] = _.filter(result, {'networkName': networkDetailsCtrl['network'].networkName})
+                        networkDetailsCtrl.crudHelperService.stopLoader(networkDetailsCtrl);
+                    },
+                    function errorCallback(result){
+                        networkDetailsCtrl.crudHelperService.stopLoader(networkDetailsCtrl);
+                    });
+        }
+    }
+
+    getNetworksModel(reload: boolean){
+        var networkDetailsCtrl = this;
+        this.networksModel.getModelByKey(this.$state.params['key'], reload, 'key')
+            .then((result) => {
+                networkDetailsCtrl['network'] = result;
+                networkDetailsCtrl.getApplicationGroups(false);
+            }, (error) => {
+                networkDetailsCtrl.crudHelperService.stopLoader(networkDetailsCtrl);
             })
-            .state('contiv.menu.networks.details.info', {
-                url: '/info',
-                templateUrl: 'networks/networkinfo.html'
-            });
-    }])
-    .controller('NetworkDetailsCtrl',
-        ['$state', '$stateParams', '$scope', '$interval', '$filter', 'NetworksModel', 'ApplicationGroupsModel', 'CRUDHelperService',
-            function ($state, $stateParams, $scope, $interval, $filter, NetworksModel, ApplicationGroupsModel, CRUDHelperService) {
-                var networkDetailsCtrl = this;
+    }
 
-                function returnToNetworks() {
-                    $state.go('contiv.menu.networks.list');
-                }
+    deleteNetwork(){
+        var networkDetailsCtrl = this;
+        this.crudHelperService.hideServerError(networkDetailsCtrl);
+        this.crudHelperService.startLoader(networkDetailsCtrl);
+        if (!isUndefined(networkDetailsCtrl['network'])){
+            this.networksModel.delete(networkDetailsCtrl['network'])
+                .then((result) => {
+                    networkDetailsCtrl.crudHelperService.stopLoader(networkDetailsCtrl);
+                    networkDetailsCtrl.returnToNetworks();
+                }, (error) => {
+                    networkDetailsCtrl.crudHelperService.stopLoader(networkDetailsCtrl);
+                    networkDetailsCtrl.crudHelperService.showServerError(networkDetailsCtrl, error);
+                })
+        }
 
-                function deleteNetwork() {
-                    CRUDHelperService.hideServerError(networkDetailsCtrl);
-                    CRUDHelperService.startLoader(networkDetailsCtrl);
-                    NetworksModel.delete(networkDetailsCtrl.network).then(function successCallback(result) {
-                        CRUDHelperService.stopLoader(networkDetailsCtrl);
-                        returnToNetworks();
-                    }, function errorCallback(result) {
-                        CRUDHelperService.stopLoader(networkDetailsCtrl);
-                        CRUDHelperService.showServerError(networkDetailsCtrl, result);
-                    });
-                }
+    }
 
-                /**
-                 * Get application groups belonging to a network
-                 */
-                function getApplicationGroups(reload) {
-                    ApplicationGroupsModel.get(reload).then(function (result) {
-                        networkDetailsCtrl.applicationGroups = $filter('orderBy')(_.filter(result, {
-                            'networkName': networkDetailsCtrl.network.networkName
-                        }), 'groupName');
-                    });
-                }
+    returnToNetworks(){
+        this.$state.go('contiv.menu.networks.list');
+    }
 
-                CRUDHelperService.stopLoader(networkDetailsCtrl);
-                CRUDHelperService.hideServerError(networkDetailsCtrl);
+    ngOnDestroy(){
+        this.refresh.unsubscribe();
+    }
+}
 
-                NetworksModel.getModelByKey($stateParams.key)
-                    .then(function (network) {
-                        networkDetailsCtrl.network = network;
-                        getApplicationGroups(false);
-                    });
-
-                networkDetailsCtrl.deleteNetwork = deleteNetwork;
-
-                var promise;
-                //Don't do autorefresh if one is already in progress
-                if (!angular.isDefined(promise)) {
-                    promise = $interval(function () {
-                        getApplicationGroups(true);
-                    }, ContivGlobals.REFRESH_INTERVAL);
-                }
-
-                //stop polling when user moves away from the page
-                $scope.$on('$destroy', function () {
-                    $interval.cancel(promise);
-                });
-            }]);

@@ -1,280 +1,276 @@
 /**
- * Created by vjain3 on 5/4/16.
+ * Created by cshampur on 10/10/16.
  */
 
-/*
-Directive Usage :
+import {Component, Input, Output, OnInit, EventEmitter, OnChanges} from "@angular/core";
+import {isUndefined} from "util";
+var _ = require('lodash');
 
-a) ctvTable -
-   usage : <ctv-table defaultsortcolumn='name' items='tableItems' filtereditems='filtItems' size='size'></ctv-table>
-   attribute details :  defaultsortcolumn - The default column name(corresponding key inside the object of items array) on which the table will be sorted when it is loaded.
-                        items - An array of objects which will be displayed by the ctv-table directive.
-                        size - number of rows to be displayed inside the table. If items.length > size then remaining items
-                               will be displayed in next page.
-                        filtereditems - This is an output field which produces a filtered subset of items specefied by
-                                        the previous attribute, Items are filtered based on search text defined inside ctv-search,
-                                        and by the size mentioned in the ctv-table attribute
-b) ctvTH -
-   usage : <ctv-th sortfield='name'>name</ctv-th>
-   attribute details : sortfield - This is the key of the object present inside items array specefied in ctvTable, for eg :
-                                   if the array object is : [{ip: "20.1.2.3", host: "cluster-1"},{ip: "20.1.2.4", host: "cluster-2"}]
-                                   then directive will be <ctv-th sortfield="'ip'"> Ip Address </ctv-th>
-   Table can only be sorted on columns which has sortfield attribute specefied.
+interface Chunk{
+    selected: boolean;
+    pageNo: number;
+}
 
-c) ctvTsearch -
-   usage : <ctv-tsearch placeholder='Search' size='30'></ctv-tsearch>
-   attribute details : placeholder - specify the placeholder for the input text field
-                       size - specify the maximum length of the search string
-   Only items matching the search string are displayed inside the table.
+interface Table {
+    chunks: Chunk[];
+    pageNo: number;
+    tableSize: number;
+    searchText: string;
+}
 
-d) ctvTpagination -
-   usage : <ctv-tpagination></ctv-tpagination>
-   Provides link for moving back and forth of the result page.
+interface SortObj {
+    field: string;
+    reverse: boolean;
+    iconDirection: Object;
+}
 
- */
-angular.module("contiv.directives")
-    .directive("ctvTable", ['filterFilter', 'limitToFilter', function (filterFilter, limitToFilter) {
-        return {
-            restrict: 'E',
-            transclude: true,
-            scope: {
-                items: '=',
-                filtereditems: '=',
-                size: '@',
-                defaultsortcolumn: '@'
-            },
-            controller: ['$scope', '$element', '$attrs', '$filter', function ($scope, $element, $attrs, $filter) {
-                var tableCtrl = this;
-                tableCtrl.chunks = [];
-                tableCtrl.pageNo = 0;
-                tableCtrl.sortObj=initializeSort($scope.defaultsortcolumn);
+@Component({
+    selector: 'ctv-table',
+    templateUrl: 'components/directives/table.html'
 
-                tableCtrl.size = parseInt($scope.size, 10);
-                if (isNaN(tableCtrl.size)) {
-                    tableCtrl.size = 12;
-                }
+})
 
-                /**
-                 * Always call showChunk with both parameters.
-                 * @param pageNo
-                 * @param searchText
-                 * @returns {boolean}
-                 */
-                function showChunk(pageNo, searchText) {
-                    tableCtrl.searchText = searchText;
-                    if (pageNo === undefined || pageNo < 0) pageNo = 0;
-                    tableCtrl.pageNo = pageNo;
+export class CtvTableComponent implements OnChanges, OnInit {
 
-                    if ($scope.items !== undefined) {//TODO: Check why items are undefined during initialization
-                        var searchTextFilteredItems = filterFilter($scope.items, tableCtrl.searchText);
-                        searchTextFilteredItems = $filter('orderBy')(searchTextFilteredItems, tableCtrl.sortObj.field, tableCtrl.sortObj.reverse);
-                        var noOfChunks = Math.ceil(searchTextFilteredItems.length / tableCtrl.size);
-                        if (noOfChunks == 0) {
-                            noOfChunks = 1;
-                        }
-                        tableCtrl.chunks = [];
-                        for (var i = 0; i < noOfChunks; i++) {
-                            tableCtrl.chunks.push({selected: false, pageNo: i});
-                        }
+    public table:Table;
+    @Input('items') items: Object[];
+    @Input('size') size:number;
+    @Output('filtereditems') filteredinputitems: EventEmitter<any>;
+    @Input('defaultSortColumn') defaultSortColumn: string;
+    public pageChunks:Chunk[];
+    public sortObj: SortObj
 
-                        //After filtering number of chunks could change so reset page no if it is greater than no of chunks
-                        if (pageNo >= tableCtrl.chunks.length) {
-                            tableCtrl.pageNo = 0;
-                        }
-                        tableCtrl.chunks[tableCtrl.pageNo].selected = true;
+    constructor(){
+        this.filteredinputitems = new EventEmitter<any>();
+        this.table = {chunks:[], pageNo: 0, tableSize: 12, searchText:''};
+        this.pageChunks = [];
+        this.defaultSortColumn='';
+        this.size=12;
+        this.items=[];
+        this.sortObj = this.initializeSort(this.defaultSortColumn);
+    }
 
-                        //Update number of chunks for pagination menu
-                        if (tableCtrl.chunks.length > 5) {
-                            var sliceStart, sliceEnd;
-                            sliceStart = tableCtrl.pageNo - 2;
-                            sliceEnd = tableCtrl.pageNo + 3;
-                            if (sliceStart < 0) {
-                                sliceEnd = sliceEnd - sliceStart;
-                                sliceStart = 0;
-                            }
-                            if (sliceEnd > tableCtrl.chunks.length) {
-                                sliceStart = sliceStart - (sliceEnd - tableCtrl.chunks.length);
-                                sliceEnd = tableCtrl.chunks.length;
-                            }
-                            $scope.paginationMenu.chunks = tableCtrl.chunks.slice(sliceStart, sliceEnd);
-                        } else {
-                            $scope.paginationMenu.chunks = tableCtrl.chunks;
-                        }
+    ngOnInit(){
+        if(isNaN(this.size))
+            this.size = 12;
+        this.table.tableSize = this.size;
+        this.sortObj = this.initializeSort(this.defaultSortColumn);
+        this.showChunk(this.table.pageNo, this.table.searchText);
+    }
 
-                        tableCtrl.filteredItems = limitToFilter(searchTextFilteredItems,
-                            tableCtrl.size,
-                            tableCtrl.pageNo * tableCtrl.size);
-                        $scope.filtereditems=tableCtrl.filteredItems;
-                    }
-                    return false;
-                }
+    ngOnChanges(){
+        this.showChunk(this.table.pageNo, this.table.searchText);
+    }
 
-                function showPrevChunk() {
-                    var prevChunk;
-                    if (tableCtrl.pageNo <= 0) {
-                        prevChunk = 0;
-                    } else {
-                        prevChunk = tableCtrl.pageNo - 1;
-                    }
-                    return showChunk(prevChunk);
-                }
 
-                function showNextChunk() {
-                    var nextChunk;
-                    nextChunk = tableCtrl.pageNo + 1;
-                    if (nextChunk > tableCtrl.chunks.length - 1) {
-                        nextChunk = tableCtrl.chunks.length - 1;
-                    }
-                    return showChunk(nextChunk);
-                }
+    public showChunk(pageNo: number, searchText: string): boolean{
+        this.table.searchText = searchText;
 
-                /**
-                 * Save pagination scope to provide chunk information to pagination menu.
-                 * @param menu
-                 */
-                function addPaginationMenu(menu) {
-                    $scope.paginationMenu = menu;
-                }
-
-                function initializeSort(sortfield){
-                    return {
-                        field:sortfield,
-                        reverse: false,
-                        iconDirection: {"angle down icon": true, "angle up icon": false}
-                    }
-                }
-
-                function sort(sortfield){
-                    if (sortfield == tableCtrl.sortObj.field){
-                        tableCtrl.sortObj.field = sortfield;
-                        tableCtrl.sortObj.reverse = !tableCtrl.sortObj.reverse;
-                        tableCtrl.sortObj.iconDirection = {
-                            "angle down icon": !tableCtrl.sortObj.reverse,
-                            "angle up icon": tableCtrl.sortObj.reverse
-                        }
-                    }
-                    else{
-                        tableCtrl.sortObj = initializeSort(sortfield);
-                    }
-                    tableCtrl.showChunk(tableCtrl.pageNo, tableCtrl.searchText);
-                    $scope.$apply();
-                }
-
-                tableCtrl.showChunk = showChunk;
-                tableCtrl.showNextChunk = showNextChunk;
-                tableCtrl.showPrevChunk = showPrevChunk;
-                tableCtrl.addPaginationMenu = addPaginationMenu;
-                tableCtrl.sort = sort;
-            }],
-            link: function (scope, element, attrs, tableCtrl) {
-                //Watch for items as they will be auto refreshed
-                scope.$parent.$watch(attrs.items, function () {
-                    tableCtrl.showChunk(tableCtrl.pageNo, tableCtrl.searchText);
-                });
-
-            },
-            templateUrl: 'components/directives/table.html'
+        if(isUndefined(pageNo) || pageNo < 0){
+            pageNo=0;
         }
-    }])
-    .directive("ctvThead", function () {
-        return {
-            restrict: 'E',
-            transclude: true,
-            replace: true,
-            template: '<thead ng-transclude></thead>'
-        }
-    })
-    .directive("ctvTh", function () {
-        return {
-            restrict: 'E',
-            transclude: true,
-            replace: true,
-            require: '^^ctvTable',
-            scope: {
-                class: '@',
-                sortfield: '='
-            },
-            link:function(scope, element, attrs, tableCtrl){
-                scope.tablectrl = tableCtrl;
-                if(scope.sortfield != undefined && scope.sortfield != null){
-                    element.bind('click', function(){
-                        tableCtrl.sort(scope.sortfield);
-                    });
+
+        this.table.pageNo = pageNo;
+
+        if(!(isUndefined(this.items))){
+            var searchTextFilteredItems = this.filterItems(searchText);
+            var sortedItems = this.sort(searchTextFilteredItems);
+            var noOfChunks = Math.ceil(sortedItems.length / this.table.tableSize);
+            if(noOfChunks == 0 ){
+                noOfChunks=1;
+            }
+
+            this.table.chunks = [];
+
+            for(var i=0; i< noOfChunks; i++){
+                this.table.chunks.push({selected: false, pageNo: i});
+            }
+
+            if( pageNo >= this.table.chunks.length){
+                this.table.pageNo = 0;
+            }
+
+            this.table.chunks[this.table.pageNo]['selected'] = true;
+
+            if(this.table.chunks.length > 5){
+                var sliceStart, sliceEnd;
+                sliceStart = this.table.pageNo - 2;
+                sliceEnd = this.table.pageNo + 3;
+                if(sliceStart < 0 ){
+                    sliceEnd = sliceEnd = sliceStart;
+                    sliceStart = 0;
                 }
-            },
-            templateUrl: 'components/directives/tableheader.html'
-        }
-    })
-    .directive("ctvTbody", function () {
-        return {
-            restrict: 'E',
-            scope: {},
-            transclude: true,
-            replace: true,
-            template: '<tbody ng-transclude></tbody>'
-        }
-    })
-    .directive("ctvTfoot", function () {
-        return {
-            restrict: 'E',
-            scope: {},
-            transclude: true,
-            replace: true,
-            template: '<tfoot ng-transclude></tfoot>'
-        }
-    })
-    .directive("ctvTsearch", function () {
-        return {
-            restrict: 'E',
-            require: '^^ctvTable',
-            scope: {
-                placeholder: '@',
-                size: '@'
-            },
-            link: function (scope, element, attr, tableCtrl) {
-                scope.showChunk = function () {
-                    tableCtrl.showChunk(tableCtrl.pageNo, scope.searchText);
+                if(sliceEnd > this.table.chunks.length){
+                    sliceStart = sliceStart = (sliceEnd = this.table.chunks.length);
+                    sliceEnd = this.table.chunks.length;
                 }
-            },
-            templateUrl: 'components/directives/searchinput.html'
+                this.pageChunks = this.table.chunks.slice(sliceStart,sliceEnd);
+            }
+            else{
+                this.pageChunks = this.table.chunks;
+            }
+            var filtitems = this.limitItems(this.table.tableSize, this.table.pageNo * this.table.tableSize, sortedItems);
+            this.filteredinputitems.emit(filtitems);
+
         }
-    })
-    .directive("ctvTr", function () {
+        return false;
+    }
+
+    public showPrevChunk(): any {
+        var prevChunk;
+        if(this.table.pageNo <=0 ) {
+            prevChunk = 0;
+        } else {
+            prevChunk = this.table.pageNo - 1;
+        }
+        return this.showChunk(prevChunk, this.table.searchText);
+    }
+
+    public showNextChunk(): any {
+        var nextChunk;
+
+        nextChunk = this.table.pageNo + 1;
+        if(nextChunk > this.table.chunks.length -1 ){
+            nextChunk = this.table.chunks.length - 1;
+        }
+
+        return this.showChunk(nextChunk, this.table.searchText);
+    }
+
+    private filterItems(searchText: string): Object[]{
+        var selectedItems = [];
+        if(searchText.length === 0){
+            return this.items;
+        }
+        for(var item of this.items){
+            var str='';
+            for(var key in item){
+                str+=JSON.stringify(item[key]);
+            }
+            if (str.search(searchText) > -1){
+                selectedItems.push(item);
+            }
+        }
+        return selectedItems;
+    }
+
+    private limitItems(limitSize: number, start: number, items: Object[]): Object[]{
+        var selectedItems = [];
+
+        for(var i=start; (i<items.length) && (i<(start + limitSize)); i++){
+            selectedItems.push(items[i]);
+        }
+        return selectedItems;
+    }
+
+    private initializeSort(sortfield: string): SortObj{
         return {
-            restrict: 'E',
-            transclude: 'true',
-            replace: true,
-            scope: {},
-            template: '<tr ng-transclude></tr>'
+            field: sortfield,
+            reverse: false,
+            iconDirection: {"down": true, "up": false}
         }
-    })
-    .directive("ctvTd", function () {
-        return {
-            restrict: 'E',
-            transclude: true,
-            replace: true,
-            scope: true,
-            template: '<td ng-transclude></td>'
+    }
+
+    public applysort(sortfield: string){
+        if(sortfield == this.sortObj.field){
+            this.sortObj.field = sortfield;
+            this.sortObj.reverse = !this.sortObj.reverse;
+            this.sortObj.iconDirection = {
+                "down": !(this.sortObj.reverse),
+                "up": this.sortObj.reverse
+            }
+        } else {
+            this.sortObj = this.initializeSort(sortfield);
         }
-    })
-    .directive("ctvTpagination", function () {
-        return {
-            restrict: 'E',
-            require: '^^ctvTable',
-            scope: {
-                colspan: '@'
-            },
-            replace:true,
-            link: function (scope, element, attr, tableCtrl) {
-                tableCtrl.addPaginationMenu(scope);
-                //showChunk() will calculate and set chunks in scope
-                tableCtrl.showChunk(tableCtrl.pageNo, tableCtrl.searchText);
-                scope.showChunk = function (pageNo) {
-                    tableCtrl.showChunk(pageNo, tableCtrl.searchText);
-                };
-                scope.showPrevChunk = tableCtrl.showPrevChunk;
-                scope.showNextChunk = tableCtrl.showNextChunk;
-            },
-            templateUrl: 'components/directives/paginationmenu.html'
-        }
-    });
+        this.showChunk(this.table.pageNo, this.table.searchText);
+    }
+
+    private sort(items: Object[]): Object[]{
+        var sortedItems: Object[];
+        if(this.sortObj.field=='') return items;
+        sortedItems = _.sortBy(items, [this.defaultSortColumn]);
+        sortedItems = _.sortBy(sortedItems, [this.sortObj.field]);
+        if(this.sortObj.reverse)
+            sortedItems = _.reverse(sortedItems);
+        return sortedItems;
+    }
+}
+
+@Component({
+    selector: "ctv-th",
+    templateUrl: 'components/directives/tableheader.html'
+})
+
+export class CtvThComponent implements OnInit{
+    @Input('sortfield') sortfield: string;
+    @Output('sortdata') sortdata: EventEmitter<any>;
+    @Input('sortobject') sortobject: SortObj;
+    constructor(){
+        this.sortdata = new EventEmitter<any>();
+        this.sortfield = '';
+        this.sortobject = {field: '', iconDirection: {down: true, up: false}, reverse: false};
+    }
+
+    sortColumn(){
+        this.sortdata.emit(this.sortfield);
+    }
+
+    ngOnInit(){
+    }
+}
+
+@Component({
+    selector: "ctv-tpagination",
+    templateUrl:'components/directives/paginationmenu.html'
+})
+
+export class CtvTpaginationComponent{
+
+    @Input('chunks') chunks: Chunk[];
+    @Output('showPage') showPage: EventEmitter<any>;
+    @Output('prevChunk') prevChunk: EventEmitter<any>;
+    @Output('nextChunk') nextChunk: EventEmitter<any>;
+
+    constructor(){
+        this.chunks = [];
+        this.showPage = new EventEmitter<any>();
+        this.prevChunk = new EventEmitter<any>();
+        this.nextChunk = new EventEmitter<any>()
+    }
+
+    public showPrevChunk(){
+        this.prevChunk.emit();
+    }
+
+    public showNextChunk(){
+        this.nextChunk.emit();
+    }
+
+    public showClickedPage(pageNo: number){
+        this.showPage.emit(pageNo);
+    }
+
+}
+
+@Component({
+    selector: 'ctv-search',
+    templateUrl: 'components/directives/searchinput.html'
+})
+
+export class CtvSearchComponent{
+
+    public searchText: string;
+    @Input('placeholder') placeholder: string;
+    @Output('searchTextChange') searchTextChange: EventEmitter<any> = new EventEmitter<any>();
+    public size:number;
+
+    constructor(){
+        this.searchText = '';
+        this.size = 30;
+        this.placeholder = 'Search';
+    }
+
+    public showChunk(event: any){
+        this.searchTextChange.emit(event);
+    }
+}

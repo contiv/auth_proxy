@@ -1,35 +1,44 @@
 <div ui-view class="ui container">
     <div class="ui basic segment">
-        <div class="ui active inverted dimmer" ng-show="bandwidthPolicyListCtrl.showLoader">
+        <div class="ui active inverted dimmer" *ngIf="bandwidthPolicyListCtrl.showLoader">
             <div class="ui loader"></div>
         </div>
-        <ctv-table defaultsortcolumn="profileName" items="bandwidthPolicyListCtrl.policies" filtereditems="bandwidthPolicyListCtrl.filteredPolicies" size="12">
-            <ctv-thead>
-                <ctv-tr>
-                    <ctv-th sortfield="'profileName'">Name</ctv-th>
-                    <ctv-th sortfield="'updatedBy'">Updated by</ctv-th>
-                    <ctv-th sortfield="'lastUpdate'">Last update</ctv-th>
-                    <ctv-th class="right floated three wide column">
-                        <ctv-tsearch placeholder="Search bandwidth policies..." size="30"></ctv-tsearch>
-                    </ctv-th>
-                </ctv-tr>
-            </ctv-thead>
+        <ctv-table #tableRef [defaultSortColumn]="'profileName'"
+                   [items]="bandwidthPolicyListCtrl['policies']"
+                   (filtereditems)="bandwidthPolicyListCtrl['filteredPolicies']=$event"
+                   [size]="12">
+            <thead>
+                <tr>
+                    <th><ctv-th [sortfield]="'profileName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Name</ctv-th></th>
+                    <th><ctv-th [sortfield]="'updatedBy'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Updated by</ctv-th></th>
+                    <th><ctv-th [sortfield]="'lastUpdate'">Last update</ctv-th></th>
+                    <th class="right floated three wide column">
+                        <ctv-search (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [placeholder]="'Search bandwidth policies...'"></ctv-search>
+                    </th>
+                </tr>
+            </thead>
 
-            <ctv-tbody>
-                <ctv-tr ng-repeat="policy in bandwidthPolicyListCtrl.filteredPolicies">
-                    <ctv-td><a ui-sref="contiv.menu.networkpolicies.bandwidth.details({key:policy.key})">{{policy.profileName}}</a>
-                    </ctv-td>
-                    <ctv-td>{{policy.updatedBy}}</ctv-td>
-                    <ctv-td>{{policy.lastUpdate}}</ctv-td>
-                    <ctv-td></ctv-td>
-                </ctv-tr>
-            </ctv-tbody>
+            <tbody>
+                <tr *ngFor="let policy of bandwidthPolicyListCtrl['filteredPolicies']">
+                    <td><a href="/#/m/networkpolicies/bandwidth/details/{{policy.key}}">{{policy.profileName}}</a>
+                    </td>
+                    <td>{{policy.updatedBy}}</td>
+                    <td>{{policy.lastUpdate}}</td>
+                    <td></td>
+                </tr>
+            </tbody>
 
-            <ctv-tfoot>
-                <ctv-tr>
-                    <ctv-tpagination colspan="4"></ctv-tpagination
-                </ctv-tr>
-            </ctv-tfoot>
+            <tfoot>
+                <tr>
+                    <td colspan="4">
+                        <ctv-tpagination [chunks]="tableRef.pageChunks"
+                                         (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
+                                         (prevChunk)="tableRef.showPrevChunk()"
+                                         (nextChunk)="tableRef.showNextChunk()">
+                        </ctv-tpagination>
+                    </td>
+                </tr>
+            </tfoot>
         </ctv-table>
     </div>
 </div>

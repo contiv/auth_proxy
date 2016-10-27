@@ -8,10 +8,11 @@
     </div>
     <div class="field">
         <label>Filesystem Commands</label>
-        <ctv-namevalue items="filesystemcmds"
-                       nameheader="Type"
-                       valueheader="Command"
-                       type="select"
-                       options="filesystems"></ctv-namevalue>
+        <ctv-namevalue [items]="filesystemcmds"
+                       (itemsChange)="filesystemcmds=$event"
+                       [nameheader]="'Type'"
+                       [valueheader]="'Command'"
+                       [type]="'select'"
+                       [options]="filesystems"></ctv-namevalue>
     </div>
 </ctv-collapsible>

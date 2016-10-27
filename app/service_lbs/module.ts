@@ -9,4 +9,12 @@ angular.module('contiv.servicelbs', ['contiv.models', 'contiv.directives', 'cont
                 abstract: true,
                 template: '<div ui-view class="ui container"/>'
             })
+            .state('contiv.menu.servicelbs.list',{
+                url: '/list',
+                component: 'servicelbList'
+            })
+            .state('contiv.menu.servicelbs.details.stats', {
+                url: '/stats',
+                component: 'servicelbstat'
+            })
     }]);

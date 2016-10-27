@@ -6,6 +6,7 @@ import { Http, Response } from '@angular/http';
 import { Collection } from "./collection";
 import 'rxjs/add/operator/map';
 import * as _ from 'lodash';
+import {isUndefined} from "util";
 
 @Injectable()
 export class VolumesModel extends Collection {
@@ -64,5 +65,16 @@ export class VolumesModel extends Collection {
 
         return promise;
     }
+
+    /*
+    getModel(model:any, reload:boolean): Promise<any>{
+        return super.getModel(model, reload).then((result) => {
+            if (isUndefined(result)){
+                var volume =
+                return volume;
+            }
+        })
+    }
+    */
 
 }
