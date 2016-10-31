@@ -13,8 +13,12 @@ angular.module('contiv.servicelbs', ['contiv.models', 'contiv.directives', 'cont
                 url: '/list',
                 component: 'servicelbList'
             })
-            .state('contiv.menu.servicelbs.details.stats', {
-                url: '/stats',
-                component: 'servicelbstat'
+            .state('contiv.menu.servicelbs.create', {
+                url: '/create',
+                component: 'servicelbCreate'
+            })
+            .state('contiv.menu.servicelbs.details', {
+                url: '/details/:key',
+                component: 'servicelbDetails'
             })
     }]);

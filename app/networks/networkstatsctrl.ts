@@ -17,6 +17,7 @@ export class NetworkStatComponent implements OnInit, OnDestroy{
     private refresh: Subscription;
     private networksModel: NetworksModel;
     private inspectSerrvice: InspectService;
+    public showLoader: boolean
     networkInspectStats:any; config:any; endpoints:any; filteredendpoints:any; containerDetails:any;
     constructor(networksModel: NetworksModel,
                 crudHelperService: CRUDHelperService,
@@ -25,11 +26,11 @@ export class NetworkStatComponent implements OnInit, OnDestroy{
         this.networksModel = networksModel;
         this.inspectSerrvice = inspectSerrvice;
         this.statKey = '';
-        this['showloader'] = true;
+        this.showLoader = true;
         this.refresh = Observable.interval(5000).subscribe(() => {
             if(this.statKey!='')
                 this.getNetworkInspect(true);
-        })
+        });
         this.networkInspectStats= {
                     allocatedAddressesCount: '',
                     allocatedIPAddresses: '',
@@ -37,13 +38,12 @@ export class NetworkStatComponent implements OnInit, OnDestroy{
                     externalPktTag: '',
                     numEndpoints: '',
                     pktTag: ''
-            }
+        }
         this.config = {networkName: '',}
         this.endpoints = []
         this.filteredendpoints = []
         this.containerDetails= {}
         this.networkStatsCtrl = this;
-
     }
 
     ngOnInit(){

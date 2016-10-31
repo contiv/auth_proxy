@@ -1,57 +1,56 @@
 /**
- * Created by vjain3 on 5/13/16.
+ * Created by cshampur on 10/17/16.
  */
-angular.module("contiv.servicelbs")
-    .directive("ctvServicelbports", function() {
-       return {
-           restrict: 'E',
-           scope: {
-             items: '='
-           },
-           link: function(scope) {
-               /**
-                * Compare if two items have same ports and protocols
-                * @param val1
-                * @param val2
-                * @returns {boolean}
-                */
-               function compare(val1, val2) {
-                   return (val1 === val2);
-               }
 
-               function resetNewItem() {
-                   scope.newItem = {
-                       servicePort: '',
-                       providerPort: '',
-                       protocol: ''
-                   };
-               }
 
-               function isEmptyItem(item) {
-                   return (item.servicePort === '' && item.providerPort === '' && item.protocol === '');
-               }
+import {Component, Input, Output, EventEmitter, OnInit} from "@angular/core";
+var _ = require('lodash');
 
-               scope.add = function() {
-                   if (isEmptyItem(scope.newItem)) return;
-                   if (scope.items === undefined) {
-                       scope.items = [];
-                   }
-                   var newItemStr = scope.newItem.servicePort + ':'
-                       + scope.newItem.providerPort + ':'
-                       + scope.newItem.protocol;
-                   //Removes existing item with the same value first if it exists.
-                   _.pullAllWith(scope.items, [newItemStr], compare);
-                   scope.items.push(newItemStr);
-                   resetNewItem();
-               };
+interface Item{
+    servicePort: string;
+    providerPort: string;
+    protocol: string;
+}
 
-               scope.remove = function(passedItem) {
-                   _.remove(scope.items, function (item) {
-                       return compare(item, passedItem);
-                   });
-               };
-               resetNewItem();
-           },
-           templateUrl: 'service_lbs/servicelbports.html'
-       }
-    });
+@Component({
+    selector:'ctv-servicelbports',
+    templateUrl:'service_lbs/servicelbports.html'
+})
+
+export class ServicelbPortsComponent{
+    @Input('items') items: Item[];
+    @Output('itemsChange') itemsChange: EventEmitter<any>;
+    public newItem:Item;
+    constructor(){
+        this.itemsChange = new EventEmitter<any>();
+        this.items=[];
+        this.newItem = {servicePort: '',  providerPort: '',  protocol: ''};
+    }
+
+    public resetItem(): void{
+        this.newItem = {servicePort: '',  providerPort: '',  protocol: ''};
+    }
+
+
+    public add(): void{
+        function compare(val1, val2){
+            return val1 == val2;
+        }
+
+        if (this.newItem.servicePort == '' && this.newItem.providerPort == '' && this.newItem.protocol == ''){
+            return;
+        }
+        var newItemStr = this.newItem.servicePort + ':' + this.newItem.providerPort + ':' + this.newItem.protocol;
+        _.pullAllWith(this.items, [newItemStr], compare);
+        this.items.push(newItemStr);
+        this.itemsChange.emit(this.items);
+        this.resetItem();
+    }
+
+    public remove(passedItem: Item): void{
+        _.remove(this.items, function(item){
+            return item == passedItem;
+        });
+    }
+
+}

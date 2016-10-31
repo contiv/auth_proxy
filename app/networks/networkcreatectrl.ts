@@ -1,62 +1,62 @@
 /**
- * Created by vjain3 on 2/19/16.
+ * Created by cshampur on 10/14/16.
  */
-angular.module('contiv.networks')
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider
-            .state('contiv.menu.networks.create', {
-                url: '/create',
-                templateUrl: 'networks/networkcreate.html',
-                controller: 'NetworkCreateCtrl as networkCreateCtrl'
-            })
-        ;
-    }])
-    .controller('NetworkCreateCtrl', ['$state', '$stateParams', 'NetworksModel', 'CRUDHelperService',
-        function ($state, $stateParams, NetworksModel, CRUDHelperService) {
-            var networkCreateCtrl = this;
-            networkCreateCtrl.cidrPattern = ContivGlobals.CIDR_REGEX;
 
-            function returnToNetworks() {
-                $state.go('contiv.menu.networks.list');
-            }
+import {Component, Inject, Directive} from "@angular/core";
+import {NetworksModel} from "../components/models/networksmodel";
+import {CRUDHelperService} from "../components/utils/crudhelperservice";
+import { StateService } from "angular-ui-router/commonjs/ng1";
 
-            function cancelCreating() {
-                returnToNetworks();
-            }
+@Component({
+    selector: 'networkcreate',
+    templateUrl: 'networks/networkcreate.html'
+})
 
-            function createNetwork() {
-                //form controller is injected by the html template
-                //checking if all validations have passed
-                if (networkCreateCtrl.form.$valid) {
-                    CRUDHelperService.hideServerError(networkCreateCtrl);
-                    CRUDHelperService.startLoader(networkCreateCtrl);
-                    networkCreateCtrl.newNetwork.key =
-                        networkCreateCtrl.newNetwork.tenantName + ':' + networkCreateCtrl.newNetwork.networkName;
-                    NetworksModel.create(networkCreateCtrl.newNetwork).then(function successCallback(result) {
-                        CRUDHelperService.stopLoader(networkCreateCtrl);
-                        returnToNetworks();
-                    }, function errorCallback(result) {
-                        CRUDHelperService.stopLoader(networkCreateCtrl);
-                        CRUDHelperService.showServerError(networkCreateCtrl, result);
-                    });
-                }
+export class NetworkCreateComponent{
+    private networksModel:NetworksModel;
+    private crudHelperService: CRUDHelperService;
+    public networkCreateCtrl: any;
+    public newNetwork: any;
 
-            }
+    constructor(@Inject('$state') private $state: StateService,
+                networksModel: NetworksModel,
+                crudHelperService: CRUDHelperService){
+        this.networksModel = networksModel;
+        this.crudHelperService = crudHelperService;
+        this['showLoader']=false;
+        this['showServerError'] = false;
+        this['serverErrorMessage'] = '';
+        this['cidrPattern'] = ContivGlobals.CIDR_REGEX;
+        this.newNetwork = {networkName: '', encap: 'vxlan', subnet:'', gateway:'', tenantName: 'default', key:''};
+        this.networkCreateCtrl = this;
+    }
 
-            function resetForm() {
-                CRUDHelperService.stopLoader(networkCreateCtrl);
-                CRUDHelperService.hideServerError(networkCreateCtrl);
-                networkCreateCtrl.newNetwork = {
-                    networkName: '',
-                    encap: 'vxlan',
-                    subnet: '',
-                    gateway: '',
-                    tenantName: 'default'//TODO: Remove hardcoded tenant.
-                };
-            }
+    returnToNetworks(){
+        this.$state.go("contiv.menu.networks.list");
+    }
 
-            networkCreateCtrl.createNetwork = createNetwork;
-            networkCreateCtrl.cancelCreating = cancelCreating;
+    cancelCreating(){
+        this.returnToNetworks();
+    }
 
-            resetForm();
-        }]);
+    createNetwork(formvalid: any){
+        debugger;
+        var networkCreateCtrl = this;
+        if(formvalid){
+            this.crudHelperService.hideServerError(this);
+            this.crudHelperService.startLoader(this);
+            this.newNetwork.key = this.newNetwork.tenantName + ':' + this.newNetwork.networkName;
+            this.networksModel.create(this.newNetwork,undefined)
+                              .then((result) => {
+                                  networkCreateCtrl.crudHelperService.stopLoader(networkCreateCtrl);
+                                  networkCreateCtrl.returnToNetworks();
+                              }, (error) => {
+                                  networkCreateCtrl.crudHelperService.stopLoader(networkCreateCtrl);
+                                  networkCreateCtrl.crudHelperService.showServerError(networkCreateCtrl, error);
+                              });
+        }
+    }
+
+}
+
+

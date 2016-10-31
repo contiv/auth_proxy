@@ -1,113 +1,63 @@
 /**
- * Created by vjain3 on 5/11/16.
+ * Created by cshampur on 10/14/16.
  */
-angular.module('contiv.servicelbs')
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider
-            .state('contiv.menu.servicelbs.details', {
-                url: '/details/:key',
-                params: {state:null},       // To reload parent view 
-                controller: 'ServicelbDetailsCtrl as servicelbDetailsCtrl',
-                templateUrl: 'service_lbs/servicelbdetails.html'
-            })
-            .state('contiv.menu.servicelbs.details.info', {
-                url: '/info',
-                controller: 'ServicelbDetailsCtrl as servicelbDetailsCtrl',
-                templateUrl: 'service_lbs/servicelbinfo.html'
-            })
-            .state('contiv.menu.servicelbs.details.edit', {
-                url: '/edit/:key',
-                controller: 'ServicelbDetailsCtrl as servicelbDetailsCtrl',
-                templateUrl: 'service_lbs/servicelbinfo.html'
-            });
-    }])
-    .controller('ServicelbDetailsCtrl',
-        ['$state', '$stateParams', 'ServicelbsModel', 'CRUDHelperService',
-            function ($state, $stateParams, ServicelbsModel, CRUDHelperService) {
-                var servicelbDetailsCtrl = this;
-                servicelbDetailsCtrl.labelSelectors = [];
 
-                /**
-                 * To show edit or details screen based on the route
-                 */
-                function setMode() {
-                    if ($state.is('contiv.menu.servicelbs.details.edit')) {
-                        servicelbDetailsCtrl.mode = 'edit';
-                    } else {
-                        servicelbDetailsCtrl.mode = 'details';
-                    }
-                }
+import {Component, OnInit, OnDestroy, Inject, ViewChild, AfterViewInit} from "@angular/core";
+import {CRUDHelperService} from "../components/utils/crudhelperservice";
+import { StateService } from "angular-ui-router/commonjs/ng1";
+import {ServicelbsModel} from "../components/models/servicelbsmodel";
+import {ServicelbInfoComponent} from "./servicelbinfoctrl";
+import {ServicelbStatComponent} from "./servicelbstatsctrl";
+var _ = require('lodash');
 
-                function returnToServicelbs() {
-                    $state.go('contiv.menu.servicelbs.list');
-                }
 
-                function returnToServicelbDetails() {
-                    $state.go('contiv.menu.servicelbs.details.info', {'key': servicelbDetailsCtrl.servicelb.key,'state':'details'});
-                }
+@Component({
+    selector: 'servicelbDetails',
+    templateUrl: "service_lbs/servicelbdetails.html"
+})
 
-                function cancelEditing() {
-                    returnToServicelbDetails();
-                }
+export class ServicelbDetailsComponent implements OnInit{
+    public infoselected: boolean
+    public statskey: string;
+    public mode: string;
+    public servicelbDetailsCtrl: any;
+    public serviceName:any;
 
-                function deleteServicelb() {
-                    CRUDHelperService.hideServerError(servicelbDetailsCtrl);
-                    CRUDHelperService.startLoader(servicelbDetailsCtrl);
-                    ServicelbsModel.delete(servicelbDetailsCtrl.servicelb).then(function successCallback(result) {
-                        CRUDHelperService.stopLoader(servicelbDetailsCtrl);
-                        returnToServicelbs();
-                    }, function errorCallback(result) {
-                        CRUDHelperService.stopLoader(servicelbDetailsCtrl);
-                        CRUDHelperService.showServerError(servicelbDetailsCtrl, result);
-                    });
-                }
+    @ViewChild(ServicelbInfoComponent)
+    public servielbInfo: ServicelbInfoComponent;
 
-                function saveServicelb() {
-                    CRUDHelperService.hideServerError(servicelbDetailsCtrl);
-                    CRUDHelperService.startLoader(servicelbDetailsCtrl);
-                    var existingLabels = servicelbDetailsCtrl.servicelb.selectors;
-                    createLabelSelectorStrings();
-                    ServicelbsModel.save(servicelbDetailsCtrl.servicelb).then(function successCallback(result) {
-                        CRUDHelperService.stopLoader(servicelbDetailsCtrl);
-                        returnToServicelbDetails();
-                    }, function errorCallback(result) {
-                        servicelbDetailsCtrl.servicelb.selectors = existingLabels;
-                        createLabelSelectors();
-                        CRUDHelperService.stopLoader(servicelbDetailsCtrl);
-                        CRUDHelperService.showServerError(servicelbDetailsCtrl, result);
-                    });
-                }
+    @ViewChild(ServicelbStatComponent)
+    public servielbStat: ServicelbInfoComponent;
 
-                function createLabelSelectors() {
-                    angular.forEach(servicelbDetailsCtrl.servicelb.selectors, function(selectorStr) {
-                        var selector = {
-                            name: selectorStr.split('=')[0],
-                            value: selectorStr.split('=')[1]
-                        };
-                        servicelbDetailsCtrl.labelSelectors.push(selector);
-                    });
-                }
 
-                function createLabelSelectorStrings() {
-                    servicelbDetailsCtrl.servicelb.selectors = [];
-                    angular.forEach(servicelbDetailsCtrl.labelSelectors, function(labelSelector) {
-                        var selectorString = labelSelector.name + '=' + labelSelector.value;
-                        servicelbDetailsCtrl.servicelb.selectors.push(selectorString);
-                    })
-                }
+    constructor(@Inject('$state') private $state: StateService
+                ){
+        this.infoselected = true;
+        this.statskey=''
+        this.mode = 'details';
+        this.serviceName='';
+        this.servicelbDetailsCtrl = this;
+    }
 
-                CRUDHelperService.stopLoader(servicelbDetailsCtrl);
-                CRUDHelperService.hideServerError(servicelbDetailsCtrl);
+    ngOnInit(){
+        this.statskey = this.$state.params['key'];
 
-                ServicelbsModel.getModelByKey($stateParams.key)
-                    .then(function successCallback(servicelb) {
-                        servicelbDetailsCtrl.servicelb = servicelb;
-                        createLabelSelectors();
-                    });
+    }
 
-                servicelbDetailsCtrl.saveServicelb = saveServicelb;
-                servicelbDetailsCtrl.cancelEditing = cancelEditing;
-                servicelbDetailsCtrl.deleteServicelb = deleteServicelb;
-                setMode();
+    returnToServicelbs() {
+        this.$state.go('contiv.menu.servicelbs.list');
+    }
 
-            }]);
+    loadDetails() {
+        this.mode = "details";
+    }
+
+    loadEdit() {
+        this.mode = "edit";
+    }
+
+    deleteServicelb(){
+        this.servielbInfo.deleteServicelb();
+    }
+}
+

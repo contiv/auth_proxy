@@ -43,6 +43,7 @@ export class VolumeDetailsComponent implements OnInit, OnDestroy{
                         backends: {crud: '', mount: '', snapshot: ''}
         }
         this['showLoader'] = true;
+        this['showServerError'] = false;
         this['serverErrorMessage'] = '';
         this.refresh=Observable.interval(5000).subscribe(() => {
             this.getVolumesInfo(true);

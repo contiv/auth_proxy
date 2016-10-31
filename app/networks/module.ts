@@ -15,5 +15,9 @@ angular.module('contiv.networks', ['contiv.models', 'contiv.directives', 'contiv
             state('contiv.menu.networks.details', {
                 url: '/details/:key',
                 component: 'networkdetails'
-        });
+            })
+            .state('contiv.menu.networks.create', {
+                url: '/create',
+                component: 'networkcreate'
+            })
     }]);

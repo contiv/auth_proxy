@@ -1,85 +1,91 @@
 /**
- * Created by vjain3 on 5/12/16.
+ * Created by cshampur on 10/14/16.
  */
-angular.module('contiv.servicelbs')
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider
-            .state('contiv.menu.servicelbs.create', {
-                url: '/create',
-                templateUrl: 'service_lbs/servicelbcreate.html',
-                controller: 'ServicelbCreateCtrl as servicelbCreateCtrl'
-            })
-        ;
-    }])
-    .controller('ServicelbCreateCtrl', [
-        '$state', '$stateParams', 'ServicelbsModel', 'NetworksModel', 'CRUDHelperService',
-        function ($state, $stateParams, ServicelbsModel, NetworksModel, CRUDHelperService) {
-            var servicelbCreateCtrl = this;
-            servicelbCreateCtrl.labelSelectors = [];
-            servicelbCreateCtrl.networks = [];
 
-            function returnToServicelbs() {
-                $state.go('contiv.menu.servicelbs.list');
-            }
+import {Component, OnInit, OnDestroy, Inject} from "@angular/core";
+import {CRUDHelperService} from "../components/utils/crudhelperservice";
+import { StateService } from "angular-ui-router/commonjs/ng1";
+import {ServicelbsModel} from "../components/models/servicelbsmodel";
+import {NetworksModel} from "../components/models/networksmodel";
+var _  = require('lodash');
 
-            function cancelCreating() {
-                returnToServicelbs();
-            }
 
-            /**
-             * Get networks for the given tenant.
-             */
-            function getNetworks() {
-                NetworksModel.get().then(function (result) {
-                    servicelbCreateCtrl.networks = _.filter(result, {
-                        'tenantName': 'default'//TODO: Remove hardcoded tenant.
-                    });
-                });
-            }
+@Component({
+    selector: 'servicelbCreate',
+    templateUrl: 'service_lbs/servicelbcreate.html'
+})
 
-            function createLabelSelectorStrings() {
-                //Empty out the selectors. In case of server errors this needs to be reset.
-                servicelbCreateCtrl.servicelb.selectors = [];
-                angular.forEach(servicelbCreateCtrl.labelSelectors, function(labelSelector) {
-                    var selectorString = labelSelector.name + '=' + labelSelector.value;
-                    servicelbCreateCtrl.servicelb.selectors.push(selectorString);
-                })
-            }
-            function createServicelb() {
-                createLabelSelectorStrings();
-                //form controller is injected by the html template
-                //checking if all validations have passed
-                if (servicelbCreateCtrl.form.$valid) {
-                    CRUDHelperService.hideServerError(servicelbCreateCtrl);
-                    CRUDHelperService.startLoader(servicelbCreateCtrl);
-                    servicelbCreateCtrl.servicelb.key =
-                        servicelbCreateCtrl.servicelb.tenantName + ':' + servicelbCreateCtrl.servicelb.serviceName;
-                    ServicelbsModel.create(servicelbCreateCtrl.servicelb).then(function successCallback(result) {
-                        CRUDHelperService.stopLoader(servicelbCreateCtrl);
-                        returnToServicelbs();
-                    }, function errorCallback(result) {
-                        CRUDHelperService.stopLoader(servicelbCreateCtrl);
-                        CRUDHelperService.showServerError(servicelbCreateCtrl, result);
-                    });
-                }
+export class ServicelbCreateComponent implements OnInit{
+    private servicelbsModel:ServicelbsModel;
+    private networksModel:NetworksModel
+    private crudHelperService: CRUDHelperService;
+    public servicelbCreateCtrl: any;
+    public servicelb: any;
+    public networks: any;
+    public labelSelectors: any;
 
-            }
+    constructor(@Inject('$state') private $state: StateService,
+                servicelbsModel: ServicelbsModel,
+                crudHelperService: CRUDHelperService,
+                networksModel: NetworksModel){
+        this.servicelbsModel = servicelbsModel;
+        this.networksModel = networksModel;
+        this.crudHelperService = crudHelperService;
+        this['showLoader']=true;
+        this.servicelb = {serviceName: '', networkName: '', ipAddress: '', selectors: [], ports: [], tenantName: 'default', key:''};
+        this.networks = [];
+        this.labelSelectors = [];
+        this.servicelbCreateCtrl = this;
+    }
 
-            function resetForm() {
-                CRUDHelperService.stopLoader(servicelbCreateCtrl);
-                CRUDHelperService.hideServerError(servicelbCreateCtrl);
-                servicelbCreateCtrl.servicelb = {
-                    serviceName: '',
-                    networkName: '',
-                    ipAddress: '',
-                    selectors: [],
-                    ports: [],
-                    tenantName: 'default'//TODO: Remove hardcoded tenant.
-                };
-            }
-            servicelbCreateCtrl.createServicelb = createServicelb;
-            servicelbCreateCtrl.cancelCreating = cancelCreating;
+    ngOnInit(){
+        this.crudHelperService.startLoader(this);
+        this.getNetworks(false);
+    }
 
-            getNetworks();
-            resetForm();
-        }]);
+    getNetworks(reload: boolean){
+        var servicelbCreateCtrl = this;
+        this.networksModel.get(reload)
+                          .then((result) => {
+                              servicelbCreateCtrl.networks = _.filter(result, {'tenantName': 'default'});
+                              servicelbCreateCtrl.crudHelperService.stopLoader(servicelbCreateCtrl);
+                          }, (error) => {
+                              servicelbCreateCtrl.crudHelperService.stopLoader(servicelbCreateCtrl);
+                          });
+    }
+
+    createServicelb(formvalid: boolean){
+        debugger;
+        var servicelbCreateCtrl = this;
+        this.createLabelSelectorStrings();
+        if(formvalid){
+            this.crudHelperService.hideServerError(this);
+            this.crudHelperService.startLoader(this);
+            this.servicelb.key = this.servicelb.tenantName + ':' + this.servicelb.serviceName;
+            this.servicelbsModel.create(this.servicelb, undefined).then((result) => {
+                servicelbCreateCtrl.crudHelperService.stopLoader(servicelbCreateCtrl);
+                this.returnToServicelbs();
+            }, (error) => {
+                servicelbCreateCtrl.crudHelperService.stopLoader(servicelbCreateCtrl);
+                servicelbCreateCtrl.crudHelperService.showServerError(servicelbCreateCtrl, error);
+            });
+        }
+    }
+
+    cancelCreating(){
+        this.returnToServicelbs();
+    }
+
+    returnToServicelbs(){
+        this.$state.go('contiv.menu.servicelbs.list');
+    }
+
+    createLabelSelectorStrings(){
+        this.labelSelectors.forEach((labelSelector) => {
+            var selectorString = labelSelector.name + '=' + labelSelector.value;
+            this.servicelb.selectors.push(selectorString);
+        })
+    }
+}
+
+

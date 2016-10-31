@@ -1,35 +1,35 @@
 <div class="ui sixteen column grid">
     <div class="one wide column">
-        <a ui-sref="contiv.menu.servicelbs.list()">
+        <a href="/#/m/servicelbs/list">
             <i class="large arrow left icon"></i>
         </a>
     </div>
     <div class="left floated ten wide column">
-        <div ng-switch="servicelbDetailsCtrl.mode" class="content" style="font-size: 24px">
+        <div [ngSwitch]="servicelbDetailsCtrl.mode" class="content" style="font-size: 24px">
             <span>Service Load Balancers</span>
-            <span ng-switch-when="details" class="headingfontcolor"> (Details)</span>
-            <span ng-switch-when="edit" class="headingfontcolor"> (Edit)</span>
+            <span *ngSwitchCase="'details'" class="headingfontcolor"> (Details)</span>
+            <span *ngSwitchCase="'edit'" class="headingfontcolor"> (Edit)</span>
         </div>
     </div>
-    <div ng-switch="servicelbDetailsCtrl.mode" class="right aligned five wide column">
+    <div [ngSwitch]="servicelbDetailsCtrl.mode" class="right aligned five wide column">
         <div id="delete-service-modal" class="ui small modal">
-            <div class="header">Remove Service: {{servicelbDetailsCtrl.servicelb.serviceName}}</div>
+            <div class="header">Remove Service: {{servicelbDetailsCtrl.serviceName}}</div>
             <div class="content">
                 <p>Are you sure you want to remove this service?</p>
             </div>
             <div class="actions">
                 <div class="ui negative button">No</div>
-                <div class="ui positive button" ng-click="servicelbDetailsCtrl.deleteServicelb()">
+                <div class="ui positive button" (click)="deleteServicelb()">
                     Yes
                 </div>
             </div>
         </div>
-        <button ng-switch-when="edit" class="ui disabled button">
+        <button *ngSwitchCase="'edit'" class="ui disabled button">
             <i class="edit icon"></i>
             Edit
         </button>
-        <button ng-switch-when="details" class="ui basic button"
-                ui-sref="contiv.menu.servicelbs.details.edit({key:servicelbDetailsCtrl.servicelb.key,state:'edit'})">
+        <button *ngSwitchCase="'details'" class="ui basic button"
+                (click)="loadEdit()">
             <i class="edit icon"></i>
             Edit
         </button>
@@ -39,16 +39,19 @@
         </button>
     </div>
 </div>
-<div class="ui secondary pointing menu" ng-if="servicelbDetailsCtrl.mode=='details'">
+<div class="ui secondary pointing menu" *ngIf="servicelbDetailsCtrl.mode=='details'">
     <div class="ui container">
-        <a class="blue item" ui-sref="contiv.menu.servicelbs.details.info({key:servicelbDetailsCtrl.servicelb.key})" ui-sref-active="active">
+        <a class="blue item" [ngClass]="{active: infoselected}" (click)="infoselected=true">
             <i class="details icon"></i>
             DETAILS
         </a>
-        <a class="blue item" ui-sref="contiv.menu.servicelbs.details.stats({key:servicelbDetailsCtrl.servicelb.key})" ui-sref-active="active">
+        <a class="blue item" [ngClass]="{active: !infoselected}" (click)="infoselected=false">
             <i class="area chart icon"></i>
             STATS
         </a>
     </div>
 </div>
-<div ui-view style="margin-top:30px"></div>
+
+<servicelb-info [(mode)]="mode" *ngIf="infoselected || servicelbDetailsCtrl.mode == 'edit'" (serviceName)="serviceName=$event"></servicelb-info>
+<servicelb-stat [statkey]="servicelbDetailsCtrl.statskey" *ngIf="!infoselected && servicelbDetailsCtrl.mode != 'edit'"></servicelb-stat>
+

@@ -1,8 +1,8 @@
-<form id="networkCreationForm" name="networkCreateCtrl.form" class="ui form" role="form"
-      ng-submit="networkCreateCtrl.createNetwork(newNetwork)" novalidate>
+<form id="networkCreationForm" name="networkCreateForm" class="ui form" role="form"
+      (submit)="networkCreateCtrl.createNetwork(networkCreateForm.valid)" novalidate #networkCreateForm="ngForm">
     <div class="ui sixteen column grid">
         <div class="one wide column">
-            <a ui-sref="contiv.menu.networks.list()">
+            <a href="/#/m/networks/list">
                 <i class="large arrow left icon"></i>
             </a>
         </div>
@@ -13,18 +13,18 @@
             </div>
         </div>
     </div>
-    <div class="ui active inverted dimmer" ng-show="networkCreateCtrl.showLoader">
+    <div class="ui active inverted dimmer" *ngIf="networkCreateCtrl.showLoader">
         <div class="ui loader"></div>
     </div>
     <div class="ui basic segment">
         <div class="field">
-            <div ng-show="networkCreateCtrl.form.$submitted">
-                <div ng-hide="networkCreateCtrl.form.$valid" class="ui negative message">
+            <div *ngIf="networkCreateForm.submitted">
+                <div [hidden]="networkCreateForm.valid" class="ui negative message">
                     <ul class="list">
-                        <li ng-show="networkCreateCtrl.form.newNetworkName.$error.required">Please enter network name
+                        <li *ngIf="newNetworkName.errors?.required">Please enter network name
                         </li>
-                        <li ng-show="networkCreateCtrl.form.newNetworkSubnet.$error.required">Please enter subnet</li>
-                        <li ng-show="networkCreateCtrl.form.newNetworkSubnet.$error.pattern">Please enter subnet in CIDR
+                        <li *ngIf="newNetworkSubnet.errors?.required">Please enter subnet</li>
+                        <li *ngIf="newNetworkSubnet.errors?.pattern">Please enter subnet in CIDR
                             notation
                         </li>
                     </ul>
@@ -34,12 +34,12 @@
         <div class="field">
             <label for="newNetworkName">Network name</label>
             <input type="text" id="newNetworkName" name="newNetworkName"
-                   ng-model="networkCreateCtrl.newNetwork.networkName"
-                   placeholder="Enter name" required>
+                   [(ngModel)]="networkCreateCtrl.newNetwork.networkName"
+                   placeholder="Enter name" required #newNetworkName="ngModel">
         </div>
         <div class="field">
             <label for="newNetworkEncapsulation">Encapsulation</label>
-            <select id="newNetworkEncapsulation" class="ui dropdown" ng-model="networkCreateCtrl.newNetwork.encap">
+            <select id="newNetworkEncapsulation" class="ui dropdown" [(ngModel)]="networkCreateCtrl.newNetwork.encap" name="newNetworkEncap">
                 <option value="vxlan">vxlan</option>
                 <option value="vlan">vlan</option>
             </select>
@@ -47,20 +47,20 @@
         <div class="field">
             <label for="newNetworkSubnet">Subnet</label>
             <input type="text" id="newNetworkSubnet" name="newNetworkSubnet"
-                   ng-model="networkCreateCtrl.newNetwork.subnet"
+                   [(ngModel)]="networkCreateCtrl.newNetwork.subnet"
                    placeholder="CIDR notation, for example: 20.1.1.0/24" required
-                   ng-pattern="networkCreateCtrl.cidrPattern">
+                   [pattern]="networkCreateCtrl.cidrPattern" #newNetworkSubnet="ngModel">
         </div>
         <div class="field">
             <label for="newNetworkGateway">Gateway</label>
-            <input type="text" id="newNetworkGateway" ng-model="networkCreateCtrl.newNetwork.gateway"
-                   placeholder="Enter gateway">
+            <input type="text" id="newNetworkGateway" [(ngModel)]="networkCreateCtrl.newNetwork.gateway"
+                   placeholder="Enter gateway" name="newNetworkGateway">
         </div>
 
         <div class="ui grid">
             <div class="right aligned sixteen wide column">
                 <div style="margin-top: 40px">
-                    <button type="button" class="ui basic button" ng-click="networkCreateCtrl.cancelCreating()">Cancel
+                    <button type="button" class="ui basic button" (click)="networkCreateCtrl.cancelCreating()">Cancel
                     </button>
                     <button type="submit" class="ui blue button">
                         Create
@@ -69,7 +69,7 @@
             </div>
         </div>
 
-        <ctv-error ng-show="networkCreateCtrl.showServerError" header="Error creating network"
+        <ctv-error *ngIf="networkCreateCtrl.showServerError" [header]="'Error creating network'"
                    [error]="networkCreateCtrl.serverErrorMessage">
         </ctv-error>
     </div>

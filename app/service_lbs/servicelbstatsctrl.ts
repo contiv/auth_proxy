@@ -1,34 +1,37 @@
-import {Component, Inject, OnInit, OnDestroy} from "@angular/core";
+import {Component, Inject, OnInit, OnDestroy, Input, AfterViewChecked, NgZone} from "@angular/core";
 import {CRUDHelperService} from "../components/utils/crudhelperservice";
 import {Subscription, Observable} from "rxjs";
-
-import { StateService } from "angular-ui-router/commonjs/ng1";
+declare var jQuery:any;
 import {InspectService} from "../components/utils/inspectservice";
 import {isUndefined} from "util";
 import {ServicelbsModel} from "../components/models/servicelbsmodel";
 
 @Component({
-    selector: 'servicelbstat',
+    selector: 'servicelb-stat',
     templateUrl: 'service_lbs/servicelbstats.html'
 })
 export class ServicelbStatComponent implements OnInit, OnDestroy{
 
+    @Input('statkey') statkey: string;
     public servicelbStatsCtrl: any;
     private crudHelperService: CRUDHelperService;
     private refresh: Subscription;
     private servicelbsModel: ServicelbsModel;
     private inspectSerrvice: InspectService;
+    public showLoader: boolean;
+    private ngZone: NgZone;
     servicelbInspectStats:any; config:any; providers:any; filteredproviders:any; providerDetails:any;
     constructor(servicelbsModel: ServicelbsModel,
-                @Inject('$state') private $state: StateService,
                 crudHelperService: CRUDHelperService,
-                inspectSerrvice: InspectService){
+                inspectSerrvice: InspectService,
+                ngZone: NgZone){
         this.crudHelperService = crudHelperService;
         this.servicelbsModel = servicelbsModel;
         this.inspectSerrvice = inspectSerrvice;
-        this['showloader'] = true;
+        this.showLoader = true;
         this.refresh = Observable.interval(5000).subscribe(() => {
-            this.getServicelbInspect(true);
+            if(this.statkey!='')
+                this.getServicelbInspect(true);
         })
         this.servicelbInspectStats= {
             allocatedAddressesCount: '',
@@ -42,17 +45,20 @@ export class ServicelbStatComponent implements OnInit, OnDestroy{
         this.providers = []
         this.filteredproviders = []
         this.providerDetails= {}
+        this.ngZone = ngZone
         this.servicelbStatsCtrl = this;
+        this.statkey = '';
     }
 
     ngOnInit(){
         this.crudHelperService.startLoader(this);
-        this.getServicelbInspect(false);
+        if(this.statkey!='')
+            this.getServicelbInspect(false);
     }
 
     getServicelbInspect(reload: boolean){
         var servicelbStatsCtrl = this;
-        this.servicelbsModel.getInspectByKey(this.$state.params['key'],
+        this.servicelbsModel.getInspectByKey(this.statkey,
             ContivGlobals.SERVICELBS_INSPECT_ENDPOINT, reload)
             .then((result) => {
                     servicelbStatsCtrl['servicelbInspectStats'] = result['Oper'];
@@ -68,10 +74,14 @@ export class ServicelbStatComponent implements OnInit, OnDestroy{
                         servicelbStatsCtrl['providers'] = []
                         servicelbStatsCtrl['providerDetails'] = {};
                     }
-                    servicelbStatsCtrl.crudHelperService.stopLoader(servicelbStatsCtrl);
+                    servicelbStatsCtrl.ngZone.run(() => {
+                        servicelbStatsCtrl.crudHelperService.stopLoader(servicelbStatsCtrl);
+                    });
                 },
                 (error) => {
-                    servicelbStatsCtrl.crudHelperService.stopLoader(servicelbStatsCtrl);
+                    servicelbStatsCtrl.ngZone.run(() => {
+                        servicelbStatsCtrl.crudHelperService.stopLoader(servicelbStatsCtrl);
+                    });
                 });
     }
 

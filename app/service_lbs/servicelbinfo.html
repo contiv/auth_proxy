@@ -1,43 +1,39 @@
-<div class="ui basic segment">
-    <div class="ui active inverted dimmer" ng-show="servicelbDetailsCtrl.showLoader">
-        <div class="ui loader"></div>
-    </div>
-
+<div class="ui basic segment" [ngClass]="{loading: servicelbInfoCtrl.showLoader}">
     <h4 class="ui header">Service Details</h4>
     <table class="ui very basic selectable table">
         <tbody>
         <tr>
             <td class="ctv-header three wide column">Name</td>
-            <td>{{servicelbDetailsCtrl.servicelb.serviceName}}</td>
+            <td>{{servicelbInfoCtrl.servicelb.serviceName}}</td>
         </tr>
         <tr>
             <td class="ctv-header three wide column">Network</td>
-            <td>{{servicelbDetailsCtrl.servicelb.networkName}}</td>
+            <td>{{servicelbInfoCtrl.servicelb.networkName}}</td>
         </tr>
         <tr>
             <td class="ctv-header three wide column">IP address</td>
-            <td>{{servicelbDetailsCtrl.servicelb.ipAddress}}</td>
+            <td>{{servicelbInfoCtrl.servicelb.ipAddress}}</td>
         </tr>
         </tbody>
     </table>
-    <div ng-switch="servicelbDetailsCtrl.mode">
-        <ctv-error ng-switch-when="edit" ng-show="servicelbDetailsCtrl.showServerError"
+    <div [ngSwitch]="servicelbInfoCtrl.mode">
+        <ctv-error *ngSwitchCase="'edit'" [hidden]="!servicelbInfoCtrl.showServerError"
                    header="Error saving service load balancer"
-                   error="servicelbDetailsCtrl.serverErrorMessage">
+                   [error]="servicelbInfoCtrl.serverErrorMessage">
         </ctv-error>
-        <ctv-error ng-switch-when="details" ng-show="servicelbDetailsCtrl.showServerError"
+        <ctv-error *ngSwitchCase="'details'" [hidden]="!servicelbInfoCtrl.showServerError"
                    header="Error deleting service load balancer"
-                   error="servicelbDetailsCtrl.serverErrorMessage">
+                   [error]="servicelbInfoCtrl.serverErrorMessage">
         </ctv-error>
-        <div ng-switch-when="details">
+        <div *ngSwitchCase="'details'">
             <div class="ui section divider" style="margin-top: 40px"></div>
             <h4 class="ui header" style="margin-top: 40px">Label Selectors</h4>
             <table class="ui very basic selectable table">
                 <tbody>
-                <tr ng-repeat="selector in servicelbDetailsCtrl.servicelb.selectors">
-                    <td class="ctv-header three wide column">{{selector.split('=')[0]}}</td>
-                    <td>{{selector.split('=')[1]}}</td>
-                </tr>
+                    <tr *ngFor="let selector of servicelbInfoCtrl.servicelb.selectors">
+                        <td class="ctv-header three wide column">{{selector.split('=')[0]}}</td>
+                        <td>{{selector.split('=')[1]}}</td>
+                    </tr>
                 </tbody>
             </table>
 
@@ -50,7 +46,7 @@
                     <td class="ctv-header">Provider port</td>
                     <td class="ctv-header">Protocol</td>
                 </tr>
-                <tr ng-repeat="port in servicelbDetailsCtrl.servicelb.ports">
+                <tr *ngFor="let port of servicelbInfoCtrl.servicelb.ports">
                     <td>{{port.split(':')[0]}}</td>
                     <td>{{port.split(':')[1]}}</td>
                     <td>{{port.split(':')[2]}}</td>
@@ -58,27 +54,27 @@
                 </tbody>
             </table>
         </div>
-        <div ng-switch-when="edit">
+        <div *ngSwitchCase="'edit'">
             <div class="ui section divider" style="margin-top: 30px"></div>
             <div class="field">
                 <ctv-collapsible title="Label Selectors">
-                    <ctv-namevalue [items]="servicelbDetailsCtrl.labelSelectors" (itemsChange)="servicelbDetailsCtrl.labelSelectors=$event"></ctv-namevalue>
+                    <ctv-namevalue [items]="servicelbInfoCtrl.labelSelectors" (itemsChange)="servicelbInfoCtrl.labelSelectors=$event"></ctv-namevalue>
                 </ctv-collapsible>
             </div>
             <div class="ui section divider"></div>
             <div class="field">
                 <ctv-collapsible title="Ports">
-                    <ctv-servicelbports items="servicelbDetailsCtrl.servicelb.ports"></ctv-servicelbports>
+                    <ctv-servicelbports [items]="servicelbInfoCtrl.servicelb.ports" (itemsChange)="servicelbInfoCtrl.servicelb.ports=$event"></ctv-servicelbports>
                 </ctv-collapsible>
             </div>
         </div>
         <div class="ui grid" style="margin-top: 40px">
             <div class="right aligned sixteen wide column">
-                <button ng-switch-when="edit" type="button" class="ui basic button"
-                        ng-click="servicelbDetailsCtrl.cancelEditing()">Cancel
+                <button *ngSwitchCase="'edit'" type="button" class="ui basic button"
+                        (click)="servicelbInfoCtrl.cancelEditing()">Cancel
                 </button>
-                <button ng-switch-when="edit" type="button" class="ui blue button"
-                        ng-click="servicelbDetailsCtrl.saveServicelb()">
+                <button *ngSwitchCase="'edit'" type="button" class="ui blue button"
+                        (click)="servicelbInfoCtrl.saveServicelb()">
                     Save
                 </button>
             </div>

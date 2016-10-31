@@ -1,7 +1,4 @@
-<div class="ui basic segment">
-<div class="ui active inverted dimmer" *ngIf="servicelbStatsCtrl.showLoader">
-    <div class="ui loader"></div>
-</div>
+<div class="ui basic segment" [ngClass]="{loading: servicelbStatsCtrl.showLoader}">
 
 <table class="ui very basic selectable table">
     <tbody>

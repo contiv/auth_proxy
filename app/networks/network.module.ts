@@ -9,6 +9,7 @@ import {NetworkListComponent} from "./networklistctrl";
 import {NetworkStatComponent} from "./networkstatsctrl";
 import {NetworkdetailsComponent} from "./networkdetailsctrl";
 import {NetworkInfoComponent} from "./networkinfoctrl";
+import {NetworkCreateComponent} from "./networkcreatectrl";
 
 @NgModule({
     imports: [
@@ -20,14 +21,15 @@ import {NetworkInfoComponent} from "./networkinfoctrl";
         NetworkListComponent,
         NetworkStatComponent,
         NetworkInfoComponent,
-        NetworkdetailsComponent
-
+        NetworkdetailsComponent,
+        NetworkCreateComponent
     ],
     exports: [
         NetworkListComponent,
         NetworkStatComponent,
         NetworkInfoComponent,
-        NetworkStatComponent
+        NetworkdetailsComponent,
+        NetworkCreateComponent
     ]
 })
 export class NetworkModule {}
