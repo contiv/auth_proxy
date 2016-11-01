@@ -73,7 +73,8 @@ gulp.task('build', function () {
             '!app/service_lbs/servicelbportsdirective.js',
             '!app/service_lbs/servicelbcreatectrl.js',
             '!app/service_lbs/servicelbdetailsctrl.js',
-            '!app/service_lbs/servicelbinfoctrl.js'
+            '!app/service_lbs/servicelbinfoctrl.js',
+            '!app/settings/clustersettingctrl.js'
             ])//Exclude vendor libraries
         .pipe(sourcemaps.init());
     //ES6 code
@@ -160,7 +161,8 @@ gulp.task('dev-build', function () {
             '!app/service_lbs/servicelbportsdirective.js',
             '!app/service_lbs/servicelbcreatectrl.js',
             '!app/service_lbs/servicelbdetailsctrl.js',
-            '!app/service_lbs/servicelbinfoctrl.js'
+            '!app/service_lbs/servicelbinfoctrl.js',
+            '!app/settings/clustersettingctrl.js'
             ])//Exclude vendor libraries
         .pipe(sourcemaps.init());
     //ES6 code

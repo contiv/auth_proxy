@@ -7,6 +7,7 @@ import { CommonModule } from "@angular/common";
 import { DirectivesModule } from "../components/directives/directives.module";
 import { NetworkSettingsComponent } from "./networksettingctrl";
 import { VolumeSettingsComponent } from "./volumesettingctrl";
+import {ClusterSettingsComponent} from "./clustersettingctrl";
 
 @NgModule({
     imports: [
@@ -16,14 +17,16 @@ import { VolumeSettingsComponent } from "./volumesettingctrl";
     ],
     declarations: [
         NetworkSettingsComponent,
-        VolumeSettingsComponent
+        VolumeSettingsComponent,
+        ClusterSettingsComponent
     ],
     exports: [
         NetworkSettingsComponent,
         VolumeSettingsComponent,
+        ClusterSettingsComponent,
         FormsModule,
         CommonModule,
-        DirectivesModule
+        DirectivesModule,
     ]
 })
 export class SettingsModule {

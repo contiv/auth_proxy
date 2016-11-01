@@ -38,4 +38,8 @@ angular.module('contiv.settings', ['contiv.models', 'contiv.directives', 'contiv
                 url: '/volumes',
                 component: 'volumesetting'
             })
+            .state('contiv.menu.settings.details.cluster', {
+                url: '/cluster',
+                component: 'clustersettings'
+            })
     }]);

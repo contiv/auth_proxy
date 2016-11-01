@@ -51,6 +51,7 @@ import {CtvNamevalueComponent} from "./components/directives/namevaluedirective"
 import {NetworkCreateComponent} from "./networks/networkcreatectrl";
 import {ServicelbCreateComponent} from "./service_lbs/servicelbcreatectrl";
 import {ServicelbDetailsComponent} from "./service_lbs/servicelbdetailsctrl";
+import {ClusterSettingsComponent} from "./settings/clustersettingctrl";
 
 upgradeAdapter.upgradeNg1Provider('$state');
 upgradeAdapter.upgradeNg1Provider('$stateParams');
@@ -69,7 +70,8 @@ angular.module('contiv.models')
 
 angular.module('contiv.settings')
     .directive('networksetting', upgradeAdapter.downgradeNg2Component(NetworkSettingsComponent) as angular.IDirectiveFactory)
-    .directive('volumesetting', upgradeAdapter.downgradeNg2Component(VolumeSettingsComponent) as angular.IDirectiveFactory);
+    .directive('volumesetting', upgradeAdapter.downgradeNg2Component(VolumeSettingsComponent) as angular.IDirectiveFactory)
+    .directive('clustersettings', upgradeAdapter.downgradeNg2Component(ClusterSettingsComponent) as angular.IDirectiveFactory);
 
 angular.module('contiv.utils')
     .factory('CRUDHelperService', upgradeAdapter.downgradeNg2Provider(CRUDHelperService))

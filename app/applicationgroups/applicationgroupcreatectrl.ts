@@ -75,7 +75,7 @@ export class ApplicationGroupCreateComponent {
              * applicationGroup consist of Group Name, Network Name, Isolation Policies, Bandwidth Policy
              */
 
-            applicationGroupCreateCtrl.applicationGroupsModel.create(applicationGroupCreateCtrl.applicationGroup).then(
+            applicationGroupCreateCtrl.applicationGroupsModel.create(applicationGroupCreateCtrl.applicationGroup,undefined).then(
                 function successCallback(result) {
                     applicationGroupCreateCtrl.crudHelperService.stopLoader(applicationGroupCreateCtrl);
                     applicationGroupCreateCtrl.returnToApplicationGroup();
