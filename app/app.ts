@@ -10,10 +10,7 @@ angular.module('contivApp', [
         'contiv.applicationgroups',
         'contiv.networks',
         'contiv.networkpolicies',
-        'contiv.storagepolicies',
         'contiv.servicelbs',
-        'contiv.volumes',
-        'contiv.nodes',
         'contiv.organizations',
         'contiv.settings',
         'contiv.visualization'

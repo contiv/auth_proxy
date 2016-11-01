@@ -6,11 +6,8 @@ import { upgradeAdapter } from "./upgradeadapter";
 import { NetworksModel } from "./components/models/networksmodel";
 import { OrganizationsModel } from "./components/models/organizationsmodel";
 import { ServicelbsModel } from "./components/models/servicelbsmodel";
-import { StoragePoliciesModel } from "./components/models/storagepoliciesmodel";
 import { PoliciesModel } from "./components/models/policiesmodel";
-import { VolumesModel } from "./components/models/volumesmodel";
 import { ApplicationGroupsModel } from "./components/models/applicationgroupsmodel";
-import { NodesModel } from "./components/models/nodesmodel";
 import { RulesModel } from "./components/models/rulesmodel";
 import { NetprofilesModel } from "./components/models/netprofilesmodel";
 import { CRUDHelperService } from "./components/utils/crudhelperservice";
@@ -26,7 +23,6 @@ import { BandwidthPolicyDetailsComponent } from "./network_policies/bandwidthpol
 import { ApplicationGroupCreateComponent } from "./applicationgroups/applicationgroupcreatectrl";
 import { ApplicationGroupDetailsComponent } from "./applicationgroups/applicationgroupdetailsctrl";
 import { NetworkSettingsComponent } from "./settings/networksettingctrl";
-import { VolumeSettingsComponent } from "./settings/volumesettingctrl";
 
 import {
     CtvTableComponent, CtvThComponent, CtvSearchComponent,
@@ -38,15 +34,10 @@ import {IsolationListComponent} from "./network_policies/isolationpolicylistctrl
 import {BandwidthListComponent} from "./network_policies/bandwidthpolicylistctrl";
 import {CtvAccordionComponent} from "./components/directives/accordiondirective";
 import {ServicelbListComponent} from "./service_lbs/servicelblistctrl";
-import {VolumeListComponent} from "./volumes/volumelistctrl";
-import {VolumeSettingService} from "./components/utils/volumesettingservice";
 import {NetworkService} from "./components/utils/networkservice";
-import {StoragepolicyListComponent} from "./storage_policies/storagepolicylistctrl";
 import {OrganizationListComponent} from "./organizations/organizationlistctrl";
 import {NetworkdetailsComponent} from "./networks/networkdetailsctrl";
 import {CtvCollapsibleComponent} from "./components/directives/collapsibledirective";
-import {VolumeDetailsComponent} from "./volumes/volumedetailsctrl";
-import {VolumeService} from "./volumes/volumeservice";
 import {CtvNamevalueComponent} from "./components/directives/namevaluedirective";
 import {NetworkCreateComponent} from "./networks/networkcreatectrl";
 import {ServicelbCreateComponent} from "./service_lbs/servicelbcreatectrl";
@@ -60,24 +51,19 @@ angular.module('contiv.models')
     .factory('NetworksModel', upgradeAdapter.downgradeNg2Provider(NetworksModel))
     .factory('OrganizationsModel', upgradeAdapter.downgradeNg2Provider(OrganizationsModel))
     .factory('ServicelbsModel', upgradeAdapter.downgradeNg2Provider(ServicelbsModel))
-    .factory('StoragePoliciesModel', upgradeAdapter.downgradeNg2Provider(StoragePoliciesModel))
     .factory('PoliciesModel', upgradeAdapter.downgradeNg2Provider(PoliciesModel))
-    .factory('VolumesModel', upgradeAdapter.downgradeNg2Provider(VolumesModel))
     .factory('ApplicationGroupsModel', upgradeAdapter.downgradeNg2Provider(ApplicationGroupsModel))
-    .factory('NodesModel', upgradeAdapter.downgradeNg2Provider(NodesModel))
     .factory('RulesModel', upgradeAdapter.downgradeNg2Provider(RulesModel))
     .factory('NetprofilesModel', upgradeAdapter.downgradeNg2Provider(NetprofilesModel));
 
 angular.module('contiv.settings')
     .directive('networksetting', upgradeAdapter.downgradeNg2Component(NetworkSettingsComponent) as angular.IDirectiveFactory)
-    .directive('volumesetting', upgradeAdapter.downgradeNg2Component(VolumeSettingsComponent) as angular.IDirectiveFactory)
     .directive('clustersettings', upgradeAdapter.downgradeNg2Component(ClusterSettingsComponent) as angular.IDirectiveFactory);
 
 angular.module('contiv.utils')
     .factory('CRUDHelperService', upgradeAdapter.downgradeNg2Provider(CRUDHelperService))
     .factory("InspectService", upgradeAdapter.downgradeNg2Provider(InspectService))
     .factory('NetworkService', upgradeAdapter.downgradeNg2Provider(NetworkService))
-    .factory('VolumeSettingService', upgradeAdapter.downgradeNg2Provider(VolumeSettingService))
     .factory('NodesService', upgradeAdapter.downgradeNg2Provider(NodesService));
 
 angular.module('contiv.dashboard')
@@ -115,14 +101,6 @@ angular.module('contiv.servicelbs')
     .directive('servicelbList', upgradeAdapter.downgradeNg2Component(ServicelbListComponent) as angular.IDirectiveFactory)
     .directive('servicelbCreate', upgradeAdapter.downgradeNg2Component(ServicelbCreateComponent) as angular.IDirectiveFactory)
     .directive('servicelbDetails', upgradeAdapter.downgradeNg2Component(ServicelbDetailsComponent) as angular.IDirectiveFactory);
-
-angular.module('contiv.volumes')
-    .directive('volumelist', upgradeAdapter.downgradeNg2Component(VolumeListComponent) as angular.IDirectiveFactory)
-    .directive('volumedetails', upgradeAdapter.downgradeNg2Component(VolumeDetailsComponent) as angular.IDirectiveFactory)
-    .factory('VolumeService',upgradeAdapter.downgradeNg2Provider(VolumeService));
-
-angular.module('contiv.storagepolicies')
-    .directive('storagepolicylist', upgradeAdapter.downgradeNg2Component(StoragepolicyListComponent) as angular.IDirectiveFactory);
 
 angular.module('contiv.organizations')
     .directive('organizationlist', upgradeAdapter.downgradeNg2Component(OrganizationListComponent) as angular.IDirectiveFactory);

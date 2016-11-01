@@ -4,72 +4,58 @@ webpackJsonp([2],{
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var upgradeadapter_1 = __webpack_require__(330);
-	var networksmodel_1 = __webpack_require__(41);
-	var organizationsmodel_1 = __webpack_require__(139);
-	var servicelbsmodel_1 = __webpack_require__(78);
-	var storagepoliciesmodel_1 = __webpack_require__(103);
-	var policiesmodel_1 = __webpack_require__(65);
-	var volumesmodel_1 = __webpack_require__(85);
-	var applicationgroupsmodel_1 = __webpack_require__(56);
-	var nodesmodel_1 = __webpack_require__(138);
-	var rulesmodel_1 = __webpack_require__(102);
-	var netprofilesmodel_1 = __webpack_require__(77);
-	var crudhelperservice_1 = __webpack_require__(11);
-	var inspectservice_1 = __webpack_require__(104);
-	var nodesservice_1 = __webpack_require__(141);
-	var errormessagedirective_1 = __webpack_require__(197);
-	var dashboardctrl_1 = __webpack_require__(201);
-	var networkpoliciestabsctrl_1 = __webpack_require__(79);
-	var isolationpolicycreatectrl_1 = __webpack_require__(204);
-	var isolationpolicydetailsctrl_1 = __webpack_require__(205);
-	var bandwidthpolicycreatectrl_1 = __webpack_require__(202);
-	var bandwidthpolicydetailsctrl_1 = __webpack_require__(203);
-	var applicationgroupcreatectrl_1 = __webpack_require__(192);
-	var applicationgroupdetailsctrl_1 = __webpack_require__(193);
-	var networksettingctrl_1 = __webpack_require__(216);
-	var volumesettingctrl_1 = __webpack_require__(217);
-	var tabledirective_1 = __webpack_require__(199);
-	var networklistctrl_1 = __webpack_require__(208);
-	var applicationgrouplistctrl_1 = __webpack_require__(194);
-	var accordiondirective_1 = __webpack_require__(195);
-	var servicelblistctrl_1 = __webpack_require__(213);
-	var volumelistctrl_1 = __webpack_require__(220);
-	var volumesettingservice_1 = __webpack_require__(142);
-	var networkservice_1 = __webpack_require__(140);
-	var storagepolicylistctrl_1 = __webpack_require__(218);
-	var organizationlistctrl_1 = __webpack_require__(209);
-	var networkdetailsctrl_1 = __webpack_require__(207);
-	var collapsibledirective_1 = __webpack_require__(196);
-	var volumedetailsctrl_1 = __webpack_require__(219);
-	var volumeservice_1 = __webpack_require__(143);
-	var namevaluedirective_1 = __webpack_require__(198);
-	var networkcreatectrl_1 = __webpack_require__(206);
-	var servicelbcreatectrl_1 = __webpack_require__(210);
-	var servicelbdetailsctrl_1 = __webpack_require__(211);
-	var clustersettingctrl_1 = __webpack_require__(215);
+	var upgradeadapter_1 = __webpack_require__(320);
+	var networksmodel_1 = __webpack_require__(39);
+	var organizationsmodel_1 = __webpack_require__(136);
+	var servicelbsmodel_1 = __webpack_require__(76);
+	var policiesmodel_1 = __webpack_require__(64);
+	var applicationgroupsmodel_1 = __webpack_require__(54);
+	var rulesmodel_1 = __webpack_require__(100);
+	var netprofilesmodel_1 = __webpack_require__(75);
+	var crudhelperservice_1 = __webpack_require__(13);
+	var inspectservice_1 = __webpack_require__(101);
+	var nodesservice_1 = __webpack_require__(138);
+	var errormessagedirective_1 = __webpack_require__(192);
+	var dashboardctrl_1 = __webpack_require__(195);
+	var networkpoliciestabsctrl_1 = __webpack_require__(77);
+	var isolationpolicycreatectrl_1 = __webpack_require__(198);
+	var isolationpolicydetailsctrl_1 = __webpack_require__(199);
+	var bandwidthpolicycreatectrl_1 = __webpack_require__(196);
+	var bandwidthpolicydetailsctrl_1 = __webpack_require__(197);
+	var applicationgroupcreatectrl_1 = __webpack_require__(187);
+	var applicationgroupdetailsctrl_1 = __webpack_require__(188);
+	var networksettingctrl_1 = __webpack_require__(210);
+	var tabledirective_1 = __webpack_require__(194);
+	var networklistctrl_1 = __webpack_require__(202);
+	var applicationgrouplistctrl_1 = __webpack_require__(189);
+	var accordiondirective_1 = __webpack_require__(190);
+	var servicelblistctrl_1 = __webpack_require__(207);
+	var networkservice_1 = __webpack_require__(137);
+	var organizationlistctrl_1 = __webpack_require__(203);
+	var networkdetailsctrl_1 = __webpack_require__(201);
+	var collapsibledirective_1 = __webpack_require__(191);
+	var namevaluedirective_1 = __webpack_require__(193);
+	var networkcreatectrl_1 = __webpack_require__(200);
+	var servicelbcreatectrl_1 = __webpack_require__(204);
+	var servicelbdetailsctrl_1 = __webpack_require__(205);
+	var clustersettingctrl_1 = __webpack_require__(209);
 	upgradeadapter_1.upgradeAdapter.upgradeNg1Provider('$state');
 	upgradeadapter_1.upgradeAdapter.upgradeNg1Provider('$stateParams');
 	angular.module('contiv.models')
 	    .factory('NetworksModel', upgradeadapter_1.upgradeAdapter.downgradeNg2Provider(networksmodel_1.NetworksModel))
 	    .factory('OrganizationsModel', upgradeadapter_1.upgradeAdapter.downgradeNg2Provider(organizationsmodel_1.OrganizationsModel))
 	    .factory('ServicelbsModel', upgradeadapter_1.upgradeAdapter.downgradeNg2Provider(servicelbsmodel_1.ServicelbsModel))
-	    .factory('StoragePoliciesModel', upgradeadapter_1.upgradeAdapter.downgradeNg2Provider(storagepoliciesmodel_1.StoragePoliciesModel))
 	    .factory('PoliciesModel', upgradeadapter_1.upgradeAdapter.downgradeNg2Provider(policiesmodel_1.PoliciesModel))
-	    .factory('VolumesModel', upgradeadapter_1.upgradeAdapter.downgradeNg2Provider(volumesmodel_1.VolumesModel))
 	    .factory('ApplicationGroupsModel', upgradeadapter_1.upgradeAdapter.downgradeNg2Provider(applicationgroupsmodel_1.ApplicationGroupsModel))
-	    .factory('NodesModel', upgradeadapter_1.upgradeAdapter.downgradeNg2Provider(nodesmodel_1.NodesModel))
 	    .factory('RulesModel', upgradeadapter_1.upgradeAdapter.downgradeNg2Provider(rulesmodel_1.RulesModel))
 	    .factory('NetprofilesModel', upgradeadapter_1.upgradeAdapter.downgradeNg2Provider(netprofilesmodel_1.NetprofilesModel));
 	angular.module('contiv.settings')
 	    .directive('networksetting', upgradeadapter_1.upgradeAdapter.downgradeNg2Component(networksettingctrl_1.NetworkSettingsComponent))
-	    .directive('volumesetting', upgradeadapter_1.upgradeAdapter.downgradeNg2Component(volumesettingctrl_1.VolumeSettingsComponent))
 	    .directive('clustersettings', upgradeadapter_1.upgradeAdapter.downgradeNg2Component(clustersettingctrl_1.ClusterSettingsComponent));
 	angular.module('contiv.utils')
 	    .factory('CRUDHelperService', upgradeadapter_1.upgradeAdapter.downgradeNg2Provider(crudhelperservice_1.CRUDHelperService))
 	    .factory("InspectService", upgradeadapter_1.upgradeAdapter.downgradeNg2Provider(inspectservice_1.InspectService))
 	    .factory('NetworkService', upgradeadapter_1.upgradeAdapter.downgradeNg2Provider(networkservice_1.NetworkService))
-	    .factory('VolumeSettingService', upgradeadapter_1.upgradeAdapter.downgradeNg2Provider(volumesettingservice_1.VolumeSettingService))
 	    .factory('NodesService', upgradeadapter_1.upgradeAdapter.downgradeNg2Provider(nodesservice_1.NodesService));
 	angular.module('contiv.dashboard')
 	    .directive('dashboard', upgradeadapter_1.upgradeAdapter.downgradeNg2Component(dashboardctrl_1.DashboardComponent));
@@ -100,12 +86,6 @@ webpackJsonp([2],{
 	    .directive('servicelbList', upgradeadapter_1.upgradeAdapter.downgradeNg2Component(servicelblistctrl_1.ServicelbListComponent))
 	    .directive('servicelbCreate', upgradeadapter_1.upgradeAdapter.downgradeNg2Component(servicelbcreatectrl_1.ServicelbCreateComponent))
 	    .directive('servicelbDetails', upgradeadapter_1.upgradeAdapter.downgradeNg2Component(servicelbdetailsctrl_1.ServicelbDetailsComponent));
-	angular.module('contiv.volumes')
-	    .directive('volumelist', upgradeadapter_1.upgradeAdapter.downgradeNg2Component(volumelistctrl_1.VolumeListComponent))
-	    .directive('volumedetails', upgradeadapter_1.upgradeAdapter.downgradeNg2Component(volumedetailsctrl_1.VolumeDetailsComponent))
-	    .factory('VolumeService', upgradeadapter_1.upgradeAdapter.downgradeNg2Provider(volumeservice_1.VolumeService));
-	angular.module('contiv.storagepolicies')
-	    .directive('storagepolicylist', upgradeadapter_1.upgradeAdapter.downgradeNg2Component(storagepolicylistctrl_1.StoragepolicyListComponent));
 	angular.module('contiv.organizations')
 	    .directive('organizationlist', upgradeadapter_1.upgradeAdapter.downgradeNg2Component(organizationlistctrl_1.OrganizationListComponent));
 	upgradeadapter_1.upgradeAdapter.bootstrap(document.documentElement, ['contivApp']);
@@ -124,7 +104,7 @@ webpackJsonp([2],{
 	"use strict";
 	var predicates_1 = __webpack_require__(9);
 	var hof_1 = __webpack_require__(16);
-	var coreservices_1 = __webpack_require__(20);
+	var coreservices_1 = __webpack_require__(19);
 	var w = typeof window === 'undefined' ? {} : window;
 	var angular = w.angular || {};
 	exports.fromJson = angular.fromJson || JSON.parse.bind(JSON);
@@ -686,7 +666,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 11:
+/***/ 13:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -976,33 +956,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 18:
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Main entry point for angular 1.x build
-	 * @module ng1
-	 */
-	/** for typedoc */
-	"use strict";
-	function __export(m) {
-	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-	}
-	__export(__webpack_require__(292));
-	__export(__webpack_require__(125));
-	__export(__webpack_require__(126));
-	__export(__webpack_require__(180));
-	__webpack_require__(299);
-	__webpack_require__(302);
-	__webpack_require__(300);
-	__webpack_require__(304);
-	Object.defineProperty(exports, "__esModule", { value: true });
-	exports.default = "ui.router";
-	//# sourceMappingURL=ng1.js.map
-
-/***/ },
-
-/***/ 20:
+/***/ 19:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1025,13 +979,39 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 29:
+/***/ 23:
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Main entry point for angular 1.x build
+	 * @module ng1
+	 */
+	/** for typedoc */
+	"use strict";
+	function __export(m) {
+	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+	}
+	__export(__webpack_require__(282));
+	__export(__webpack_require__(123));
+	__export(__webpack_require__(124));
+	__export(__webpack_require__(175));
+	__webpack_require__(289);
+	__webpack_require__(292);
+	__webpack_require__(290);
+	__webpack_require__(294);
+	Object.defineProperty(exports, "__esModule", { value: true });
+	exports.default = "ui.router";
+	//# sourceMappingURL=ng1.js.map
+
+/***/ },
+
+/***/ 34:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global, module) {/**
 	 * @license
 	 * lodash <https://lodash.com/>
-	 * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+	 * Copyright JS Foundation and other contributors <https://js.foundation/>
 	 * Released under MIT license <https://lodash.com/license>
 	 * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
 	 * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -1042,7 +1022,7 @@ webpackJsonp([2],{
 	  var undefined;
 
 	  /** Used as the semantic version number. */
-	  var VERSION = '4.16.4';
+	  var VERSION = '4.16.6';
 
 	  /** Used as the size to enable large array optimizations. */
 	  var LARGE_ARRAY_SIZE = 200;
@@ -1081,7 +1061,7 @@ webpackJsonp([2],{
 	      DEFAULT_TRUNC_OMISSION = '...';
 
 	  /** Used to detect hot functions by number of calls within a span of milliseconds. */
-	  var HOT_COUNT = 500,
+	  var HOT_COUNT = 800,
 	      HOT_SPAN = 16;
 
 	  /** Used to indicate the type of lazy iteratees. */
@@ -1116,13 +1096,16 @@ webpackJsonp([2],{
 	  /** `Object#toString` result references. */
 	  var argsTag = '[object Arguments]',
 	      arrayTag = '[object Array]',
+	      asyncTag = '[object AsyncFunction]',
 	      boolTag = '[object Boolean]',
 	      dateTag = '[object Date]',
+	      domExcTag = '[object DOMException]',
 	      errorTag = '[object Error]',
 	      funcTag = '[object Function]',
 	      genTag = '[object GeneratorFunction]',
 	      mapTag = '[object Map]',
 	      numberTag = '[object Number]',
+	      nullTag = '[object Null]',
 	      objectTag = '[object Object]',
 	      promiseTag = '[object Promise]',
 	      proxyTag = '[object Proxy]',
@@ -1130,6 +1113,7 @@ webpackJsonp([2],{
 	      setTag = '[object Set]',
 	      stringTag = '[object String]',
 	      symbolTag = '[object Symbol]',
+	      undefinedTag = '[object Undefined]',
 	      weakMapTag = '[object WeakMap]',
 	      weakSetTag = '[object WeakSet]';
 
@@ -1255,13 +1239,15 @@ webpackJsonp([2],{
 	      rsZWJ = '\\u200d';
 
 	  /** Used to compose unicode regexes. */
-	  var rsLowerMisc = '(?:' + rsLower + '|' + rsMisc + ')',
-	      rsUpperMisc = '(?:' + rsUpper + '|' + rsMisc + ')',
-	      rsOptLowerContr = '(?:' + rsApos + '(?:d|ll|m|re|s|t|ve))?',
-	      rsOptUpperContr = '(?:' + rsApos + '(?:D|LL|M|RE|S|T|VE))?',
+	  var rsMiscLower = '(?:' + rsLower + '|' + rsMisc + ')',
+	      rsMiscUpper = '(?:' + rsUpper + '|' + rsMisc + ')',
+	      rsOptContrLower = '(?:' + rsApos + '(?:d|ll|m|re|s|t|ve))?',
+	      rsOptContrUpper = '(?:' + rsApos + '(?:D|LL|M|RE|S|T|VE))?',
 	      reOptMod = rsModifier + '?',
 	      rsOptVar = '[' + rsVarRange + ']?',
 	      rsOptJoin = '(?:' + rsZWJ + '(?:' + [rsNonAstral, rsRegional, rsSurrPair].join('|') + ')' + rsOptVar + reOptMod + ')*',
+	      rsOrdLower = '\\d*(?:(?:1st|2nd|3rd|(?![123])\\dth)\\b)',
+	      rsOrdUpper = '\\d*(?:(?:1ST|2ND|3RD|(?![123])\\dTH)\\b)',
 	      rsSeq = rsOptVar + reOptMod + rsOptJoin,
 	      rsEmoji = '(?:' + [rsDingbat, rsRegional, rsSurrPair].join('|') + ')' + rsSeq,
 	      rsSymbol = '(?:' + [rsNonAstral + rsCombo + '?', rsCombo, rsRegional, rsSurrPair, rsAstral].join('|') + ')';
@@ -1280,10 +1266,12 @@ webpackJsonp([2],{
 
 	  /** Used to match complex or compound words. */
 	  var reUnicodeWord = RegExp([
-	    rsUpper + '?' + rsLower + '+' + rsOptLowerContr + '(?=' + [rsBreak, rsUpper, '$'].join('|') + ')',
-	    rsUpperMisc + '+' + rsOptUpperContr + '(?=' + [rsBreak, rsUpper + rsLowerMisc, '$'].join('|') + ')',
-	    rsUpper + '?' + rsLowerMisc + '+' + rsOptLowerContr,
-	    rsUpper + '+' + rsOptUpperContr,
+	    rsUpper + '?' + rsLower + '+' + rsOptContrLower + '(?=' + [rsBreak, rsUpper, '$'].join('|') + ')',
+	    rsMiscUpper + '+' + rsOptContrUpper + '(?=' + [rsBreak, rsUpper + rsMiscLower, '$'].join('|') + ')',
+	    rsUpper + '?' + rsMiscLower + '+' + rsOptContrLower,
+	    rsUpper + '+' + rsOptContrUpper,
+	    rsOrdUpper,
+	    rsOrdLower,
 	    rsDigits,
 	    rsEmoji
 	  ].join('|'), 'g');
@@ -1526,7 +1514,7 @@ webpackJsonp([2],{
 	   */
 	  function arrayAggregator(array, setter, iteratee, accumulator) {
 	    var index = -1,
-	        length = array ? array.length : 0;
+	        length = array == null ? 0 : array.length;
 
 	    while (++index < length) {
 	      var value = array[index];
@@ -1546,7 +1534,7 @@ webpackJsonp([2],{
 	   */
 	  function arrayEach(array, iteratee) {
 	    var index = -1,
-	        length = array ? array.length : 0;
+	        length = array == null ? 0 : array.length;
 
 	    while (++index < length) {
 	      if (iteratee(array[index], index, array) === false) {
@@ -1566,7 +1554,7 @@ webpackJsonp([2],{
 	   * @returns {Array} Returns `array`.
 	   */
 	  function arrayEachRight(array, iteratee) {
-	    var length = array ? array.length : 0;
+	    var length = array == null ? 0 : array.length;
 
 	    while (length--) {
 	      if (iteratee(array[length], length, array) === false) {
@@ -1588,7 +1576,7 @@ webpackJsonp([2],{
 	   */
 	  function arrayEvery(array, predicate) {
 	    var index = -1,
-	        length = array ? array.length : 0;
+	        length = array == null ? 0 : array.length;
 
 	    while (++index < length) {
 	      if (!predicate(array[index], index, array)) {
@@ -1609,7 +1597,7 @@ webpackJsonp([2],{
 	   */
 	  function arrayFilter(array, predicate) {
 	    var index = -1,
-	        length = array ? array.length : 0,
+	        length = array == null ? 0 : array.length,
 	        resIndex = 0,
 	        result = [];
 
@@ -1632,7 +1620,7 @@ webpackJsonp([2],{
 	   * @returns {boolean} Returns `true` if `target` is found, else `false`.
 	   */
 	  function arrayIncludes(array, value) {
-	    var length = array ? array.length : 0;
+	    var length = array == null ? 0 : array.length;
 	    return !!length && baseIndexOf(array, value, 0) > -1;
 	  }
 
@@ -1647,7 +1635,7 @@ webpackJsonp([2],{
 	   */
 	  function arrayIncludesWith(array, value, comparator) {
 	    var index = -1,
-	        length = array ? array.length : 0;
+	        length = array == null ? 0 : array.length;
 
 	    while (++index < length) {
 	      if (comparator(value, array[index])) {
@@ -1668,7 +1656,7 @@ webpackJsonp([2],{
 	   */
 	  function arrayMap(array, iteratee) {
 	    var index = -1,
-	        length = array ? array.length : 0,
+	        length = array == null ? 0 : array.length,
 	        result = Array(length);
 
 	    while (++index < length) {
@@ -1710,7 +1698,7 @@ webpackJsonp([2],{
 	   */
 	  function arrayReduce(array, iteratee, accumulator, initAccum) {
 	    var index = -1,
-	        length = array ? array.length : 0;
+	        length = array == null ? 0 : array.length;
 
 	    if (initAccum && length) {
 	      accumulator = array[++index];
@@ -1734,7 +1722,7 @@ webpackJsonp([2],{
 	   * @returns {*} Returns the accumulated value.
 	   */
 	  function arrayReduceRight(array, iteratee, accumulator, initAccum) {
-	    var length = array ? array.length : 0;
+	    var length = array == null ? 0 : array.length;
 	    if (initAccum && length) {
 	      accumulator = array[--length];
 	    }
@@ -1756,7 +1744,7 @@ webpackJsonp([2],{
 	   */
 	  function arraySome(array, predicate) {
 	    var index = -1,
-	        length = array ? array.length : 0;
+	        length = array == null ? 0 : array.length;
 
 	    while (++index < length) {
 	      if (predicate(array[index], index, array)) {
@@ -1900,7 +1888,7 @@ webpackJsonp([2],{
 	   * @returns {number} Returns the mean.
 	   */
 	  function baseMean(array, iteratee) {
-	    var length = array ? array.length : 0;
+	    var length = array == null ? 0 : array.length;
 	    return length ? (baseSum(array, iteratee) / length) : NAN;
 	  }
 
@@ -2440,7 +2428,7 @@ webpackJsonp([2],{
 	   * var defer = _.runInContext({ 'setTimeout': setImmediate }).defer;
 	   */
 	  var runInContext = (function runInContext(context) {
-	    context = context ? _.defaults(root.Object(), context, _.pick(root, contextProps)) : root;
+	    context = context == null ? root : _.defaults(root.Object(), context, _.pick(root, contextProps));
 
 	    /** Built-in constructor references. */
 	    var Array = context.Array,
@@ -2461,12 +2449,6 @@ webpackJsonp([2],{
 	    /** Used to detect overreaching core-js shims. */
 	    var coreJsData = context['__core-js_shared__'];
 
-	    /** Used to detect methods masquerading as native. */
-	    var maskSrcKey = (function() {
-	      var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
-	      return uid ? ('Symbol(src)_1.' + uid) : '';
-	    }());
-
 	    /** Used to resolve the decompiled source of functions. */
 	    var funcToString = funcProto.toString;
 
@@ -2476,15 +2458,21 @@ webpackJsonp([2],{
 	    /** Used to generate unique IDs. */
 	    var idCounter = 0;
 
-	    /** Used to infer the `Object` constructor. */
-	    var objectCtorString = funcToString.call(Object);
+	    /** Used to detect methods masquerading as native. */
+	    var maskSrcKey = (function() {
+	      var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
+	      return uid ? ('Symbol(src)_1.' + uid) : '';
+	    }());
 
 	    /**
 	     * Used to resolve the
 	     * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
 	     * of values.
 	     */
-	    var objectToString = objectProto.toString;
+	    var nativeObjectToString = objectProto.toString;
+
+	    /** Used to infer the `Object` constructor. */
+	    var objectCtorString = funcToString.call(Object);
 
 	    /** Used to restore the original `_` reference in `_.noConflict`. */
 	    var oldDash = root._;
@@ -2501,11 +2489,12 @@ webpackJsonp([2],{
 	        Uint8Array = context.Uint8Array,
 	        allocUnsafe = Buffer ? Buffer.allocUnsafe : undefined,
 	        getPrototype = overArg(Object.getPrototypeOf, Object),
-	        iteratorSymbol = Symbol ? Symbol.iterator : undefined,
 	        objectCreate = Object.create,
 	        propertyIsEnumerable = objectProto.propertyIsEnumerable,
 	        splice = arrayProto.splice,
-	        spreadableSymbol = Symbol ? Symbol.isConcatSpreadable : undefined;
+	        spreadableSymbol = Symbol ? Symbol.isConcatSpreadable : undefined,
+	        symIterator = Symbol ? Symbol.iterator : undefined,
+	        symToStringTag = Symbol ? Symbol.toStringTag : undefined;
 
 	    var defineProperty = (function() {
 	      try {
@@ -2939,7 +2928,7 @@ webpackJsonp([2],{
 	     */
 	    function Hash(entries) {
 	      var index = -1,
-	          length = entries ? entries.length : 0;
+	          length = entries == null ? 0 : entries.length;
 
 	      this.clear();
 	      while (++index < length) {
@@ -3043,7 +3032,7 @@ webpackJsonp([2],{
 	     */
 	    function ListCache(entries) {
 	      var index = -1,
-	          length = entries ? entries.length : 0;
+	          length = entries == null ? 0 : entries.length;
 
 	      this.clear();
 	      while (++index < length) {
@@ -3160,7 +3149,7 @@ webpackJsonp([2],{
 	     */
 	    function MapCache(entries) {
 	      var index = -1,
-	          length = entries ? entries.length : 0;
+	          length = entries == null ? 0 : entries.length;
 
 	      this.clear();
 	      while (++index < length) {
@@ -3264,7 +3253,7 @@ webpackJsonp([2],{
 	     */
 	    function SetCache(values) {
 	      var index = -1,
-	          length = values ? values.length : 0;
+	          length = values == null ? 0 : values.length;
 
 	      this.__data__ = new MapCache;
 	      while (++index < length) {
@@ -3611,12 +3600,12 @@ webpackJsonp([2],{
 	     */
 	    function baseAt(object, paths) {
 	      var index = -1,
-	          isNil = object == null,
 	          length = paths.length,
-	          result = Array(length);
+	          result = Array(length),
+	          skip = object == null;
 
 	      while (++index < length) {
-	        result[index] = isNil ? undefined : get(object, paths[index]);
+	        result[index] = skip ? undefined : get(object, paths[index]);
 	      }
 	      return result;
 	    }
@@ -3806,7 +3795,7 @@ webpackJsonp([2],{
 	      outer:
 	      while (++index < length) {
 	        var value = array[index],
-	            computed = iteratee ? iteratee(value) : value;
+	            computed = iteratee == null ? value : iteratee(value);
 
 	        value = (comparator || value !== 0) ? value : 0;
 	        if (isCommon && computed === computed) {
@@ -4073,14 +4062,20 @@ webpackJsonp([2],{
 	    }
 
 	    /**
-	     * The base implementation of `getTag`.
+	     * The base implementation of `getTag` without fallbacks for buggy environments.
 	     *
 	     * @private
 	     * @param {*} value The value to query.
 	     * @returns {string} Returns the `toStringTag`.
 	     */
 	    function baseGetTag(value) {
-	      return objectToString.call(value);
+	      if (value == null) {
+	        return value === undefined ? undefinedTag : nullTag;
+	      }
+	      value = Object(value);
+	      return (symToStringTag && symToStringTag in value)
+	        ? getRawTag(value)
+	        : objectToString(value);
 	    }
 
 	    /**
@@ -4242,7 +4237,7 @@ webpackJsonp([2],{
 	     * @returns {boolean} Returns `true` if `value` is an `arguments` object,
 	     */
 	    function baseIsArguments(value) {
-	      return isObjectLike(value) && objectToString.call(value) == argsTag;
+	      return isObjectLike(value) && baseGetTag(value) == argsTag;
 	    }
 
 	    /**
@@ -4253,7 +4248,7 @@ webpackJsonp([2],{
 	     * @returns {boolean} Returns `true` if `value` is an array buffer, else `false`.
 	     */
 	    function baseIsArrayBuffer(value) {
-	      return isObjectLike(value) && objectToString.call(value) == arrayBufferTag;
+	      return isObjectLike(value) && baseGetTag(value) == arrayBufferTag;
 	    }
 
 	    /**
@@ -4264,7 +4259,7 @@ webpackJsonp([2],{
 	     * @returns {boolean} Returns `true` if `value` is a date object, else `false`.
 	     */
 	    function baseIsDate(value) {
-	      return isObjectLike(value) && objectToString.call(value) == dateTag;
+	      return isObjectLike(value) && baseGetTag(value) == dateTag;
 	    }
 
 	    /**
@@ -4446,7 +4441,7 @@ webpackJsonp([2],{
 	     * @returns {boolean} Returns `true` if `value` is a regexp, else `false`.
 	     */
 	    function baseIsRegExp(value) {
-	      return isObject(value) && objectToString.call(value) == regexpTag;
+	      return isObjectLike(value) && baseGetTag(value) == regexpTag;
 	    }
 
 	    /**
@@ -4469,7 +4464,7 @@ webpackJsonp([2],{
 	     */
 	    function baseIsTypedArray(value) {
 	      return isObjectLike(value) &&
-	        isLength(value.length) && !!typedArrayTags[objectToString.call(value)];
+	        isLength(value.length) && !!typedArrayTags[baseGetTag(value)];
 	    }
 
 	    /**
@@ -5130,7 +5125,7 @@ webpackJsonp([2],{
 	     */
 	    function baseSortedIndex(array, value, retHighest) {
 	      var low = 0,
-	          high = array ? array.length : low;
+	          high = array == null ? low : array.length;
 
 	      if (typeof value == 'number' && value === value && high <= HALF_MAX_ARRAY_LENGTH) {
 	        while (low < high) {
@@ -5166,7 +5161,7 @@ webpackJsonp([2],{
 	      value = iteratee(value);
 
 	      var low = 0,
-	          high = array ? array.length : 0,
+	          high = array == null ? 0 : array.length,
 	          valIsNaN = value !== value,
 	          valIsNull = value === null,
 	          valIsSymbol = isSymbol(value),
@@ -5416,18 +5411,24 @@ webpackJsonp([2],{
 	     * @returns {Array} Returns the new array of values.
 	     */
 	    function baseXor(arrays, iteratee, comparator) {
+	      var length = arrays.length;
+	      if (length < 2) {
+	        return length ? baseUniq(arrays[0]) : [];
+	      }
 	      var index = -1,
-	          length = arrays.length;
+	          result = Array(length);
 
 	      while (++index < length) {
-	        var result = result
-	          ? arrayPush(
-	              baseDifference(result, arrays[index], iteratee, comparator),
-	              baseDifference(arrays[index], result, iteratee, comparator)
-	            )
-	          : arrays[index];
+	        var array = arrays[index],
+	            othIndex = -1;
+
+	        while (++othIndex < length) {
+	          if (othIndex != index) {
+	            result[index] = baseDifference(result[index] || array, arrays[othIndex], iteratee, comparator);
+	          }
+	        }
 	      }
-	      return (result && result.length) ? baseUniq(result, iteratee, comparator) : [];
+	      return baseUniq(baseFlatten(result, 1), iteratee, comparator);
 	    }
 
 	    /**
@@ -6965,6 +6966,33 @@ webpackJsonp([2],{
 	    }
 
 	    /**
+	     * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
+	     *
+	     * @private
+	     * @param {*} value The value to query.
+	     * @returns {string} Returns the raw `toStringTag`.
+	     */
+	    function getRawTag(value) {
+	      var isOwn = hasOwnProperty.call(value, symToStringTag),
+	          tag = value[symToStringTag];
+
+	      try {
+	        value[symToStringTag] = undefined;
+	        var unmasked = true;
+	      } catch (e) {}
+
+	      var result = nativeObjectToString.call(value);
+	      if (unmasked) {
+	        if (isOwn) {
+	          value[symToStringTag] = tag;
+	        } else {
+	          delete value[symToStringTag];
+	        }
+	      }
+	      return result;
+	    }
+
+	    /**
 	     * Creates an array of the own enumerable symbol properties of `object`.
 	     *
 	     * @private
@@ -7006,9 +7034,9 @@ webpackJsonp([2],{
 	        (Set && getTag(new Set) != setTag) ||
 	        (WeakMap && getTag(new WeakMap) != weakMapTag)) {
 	      getTag = function(value) {
-	        var result = objectToString.call(value),
+	        var result = baseGetTag(value),
 	            Ctor = result == objectTag ? value.constructor : undefined,
-	            ctorString = Ctor ? toSource(Ctor) : undefined;
+	            ctorString = Ctor ? toSource(Ctor) : '';
 
 	        if (ctorString) {
 	          switch (ctorString) {
@@ -7089,7 +7117,7 @@ webpackJsonp([2],{
 	      if (result || ++index != length) {
 	        return result;
 	      }
-	      length = object ? object.length : 0;
+	      length = object == null ? 0 : object.length;
 	      return !!length && isLength(length) && isIndex(key, length) &&
 	        (isArray(object) || isArguments(object));
 	    }
@@ -7501,6 +7529,17 @@ webpackJsonp([2],{
 	    }
 
 	    /**
+	     * Converts `value` to a string using `Object.prototype.toString`.
+	     *
+	     * @private
+	     * @param {*} value The value to convert.
+	     * @returns {string} Returns the converted string.
+	     */
+	    function objectToString(value) {
+	      return nativeObjectToString.call(value);
+	    }
+
+	    /**
 	     * A specialized version of `baseRest` which transforms the rest array.
 	     *
 	     * @private
@@ -7710,7 +7749,7 @@ webpackJsonp([2],{
 	     * Converts `func` to its source code.
 	     *
 	     * @private
-	     * @param {Function} func The function to process.
+	     * @param {Function} func The function to convert.
 	     * @returns {string} Returns the source code.
 	     */
 	    function toSource(func) {
@@ -7790,7 +7829,7 @@ webpackJsonp([2],{
 	      } else {
 	        size = nativeMax(toInteger(size), 0);
 	      }
-	      var length = array ? array.length : 0;
+	      var length = array == null ? 0 : array.length;
 	      if (!length || size < 1) {
 	        return [];
 	      }
@@ -7821,7 +7860,7 @@ webpackJsonp([2],{
 	     */
 	    function compact(array) {
 	      var index = -1,
-	          length = array ? array.length : 0,
+	          length = array == null ? 0 : array.length,
 	          resIndex = 0,
 	          result = [];
 
@@ -7993,7 +8032,7 @@ webpackJsonp([2],{
 	     * // => [1, 2, 3]
 	     */
 	    function drop(array, n, guard) {
-	      var length = array ? array.length : 0;
+	      var length = array == null ? 0 : array.length;
 	      if (!length) {
 	        return [];
 	      }
@@ -8027,7 +8066,7 @@ webpackJsonp([2],{
 	     * // => [1, 2, 3]
 	     */
 	    function dropRight(array, n, guard) {
-	      var length = array ? array.length : 0;
+	      var length = array == null ? 0 : array.length;
 	      if (!length) {
 	        return [];
 	      }
@@ -8087,8 +8126,7 @@ webpackJsonp([2],{
 	     * @since 3.0.0
 	     * @category Array
 	     * @param {Array} array The array to query.
-	     * @param {Function} [predicate=_.identity]
-	     *  The function invoked per iteration.
+	     * @param {Function} [predicate=_.identity] The function invoked per iteration.
 	     * @returns {Array} Returns the slice of `array`.
 	     * @example
 	     *
@@ -8149,7 +8187,7 @@ webpackJsonp([2],{
 	     * // => [4, '*', '*', 10]
 	     */
 	    function fill(array, value, start, end) {
-	      var length = array ? array.length : 0;
+	      var length = array == null ? 0 : array.length;
 	      if (!length) {
 	        return [];
 	      }
@@ -8169,8 +8207,7 @@ webpackJsonp([2],{
 	     * @since 1.1.0
 	     * @category Array
 	     * @param {Array} array The array to inspect.
-	     * @param {Function} [predicate=_.identity]
-	     *  The function invoked per iteration.
+	     * @param {Function} [predicate=_.identity] The function invoked per iteration.
 	     * @param {number} [fromIndex=0] The index to search from.
 	     * @returns {number} Returns the index of the found element, else `-1`.
 	     * @example
@@ -8197,7 +8234,7 @@ webpackJsonp([2],{
 	     * // => 2
 	     */
 	    function findIndex(array, predicate, fromIndex) {
-	      var length = array ? array.length : 0;
+	      var length = array == null ? 0 : array.length;
 	      if (!length) {
 	        return -1;
 	      }
@@ -8217,8 +8254,7 @@ webpackJsonp([2],{
 	     * @since 2.0.0
 	     * @category Array
 	     * @param {Array} array The array to inspect.
-	     * @param {Function} [predicate=_.identity]
-	     *  The function invoked per iteration.
+	     * @param {Function} [predicate=_.identity] The function invoked per iteration.
 	     * @param {number} [fromIndex=array.length-1] The index to search from.
 	     * @returns {number} Returns the index of the found element, else `-1`.
 	     * @example
@@ -8245,7 +8281,7 @@ webpackJsonp([2],{
 	     * // => 0
 	     */
 	    function findLastIndex(array, predicate, fromIndex) {
-	      var length = array ? array.length : 0;
+	      var length = array == null ? 0 : array.length;
 	      if (!length) {
 	        return -1;
 	      }
@@ -8274,7 +8310,7 @@ webpackJsonp([2],{
 	     * // => [1, 2, [3, [4]], 5]
 	     */
 	    function flatten(array) {
-	      var length = array ? array.length : 0;
+	      var length = array == null ? 0 : array.length;
 	      return length ? baseFlatten(array, 1) : [];
 	    }
 
@@ -8293,7 +8329,7 @@ webpackJsonp([2],{
 	     * // => [1, 2, 3, 4, 5]
 	     */
 	    function flattenDeep(array) {
-	      var length = array ? array.length : 0;
+	      var length = array == null ? 0 : array.length;
 	      return length ? baseFlatten(array, INFINITY) : [];
 	    }
 
@@ -8318,7 +8354,7 @@ webpackJsonp([2],{
 	     * // => [1, 2, 3, [4], 5]
 	     */
 	    function flattenDepth(array, depth) {
-	      var length = array ? array.length : 0;
+	      var length = array == null ? 0 : array.length;
 	      if (!length) {
 	        return [];
 	      }
@@ -8343,7 +8379,7 @@ webpackJsonp([2],{
 	     */
 	    function fromPairs(pairs) {
 	      var index = -1,
-	          length = pairs ? pairs.length : 0,
+	          length = pairs == null ? 0 : pairs.length,
 	          result = {};
 
 	      while (++index < length) {
@@ -8399,7 +8435,7 @@ webpackJsonp([2],{
 	     * // => 3
 	     */
 	    function indexOf(array, value, fromIndex) {
-	      var length = array ? array.length : 0;
+	      var length = array == null ? 0 : array.length;
 	      if (!length) {
 	        return -1;
 	      }
@@ -8425,7 +8461,7 @@ webpackJsonp([2],{
 	     * // => [1, 2]
 	     */
 	    function initial(array) {
-	      var length = array ? array.length : 0;
+	      var length = array == null ? 0 : array.length;
 	      return length ? baseSlice(array, 0, -1) : [];
 	    }
 
@@ -8515,9 +8551,8 @@ webpackJsonp([2],{
 	      var comparator = last(arrays),
 	          mapped = arrayMap(arrays, castArrayLikeObject);
 
-	      if (comparator === last(mapped)) {
-	        comparator = undefined;
-	      } else {
+	      comparator = typeof comparator == 'function' ? comparator : undefined;
+	      if (comparator) {
 	        mapped.pop();
 	      }
 	      return (mapped.length && mapped[0] === arrays[0])
@@ -8541,7 +8576,7 @@ webpackJsonp([2],{
 	     * // => 'a~b~c'
 	     */
 	    function join(array, separator) {
-	      return array ? nativeJoin.call(array, separator) : '';
+	      return array == null ? '' : nativeJoin.call(array, separator);
 	    }
 
 	    /**
@@ -8559,7 +8594,7 @@ webpackJsonp([2],{
 	     * // => 3
 	     */
 	    function last(array) {
-	      var length = array ? array.length : 0;
+	      var length = array == null ? 0 : array.length;
 	      return length ? array[length - 1] : undefined;
 	    }
 
@@ -8585,7 +8620,7 @@ webpackJsonp([2],{
 	     * // => 1
 	     */
 	    function lastIndexOf(array, value, fromIndex) {
-	      var length = array ? array.length : 0;
+	      var length = array == null ? 0 : array.length;
 	      if (!length) {
 	        return -1;
 	      }
@@ -8688,8 +8723,7 @@ webpackJsonp([2],{
 	     * @category Array
 	     * @param {Array} array The array to modify.
 	     * @param {Array} values The values to remove.
-	     * @param {Function} [iteratee=_.identity]
-	     *  The iteratee invoked per element.
+	     * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
 	     * @returns {Array} Returns `array`.
 	     * @example
 	     *
@@ -8759,7 +8793,7 @@ webpackJsonp([2],{
 	     * // => ['b', 'd']
 	     */
 	    var pullAt = flatRest(function(array, indexes) {
-	      var length = array ? array.length : 0,
+	      var length = array == null ? 0 : array.length,
 	          result = baseAt(array, indexes);
 
 	      basePullAt(array, arrayMap(indexes, function(index) {
@@ -8782,8 +8816,7 @@ webpackJsonp([2],{
 	     * @since 2.0.0
 	     * @category Array
 	     * @param {Array} array The array to modify.
-	     * @param {Function} [predicate=_.identity]
-	     *  The function invoked per iteration.
+	     * @param {Function} [predicate=_.identity] The function invoked per iteration.
 	     * @returns {Array} Returns the new array of removed elements.
 	     * @example
 	     *
@@ -8843,7 +8876,7 @@ webpackJsonp([2],{
 	     * // => [3, 2, 1]
 	     */
 	    function reverse(array) {
-	      return array ? nativeReverse.call(array) : array;
+	      return array == null ? array : nativeReverse.call(array);
 	    }
 
 	    /**
@@ -8863,7 +8896,7 @@ webpackJsonp([2],{
 	     * @returns {Array} Returns the slice of `array`.
 	     */
 	    function slice(array, start, end) {
-	      var length = array ? array.length : 0;
+	      var length = array == null ? 0 : array.length;
 	      if (!length) {
 	        return [];
 	      }
@@ -8910,8 +8943,7 @@ webpackJsonp([2],{
 	     * @category Array
 	     * @param {Array} array The sorted array to inspect.
 	     * @param {*} value The value to evaluate.
-	     * @param {Function} [iteratee=_.identity]
-	     *  The iteratee invoked per element.
+	     * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
 	     * @returns {number} Returns the index at which `value` should be inserted
 	     *  into `array`.
 	     * @example
@@ -8946,7 +8978,7 @@ webpackJsonp([2],{
 	     * // => 1
 	     */
 	    function sortedIndexOf(array, value) {
-	      var length = array ? array.length : 0;
+	      var length = array == null ? 0 : array.length;
 	      if (length) {
 	        var index = baseSortedIndex(array, value);
 	        if (index < length && eq(array[index], value)) {
@@ -8989,8 +9021,7 @@ webpackJsonp([2],{
 	     * @category Array
 	     * @param {Array} array The sorted array to inspect.
 	     * @param {*} value The value to evaluate.
-	     * @param {Function} [iteratee=_.identity]
-	     *  The iteratee invoked per element.
+	     * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
 	     * @returns {number} Returns the index at which `value` should be inserted
 	     *  into `array`.
 	     * @example
@@ -9025,7 +9056,7 @@ webpackJsonp([2],{
 	     * // => 3
 	     */
 	    function sortedLastIndexOf(array, value) {
-	      var length = array ? array.length : 0;
+	      var length = array == null ? 0 : array.length;
 	      if (length) {
 	        var index = baseSortedIndex(array, value, true) - 1;
 	        if (eq(array[index], value)) {
@@ -9093,7 +9124,7 @@ webpackJsonp([2],{
 	     * // => [2, 3]
 	     */
 	    function tail(array) {
-	      var length = array ? array.length : 0;
+	      var length = array == null ? 0 : array.length;
 	      return length ? baseSlice(array, 1, length) : [];
 	    }
 
@@ -9156,7 +9187,7 @@ webpackJsonp([2],{
 	     * // => []
 	     */
 	    function takeRight(array, n, guard) {
-	      var length = array ? array.length : 0;
+	      var length = array == null ? 0 : array.length;
 	      if (!length) {
 	        return [];
 	      }
@@ -9175,8 +9206,7 @@ webpackJsonp([2],{
 	     * @since 3.0.0
 	     * @category Array
 	     * @param {Array} array The array to query.
-	     * @param {Function} [predicate=_.identity]
-	     *  The function invoked per iteration.
+	     * @param {Function} [predicate=_.identity] The function invoked per iteration.
 	     * @returns {Array} Returns the slice of `array`.
 	     * @example
 	     *
@@ -9217,8 +9247,7 @@ webpackJsonp([2],{
 	     * @since 3.0.0
 	     * @category Array
 	     * @param {Array} array The array to query.
-	     * @param {Function} [predicate=_.identity]
-	     *  The function invoked per iteration.
+	     * @param {Function} [predicate=_.identity] The function invoked per iteration.
 	     * @returns {Array} Returns the slice of `array`.
 	     * @example
 	     *
@@ -9281,8 +9310,7 @@ webpackJsonp([2],{
 	     * @since 4.0.0
 	     * @category Array
 	     * @param {...Array} [arrays] The arrays to inspect.
-	     * @param {Function} [iteratee=_.identity]
-	     *  The iteratee invoked per element.
+	     * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
 	     * @returns {Array} Returns the new array of combined values.
 	     * @example
 	     *
@@ -9324,9 +9352,7 @@ webpackJsonp([2],{
 	     */
 	    var unionWith = baseRest(function(arrays) {
 	      var comparator = last(arrays);
-	      if (isArrayLikeObject(comparator)) {
-	        comparator = undefined;
-	      }
+	      comparator = typeof comparator == 'function' ? comparator : undefined;
 	      return baseUniq(baseFlatten(arrays, 1, isArrayLikeObject, true), undefined, comparator);
 	    });
 
@@ -9349,9 +9375,7 @@ webpackJsonp([2],{
 	     * // => [2, 1]
 	     */
 	    function uniq(array) {
-	      return (array && array.length)
-	        ? baseUniq(array)
-	        : [];
+	      return (array && array.length) ? baseUniq(array) : [];
 	    }
 
 	    /**
@@ -9366,8 +9390,7 @@ webpackJsonp([2],{
 	     * @since 4.0.0
 	     * @category Array
 	     * @param {Array} array The array to inspect.
-	     * @param {Function} [iteratee=_.identity]
-	     *  The iteratee invoked per element.
+	     * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
 	     * @returns {Array} Returns the new duplicate free array.
 	     * @example
 	     *
@@ -9379,9 +9402,7 @@ webpackJsonp([2],{
 	     * // => [{ 'x': 1 }, { 'x': 2 }]
 	     */
 	    function uniqBy(array, iteratee) {
-	      return (array && array.length)
-	        ? baseUniq(array, getIteratee(iteratee, 2))
-	        : [];
+	      return (array && array.length) ? baseUniq(array, getIteratee(iteratee, 2)) : [];
 	    }
 
 	    /**
@@ -9405,9 +9426,8 @@ webpackJsonp([2],{
 	     * // => [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }]
 	     */
 	    function uniqWith(array, comparator) {
-	      return (array && array.length)
-	        ? baseUniq(array, undefined, comparator)
-	        : [];
+	      comparator = typeof comparator == 'function' ? comparator : undefined;
+	      return (array && array.length) ? baseUniq(array, undefined, comparator) : [];
 	    }
 
 	    /**
@@ -9539,8 +9559,7 @@ webpackJsonp([2],{
 	     * @since 4.0.0
 	     * @category Array
 	     * @param {...Array} [arrays] The arrays to inspect.
-	     * @param {Function} [iteratee=_.identity]
-	     *  The iteratee invoked per element.
+	     * @param {Function} [iteratee=_.identity] The iteratee invoked per element.
 	     * @returns {Array} Returns the new array of filtered values.
 	     * @example
 	     *
@@ -9582,9 +9601,7 @@ webpackJsonp([2],{
 	     */
 	    var xorWith = baseRest(function(arrays) {
 	      var comparator = last(arrays);
-	      if (isArrayLikeObject(comparator)) {
-	        comparator = undefined;
-	      }
+	      comparator = typeof comparator == 'function' ? comparator : undefined;
 	      return baseXor(arrayFilter(arrays, isArrayLikeObject), undefined, comparator);
 	    });
 
@@ -9655,7 +9672,8 @@ webpackJsonp([2],{
 	     * @since 3.8.0
 	     * @category Array
 	     * @param {...Array} [arrays] The arrays to process.
-	     * @param {Function} [iteratee=_.identity] The function to combine grouped values.
+	     * @param {Function} [iteratee=_.identity] The function to combine
+	     *  grouped values.
 	     * @returns {Array} Returns the new array of grouped elements.
 	     * @example
 	     *
@@ -10032,8 +10050,7 @@ webpackJsonp([2],{
 	     * @since 0.5.0
 	     * @category Collection
 	     * @param {Array|Object} collection The collection to iterate over.
-	     * @param {Function} [iteratee=_.identity]
-	     *  The iteratee to transform keys.
+	     * @param {Function} [iteratee=_.identity] The iteratee to transform keys.
 	     * @returns {Object} Returns the composed aggregate object.
 	     * @example
 	     *
@@ -10067,8 +10084,7 @@ webpackJsonp([2],{
 	     * @since 0.1.0
 	     * @category Collection
 	     * @param {Array|Object} collection The collection to iterate over.
-	     * @param {Function} [predicate=_.identity]
-	     *  The function invoked per iteration.
+	     * @param {Function} [predicate=_.identity] The function invoked per iteration.
 	     * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
 	     * @returns {boolean} Returns `true` if all elements pass the predicate check,
 	     *  else `false`.
@@ -10114,8 +10130,7 @@ webpackJsonp([2],{
 	     * @since 0.1.0
 	     * @category Collection
 	     * @param {Array|Object} collection The collection to iterate over.
-	     * @param {Function} [predicate=_.identity]
-	     *  The function invoked per iteration.
+	     * @param {Function} [predicate=_.identity] The function invoked per iteration.
 	     * @returns {Array} Returns the new filtered array.
 	     * @see _.reject
 	     * @example
@@ -10155,8 +10170,7 @@ webpackJsonp([2],{
 	     * @since 0.1.0
 	     * @category Collection
 	     * @param {Array|Object} collection The collection to inspect.
-	     * @param {Function} [predicate=_.identity]
-	     *  The function invoked per iteration.
+	     * @param {Function} [predicate=_.identity] The function invoked per iteration.
 	     * @param {number} [fromIndex=0] The index to search from.
 	     * @returns {*} Returns the matched element, else `undefined`.
 	     * @example
@@ -10193,8 +10207,7 @@ webpackJsonp([2],{
 	     * @since 2.0.0
 	     * @category Collection
 	     * @param {Array|Object} collection The collection to inspect.
-	     * @param {Function} [predicate=_.identity]
-	     *  The function invoked per iteration.
+	     * @param {Function} [predicate=_.identity] The function invoked per iteration.
 	     * @param {number} [fromIndex=collection.length-1] The index to search from.
 	     * @returns {*} Returns the matched element, else `undefined`.
 	     * @example
@@ -10216,8 +10229,7 @@ webpackJsonp([2],{
 	     * @since 4.0.0
 	     * @category Collection
 	     * @param {Array|Object} collection The collection to iterate over.
-	     * @param {Function} [iteratee=_.identity]
-	     *  The function invoked per iteration.
+	     * @param {Function} [iteratee=_.identity] The function invoked per iteration.
 	     * @returns {Array} Returns the new flattened array.
 	     * @example
 	     *
@@ -10241,8 +10253,7 @@ webpackJsonp([2],{
 	     * @since 4.7.0
 	     * @category Collection
 	     * @param {Array|Object} collection The collection to iterate over.
-	     * @param {Function} [iteratee=_.identity]
-	     *  The function invoked per iteration.
+	     * @param {Function} [iteratee=_.identity] The function invoked per iteration.
 	     * @returns {Array} Returns the new flattened array.
 	     * @example
 	     *
@@ -10266,8 +10277,7 @@ webpackJsonp([2],{
 	     * @since 4.7.0
 	     * @category Collection
 	     * @param {Array|Object} collection The collection to iterate over.
-	     * @param {Function} [iteratee=_.identity]
-	     *  The function invoked per iteration.
+	     * @param {Function} [iteratee=_.identity] The function invoked per iteration.
 	     * @param {number} [depth=1] The maximum recursion depth.
 	     * @returns {Array} Returns the new flattened array.
 	     * @example
@@ -10356,8 +10366,7 @@ webpackJsonp([2],{
 	     * @since 0.1.0
 	     * @category Collection
 	     * @param {Array|Object} collection The collection to iterate over.
-	     * @param {Function} [iteratee=_.identity]
-	     *  The iteratee to transform keys.
+	     * @param {Function} [iteratee=_.identity] The iteratee to transform keys.
 	     * @returns {Object} Returns the composed aggregate object.
 	     * @example
 	     *
@@ -10466,8 +10475,7 @@ webpackJsonp([2],{
 	     * @since 4.0.0
 	     * @category Collection
 	     * @param {Array|Object} collection The collection to iterate over.
-	     * @param {Function} [iteratee=_.identity]
-	     *  The iteratee to transform keys.
+	     * @param {Function} [iteratee=_.identity] The iteratee to transform keys.
 	     * @returns {Object} Returns the composed aggregate object.
 	     * @example
 	     *
@@ -11482,7 +11490,7 @@ webpackJsonp([2],{
 	     * function. Its creation may be customized by replacing the `_.memoize.Cache`
 	     * constructor with one whose instances implement the
 	     * [`Map`](http://ecma-international.org/ecma-262/7.0/#sec-properties-of-the-map-prototype-object)
-	     * method interface of `delete`, `get`, `has`, and `set`.
+	     * method interface of `clear`, `delete`, `get`, `has`, and `set`.
 	     *
 	     * @static
 	     * @memberOf _
@@ -11516,7 +11524,7 @@ webpackJsonp([2],{
 	     * _.memoize.Cache = WeakMap;
 	     */
 	    function memoize(func, resolver) {
-	      if (typeof func != 'function' || (resolver && typeof resolver != 'function')) {
+	      if (typeof func != 'function' || (resolver != null && typeof resolver != 'function')) {
 	        throw new TypeError(FUNC_ERROR_TEXT);
 	      }
 	      var memoized = function() {
@@ -11932,8 +11940,7 @@ webpackJsonp([2],{
 	     * // => '<p>fred, barney, &amp; pebbles</p>'
 	     */
 	    function wrap(value, wrapper) {
-	      wrapper = wrapper == null ? identity : wrapper;
-	      return partial(wrapper, value);
+	      return partial(castFunction(wrapper), value);
 	    }
 
 	    /*------------------------------------------------------------------------*/
@@ -12041,6 +12048,7 @@ webpackJsonp([2],{
 	     * // => 0
 	     */
 	    function cloneWith(value, customizer) {
+	      customizer = typeof customizer == 'function' ? customizer : undefined;
 	      return baseClone(value, false, true, customizer);
 	    }
 
@@ -12095,6 +12103,7 @@ webpackJsonp([2],{
 	     * // => 20
 	     */
 	    function cloneDeepWith(value, customizer) {
+	      customizer = typeof customizer == 'function' ? customizer : undefined;
 	      return baseClone(value, true, true, customizer);
 	    }
 
@@ -12358,7 +12367,7 @@ webpackJsonp([2],{
 	     */
 	    function isBoolean(value) {
 	      return value === true || value === false ||
-	        (isObjectLike(value) && objectToString.call(value) == boolTag);
+	        (isObjectLike(value) && baseGetTag(value) == boolTag);
 	    }
 
 	    /**
@@ -12417,7 +12426,7 @@ webpackJsonp([2],{
 	     * // => false
 	     */
 	    function isElement(value) {
-	      return value != null && value.nodeType === 1 && isObjectLike(value) && !isPlainObject(value);
+	      return isObjectLike(value) && value.nodeType === 1 && !isPlainObject(value);
 	    }
 
 	    /**
@@ -12454,6 +12463,9 @@ webpackJsonp([2],{
 	     * // => false
 	     */
 	    function isEmpty(value) {
+	      if (value == null) {
+	        return true;
+	      }
 	      if (isArrayLike(value) &&
 	          (isArray(value) || typeof value == 'string' || typeof value.splice == 'function' ||
 	            isBuffer(value) || isTypedArray(value) || isArguments(value))) {
@@ -12566,8 +12578,9 @@ webpackJsonp([2],{
 	      if (!isObjectLike(value)) {
 	        return false;
 	      }
-	      return (objectToString.call(value) == errorTag) ||
-	        (typeof value.message == 'string' && typeof value.name == 'string');
+	      var tag = baseGetTag(value);
+	      return tag == errorTag || tag == domExcTag ||
+	        (typeof value.message == 'string' && typeof value.name == 'string' && !isPlainObject(value));
 	    }
 
 	    /**
@@ -12618,10 +12631,13 @@ webpackJsonp([2],{
 	     * // => false
 	     */
 	    function isFunction(value) {
+	      if (!isObject(value)) {
+	        return false;
+	      }
 	      // The use of `Object#toString` avoids issues with the `typeof` operator
-	      // in Safari 9 which returns 'object' for typed array and other constructors.
-	      var tag = isObject(value) ? objectToString.call(value) : '';
-	      return tag == funcTag || tag == genTag || tag == proxyTag;
+	      // in Safari 9 which returns 'object' for typed arrays and other constructors.
+	      var tag = baseGetTag(value);
+	      return tag == funcTag || tag == genTag || tag == asyncTag || tag == proxyTag;
 	    }
 
 	    /**
@@ -12972,7 +12988,7 @@ webpackJsonp([2],{
 	     */
 	    function isNumber(value) {
 	      return typeof value == 'number' ||
-	        (isObjectLike(value) && objectToString.call(value) == numberTag);
+	        (isObjectLike(value) && baseGetTag(value) == numberTag);
 	    }
 
 	    /**
@@ -13004,7 +13020,7 @@ webpackJsonp([2],{
 	     * // => true
 	     */
 	    function isPlainObject(value) {
-	      if (!isObjectLike(value) || objectToString.call(value) != objectTag) {
+	      if (!isObjectLike(value) || baseGetTag(value) != objectTag) {
 	        return false;
 	      }
 	      var proto = getPrototype(value);
@@ -13012,8 +13028,8 @@ webpackJsonp([2],{
 	        return true;
 	      }
 	      var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
-	      return (typeof Ctor == 'function' &&
-	        Ctor instanceof Ctor && funcToString.call(Ctor) == objectCtorString);
+	      return typeof Ctor == 'function' && Ctor instanceof Ctor &&
+	        funcToString.call(Ctor) == objectCtorString;
 	    }
 
 	    /**
@@ -13104,7 +13120,7 @@ webpackJsonp([2],{
 	     */
 	    function isString(value) {
 	      return typeof value == 'string' ||
-	        (!isArray(value) && isObjectLike(value) && objectToString.call(value) == stringTag);
+	        (!isArray(value) && isObjectLike(value) && baseGetTag(value) == stringTag);
 	    }
 
 	    /**
@@ -13126,7 +13142,7 @@ webpackJsonp([2],{
 	     */
 	    function isSymbol(value) {
 	      return typeof value == 'symbol' ||
-	        (isObjectLike(value) && objectToString.call(value) == symbolTag);
+	        (isObjectLike(value) && baseGetTag(value) == symbolTag);
 	    }
 
 	    /**
@@ -13208,7 +13224,7 @@ webpackJsonp([2],{
 	     * // => false
 	     */
 	    function isWeakSet(value) {
-	      return isObjectLike(value) && objectToString.call(value) == weakSetTag;
+	      return isObjectLike(value) && baseGetTag(value) == weakSetTag;
 	    }
 
 	    /**
@@ -13293,8 +13309,8 @@ webpackJsonp([2],{
 	      if (isArrayLike(value)) {
 	        return isString(value) ? stringToArray(value) : copyArray(value);
 	      }
-	      if (iteratorSymbol && value[iteratorSymbol]) {
-	        return iteratorToArray(value[iteratorSymbol]());
+	      if (symIterator && value[symIterator]) {
+	        return iteratorToArray(value[symIterator]());
 	      }
 	      var tag = getTag(value),
 	          func = tag == mapTag ? mapToArray : (tag == setTag ? setToArray : values);
@@ -13727,7 +13743,7 @@ webpackJsonp([2],{
 	     */
 	    function create(prototype, properties) {
 	      var result = baseCreate(prototype);
-	      return properties ? baseAssign(result, properties) : result;
+	      return properties == null ? result : baseAssign(result, properties);
 	    }
 
 	    /**
@@ -14834,7 +14850,7 @@ webpackJsonp([2],{
 	     * // => ['h', 'i']
 	     */
 	    function values(object) {
-	      return object ? baseValues(object, keys(object)) : [];
+	      return object == null ? [] : baseValues(object, keys(object));
 	    }
 
 	    /**
@@ -16221,7 +16237,7 @@ webpackJsonp([2],{
 	     * // => 'no match'
 	     */
 	    function cond(pairs) {
-	      var length = pairs ? pairs.length : 0,
+	      var length = pairs == null ? 0 : pairs.length,
 	          toIteratee = getIteratee();
 
 	      pairs = !length ? [] : arrayMap(pairs, function(pair) {
@@ -17973,8 +17989,8 @@ webpackJsonp([2],{
 	    // Add lazy aliases.
 	    lodash.prototype.first = lodash.prototype.head;
 
-	    if (iteratorSymbol) {
-	      lodash.prototype[iteratorSymbol] = wrapperToIterator;
+	    if (symIterator) {
+	      lodash.prototype[symIterator] = wrapperToIterator;
 	    }
 	    return lodash;
 	  });
@@ -18011,21 +18027,21 @@ webpackJsonp([2],{
 	  }
 	}.call(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(765)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(754)(module)))
 
 /***/ },
 
-/***/ 40:
+/***/ 38:
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @module common_strings */ /** */
 	"use strict";
 	var predicates_1 = __webpack_require__(9);
-	var rejectFactory_1 = __webpack_require__(84);
+	var rejectFactory_1 = __webpack_require__(83);
 	var common_1 = __webpack_require__(5);
 	var hof_1 = __webpack_require__(16);
-	var transition_1 = __webpack_require__(132);
-	var resolvable_1 = __webpack_require__(64);
+	var transition_1 = __webpack_require__(130);
+	var resolvable_1 = __webpack_require__(62);
 	/**
 	 * Returns a string shortened to a maximum length
 	 *
@@ -18129,7 +18145,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 41:
+/***/ 39:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -18148,9 +18164,9 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(3);
-	var http_1 = __webpack_require__(21);
-	var collection_1 = __webpack_require__(48);
-	var util_1 = __webpack_require__(74);
+	var http_1 = __webpack_require__(31);
+	var collection_1 = __webpack_require__(63);
+	var util_1 = __webpack_require__(81);
 	var NetworksModel = (function (_super) {
 	    __extends(NetworksModel, _super);
 	    function NetworksModel(http) {
@@ -18222,7 +18238,7 @@ webpackJsonp([2],{
 	 */ /** for typedoc */
 	var hof_1 = __webpack_require__(16);
 	var predicates_1 = __webpack_require__(9);
-	var strings_1 = __webpack_require__(40);
+	var strings_1 = __webpack_require__(38);
 	/** @hidden */
 	function uiViewString(viewData) {
 	    if (!viewData)
@@ -18441,11 +18457,11 @@ webpackJsonp([2],{
 	var common_1 = __webpack_require__(5);
 	var hof_1 = __webpack_require__(16);
 	var trace_1 = __webpack_require__(46);
-	var coreservices_1 = __webpack_require__(20);
-	var interface_1 = __webpack_require__(184);
-	var resolvable_1 = __webpack_require__(64);
-	var pathFactory_1 = __webpack_require__(101);
-	var strings_1 = __webpack_require__(40);
+	var coreservices_1 = __webpack_require__(19);
+	var interface_1 = __webpack_require__(179);
+	var resolvable_1 = __webpack_require__(62);
+	var pathFactory_1 = __webpack_require__(99);
+	var strings_1 = __webpack_require__(38);
 	var when = interface_1.resolvePolicies.when;
 	var ALL_WHENS = [when.EAGER, when.LAZY];
 	var EAGER_WHENS = [when.EAGER];
@@ -18621,160 +18637,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 48:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __extends = (this && this.__extends) || function (d, b) {
-	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-	    function __() { this.constructor = d; }
-	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-	};
-	var basecollection_1 = __webpack_require__(200);
-	var _ = __webpack_require__(29);
-	var Collection = (function (_super) {
-	    __extends(Collection, _super);
-	    /**
-	     * Extends BaseCollection class to do create, update and delete using POST, PUT and DELETE verbs.
-	     * @param $http
-	     * @param $q
-	     * @param url Used for doing HTTP GET and fetch objects from server
-	     * @constructor
-	     */
-	    function Collection(http, url) {
-	        _super.call(this, http, url);
-	        this.inspectStats = {};
-	    }
-	    /**
-	     *
-	     * @param model
-	     * @param url Optional if not passed it is constructed using key and url passed in constructor
-	     * @returns {*}
-	     */
-	    Collection.prototype.create = function (model, url) {
-	        var collection = this;
-	        var promise = new Promise(function (resolve, reject) {
-	            if (url === undefined)
-	                url = collection.url + model.key + '/';
-	            collection.http.post(url, model).map(function (res) { return res.json(); }).toPromise()
-	                .then(function successCallback(response) {
-	                var responseData = response;
-	                //For rest endpoints that do not return created json object in response
-	                if ((responseData === undefined) || (responseData === '')) {
-	                    responseData = model;
-	                }
-	                collection.models.push(responseData);
-	                resolve(responseData);
-	            }, function errorCallback(response) {
-	                reject(response);
-	            });
-	        });
-	        return promise;
-	    };
-	    ;
-	    /**
-	     * This is for netmaster specific endpoints and used by netmaster objects only.
-	     * TODO: Generalize
-	     * @param model
-	     * @param url Optional
-	     * @returns {*}
-	     */
-	    Collection.prototype.save = function (model) {
-	        var collection = this;
-	        var promise = new Promise(function (resolve, reject) {
-	            var url = collection.url + model.key + '/';
-	            collection.http.put(url, model).map(function (res) { return res.json(); }).toPromise()
-	                .then(function successCallback(response) {
-	                _.remove(collection.models, function (n) {
-	                    return n.key == model.key;
-	                });
-	                collection.models.push(response);
-	                resolve(response);
-	            }, function errorCallback(response) {
-	                reject(response);
-	            });
-	        });
-	        return promise;
-	    };
-	    ;
-	    /**
-	     * This is for netmaster specific endpoints and used by netmaster objects only.
-	     * TODO: Generalize
-	     * @param model
-	     * @returns {*}
-	     */
-	    Collection.prototype.delete = function (model) {
-	        var collection = this;
-	        var promise = new Promise(function (resolve, reject) {
-	            var url = collection.url + model.key + '/';
-	            collection.http.delete(url).map(function (res) { return res.json(); }).toPromise()
-	                .then(function successCallback(response) {
-	                _.remove(collection.models, function (n) {
-	                    return n.key == model.key;
-	                });
-	                resolve(response);
-	            }, function errorCallback(response) {
-	                reject(response);
-	            });
-	        });
-	        return promise;
-	    };
-	    ;
-	    /**
-	     *
-	     * @param key
-	     * @param keyname
-	     * @param url Optional if not passed it is constructed using key and url passed in constructor
-	     * @returns {*}
-	     */
-	    Collection.prototype.deleteUsingKey = function (key, keyname, url) {
-	        var collection = this;
-	        if (keyname === undefined)
-	            keyname = 'key';
-	        var promise = new Promise(function (resolve, reject) {
-	            if (url === undefined)
-	                url = collection.url + key + '/';
-	            collection.http.delete(url).map(function (res) { return res.json(); }).toPromise()
-	                .then(function successCallback(response) {
-	                _.remove(collection.models, function (n) {
-	                    return n[keyname] == key;
-	                });
-	                resolve(response);
-	            }, function errorCallback(response) {
-	                reject(response);
-	            });
-	        });
-	        return promise;
-	    };
-	    ;
-	    Collection.prototype.getInspectByKey = function (key, url, refresh) {
-	        var collection = this;
-	        var promise = new Promise(function (resolve, reject) {
-	            if (key in collection.inspectStats && refresh == false) {
-	                resolve(collection.inspectStats[key]);
-	            }
-	            else {
-	                collection.http.get(url + key + '/').map(function (res) { return res.json(); }).toPromise()
-	                    .then(function successCallback(response) {
-	                    var responseStats = response;
-	                    collection.inspectStats[key] = responseStats;
-	                    resolve(responseStats);
-	                }, function errorCallback(error) {
-	                    reject(error);
-	                });
-	            }
-	        });
-	        return promise;
-	    };
-	    ;
-	    return Collection;
-	}(basecollection_1.BaseCollection));
-	exports.Collection = Collection;
-	
-
-/***/ },
-
-/***/ 54:
+/***/ 53:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -18782,9 +18645,9 @@ webpackJsonp([2],{
 	var common_1 = __webpack_require__(5);
 	var hof_1 = __webpack_require__(16);
 	var predicates_1 = __webpack_require__(9);
-	var coreservices_1 = __webpack_require__(20);
-	var urlMatcherConfig_1 = __webpack_require__(135);
-	var type_1 = __webpack_require__(127);
+	var coreservices_1 = __webpack_require__(19);
+	var urlMatcherConfig_1 = __webpack_require__(133);
+	var type_1 = __webpack_require__(125);
 	var hasOwn = Object.prototype.hasOwnProperty;
 	var isShorthand = function (cfg) {
 	    return ["value", "type", "squash", "array", "dynamic"].filter(hasOwn.bind(cfg || {})).length === 0;
@@ -18957,69 +18820,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 55:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	/**
-	 * Created by vjain3 on 10/17/16.
-	 */
-	var core_1 = __webpack_require__(3);
-	var common_1 = __webpack_require__(32);
-	var errormessagedirective_1 = __webpack_require__(197);
-	var tabledirective_1 = __webpack_require__(199);
-	var forms_1 = __webpack_require__(37);
-	var accordiondirective_1 = __webpack_require__(195);
-	var collapsibledirective_1 = __webpack_require__(196);
-	var namevaluedirective_1 = __webpack_require__(198);
-	var DirectivesModule = (function () {
-	    function DirectivesModule() {
-	    }
-	    DirectivesModule = __decorate([
-	        core_1.NgModule({
-	            imports: [
-	                common_1.CommonModule, forms_1.FormsModule
-	            ],
-	            declarations: [
-	                errormessagedirective_1.ErrorMessageComponent,
-	                tabledirective_1.CtvTableComponent,
-	                tabledirective_1.CtvThComponent,
-	                tabledirective_1.CtvSearchComponent,
-	                tabledirective_1.CtvTpaginationComponent,
-	                accordiondirective_1.CtvAccordionComponent,
-	                collapsibledirective_1.CtvCollapsibleComponent,
-	                namevaluedirective_1.CtvNamevalueComponent
-	            ],
-	            exports: [
-	                errormessagedirective_1.ErrorMessageComponent,
-	                tabledirective_1.CtvTableComponent,
-	                tabledirective_1.CtvThComponent,
-	                tabledirective_1.CtvSearchComponent,
-	                tabledirective_1.CtvTpaginationComponent,
-	                accordiondirective_1.CtvAccordionComponent,
-	                collapsibledirective_1.CtvCollapsibleComponent,
-	                namevaluedirective_1.CtvNamevalueComponent
-	            ]
-	        }), 
-	        __metadata('design:paramtypes', [])
-	    ], DirectivesModule);
-	    return DirectivesModule;
-	}());
-	exports.DirectivesModule = DirectivesModule;
-	
-
-/***/ },
-
-/***/ 56:
+/***/ 54:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -19041,8 +18842,8 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 3/11/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var http_1 = __webpack_require__(21);
-	var collection_1 = __webpack_require__(48);
+	var http_1 = __webpack_require__(31);
+	var collection_1 = __webpack_require__(63);
 	var ApplicationGroupsModel = (function (_super) {
 	    __extends(ApplicationGroupsModel, _super);
 	    function ApplicationGroupsModel(http) {
@@ -19083,15 +18884,15 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 64:
+/***/ 62:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	/** @module resolve */ /** for typedoc */
 	var common_1 = __webpack_require__(5);
-	var coreservices_1 = __webpack_require__(20);
+	var coreservices_1 = __webpack_require__(19);
 	var trace_1 = __webpack_require__(46);
-	var strings_1 = __webpack_require__(40);
+	var strings_1 = __webpack_require__(38);
 	var predicates_1 = __webpack_require__(9);
 	// TODO: explicitly make this user configurable
 	exports.defaultResolvePolicy = {
@@ -19218,7 +19019,160 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 65:
+/***/ 63:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var basecollection_1 = __webpack_require__(307);
+	var _ = __webpack_require__(34);
+	var Collection = (function (_super) {
+	    __extends(Collection, _super);
+	    /**
+	     * Extends BaseCollection class to do create, update and delete using POST, PUT and DELETE verbs.
+	     * @param $http
+	     * @param $q
+	     * @param url Used for doing HTTP GET and fetch objects from server
+	     * @constructor
+	     */
+	    function Collection(http, url) {
+	        _super.call(this, http, url);
+	        this.inspectStats = {};
+	    }
+	    /**
+	     *
+	     * @param model
+	     * @param url Optional if not passed it is constructed using key and url passed in constructor
+	     * @returns {*}
+	     */
+	    Collection.prototype.create = function (model, url) {
+	        var collection = this;
+	        var promise = new Promise(function (resolve, reject) {
+	            if (url === undefined)
+	                url = collection.url + model.key + '/';
+	            collection.http.post(url, model).map(function (res) { return res.json(); }).toPromise()
+	                .then(function successCallback(response) {
+	                var responseData = response;
+	                //For rest endpoints that do not return created json object in response
+	                if ((responseData === undefined) || (responseData === '')) {
+	                    responseData = model;
+	                }
+	                collection.models.push(responseData);
+	                resolve(responseData);
+	            }, function errorCallback(response) {
+	                reject(response);
+	            });
+	        });
+	        return promise;
+	    };
+	    ;
+	    /**
+	     * This is for netmaster specific endpoints and used by netmaster objects only.
+	     * TODO: Generalize
+	     * @param model
+	     * @param url Optional
+	     * @returns {*}
+	     */
+	    Collection.prototype.save = function (model) {
+	        var collection = this;
+	        var promise = new Promise(function (resolve, reject) {
+	            var url = collection.url + model.key + '/';
+	            collection.http.put(url, model).map(function (res) { return res.json(); }).toPromise()
+	                .then(function successCallback(response) {
+	                _.remove(collection.models, function (n) {
+	                    return n.key == model.key;
+	                });
+	                collection.models.push(response);
+	                resolve(response);
+	            }, function errorCallback(response) {
+	                reject(response);
+	            });
+	        });
+	        return promise;
+	    };
+	    ;
+	    /**
+	     * This is for netmaster specific endpoints and used by netmaster objects only.
+	     * TODO: Generalize
+	     * @param model
+	     * @returns {*}
+	     */
+	    Collection.prototype.delete = function (model) {
+	        var collection = this;
+	        var promise = new Promise(function (resolve, reject) {
+	            var url = collection.url + model.key + '/';
+	            collection.http.delete(url).map(function (res) { return res.json(); }).toPromise()
+	                .then(function successCallback(response) {
+	                _.remove(collection.models, function (n) {
+	                    return n.key == model.key;
+	                });
+	                resolve(response);
+	            }, function errorCallback(response) {
+	                reject(response);
+	            });
+	        });
+	        return promise;
+	    };
+	    ;
+	    /**
+	     *
+	     * @param key
+	     * @param keyname
+	     * @param url Optional if not passed it is constructed using key and url passed in constructor
+	     * @returns {*}
+	     */
+	    Collection.prototype.deleteUsingKey = function (key, keyname, url) {
+	        var collection = this;
+	        if (keyname === undefined)
+	            keyname = 'key';
+	        var promise = new Promise(function (resolve, reject) {
+	            if (url === undefined)
+	                url = collection.url + key + '/';
+	            collection.http.delete(url).map(function (res) { return res.json(); }).toPromise()
+	                .then(function successCallback(response) {
+	                _.remove(collection.models, function (n) {
+	                    return n[keyname] == key;
+	                });
+	                resolve(response);
+	            }, function errorCallback(response) {
+	                reject(response);
+	            });
+	        });
+	        return promise;
+	    };
+	    ;
+	    Collection.prototype.getInspectByKey = function (key, url, refresh) {
+	        var collection = this;
+	        var promise = new Promise(function (resolve, reject) {
+	            if (key in collection.inspectStats && refresh == false) {
+	                resolve(collection.inspectStats[key]);
+	            }
+	            else {
+	                collection.http.get(url + key + '/').map(function (res) { return res.json(); }).toPromise()
+	                    .then(function successCallback(response) {
+	                    var responseStats = response;
+	                    collection.inspectStats[key] = responseStats;
+	                    resolve(responseStats);
+	                }, function errorCallback(error) {
+	                    reject(error);
+	                });
+	            }
+	        });
+	        return promise;
+	    };
+	    ;
+	    return Collection;
+	}(basecollection_1.BaseCollection));
+	exports.Collection = Collection;
+	
+
+/***/ },
+
+/***/ 64:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -19237,8 +19191,8 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(3);
-	var http_1 = __webpack_require__(21);
-	var collection_1 = __webpack_require__(48);
+	var http_1 = __webpack_require__(31);
+	var collection_1 = __webpack_require__(63);
 	var PoliciesModel = (function (_super) {
 	    __extends(PoliciesModel, _super);
 	    function PoliciesModel(http) {
@@ -19264,7 +19218,318 @@ webpackJsonp([2],{
 
 /***/ },
 
+/***/ 72:
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @module state */ /** for typedoc */
+	"use strict";
+	var common_1 = __webpack_require__(5);
+	/**
+	 * @ngdoc object
+	 * @name ui.router.state.type:TargetState
+	 *
+	 * @description
+	 * Encapsulate the desired target of a transition.
+	 * Wraps an identifier for a state, a set of parameters, and transition options with the definition of the state.
+	 *
+	 * @param {StateOrName} _identifier  An identifier for a state. Either a fully-qualified path, or the object
+	 *            used to define the state.
+	 * @param {IState} _definition The `State` object definition.
+	 * @param {ParamsOrArray} _params Parameters for the target state
+	 * @param {TransitionOptions} _options Transition options.
+	 */
+	var TargetState = (function () {
+	    function TargetState(_identifier, _definition, _params, _options) {
+	        if (_params === void 0) { _params = {}; }
+	        if (_options === void 0) { _options = {}; }
+	        this._identifier = _identifier;
+	        this._definition = _definition;
+	        this._options = _options;
+	        this._params = _params || {};
+	    }
+	    TargetState.prototype.name = function () {
+	        return this._definition && this._definition.name || this._identifier;
+	    };
+	    TargetState.prototype.identifier = function () {
+	        return this._identifier;
+	    };
+	    TargetState.prototype.params = function () {
+	        return this._params;
+	    };
+	    TargetState.prototype.$state = function () {
+	        return this._definition;
+	    };
+	    TargetState.prototype.state = function () {
+	        return this._definition && this._definition.self;
+	    };
+	    TargetState.prototype.options = function () {
+	        return this._options;
+	    };
+	    TargetState.prototype.exists = function () {
+	        return !!(this._definition && this._definition.self);
+	    };
+	    TargetState.prototype.valid = function () {
+	        return !this.error();
+	    };
+	    TargetState.prototype.error = function () {
+	        var base = this.options().relative;
+	        if (!this._definition && !!base) {
+	            var stateName = base.name ? base.name : base;
+	            return "Could not resolve '" + this.name() + "' from state '" + stateName + "'";
+	        }
+	        if (!this._definition)
+	            return "No such state '" + this.name() + "'";
+	        if (!this._definition.self)
+	            return "State '" + this.name() + "' has an invalid definition";
+	    };
+	    TargetState.prototype.toString = function () {
+	        return "'" + this.name() + "'" + common_1.toJson(this.params());
+	    };
+	    return TargetState;
+	}());
+	exports.TargetState = TargetState;
+	//# sourceMappingURL=targetState.js.map
+
+/***/ },
+
+/***/ 73:
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(302);
+	module.exports = angular;
+
+
+/***/ },
+
 /***/ 74:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	/**
+	 * Created by vjain3 on 10/17/16.
+	 */
+	var core_1 = __webpack_require__(3);
+	var common_1 = __webpack_require__(35);
+	var errormessagedirective_1 = __webpack_require__(192);
+	var tabledirective_1 = __webpack_require__(194);
+	var forms_1 = __webpack_require__(45);
+	var accordiondirective_1 = __webpack_require__(190);
+	var collapsibledirective_1 = __webpack_require__(191);
+	var namevaluedirective_1 = __webpack_require__(193);
+	var DirectivesModule = (function () {
+	    function DirectivesModule() {
+	    }
+	    DirectivesModule = __decorate([
+	        core_1.NgModule({
+	            imports: [
+	                common_1.CommonModule, forms_1.FormsModule
+	            ],
+	            declarations: [
+	                errormessagedirective_1.ErrorMessageComponent,
+	                tabledirective_1.CtvTableComponent,
+	                tabledirective_1.CtvThComponent,
+	                tabledirective_1.CtvSearchComponent,
+	                tabledirective_1.CtvTpaginationComponent,
+	                accordiondirective_1.CtvAccordionComponent,
+	                collapsibledirective_1.CtvCollapsibleComponent,
+	                namevaluedirective_1.CtvNamevalueComponent
+	            ],
+	            exports: [
+	                errormessagedirective_1.ErrorMessageComponent,
+	                tabledirective_1.CtvTableComponent,
+	                tabledirective_1.CtvThComponent,
+	                tabledirective_1.CtvSearchComponent,
+	                tabledirective_1.CtvTpaginationComponent,
+	                accordiondirective_1.CtvAccordionComponent,
+	                collapsibledirective_1.CtvCollapsibleComponent,
+	                namevaluedirective_1.CtvNamevalueComponent
+	            ]
+	        }), 
+	        __metadata('design:paramtypes', [])
+	    ], DirectivesModule);
+	    return DirectivesModule;
+	}());
+	exports.DirectivesModule = DirectivesModule;
+	
+
+/***/ },
+
+/***/ 75:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	/**
+	 * Created by hardik gandhi on 6/15/16.
+	 */
+	var core_1 = __webpack_require__(3);
+	var http_1 = __webpack_require__(31);
+	var collection_1 = __webpack_require__(63);
+	var NetprofilesModel = (function (_super) {
+	    __extends(NetprofilesModel, _super);
+	    function NetprofilesModel(http) {
+	        _super.call(this, http, ContivGlobals.NETPROFILES_ENDPOINT);
+	    }
+	    /**
+	     * Generate policy key to save policy on server
+	     * @param policy
+	     * @returns {string}
+	     */
+	    NetprofilesModel.prototype.generateKey = function (policy) {
+	        return policy.tenantName + ':' + policy.profileName;
+	    };
+	    NetprofilesModel = __decorate([
+	        core_1.Injectable(), 
+	        __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object])
+	    ], NetprofilesModel);
+	    return NetprofilesModel;
+	    var _a;
+	}(collection_1.Collection));
+	exports.NetprofilesModel = NetprofilesModel;
+	
+
+/***/ },
+
+/***/ 76:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	/**
+	 * Created by vjain3 on 5/11/16.
+	 */
+	var core_1 = __webpack_require__(3);
+	var http_1 = __webpack_require__(31);
+	var collection_1 = __webpack_require__(63);
+	var ServicelbsModel = (function (_super) {
+	    __extends(ServicelbsModel, _super);
+	    function ServicelbsModel(http) {
+	        _super.call(this, http, ContivGlobals.SERVICELBS_ENDPOINT);
+	    }
+	    ServicelbsModel = __decorate([
+	        core_1.Injectable(), 
+	        __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object])
+	    ], ServicelbsModel);
+	    return ServicelbsModel;
+	    var _a;
+	}(collection_1.Collection));
+	exports.ServicelbsModel = ServicelbsModel;
+	
+
+/***/ },
+
+/***/ 77:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var __param = (this && this.__param) || function (paramIndex, decorator) {
+	    return function (target, key) { decorator(target, key, paramIndex); }
+	};
+	/**
+	 * Created by vjain3 on 3/9/16.
+	 */
+	var core_1 = __webpack_require__(3);
+	var ng1_1 = __webpack_require__(23);
+	(function (PolicyTab) {
+	    PolicyTab[PolicyTab["isolation"] = 0] = "isolation";
+	    PolicyTab[PolicyTab["bandwidth"] = 1] = "bandwidth";
+	})(exports.PolicyTab || (exports.PolicyTab = {}));
+	var PolicyTab = exports.PolicyTab;
+	var NetworkPoliciesTabsComponent = (function () {
+	    function NetworkPoliciesTabsComponent($state, $stateParams) {
+	        this.$state = $state;
+	        this.$stateParams = $stateParams;
+	        this.isolationPolicySelected = true;
+	        this.bandwidthPolicySelected = false;
+	        this.policyTab = PolicyTab;
+	        this.selectPolicyTab($stateParams['policyTab']);
+	    }
+	    NetworkPoliciesTabsComponent.prototype.createNetworkPolicy = function () {
+	        if (this.isolationPolicySelected) {
+	            this.$state.go('contiv.menu.networkpolicies.isolation.create');
+	        }
+	        if (this.bandwidthPolicySelected) {
+	            this.$state.go('contiv.menu.networkpolicies.bandwidth.create');
+	        }
+	    };
+	    NetworkPoliciesTabsComponent.prototype.selectPolicyTab = function (tab) {
+	        switch (tab) {
+	            case PolicyTab.isolation:
+	                this.isolationPolicySelected = true;
+	                this.bandwidthPolicySelected = false;
+	                break;
+	            case PolicyTab.bandwidth:
+	                this.isolationPolicySelected = false;
+	                this.bandwidthPolicySelected = true;
+	                break;
+	            default:
+	                this.isolationPolicySelected = true;
+	                this.bandwidthPolicySelected = false;
+	                break;
+	        }
+	    };
+	    NetworkPoliciesTabsComponent = __decorate([
+	        core_1.Component({
+	            selector: 'networkpoliciestabs',
+	            templateUrl: 'network_policies/networkpoliciestabs.html'
+	        }),
+	        __param(0, core_1.Inject('$state')),
+	        __param(1, core_1.Inject('$stateParams')), 
+	        __metadata('design:paramtypes', [(typeof (_a = typeof ng1_1.StateService !== 'undefined' && ng1_1.StateService) === 'function' && _a) || Object, (typeof (_b = typeof ng1_1.StateParams !== 'undefined' && ng1_1.StateParams) === 'function' && _b) || Object])
+	    ], NetworkPoliciesTabsComponent);
+	    return NetworkPoliciesTabsComponent;
+	    var _a, _b;
+	}());
+	exports.NetworkPoliciesTabsComponent = NetworkPoliciesTabsComponent;
+	
+
+/***/ },
+
+/***/ 81:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -19792,7 +20057,7 @@ webpackJsonp([2],{
 	}
 	exports.isPrimitive = isPrimitive;
 
-	exports.isBuffer = __webpack_require__(764);
+	exports.isBuffer = __webpack_require__(753);
 
 	function objectToString(o) {
 	  return Object.prototype.toString.call(o);
@@ -19836,7 +20101,7 @@ webpackJsonp([2],{
 	 *     prototype.
 	 * @param {function} superCtor Constructor function to inherit prototype from.
 	 */
-	exports.inherits = __webpack_require__(763);
+	exports.inherits = __webpack_require__(752);
 
 	exports._extend = function(origin, add) {
 	  // Don't do anything if add isn't an object
@@ -19854,267 +20119,18 @@ webpackJsonp([2],{
 	  return Object.prototype.hasOwnProperty.call(obj, prop);
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(256)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(246)))
 
 /***/ },
 
-/***/ 75:
-/***/ function(module, exports, __webpack_require__) {
-
-	/** @module state */ /** for typedoc */
-	"use strict";
-	var common_1 = __webpack_require__(5);
-	/**
-	 * @ngdoc object
-	 * @name ui.router.state.type:TargetState
-	 *
-	 * @description
-	 * Encapsulate the desired target of a transition.
-	 * Wraps an identifier for a state, a set of parameters, and transition options with the definition of the state.
-	 *
-	 * @param {StateOrName} _identifier  An identifier for a state. Either a fully-qualified path, or the object
-	 *            used to define the state.
-	 * @param {IState} _definition The `State` object definition.
-	 * @param {ParamsOrArray} _params Parameters for the target state
-	 * @param {TransitionOptions} _options Transition options.
-	 */
-	var TargetState = (function () {
-	    function TargetState(_identifier, _definition, _params, _options) {
-	        if (_params === void 0) { _params = {}; }
-	        if (_options === void 0) { _options = {}; }
-	        this._identifier = _identifier;
-	        this._definition = _definition;
-	        this._options = _options;
-	        this._params = _params || {};
-	    }
-	    TargetState.prototype.name = function () {
-	        return this._definition && this._definition.name || this._identifier;
-	    };
-	    TargetState.prototype.identifier = function () {
-	        return this._identifier;
-	    };
-	    TargetState.prototype.params = function () {
-	        return this._params;
-	    };
-	    TargetState.prototype.$state = function () {
-	        return this._definition;
-	    };
-	    TargetState.prototype.state = function () {
-	        return this._definition && this._definition.self;
-	    };
-	    TargetState.prototype.options = function () {
-	        return this._options;
-	    };
-	    TargetState.prototype.exists = function () {
-	        return !!(this._definition && this._definition.self);
-	    };
-	    TargetState.prototype.valid = function () {
-	        return !this.error();
-	    };
-	    TargetState.prototype.error = function () {
-	        var base = this.options().relative;
-	        if (!this._definition && !!base) {
-	            var stateName = base.name ? base.name : base;
-	            return "Could not resolve '" + this.name() + "' from state '" + stateName + "'";
-	        }
-	        if (!this._definition)
-	            return "No such state '" + this.name() + "'";
-	        if (!this._definition.self)
-	            return "State '" + this.name() + "' has an invalid definition";
-	    };
-	    TargetState.prototype.toString = function () {
-	        return "'" + this.name() + "'" + common_1.toJson(this.params());
-	    };
-	    return TargetState;
-	}());
-	exports.TargetState = TargetState;
-	//# sourceMappingURL=targetState.js.map
-
-/***/ },
-
-/***/ 76:
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(312);
-	module.exports = angular;
-
-
-/***/ },
-
-/***/ 77:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __extends = (this && this.__extends) || function (d, b) {
-	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-	    function __() { this.constructor = d; }
-	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-	};
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	/**
-	 * Created by hardik gandhi on 6/15/16.
-	 */
-	var core_1 = __webpack_require__(3);
-	var http_1 = __webpack_require__(21);
-	var collection_1 = __webpack_require__(48);
-	var NetprofilesModel = (function (_super) {
-	    __extends(NetprofilesModel, _super);
-	    function NetprofilesModel(http) {
-	        _super.call(this, http, ContivGlobals.NETPROFILES_ENDPOINT);
-	    }
-	    /**
-	     * Generate policy key to save policy on server
-	     * @param policy
-	     * @returns {string}
-	     */
-	    NetprofilesModel.prototype.generateKey = function (policy) {
-	        return policy.tenantName + ':' + policy.profileName;
-	    };
-	    NetprofilesModel = __decorate([
-	        core_1.Injectable(), 
-	        __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object])
-	    ], NetprofilesModel);
-	    return NetprofilesModel;
-	    var _a;
-	}(collection_1.Collection));
-	exports.NetprofilesModel = NetprofilesModel;
-	
-
-/***/ },
-
-/***/ 78:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __extends = (this && this.__extends) || function (d, b) {
-	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-	    function __() { this.constructor = d; }
-	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-	};
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	/**
-	 * Created by vjain3 on 5/11/16.
-	 */
-	var core_1 = __webpack_require__(3);
-	var http_1 = __webpack_require__(21);
-	var collection_1 = __webpack_require__(48);
-	var ServicelbsModel = (function (_super) {
-	    __extends(ServicelbsModel, _super);
-	    function ServicelbsModel(http) {
-	        _super.call(this, http, ContivGlobals.SERVICELBS_ENDPOINT);
-	    }
-	    ServicelbsModel = __decorate([
-	        core_1.Injectable(), 
-	        __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object])
-	    ], ServicelbsModel);
-	    return ServicelbsModel;
-	    var _a;
-	}(collection_1.Collection));
-	exports.ServicelbsModel = ServicelbsModel;
-	
-
-/***/ },
-
-/***/ 79:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	var __param = (this && this.__param) || function (paramIndex, decorator) {
-	    return function (target, key) { decorator(target, key, paramIndex); }
-	};
-	/**
-	 * Created by vjain3 on 3/9/16.
-	 */
-	var core_1 = __webpack_require__(3);
-	var ng1_1 = __webpack_require__(18);
-	(function (PolicyTab) {
-	    PolicyTab[PolicyTab["isolation"] = 0] = "isolation";
-	    PolicyTab[PolicyTab["bandwidth"] = 1] = "bandwidth";
-	})(exports.PolicyTab || (exports.PolicyTab = {}));
-	var PolicyTab = exports.PolicyTab;
-	var NetworkPoliciesTabsComponent = (function () {
-	    function NetworkPoliciesTabsComponent($state, $stateParams) {
-	        this.$state = $state;
-	        this.$stateParams = $stateParams;
-	        this.isolationPolicySelected = true;
-	        this.bandwidthPolicySelected = false;
-	        this.policyTab = PolicyTab;
-	        this.selectPolicyTab($stateParams['policyTab']);
-	    }
-	    NetworkPoliciesTabsComponent.prototype.createNetworkPolicy = function () {
-	        if (this.isolationPolicySelected) {
-	            this.$state.go('contiv.menu.networkpolicies.isolation.create');
-	        }
-	        if (this.bandwidthPolicySelected) {
-	            this.$state.go('contiv.menu.networkpolicies.bandwidth.create');
-	        }
-	    };
-	    NetworkPoliciesTabsComponent.prototype.selectPolicyTab = function (tab) {
-	        switch (tab) {
-	            case PolicyTab.isolation:
-	                this.isolationPolicySelected = true;
-	                this.bandwidthPolicySelected = false;
-	                break;
-	            case PolicyTab.bandwidth:
-	                this.isolationPolicySelected = false;
-	                this.bandwidthPolicySelected = true;
-	                break;
-	            default:
-	                this.isolationPolicySelected = true;
-	                this.bandwidthPolicySelected = false;
-	                break;
-	        }
-	    };
-	    NetworkPoliciesTabsComponent = __decorate([
-	        core_1.Component({
-	            selector: 'networkpoliciestabs',
-	            templateUrl: 'network_policies/networkpoliciestabs.html'
-	        }),
-	        __param(0, core_1.Inject('$state')),
-	        __param(1, core_1.Inject('$stateParams')), 
-	        __metadata('design:paramtypes', [(typeof (_a = typeof ng1_1.StateService !== 'undefined' && ng1_1.StateService) === 'function' && _a) || Object, (typeof (_b = typeof ng1_1.StateParams !== 'undefined' && ng1_1.StateParams) === 'function' && _b) || Object])
-	    ], NetworkPoliciesTabsComponent);
-	    return NetworkPoliciesTabsComponent;
-	    var _a, _b;
-	}());
-	exports.NetworkPoliciesTabsComponent = NetworkPoliciesTabsComponent;
-	
-
-/***/ },
-
-/***/ 83:
+/***/ 82:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	/** @module path */ /** for typedoc */
 	var common_1 = __webpack_require__(5);
 	var hof_1 = __webpack_require__(16);
-	var param_1 = __webpack_require__(54);
+	var param_1 = __webpack_require__(53);
 	/**
 	 * A node in a [[TreeChanges]] path
 	 *
@@ -20198,13 +20214,13 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 84:
+/***/ 83:
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @module transition */ /** for typedoc */
 	"use strict";
 	var common_1 = __webpack_require__(5);
-	var strings_1 = __webpack_require__(40);
+	var strings_1 = __webpack_require__(38);
 	(function (RejectType) {
 	    RejectType[RejectType["SUPERSEDED"] = 2] = "SUPERSEDED";
 	    RejectType[RejectType["ABORTED"] = 3] = "ABORTED";
@@ -20275,97 +20291,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 85:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __extends = (this && this.__extends) || function (d, b) {
-	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-	    function __() { this.constructor = d; }
-	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-	};
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	/**
-	 * Created by vjain3 on 3/22/16.
-	 */
-	var core_1 = __webpack_require__(3);
-	var http_1 = __webpack_require__(21);
-	var collection_1 = __webpack_require__(48);
-	__webpack_require__(73);
-	var _ = __webpack_require__(29);
-	var VolumesModel = (function (_super) {
-	    __extends(VolumesModel, _super);
-	    function VolumesModel(http) {
-	        _super.call(this, http, ContivGlobals.VOLUMES_ENDPOINT);
-	    }
-	    VolumesModel.prototype.delete = function (model) {
-	        var volumescollection = this;
-	        var promise = new Promise(function (resolve, reject) {
-	            var url = ContivGlobals.VOLUMES_DELETE_ENDPOINT;
-	            //delete endpoint expects volume property in addition to policy. TODO ask to be fixed
-	            model.volume = model.name;
-	            var config = {
-	                data: model
-	            };
-	            volumescollection.http.delete(url, config).map(function (res) { return res.json(); }).toPromise()
-	                .then(function successCallback(response) {
-	                _.remove(volumescollection.models, function (n) {
-	                    return (n.name == model.name && n.policy == model.policy);
-	                });
-	                resolve(response);
-	            }, function errorCallback(response) {
-	                reject(response);
-	            });
-	        });
-	        return promise;
-	    };
-	    VolumesModel.prototype.create = function (model) {
-	        var url = ContivGlobals.VOLUMES_CREATE_ENDPOINT;
-	        return _super.prototype.create.call(this, model, url);
-	    };
-	    VolumesModel.prototype.copy = function (model, snapshot, newVolume) {
-	        var collection = this;
-	        var promise = new Promise(function (resolve, reject) {
-	            var url = ContivGlobals.VOLUMES_COPYSNAPSHOTS_ENDPOINT;
-	            var volcopymodel = {
-	                name: model.name,
-	                policy: model.policy,
-	                Options: {
-	                    target: newVolume,
-	                    snapshot: snapshot
-	                }
-	            };
-	            collection.http.post(url, volcopymodel).map(function (res) { return res.json(); }).toPromise()
-	                .then(function successCallback(response) {
-	                collection.models.push(response);
-	                resolve(response);
-	            }, function errorCallback(response) {
-	                reject(response);
-	            });
-	        });
-	        return promise;
-	    };
-	    VolumesModel = __decorate([
-	        core_1.Injectable(), 
-	        __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object])
-	    ], VolumesModel);
-	    return VolumesModel;
-	    var _a;
-	}(collection_1.Collection));
-	exports.VolumesModel = VolumesModel;
-	
-
-/***/ },
-
-/***/ 100:
+/***/ 98:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -20455,15 +20381,15 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 101:
+/***/ 99:
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @module path */ /** for typedoc */
 	"use strict";
 	var common_1 = __webpack_require__(5);
 	var hof_1 = __webpack_require__(16);
-	var targetState_1 = __webpack_require__(75);
-	var node_1 = __webpack_require__(83);
+	var targetState_1 = __webpack_require__(72);
+	var node_1 = __webpack_require__(82);
 	/**
 	 * This class contains functions which convert TargetStates, Nodes and paths from one type to another.
 	 */
@@ -20590,7 +20516,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 102:
+/***/ 100:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -20612,9 +20538,9 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 3/8/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var http_1 = __webpack_require__(21);
-	var collection_1 = __webpack_require__(48);
-	var _ = __webpack_require__(29);
+	var http_1 = __webpack_require__(31);
+	var collection_1 = __webpack_require__(63);
+	var _ = __webpack_require__(34);
 	var RulesModel = (function (_super) {
 	    __extends(RulesModel, _super);
 	    function RulesModel(http) {
@@ -20672,71 +20598,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 103:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __extends = (this && this.__extends) || function (d, b) {
-	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-	    function __() { this.constructor = d; }
-	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-	};
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	/**
-	 * Created by vjain3 on 4/18/16.
-	 */
-	var core_1 = __webpack_require__(3);
-	var http_1 = __webpack_require__(21);
-	var collection_1 = __webpack_require__(48);
-	var _ = __webpack_require__(29);
-	var StoragePoliciesModel = (function (_super) {
-	    __extends(StoragePoliciesModel, _super);
-	    function StoragePoliciesModel(http) {
-	        _super.call(this, http, ContivGlobals.STORAGEPOLICIES_ENDPOINT);
-	    }
-	    StoragePoliciesModel.prototype.create = function (model) {
-	        var collection = this;
-	        var url = collection.url + model.name;
-	        return _super.prototype.create.call(this, model, url);
-	    };
-	    StoragePoliciesModel.prototype.save = function (model) {
-	        var collection = this;
-	        var promise = new Promise(function (resolve, reject) {
-	            var url = collection.url + model.name;
-	            collection.http.post(url, model).map(function (res) { return res.json(); }).toPromise()
-	                .then(function successCallback(response) {
-	                _.remove(collection.models, function (n) {
-	                    return n.name == model.name;
-	                });
-	                collection.models.push(model);
-	                resolve(response);
-	            }, function errorCallback(response) {
-	                reject(response);
-	            });
-	        });
-	        return promise;
-	    };
-	    StoragePoliciesModel = __decorate([
-	        core_1.Injectable(), 
-	        __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object])
-	    ], StoragePoliciesModel);
-	    return StoragePoliciesModel;
-	    var _a;
-	}(collection_1.Collection));
-	exports.StoragePoliciesModel = StoragePoliciesModel;
-	
-
-/***/ },
-
-/***/ 104:
+/***/ 101:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -20753,7 +20615,7 @@ webpackJsonp([2],{
 	 * Created by cshampur on 7/17/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var util_1 = __webpack_require__(74);
+	var util_1 = __webpack_require__(81);
 	var InspectService = (function () {
 	    function InspectService() {
 	    }
@@ -20823,7 +20685,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 124:
+/***/ 122:
 /***/ function(module, exports) {
 
 	/** @module common */ /** for typedoc */
@@ -20872,7 +20734,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 125:
+/***/ 123:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -20887,18 +20749,18 @@ webpackJsonp([2],{
 	 */
 	"use strict";
 	/** for typedoc */
-	var router_1 = __webpack_require__(128);
-	var coreservices_1 = __webpack_require__(20);
+	var router_1 = __webpack_require__(126);
+	var coreservices_1 = __webpack_require__(19);
 	var common_1 = __webpack_require__(5);
 	var hof_1 = __webpack_require__(16);
 	var predicates_1 = __webpack_require__(9);
-	var resolveService_1 = __webpack_require__(301);
+	var resolveService_1 = __webpack_require__(291);
 	var trace_1 = __webpack_require__(46);
-	var views_1 = __webpack_require__(126);
-	var templateFactory_1 = __webpack_require__(181);
-	var stateProvider_1 = __webpack_require__(180);
-	var onEnterExitRetain_1 = __webpack_require__(303);
-	var angular = __webpack_require__(76);
+	var views_1 = __webpack_require__(124);
+	var templateFactory_1 = __webpack_require__(176);
+	var stateProvider_1 = __webpack_require__(175);
+	var onEnterExitRetain_1 = __webpack_require__(293);
+	var angular = __webpack_require__(73);
 	/** @hidden */
 	var app = angular.module("ui.router.angular1", []);
 	/**
@@ -21228,20 +21090,20 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 126:
+/***/ 124:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var common_1 = __webpack_require__(5);
-	var strings_1 = __webpack_require__(40);
-	var view_1 = __webpack_require__(137);
+	var strings_1 = __webpack_require__(38);
+	var view_1 = __webpack_require__(135);
 	var predicates_1 = __webpack_require__(9);
-	var coreservices_1 = __webpack_require__(20);
+	var coreservices_1 = __webpack_require__(19);
 	var trace_1 = __webpack_require__(46);
-	var templateFactory_1 = __webpack_require__(181);
+	var templateFactory_1 = __webpack_require__(176);
 	var resolveContext_1 = __webpack_require__(47);
-	var resolvable_1 = __webpack_require__(64);
-	var angular = __webpack_require__(76);
+	var resolvable_1 = __webpack_require__(62);
+	var angular = __webpack_require__(73);
 	exports.ng1ViewConfigFactory = function (path, view) {
 	    return [new Ng1ViewConfig(path, view)];
 	};
@@ -21378,7 +21240,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 127:
+/***/ 125:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -21513,19 +21375,19 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 128:
+/***/ 126:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	/** @module core */ /** */
-	var urlMatcherFactory_1 = __webpack_require__(191);
-	var urlRouter_1 = __webpack_require__(136);
-	var urlRouter_2 = __webpack_require__(136);
-	var transitionService_1 = __webpack_require__(134);
-	var view_1 = __webpack_require__(137);
-	var stateRegistry_1 = __webpack_require__(187);
-	var stateService_1 = __webpack_require__(188);
-	var globals_1 = __webpack_require__(179);
+	var urlMatcherFactory_1 = __webpack_require__(186);
+	var urlRouter_1 = __webpack_require__(134);
+	var urlRouter_2 = __webpack_require__(134);
+	var transitionService_1 = __webpack_require__(132);
+	var view_1 = __webpack_require__(135);
+	var stateRegistry_1 = __webpack_require__(182);
+	var stateService_1 = __webpack_require__(183);
+	var globals_1 = __webpack_require__(174);
 	/**
 	 * The master class used to instantiate an instance of UI-Router.
 	 *
@@ -21556,18 +21418,18 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 129:
+/***/ 127:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	/** @module state */ /** for typedoc */
 	var common_1 = __webpack_require__(5);
 	var predicates_1 = __webpack_require__(9);
-	var strings_1 = __webpack_require__(40);
+	var strings_1 = __webpack_require__(38);
 	var hof_1 = __webpack_require__(16);
-	var param_1 = __webpack_require__(54);
-	var resolvable_1 = __webpack_require__(64);
-	var coreservices_1 = __webpack_require__(20);
+	var param_1 = __webpack_require__(53);
+	var resolvable_1 = __webpack_require__(62);
+	var coreservices_1 = __webpack_require__(19);
 	var parseUrl = function (url) {
 	    if (!predicates_1.isString(url))
 	        return false;
@@ -21832,7 +21694,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 130:
+/***/ 128:
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @module state */ /** for typedoc */
@@ -21923,14 +21785,14 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 131:
+/***/ 129:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	/** @module transition */ /** for typedoc */
 	var common_1 = __webpack_require__(5);
 	var predicates_1 = __webpack_require__(9);
-	var glob_1 = __webpack_require__(100);
+	var glob_1 = __webpack_require__(98);
 	/**
 	 * Determines if the given state matches the matchCriteria
 	 *
@@ -22061,28 +21923,28 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 132:
+/***/ 130:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	/** @module transition */ /** for typedoc */
-	var strings_1 = __webpack_require__(40);
+	var strings_1 = __webpack_require__(38);
 	var trace_1 = __webpack_require__(46);
-	var coreservices_1 = __webpack_require__(20);
+	var coreservices_1 = __webpack_require__(19);
 	var common_1 = __webpack_require__(5);
 	var predicates_1 = __webpack_require__(9);
 	var hof_1 = __webpack_require__(16);
-	var transitionHook_1 = __webpack_require__(133);
-	var hookRegistry_1 = __webpack_require__(131);
-	var hookBuilder_1 = __webpack_require__(189);
-	var node_1 = __webpack_require__(83);
-	var pathFactory_1 = __webpack_require__(101);
-	var targetState_1 = __webpack_require__(75);
-	var param_1 = __webpack_require__(54);
-	var resolvable_1 = __webpack_require__(64);
-	var rejectFactory_1 = __webpack_require__(84);
+	var transitionHook_1 = __webpack_require__(131);
+	var hookRegistry_1 = __webpack_require__(129);
+	var hookBuilder_1 = __webpack_require__(184);
+	var node_1 = __webpack_require__(82);
+	var pathFactory_1 = __webpack_require__(99);
+	var targetState_1 = __webpack_require__(72);
+	var param_1 = __webpack_require__(53);
+	var resolvable_1 = __webpack_require__(62);
+	var rejectFactory_1 = __webpack_require__(83);
 	var resolveContext_1 = __webpack_require__(47);
-	var router_1 = __webpack_require__(128);
+	var router_1 = __webpack_require__(126);
 	var transitionCount = 0;
 	var stateSelf = hof_1.prop("self");
 	/**
@@ -22568,18 +22430,18 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 133:
+/***/ 131:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var common_1 = __webpack_require__(5);
-	var strings_1 = __webpack_require__(40);
+	var strings_1 = __webpack_require__(38);
 	var predicates_1 = __webpack_require__(9);
 	var hof_1 = __webpack_require__(16);
 	var trace_1 = __webpack_require__(46);
-	var coreservices_1 = __webpack_require__(20);
-	var rejectFactory_1 = __webpack_require__(84);
-	var targetState_1 = __webpack_require__(75);
+	var coreservices_1 = __webpack_require__(19);
+	var rejectFactory_1 = __webpack_require__(83);
+	var targetState_1 = __webpack_require__(72);
 	var defaultOptions = {
 	    async: true,
 	    rejectIfSuperseded: true,
@@ -22686,18 +22548,18 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 134:
+/***/ 132:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var transition_1 = __webpack_require__(132);
-	var hookRegistry_1 = __webpack_require__(131);
-	var resolve_1 = __webpack_require__(296);
-	var views_1 = __webpack_require__(298);
-	var url_1 = __webpack_require__(297);
-	var redirectTo_1 = __webpack_require__(295);
-	var onEnterExitRetain_1 = __webpack_require__(294);
-	var lazyLoadStates_1 = __webpack_require__(293);
+	var transition_1 = __webpack_require__(130);
+	var hookRegistry_1 = __webpack_require__(129);
+	var resolve_1 = __webpack_require__(286);
+	var views_1 = __webpack_require__(288);
+	var url_1 = __webpack_require__(287);
+	var redirectTo_1 = __webpack_require__(285);
+	var onEnterExitRetain_1 = __webpack_require__(284);
+	var lazyLoadStates_1 = __webpack_require__(283);
 	/**
 	 * The default [[Transition]] options.
 	 *
@@ -22796,7 +22658,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 135:
+/***/ 133:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -22828,14 +22690,14 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 136:
+/***/ 134:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	/** @module url */ /** for typedoc */
 	var common_1 = __webpack_require__(5);
 	var predicates_1 = __webpack_require__(9);
-	var coreservices_1 = __webpack_require__(20);
+	var coreservices_1 = __webpack_require__(19);
 	/** @hidden */
 	var $location = coreservices_1.services.location;
 	/** @hidden Returns a string that is a prefix of all strings matching the RegExp */
@@ -23227,7 +23089,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 137:
+/***/ 135:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -23466,137 +23328,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 138:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __extends = (this && this.__extends) || function (d, b) {
-	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-	    function __() { this.constructor = d; }
-	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-	};
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	/**
-	 * Created by vjain3 on 3/22/16.
-	 */
-	var core_1 = __webpack_require__(3);
-	var http_1 = __webpack_require__(21);
-	var basecollection_1 = __webpack_require__(200);
-	__webpack_require__(73);
-	var NodesModel = (function (_super) {
-	    __extends(NodesModel, _super);
-	    function NodesModel(http) {
-	        _super.call(this, http, ContivGlobals.NODES_LIST_ENDPOINT);
-	    }
-	    NodesModel.prototype.extract = function (result) {
-	        //Convert to array if the returned collection is not an array
-	        return _.map(result.data, function (value, key) {
-	            value.key = key;
-	            return value;
-	        });
-	    };
-	    /**
-	     *
-	     * @param key
-	     * @param extraVars JSON object of extra ansible and environment variables to be passed while commissioning a node
-	     * {
-	             * "env":{"http_proxy":"http://proxy.esl.cisco.com:8080", "https_proxy":"http://proxy.esl.cisco.com:8080"},
-	             * "control_interface": "eth1", "service_vip": "192.168.2.252", "validate_certs": "false", "netplugin_if" : "eth2"
-	             * }
-	     * @returns {*}
-	     */
-	    NodesModel.prototype.commission = function (nodeOpsObj) {
-	        var nodescollection = this;
-	        var promise = new Promise(function (resolve, reject) {
-	            var url = ContivGlobals.NODES_COMMISSION_ENDPOINT;
-	            var headers = new http_1.Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
-	            var options = new http_1.RequestOptions({ headers: headers }); // Create a request option
-	            nodescollection.http.post(url, nodeOpsObj, options).map(function (res) { return res.json(); }).toPromise()
-	                .then(function successCallback(response) {
-	                //Server doesn't return any json in response
-	                resolve(response);
-	            }, function errorCallback(response) {
-	                reject(response);
-	            });
-	        });
-	        return promise;
-	    };
-	    NodesModel.prototype.decommission = function (nodeOpsObj) {
-	        var nodescollection = this;
-	        var promise = new Promise(function (resolve, reject) {
-	            var url = ContivGlobals.NODES_DECOMMISSION_ENDPOINT;
-	            var headers = new http_1.Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
-	            var options = new http_1.RequestOptions({ headers: headers }); // Create a request option
-	            nodescollection.http.post(url, nodeOpsObj, options).map(function (res) { return res.json(); }).toPromise()
-	                .then(function successCallback(response) {
-	                resolve(response);
-	            }, function errorCallback(response) {
-	                reject(response);
-	            });
-	        });
-	        return promise;
-	    };
-	    NodesModel.prototype.upgrade = function (nodeOpsObj) {
-	        var nodescollection = this;
-	        var promise = new Promise(function (resolve, reject) {
-	            var url = ContivGlobals.NODES_MAINTENANCE_ENDPOINT;
-	            var headers = new http_1.Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
-	            var options = new http_1.RequestOptions({ headers: headers }); // Create a request option
-	            nodescollection.http.post(url, nodeOpsObj, options).map(function (res) { return res.json(); }).toPromise()
-	                .then(function successCallback(response) {
-	                resolve(response);
-	            }, function errorCallback(response) {
-	                reject(response);
-	            });
-	        });
-	        return promise;
-	    };
-	    /**
-	     *
-	     * @param ip
-	     * @param extraVars JSON object of extra ansible and environment variables to be passed while discovering a node
-	     * {
-	             * "env":{"http_proxy":"http://proxy.esl.cisco.com:8080", "https_proxy":"http://proxy.esl.cisco.com:8080"},
-	             * "control_interface": "eth1", "service_vip": "192.168.2.252", "cluster-name": "contiv", "node-label" : "node1"
-	             * }
-	     * @returns {*}
-	     */
-	    NodesModel.prototype.discover = function (nodeOpsObj) {
-	        var nodescollection = this;
-	        var promise = new Promise(function (resolve, reject) {
-	            var url = ContivGlobals.NODES_DISCOVER_ENDPOINT;
-	            var headers = new http_1.Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
-	            var options = new http_1.RequestOptions({ headers: headers }); // Create a request option
-	            nodescollection.http.post(url, nodeOpsObj, options).map(function (res) { return res.json(); }).toPromise()
-	                .then(function successCallback(response) {
-	                resolve(response);
-	            }, function errorCallback(response) {
-	                reject(response);
-	            });
-	        });
-	        return promise;
-	    };
-	    NodesModel = __decorate([
-	        core_1.Injectable(), 
-	        __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object])
-	    ], NodesModel);
-	    return NodesModel;
-	    var _a;
-	}(basecollection_1.BaseCollection));
-	exports.NodesModel = NodesModel;
-	
-
-/***/ },
-
-/***/ 139:
+/***/ 136:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -23615,8 +23347,8 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(3);
-	var http_1 = __webpack_require__(21);
-	var collection_1 = __webpack_require__(48);
+	var http_1 = __webpack_require__(31);
+	var collection_1 = __webpack_require__(63);
 	var OrganizationsModel = (function (_super) {
 	    __extends(OrganizationsModel, _super);
 	    function OrganizationsModel(http) {
@@ -23634,7 +23366,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 140:
+/***/ 137:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -23648,8 +23380,8 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(3);
-	var http_1 = __webpack_require__(21);
-	__webpack_require__(73);
+	var http_1 = __webpack_require__(31);
+	__webpack_require__(114);
 	var NetworkService = (function () {
 	    function NetworkService(http) {
 	        this.http = http;
@@ -23683,7 +23415,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 141:
+/***/ 138:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -23697,8 +23429,8 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(3);
-	var http_1 = __webpack_require__(21);
-	__webpack_require__(73);
+	var http_1 = __webpack_require__(31);
+	__webpack_require__(114);
 	var NodesService = (function () {
 	    function NodesService(http) {
 	        this.http = http;
@@ -23869,122 +23601,13 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 142:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	var core_1 = __webpack_require__(3);
-	var http_1 = __webpack_require__(21);
-	__webpack_require__(73);
-	var VolumeSettingService = (function () {
-	    function VolumeSettingService(http) {
-	        this.http = http;
-	    }
-	    VolumeSettingService.prototype.getSettings = function () {
-	        var volumeservice = this;
-	        var promise = new Promise(function (resolve, reject) {
-	            var url = ContivGlobals.VOLUMES_GLOBAL_ENDPOINT;
-	            volumeservice.http.get(url).map(function (res) { return res.json(); }).toPromise()
-	                .then(function successCallback(result) {
-	                resolve(result);
-	            }, function errorCallback(result) {
-	                reject(result);
-	            });
-	        });
-	        return promise;
-	    };
-	    VolumeSettingService.prototype.updateSettings = function (setting) {
-	        return this.http.post(ContivGlobals.VOLUMES_GLOBAL_ENDPOINT, setting)
-	            .map(function (res) { return res.json(); }).toPromise();
-	    };
-	    VolumeSettingService = __decorate([
-	        core_1.Injectable(), 
-	        __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object])
-	    ], VolumeSettingService);
-	    return VolumeSettingService;
-	    var _a;
-	}());
-	exports.VolumeSettingService = VolumeSettingService;
-	
-
-/***/ },
-
-/***/ 143:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	var core_1 = __webpack_require__(3);
-	var http_1 = __webpack_require__(21);
-	var rxjs_1 = __webpack_require__(30);
-	var VolumeService = (function () {
-	    function VolumeService(http) {
-	        this.http = http;
-	    }
-	    VolumeService.prototype.getVolumeUseInfo = function (volume) {
-	        var _this = this;
-	        var observable = new rxjs_1.Observable(function (observer) {
-	            var url = ContivGlobals.VOLUMES_USES_ENDPOINT + volume['policy'] + '/' + volume['name'];
-	            _this.http.get(url)
-	                .map(function (res) { return res.json(); })
-	                .subscribe(function (result) { observer.next(result); }, function (error) {
-	                observer.error(error);
-	            });
-	        });
-	        return observable;
-	    };
-	    VolumeService.prototype.getVolumeSnapshot = function (volume) {
-	        var url = ContivGlobals.VOLUMES_SNAPSHOTS_ENDPOINT
-	            + volume['policy'] + '/' + volume['name'];
-	        return this.http.get(url)
-	            .map(function (res) { return res.json(); });
-	    };
-	    VolumeService.prototype.triggerSnapshot = function (volume) {
-	        var url = ContivGlobals.VOLUMES_SNAPSHOTS_ENDPOINT + "take/" + volume['policy'] + '/' + volume['name'];
-	        return this.http.post(url, JSON.stringify(''))
-	            .map(function (res) {
-	            if (res.headers.get("content-type").indexOf("text") > -1)
-	                return res;
-	            else
-	                return res.json();
-	        });
-	    };
-	    VolumeService = __decorate([
-	        core_1.Injectable(), 
-	        __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object])
-	    ], VolumeService);
-	    return VolumeService;
-	    var _a;
-	}());
-	exports.VolumeService = VolumeService;
-	
-
-/***/ },
-
-/***/ 179:
+/***/ 174:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	/** @module core */ /** */
-	var stateParams_1 = __webpack_require__(183);
-	var queue_1 = __webpack_require__(124);
+	var stateParams_1 = __webpack_require__(178);
+	var queue_1 = __webpack_require__(122);
 	var common_1 = __webpack_require__(5);
 	/**
 	 * Global mutable state
@@ -24018,7 +23641,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 180:
+/***/ 175:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -24171,15 +23794,15 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 181:
+/***/ 176:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	/** @module view */ /** for typedoc */
 	var predicates_1 = __webpack_require__(9);
-	var coreservices_1 = __webpack_require__(20);
+	var coreservices_1 = __webpack_require__(19);
 	var common_1 = __webpack_require__(5);
-	var resolvable_1 = __webpack_require__(64);
+	var resolvable_1 = __webpack_require__(62);
 	/**
 	 * Service which manages loading of templates from a ViewConfig.
 	 */
@@ -24258,7 +23881,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 182:
+/***/ 177:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -24266,8 +23889,8 @@ webpackJsonp([2],{
 	var common_1 = __webpack_require__(5);
 	var predicates_1 = __webpack_require__(9);
 	var hof_1 = __webpack_require__(16);
-	var coreservices_1 = __webpack_require__(20);
-	var type_1 = __webpack_require__(127);
+	var coreservices_1 = __webpack_require__(19);
+	var type_1 = __webpack_require__(125);
 	// Use tildes to pre-encode slashes.
 	// If the slashes are simply URLEncoded, the browser can choose to pre-decode them,
 	// and bidirectional encoding/decoding fails.
@@ -24372,7 +23995,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 183:
+/***/ 178:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -24416,7 +24039,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 184:
+/***/ 179:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -24435,13 +24058,13 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 185:
+/***/ 180:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	/** @module state */ /** for typedoc */
 	var predicates_1 = __webpack_require__(9);
-	var glob_1 = __webpack_require__(100);
+	var glob_1 = __webpack_require__(98);
 	var common_1 = __webpack_require__(5);
 	var StateMatcher = (function () {
 	    function StateMatcher(_states) {
@@ -24500,14 +24123,14 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 186:
+/***/ 181:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	/** @module state */ /** for typedoc */
 	var common_1 = __webpack_require__(5);
 	var predicates_1 = __webpack_require__(9);
-	var stateObject_1 = __webpack_require__(130);
+	var stateObject_1 = __webpack_require__(128);
 	var StateQueueManager = (function () {
 	    function StateQueueManager(states, builder, $urlRouterProvider, listeners) {
 	        this.states = states;
@@ -24593,14 +24216,14 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 187:
+/***/ 182:
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @module state */ /** for typedoc */
 	"use strict";
-	var stateMatcher_1 = __webpack_require__(185);
-	var stateBuilder_1 = __webpack_require__(129);
-	var stateQueueManager_1 = __webpack_require__(186);
+	var stateMatcher_1 = __webpack_require__(180);
+	var stateBuilder_1 = __webpack_require__(127);
+	var stateQueueManager_1 = __webpack_require__(181);
 	var common_1 = __webpack_require__(5);
 	var StateRegistry = (function () {
 	    function StateRegistry(urlMatcherFactory, urlRouterProvider) {
@@ -24737,22 +24360,22 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 188:
+/***/ 183:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	/** @module state */ /** */
 	var common_1 = __webpack_require__(5);
 	var predicates_1 = __webpack_require__(9);
-	var queue_1 = __webpack_require__(124);
-	var coreservices_1 = __webpack_require__(20);
-	var pathFactory_1 = __webpack_require__(101);
-	var node_1 = __webpack_require__(83);
-	var transitionService_1 = __webpack_require__(134);
-	var rejectFactory_1 = __webpack_require__(84);
-	var targetState_1 = __webpack_require__(75);
-	var param_1 = __webpack_require__(54);
-	var glob_1 = __webpack_require__(100);
+	var queue_1 = __webpack_require__(122);
+	var coreservices_1 = __webpack_require__(19);
+	var pathFactory_1 = __webpack_require__(99);
+	var node_1 = __webpack_require__(82);
+	var transitionService_1 = __webpack_require__(132);
+	var rejectFactory_1 = __webpack_require__(83);
+	var targetState_1 = __webpack_require__(72);
+	var param_1 = __webpack_require__(53);
+	var glob_1 = __webpack_require__(98);
 	var common_2 = __webpack_require__(5);
 	var common_3 = __webpack_require__(5);
 	var resolveContext_1 = __webpack_require__(47);
@@ -25304,14 +24927,14 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 189:
+/***/ 184:
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @module transition */ /** for typedoc */
 	"use strict";
 	var common_1 = __webpack_require__(5);
 	var predicates_1 = __webpack_require__(9);
-	var transitionHook_1 = __webpack_require__(133);
+	var transitionHook_1 = __webpack_require__(131);
 	var resolveContext_1 = __webpack_require__(47);
 	/**
 	 * This class returns applicable TransitionHooks for a specific Transition instance.
@@ -25438,7 +25061,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 190:
+/***/ 185:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -25446,9 +25069,9 @@ webpackJsonp([2],{
 	var common_1 = __webpack_require__(5);
 	var hof_1 = __webpack_require__(16);
 	var predicates_1 = __webpack_require__(9);
-	var param_1 = __webpack_require__(54);
+	var param_1 = __webpack_require__(53);
 	var predicates_2 = __webpack_require__(9);
-	var param_2 = __webpack_require__(54);
+	var param_2 = __webpack_require__(53);
 	var common_2 = __webpack_require__(5);
 	var common_3 = __webpack_require__(5);
 	/** @hidden */
@@ -25874,17 +25497,17 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 191:
+/***/ 186:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	/** @module url */ /** for typedoc */
 	var common_1 = __webpack_require__(5);
 	var predicates_1 = __webpack_require__(9);
-	var urlMatcher_1 = __webpack_require__(190);
-	var urlMatcherConfig_1 = __webpack_require__(135);
-	var param_1 = __webpack_require__(54);
-	var paramTypes_1 = __webpack_require__(182);
+	var urlMatcher_1 = __webpack_require__(185);
+	var urlMatcherConfig_1 = __webpack_require__(133);
+	var param_1 = __webpack_require__(53);
+	var paramTypes_1 = __webpack_require__(177);
 	/** @hidden */
 	function getDefaultConfig() {
 	    return {
@@ -26002,7 +25625,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 192:
+/***/ 187:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -26025,10 +25648,10 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 3/10/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var ng1_1 = __webpack_require__(18);
-	var networksmodel_1 = __webpack_require__(41);
-	var applicationgroupsmodel_1 = __webpack_require__(56);
-	var crudhelperservice_1 = __webpack_require__(11);
+	var ng1_1 = __webpack_require__(23);
+	var networksmodel_1 = __webpack_require__(39);
+	var applicationgroupsmodel_1 = __webpack_require__(54);
+	var crudhelperservice_1 = __webpack_require__(13);
 	var ApplicationGroupCreateComponent = (function () {
 	    function ApplicationGroupCreateComponent($state, networksModel, applicationGroupsModel, crudHelperService) {
 	        this.$state = $state;
@@ -26109,7 +25732,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 193:
+/***/ 188:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -26129,9 +25752,9 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 3/15/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var ng1_1 = __webpack_require__(18);
-	var applicationgroupsmodel_1 = __webpack_require__(56);
-	var crudhelperservice_1 = __webpack_require__(11);
+	var ng1_1 = __webpack_require__(23);
+	var applicationgroupsmodel_1 = __webpack_require__(54);
+	var crudhelperservice_1 = __webpack_require__(13);
 	var ApplicationGroupDetailsComponent = (function () {
 	    function ApplicationGroupDetailsComponent($state, $stateParams, applicationGroupsModel, crudHelperService) {
 	        this.$state = $state;
@@ -26213,7 +25836,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 194:
+/***/ 189:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26233,10 +25856,10 @@ webpackJsonp([2],{
 	    return function (target, key) { decorator(target, key, paramIndex); }
 	};
 	var core_1 = __webpack_require__(3);
-	var applicationgroupsmodel_1 = __webpack_require__(56);
-	var crudhelperservice_1 = __webpack_require__(11);
-	var rxjs_1 = __webpack_require__(30);
-	var ng1_1 = __webpack_require__(18);
+	var applicationgroupsmodel_1 = __webpack_require__(54);
+	var crudhelperservice_1 = __webpack_require__(13);
+	var rxjs_1 = __webpack_require__(43);
+	var ng1_1 = __webpack_require__(23);
 	var AppGrouplistComponent = (function () {
 	    function AppGrouplistComponent($state, appGroupModel, crudHelperService) {
 	        var _this = this;
@@ -26272,7 +25895,7 @@ webpackJsonp([2],{
 	    AppGrouplistComponent = __decorate([
 	        core_1.Component({
 	            selector: 'app-group',
-	            template: __webpack_require__(493)
+	            template: __webpack_require__(482)
 	        }),
 	        __param(0, core_1.Inject('$state')), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof ng1_1.StateService !== 'undefined' && ng1_1.StateService) === 'function' && _a) || Object, (typeof (_b = typeof applicationgroupsmodel_1.ApplicationGroupsModel !== 'undefined' && applicationgroupsmodel_1.ApplicationGroupsModel) === 'function' && _b) || Object, (typeof (_c = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _c) || Object])
@@ -26285,7 +25908,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 195:
+/***/ 190:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -26327,7 +25950,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 196:
+/***/ 191:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26371,7 +25994,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 197:
+/***/ 192:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -26420,7 +26043,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 198:
+/***/ 193:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26437,7 +26060,7 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(3);
-	var _ = __webpack_require__(29);
+	var _ = __webpack_require__(34);
 	var CtvNamevalueComponent = (function () {
 	    function CtvNamevalueComponent() {
 	        this.itemsChange = new core_1.EventEmitter();
@@ -26507,7 +26130,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 199:
+/***/ 194:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26524,8 +26147,8 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(3);
-	var util_1 = __webpack_require__(74);
-	var _ = __webpack_require__(29);
+	var util_1 = __webpack_require__(81);
+	var _ = __webpack_require__(34);
 	var CtvTableComponent = (function () {
 	    function CtvTableComponent() {
 	        this.filteredinputitems = new core_1.EventEmitter();
@@ -26799,112 +26422,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 200:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	__webpack_require__(73);
-	var _ = __webpack_require__(29);
-	/**
-	 * BaseCollection class that does just fetch of the objects.
-	 * @param $http
-	 * @param $q
-	 * @param url Used for doing HTTP GET and fetch objects from server
-	 * @constructor
-	 */
-	var BaseCollection = (function () {
-	    function BaseCollection(http, url) {
-	        this.http = http;
-	        this.url = url;
-	        this.models = [];
-	        this.url = url;
-	    }
-	    /**
-	     *
-	     * @param reload Optional. Default is false
-	     * @returns {*}
-	     */
-	    BaseCollection.prototype.get = function (reload) {
-	        var collection = this;
-	        if (reload === undefined)
-	            reload = false;
-	        return (!reload && collection.models.length > 0) ?
-	            new Promise(function (resolve) {
-	                resolve(collection.models);
-	            }) : collection.http.get(collection.url).map(function (res) { return res.json(); }).toPromise()
-	            .then(function (result) {
-	            collection.models = result;
-	            return collection.models;
-	        });
-	    };
-	    ;
-	    /**
-	     *
-	     * @param key
-	     * @param reload Optional. Default is false
-	     * @param keyname
-	     * @returns {*}
-	     */
-	    BaseCollection.prototype.getModelByKey = function (key, reload, keyname) {
-	        var collection = this;
-	        if (reload === undefined)
-	            reload = false;
-	        if (keyname === undefined)
-	            keyname = 'key';
-	        var promise = new Promise(function (resolve) {
-	            if (!reload && collection.models.length > 0) {
-	                resolve(findModel());
-	            }
-	            else {
-	                collection.get(reload)
-	                    .then(function () {
-	                    resolve(findModel());
-	                });
-	            }
-	        });
-	        function findModel() {
-	            return _.find(collection.models, function (c) {
-	                return c[keyname] == key;
-	            });
-	        }
-	        return promise;
-	    };
-	    ;
-	    /**
-	     *
-	     * @param model
-	     * @param reload Optional. Default is false
-	     * @returns {*}
-	     */
-	    BaseCollection.prototype.getModel = function (model, reload) {
-	        var collection = this;
-	        if (reload === undefined)
-	            reload = false;
-	        var promise = new Promise(function (resolve) {
-	            if (!reload && collection.models.length > 0) {
-	                resolve(findModel());
-	            }
-	            else {
-	                collection.get(reload)
-	                    .then(function () {
-	                    resolve(findModel());
-	                });
-	            }
-	        });
-	        function findModel() {
-	            return _.find(collection.models, model);
-	        }
-	        return promise;
-	    };
-	    ;
-	    return BaseCollection;
-	}());
-	exports.BaseCollection = BaseCollection;
-	
-
-/***/ },
-
-/***/ 201:
+/***/ 195:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -26922,20 +26440,14 @@ webpackJsonp([2],{
 	 */
 	var core_1 = __webpack_require__(3);
 	var Observable_1 = __webpack_require__(1);
-	var applicationgroupsmodel_1 = __webpack_require__(56);
-	var policiesmodel_1 = __webpack_require__(65);
-	var storagepoliciesmodel_1 = __webpack_require__(103);
-	var nodesmodel_1 = __webpack_require__(138);
-	var networksmodel_1 = __webpack_require__(41);
-	var volumesmodel_1 = __webpack_require__(85);
+	var applicationgroupsmodel_1 = __webpack_require__(54);
+	var policiesmodel_1 = __webpack_require__(64);
+	var networksmodel_1 = __webpack_require__(39);
 	var DashboardComponent = (function () {
-	    function DashboardComponent(nodesModel, networksModel, volumesModel, applicationGroupsModel, policiesModel, storagePoliciesModel) {
-	        this.nodesModel = nodesModel;
+	    function DashboardComponent(networksModel, applicationGroupsModel, policiesModel) {
 	        this.networksModel = networksModel;
-	        this.volumesModel = volumesModel;
 	        this.applicationGroupsModel = applicationGroupsModel;
 	        this.policiesModel = policiesModel;
-	        this.storagePoliciesModel = storagePoliciesModel;
 	        this.nodes = 0;
 	        this.networks = 0;
 	        this.volumes = 0;
@@ -26944,17 +26456,9 @@ webpackJsonp([2],{
 	        this.storagepolicies = 0;
 	        var dashboardComponent = this;
 	        function getDashboardInfo(reload) {
-	            nodesModel.get(reload)
-	                .then(function (result) {
-	                dashboardComponent.nodes = result.length;
-	            });
 	            networksModel.get(reload)
 	                .then(function (result) {
 	                dashboardComponent.networks = result.length;
-	            });
-	            volumesModel.get(reload)
-	                .then(function (result) {
-	                dashboardComponent.volumes = result.length;
 	            });
 	            applicationGroupsModel.get(reload)
 	                .then(function (result) {
@@ -26963,10 +26467,6 @@ webpackJsonp([2],{
 	            policiesModel.get(reload)
 	                .then(function (result) {
 	                dashboardComponent.networkpolicies = result.length;
-	            });
-	            storagePoliciesModel.get(reload)
-	                .then(function (result) {
-	                dashboardComponent.storagepolicies = result.length;
 	            });
 	        }
 	        //Load from cache for quick display initially
@@ -26991,17 +26491,17 @@ webpackJsonp([2],{
 	            selector: 'dashboard',
 	            templateUrl: 'dashboard/dashboard.html'
 	        }), 
-	        __metadata('design:paramtypes', [(typeof (_a = typeof nodesmodel_1.NodesModel !== 'undefined' && nodesmodel_1.NodesModel) === 'function' && _a) || Object, (typeof (_b = typeof networksmodel_1.NetworksModel !== 'undefined' && networksmodel_1.NetworksModel) === 'function' && _b) || Object, (typeof (_c = typeof volumesmodel_1.VolumesModel !== 'undefined' && volumesmodel_1.VolumesModel) === 'function' && _c) || Object, (typeof (_d = typeof applicationgroupsmodel_1.ApplicationGroupsModel !== 'undefined' && applicationgroupsmodel_1.ApplicationGroupsModel) === 'function' && _d) || Object, (typeof (_e = typeof policiesmodel_1.PoliciesModel !== 'undefined' && policiesmodel_1.PoliciesModel) === 'function' && _e) || Object, (typeof (_f = typeof storagepoliciesmodel_1.StoragePoliciesModel !== 'undefined' && storagepoliciesmodel_1.StoragePoliciesModel) === 'function' && _f) || Object])
+	        __metadata('design:paramtypes', [(typeof (_a = typeof networksmodel_1.NetworksModel !== 'undefined' && networksmodel_1.NetworksModel) === 'function' && _a) || Object, (typeof (_b = typeof applicationgroupsmodel_1.ApplicationGroupsModel !== 'undefined' && applicationgroupsmodel_1.ApplicationGroupsModel) === 'function' && _b) || Object, (typeof (_c = typeof policiesmodel_1.PoliciesModel !== 'undefined' && policiesmodel_1.PoliciesModel) === 'function' && _c) || Object])
 	    ], DashboardComponent);
 	    return DashboardComponent;
-	    var _a, _b, _c, _d, _e, _f;
+	    var _a, _b, _c;
 	}());
 	exports.DashboardComponent = DashboardComponent;
 	
 
 /***/ },
 
-/***/ 202:
+/***/ 196:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27022,10 +26522,10 @@ webpackJsonp([2],{
 	 * Created by hardik gandhi on 6/14/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var ng1_1 = __webpack_require__(18);
-	var netprofilesmodel_1 = __webpack_require__(77);
-	var crudhelperservice_1 = __webpack_require__(11);
-	var networkpoliciestabsctrl_1 = __webpack_require__(79);
+	var ng1_1 = __webpack_require__(23);
+	var netprofilesmodel_1 = __webpack_require__(75);
+	var crudhelperservice_1 = __webpack_require__(13);
+	var networkpoliciestabsctrl_1 = __webpack_require__(77);
 	var BandwidthPolicyCreateComponent = (function () {
 	    function BandwidthPolicyCreateComponent($state, netprofilesModel, crudHelperService) {
 	        this.$state = $state;
@@ -27084,7 +26584,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 203:
+/***/ 197:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27104,10 +26604,10 @@ webpackJsonp([2],{
 	 * Created by hardik gandhi on 6/16/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var netprofilesmodel_1 = __webpack_require__(77);
-	var crudhelperservice_1 = __webpack_require__(11);
-	var ng1_1 = __webpack_require__(18);
-	var networkpoliciestabsctrl_1 = __webpack_require__(79);
+	var netprofilesmodel_1 = __webpack_require__(75);
+	var crudhelperservice_1 = __webpack_require__(13);
+	var ng1_1 = __webpack_require__(23);
+	var networkpoliciestabsctrl_1 = __webpack_require__(77);
 	var BandwidthPolicyDetailsComponent = (function () {
 	    function BandwidthPolicyDetailsComponent($state, $stateParams, netprofilesModel, crudHelperService) {
 	        this.$state = $state;
@@ -27194,7 +26694,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 204:
+/***/ 198:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27214,10 +26714,10 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 3/10/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var policiesmodel_1 = __webpack_require__(65);
-	var crudhelperservice_1 = __webpack_require__(11);
-	var ng1_1 = __webpack_require__(18);
-	var networkpoliciestabsctrl_1 = __webpack_require__(79);
+	var policiesmodel_1 = __webpack_require__(64);
+	var crudhelperservice_1 = __webpack_require__(13);
+	var ng1_1 = __webpack_require__(23);
+	var networkpoliciestabsctrl_1 = __webpack_require__(77);
 	var IsolationPolicyCreateComponent = (function () {
 	    function IsolationPolicyCreateComponent($state, policiesModel, crudHelperService) {
 	        this.$state = $state;
@@ -27272,7 +26772,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 205:
+/***/ 199:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27292,13 +26792,13 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 3/8/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var policiesmodel_1 = __webpack_require__(65);
-	var rulesmodel_1 = __webpack_require__(102);
-	var networksmodel_1 = __webpack_require__(41);
-	var applicationgroupsmodel_1 = __webpack_require__(56);
-	var crudhelperservice_1 = __webpack_require__(11);
-	var ng1_1 = __webpack_require__(18);
-	var networkpoliciestabsctrl_1 = __webpack_require__(79);
+	var policiesmodel_1 = __webpack_require__(64);
+	var rulesmodel_1 = __webpack_require__(100);
+	var networksmodel_1 = __webpack_require__(39);
+	var applicationgroupsmodel_1 = __webpack_require__(54);
+	var crudhelperservice_1 = __webpack_require__(13);
+	var ng1_1 = __webpack_require__(23);
+	var networkpoliciestabsctrl_1 = __webpack_require__(77);
 	var IsolationPolicyDetailsComponent = (function () {
 	    function IsolationPolicyDetailsComponent($state, $stateParams, policiesModel, rulesModel, networksModel, applicationGroupsModel, crudHelperService) {
 	        this.$state = $state;
@@ -27667,7 +27167,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 206:
+/***/ 200:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27687,9 +27187,9 @@ webpackJsonp([2],{
 	    return function (target, key) { decorator(target, key, paramIndex); }
 	};
 	var core_1 = __webpack_require__(3);
-	var networksmodel_1 = __webpack_require__(41);
-	var crudhelperservice_1 = __webpack_require__(11);
-	var ng1_1 = __webpack_require__(18);
+	var networksmodel_1 = __webpack_require__(39);
+	var crudhelperservice_1 = __webpack_require__(13);
+	var ng1_1 = __webpack_require__(23);
 	var NetworkCreateComponent = (function () {
 	    function NetworkCreateComponent($state, networksModel, crudHelperService) {
 	        this.$state = $state;
@@ -27741,7 +27241,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 207:
+/***/ 201:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27761,13 +27261,13 @@ webpackJsonp([2],{
 	    return function (target, key) { decorator(target, key, paramIndex); }
 	};
 	var core_1 = __webpack_require__(3);
-	var crudhelperservice_1 = __webpack_require__(11);
-	var rxjs_1 = __webpack_require__(30);
-	var ng1_1 = __webpack_require__(18);
-	var applicationgroupsmodel_1 = __webpack_require__(56);
-	var networksmodel_1 = __webpack_require__(41);
-	var util_1 = __webpack_require__(74);
-	var _ = __webpack_require__(29);
+	var crudhelperservice_1 = __webpack_require__(13);
+	var rxjs_1 = __webpack_require__(43);
+	var ng1_1 = __webpack_require__(23);
+	var applicationgroupsmodel_1 = __webpack_require__(54);
+	var networksmodel_1 = __webpack_require__(39);
+	var util_1 = __webpack_require__(81);
+	var _ = __webpack_require__(34);
 	var NetworkdetailsComponent = (function () {
 	    function NetworkdetailsComponent($state, applicationGroupsModel, networksModel, crudHelperService) {
 	        var _this = this;
@@ -27850,7 +27350,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 208:
+/***/ 202:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27870,10 +27370,10 @@ webpackJsonp([2],{
 	    return function (target, key) { decorator(target, key, paramIndex); }
 	};
 	var core_1 = __webpack_require__(3);
-	var networksmodel_1 = __webpack_require__(41);
-	var crudhelperservice_1 = __webpack_require__(11);
-	var rxjs_1 = __webpack_require__(30);
-	var ng1_1 = __webpack_require__(18);
+	var networksmodel_1 = __webpack_require__(39);
+	var crudhelperservice_1 = __webpack_require__(13);
+	var rxjs_1 = __webpack_require__(43);
+	var ng1_1 = __webpack_require__(23);
 	var NetworkListComponent = (function () {
 	    function NetworkListComponent($state, networksModel, crudHelperService) {
 	        var _this = this;
@@ -27909,7 +27409,7 @@ webpackJsonp([2],{
 	    NetworkListComponent = __decorate([
 	        core_1.Component({
 	            selector: 'networkList',
-	            template: __webpack_require__(494)
+	            template: __webpack_require__(483)
 	        }),
 	        __param(0, core_1.Inject('$state')), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof ng1_1.StateService !== 'undefined' && ng1_1.StateService) === 'function' && _a) || Object, (typeof (_b = typeof networksmodel_1.NetworksModel !== 'undefined' && networksmodel_1.NetworksModel) === 'function' && _b) || Object, (typeof (_c = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _c) || Object])
@@ -27922,7 +27422,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 209:
+/***/ 203:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -27942,10 +27442,10 @@ webpackJsonp([2],{
 	    return function (target, key) { decorator(target, key, paramIndex); }
 	};
 	var core_1 = __webpack_require__(3);
-	var crudhelperservice_1 = __webpack_require__(11);
-	var rxjs_1 = __webpack_require__(30);
-	var ng1_1 = __webpack_require__(18);
-	var organizationsmodel_1 = __webpack_require__(139);
+	var crudhelperservice_1 = __webpack_require__(13);
+	var rxjs_1 = __webpack_require__(43);
+	var ng1_1 = __webpack_require__(23);
+	var organizationsmodel_1 = __webpack_require__(136);
 	var OrganizationListComponent = (function () {
 	    function OrganizationListComponent($state, organizationsModel, crudHelperService) {
 	        var _this = this;
@@ -27994,7 +27494,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 210:
+/***/ 204:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -28014,11 +27514,11 @@ webpackJsonp([2],{
 	    return function (target, key) { decorator(target, key, paramIndex); }
 	};
 	var core_1 = __webpack_require__(3);
-	var crudhelperservice_1 = __webpack_require__(11);
-	var ng1_1 = __webpack_require__(18);
-	var servicelbsmodel_1 = __webpack_require__(78);
-	var networksmodel_1 = __webpack_require__(41);
-	var _ = __webpack_require__(29);
+	var crudhelperservice_1 = __webpack_require__(13);
+	var ng1_1 = __webpack_require__(23);
+	var servicelbsmodel_1 = __webpack_require__(76);
+	var networksmodel_1 = __webpack_require__(39);
+	var _ = __webpack_require__(34);
 	var ServicelbCreateComponent = (function () {
 	    function ServicelbCreateComponent($state, servicelbsModel, crudHelperService, networksModel) {
 	        this.$state = $state;
@@ -28092,7 +27592,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 211:
+/***/ 205:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -28112,10 +27612,10 @@ webpackJsonp([2],{
 	    return function (target, key) { decorator(target, key, paramIndex); }
 	};
 	var core_1 = __webpack_require__(3);
-	var ng1_1 = __webpack_require__(18);
-	var servicelbinfoctrl_1 = __webpack_require__(212);
-	var servicelbstatsctrl_1 = __webpack_require__(214);
-	var _ = __webpack_require__(29);
+	var ng1_1 = __webpack_require__(23);
+	var servicelbinfoctrl_1 = __webpack_require__(206);
+	var servicelbstatsctrl_1 = __webpack_require__(208);
+	var _ = __webpack_require__(34);
 	var ServicelbDetailsComponent = (function () {
 	    function ServicelbDetailsComponent($state) {
 	        this.$state = $state;
@@ -28164,7 +27664,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 212:
+/***/ 206:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -28184,10 +27684,10 @@ webpackJsonp([2],{
 	    return function (target, key) { decorator(target, key, paramIndex); }
 	};
 	var core_1 = __webpack_require__(3);
-	var crudhelperservice_1 = __webpack_require__(11);
-	var ng1_1 = __webpack_require__(18);
-	var servicelbsmodel_1 = __webpack_require__(78);
-	var _ = __webpack_require__(29);
+	var crudhelperservice_1 = __webpack_require__(13);
+	var ng1_1 = __webpack_require__(23);
+	var servicelbsmodel_1 = __webpack_require__(76);
+	var _ = __webpack_require__(34);
 	var ServicelbInfoComponent = (function () {
 	    function ServicelbInfoComponent($state, servicelbsModel, crudHelperService, ngZone) {
 	        this.$state = $state;
@@ -28321,7 +27821,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 213:
+/***/ 207:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -28341,10 +27841,10 @@ webpackJsonp([2],{
 	    return function (target, key) { decorator(target, key, paramIndex); }
 	};
 	var core_1 = __webpack_require__(3);
-	var crudhelperservice_1 = __webpack_require__(11);
-	var rxjs_1 = __webpack_require__(30);
-	var ng1_1 = __webpack_require__(18);
-	var servicelbsmodel_1 = __webpack_require__(78);
+	var crudhelperservice_1 = __webpack_require__(13);
+	var rxjs_1 = __webpack_require__(43);
+	var ng1_1 = __webpack_require__(23);
+	var servicelbsmodel_1 = __webpack_require__(76);
 	var ServicelbListComponent = (function () {
 	    function ServicelbListComponent($state, servicelbsModel, crudHelperService) {
 	        var _this = this;
@@ -28393,7 +27893,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 214:
+/***/ 208:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28407,11 +27907,11 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(3);
-	var crudhelperservice_1 = __webpack_require__(11);
-	var rxjs_1 = __webpack_require__(30);
-	var inspectservice_1 = __webpack_require__(104);
-	var util_1 = __webpack_require__(74);
-	var servicelbsmodel_1 = __webpack_require__(78);
+	var crudhelperservice_1 = __webpack_require__(13);
+	var rxjs_1 = __webpack_require__(43);
+	var inspectservice_1 = __webpack_require__(101);
+	var util_1 = __webpack_require__(81);
+	var servicelbsmodel_1 = __webpack_require__(76);
 	var ServicelbStatComponent = (function () {
 	    function ServicelbStatComponent(servicelbsModel, crudHelperService, inspectSerrvice, ngZone) {
 	        var _this = this;
@@ -28492,7 +27992,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 215:
+/***/ 209:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28506,8 +28006,8 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(3);
-	var crudhelperservice_1 = __webpack_require__(11);
-	var nodesservice_1 = __webpack_require__(141);
+	var crudhelperservice_1 = __webpack_require__(13);
+	var nodesservice_1 = __webpack_require__(138);
 	var ClusterSettingsComponent = (function () {
 	    function ClusterSettingsComponent(crudHelperService, nodesService) {
 	        this.nodesService = nodesService;
@@ -28566,7 +28066,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 216:
+/***/ 210:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28580,8 +28080,8 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(3);
-	var crudhelperservice_1 = __webpack_require__(11);
-	var networkservice_1 = __webpack_require__(140);
+	var crudhelperservice_1 = __webpack_require__(13);
+	var networkservice_1 = __webpack_require__(137);
 	var NetworkSettingsComponent = (function () {
 	    function NetworkSettingsComponent(crudHelperService, networkService) {
 	        this.crudHelperService = crudHelperService;
@@ -28628,349 +28128,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 217:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	var core_1 = __webpack_require__(3);
-	var crudhelperservice_1 = __webpack_require__(11);
-	var volumesettingservice_1 = __webpack_require__(142);
-	var VolumeSettingsComponent = (function () {
-	    function VolumeSettingsComponent(crudHelperService, volumeSettingService) {
-	        this.crudHelperService = crudHelperService;
-	        this.volumeSettingService = volumeSettingService;
-	        this.setting = {};
-	        var volumeSettingCtrl = this;
-	        function getVolumeSettings() {
-	            volumeSettingCtrl.volumeSettingService.getSettings().then(function successCallback(result) {
-	                volumeSettingCtrl.setting = result;
-	            }, function errorCallback(result) {
-	            });
-	        }
-	        getVolumeSettings();
-	        volumeSettingCtrl.crudHelperService.stopLoader(volumeSettingCtrl);
-	        volumeSettingCtrl.crudHelperService.hideServerError(volumeSettingCtrl);
-	    }
-	    VolumeSettingsComponent.prototype.updateVolumeSettings = function (validform) {
-	        var volumeSettingCtrl = this;
-	        if (validform) {
-	            volumeSettingCtrl.crudHelperService.hideServerError(volumeSettingCtrl);
-	            volumeSettingCtrl.crudHelperService.startLoader(volumeSettingCtrl);
-	            volumeSettingCtrl.volumeSettingService.updateSettings(volumeSettingCtrl.setting).then(function successCallback(result) {
-	                volumeSettingCtrl.crudHelperService.stopLoader(volumeSettingCtrl);
-	            }, function errorCallback(result) {
-	                volumeSettingCtrl.crudHelperService.stopLoader(volumeSettingCtrl);
-	                volumeSettingCtrl.crudHelperService.showServerError(volumeSettingCtrl, result);
-	            });
-	        }
-	    };
-	    VolumeSettingsComponent = __decorate([
-	        core_1.Component({
-	            selector: 'volumesetting',
-	            templateUrl: 'settings/volumesettings.html'
-	        }), 
-	        __metadata('design:paramtypes', [(typeof (_a = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _a) || Object, (typeof (_b = typeof volumesettingservice_1.VolumeSettingService !== 'undefined' && volumesettingservice_1.VolumeSettingService) === 'function' && _b) || Object])
-	    ], VolumeSettingsComponent);
-	    return VolumeSettingsComponent;
-	    var _a, _b;
-	}());
-	exports.VolumeSettingsComponent = VolumeSettingsComponent;
-	
-
-/***/ },
-
-/***/ 218:
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Created by cshampur on 10/14/16.
-	 */
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	var __param = (this && this.__param) || function (paramIndex, decorator) {
-	    return function (target, key) { decorator(target, key, paramIndex); }
-	};
-	var core_1 = __webpack_require__(3);
-	var crudhelperservice_1 = __webpack_require__(11);
-	var rxjs_1 = __webpack_require__(30);
-	var ng1_1 = __webpack_require__(18);
-	var storagepoliciesmodel_1 = __webpack_require__(103);
-	var StoragepolicyListComponent = (function () {
-	    function StoragepolicyListComponent($state, storagePoliciesModel, crudHelperService) {
-	        var _this = this;
-	        this.$state = $state;
-	        this.storagePoliciesModel = storagePoliciesModel;
-	        this.crudHelperService = crudHelperService;
-	        this.storagePolicyListCtrl = this;
-	        this['showLoader'] = true;
-	        this.refresh = rxjs_1.Observable.interval(5000).subscribe(function () {
-	            _this.getPolicies(true);
-	        });
-	    }
-	    StoragepolicyListComponent.prototype.ngOnInit = function () {
-	        this.crudHelperService.startLoader(this);
-	        this.getPolicies(false);
-	    };
-	    StoragepolicyListComponent.prototype.getPolicies = function (reload) {
-	        var storagePolicyListCtrl = this;
-	        this.storagePoliciesModel.get(reload)
-	            .then(function successCallback(result) {
-	            storagePolicyListCtrl['policies'] = result;
-	            storagePolicyListCtrl.crudHelperService.stopLoader(storagePolicyListCtrl);
-	        }, function errorCallback(result) {
-	            storagePolicyListCtrl.crudHelperService.stopLoader(storagePolicyListCtrl);
-	        });
-	    };
-	    StoragepolicyListComponent.prototype.create = function () {
-	        this.$state.go('contiv.menu.storagepolicies.create');
-	    };
-	    StoragepolicyListComponent.prototype.ngOnDestroy = function () {
-	        this.refresh.unsubscribe();
-	    };
-	    StoragepolicyListComponent = __decorate([
-	        core_1.Component({
-	            selector: 'storagepolicylist',
-	            templateUrl: 'storage_policies/storagepolicylist.html'
-	        }),
-	        __param(0, core_1.Inject('$state')), 
-	        __metadata('design:paramtypes', [(typeof (_a = typeof ng1_1.StateService !== 'undefined' && ng1_1.StateService) === 'function' && _a) || Object, (typeof (_b = typeof storagepoliciesmodel_1.StoragePoliciesModel !== 'undefined' && storagepoliciesmodel_1.StoragePoliciesModel) === 'function' && _b) || Object, (typeof (_c = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _c) || Object])
-	    ], StoragepolicyListComponent);
-	    return StoragepolicyListComponent;
-	    var _a, _b, _c;
-	}());
-	exports.StoragepolicyListComponent = StoragepolicyListComponent;
-	
-
-/***/ },
-
-/***/ 219:
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Created by cshampur on 10/14/16.
-	 */
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	var __param = (this && this.__param) || function (paramIndex, decorator) {
-	    return function (target, key) { decorator(target, key, paramIndex); }
-	};
-	var core_1 = __webpack_require__(3);
-	var crudhelperservice_1 = __webpack_require__(11);
-	var rxjs_1 = __webpack_require__(30);
-	var ng1_1 = __webpack_require__(18);
-	var volumesmodel_1 = __webpack_require__(85);
-	var volumeservice_1 = __webpack_require__(143);
-	var util_1 = __webpack_require__(74);
-	var VolumeDetailsComponent = (function () {
-	    function VolumeDetailsComponent($state, volumesModel, crudHelperService, volumeService) {
-	        var _this = this;
-	        this.$state = $state;
-	        this.volumesModel = volumesModel;
-	        this.crudHelperService = crudHelperService;
-	        this.volumeService = volumeService;
-	        this['snapshots'] = [];
-	        this['volumeUse'] = { Hostname: '', Reason: '' };
-	        this.volume = { policy: '',
-	            driver: { pool: '' },
-	            create: { size: '', filesystem: '' },
-	            runtime: { snapshot: { frequency: '', keep: '' },
-	                'rate-limit': { 'write-iops': '', 'read-iops': '', 'write-bps': '', 'read-bps': '' } },
-	            backends: { crud: '', mount: '', snapshot: '' }
-	        };
-	        this['showLoader'] = true;
-	        this['showServerError'] = false;
-	        this['serverErrorMessage'] = '';
-	        this.refresh = rxjs_1.Observable.interval(5000).subscribe(function () {
-	            _this.getVolumesInfo(true);
-	        });
-	        this.volumeDetailsCtrl = this;
-	    }
-	    VolumeDetailsComponent.prototype.ngOnInit = function () {
-	        this.crudHelperService.startLoader(this);
-	        this.getVolumesInfo(false);
-	    };
-	    VolumeDetailsComponent.prototype.getVolumesInfo = function (reload) {
-	        var tokens = this.$state.params['key'].toString().split('/');
-	        var volumeDetailsCtrl = this;
-	        var model = { policy: tokens[0], name: tokens[1] };
-	        this.volumesModel.getModel(model, reload)
-	            .then(function (volume) {
-	            volumeDetailsCtrl['volume'] = volume;
-	            volumeDetailsCtrl.getVolumeUseInfo();
-	            volumeDetailsCtrl.getVolumeSnapshots();
-	        });
-	    };
-	    VolumeDetailsComponent.prototype.getVolumeUseInfo = function () {
-	        var volumeDetailsCtrl = this;
-	        this.volumeService.getVolumeUseInfo(volumeDetailsCtrl.volume)
-	            .subscribe(function (result) {
-	            if (!util_1.isUndefined(result))
-	                volumeDetailsCtrl['volumeUse'] = result;
-	        }, function (error) {
-	            console.log("Error with volume use Info" + error);
-	        });
-	    };
-	    VolumeDetailsComponent.prototype.getVolumeSnapshots = function () {
-	        var volumeDetailsCtrl = this;
-	        this.volumeService.getVolumeSnapshot(volumeDetailsCtrl.volume)
-	            .subscribe(function (result) {
-	            if (!util_1.isUndefined(result))
-	                volumeDetailsCtrl['snapshots'] = result;
-	            volumeDetailsCtrl.crudHelperService.stopLoader(volumeDetailsCtrl);
-	        }, function (error) {
-	            volumeDetailsCtrl.crudHelperService.stopLoader(volumeDetailsCtrl);
-	        });
-	    };
-	    VolumeDetailsComponent.prototype.triggerVolumeSnapshot = function () {
-	        var volumeDetailsCtrl = this;
-	        this.volumeDetailsCtrl['snapshotSuccess'] = false;
-	        this.crudHelperService.hideServerError(this);
-	        this.crudHelperService.startLoader(this);
-	        this.volumeService.triggerSnapshot(volumeDetailsCtrl.volume)
-	            .subscribe(function (result) {
-	            volumeDetailsCtrl.crudHelperService.stopLoader(volumeDetailsCtrl);
-	            volumeDetailsCtrl['snapshotSuccess'] = true;
-	        }, function (error) {
-	            volumeDetailsCtrl.crudHelperService.stopLoader(volumeDetailsCtrl);
-	            volumeDetailsCtrl.crudHelperService.showServerError(volumeDetailsCtrl, error);
-	        });
-	    };
-	    VolumeDetailsComponent.prototype.copysnapshot = function (snapshot, policy, volume) {
-	        this.$state.go('contiv.menu.volumes.copy', { snapshot: snapshot, policy: policy, volume: volume });
-	    };
-	    VolumeDetailsComponent.prototype.deleteVolume = function () {
-	        var _this = this;
-	        var volumeDetailsCtrl = this;
-	        this.crudHelperService.hideServerError(this);
-	        this.crudHelperService.startLoader(this);
-	        this.volumesModel.delete(volumeDetailsCtrl.volume)
-	            .then(function (result) {
-	            volumeDetailsCtrl.crudHelperService.stopLoader(volumeDetailsCtrl);
-	            _this.returnToVolumes();
-	        }, function (error) {
-	            volumeDetailsCtrl.crudHelperService.showServerError(volumeDetailsCtrl, error);
-	        });
-	    };
-	    VolumeDetailsComponent.prototype.returnToVolumes = function () {
-	        this.$state.go('contiv.menu.volumes.list');
-	    };
-	    VolumeDetailsComponent.prototype.ngOnDestroy = function () {
-	        this.refresh.unsubscribe();
-	    };
-	    VolumeDetailsComponent = __decorate([
-	        core_1.Component({
-	            selector: 'volumedetails',
-	            templateUrl: "volumes/volumedetails.html"
-	        }),
-	        __param(0, core_1.Inject('$state')), 
-	        __metadata('design:paramtypes', [(typeof (_a = typeof ng1_1.StateService !== 'undefined' && ng1_1.StateService) === 'function' && _a) || Object, (typeof (_b = typeof volumesmodel_1.VolumesModel !== 'undefined' && volumesmodel_1.VolumesModel) === 'function' && _b) || Object, (typeof (_c = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _c) || Object, (typeof (_d = typeof volumeservice_1.VolumeService !== 'undefined' && volumeservice_1.VolumeService) === 'function' && _d) || Object])
-	    ], VolumeDetailsComponent);
-	    return VolumeDetailsComponent;
-	    var _a, _b, _c, _d;
-	}());
-	exports.VolumeDetailsComponent = VolumeDetailsComponent;
-	
-
-/***/ },
-
-/***/ 220:
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Created by cshampur on 10/14/16.
-	 */
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	var __param = (this && this.__param) || function (paramIndex, decorator) {
-	    return function (target, key) { decorator(target, key, paramIndex); }
-	};
-	var core_1 = __webpack_require__(3);
-	var crudhelperservice_1 = __webpack_require__(11);
-	var rxjs_1 = __webpack_require__(30);
-	var ng1_1 = __webpack_require__(18);
-	var volumesmodel_1 = __webpack_require__(85);
-	var VolumeListComponent = (function () {
-	    function VolumeListComponent($state, volumesModel, crudHelperService) {
-	        var _this = this;
-	        this.$state = $state;
-	        this.volumesModel = volumesModel;
-	        this.crudHelperService = crudHelperService;
-	        this.volumeListCtrl = this;
-	        this['showLoader'] = true;
-	        this.refresh = rxjs_1.Observable.interval(5000).subscribe(function () {
-	            _this.getVolumes(true);
-	        });
-	    }
-	    VolumeListComponent.prototype.ngOnInit = function () {
-	        this.crudHelperService.startLoader(this);
-	        this.getVolumes(false);
-	    };
-	    VolumeListComponent.prototype.getVolumes = function (reload) {
-	        var volumeListCtrl = this;
-	        this.volumesModel.get(reload)
-	            .then(function successCallback(result) {
-	            volumeListCtrl['volumes'] = result;
-	            volumeListCtrl.crudHelperService.stopLoader(volumeListCtrl);
-	        }, function errorCallback(result) {
-	            volumeListCtrl.crudHelperService.stopLoader(volumeListCtrl);
-	        });
-	    };
-	    VolumeListComponent.prototype.create = function () {
-	        this.$state.go('contiv.menu.volumes.create');
-	    };
-	    VolumeListComponent.prototype.ngOnDestroy = function () {
-	        this.refresh.unsubscribe();
-	    };
-	    VolumeListComponent = __decorate([
-	        core_1.Component({
-	            selector: 'volumelist',
-	            templateUrl: "volumes/volumelist.html"
-	        }),
-	        __param(0, core_1.Inject('$state')), 
-	        __metadata('design:paramtypes', [(typeof (_a = typeof ng1_1.StateService !== 'undefined' && ng1_1.StateService) === 'function' && _a) || Object, (typeof (_b = typeof volumesmodel_1.VolumesModel !== 'undefined' && volumesmodel_1.VolumesModel) === 'function' && _b) || Object, (typeof (_c = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _c) || Object])
-	    ], VolumeListComponent);
-	    return VolumeListComponent;
-	    var _a, _b, _c;
-	}());
-	exports.VolumeListComponent = VolumeListComponent;
-	
-
-/***/ },
-
-/***/ 291:
+/***/ 281:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28979,18 +28137,18 @@ webpackJsonp([2],{
 	}
 	/** @module common */ /** for typedoc */
 	__export(__webpack_require__(5));
-	__export(__webpack_require__(20));
-	__export(__webpack_require__(100));
+	__export(__webpack_require__(19));
+	__export(__webpack_require__(98));
 	__export(__webpack_require__(16));
 	__export(__webpack_require__(9));
-	__export(__webpack_require__(124));
-	__export(__webpack_require__(40));
+	__export(__webpack_require__(122));
+	__export(__webpack_require__(38));
 	__export(__webpack_require__(46));
 	//# sourceMappingURL=module.js.map
 
 /***/ },
 
-/***/ 292:
+/***/ 282:
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @module common */ /** */
@@ -28998,26 +28156,26 @@ webpackJsonp([2],{
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(291));
-	__export(__webpack_require__(305));
-	__export(__webpack_require__(306));
-	__export(__webpack_require__(307));
-	__export(__webpack_require__(308));
-	__export(__webpack_require__(309));
-	__export(__webpack_require__(310));
-	__export(__webpack_require__(311));
-	__export(__webpack_require__(179));
-	var router_1 = __webpack_require__(128);
+	__export(__webpack_require__(281));
+	__export(__webpack_require__(295));
+	__export(__webpack_require__(296));
+	__export(__webpack_require__(297));
+	__export(__webpack_require__(298));
+	__export(__webpack_require__(299));
+	__export(__webpack_require__(300));
+	__export(__webpack_require__(301));
+	__export(__webpack_require__(174));
+	var router_1 = __webpack_require__(126);
 	exports.UIRouter = router_1.UIRouter;
 	//# sourceMappingURL=core.js.map
 
 /***/ },
 
-/***/ 293:
+/***/ 283:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var coreservices_1 = __webpack_require__(20);
+	var coreservices_1 = __webpack_require__(19);
 	/**
 	 * A [[TransitionHookFn]] that lazy loads a state tree.
 	 *
@@ -29081,7 +28239,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 294:
+/***/ 284:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -29142,14 +28300,14 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 295:
+/***/ 285:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	/** @module hooks */ /** */
 	var predicates_1 = __webpack_require__(9);
-	var coreservices_1 = __webpack_require__(20);
-	var targetState_1 = __webpack_require__(75);
+	var coreservices_1 = __webpack_require__(19);
+	var targetState_1 = __webpack_require__(72);
 	/**
 	 * A [[TransitionHookFn]] that redirects to a different state or params
 	 *
@@ -29182,7 +28340,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 296:
+/***/ 286:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29229,7 +28387,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 297:
+/***/ 287:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -29259,13 +28417,13 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 298:
+/***/ 288:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	/** @module hooks */ /** for typedoc */
 	var common_1 = __webpack_require__(5);
-	var coreservices_1 = __webpack_require__(20);
+	var coreservices_1 = __webpack_require__(19);
 	/**
 	 * A [[TransitionHookFn]] which waits for the views to load
 	 *
@@ -29310,7 +28468,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 299:
+/***/ 289:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29321,7 +28479,7 @@ webpackJsonp([2],{
 	 *
 	 * @preferred @module ng1_directives
 	 */ /** for typedoc */
-	var angular = __webpack_require__(76);
+	var angular = __webpack_require__(73);
 	var common_1 = __webpack_require__(5);
 	var predicates_1 = __webpack_require__(9);
 	var hof_1 = __webpack_require__(16);
@@ -29725,7 +28883,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 300:
+/***/ 290:
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @module ng1_directives */ /** for typedoc */
@@ -29733,12 +28891,12 @@ webpackJsonp([2],{
 	var common_1 = __webpack_require__(5);
 	var predicates_1 = __webpack_require__(9);
 	var trace_1 = __webpack_require__(46);
-	var views_1 = __webpack_require__(126);
+	var views_1 = __webpack_require__(124);
 	var hof_1 = __webpack_require__(16);
 	var resolveContext_1 = __webpack_require__(47);
-	var strings_1 = __webpack_require__(40);
-	var services_1 = __webpack_require__(125);
-	var angular = __webpack_require__(76);
+	var strings_1 = __webpack_require__(38);
+	var services_1 = __webpack_require__(123);
+	var angular = __webpack_require__(73);
 	/**
 	 * `ui-view`: A viewport directive which is filled in by a view from the active state.
 	 *
@@ -30109,16 +29267,16 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 301:
+/***/ 291:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	/** @module ng1 */ /** */
-	var stateObject_1 = __webpack_require__(130);
-	var node_1 = __webpack_require__(83);
+	var stateObject_1 = __webpack_require__(128);
+	var node_1 = __webpack_require__(82);
 	var resolveContext_1 = __webpack_require__(47);
 	var common_1 = __webpack_require__(5);
-	var stateBuilder_1 = __webpack_require__(129);
+	var stateBuilder_1 = __webpack_require__(127);
 	/**
 	 * Implementation of the legacy `$resolve` service for angular 1.
 	 */
@@ -30177,12 +29335,12 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 302:
+/***/ 292:
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @module state */ /** for typedoc */
 	"use strict";
-	var angular = __webpack_require__(76);
+	var angular = __webpack_require__(73);
 	/**
 	 * @ngdoc filter
 	 * @name ui.router.state.filter:isState
@@ -30226,12 +29384,12 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 303:
+/***/ 293:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var coreservices_1 = __webpack_require__(20);
-	var services_1 = __webpack_require__(125);
+	var coreservices_1 = __webpack_require__(19);
+	var services_1 = __webpack_require__(123);
 	var resolveContext_1 = __webpack_require__(47);
 	var common_1 = __webpack_require__(5);
 	/**
@@ -30255,12 +29413,12 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 304:
+/***/ 294:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	/** @module ng1 */ /** */
-	var angular = __webpack_require__(76);
+	var angular = __webpack_require__(73);
 	/**
 	 * @ngdoc object
 	 * @name ui.router.state.$uiViewScrollProvider
@@ -30312,7 +29470,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 305:
+/***/ 295:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -30327,15 +29485,15 @@ webpackJsonp([2],{
 	 * @preferred doc
 	 */
 	/** for typedoc */
-	__export(__webpack_require__(54));
-	__export(__webpack_require__(182));
-	__export(__webpack_require__(183));
-	__export(__webpack_require__(127));
+	__export(__webpack_require__(53));
+	__export(__webpack_require__(177));
+	__export(__webpack_require__(178));
+	__export(__webpack_require__(125));
 	//# sourceMappingURL=module.js.map
 
 /***/ },
 
-/***/ 306:
+/***/ 296:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -30343,13 +29501,13 @@ webpackJsonp([2],{
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
 	/** @module path */ /** for typedoc */
-	__export(__webpack_require__(83));
-	__export(__webpack_require__(101));
+	__export(__webpack_require__(82));
+	__export(__webpack_require__(99));
 	//# sourceMappingURL=module.js.map
 
 /***/ },
 
-/***/ 307:
+/***/ 297:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -30357,14 +29515,14 @@ webpackJsonp([2],{
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
 	/** @module resolve */ /** for typedoc */
-	__export(__webpack_require__(184));
-	__export(__webpack_require__(64));
+	__export(__webpack_require__(179));
+	__export(__webpack_require__(62));
 	__export(__webpack_require__(47));
 	//# sourceMappingURL=module.js.map
 
 /***/ },
 
-/***/ 308:
+/***/ 298:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -30372,18 +29530,18 @@ webpackJsonp([2],{
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
 	/** @module state */ /** for typedoc */
-	__export(__webpack_require__(129));
-	__export(__webpack_require__(130));
-	__export(__webpack_require__(185));
-	__export(__webpack_require__(186));
-	__export(__webpack_require__(187));
-	__export(__webpack_require__(188));
-	__export(__webpack_require__(75));
+	__export(__webpack_require__(127));
+	__export(__webpack_require__(128));
+	__export(__webpack_require__(180));
+	__export(__webpack_require__(181));
+	__export(__webpack_require__(182));
+	__export(__webpack_require__(183));
+	__export(__webpack_require__(72));
 	//# sourceMappingURL=module.js.map
 
 /***/ },
 
-/***/ 309:
+/***/ 299:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -30399,17 +29557,17 @@ webpackJsonp([2],{
 	 * @preferred
 	 */
 	/** for typedoc */
-	__export(__webpack_require__(189));
+	__export(__webpack_require__(184));
+	__export(__webpack_require__(129));
+	__export(__webpack_require__(83));
+	__export(__webpack_require__(130));
 	__export(__webpack_require__(131));
-	__export(__webpack_require__(84));
 	__export(__webpack_require__(132));
-	__export(__webpack_require__(133));
-	__export(__webpack_require__(134));
 	//# sourceMappingURL=module.js.map
 
 /***/ },
 
-/***/ 310:
+/***/ 300:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -30417,15 +29575,15 @@ webpackJsonp([2],{
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
 	/** @module url */ /** for typedoc */
-	__export(__webpack_require__(190));
-	__export(__webpack_require__(135));
-	__export(__webpack_require__(191));
-	__export(__webpack_require__(136));
+	__export(__webpack_require__(185));
+	__export(__webpack_require__(133));
+	__export(__webpack_require__(186));
+	__export(__webpack_require__(134));
 	//# sourceMappingURL=module.js.map
 
 /***/ },
 
-/***/ 311:
+/***/ 301:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -30433,12 +29591,12 @@ webpackJsonp([2],{
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
 	/** @module view */ /** for typedoc */
-	__export(__webpack_require__(137));
+	__export(__webpack_require__(135));
 	//# sourceMappingURL=module.js.map
 
 /***/ },
 
-/***/ 312:
+/***/ 302:
 /***/ function(module, exports) {
 
 	/**
@@ -62212,7 +61370,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 313:
+/***/ 303:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -62229,32 +61387,26 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 10/6/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var platform_browser_1 = __webpack_require__(99);
-	var http_1 = __webpack_require__(21);
-	var networkpolicies_module_1 = __webpack_require__(321);
-	var applicationgroups_module_ts_1 = __webpack_require__(314);
-	var settings_module_1 = __webpack_require__(328);
-	var netprofilesmodel_1 = __webpack_require__(77);
-	var applicationgroupsmodel_1 = __webpack_require__(56);
-	var networksmodel_1 = __webpack_require__(41);
-	var nodesmodel_1 = __webpack_require__(138);
-	var organizationsmodel_1 = __webpack_require__(139);
-	var policiesmodel_1 = __webpack_require__(65);
-	var rulesmodel_1 = __webpack_require__(102);
-	var servicelbsmodel_1 = __webpack_require__(78);
-	var storagepoliciesmodel_1 = __webpack_require__(103);
-	var volumesmodel_1 = __webpack_require__(85);
-	var crudhelperservice_1 = __webpack_require__(11);
-	var inspectservice_1 = __webpack_require__(104);
-	var networkservice_1 = __webpack_require__(140);
-	var volumesettingservice_1 = __webpack_require__(142);
-	var nodesservice_1 = __webpack_require__(141);
-	var dashboardctrl_1 = __webpack_require__(201);
-	var network_module_1 = __webpack_require__(322);
-	var servicelb_module_1 = __webpack_require__(326);
-	var volume_module_1 = __webpack_require__(331);
-	var storagepolicy_module_1 = __webpack_require__(329);
-	var organization_module_1 = __webpack_require__(325);
+	var platform_browser_1 = __webpack_require__(97);
+	var http_1 = __webpack_require__(31);
+	var networkpolicies_module_1 = __webpack_require__(312);
+	var applicationgroups_module_ts_1 = __webpack_require__(304);
+	var settings_module_1 = __webpack_require__(319);
+	var netprofilesmodel_1 = __webpack_require__(75);
+	var applicationgroupsmodel_1 = __webpack_require__(54);
+	var networksmodel_1 = __webpack_require__(39);
+	var organizationsmodel_1 = __webpack_require__(136);
+	var policiesmodel_1 = __webpack_require__(64);
+	var rulesmodel_1 = __webpack_require__(100);
+	var servicelbsmodel_1 = __webpack_require__(76);
+	var crudhelperservice_1 = __webpack_require__(13);
+	var inspectservice_1 = __webpack_require__(101);
+	var networkservice_1 = __webpack_require__(137);
+	var dashboardctrl_1 = __webpack_require__(195);
+	var network_module_1 = __webpack_require__(313);
+	var servicelb_module_1 = __webpack_require__(317);
+	var organization_module_1 = __webpack_require__(316);
+	var nodesservice_1 = __webpack_require__(138);
 	var AppModule = (function () {
 	    function AppModule() {
 	    }
@@ -62268,8 +61420,6 @@ webpackJsonp([2],{
 	                settings_module_1.SettingsModule,
 	                network_module_1.NetworkModule,
 	                servicelb_module_1.ServicelbModule,
-	                volume_module_1.VolumeModule,
-	                storagepolicy_module_1.StoragepolicyModule,
 	                organization_module_1.OrganizationModule
 	            ],
 	            declarations: [
@@ -62279,17 +61429,13 @@ webpackJsonp([2],{
 	                applicationgroupsmodel_1.ApplicationGroupsModel,
 	                netprofilesmodel_1.NetprofilesModel,
 	                networksmodel_1.NetworksModel,
-	                nodesmodel_1.NodesModel,
 	                organizationsmodel_1.OrganizationsModel,
 	                policiesmodel_1.PoliciesModel,
 	                rulesmodel_1.RulesModel,
 	                servicelbsmodel_1.ServicelbsModel,
-	                storagepoliciesmodel_1.StoragePoliciesModel,
-	                volumesmodel_1.VolumesModel,
 	                crudhelperservice_1.CRUDHelperService,
 	                inspectservice_1.InspectService,
 	                networkservice_1.NetworkService,
-	                volumesettingservice_1.VolumeSettingService,
 	                nodesservice_1.NodesService
 	            ]
 	        }), 
@@ -62302,7 +61448,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 314:
+/***/ 304:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -62319,15 +61465,15 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 10/21/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var forms_1 = __webpack_require__(37);
-	var common_1 = __webpack_require__(32);
-	var directives_module_1 = __webpack_require__(55);
-	var pipes_module_1 = __webpack_require__(318);
-	var applicationgroupcreatectrl_1 = __webpack_require__(192);
-	var applicationgroupdetailsctrl_1 = __webpack_require__(193);
-	var isolationpolicydirective_1 = __webpack_require__(316);
-	var bandwidthpolicydirective_1 = __webpack_require__(315);
-	var applicationgrouplistctrl_1 = __webpack_require__(194);
+	var forms_1 = __webpack_require__(45);
+	var common_1 = __webpack_require__(35);
+	var directives_module_1 = __webpack_require__(74);
+	var pipes_module_1 = __webpack_require__(309);
+	var applicationgroupcreatectrl_1 = __webpack_require__(187);
+	var applicationgroupdetailsctrl_1 = __webpack_require__(188);
+	var isolationpolicydirective_1 = __webpack_require__(306);
+	var bandwidthpolicydirective_1 = __webpack_require__(305);
+	var applicationgrouplistctrl_1 = __webpack_require__(189);
 	var ApplicationGroupsModule = (function () {
 	    function ApplicationGroupsModule() {
 	    }
@@ -62367,7 +61513,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 315:
+/***/ 305:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -62384,8 +61530,8 @@ webpackJsonp([2],{
 	 * Created by hardik gandhi on 6/28/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var _ = __webpack_require__(29);
-	var netprofilesmodel_1 = __webpack_require__(77);
+	var _ = __webpack_require__(34);
+	var netprofilesmodel_1 = __webpack_require__(75);
 	/*
 	angular.module("contiv.applicationgroups")
 	    .directive("ctvBandwidthpolicy", function () {
@@ -62498,7 +61644,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 316:
+/***/ 306:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -62515,9 +61661,9 @@ webpackJsonp([2],{
 	 * Created by hardik gandhi on 7/8/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var _ = __webpack_require__(29);
-	var policiesmodel_1 = __webpack_require__(65);
-	var rulesmodel_1 = __webpack_require__(102);
+	var _ = __webpack_require__(34);
+	var policiesmodel_1 = __webpack_require__(64);
+	var rulesmodel_1 = __webpack_require__(100);
 	var IsolationPolicySelectionComponent = (function () {
 	    function IsolationPolicySelectionComponent(policiesModel, rulesModel) {
 	        this.policiesModel = policiesModel;
@@ -62634,7 +61780,112 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 317:
+/***/ 307:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	__webpack_require__(114);
+	var _ = __webpack_require__(34);
+	/**
+	 * BaseCollection class that does just fetch of the objects.
+	 * @param $http
+	 * @param $q
+	 * @param url Used for doing HTTP GET and fetch objects from server
+	 * @constructor
+	 */
+	var BaseCollection = (function () {
+	    function BaseCollection(http, url) {
+	        this.http = http;
+	        this.url = url;
+	        this.models = [];
+	        this.url = url;
+	    }
+	    /**
+	     *
+	     * @param reload Optional. Default is false
+	     * @returns {*}
+	     */
+	    BaseCollection.prototype.get = function (reload) {
+	        var collection = this;
+	        if (reload === undefined)
+	            reload = false;
+	        return (!reload && collection.models.length > 0) ?
+	            new Promise(function (resolve) {
+	                resolve(collection.models);
+	            }) : collection.http.get(collection.url).map(function (res) { return res.json(); }).toPromise()
+	            .then(function (result) {
+	            collection.models = result;
+	            return collection.models;
+	        });
+	    };
+	    ;
+	    /**
+	     *
+	     * @param key
+	     * @param reload Optional. Default is false
+	     * @param keyname
+	     * @returns {*}
+	     */
+	    BaseCollection.prototype.getModelByKey = function (key, reload, keyname) {
+	        var collection = this;
+	        if (reload === undefined)
+	            reload = false;
+	        if (keyname === undefined)
+	            keyname = 'key';
+	        var promise = new Promise(function (resolve) {
+	            if (!reload && collection.models.length > 0) {
+	                resolve(findModel());
+	            }
+	            else {
+	                collection.get(reload)
+	                    .then(function () {
+	                    resolve(findModel());
+	                });
+	            }
+	        });
+	        function findModel() {
+	            return _.find(collection.models, function (c) {
+	                return c[keyname] == key;
+	            });
+	        }
+	        return promise;
+	    };
+	    ;
+	    /**
+	     *
+	     * @param model
+	     * @param reload Optional. Default is false
+	     * @returns {*}
+	     */
+	    BaseCollection.prototype.getModel = function (model, reload) {
+	        var collection = this;
+	        if (reload === undefined)
+	            reload = false;
+	        var promise = new Promise(function (resolve) {
+	            if (!reload && collection.models.length > 0) {
+	                resolve(findModel());
+	            }
+	            else {
+	                collection.get(reload)
+	                    .then(function () {
+	                    resolve(findModel());
+	                });
+	            }
+	        });
+	        function findModel() {
+	            return _.find(collection.models, model);
+	        }
+	        return promise;
+	    };
+	    ;
+	    return BaseCollection;
+	}());
+	exports.BaseCollection = BaseCollection;
+	
+
+/***/ },
+
+/***/ 308:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -62685,7 +61936,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 318:
+/***/ 309:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -62702,9 +61953,9 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 10/21/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var forms_1 = __webpack_require__(37);
-	var common_1 = __webpack_require__(32);
-	var filterpipe_1 = __webpack_require__(317);
+	var forms_1 = __webpack_require__(45);
+	var common_1 = __webpack_require__(35);
+	var filterpipe_1 = __webpack_require__(308);
 	var PipesModule = (function () {
 	    function PipesModule() {
 	    }
@@ -62733,7 +61984,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 319:
+/***/ 310:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -62750,9 +62001,9 @@ webpackJsonp([2],{
 	 * Created by cshampur on 10/19/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var crudhelperservice_1 = __webpack_require__(11);
-	var rxjs_1 = __webpack_require__(30);
-	var netprofilesmodel_1 = __webpack_require__(77);
+	var crudhelperservice_1 = __webpack_require__(13);
+	var rxjs_1 = __webpack_require__(43);
+	var netprofilesmodel_1 = __webpack_require__(75);
 	var BandwidthListComponent = (function () {
 	    function BandwidthListComponent(netprofilesModel, crudHelperService, ngZone) {
 	        var _this = this;
@@ -62800,7 +62051,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 320:
+/***/ 311:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -62817,9 +62068,9 @@ webpackJsonp([2],{
 	 * Created by cshampur on 10/19/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var policiesmodel_1 = __webpack_require__(65);
-	var crudhelperservice_1 = __webpack_require__(11);
-	var rxjs_1 = __webpack_require__(30);
+	var policiesmodel_1 = __webpack_require__(64);
+	var crudhelperservice_1 = __webpack_require__(13);
+	var rxjs_1 = __webpack_require__(43);
 	var IsolationListComponent = (function () {
 	    function IsolationListComponent(policiesModel, crudHelperService, ngZone) {
 	        var _this = this;
@@ -62867,7 +62118,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 321:
+/***/ 312:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -62884,16 +62135,16 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 10/14/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var forms_1 = __webpack_require__(37);
-	var common_1 = __webpack_require__(32);
-	var directives_module_1 = __webpack_require__(55);
-	var networkpoliciestabsctrl_1 = __webpack_require__(79);
-	var isolationpolicycreatectrl_1 = __webpack_require__(204);
-	var isolationpolicydetailsctrl_1 = __webpack_require__(205);
-	var bandwidthpolicycreatectrl_1 = __webpack_require__(202);
-	var bandwidthpolicydetailsctrl_1 = __webpack_require__(203);
-	var isolationpolicylistctrl_1 = __webpack_require__(320);
-	var bandwidthpolicylistctrl_1 = __webpack_require__(319);
+	var forms_1 = __webpack_require__(45);
+	var common_1 = __webpack_require__(35);
+	var directives_module_1 = __webpack_require__(74);
+	var networkpoliciestabsctrl_1 = __webpack_require__(77);
+	var isolationpolicycreatectrl_1 = __webpack_require__(198);
+	var isolationpolicydetailsctrl_1 = __webpack_require__(199);
+	var bandwidthpolicycreatectrl_1 = __webpack_require__(196);
+	var bandwidthpolicydetailsctrl_1 = __webpack_require__(197);
+	var isolationpolicylistctrl_1 = __webpack_require__(311);
+	var bandwidthpolicylistctrl_1 = __webpack_require__(310);
 	var NetworkPoliciesModule = (function () {
 	    function NetworkPoliciesModule() {
 	    }
@@ -62936,7 +62187,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 322:
+/***/ 313:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -62953,14 +62204,14 @@ webpackJsonp([2],{
 	 * Created by cshampur on 10/18/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var forms_1 = __webpack_require__(37);
-	var common_1 = __webpack_require__(32);
-	var directives_module_1 = __webpack_require__(55);
-	var networklistctrl_1 = __webpack_require__(208);
-	var networkstatsctrl_1 = __webpack_require__(324);
-	var networkdetailsctrl_1 = __webpack_require__(207);
-	var networkinfoctrl_1 = __webpack_require__(323);
-	var networkcreatectrl_1 = __webpack_require__(206);
+	var forms_1 = __webpack_require__(45);
+	var common_1 = __webpack_require__(35);
+	var directives_module_1 = __webpack_require__(74);
+	var networklistctrl_1 = __webpack_require__(202);
+	var networkstatsctrl_1 = __webpack_require__(315);
+	var networkdetailsctrl_1 = __webpack_require__(201);
+	var networkinfoctrl_1 = __webpack_require__(314);
+	var networkcreatectrl_1 = __webpack_require__(200);
 	var NetworkModule = (function () {
 	    function NetworkModule() {
 	    }
@@ -62995,7 +62246,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 323:
+/***/ 314:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -63037,7 +62288,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 324:
+/***/ 315:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -63051,11 +62302,11 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(3);
-	var crudhelperservice_1 = __webpack_require__(11);
-	var rxjs_1 = __webpack_require__(30);
-	var networksmodel_1 = __webpack_require__(41);
-	var inspectservice_1 = __webpack_require__(104);
-	var util_1 = __webpack_require__(74);
+	var crudhelperservice_1 = __webpack_require__(13);
+	var rxjs_1 = __webpack_require__(43);
+	var networksmodel_1 = __webpack_require__(39);
+	var inspectservice_1 = __webpack_require__(101);
+	var util_1 = __webpack_require__(81);
 	var NetworkStatComponent = (function () {
 	    function NetworkStatComponent(networksModel, crudHelperService, inspectSerrvice) {
 	        var _this = this;
@@ -63131,7 +62382,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 325:
+/***/ 316:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -63148,10 +62399,10 @@ webpackJsonp([2],{
 	 * Created by cshampur on 10/18/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var forms_1 = __webpack_require__(37);
-	var common_1 = __webpack_require__(32);
-	var directives_module_1 = __webpack_require__(55);
-	var organizationlistctrl_1 = __webpack_require__(209);
+	var forms_1 = __webpack_require__(45);
+	var common_1 = __webpack_require__(35);
+	var directives_module_1 = __webpack_require__(74);
+	var organizationlistctrl_1 = __webpack_require__(203);
 	var OrganizationModule = (function () {
 	    function OrganizationModule() {
 	    }
@@ -63178,7 +62429,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 326:
+/***/ 317:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -63195,15 +62446,15 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(3);
-	var forms_1 = __webpack_require__(37);
-	var common_1 = __webpack_require__(32);
-	var directives_module_1 = __webpack_require__(55);
-	var servicelblistctrl_1 = __webpack_require__(213);
-	var servicelbstatsctrl_1 = __webpack_require__(214);
-	var servicelbportsdirective_1 = __webpack_require__(327);
-	var servicelbcreatectrl_1 = __webpack_require__(210);
-	var servicelbinfoctrl_1 = __webpack_require__(212);
-	var servicelbdetailsctrl_1 = __webpack_require__(211);
+	var forms_1 = __webpack_require__(45);
+	var common_1 = __webpack_require__(35);
+	var directives_module_1 = __webpack_require__(74);
+	var servicelblistctrl_1 = __webpack_require__(207);
+	var servicelbstatsctrl_1 = __webpack_require__(208);
+	var servicelbportsdirective_1 = __webpack_require__(318);
+	var servicelbcreatectrl_1 = __webpack_require__(204);
+	var servicelbinfoctrl_1 = __webpack_require__(206);
+	var servicelbdetailsctrl_1 = __webpack_require__(205);
 	var ServicelbModule = (function () {
 	    function ServicelbModule() {
 	    }
@@ -63240,7 +62491,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 327:
+/***/ 318:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -63257,7 +62508,7 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(3);
-	var _ = __webpack_require__(29);
+	var _ = __webpack_require__(34);
 	var ServicelbPortsComponent = (function () {
 	    function ServicelbPortsComponent() {
 	        this.itemsChange = new core_1.EventEmitter();
@@ -63308,7 +62559,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 328:
+/***/ 319:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -63325,12 +62576,11 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 10/25/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var forms_1 = __webpack_require__(37);
-	var common_1 = __webpack_require__(32);
-	var directives_module_1 = __webpack_require__(55);
-	var networksettingctrl_1 = __webpack_require__(216);
-	var volumesettingctrl_1 = __webpack_require__(217);
-	var clustersettingctrl_1 = __webpack_require__(215);
+	var forms_1 = __webpack_require__(45);
+	var common_1 = __webpack_require__(35);
+	var directives_module_1 = __webpack_require__(74);
+	var networksettingctrl_1 = __webpack_require__(210);
+	var clustersettingctrl_1 = __webpack_require__(209);
 	var SettingsModule = (function () {
 	    function SettingsModule() {
 	    }
@@ -63343,16 +62593,14 @@ webpackJsonp([2],{
 	            ],
 	            declarations: [
 	                networksettingctrl_1.NetworkSettingsComponent,
-	                volumesettingctrl_1.VolumeSettingsComponent,
 	                clustersettingctrl_1.ClusterSettingsComponent
 	            ],
 	            exports: [
 	                networksettingctrl_1.NetworkSettingsComponent,
-	                volumesettingctrl_1.VolumeSettingsComponent,
 	                clustersettingctrl_1.ClusterSettingsComponent,
 	                forms_1.FormsModule,
 	                common_1.CommonModule,
-	                directives_module_1.DirectivesModule,
+	                directives_module_1.DirectivesModule
 	            ]
 	        }), 
 	        __metadata('design:paramtypes', [])
@@ -63364,134 +62612,35 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 329:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	/**
-	 * Created by cshampur on 10/18/16.
-	 */
-	var core_1 = __webpack_require__(3);
-	var forms_1 = __webpack_require__(37);
-	var common_1 = __webpack_require__(32);
-	var directives_module_1 = __webpack_require__(55);
-	var storagepolicylistctrl_1 = __webpack_require__(218);
-	var StoragepolicyModule = (function () {
-	    function StoragepolicyModule() {
-	    }
-	    StoragepolicyModule = __decorate([
-	        core_1.NgModule({
-	            imports: [
-	                forms_1.FormsModule,
-	                common_1.CommonModule,
-	                directives_module_1.DirectivesModule
-	            ],
-	            declarations: [
-	                storagepolicylistctrl_1.StoragepolicyListComponent
-	            ],
-	            exports: [
-	                storagepolicylistctrl_1.StoragepolicyListComponent
-	            ]
-	        }), 
-	        __metadata('design:paramtypes', [])
-	    ], StoragepolicyModule);
-	    return StoragepolicyModule;
-	}());
-	exports.StoragepolicyModule = StoragepolicyModule;
-	
-
-/***/ },
-
-/***/ 330:
+/***/ 320:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	/**
 	 * Created by vjain3 on 10/14/16.
 	 */
-	var upgrade_1 = __webpack_require__(178);
-	var app_module_1 = __webpack_require__(313);
+	var upgrade_1 = __webpack_require__(173);
+	var app_module_1 = __webpack_require__(303);
 	exports.upgradeAdapter = new upgrade_1.UpgradeAdapter(app_module_1.AppModule);
 	
 
 /***/ },
 
-/***/ 331:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	/**
-	 * Created by cshampur on 10/18/16.
-	 */
-	var core_1 = __webpack_require__(3);
-	var forms_1 = __webpack_require__(37);
-	var common_1 = __webpack_require__(32);
-	var directives_module_1 = __webpack_require__(55);
-	var volumelistctrl_1 = __webpack_require__(220);
-	var volumeservice_1 = __webpack_require__(143);
-	var volumedetailsctrl_1 = __webpack_require__(219);
-	var VolumeModule = (function () {
-	    function VolumeModule() {
-	    }
-	    VolumeModule = __decorate([
-	        core_1.NgModule({
-	            imports: [
-	                forms_1.FormsModule,
-	                common_1.CommonModule,
-	                directives_module_1.DirectivesModule
-	            ],
-	            declarations: [
-	                volumelistctrl_1.VolumeListComponent,
-	                volumedetailsctrl_1.VolumeDetailsComponent,
-	            ],
-	            exports: [
-	                volumelistctrl_1.VolumeListComponent,
-	                volumedetailsctrl_1.VolumeDetailsComponent,
-	            ],
-	            providers: [volumeservice_1.VolumeService]
-	        }), 
-	        __metadata('design:paramtypes', [])
-	    ], VolumeModule);
-	    return VolumeModule;
-	}());
-	exports.VolumeModule = VolumeModule;
-	
-
-/***/ },
-
-/***/ 493:
+/***/ 482:
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"left aligned twelve wide column\">\n        <div class=\"content\" style=\"font-size: 24px\">Application Groups</div>\n    </div>\n\n    <div class=\"center aligned four wide column\">\n        <button class=\"ui blue button\" (click)=\"create()\">\n            <i class=\"add icon\"></i>\n            Create Application Group\n        </button>\n    </div>\n</div>\n\n<div class=\"ui basic segment\">\n    <div class=\"ui active inverted dimmer\" *ngIf=\"applicationGroupListCtrl.showLoader\">\n        <div class=\"ui loader\"></div>\n    </div>\n    <ctv-table #tableRef [defaultSortColumn]=\"'groupName'\"\n               [items]=\"applicationGroupListCtrl['groups']\"\n               (filtereditems)=\"applicationGroupListCtrl['filteredgroups']=$event;\"\n               [size]=\"12\">\n        <thead>\n            <tr>\n                <th><ctv-th [sortfield]=\"'groupName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Name</ctv-th></th>\n                <th><ctv-th [sortfield]=\"'networkName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Network</ctv-th></th>\n                <th><ctv-th [sortfield]=\"'policies'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Policies</ctv-th></th>\n                <th class=\"right floated three wide column\">\n                    <ctv-search (searchTextChange)=\"tableRef.showChunk(tableRef.table.pageNo,$event);\" [placeholder]=\"'Search application groups...'\"></ctv-search>\n                </th>\n            </tr>\n        </thead>\n\n        <tbody>\n            <tr *ngFor=\"let group of applicationGroupListCtrl['filteredgroups']\">\n                <td><a href=\"/#/m/applicationgroups/details/{{group.key}}\">{{group.groupName}}</a></td>\n                <td>{{group.networkName}}</td>\n                <td>{{group.policies.join(\", \")}}</td>\n                <td></td>\n            </tr>\n        </tbody>\n\n        <tfoot>\n            <tr>\n                <td colspan=\"4\">\n                    <ctv-tpagination [chunks]=\"tableRef.pageChunks\"\n                                     (showPage)=\"tableRef.showChunk($event, tableRef.table.searchText)\"\n                                     (prevChunk)=\"tableRef.showPrevChunk()\"\n                                     (nextChunk)=\"tableRef.showNextChunk()\">\n\n                    </ctv-tpagination>\n                </td>\n            </tr>\n        </tfoot>\n    </ctv-table>\n</div>"
 
 /***/ },
 
-/***/ 494:
+/***/ 483:
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"left aligned thirteen wide column\">\n        <div class=\"content\" style=\"font-size: 24px\">Networks</div>\n    </div>\n\n    <div class=\"center aligned three wide column\">\n        <button class=\"ui blue button\" (click)=\"create()\">\n            <i class=\"add icon\"></i>\n            Create Network\n        </button>\n    </div>\n</div>\n\n<div class=\"ui basic segment\">\n\n    <div class=\"ui active inverted dimmer\" *ngIf=\"networkListComp.showLoader\">\n        <div class=\"ui loader\"></div>\n    </div>\n\n    <ctv-table #tableRef [defaultSortColumn]=\"'networkName'\"\n               [items]=\"networkListComp['networks']\"\n               (filtereditems)=\"networkListComp['filterednetworks']=$event;\"\n               [size]=\"12\">\n        <thead>\n        <tr>\n            <th><ctv-th [sortfield]=\"'networkName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Name</ctv-th></th>\n            <th><ctv-th [sortfield]=\"'encap'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Encapsulation</ctv-th></th>\n            <th><ctv-th [sortfield]=\"'subnet'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Subnet</ctv-th></th>\n            <th><ctv-th [sortfield]=\"'gateway'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Gateway</ctv-th></th>\n            <th class=\"right floated three wide column\">\n                <ctv-search (searchTextChange)=\"tableRef.showChunk(tableRef.table.pageNo,$event);\" [placeholder]=\"'Search networks...'\"></ctv-search>\n            </th>\n        </tr>\n        </thead>\n\n        <tbody>\n        <tr *ngFor=\"let network of networkListComp['filterednetworks']\">\n            <td><a href=\"/#/m/networks/details/{{network.key}}\">{{network.networkName}}</a></td>\n            <td>{{network.encap}}</td>\n            <td>{{network.subnet}}</td>\n            <td>{{network.gateway}}</td>\n            <td></td>\n        </tr>\n        </tbody>\n        <tfoot>\n        <tr>\n            <td colspan=\"5\">\n                <ctv-tpagination [chunks]=\"tableRef.pageChunks\"\n                                 (showPage)=\"tableRef.showChunk($event, tableRef.table.searchText)\"\n                                 (prevChunk)=\"tableRef.showPrevChunk()\"\n                                 (nextChunk)=\"tableRef.showNextChunk()\">\n                </ctv-tpagination>\n            </td>\n        </tr>\n        </tfoot>\n    </ctv-table>\n</div>"
 
 /***/ },
 
-/***/ 763:
+/***/ 752:
 /***/ function(module, exports) {
 
 	if (typeof Object.create === 'function') {
@@ -63521,7 +62670,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 764:
+/***/ 753:
 /***/ function(module, exports) {
 
 	module.exports = function isBuffer(arg) {
@@ -63533,7 +62682,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 765:
+/***/ 754:
 /***/ function(module, exports) {
 
 	module.exports = function(module) {

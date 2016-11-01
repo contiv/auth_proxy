@@ -6,10 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { ApplicationGroupsModel } from "../components/models/applicationgroupsmodel";
 import { PoliciesModel } from "../components/models/policiesmodel";
-import { StoragePoliciesModel } from "../components/models/storagepoliciesmodel";
-import { NodesModel } from "../components/models/nodesmodel";
 import { NetworksModel } from "../components/models/networksmodel";
-import { VolumesModel } from "../components/models/volumesmodel";
 
 @Component({
     selector: 'dashboard',
@@ -26,26 +23,15 @@ export class DashboardComponent implements OnDestroy {
     observable: Observable<any>;
     subscription: Subscription;
 
-    constructor(private nodesModel:NodesModel,
-                private networksModel:NetworksModel,
-                private volumesModel:VolumesModel,
+    constructor(private networksModel:NetworksModel,
                 private applicationGroupsModel:ApplicationGroupsModel,
-                private policiesModel:PoliciesModel,
-                private storagePoliciesModel:StoragePoliciesModel) {
+                private policiesModel:PoliciesModel) {
         var dashboardComponent = this;
 
         function getDashboardInfo(reload) {
-            nodesModel.get(reload)
-                .then(function (result) {
-                    dashboardComponent.nodes = result.length;
-                });
             networksModel.get(reload)
                 .then(function (result) {
                     dashboardComponent.networks = result.length;
-                });
-            volumesModel.get(reload)
-                .then(function (result) {
-                    dashboardComponent.volumes = result.length;
                 });
             applicationGroupsModel.get(reload)
                 .then(function (result) {
@@ -54,10 +40,6 @@ export class DashboardComponent implements OnDestroy {
             policiesModel.get(reload)
                 .then(function (result) {
                     dashboardComponent.networkpolicies = result.length;
-                });
-            storagePoliciesModel.get(reload)
-                .then(function (result) {
-                    dashboardComponent.storagepolicies = result.length;
                 });
         }
 
