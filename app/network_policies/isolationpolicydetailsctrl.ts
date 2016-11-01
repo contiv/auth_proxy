@@ -8,6 +8,7 @@ import { NetworksModel } from "../components/models/networksmodel";
 import { ApplicationGroupsModel } from "../components/models/applicationgroupsmodel";
 import { CRUDHelperService } from "../components/utils/crudhelperservice";
 import { StateService, StateParams } from "angular-ui-router/commonjs/ng1";
+import { PolicyTab } from "./networkpoliciestabsctrl";
 
 @Component({
     selector: 'isolationpolicydetails',
@@ -103,7 +104,7 @@ export class IsolationPolicyDetailsComponent {
     }
 
     returnToPolicies() {
-        this.$state.go('contiv.menu.networkpolicies.list.isolation');
+        this.$state.go('contiv.menu.networkpolicies.list', {policyTab: PolicyTab.isolation});
     }
 
     returnToPolicyDetails() {

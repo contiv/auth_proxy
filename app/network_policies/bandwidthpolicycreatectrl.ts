@@ -6,6 +6,7 @@ import { Component, Inject } from '@angular/core';
 import { StateService } from "angular-ui-router/commonjs/ng1";
 import { NetprofilesModel } from "../components/models/netprofilesmodel";
 import { CRUDHelperService } from "../components/utils/crudhelperservice";
+import { PolicyTab } from "./networkpoliciestabsctrl";
 
 @Component({
     selector: 'bandwidthpolicycreate',
@@ -33,7 +34,7 @@ export class BandwidthPolicyCreateComponent {
     }
 
     returnToPolicies() {
-        this.$state.go('contiv.menu.networkpolicies.list.bandwidth');
+        this.$state.go('contiv.menu.networkpolicies.list', {policyTab: PolicyTab.bandwidth});
     }
 
     cancelCreating() {

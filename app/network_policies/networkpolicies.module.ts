@@ -5,12 +5,13 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { DirectivesModule } from "../components/directives/directives.module";
+import { NetworkPoliciesTabsComponent } from "./networkpoliciestabsctrl";
 import { IsolationPolicyCreateComponent } from "./isolationpolicycreatectrl";
 import { IsolationPolicyDetailsComponent } from "./isolationpolicydetailsctrl";
 import { BandwidthPolicyCreateComponent } from "./bandwidthpolicycreatectrl";
 import { BandwidthPolicyDetailsComponent } from "./bandwidthpolicydetailsctrl";
-import {IsolationListComponent} from "./isolationpolicylistctrl";
-import {BandwidthListComponent} from "./bandwidthpolicylistctrl";
+import { IsolationListComponent } from "./isolationpolicylistctrl";
+import { BandwidthListComponent } from "./bandwidthpolicylistctrl";
 
 @NgModule({
     imports: [
@@ -19,6 +20,7 @@ import {BandwidthListComponent} from "./bandwidthpolicylistctrl";
         DirectivesModule
     ],
     declarations: [
+        NetworkPoliciesTabsComponent,
         IsolationPolicyCreateComponent,
         IsolationPolicyDetailsComponent,
         BandwidthPolicyCreateComponent,
@@ -28,6 +30,7 @@ import {BandwidthListComponent} from "./bandwidthpolicylistctrl";
         BandwidthListComponent
     ],
     exports: [
+        NetworkPoliciesTabsComponent,
         IsolationPolicyCreateComponent,
         IsolationPolicyDetailsComponent,
         BandwidthPolicyCreateComponent,

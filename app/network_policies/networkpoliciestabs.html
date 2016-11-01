@@ -4,7 +4,7 @@
     </div>
 
     <div class="right aligned four wide column">
-        <button class="ui blue button" ng-click="networkPoliciesTabsCtrl.createNetworkPolicy()">
+        <button class="ui blue button" (click)="createNetworkPolicy()">
             <i class="add icon"></i>
             Create Policy
         </button>
@@ -12,19 +12,19 @@
     </div>
 </div>
 <div class="ui secondary pointing menu">
-    <a class="blue item" ui-sref="contiv.menu.networkpolicies.list.isolation()"
-       ui-sref-active="{'active':'contiv.menu.networkpolicies.list.isolation'}">
+    <a class="blue item"
+       [ngClass]="{active: isolationPolicySelected}"
+       (click)="selectPolicyTab(policyTab.isolation)">
         Isolation Policies
     </a>
-    <a class="blue item" ui-sref="contiv.menu.networkpolicies.list.bandwidth()"
-       ui-sref-active="{'active':'contiv.menu.networkpolicies.list.bandwidth'}">
+    <a class="blue item"
+       [ngClass]="{active: bandwidthPolicySelected}"
+       (click)="selectPolicyTab(policyTab.bandwidth)">
         Bandwidth Policies
     </a>
-    <a class="blue item" ui-sref="contiv.menu.networkpolicies.list.redirection()"
-       ui-sref-active="{'active':'contiv.menu.networkpolicies.list.redirection'}">
-        Redirection Policies
-    </a>
 </div>
-<div ui-view></div>
+
+<isolationpolicylist *ngIf="isolationPolicySelected"></isolationpolicylist>
+<bandwidthpolicylist *ngIf="bandwidthPolicySelected"></bandwidthpolicylist>
 
 

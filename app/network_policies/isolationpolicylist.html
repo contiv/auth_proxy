@@ -1,8 +1,5 @@
 <div ui-view class="ui container">
-    <div class="ui basic segment">
-        <div class="ui active inverted dimmer" *ngIf="isolationPolicyListCtrl.showLoader">
-            <div class="ui loader"></div>
-        </div>
+    <div class="ui basic segment" [ngClass]="{loading: showLoader}">
         <ctv-table #tableRef [defaultSortColumn]="'policyName'"
                    [items]="isolationPolicyListCtrl['policies']"
                    (filtereditems)="isolationPolicyListCtrl['filteredPolicies']=$event"

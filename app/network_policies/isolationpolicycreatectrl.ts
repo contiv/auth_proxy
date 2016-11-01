@@ -5,6 +5,7 @@ import { Component, Inject } from '@angular/core';
 import { PoliciesModel } from "../components/models/policiesmodel";
 import { CRUDHelperService } from "../components/utils/crudhelperservice";
 import { StateService } from "angular-ui-router/commonjs/ng1";
+import { PolicyTab } from "./networkpoliciestabsctrl";
 
 @Component({
     selector: 'isolationpolicycreate',
@@ -30,7 +31,7 @@ export class IsolationPolicyCreateComponent {
     }
 
     returnToPolicies() {
-        this.$state.go('contiv.menu.networkpolicies.list.isolation');
+        this.$state.go('contiv.menu.networkpolicies.list', {policyTab: PolicyTab.isolation});
     }
 
     cancelCreating() {
