@@ -2,32 +2,51 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
+
+	log "github.com/Sirupsen/logrus"
 )
 
 const (
+	// this name is used in logging output and the X-Forwarded-By header
+	// which is sent to netmaster.
 	name = "ccn_proxy"
 )
 
 var (
 	// flags
-	disableTLS bool
+	disableTLS       bool
+	listenAddress    string
+	netmasterAddress string
 
 	// globals
 	upstream *url.URL
 
-	// TODO: use a version string which will be sent in response headers and can be
-	//       displayed in --version.  it can be set by:
-	//       -ldflags '-X main.version=${BUILD_VERSION-devbuild}'
+	// this string is included in the X-Forwarded-By header.
+	// for releases, it is overridden at compile time.
 	version = "devbuild"
 )
 
-func proxyRequest(w http.ResponseWriter, req *http.Request) {
+/*
+// authError logs a message and changes the HTTP status code to 401.
+func authError(w http.ResponseWriter, msg string) {
+	log.Println(msg)
+	w.WriteHeader(http.StatusUnauthorized)
+}
+*/
 
+// serverError logs a message + error and changes the HTTP status code to 500.
+func serverError(w http.ResponseWriter, msg string, err error) {
+	log.Errorln(msg, err)
+	w.WriteHeader(http.StatusInternalServerError)
+}
+
+// proxyRequest takes a HTTP request we've received, duplicates it, adds a few
+// custom request headers, and sends the request to the upstream netmaster. It
+// copies the response body and response headers and writes them to our client.
+func proxyRequest(w http.ResponseWriter, req *http.Request) {
 	copy := new(http.Request)
 	*copy = *req
 
@@ -36,24 +55,25 @@ func proxyRequest(w http.ResponseWriter, req *http.Request) {
 	// the RequestURI has to be cleared before sending a new request
 	copy.RequestURI = ""
 
+	// TODO: copy original request body to the cloned request?
+	//       i forget if that's necessary or not in this case...
+
 	// add our custom headers
-	req.Header.Add("X-Forwarded-For", "w.x.y.z") // TODO: get real ip
+	req.Header.Add("X-Forwarded-For", req.RemoteAddr)
 	req.Header.Add("X-Forwarder", name+" "+version)
 
 	resp, err := http.DefaultClient.Do(copy)
 	if err != nil {
-		fmt.Println("Request failed:", err)
-		// TODO: log an error and return a 500 here
-		panic("request failed")
+		serverError(w, "Failed to perform duplicate request", err)
+		return
 	}
 
 	defer resp.Body.Close()
 
 	data, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Println("Failed to read body:", err)
-		// TODO: log an error and return a 500
-		panic("request failed")
+		serverError(w, "Failed to read body from response", err)
+		return
 	}
 
 	// copy all the response headers into our response
@@ -66,58 +86,58 @@ func proxyRequest(w http.ResponseWriter, req *http.Request) {
 	w.Write(data)
 }
 
+// handler runs the LDAP lookup and authorization code before proxying the
+// request to the upstream netmaster.
 func handler(w http.ResponseWriter, req *http.Request) {
 	/*
 		authn, err := doLDAPLookup()
 		if err != nil {
-			fmt.Println("LDAP lookup failed:", err)
-			// TODO: log an error and return a 500
-			panic("LDAP lookup failed")
+			serverError(w, "LDAP lookup failed", err)
+			return
 		}
 
 		if !authn {
-			fmt.Println("LDAP authentication failed")
-			// TODO: log it and return a 401
-			panic("LDAP authentication failed")
+			authError(w, "LDAP authentication failed")
+			return
 		}
 
 		authz, err := doAuthorization()
 		if err != nil {
-			fmt.Println("authorization failed:", err)
-			// TODO: log an error and return a 500
-			panic("authorization failed")
+			serverError(w, "Authorization failed", err)
 		}
 
 		if !authz {
-			fmt.Println("user is not authorized")
-			// TODO: log it and return a 401
-			panic("user is not authorized")
+			authError(w, "user is not authorized")
+			return
 		}
 	*/
+
 	proxyRequest(w, req)
 }
 
 func main() {
 	// TODO: add a flag for LDAP host + port
 	flag.BoolVar(&disableTLS, "disable-tls", false, "if set, TLS is disabled")
+	flag.StringVar(&listenAddress, "listen-address", ":9998", "address to listen to HTTP requests on")
+	flag.StringVar(&netmasterAddress, "netmaster-address", "localhost:9999", "address of the upstream netmaster")
 	flag.Parse()
 
-	// TODO: set this from envvars or command line flags
 	upstream = &url.URL{
-		Scheme: "http",
-		Host:   "localhost",
+		Scheme: "http", // TODO: support HTTPS-enabled netmasters?
+		Host:   netmasterAddress,
 	}
 
 	http.HandleFunc("/", handler)
 
-	var err error
+	log.Printf("%s %s starting up", name, version)
+	log.Println("Proxying requests to", netmasterAddress)
 
 	if disableTLS {
-		err = http.ListenAndServe(":8000", nil)
+		log.Println("Listening on for insecure HTTP requests on", listenAddress)
+		log.Fatalln(http.ListenAndServe(listenAddress, nil))
 	} else {
+		log.Println("Listening for secure HTTPS requests on", listenAddress)
 		// TODO: get the cert/key from somewhere else (envvar, flag, Vault, etc.)
-		err = http.ListenAndServeTLS(":8000", "cert.pem", "key.pem", nil)
+		log.Fatalln(http.ListenAndServeTLS(listenAddress, "cert.pem", "key.pem", nil))
 	}
-
-	log.Fatal(err)
 }

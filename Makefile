@@ -1,7 +1,9 @@
 all: build
 
 build: checks
-	go install github.com/contiv/ccn_proxy/ccn_proxy
+	go install \
+		-ldflags '-X main.version=$(if ${BUILD_VERSION},${BUILD_VERSION},devbuild)' \
+		github.com/contiv/ccn_proxy/ccn_proxy
 
 checks:
 	@bash ./scripts/checks.sh
