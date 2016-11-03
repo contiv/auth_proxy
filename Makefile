@@ -1,7 +1,7 @@
 all: build
 
 build: checks
-	go install github.com/contiv/rbac_proxy/rbac_proxy
+	go install github.com/contiv/ccn_proxy/ccn_proxy
 
 checks:
 	@bash ./scripts/checks.sh

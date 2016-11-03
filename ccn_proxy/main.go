@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	name = "rbac_proxy"
+	name = "ccn_proxy"
 )
 
 var (
