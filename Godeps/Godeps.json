@@ -1,0 +1,19 @@
+{
+	"ImportPath": "github.com/contiv/ccn_proxy",
+	"GoVersion": "go1.7",
+	"GodepVersion": "v74",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/Sirupsen/logrus",
+			"Comment": "v0.10.0-38-g3ec0642",
+			"Rev": "3ec0642a7fb6488f65b06f9040adc67e3990296a"
+		},
+		{
+			"ImportPath": "golang.org/x/sys/unix",
+			"Rev": "c200b10b5d5e122be351b67af224adc6128af5bf"
+		}
+	]
+}

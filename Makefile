@@ -8,4 +8,7 @@ build: checks
 checks:
 	@bash ./scripts/checks.sh
 
+godep:
+	godep save ./...
+
 .PHONY: all build checks
