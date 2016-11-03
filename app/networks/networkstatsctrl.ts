@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, Input} from "@angular/core";
+import {Component, OnInit, OnDestroy, Input, NgZone} from "@angular/core";
 import {CRUDHelperService} from "../components/utils/crudhelperservice";
 import {Subscription, Observable} from "rxjs";
 import {NetworksModel} from "../components/models/networksmodel";
@@ -21,7 +21,8 @@ export class NetworkStatComponent implements OnInit, OnDestroy{
     networkInspectStats:any; config:any; endpoints:any; filteredendpoints:any; containerDetails:any;
     constructor(networksModel: NetworksModel,
                 crudHelperService: CRUDHelperService,
-                inspectSerrvice: InspectService){
+                inspectSerrvice: InspectService,
+                private ngZone: NgZone){
         this.crudHelperService = crudHelperService;
         this.networksModel = networksModel;
         this.inspectSerrvice = inspectSerrvice;
@@ -70,10 +71,14 @@ export class NetworkStatComponent implements OnInit, OnDestroy{
                         networkStatsCtrl['endpoints'] = []
                         networkStatsCtrl['containerDetails'] = {};
                     }
-                    networkStatsCtrl.crudHelperService.stopLoader(networkStatsCtrl);
+                    networkStatsCtrl.ngZone.run(() => {
+                        networkStatsCtrl.crudHelperService.stopLoader(networkStatsCtrl);
+                    });
                 },
                 (error) => {
-                    networkStatsCtrl.crudHelperService.stopLoader(networkStatsCtrl);
+                    networkStatsCtrl.ngZone.run(() => {
+                        networkStatsCtrl.crudHelperService.stopLoader(networkStatsCtrl);
+                    });
                 });
     }
 

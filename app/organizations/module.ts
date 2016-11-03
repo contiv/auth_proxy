@@ -9,4 +9,12 @@ angular.module('contiv.organizations', ['contiv.models', 'contiv.directives', 'c
                 url:'/list',
                 component: 'organizationlist'
             })
+            .state('contiv.menu.organizations.create', {
+                url: '/create',
+                component: 'organizationcreate'
+            })
+            .state('contiv.menu.organizations.details', {
+                url: '/details/:key',
+                component: 'organizationdetails'
+            })
     }]);

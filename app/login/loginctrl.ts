@@ -1,30 +1,38 @@
-/**
- * Created by vjain3 on 5/19/16.
- */
-angular.module('contiv.login')
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider
-            .state('contiv.login', {
-                url: '/',
-                templateUrl: 'login/login.html',
-                controller: 'LoginCtrl as loginCtrl'
-            })
-        ;
-    }])
-    .controller('LoginCtrl', ['$state', 'CRUDHelperService',
-        function ($state, CRUDHelperService) {
-            var loginCtrl = this;
+import {Component, Inject, OnInit, ViewEncapsulation} from "@angular/core";
+import {StateService} from "angular-ui-router";
+import {CRUDHelperService} from "../components/utils/crudhelperservice";
+@Component({
+    selector: 'login',
+    templateUrl: 'login/login.html',
+    styles: [require('./login.css')],
+    encapsulation: ViewEncapsulation.None
+})
 
-            function returnToDashboard() {
-                $state.go('contiv.menu.dashboard', {username: loginCtrl.username});
-            }
+export class LoginComponent implements OnInit{
+    public showLoader: boolean;
+    public showServerError: boolean;
+    public serverErrorMessage: string;
+    private crudHelperService: CRUDHelperService;
+    public loginCtrl: any;
+    public username: string;
+    public password: string;
+    constructor(@Inject('$state') private $state: StateService,
+                crudHelperService: CRUDHelperService){
+        this.showLoader = true;
+        this.showServerError = false;
+        this.serverErrorMessage = '';
+        this.crudHelperService = crudHelperService;
+        this.username = '';
+        this.password = '';
+        this.loginCtrl = this;
+    }
 
-            function login() {
-                returnToDashboard();
-            }
+    ngOnInit(){
+        this.crudHelperService.stopLoader(this);
+        this.crudHelperService.hideServerError(this);
+    }
 
-            CRUDHelperService.stopLoader(loginCtrl);
-            CRUDHelperService.hideServerError(loginCtrl);
-            loginCtrl.login = login;
-
-        }]);
+    login(){
+        this.$state.go('contiv.menu.dashboard', {username: this.username});
+    }
+}

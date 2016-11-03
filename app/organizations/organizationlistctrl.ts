@@ -2,7 +2,7 @@
  * Created by cshampur on 10/14/16.
  */
 
-import {Component, OnInit, OnDestroy, Inject} from "@angular/core";
+import {Component, OnInit, OnDestroy, Inject, NgZone} from "@angular/core";
 
 import {CRUDHelperService} from "../components/utils/crudhelperservice";
 import {Observable, Subscription} from "rxjs";
@@ -23,7 +23,8 @@ export class OrganizationListComponent implements OnInit, OnDestroy{
 
     constructor(@Inject('$state') private $state: StateService,
                 organizationsModel: OrganizationsModel,
-                crudHelperService: CRUDHelperService){
+                crudHelperService: CRUDHelperService,
+                private ngZone: NgZone){
         this.organizationsModel = organizationsModel;
         this.crudHelperService = crudHelperService;
         this.organizationsListCtrl = this;
@@ -43,11 +44,15 @@ export class OrganizationListComponent implements OnInit, OnDestroy{
         this.organizationsModel.get(reload)
             .then(function successCallback(result){
                     organizationsListCtrl['organizations'] = result;
-                    organizationsListCtrl.crudHelperService.stopLoader(organizationsListCtrl);
+                    organizationsListCtrl.ngZone.run(() => {
+                        organizationsListCtrl.crudHelperService.stopLoader(organizationsListCtrl);
+                    });
                 },
                 function errorCallback(result){
-                    organizationsListCtrl.crudHelperService.stopLoader(organizationsListCtrl);
-                })
+                    organizationsListCtrl.ngZone.run(() => {
+                        organizationsListCtrl.crudHelperService.stopLoader(organizationsListCtrl);
+                    });
+                });
     }
 
     create(){

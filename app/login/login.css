@@ -1,0 +1,17 @@
+body{
+    /* This image will be displayed fullscreen */
+    background: url('../images/loginbackground.jpeg') no-repeat center center;
+
+    /* Workaround for some mobile browsers */
+    min-height: 100%;
+
+    background-size: cover;
+}
+
+.copyright {
+    max-width: 450px;
+}
+
+.login-seg {
+    margin-top: 600px;
+}

@@ -1,40 +1,63 @@
-angular.module('contiv.organizations')
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider
-            .state('contiv.menu.organizations.details', {
-                url: '/details/:key',
-                controller: 'OrganizationDetailsCtrl as organizationDetailsCtrl',
-                templateUrl: 'organizations/organizationdetails.html'
+import {Component, Inject, OnInit, NgZone} from "@angular/core";
+import {CRUDHelperService} from "../components/utils/crudhelperservice";
+import {OrganizationsModel} from "../components/models/organizationsmodel";
+import {StateService} from "angular-ui-router";
+@Component({
+    selector: 'organizationdetails',
+    templateUrl: 'organizations/organizationdetails.html'
+})
+
+
+export class OrganizationDetailComponent implements OnInit{
+    public showLoader: boolean;
+    public organizationDetailsCtrl: any;
+    public organization: any;
+    public showServerError: boolean;
+    public serverErrorMessage: string;
+
+    constructor(private crudHelperService: CRUDHelperService,
+                private organizationsModel: OrganizationsModel,
+                @Inject('$state') private $state: StateService,
+                private ngZone: NgZone){
+        this.showServerError = false;
+        this.serverErrorMessage = '';
+        this.showLoader = false;
+        this.organization = {tenantName: ''};
+        this.organizationDetailsCtrl = this;
+
+    }
+
+    ngOnInit(){
+        this.showLoader = true;
+        var organizationDetailsCtrl = this;
+        this.organizationsModel.getModelByKey(this.$state.params['key'], false, 'key')
+            .then((result) => {
+                organizationDetailsCtrl.organization = result
+                organizationDetailsCtrl.ngZone.run(() => {
+                    organizationDetailsCtrl.showLoader = false;
+                });
+            }, (error) => {
+                organizationDetailsCtrl.ngZone.run(() => {
+                    organizationDetailsCtrl.showLoader = false;
+                });
             });
-    }])
-    .controller('OrganizationDetailsCtrl',
-        ['$state', '$stateParams', 'OrganizationsModel', 'CRUDHelperService',
-            function ($state, $stateParams, OrganizationsModel, CRUDHelperService) {
-                var organizationDetailsCtrl = this;
+    }
 
-                function returnToOrganizations() {
-                    $state.go('contiv.menu.organizations.list');
-                }
+    returnToOrganization(){
+        this.$state.go('contiv.menu.organizations.list');
+    }
 
-                function deleteOrganization() {
-                    CRUDHelperService.hideServerError(organizationDetailsCtrl);
-                    CRUDHelperService.startLoader(organizationDetailsCtrl);
-                    OrganizationsModel.delete(organizationDetailsCtrl.organization).then(function successCallback(result) {
-                        CRUDHelperService.stopLoader(organizationDetailsCtrl);
-                        returnToOrganizations();
-                    }, function errorCallback(result) {
-                        CRUDHelperService.stopLoader(organizationDetailsCtrl);
-                        CRUDHelperService.showServerError(organizationDetailsCtrl, result);
-                    });
-                }
-
-                CRUDHelperService.stopLoader(organizationDetailsCtrl);
-                CRUDHelperService.hideServerError(organizationDetailsCtrl);
-
-                OrganizationsModel.getModelByKey($stateParams.key)
-                    .then(function (organization) {
-                        organizationDetailsCtrl.organization = organization;
-                    });
-
-                organizationDetailsCtrl.deleteOrganization = deleteOrganization;
-            }]);
+    deleteOrganization(){
+        var organizationDetailsCtrl = this
+        this.crudHelperService.hideServerError(this);
+        this.showLoader = true;
+        this.organizationsModel.delete(this.organization)
+            .then((result) => {
+                organizationDetailsCtrl.showLoader = false;
+                organizationDetailsCtrl.returnToOrganization();
+            }, (error) => {
+                organizationDetailsCtrl.showLoader = false;
+                organizationDetailsCtrl.crudHelperService.showServerError(organizationDetailsCtrl, error);
+            });
+    }
+}

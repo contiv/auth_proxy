@@ -1,32 +1,13 @@
-<style>
-    body {
-        /* This image will be displayed fullscreen */
-        background: url('images/loginbackground.jpeg') no-repeat center center;
-
-        /* Workaround for some mobile browsers */
-        min-height: 100%;
-
-        background-size: cover;
-    }
-
-    .column {
-        max-width: 450px;
-    }
-
-    .segment {
-        margin-top: 600px;
-    }
-</style>
 <div class="ui middle aligned center aligned grid container">
-    <div class="column">
+    <div class="column copyright">
 
         <form id="loginForm" name="loginCtrl.form" class="ui form" role="form"
-              ng-submit="loginCtrl.login()" novalidate>
-            <div class="ui active inverted dimmer" ng-show="loginCtrl.showLoader">
+              (submit)="login()" novalidate #loginForm="ngForm">
+            <div class="ui active inverted dimmer" *ngIf="loginCtrl.showLoader">
                 <div class="ui loader"></div>
             </div>
 
-            <div class="ui stacked segment" style="margin-top: 180px">
+            <div class="ui stacked segment login-seg" style="margin-top: 180px">
                 <h1 class="header" style="margin-left:6px; margin-right:auto;">
                     <img class="ui image" src="images/loginlogo.svg" height="54" width="450">
                 </h1>
@@ -34,11 +15,11 @@
 
 
                 <div class="field">
-                    <input type="text" id="username" name="username" ng-model="loginCtrl.username"
+                    <input type="text" id="username" name="username" [(ngModel)]="loginCtrl.username"
                            placeholder="User Name">
                 </div>
                 <div class="field">
-                    <input type="password" id="password" name="password" ng-model="loginCtrl.password"
+                    <input type="password" id="password" name="password" [(ngModel)]="loginCtrl.password"
                            placeholder="Password">
                 </div>
 
@@ -47,7 +28,7 @@
                 </button>
                 <div class="ui section divider"></div>
                 <div class="ui center aligned grid">
-                    <div class="column">
+                    <div class="column copyright">
                         <h6 class="ui disabled header">
                             Copyright (c) 2016 Cisco Systems, Inc. All rights reserved.
                         </h6>

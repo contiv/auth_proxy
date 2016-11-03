@@ -1,8 +1,8 @@
 <form id="organizationCreationForm" name="organizationCreateCtrl.form" class="ui form" role="form"
-      ng-submit="organizationCreateCtrl.createOrganization(newOrganization)" novalidate>
+      (submit)="organizationCreateCtrl.createOrganization(organizationCreateFrom.valid)" novalidate #organizationCreateFrom="ngForm">
     <div class="ui sixteen column grid">
         <div class="one wide column">
-            <a ui-sref="contiv.menu.organizations.list()">
+            <a href="/#/m/organizations/list">
                 <i class="large arrow left icon"></i>
             </a>
         </div>
@@ -14,15 +14,15 @@
         </div>
     </div>
 
-    <div class="ui active inverted dimmer" ng-show="organizationCreateCtrl.showLoader">
+    <div class="ui active inverted dimmer" *ngIf="organizationCreateCtrl.showLoader">
         <div class="ui loader"></div>
     </div>
     <div class="ui basic segment">
         <div class="field">
-            <div ng-show="organizationCreateCtrl.form.$submitted">
-                <div ng-hide="organizationCreateCtrl.form.$valid" class="ui negative message">
+            <div *ngIf="organizationCreateFrom.submitted">
+                <div [hidden]="organizationCreateFrom.valid" class="ui negative message">
                     <ul class="list">
-                        <li ng-show="organizationCreateCtrl.form.newOrganizationName.$error.required">Please enter
+                        <li *ngIf="newOrganizationName.errors?.required">Please enter
                             organization name
                         </li>
                     </ul>
@@ -32,14 +32,14 @@
         <div class="field">
             <label for="newOrganizationName">Organization name</label>
             <input type="text" id="newOrganizationName" name="newOrganizationName"
-                   ng-model="organizationCreateCtrl.newOrganization.tenantName"
-                   placeholder="Enter name" required>
+                   [(ngModel)]="organizationCreateCtrl.newOrganization.tenantName"
+                   placeholder="Enter name" required #newOrganizationName="ngModel">
         </div>
 
         <div class="ui grid">
             <div class="right aligned sixteen wide column">
                 <div style="margin-top: 40px">
-                    <button type="button" class="ui basic button" ng-click="organizationCreateCtrl.cancelCreating()">
+                    <button type="button" class="ui basic button" (click)="organizationCreateCtrl.cancelCreating()">
                         Cancel
                     </button>
                     <button type="submit" class="ui blue button">Create</button>
@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <ctv-error ng-show="organizationCreateCtrl.showServerError" header="Error creating organization"
+        <ctv-error *ngIf="organizationCreateCtrl.showServerError" header="Error creating organization"
                    [error]="organizationCreateCtrl.serverErrorMessage">
         </ctv-error>
     </div>

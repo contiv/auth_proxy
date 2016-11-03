@@ -1,6 +1,6 @@
 <div class="ui sixteen column grid">
     <div class="one wide column">
-        <a ui-sref="contiv.menu.organizations.list()">
+        <a href="/#/m/organizations/list">
             <i class="large arrow left icon"></i>
         </a>
     </div>
@@ -18,7 +18,7 @@
             </div>
             <div class="actions">
                 <div class="ui negative button">No</div>
-                <div class="ui positive button" ng-click="organizationDetailsCtrl.deleteOrganization()">
+                <div class="ui positive button" (click)="organizationDetailsCtrl.deleteOrganization()">
                     Yes
                 </div>
             </div>
@@ -31,7 +31,7 @@
 </div>
 
 <div class="ui basic segment">
-    <div class="ui active inverted dimmer" ng-show="organizationDetailsCtrl.showLoader">
+    <div class="ui active inverted dimmer" *ngIf="organizationDetailsCtrl.showLoader">
         <div class="ui loader"></div>
     </div>
     <div>
@@ -45,7 +45,7 @@
         </table>
     </div>
 
-    <ctv-error ng-show="organizationDetailsCtrl.showServerError" header="Error deleting organization"
+    <ctv-error *ngIf="organizationDetailsCtrl.showServerError" header="Error deleting organization"
                [error]="organizationDetailsCtrl.serverErrorMessage">
     </ctv-error>
 </div>

@@ -2,7 +2,7 @@
  * Created by cshampur on 10/14/16.
  */
 
-import {Component, OnInit, OnDestroy, Inject} from "@angular/core";
+import {Component, OnInit, OnDestroy, Inject, NgZone} from "@angular/core";
 import {CRUDHelperService} from "../components/utils/crudhelperservice";
 import {Observable, Subscription} from "rxjs";
 import { StateService } from "angular-ui-router/commonjs/ng1";
@@ -22,7 +22,8 @@ export class ServicelbListComponent implements OnInit, OnDestroy{
 
     constructor(@Inject('$state') private $state: StateService,
                 servicelbsModel: ServicelbsModel,
-                crudHelperService: CRUDHelperService){
+                crudHelperService: CRUDHelperService,
+                private ngZone: NgZone){
         this.servicelbsModel = servicelbsModel;
         this.crudHelperService = crudHelperService;
         this.servicelbListCtrl = this;
@@ -42,10 +43,14 @@ export class ServicelbListComponent implements OnInit, OnDestroy{
         this.servicelbsModel.get(reload)
             .then(function successCallback(result){
                     servicelbListCtrl['servicelbs'] = result;
-                    servicelbListCtrl.crudHelperService.stopLoader(servicelbListCtrl);
+                    servicelbListCtrl.ngZone.run(() => {
+                        servicelbListCtrl.crudHelperService.stopLoader(servicelbListCtrl);
+                    })
                 },
                 function errorCallback(result){
-                    servicelbListCtrl.crudHelperService.stopLoader(servicelbListCtrl);
+                    servicelbListCtrl.ngZone.run(() => {
+                        servicelbListCtrl.crudHelperService.stopLoader(servicelbListCtrl);
+                    })
                 })
     }
 

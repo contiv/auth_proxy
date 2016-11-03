@@ -1,52 +1,56 @@
-angular.module('contiv.organizations')
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider
-            .state('contiv.menu.organizations.create', {
-                url: '/create',
-                templateUrl: 'organizations/organizationcreate.html',
-                controller: 'OrganizationCreateCtrl as organizationCreateCtrl'
-            })
-        ;
-    }])
-    .controller('OrganizationCreateCtrl', ['$state', 'OrganizationsModel', 'CRUDHelperService',
-        function ($state, OrganizationsModel, CRUDHelperService) {
-            var organizationCreateCtrl = this;
+import {Component, Inject, OnInit, NgZone} from "@angular/core";
+import {CRUDHelperService} from "../components/utils/crudhelperservice";
+import {OrganizationsModel} from "../components/models/organizationsmodel";
+import {StateService} from "angular-ui-router";
+@Component({
+    selector: 'organizationcreate',
+    templateUrl: 'organizations/organizationcreate.html'
+})
 
-            function returnToOrganizations() {
-                $state.go('contiv.menu.organizations.list');
-            }
+export class OrganizationCreateComponent{
+    public organizationCreateCtrl: any;
+    public newOrganization: any;
+    public showLoader: boolean;
+    public showServerError: boolean;
+    public serverErrorMessage: string;
+    constructor(private crudHelperService: CRUDHelperService,
+                private organizationsModel: OrganizationsModel,
+                @Inject('$state') private $state: StateService,
+                private ngZone: NgZone){
+        this.newOrganization = {key: '', tenantName: ''};
+        this.showServerError = false;
+        this.serverErrorMessage = '';
+        this.showLoader = false;
+        this.organizationCreateCtrl = this;
+    }
 
-            function cancelCreating() {
-                returnToOrganizations();
-            }
+    returnToOrganizations(){
+        this.$state.go('contiv.menu.organizations.list');
+    }
 
-            function createOrganization() {
-                //form controller is injected by the html template
-                //checking if all validations have passed
-                if (organizationCreateCtrl.form.$valid) {
-                    CRUDHelperService.hideServerError(organizationCreateCtrl);
-                    CRUDHelperService.startLoader(organizationCreateCtrl);
-                    organizationCreateCtrl.newOrganization.key = organizationCreateCtrl.newOrganization.tenantName; 
-                    OrganizationsModel.create(organizationCreateCtrl.newOrganization).then(function successCallback(result) {
-                        CRUDHelperService.stopLoader(organizationCreateCtrl);
-                        returnToOrganizations();
-                    }, function errorCallback(result) {
-                        CRUDHelperService.stopLoader(organizationCreateCtrl);
-                        CRUDHelperService.showServerError(organizationCreateCtrl, result);
+    cancelCreating(){
+        this.returnToOrganizations();
+    }
+
+    createOrganization(formvalid: boolean){
+        var organizationCreateCtrl = this;
+        if(formvalid){
+            this.crudHelperService.startLoader(this);
+            this.crudHelperService.hideServerError(this);
+            organizationCreateCtrl.newOrganization.key = organizationCreateCtrl.newOrganization.tenantName;
+            this.organizationsModel.create(organizationCreateCtrl.newOrganization,undefined)
+                .then((result) => {
+                    organizationCreateCtrl.ngZone.run(() => {
+                        organizationCreateCtrl.crudHelperService.stopLoader(organizationCreateCtrl);
                     });
-                }
-            }
+                    organizationCreateCtrl.returnToOrganizations();
+                }, (error) => {
+                    organizationCreateCtrl.ngZone.run(() => {
+                        organizationCreateCtrl.crudHelperService.stopLoader(organizationCreateCtrl);
+                    });
+                    organizationCreateCtrl.crudHelperService.showServerError(organizationCreateCtrl,error);
+                });
+        }
+    }
 
-            function resetForm() {
-                CRUDHelperService.stopLoader(organizationCreateCtrl);
-                CRUDHelperService.hideServerError(organizationCreateCtrl);
-                organizationCreateCtrl.newOrganization = {
-                    tenantName: ''
-                };
-            }
-
-            organizationCreateCtrl.createOrganization = createOrganization;
-            organizationCreateCtrl.cancelCreating = cancelCreating;
-
-            resetForm();
-        }]);
+}

@@ -7,6 +7,8 @@ import { CommonModule } from "@angular/common";
 import { DirectivesModule } from "../components/directives/directives.module";
 import Order = jasmine.Order;
 import {OrganizationListComponent} from "./organizationlistctrl";
+import {OrganizationCreateComponent} from "./organizationcreatectrl";
+import {OrganizationDetailComponent} from "./organizationdetailsctrl";
 
 @NgModule({
     imports: [
@@ -15,10 +17,14 @@ import {OrganizationListComponent} from "./organizationlistctrl";
         DirectivesModule
     ],
     declarations: [
-        OrganizationListComponent
+        OrganizationListComponent,
+        OrganizationCreateComponent,
+        OrganizationDetailComponent
     ],
     exports: [
-        OrganizationListComponent
+        OrganizationListComponent,
+        OrganizationCreateComponent,
+        OrganizationDetailComponent
     ]
 })
 export class OrganizationModule {}

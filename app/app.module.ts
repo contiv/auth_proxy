@@ -22,6 +22,7 @@ import { NetworkModule } from "./networks/network.module";
 import { ServicelbModule } from "./service_lbs/servicelb.module";
 import { OrganizationModule } from "./organizations/organization.module";
 import { NodesService } from "./components/utils/nodesservice";
+import {LoginComponent} from "./login/loginctrl";
 
 @NgModule({
     imports: [
@@ -35,7 +36,8 @@ import { NodesService } from "./components/utils/nodesservice";
         OrganizationModule
     ],
     declarations: [
-        DashboardComponent
+        DashboardComponent,
+        LoginComponent
     ],
     providers: [
         ApplicationGroupsModel,
