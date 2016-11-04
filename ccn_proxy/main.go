@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/tls"
 	"flag"
 	"io/ioutil"
 	"net/http"
@@ -9,23 +10,22 @@ import (
 	log "github.com/Sirupsen/logrus"
 )
 
-const (
-	// this name is used in logging output and the X-Forwarded-By header.
-	name = "ccn_proxy"
-)
-
 var (
 	// flags
-	disableTLS       bool
-	listenAddress    string
-	netmasterAddress string
+	listenAddress             string // address we listen on
+	netmasterAddress          string // address of the netmaster we proxy to
+	skipNetmasterVerification bool   // if set, skip verification of netmaster's certificate
 
 	// globals
-	upstream *url.URL
+	netmasterClient *http.Client // custom client which can skip cert verification
+	upstream        *url.URL     // URL object constructed from netmasterAddress
 
-	// the version is used in logging output and the X-Forwarded-By header.
-	// for releases, it is overridden at compile time via -ldflags
-	version = "devbuild"
+	// ProgramName is used in logging output and the X-Forwarded-By header.
+	ProgramName = "CCN Proxy"
+
+	// ProgramVersion is used in logging output and the X-Forwarded-By header.
+	// it is overridden at compile time via -ldflags
+	ProgramVersion = "unknown"
 )
 
 /*
@@ -62,9 +62,9 @@ func proxyRequest(w http.ResponseWriter, req *http.Request) {
 	//     X-Forwarded-For is our client's IP
 	//     X-Forwarded-By is the version string of this program which did the forwarding
 	req.Header.Add("X-Forwarded-For", req.RemoteAddr)
-	req.Header.Add("X-Forwarder", name+" "+version)
+	req.Header.Add("X-Forwarder", ProgramName+" "+ProgramVersion)
 
-	resp, err := http.DefaultClient.Do(copy)
+	resp, err := netmasterClient.Do(copy)
 	if err != nil {
 		serverError(w, "Failed to perform duplicate request", err)
 		return
@@ -126,27 +126,29 @@ func handler(w http.ResponseWriter, req *http.Request) {
 
 func main() {
 	// TODO: add a flag for LDAP host + port
-	flag.BoolVar(&disableTLS, "disable-tls", false, "if set, TLS is disabled")
 	flag.StringVar(&listenAddress, "listen-address", ":9998", "address to listen to HTTP requests on")
 	flag.StringVar(&netmasterAddress, "netmaster-address", "localhost:9999", "address of the upstream netmaster")
+	flag.BoolVar(&skipNetmasterVerification, "skip-netmaster-verification", false, "if set, skip verification of netmaster's certificate")
 	flag.Parse()
 
+	// TODO: support a configurable timeout here for communication with netmaster
+	netmasterClient = &http.Client{
+		Transport: &http.Transport{
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: skipNetmasterVerification},
+		},
+	}
+
 	upstream = &url.URL{
-		Scheme: "http", // we only support HTTP here because communication will be local
+		Scheme: "https", // we only support HTTPS netmasters
 		Host:   netmasterAddress,
 	}
 
 	http.HandleFunc("/", handler)
 
-	log.Printf("%s %s starting up", name, version)
+	log.Println(ProgramName, ProgramVersion, "starting up...")
 	log.Println("Proxying requests to", netmasterAddress)
 
-	if disableTLS {
-		log.Println("Listening for insecure HTTP requests on", listenAddress)
-		log.Fatalln(http.ListenAndServe(listenAddress, nil))
-	} else {
-		log.Println("Listening for secure HTTPS requests on", listenAddress)
-		// TODO: get the cert/key from somewhere else (envvar, flag, Vault, etc.)
-		log.Fatalln(http.ListenAndServeTLS(listenAddress, "cert.pem", "key.pem", nil))
-	}
+	log.Println("Listening for secure HTTPS requests on", listenAddress)
+	// TODO: get the cert/key from somewhere else (envvar, flag, Vault, etc.)
+	log.Fatalln(http.ListenAndServeTLS(listenAddress, "cert.pem", "key.pem", nil))
 }

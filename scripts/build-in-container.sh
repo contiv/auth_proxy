@@ -9,7 +9,7 @@ export CGO_ENABLED=0
 VERSION=${BUILD_VERSION-devbuild}
 
 go build \
-   -ldflags "-X main.version=$VERSION" \
+   -ldflags "-X main.ProgramVersion=$VERSION" \
    -o /output/ccn_proxy \
    github.com/contiv/ccn_proxy/ccn_proxy
 

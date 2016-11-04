@@ -18,4 +18,4 @@ docker build -t $IMAGE_NAME:$VERSION -f ./build/Dockerfile .
 echo
 echo "Created image: $IMAGE_NAME:$VERSION"
 echo
-echo "Test it with: docker run --rm $IMAGE_NAME:$VERSION --disable-tls"
+echo "Test it with: docker run --rm $IMAGE_NAME:$VERSION"
