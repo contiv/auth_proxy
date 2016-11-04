@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Collection } from "./collection";
 import {isUndefined} from "util";
+import { ContivGlobals } from "./contivglobals";
 
 @Injectable()
 export class NetworksModel extends Collection {

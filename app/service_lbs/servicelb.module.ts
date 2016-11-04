@@ -12,13 +12,15 @@ import {ServicelbPortsComponent} from "./servicelbportsdirective";
 import {ServicelbCreateComponent} from "./servicelbcreatectrl";
 import {ServicelbInfoComponent} from "./servicelbinfoctrl";
 import {ServicelbDetailsComponent} from "./servicelbdetailsctrl";
+import {RouterModule} from "@angular/router";
 
 
 @NgModule({
     imports: [
         FormsModule,
         CommonModule,
-        DirectivesModule
+        DirectivesModule,
+        RouterModule
     ],
     declarations: [
         ServicelbListComponent,

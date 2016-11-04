@@ -2,7 +2,7 @@
  * Created by vjain3 on 3/15/16.
  */
 import { Component, Inject } from '@angular/core';
-import { StateService, StateParams } from "angular-ui-router/commonjs/ng1";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ApplicationGroupsModel } from "../components/models/applicationgroupsmodel";
 import { CRUDHelperService } from "../components/utils/crudhelperservice";
 
@@ -14,8 +14,8 @@ export class ApplicationGroupDetailsComponent {
     applicationGroup:any = {};
     mode:string = 'details';
 
-    constructor(@Inject('$state') private $state:StateService,
-                @Inject('$stateParams') private $stateParams:StateParams,
+    constructor(private activatedRoute: ActivatedRoute,
+                private router: Router,
                 private applicationGroupsModel:ApplicationGroupsModel,
                 private crudHelperService:CRUDHelperService) {
         var applicationGroupDetailsCtrl = this;
@@ -24,7 +24,7 @@ export class ApplicationGroupDetailsComponent {
          * To show edit or details screen based on the route
          */
         function setMode() {
-            if ($state.is('contiv.menu.applicationgroups.edit')) {
+            if (activatedRoute.routeConfig.path.includes('edit')) {
                 applicationGroupDetailsCtrl.mode = 'edit';
             } else {
                 applicationGroupDetailsCtrl.mode = 'details';
@@ -34,7 +34,7 @@ export class ApplicationGroupDetailsComponent {
         applicationGroupDetailsCtrl.crudHelperService.stopLoader(applicationGroupDetailsCtrl);
         applicationGroupDetailsCtrl.crudHelperService.hideServerError(applicationGroupDetailsCtrl);
 
-        applicationGroupDetailsCtrl.applicationGroupsModel.getModelByKey($stateParams['key'], false, 'key')
+        applicationGroupDetailsCtrl.applicationGroupsModel.getModelByKey(activatedRoute.snapshot.params['key'], false, 'key')
             .then(function (group) {
                 applicationGroupDetailsCtrl.applicationGroup = group;
             });
@@ -43,15 +43,15 @@ export class ApplicationGroupDetailsComponent {
     }
 
     returnToApplicationGroup() {
-        this.$state.go('contiv.menu.applicationgroups.list');
+        this.router.navigate(['../../list'], { relativeTo: this.activatedRoute });
     }
 
     returnToApplicationGroupDetails() {
-        this.$state.go('contiv.menu.applicationgroups.details', {'key': this.applicationGroup.key});
+        this.router.navigate(['../../details', this.applicationGroup.key], { relativeTo: this.activatedRoute });
     }
 
     editApplicationGroup() {
-        this.$state.go('contiv.menu.applicationgroups.edit', {key:this.applicationGroup.key});
+        this.router.navigate(['../../edit', this.applicationGroup.key], { relativeTo: this.activatedRoute });
     }
 
     cancelEditing() {

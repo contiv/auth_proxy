@@ -18,3 +18,13 @@ table thead th[sortfield] span{
 .headingfontcolor {
     color: #b6b6b8
 }
+
+.login{
+    /* This image will be displayed fullscreen */
+    background: url('images/loginbackground.jpeg') no-repeat center center;
+
+    /* Workaround for some mobile browsers */
+    min-height: 100%;
+
+    background-size: cover;
+}

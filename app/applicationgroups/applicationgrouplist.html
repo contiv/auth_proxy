@@ -32,7 +32,7 @@
 
         <tbody>
             <tr *ngFor="let group of applicationGroupListCtrl['filteredgroups']">
-                <td><a href="/#/m/applicationgroups/details/{{group.key}}">{{group.groupName}}</a></td>
+                <td><a [routerLink]="['../details', group.key]">{{group.groupName}}</a></td>
                 <td>{{group.networkName}}</td>
                 <td>{{group.policies.join(", ")}}</td>
                 <td></td>

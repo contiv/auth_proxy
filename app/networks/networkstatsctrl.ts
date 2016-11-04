@@ -4,6 +4,7 @@ import {Subscription, Observable} from "rxjs";
 import {NetworksModel} from "../components/models/networksmodel";
 import {InspectService} from "../components/utils/inspectservice";
 import {isUndefined} from "util";
+import {ContivGlobals} from "../components/models/contivglobals";
 
 @Component({
     selector: 'network-stat',

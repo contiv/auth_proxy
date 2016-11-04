@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Collection } from "./collection";
 import * as _ from 'lodash';
+import { ContivGlobals } from "./contivglobals";
 
 @Injectable()
 export class RulesModel extends Collection {

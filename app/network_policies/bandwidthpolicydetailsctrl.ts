@@ -2,9 +2,9 @@
  * Created by hardik gandhi on 6/16/16.
  */
 import { Component, Inject } from '@angular/core';
+import { ActivatedRoute, Router } from "@angular/router";
 import { NetprofilesModel } from "../components/models/netprofilesmodel";
 import { CRUDHelperService } from "../components/utils/crudhelperservice";
-import { StateService, StateParams } from "angular-ui-router/commonjs/ng1";
 import { PolicyTab } from "./networkpoliciestabsctrl";
 
 @Component({
@@ -16,8 +16,8 @@ export class BandwidthPolicyDetailsComponent {
     policy:any = {};
     mode:string = 'details';
 
-    constructor(@Inject('$state') private $state:StateService,
-                @Inject('$stateParams') private $stateParams:StateParams,
+    constructor(private activatedRoute: ActivatedRoute,
+                private router: Router,
                 private netprofilesModel:NetprofilesModel,
                 private crudHelperService:CRUDHelperService) {
         var bandwidthPolicyDetailsCtrl = this;
@@ -26,7 +26,7 @@ export class BandwidthPolicyDetailsComponent {
          * To show edit or details screen based on the route
          */
         function setMode() {
-            if ($state.is('contiv.menu.networkpolicies.bandwidth.edit')) {
+            if (activatedRoute.routeConfig.path.includes('edit')) {
                 bandwidthPolicyDetailsCtrl.mode = 'edit';
             } else {
                 bandwidthPolicyDetailsCtrl.mode = 'details';
@@ -34,7 +34,7 @@ export class BandwidthPolicyDetailsComponent {
         }
 
         /* Get particular Profile for based on key*/
-        bandwidthPolicyDetailsCtrl.netprofilesModel.getModelByKey($stateParams.key)
+        bandwidthPolicyDetailsCtrl.netprofilesModel.getModelByKey(activatedRoute.snapshot.params['key'],false,undefined)
             .then(function (policy) {
                 bandwidthPolicyDetailsCtrl.policy = policy;
             });
@@ -48,7 +48,7 @@ export class BandwidthPolicyDetailsComponent {
         var bandwidthPolicyDetailsCtrl = this;
         bandwidthPolicyDetailsCtrl.crudHelperService.hideServerError(bandwidthPolicyDetailsCtrl);
         bandwidthPolicyDetailsCtrl.crudHelperService.startLoader(bandwidthPolicyDetailsCtrl);
-        bandwidthPolicyDetailsCtrl.netprofilesModel.deleteUsingKey(bandwidthPolicyDetailsCtrl.policy.key, 'name').then(
+        bandwidthPolicyDetailsCtrl.netprofilesModel.deleteUsingKey(bandwidthPolicyDetailsCtrl.policy.key, 'name', undefined).then(
             function successCallback(result) {
                 bandwidthPolicyDetailsCtrl.crudHelperService.stopLoader(bandwidthPolicyDetailsCtrl);
                 bandwidthPolicyDetailsCtrl.returnToPolicies();
@@ -60,15 +60,15 @@ export class BandwidthPolicyDetailsComponent {
 
 
     returnToPolicies() {
-        this.$state.go('contiv.menu.networkpolicies.list', {policyTab: PolicyTab.bandwidth});
+        this.router.navigate(['../../../list', {policyTab: PolicyTab.bandwidth}], { relativeTo: this.activatedRoute });
     }
 
     returnToPolicyDetails() {
-        this.$state.go('contiv.menu.networkpolicies.bandwidth.details', {'key': this.policy.key});
+        this.router.navigate(['../../details', this.policy.key], { relativeTo: this.activatedRoute });
     }
 
     editPolicy() {
-        this.$state.go('contiv.menu.networkpolicies.bandwidth.edit', {key:this.policy.key});
+        this.router.navigate(['../../edit', this.policy.key], { relativeTo: this.activatedRoute });
     }
 
     cancelEditing() {

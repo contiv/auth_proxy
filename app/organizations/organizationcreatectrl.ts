@@ -1,7 +1,8 @@
 import {Component, Inject, OnInit, NgZone} from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import {CRUDHelperService} from "../components/utils/crudhelperservice";
 import {OrganizationsModel} from "../components/models/organizationsmodel";
-import {StateService} from "angular-ui-router";
+
 @Component({
     selector: 'organizationcreate',
     templateUrl: 'organizations/organizationcreate.html'
@@ -13,9 +14,10 @@ export class OrganizationCreateComponent{
     public showLoader: boolean;
     public showServerError: boolean;
     public serverErrorMessage: string;
-    constructor(private crudHelperService: CRUDHelperService,
+    constructor(private activatedRoute: ActivatedRoute,
+                private router: Router,
+                private crudHelperService: CRUDHelperService,
                 private organizationsModel: OrganizationsModel,
-                @Inject('$state') private $state: StateService,
                 private ngZone: NgZone){
         this.newOrganization = {key: '', tenantName: ''};
         this.showServerError = false;
@@ -25,7 +27,7 @@ export class OrganizationCreateComponent{
     }
 
     returnToOrganizations(){
-        this.$state.go('contiv.menu.organizations.list');
+        this.router.navigate(['../list'], { relativeTo: this.activatedRoute });
     }
 
     cancelCreating(){

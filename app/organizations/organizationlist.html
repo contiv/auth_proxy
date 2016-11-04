@@ -30,7 +30,7 @@
 
         <tbody>
             <tr *ngFor="let organization of organizationsListCtrl.filteredorganizations">
-                <td><a href="/#/m/organizations/details/{{organization.key}}">{{organization.tenantName}}</a></td>
+                <td><a [routerLink]="['../details', organization.key]">{{organization.tenantName}}</a></td>
                 <td></td>
             </tr>
         </tbody>

@@ -2,7 +2,7 @@
       (submit)="networkCreateCtrl.createNetwork(networkCreateForm.valid)" novalidate #networkCreateForm="ngForm">
     <div class="ui sixteen column grid">
         <div class="one wide column">
-            <a href="/#/m/networks/list">
+            <a [routerLink]="['../list']">
                 <i class="large arrow left icon"></i>
             </a>
         </div>

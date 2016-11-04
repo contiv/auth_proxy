@@ -3,10 +3,9 @@
  */
 
 import {Component, OnInit, OnDestroy, Inject, NgZone} from "@angular/core";
-
+import { ActivatedRoute, Router } from "@angular/router";
 import {CRUDHelperService} from "../components/utils/crudhelperservice";
 import {Observable, Subscription} from "rxjs";
-import { StateService } from "angular-ui-router/commonjs/ng1";
 import {OrganizationsModel} from "../components/models/organizationsmodel";
 
 
@@ -21,7 +20,8 @@ export class OrganizationListComponent implements OnInit, OnDestroy{
     public organizationsListCtrl: any;
     private refresh: Subscription;
 
-    constructor(@Inject('$state') private $state: StateService,
+    constructor(private activatedRoute: ActivatedRoute,
+                private router: Router,
                 organizationsModel: OrganizationsModel,
                 crudHelperService: CRUDHelperService,
                 private ngZone: NgZone){
@@ -56,7 +56,7 @@ export class OrganizationListComponent implements OnInit, OnDestroy{
     }
 
     create(){
-        this.$state.go('contiv.menu.organizations.create');
+        this.router.navigate(['../create'], { relativeTo: this.activatedRoute });
     }
 
     ngOnDestroy(){

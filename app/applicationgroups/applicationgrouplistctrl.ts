@@ -1,12 +1,11 @@
 /**
  * Created by vjain3 on 3/11/16.
  */
-
 import {Component, OnInit, OnDestroy, Inject} from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import {ApplicationGroupsModel} from "../components/models/applicationgroupsmodel";
 import {CRUDHelperService} from "../components/utils/crudhelperservice";
 import {Observable, Subscription} from "rxjs";
-import { StateService } from "angular-ui-router/commonjs/ng1";
 
 @Component({
     selector:'app-group',
@@ -19,7 +18,8 @@ export class AppGrouplistComponent implements OnInit, OnDestroy{
     private crudHelperService: CRUDHelperService;
     private refresh: Subscription;
 
-    constructor(@Inject('$state') private $state: StateService,
+    constructor(private activatedRoute: ActivatedRoute,
+                private router: Router,
                 appGroupModel: ApplicationGroupsModel,
                 crudHelperService:CRUDHelperService){
         this.appGroupModel = appGroupModel;
@@ -49,7 +49,7 @@ export class AppGrouplistComponent implements OnInit, OnDestroy{
     }
 
     create(){
-        this.$state.go('contiv.menu.applicationgroups.create');
+        this.router.navigate(['../create'], { relativeTo: this.activatedRoute });
     }
 
     ngOnDestroy(){

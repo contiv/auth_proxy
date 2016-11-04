@@ -35,7 +35,7 @@
 
         <tbody>
         <tr *ngFor="let network of networkListComp['filterednetworks']">
-            <td><a href="/#/m/networks/details/{{network.key}}">{{network.networkName}}</a></td>
+            <td><a [routerLink]="['../details',network.key]">{{network.networkName}}</a></td>
             <td>{{network.encap}}</td>
             <td>{{network.subnet}}</td>
             <td>{{network.gateway}}</td>

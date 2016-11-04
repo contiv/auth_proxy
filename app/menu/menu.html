@@ -1,34 +1,36 @@
-<style>
-    body{
-        background: none;
-    }
-</style>
 <div id="sidebar" class="ui visible left vertical sidebar icon labeled menu">
-    <a class="white item" ui-sref="contiv.menu.dashboard()" ui-sref-active="{'active':'contiv.menu.dashboard'}">
+
+    <a class="white item" [routerLink]="['dashboard']" routerLinkActive="active">
         <i class="dashboard icon"></i>
         Dashboard
     </a>
-    <a class="white item" ui-sref="contiv.menu.applicationgroups.list()" ui-sref-active="{'active':'contiv.menu.applicationgroups'}">
+
+    <a class="white item" [routerLink]="['applicationgroups/list']" routerLinkActive="active">
         <i class="appgroup icon"></i>
         Application Groups
     </a>
-    <a class="white item" ui-sref="contiv.menu.networkpolicies.list()" ui-sref-active="{'active':'contiv.menu.networkpolicies'}">
+
+    <a class="white item" [routerLink]="['networkpolicies/list']" routerLinkActive="active">
         <i class="networkpolicies icon"></i>
         Network Policies
     </a>
-    <a class="white item" ui-sref="contiv.menu.servicelbs.list()" ui-sref-active="{'active':'contiv.menu.servicelbs'}">
+
+    <a class="white item" [routerLink]="['servicelbs/list']" routerLinkActive="active">
         <i class="loadbalancer icon"></i>
         Service Load Balancers
     </a>
-    <a class="white item" ui-sref="contiv.menu.networks.list()" ui-sref-active="{'active':'contiv.menu.networks'}">
+
+    <a class="white item" [routerLink]="['networks/list']" routerLinkActive="active">
         <i class="networks icon"></i>
         Networks
     </a>
-    <a class="white item" ui-sref="contiv.menu.organizations.list()" ui-sref-active="{'active':'contiv.menu.organizations'}">
+
+    <a class="white item" [routerLink]="['organizations/list']" routerLinkActive="active">
         <i class="organizations icon"></i> 
         Organizations
     </a>
-    <a class="white item" ui-sref="contiv.menu.settings.details.cluster()" ui-sref-active="{'active':'contiv.menu.settings'}">
+
+    <a class="white item" [routerLink]="['settings']" routerLinkActive="active">
         <i class="global_settings icon"></i> 
         Settings
     </a>
@@ -45,19 +47,19 @@
         </h1>
         <div class="right floated one wide column" style="margin-top: 12px; margin-right: 12px;">
             <button type="button" class="circular ui mini icon button"
-                    ng-click="menuCtrl.help()">
+                    (click)="help()">
                 <i class="large help icon"></i>
             </button>
             <button type="button" class="circular ui mini icon button"
-                    ng-click="menuCtrl.logout()">
+                    (click)="logout()">
                 <i class="large logout icon"></i>
             </button>
             <button type="button" class="circular ui mini icon button"
-                    ng-click="menuCtrl.account()">
+                    (click)="account()">
                 <i class="large user icon"></i>
             </button>
             <div class="ui dropdown">
-                <div class="text">{{menuCtrl.username}}</div>
+                <div class="text">{{username}}</div>
                 <i class="large dropdown icon"></i>
                 <div class="menu">
                 </div>
@@ -66,5 +68,7 @@
 
     </div>
 
-    <div ui-view style="margin-left:180px;margin-top:30px"></div>
+    <div [ngStyle]="{'margin-left.px':180,'margin-top.px':30, 'margin-right.px': 30}">
+        <router-outlet></router-outlet>
+    </div>
 </div>

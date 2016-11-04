@@ -2,7 +2,7 @@
  * Created by vjain3 on 3/9/16.
  */
 import { Component, Inject } from '@angular/core';
-import { StateService, StateParams } from "angular-ui-router/commonjs/ng1";
+import { ActivatedRoute, Router } from "@angular/router";
 
 export enum PolicyTab {
     isolation,
@@ -19,17 +19,17 @@ export class NetworkPoliciesTabsComponent {
     policyTab = PolicyTab;
 
 
-    constructor(@Inject('$state') private $state:StateService,
-                @Inject('$stateParams') private $stateParams:StateParams) {
-        this.selectPolicyTab($stateParams['policyTab']);
+    constructor(private activatedRoute: ActivatedRoute,
+                private router: Router) {
+        this.selectPolicyTab(+activatedRoute.snapshot.params['policyTab']);
     }
 
     createNetworkPolicy() {
         if (this.isolationPolicySelected) {
-            this.$state.go('contiv.menu.networkpolicies.isolation.create');
+            this.router.navigate(['../isolation/create'], { relativeTo: this.activatedRoute });
         }
         if (this.bandwidthPolicySelected) {
-            this.$state.go('contiv.menu.networkpolicies.bandwidth.create');
+            this.router.navigate(['../bandwidth/create'], { relativeTo: this.activatedRoute });
         }
     }
 

@@ -1,6 +1,6 @@
 <div class="ui sixteen column grid">
     <div class="one wide column">
-        <a href="/#/m/servicelbs/list">
+        <a [routerLink]="['../../list']">
             <i class="large arrow left icon"></i>
         </a>
     </div>
@@ -40,18 +40,18 @@
     </div>
 </div>
 <div class="ui secondary pointing menu" *ngIf="servicelbDetailsCtrl.mode=='details'">
-    <div class="ui container">
-        <a class="blue item" [ngClass]="{active: infoselected}" (click)="infoselected=true">
-            <i class="details icon"></i>
-            DETAILS
-        </a>
-        <a class="blue item" [ngClass]="{active: !infoselected}" (click)="infoselected=false">
-            <i class="area chart icon"></i>
-            STATS
-        </a>
-    </div>
+    <a class="blue item" [ngClass]="{active: infoselected}" (click)="infoselected=true">
+        <i class="details icon"></i>
+        DETAILS
+    </a>
+    <a class="blue item" [ngClass]="{active: !infoselected}" (click)="infoselected=false">
+        <i class="area chart icon"></i>
+        STATS
+    </a>
 </div>
 
-<servicelb-info [(mode)]="mode" *ngIf="infoselected || servicelbDetailsCtrl.mode == 'edit'" (serviceName)="serviceName=$event"></servicelb-info>
-<servicelb-stat [statkey]="servicelbDetailsCtrl.statskey" *ngIf="!infoselected && servicelbDetailsCtrl.mode != 'edit'"></servicelb-stat>
+<servicelb-info [(mode)]="mode" *ngIf="infoselected || servicelbDetailsCtrl.mode == 'edit'"
+                (serviceName)="serviceName=$event"></servicelb-info>
+<servicelb-stat [statkey]="servicelbDetailsCtrl.statskey"
+                *ngIf="!infoselected && servicelbDetailsCtrl.mode != 'edit'"></servicelb-stat>
 

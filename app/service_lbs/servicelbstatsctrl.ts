@@ -5,6 +5,7 @@ declare var jQuery:any;
 import {InspectService} from "../components/utils/inspectservice";
 import {isUndefined} from "util";
 import {ServicelbsModel} from "../components/models/servicelbsmodel";
+import {ContivGlobals} from "../components/models/contivglobals";
 
 @Component({
     selector: 'servicelb-stat',

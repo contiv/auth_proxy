@@ -4,18 +4,20 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
+import { RouterModule } from "@angular/router";
 import { DirectivesModule } from "../components/directives/directives.module";
 import { PipesModule } from "../components/pipes/pipes.module";
 import { ApplicationGroupCreateComponent } from "./applicationgroupcreatectrl";
 import { ApplicationGroupDetailsComponent } from "./applicationgroupdetailsctrl";
 import { IsolationPolicySelectionComponent } from "./isolationpolicydirective";
 import { BandwidthPolicySelectionComponent } from "./bandwidthpolicydirective";
-import {AppGrouplistComponent} from "./applicationgrouplistctrl";
+import { AppGrouplistComponent } from "./applicationgrouplistctrl";
 
 @NgModule({
     imports: [
         FormsModule,
         CommonModule,
+        RouterModule,
         DirectivesModule,
         PipesModule
     ],
@@ -27,15 +29,16 @@ import {AppGrouplistComponent} from "./applicationgrouplistctrl";
         AppGrouplistComponent
     ],
     exports: [
+        AppGrouplistComponent,
         ApplicationGroupCreateComponent,
         ApplicationGroupDetailsComponent,
         IsolationPolicySelectionComponent,
         BandwidthPolicySelectionComponent,
         FormsModule,
         CommonModule,
+        RouterModule,
         DirectivesModule,
-        PipesModule,
-        AppGrouplistComponent
+        PipesModule
     ]
 })
 export class ApplicationGroupsModule {}

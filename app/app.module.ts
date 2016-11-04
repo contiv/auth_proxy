@@ -4,9 +4,16 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from "@angular/http";
+import { APP_BASE_HREF, HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { LoginModule } from "./login/login.module";
+import { MenuModule } from "./menu/menu.module";
+import { DashboardModule } from "./dashboard/dashboard.module";
 import { NetworkPoliciesModule } from "./network_policies/networkpolicies.module";
 import { ApplicationGroupsModule } from "./applicationgroups/applicationgroups.module.ts";
 import { SettingsModule } from "./settings/settings.module";
+import { NetworkModule } from "./networks/network.module";
+import { ServicelbModule } from "./service_lbs/servicelb.module";
+import { OrganizationModule } from "./organizations/organization.module";
 import { NetprofilesModel } from "./components/models/netprofilesmodel";
 import { ApplicationGroupsModel } from "./components/models/applicationgroupsmodel";
 import { NetworksModel } from "./components/models/networksmodel";
@@ -17,27 +24,27 @@ import { ServicelbsModel } from "./components/models/servicelbsmodel";
 import { CRUDHelperService } from "./components/utils/crudhelperservice";
 import { InspectService } from "./components/utils/inspectservice";
 import { NetworkService } from "./components/utils/networkservice";
-import { DashboardComponent } from "./dashboard/dashboardctrl";
-import { NetworkModule } from "./networks/network.module";
-import { ServicelbModule } from "./service_lbs/servicelb.module";
-import { OrganizationModule } from "./organizations/organization.module";
 import { NodesService } from "./components/utils/nodesservice";
-import {LoginComponent} from "./login/loginctrl";
+import { AppComponent } from "./app.component";
+import appRoutes from "./app.routes.ts";
 
 @NgModule({
     imports: [
         BrowserModule,
         HttpModule,
+        appRoutes,
+        MenuModule,
+        DashboardModule,
         NetworkPoliciesModule,
         ApplicationGroupsModule,
         SettingsModule,
         NetworkModule,
         ServicelbModule,
-        OrganizationModule
+        OrganizationModule,
+        LoginModule
     ],
     declarations: [
-        DashboardComponent,
-        LoginComponent
+        AppComponent
     ],
     providers: [
         ApplicationGroupsModel,
@@ -50,7 +57,10 @@ import {LoginComponent} from "./login/loginctrl";
         CRUDHelperService,
         InspectService,
         NetworkService,
-        NodesService
-    ]
+        NodesService,
+        { provide: APP_BASE_HREF, useValue: '' },
+        { provide: LocationStrategy, useClass: HashLocationStrategy }
+    ],
+    bootstrap: [ AppComponent ]
 })
 export class AppModule {}

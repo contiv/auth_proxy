@@ -2,13 +2,14 @@
  * Created by vjain3 on 3/8/16.
  */
 import { Component, Inject } from '@angular/core';
+import { ActivatedRoute, Router } from "@angular/router";
 import { PoliciesModel } from "../components/models/policiesmodel";
 import { RulesModel } from "../components/models/rulesmodel";
 import { NetworksModel } from "../components/models/networksmodel";
 import { ApplicationGroupsModel } from "../components/models/applicationgroupsmodel";
 import { CRUDHelperService } from "../components/utils/crudhelperservice";
-import { StateService, StateParams } from "angular-ui-router/commonjs/ng1";
 import { PolicyTab } from "./networkpoliciestabsctrl";
+import { ContivGlobals } from "../components/models/contivglobals";
 
 @Component({
     selector: 'isolationpolicydetails',
@@ -36,8 +37,8 @@ export class IsolationPolicyDetailsComponent {
     incorrectCIDR:boolean = false;
     validateCIDRFlag:boolean = false;
 
-    constructor(@Inject('$state') private $state:StateService,
-                @Inject('$stateParams') private $stateParams:StateParams,
+    constructor(private activatedRoute: ActivatedRoute,
+                private router: Router,
                 private policiesModel:PoliciesModel,
                 private rulesModel:RulesModel,
                 private networksModel:NetworksModel,
@@ -49,7 +50,7 @@ export class IsolationPolicyDetailsComponent {
          * To show edit or details screen based on the route
          */
         function setMode() {
-            if ($state.is('contiv.menu.networkpolicies.isolation.edit')) {
+            if (activatedRoute.routeConfig.path.includes('edit')) {
                 isolationPolicyDetailsCtrl.mode = 'edit';
             } else {
                 isolationPolicyDetailsCtrl.mode = 'details';
@@ -85,7 +86,7 @@ export class IsolationPolicyDetailsComponent {
         isolationPolicyDetailsCtrl.crudHelperService.stopLoader(isolationPolicyDetailsCtrl);
         isolationPolicyDetailsCtrl.crudHelperService.hideServerError(isolationPolicyDetailsCtrl);
 
-        isolationPolicyDetailsCtrl.policiesModel.getModelByKey($stateParams['key'], false, 'key')
+        isolationPolicyDetailsCtrl.policiesModel.getModelByKey(activatedRoute.snapshot.params['key'], false, 'key')
             .then(function (policy) {
                 isolationPolicyDetailsCtrl.policy = policy;
                 isolationPolicyDetailsCtrl.rulesModel.getIncomingRules(policy.policyName, 'default').then(function (result) {
@@ -104,15 +105,15 @@ export class IsolationPolicyDetailsComponent {
     }
 
     returnToPolicies() {
-        this.$state.go('contiv.menu.networkpolicies.list', {policyTab: PolicyTab.isolation});
+        this.router.navigate(['../../../list', {policyTab: PolicyTab.isolation}], { relativeTo: this.activatedRoute });
     }
 
     returnToPolicyDetails() {
-        this.$state.go('contiv.menu.networkpolicies.isolation.details', {key: this.policy.key});
+        this.router.navigate(['../../details', this.policy.key], { relativeTo: this.activatedRoute });
     }
 
     editPolicy() {
-        this.$state.go('contiv.menu.networkpolicies.isolation.edit', {key:this.policy.key});
+        this.router.navigate(['../../edit', this.policy.key], { relativeTo: this.activatedRoute });
     }
 
     cancelEditing() {

@@ -2,7 +2,7 @@
       (submit)="organizationCreateCtrl.createOrganization(organizationCreateFrom.valid)" novalidate #organizationCreateFrom="ngForm">
     <div class="ui sixteen column grid">
         <div class="one wide column">
-            <a href="/#/m/organizations/list">
+            <a [routerLink]="['../list']">
                 <i class="large arrow left icon"></i>
             </a>
         </div>

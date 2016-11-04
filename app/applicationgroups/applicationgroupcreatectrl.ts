@@ -1,11 +1,8 @@
 /**
  * Created by vjain3 on 3/11/16.
  */
-/**
- * Created by vjain3 on 3/10/16.
- */
 import { Component, Inject } from '@angular/core';
-import { StateService } from "angular-ui-router/commonjs/ng1";
+import { ActivatedRoute, Router } from "@angular/router";
 import { NetworksModel } from "../components/models/networksmodel";
 import { ApplicationGroupsModel } from "../components/models/applicationgroupsmodel";
 import { CRUDHelperService } from "../components/utils/crudhelperservice";
@@ -19,7 +16,8 @@ export class ApplicationGroupCreateComponent {
     applicationGroup:any = {};
     selectedNetwork:string = '';
 
-    constructor(@Inject('$state') private $state:StateService,
+    constructor(private activatedRoute: ActivatedRoute,
+                private router: Router,
                 private networksModel:NetworksModel,
                 private applicationGroupsModel:ApplicationGroupsModel,
                 private crudHelperService:CRUDHelperService) {
@@ -53,7 +51,7 @@ export class ApplicationGroupCreateComponent {
     }
 
     returnToApplicationGroup() {
-        this.$state.go('contiv.menu.applicationgroups.list');
+        this.router.navigate(['../list'], { relativeTo: this.activatedRoute });
     }
 
     cancelCreating() {

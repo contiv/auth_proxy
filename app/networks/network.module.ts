@@ -10,12 +10,14 @@ import {NetworkStatComponent} from "./networkstatsctrl";
 import {NetworkdetailsComponent} from "./networkdetailsctrl";
 import {NetworkInfoComponent} from "./networkinfoctrl";
 import {NetworkCreateComponent} from "./networkcreatectrl";
+import {RouterModule} from "@angular/router";
 
 @NgModule({
     imports: [
         FormsModule,
         CommonModule,
-        DirectivesModule
+        DirectivesModule,
+        RouterModule
     ],
     declarations: [
         NetworkListComponent,

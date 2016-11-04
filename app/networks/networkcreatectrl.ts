@@ -5,7 +5,8 @@
 import {Component, Inject, Directive} from "@angular/core";
 import {NetworksModel} from "../components/models/networksmodel";
 import {CRUDHelperService} from "../components/utils/crudhelperservice";
-import { StateService } from "angular-ui-router/commonjs/ng1";
+import {Router, ActivatedRoute} from "@angular/router";
+import {ContivGlobals} from "../components/models/contivglobals";
 
 @Component({
     selector: 'networkcreate',
@@ -18,7 +19,8 @@ export class NetworkCreateComponent{
     public networkCreateCtrl: any;
     public newNetwork: any;
 
-    constructor(@Inject('$state') private $state: StateService,
+    constructor(private router: Router,
+                private activatedRoute: ActivatedRoute,
                 networksModel: NetworksModel,
                 crudHelperService: CRUDHelperService){
         this.networksModel = networksModel;
@@ -32,7 +34,7 @@ export class NetworkCreateComponent{
     }
 
     returnToNetworks(){
-        this.$state.go("contiv.menu.networks.list");
+        this.router.navigate(['../list'], {relativeTo: this.activatedRoute});
     }
 
     cancelCreating(){

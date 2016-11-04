@@ -4,9 +4,9 @@
 
 import {Component, OnInit, OnDestroy, Inject} from "@angular/core";
 import {CRUDHelperService} from "../components/utils/crudhelperservice";
-import { StateService } from "angular-ui-router/commonjs/ng1";
 import {ServicelbsModel} from "../components/models/servicelbsmodel";
 import {NetworksModel} from "../components/models/networksmodel";
+import {Router, ActivatedRoute} from "@angular/router";
 var _  = require('lodash');
 
 
@@ -24,7 +24,8 @@ export class ServicelbCreateComponent implements OnInit{
     public networks: any;
     public labelSelectors: any;
 
-    constructor(@Inject('$state') private $state: StateService,
+    constructor(private router: Router,
+                private activatedRoute: ActivatedRoute,
                 servicelbsModel: ServicelbsModel,
                 crudHelperService: CRUDHelperService,
                 networksModel: NetworksModel){
@@ -77,7 +78,7 @@ export class ServicelbCreateComponent implements OnInit{
     }
 
     returnToServicelbs(){
-        this.$state.go('contiv.menu.servicelbs.list');
+        this.router.navigate(['../list'], {relativeTo: this.activatedRoute});
     }
 
     createLabelSelectorStrings(){

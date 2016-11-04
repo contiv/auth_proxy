@@ -4,8 +4,8 @@
 
 import {Component, OnInit, Input, Inject, EventEmitter, Output, AfterViewChecked, NgZone} from "@angular/core";
 import {CRUDHelperService} from "../components/utils/crudhelperservice";
-import { StateService } from "angular-ui-router/commonjs/ng1";
 import {ServicelbsModel} from "../components/models/servicelbsmodel";
+import {Router, ActivatedRoute} from "@angular/router";
 var _ = require('lodash');
 
 
@@ -28,7 +28,8 @@ export class  ServicelbInfoComponent implements OnInit{
     public showLoader: boolean;
     private ngZone: NgZone;
 
-    constructor(@Inject('$state') private $state: StateService,
+    constructor(private router: Router,
+                private activatedRoute: ActivatedRoute,
                 servicelbsModel: ServicelbsModel,
                 crudHelperService: CRUDHelperService,
                 ngZone: NgZone){
@@ -50,7 +51,7 @@ export class  ServicelbInfoComponent implements OnInit{
 
     ngOnInit(){
         this.crudHelperService.startLoader(this);
-        this.statskey = this.$state.params['key'];
+        this.statskey = this.activatedRoute.snapshot.params['key'];
         this.getServicelbs(false);
     }
 
@@ -60,7 +61,7 @@ export class  ServicelbInfoComponent implements OnInit{
     }
 
     returnToServicelbs(){
-        this.$state.go('contiv.menu.servicelbs.list');
+        this.router.navigate(['../../list'], {relativeTo: this.activatedRoute});
     }
 
     getServicelbs(reload: boolean){

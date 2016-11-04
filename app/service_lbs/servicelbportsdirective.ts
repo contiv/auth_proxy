@@ -18,7 +18,7 @@ interface Item{
 })
 
 export class ServicelbPortsComponent{
-    @Input('items') items: Item[];
+    @Input('items') items: string[];
     @Output('itemsChange') itemsChange: EventEmitter<any>;
     public newItem:Item;
     constructor(){

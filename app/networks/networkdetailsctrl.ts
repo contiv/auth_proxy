@@ -5,10 +5,10 @@
 import {Component, OnInit, OnDestroy, Inject} from "@angular/core";
 import {CRUDHelperService} from "../components/utils/crudhelperservice";
 import {Observable, Subscription} from "rxjs";
-import { StateService } from "angular-ui-router/commonjs/ng1";
 import {ApplicationGroupsModel} from "../components/models/applicationgroupsmodel";
 import {NetworksModel} from "../components/models/networksmodel";
 import {isUndefined} from "util";
+import {ActivatedRoute, Router} from "@angular/router";
 var _ = require('lodash');
 
 
@@ -27,10 +27,12 @@ export class NetworkdetailsComponent implements OnInit, OnDestroy{
     public infoselected: boolean
     public statskey: string;
 
-    constructor(@Inject('$state') private $state: StateService,
+    constructor(private route: ActivatedRoute,
+                private router: Router,
                 applicationGroupsModel: ApplicationGroupsModel,
                 networksModel: NetworksModel,
                 crudHelperService: CRUDHelperService){
+
         this.applicationGroupsModel = applicationGroupsModel;
         this.networksModel = networksModel;
         this.crudHelperService = crudHelperService;
@@ -48,7 +50,7 @@ export class NetworkdetailsComponent implements OnInit, OnDestroy{
 
     ngOnInit(){
         this.crudHelperService.startLoader(this);
-        this.statskey = this.$state.params['key'];
+        this.statskey = this.route.snapshot.params['key'];
         this.getNetworksModel(false);
     }
 
@@ -68,7 +70,7 @@ export class NetworkdetailsComponent implements OnInit, OnDestroy{
 
     getNetworksModel(reload: boolean){
         var networkDetailsCtrl = this;
-        this.networksModel.getModelByKey(this.$state.params['key'], reload, 'key')
+        this.networksModel.getModelByKey(this.route.snapshot.params['key'], reload, 'key')
             .then((result) => {
                 networkDetailsCtrl['network'] = result;
                 networkDetailsCtrl.getApplicationGroups(false);
@@ -95,7 +97,7 @@ export class NetworkdetailsComponent implements OnInit, OnDestroy{
     }
 
     returnToNetworks(){
-        this.$state.go('contiv.menu.networks.list');
+        this.router.navigate(['../../list'], {relativeTo: this.route});
     }
 
     ngOnDestroy(){
