@@ -1,0 +1,5 @@
+FROM golang:1.7.3
+
+WORKDIR /go/src/github.com/contiv/ccn_proxy
+
+ENTRYPOINT ["/bin/bash", "./scripts/build-in-container.sh"]
