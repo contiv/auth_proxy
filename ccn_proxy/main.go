@@ -10,8 +10,7 @@ import (
 )
 
 const (
-	// this name is used in logging output and the X-Forwarded-By header
-	// which is sent to netmaster.
+	// this name is used in logging output and the X-Forwarded-By header.
 	name = "ccn_proxy"
 )
 
@@ -24,8 +23,8 @@ var (
 	// globals
 	upstream *url.URL
 
-	// this string is included in the X-Forwarded-By header.
-	// for releases, it is overridden at compile time.
+	// the version is used in logging output and the X-Forwarded-By header.
+	// for releases, it is overridden at compile time via -ldflags
 	version = "devbuild"
 )
 
@@ -44,8 +43,9 @@ func serverError(w http.ResponseWriter, msg string, err error) {
 }
 
 // proxyRequest takes a HTTP request we've received, duplicates it, adds a few
-// custom request headers, and sends the request to the upstream netmaster. It
-// copies the response body and response headers and writes them to our client.
+// custom request headers, and sends the request to the netmaster. It copies
+// the status code, response body, and response headers onto the response we
+// send to our client.
 func proxyRequest(w http.ResponseWriter, req *http.Request) {
 	copy := new(http.Request)
 	*copy = *req
@@ -58,7 +58,9 @@ func proxyRequest(w http.ResponseWriter, req *http.Request) {
 	// TODO: copy original request body to the cloned request?
 	//       i forget if that's necessary or not in this case...
 
-	// add our custom headers
+	// add our custom headers:
+	//     X-Forwarded-For is our client's IP
+	//     X-Forwarded-By is the version string of this program which did the forwarding
 	req.Header.Add("X-Forwarded-For", req.RemoteAddr)
 	req.Header.Add("X-Forwarder", name+" "+version)
 
@@ -76,10 +78,13 @@ func proxyRequest(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	// copy all the response headers into our response
-	for k, headers := range resp.Header {
+	// set our status code to the status code we got from netmaster
+	w.WriteHeader(resp.StatusCode)
+
+	// use all of netmaster's response headers as our response headers
+	for name, headers := range resp.Header {
 		for _, header := range headers {
-			w.Header().Set(k, header)
+			w.Header().Set(name, header)
 		}
 	}
 
@@ -87,7 +92,11 @@ func proxyRequest(w http.ResponseWriter, req *http.Request) {
 }
 
 // handler runs the LDAP lookup and authorization code before proxying the
-// request to the upstream netmaster.
+// request to netmaster.
+// it can return various HTTP status codes:
+//     500 (something breaks)
+//     401 (authorization fails)
+//     any code that netmaster itself can return
 func handler(w http.ResponseWriter, req *http.Request) {
 	/*
 		authn, err := doLDAPLookup()
@@ -123,7 +132,7 @@ func main() {
 	flag.Parse()
 
 	upstream = &url.URL{
-		Scheme: "http", // TODO: support HTTPS-enabled netmasters?
+		Scheme: "http", // we only support HTTP here because communication will be local
 		Host:   netmasterAddress,
 	}
 
@@ -133,7 +142,7 @@ func main() {
 	log.Println("Proxying requests to", netmasterAddress)
 
 	if disableTLS {
-		log.Println("Listening on for insecure HTTP requests on", listenAddress)
+		log.Println("Listening for insecure HTTP requests on", listenAddress)
 		log.Fatalln(http.ListenAndServe(listenAddress, nil))
 	} else {
 		log.Println("Listening for secure HTTPS requests on", listenAddress)
