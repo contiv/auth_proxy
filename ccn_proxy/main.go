@@ -15,6 +15,8 @@ var (
 	listenAddress             string // address we listen on
 	netmasterAddress          string // address of the netmaster we proxy to
 	skipNetmasterVerification bool   // if set, skip verification of netmaster's certificate
+	tlsKeyFile                string // path to TLS key
+	tlsCertificate            string // path to TLS certificate
 
 	// globals
 	netmasterClient *http.Client // custom client which can skip cert verification
@@ -124,12 +126,44 @@ func handler(w http.ResponseWriter, req *http.Request) {
 	proxyRequest(w, req)
 }
 
-func main() {
+func processFlags() {
 	// TODO: add a flag for LDAP host + port
-	flag.StringVar(&listenAddress, "listen-address", ":9998", "address to listen to HTTP requests on")
-	flag.StringVar(&netmasterAddress, "netmaster-address", "localhost:9999", "address of the upstream netmaster")
-	flag.BoolVar(&skipNetmasterVerification, "skip-netmaster-verification", false, "if set, skip verification of netmaster's certificate")
+	flag.StringVar(
+		&listenAddress,
+		"listen-address",
+		":9998",
+		"address to listen to HTTP requests on",
+	)
+	flag.StringVar(
+		&netmasterAddress,
+		"netmaster-address",
+		"localhost:9999",
+		"address of the upstream netmaster",
+	)
+	flag.BoolVar(
+		&skipNetmasterVerification,
+		"skip-netmaster-verification",
+		false,
+		"if set, skip verification of netmaster's certificate",
+	)
+	flag.StringVar(
+		&tlsKeyFile,
+		"tls-key-file",
+		"local.key",
+		"path to TLS key",
+	)
+	flag.StringVar(
+		&tlsCertificate,
+		"tls-certificate",
+		"cert.pem",
+		"path to TLS certificate",
+	)
 	flag.Parse()
+}
+
+func main() {
+
+	processFlags()
 
 	// TODO: support a configurable timeout here for communication with netmaster
 	netmasterClient = &http.Client{
@@ -145,10 +179,11 @@ func main() {
 
 	http.HandleFunc("/", handler)
 
+	// TODO: add RBAC-related endpoints here
+
 	log.Println(ProgramName, ProgramVersion, "starting up...")
 	log.Println("Proxying requests to", netmasterAddress)
-
 	log.Println("Listening for secure HTTPS requests on", listenAddress)
-	// TODO: get the cert/key from somewhere else (envvar, flag, Vault, etc.)
-	log.Fatalln(http.ListenAndServeTLS(listenAddress, "cert.pem", "key.pem", nil))
+
+	log.Fatalln(http.ListenAndServeTLS(listenAddress, tlsCertificate, tlsKeyFile, nil))
 }
