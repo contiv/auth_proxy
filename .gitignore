@@ -1,3 +1,7 @@
+# binaries and binary directories
 build/output
 ccn_proxy/ccn_proxy
 
+# local development certificates and keys
+cert.pem
+local.key

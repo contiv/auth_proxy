@@ -15,7 +15,14 @@ docker run --rm -v $GOPATH:/go -v $PWD/build/output:/output $BUILD_IMAGE_NAME
 # create the final container image with the static binary
 docker build -t $IMAGE_NAME:$VERSION -f ./build/Dockerfile .
 
-echo
-echo "Created image: $IMAGE_NAME:$VERSION"
-echo
-echo "Test it with: docker run --rm $IMAGE_NAME:$VERSION"
+cat <<-EOF
+	Created image: $IMAGE_NAME:$VERSION
+
+	Test it with:
+
+	make run-local
+
+	OR
+
+	docker run --rm -v \$PWD:/code ccn_proxy:devbuild --tls-key-file=/code/local.key --tls-certificate=/code/cert.pem
+EOF
