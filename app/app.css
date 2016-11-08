@@ -19,7 +19,7 @@ table thead th[sortfield] span{
     color: #b6b6b8
 }
 
-.login{
+.background{
     /* This image will be displayed fullscreen */
     background: url('images/loginbackground.jpeg') no-repeat center center;
 

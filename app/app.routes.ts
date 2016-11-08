@@ -25,13 +25,19 @@ import {ServicelbListComponent} from "./service_lbs/servicelblistctrl";
 import {ServicelbCreateComponent} from "./service_lbs/servicelbcreatectrl";
 import {ServicelbDetailsComponent} from "./service_lbs/servicelbdetailsctrl";
 import {LoginComponent} from "./login/loginctrl";
+import {AuthGuard} from "./components/utils/authguard";
+import {UnauthorizedComponent} from "./login/unauthorized";
+import {LogoutComponent} from "./login/logoutctrl";
 
 const routes = [
-    {path: 'login', component: LoginComponent},
+    {path: 'login', component: LoginComponent, canActivate: [AuthGuard]},
+    {path: 'logout', component: LogoutComponent, canActivate: [AuthGuard]},
+    {path: 'unauthorized', component: UnauthorizedComponent, canActivate: [AuthGuard]},
     {path: '', redirectTo: 'login', pathMatch: 'full'},
     {
         path: 'm',
         component: MenuComponent,
+        canActivateChild: [AuthGuard],
         children: [
             {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
             {path: 'dashboard', component: DashboardComponent},

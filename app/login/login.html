@@ -1,10 +1,25 @@
 <div class="ui middle aligned center aligned grid container">
     <div class="column copyright">
 
-        <form id="loginForm" name="loginCtrl.form" class="ui form" role="form"
+        <form id="loginForm" name="loginForm" class="ui form" role="form"
               (submit)="login()" novalidate #loginForm="ngForm">
             <div class="ui active inverted dimmer" *ngIf="loginCtrl.showLoader">
                 <div class="ui loader"></div>
+            </div>
+
+            <div id="login-failed" class="ui small modal">
+                <div class="header">Login Failed</div>
+                <div class="content" *ngIf="!loginCtrl.showServerError">
+                    <p>Username or Password is wrong</p>
+                </div>
+                <div class="content" *ngIf="loginCtrl.showServerError">
+                    <p>{{serverErrorMessage}}</p>
+                </div>
+                <div class="actions">
+                    <div class="ui positive button" onclick="$('#login-failed').modal('hide')">
+                        OK
+                    </div>
+                </div>
             </div>
 
             <div class="ui stacked segment login-seg" style="margin-top: 180px">
@@ -16,14 +31,14 @@
 
                 <div class="field">
                     <input type="text" id="username" name="username" [(ngModel)]="loginCtrl.username"
-                           placeholder="User Name">
+                           placeholder="User Name" required>
                 </div>
                 <div class="field">
                     <input type="password" id="password" name="password" [(ngModel)]="loginCtrl.password"
-                           placeholder="Password">
+                           placeholder="Password" required>
                 </div>
 
-                <button type="submit" class="ui fluid blue button">
+                <button [disabled]="!loginForm.valid" type="submit" class="ui fluid blue button">
                     Log In
                 </button>
                 <div class="ui section divider"></div>

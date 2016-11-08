@@ -30,7 +30,7 @@
         Organizations
     </a>
 
-    <a class="white item" [routerLink]="['settings']" routerLinkActive="active">
+    <a class="white item" [routerLink]="['settings']" routerLinkActive="active" *auth="'SysAdmin'">
         <i class="global_settings icon"></i> 
         Settings
     </a>

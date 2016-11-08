@@ -3,7 +3,7 @@
         <div class="content" style="font-size: 24px">Service Load Balancers</div>
     </div>
 
-    <div class="left aligned four wide column">
+    <div class="left aligned four wide column" *auth="'SysAdmin'">
         <button class="ui blue button" (click)="create()">
             <i class="add icon"></i>
             Create Service Load Balancer
@@ -33,7 +33,7 @@
 
         <tbody>
             <tr *ngFor="let servicelb of servicelbListCtrl.filteredservicelbs">
-                <td><a [routerLink]="['../details', servicelb.key]" href="/#/m/servicelbs/details/{{servicelb.key}}">{{servicelb.serviceName}}</a></td>
+                <td><a [routerLink]="['../details', servicelb.key]">{{servicelb.serviceName}}</a></td>
                 <td>{{servicelb.networkName}}</td>
                 <td>{{servicelb.ipAddress}}</td>
                 <td>

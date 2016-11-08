@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit, ViewEncapsulation} from "@angular/core";
 import {CRUDHelperService} from "../components/utils/crudhelperservice";
 import {Router, ActivatedRoute} from "@angular/router";
+import {AuthService} from "../components/utils/authservice";
 declare var jQuery:any;
 
 @Component({
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit{
     public password: string;
     constructor(private router: Router,
                 private activatedRoute: ActivatedRoute,
-                crudHelperService: CRUDHelperService){
+                crudHelperService: CRUDHelperService,
+                private authService: AuthService){
         this.showLoader = true;
         this.showServerError = false;
         this.serverErrorMessage = '';
@@ -32,10 +34,31 @@ export class LoginComponent implements OnInit{
     ngOnInit(){
         this.crudHelperService.stopLoader(this);
         this.crudHelperService.hideServerError(this);
-        jQuery("body").addClass("login");
+        jQuery("body").addClass("background");
     }
 
     login(){
-        this.router.navigate(['/m/dashboard', {username: this.username}]);
+        this.crudHelperService.startLoader(this);
+        this.authService.login({username: this.username, password: this.password})
+            .subscribe((result) => {
+                if(result){
+                    this.crudHelperService.stopLoader(this);
+                    if (this.authService.redirectUrl.length > 0) {
+                        var redirectUrl = this.authService.redirectUrl;
+                        this.authService.redirectUrl = '';
+                        this.router.navigate([redirectUrl]);
+                    }
+                    else{
+                        this.router.navigate(['/m/dashboard']);
+                    }
+                }
+                else{
+                    this.crudHelperService.stopLoader(this);
+                    jQuery('#login-failed').modal('show');
+                }
+            }, (error) => {
+                this.crudHelperService.stopLoader(this);
+                jQuery('#login-failed').modal('show');
+            });
     }
 }

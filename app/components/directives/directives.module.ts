@@ -9,6 +9,7 @@ import {FormsModule} from "@angular/forms";
 import {CtvAccordionComponent} from "./accordiondirective";
 import {CtvCollapsibleComponent} from "./collapsibledirective";
 import {CtvNamevalueComponent} from "./namevaluedirective";
+import {AuthDirective} from "./authdirective";
 @NgModule({
     imports: [
         CommonModule, FormsModule
@@ -21,7 +22,8 @@ import {CtvNamevalueComponent} from "./namevaluedirective";
         CtvTpaginationComponent,
         CtvAccordionComponent,
         CtvCollapsibleComponent,
-        CtvNamevalueComponent
+        CtvNamevalueComponent,
+        AuthDirective
     ],
     exports: [
         ErrorMessageComponent,
@@ -31,7 +33,8 @@ import {CtvNamevalueComponent} from "./namevaluedirective";
         CtvTpaginationComponent,
         CtvAccordionComponent,
         CtvCollapsibleComponent,
-        CtvNamevalueComponent
+        CtvNamevalueComponent,
+        AuthDirective
     ]
 })
 export class DirectivesModule {}

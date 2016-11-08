@@ -59,7 +59,7 @@ export class Collection extends BaseCollection {
             collection.http.put(url, model).map((res: Response) => res.json()).toPromise()
                 .then(function successCallback(response) {
                     _.remove(collection.models, function (n) {
-                        return n.key == model.key;
+                        return n['key'] == model['key'];
                     });
                     collection.models.push(response);
                     resolve(response);
@@ -83,7 +83,7 @@ export class Collection extends BaseCollection {
             collection.http.delete(url).map((res: Response) => res.json()).toPromise()
                 .then(function successCallback(response) {
                     _.remove(collection.models, function (n) {
-                        return n.key == model.key;
+                        return n['key'] == model['key'];
                     });
                     resolve(response);
                 }, function errorCallback(response) {
