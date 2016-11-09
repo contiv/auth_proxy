@@ -3,10 +3,11 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import { ContivGlobals } from "../models/contivglobals";
+import {ApiService} from "./apiservice";
 
 @Injectable()
 export class NodesService {
-    constructor(private http: Http) {}
+    constructor(private http: Http, private apiService: ApiService) {}
     public static get node_constants(): any {
         return {
             APIC_CONTR_UNRESTRICT_MODE: 'apic_contracts_unrestricted_mode',
@@ -32,7 +33,7 @@ export class NodesService {
         var nodeservice = this;
         let promise = new Promise(function (resolve, reject) {
             var url = ContivGlobals.NODES_SETTINGS_GET_ENDPOINT;
-            nodeservice.http.get(url).map((res: Response) => res.json()).toPromise().then(function successCallback(result) {
+            nodeservice.apiService.get(url).map((res: Response) => res.json()).toPromise().then(function successCallback(result) {
                 resolve(result);
                 ctrl.setting = result;
                 var extraVars = ctrl.setting.extra_vars;
@@ -119,9 +120,9 @@ export class NodesService {
     };
 
     updateSettings(nodeOpsObj) {
-        let headers = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
-        let options = new RequestOptions({ headers: headers }); // Create a request option
-        return this.http.post(ContivGlobals.NODES_SETTINGS_SET_ENDPOINT, nodeOpsObj, options)
+        //let headers = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
+        //let options = new RequestOptions({ headers: headers }); // Create a request option
+        return this.apiService.post(ContivGlobals.NODES_SETTINGS_SET_ENDPOINT, nodeOpsObj)
             .map((res: Response) => res.json()).toPromise();
     };
 

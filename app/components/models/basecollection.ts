@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Rx';
 
 import 'rxjs/add/operator/map';
 import * as _ from 'lodash';
+import {ApiService} from "../utils/apiservice";
 
 /**
  * BaseCollection class that does just fetch of the objects.
@@ -17,7 +18,8 @@ import * as _ from 'lodash';
 export class BaseCollection {
     models: any;
 
-    constructor(protected http: Http, protected url: string) {
+    constructor(protected http: Http, protected url: string,
+                protected apiService: ApiService) {
         this.models = [];
         this.url = url;
     }
@@ -33,7 +35,7 @@ export class BaseCollection {
         return (!reload && collection.models.length > 0) ?
             new Promise(function (resolve) {
                 resolve(collection.models);
-            }) : collection.http.get(collection.url).map((res: Response) => res.json()).toPromise()
+            }) : collection.apiService.get(collection.url).map((res: Response) => res.json()).toPromise()
             .then(function (result) {
                 collection.models = result;
                 return collection.models;

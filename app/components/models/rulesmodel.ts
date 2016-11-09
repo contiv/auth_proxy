@@ -6,11 +6,12 @@ import { Http } from '@angular/http';
 import { Collection } from "./collection";
 import * as _ from 'lodash';
 import { ContivGlobals } from "./contivglobals";
+import {ApiService} from "../utils/apiservice";
 
 @Injectable()
 export class RulesModel extends Collection {
-    constructor(http: Http) {
-        super(http, ContivGlobals.RULES_ENDPOINT);
+    constructor(http: Http, apiService: ApiService) {
+        super(http, ContivGlobals.RULES_ENDPOINT, apiService);
     }
 
     /**

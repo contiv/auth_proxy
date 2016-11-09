@@ -3,11 +3,12 @@ import { Http } from '@angular/http';
 import { Collection } from "./collection";
 import {isUndefined} from "util";
 import { ContivGlobals } from "./contivglobals";
+import {ApiService} from "../utils/apiservice";
 
 @Injectable()
 export class NetworksModel extends Collection {
-    constructor(http: Http) {
-        super(http, ContivGlobals.NETWORKS_ENDPOINT);
+    constructor(http: Http, apiService: ApiService) {
+        super(http, ContivGlobals.NETWORKS_ENDPOINT, apiService);
     }
 
     getInspectByKey(key:string, url: string, reload: boolean): Promise<any>{

@@ -29,6 +29,8 @@ import appRoutes from "./app.routes.ts";
 import {LoginModule} from "./login/login.module";
 import {AuthService} from "./components/utils/authservice";
 import {AuthGuard} from "./components/utils/authguard";
+import {ApiService} from "./components/utils/apiservice";
+
 
 @NgModule({
     imports: [
@@ -62,6 +64,7 @@ import {AuthGuard} from "./components/utils/authguard";
         NodesService,
         AuthService,
         AuthGuard,
+        ApiService,
         { provide: APP_BASE_HREF, useValue: '' },
         { provide: LocationStrategy, useClass: HashLocationStrategy }
     ],

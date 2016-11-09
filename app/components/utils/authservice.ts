@@ -26,12 +26,14 @@ export class AuthService {
     headers: Headers;
     authTokenPayload: any;
     accessMatrix:any;
+    authToken:string;
 
     constructor(private http: Http){
         this.isLoggedIn = false;
         this.redirectUrl = '';
         this.accessMatrix = AuthMatrix;
         this.authTokenPayload = {};
+        this.authToken='';
     }
 
     checkAccess(url: string): boolean{
@@ -136,6 +138,7 @@ export class AuthService {
 
     extractBody(): void{
         var token = localStorage.getItem("authToken");
+        this.authToken = token;
         var bodyEncoded = token.split('.')[1];
         var bodyString = atob(bodyEncoded);
         this.authTokenPayload = JSON.parse(bodyString);

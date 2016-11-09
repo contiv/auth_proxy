@@ -6,11 +6,13 @@ import { Http } from '@angular/http';
 import { Collection } from "./collection";
 import {Observable} from "rxjs";
 import { ContivGlobals } from "./contivglobals";
+import {ApiService} from "../utils/apiservice";
+
 
 @Injectable()
 export class ApplicationGroupsModel extends Collection {
-    constructor(http: Http) {
-        super(http, ContivGlobals.APPLICATIONGROUPS_ENDPOINT);
+    constructor(http: Http, apiService: ApiService) {
+        super(http, ContivGlobals.APPLICATIONGROUPS_ENDPOINT,apiService);
     }
 
     /**
