@@ -1,0 +1,20 @@
+[
+    {
+        "key": "default:john",
+        "userName": "john",
+        "firstName": "John",
+        "lastName": "Doe",
+        "role": "Admin",
+        "enabled": true,
+        "tenantName": "default"
+    },
+    {
+        "key": "default:karla",
+        "userName": "karla",
+        "firstName": "Karla",
+        "lastName": "Arlak",
+        "role": "DevOps",
+        "enabled": true,
+        "tenantName": "default"
+    }
+]

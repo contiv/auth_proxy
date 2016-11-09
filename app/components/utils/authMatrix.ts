@@ -15,6 +15,10 @@ export const AuthMatrix = {
     'applicationgroups/create':                 {'DevOps':'n', 'SysAdmin':'y'},
     'applicationgroups/details':                {'DevOps':'y', 'SysAdmin':'y'},
     'applicationgroups/edit':                   {'DevOps':'n', 'SysAdmin':'y'},
+    'settings/users/list':                      {'DevOps':'n', 'SysAdmin':'y'},
+    'settings/users/create':                    {'DevOps':'n', 'SysAdmin':'y'},
+    'settings/users/details':                   {'DevOps':'n', 'SysAdmin':'y'},
+    'settings/users/edit':                      {'DevOps':'n', 'SysAdmin':'y'},
     'settings/cluster':                         {'DevOps':'n', 'SysAdmin':'y'},
     'settings/networks':                        {'DevOps':'n', 'SysAdmin':'y'},
     'organizations/list':                       {'DevOps':'y', 'SysAdmin':'y'},
@@ -26,4 +30,4 @@ export const AuthMatrix = {
     'servicelbs/list':                          {'DevOps':'y', 'SysAdmin':'y'},
     'servicelbs/create':                        {'DevOps':'n', 'SysAdmin':'y'},
     'servicelbs/details':                       {'DevOps':'y', 'SysAdmin':'y'}
-}
+};

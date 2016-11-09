@@ -38,6 +38,9 @@ export const ContivGlobals = {
     'NODES_SETTINGS_SET_ENDPOINT': '/globals',
     'NODES_SETTINGS_GET_ENDPOINT': '/info/globals',
 
+    //REST endpoints for USER
+    'USERS_ENDPOINT': '/components/models/users.json',
+
     //Refresh interval in milliseconds
     'REFRESH_INTERVAL': 5000,
 

@@ -3,11 +3,11 @@
  */
 import { RouterModule } from '@angular/router';
 import { MenuComponent } from "./menu/menuCtrl";
-import {NetworkPoliciesTabsComponent} from "./network_policies/networkpoliciestabsctrl";
-import {IsolationPolicyCreateComponent} from "./network_policies/isolationpolicycreatectrl";
-import {IsolationPolicyDetailsComponent} from "./network_policies/isolationpolicydetailsctrl";
-import {BandwidthPolicyCreateComponent} from "./network_policies/bandwidthpolicycreatectrl";
-import {BandwidthPolicyDetailsComponent} from "./network_policies/bandwidthpolicydetailsctrl";
+import { NetworkPoliciesTabsComponent } from "./network_policies/networkpoliciestabsctrl";
+import { IsolationPolicyCreateComponent } from "./network_policies/isolationpolicycreatectrl";
+import { IsolationPolicyDetailsComponent } from "./network_policies/isolationpolicydetailsctrl";
+import { BandwidthPolicyCreateComponent } from "./network_policies/bandwidthpolicycreatectrl";
+import { BandwidthPolicyDetailsComponent } from "./network_policies/bandwidthpolicydetailsctrl";
 import { DashboardComponent } from "./dashboard/dashboardctrl";
 import { AppGrouplistComponent } from "./applicationgroups/applicationgrouplistctrl";
 import { ApplicationGroupCreateComponent } from "./applicationgroups/applicationgroupcreatectrl";
@@ -18,16 +18,19 @@ import { NetworkSettingsComponent } from "./settings/networksettingctrl";
 import { OrganizationListComponent } from "./organizations/organizationlistctrl";
 import { OrganizationCreateComponent } from "./organizations/organizationcreatectrl";
 import { OrganizationDetailsComponent } from "./organizations/organizationdetailsctrl";
-import {NetworkListComponent} from "./networks/networklistctrl";
-import {NetworkdetailsComponent} from "./networks/networkdetailsctrl";
-import {NetworkCreateComponent} from "./networks/networkcreatectrl";
-import {ServicelbListComponent} from "./service_lbs/servicelblistctrl";
-import {ServicelbCreateComponent} from "./service_lbs/servicelbcreatectrl";
-import {ServicelbDetailsComponent} from "./service_lbs/servicelbdetailsctrl";
-import {LoginComponent} from "./login/loginctrl";
-import {AuthGuard} from "./components/utils/authguard";
-import {UnauthorizedComponent} from "./login/unauthorized";
-import {LogoutComponent} from "./login/logoutctrl";
+import { NetworkListComponent } from "./networks/networklistctrl";
+import { NetworkdetailsComponent } from "./networks/networkdetailsctrl";
+import { NetworkCreateComponent } from "./networks/networkcreatectrl";
+import { ServicelbListComponent } from "./service_lbs/servicelblistctrl";
+import { ServicelbCreateComponent } from "./service_lbs/servicelbcreatectrl";
+import { ServicelbDetailsComponent } from "./service_lbs/servicelbdetailsctrl";
+import { LoginComponent } from "./login/loginctrl";
+import { AuthGuard } from "./components/utils/authguard";
+import { UnauthorizedComponent } from "./login/unauthorized";
+import { LogoutComponent } from "./login/logoutctrl";
+import { UserListComponent } from "./settings/users/userlist.component";
+import { UserCreateComponent } from "./settings/users/usercreate.component";
+import { UserDetailsComponent } from "./settings/users/userdetails.component";
 
 const routes = [
     {path: 'login', component: LoginComponent, canActivate: [AuthGuard]},
@@ -62,9 +65,13 @@ const routes = [
                 path: 'settings',
                 component: SettingsMenuComponent,
                 children: [
-                    {path: '', redirectTo: 'cluster', pathMatch: 'full'},
+                    {path: '', redirectTo: 'users/list', pathMatch: 'full'},
                     {path: 'cluster', component: ClusterSettingsComponent},
-                    {path: 'networks', component: NetworkSettingsComponent}
+                    {path: 'networks', component: NetworkSettingsComponent},
+                    {path: 'users/list', component: UserListComponent},
+                    {path: 'users/create', component: UserCreateComponent},
+                    {path: 'users/details/:key', component: UserDetailsComponent},
+                    {path: 'users/edit/:key', component: UserDetailsComponent},
                 ]
             },
 

@@ -12,6 +12,7 @@ import { SettingsModule } from "./settings/settings.module";
 import { NetworkModule } from "./networks/network.module";
 import { ServicelbModule } from "./service_lbs/servicelb.module";
 import { OrganizationModule } from "./organizations/organization.module";
+import { UsersModule } from "./settings/users/users.module";
 import { NetprofilesModel } from "./components/models/netprofilesmodel";
 import { ApplicationGroupsModel } from "./components/models/applicationgroupsmodel";
 import { NetworksModel } from "./components/models/networksmodel";
@@ -19,6 +20,7 @@ import { OrganizationsModel } from "./components/models/organizationsmodel";
 import { PoliciesModel } from "./components/models/policiesmodel";
 import { RulesModel } from "./components/models/rulesmodel";
 import { ServicelbsModel } from "./components/models/servicelbsmodel";
+import { UsersModel } from "./components/models/usersmodel";
 import { CRUDHelperService } from "./components/utils/crudhelperservice";
 import { InspectService } from "./components/utils/inspectservice";
 import { NetworkService } from "./components/utils/networkservice";
@@ -45,7 +47,8 @@ import {ApiService} from "./components/utils/apiservice";
         NetworkModule,
         ServicelbModule,
         OrganizationModule,
-        LoginModule
+        LoginModule,
+        UsersModule
     ],
     declarations: [
         AppComponent
@@ -58,6 +61,7 @@ import {ApiService} from "./components/utils/apiservice";
         PoliciesModel,
         RulesModel,
         ServicelbsModel,
+        UsersModel,
         CRUDHelperService,
         InspectService,
         NetworkService,
