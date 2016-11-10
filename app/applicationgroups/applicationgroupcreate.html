@@ -2,15 +2,13 @@
       (ngSubmit)="createApplicationGroup(formRef.valid)"
       novalidate>
     <div class="ui sixteen column grid">
-        <div class="one wide column">
-            <a [routerLink]="['../list']">
-                <i class="large arrow left icon"></i>
-            </a>
-        </div>
-        <div class="left floated fifteen wide column">
-            <div class="content" style="font-size: 24px">
-                <span>Application Groups</span>
-                <span class="headingfontcolor"> (Create Application Group)</span>
+        <div class="nine wide column">
+            <div class="content">
+                <a [routerLink]="['../list']">
+                    <i class="large arrow left icon"></i>
+                </a>
+                <span style="font-size: 24px; margin-left: 6px">Application Groups</span>
+                <span class="headingfontcolor" style="font-size: 24px"> (Create Application Group)</span>
             </div>
         </div>
     </div>
@@ -59,14 +57,6 @@
         </div>
 
         <div class="ui section divider" style="margin-top: 30px"></div>
-        <div class="field">
-            <h4 class="ui header">
-                <i class="grey plus circle outline icon"></i>
-                Labels
-            </h4>
-        </div>
-
-        <div class="ui section divider"></div>
 
         <ctv-collapsible title="Isolation Policies">
             <ctv-isolationpolicy mode="edit" [applicationgroup]="applicationGroup"></ctv-isolationpolicy>
@@ -77,15 +67,6 @@
         <ctv-collapsible title="Bandwidth Policies">
             <ctv-bandwidthpolicy mode="edit" [applicationgroup]="applicationGroup"></ctv-bandwidthpolicy>
         </ctv-collapsible>
-
-        <div class="ui section divider"></div>
-
-        <div class="field">
-            <h4 class="ui header">
-                <i class="grey plus circle outline icon"></i>
-                Redirection Policies
-            </h4>
-        </div>
 
         <div class="ui grid">
             <div class="right aligned sixteen wide column">
