@@ -2,17 +2,22 @@
 
 set -euo pipefail
 
+PREFIX="./local_certs"
+KEY_PATH="$PREFIX/local.key"
+CERT_PATH="$PREFIX/cert.pem"
+
 # if both files exist, just exit
-if [[ -f local.key && -f cert.pem ]]; then
+if [[ -f $KEY_PATH && -f $CERT_PATH ]]; then
     exit 0
 fi
 
-rm -f local.key
-rm -f cert.pem
+rm -f $KEY_PATH
+rm -f $CERT_PATH
 
-openssl genrsa -out local.key 2048 >/dev/null 2>&1
+openssl genrsa -out $KEY_PATH 2048 >/dev/null 2>&1
 openssl req -new -x509 -sha256 -days 3650 \
-	-key local.key -out cert.pem \
+	-key $KEY_PATH \
+	-out $CERT_PATH \
 	-subj "/C=US/ST=CA/L=San Jose/O=CPSG/OU=IT Department/CN=ccn-local.cisco.com"
 
-echo "Created local.key and cert.pem"
+echo "Created $KEY_PATH and $CERT_PATH"

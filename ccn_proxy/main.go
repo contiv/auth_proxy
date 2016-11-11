@@ -131,13 +131,13 @@ func processFlags() {
 	flag.StringVar(
 		&listenAddress,
 		"listen-address",
-		":9998",
+		":9999",
 		"address to listen to HTTP requests on",
 	)
 	flag.StringVar(
 		&netmasterAddress,
 		"netmaster-address",
-		"localhost:9999",
+		"localhost:9998",
 		"address of the upstream netmaster",
 	)
 	flag.BoolVar(
@@ -184,6 +184,10 @@ func main() {
 	log.Println(ProgramName, ProgramVersion, "starting up...")
 	log.Println("Proxying requests to", netmasterAddress)
 	log.Println("Listening for secure HTTPS requests on", listenAddress)
+
+	if skipNetmasterVerification {
+		log.Warn("Skipping netmaster TLS verification when proxying requests was requested (--skip-netmaster-verification)")
+	}
 
 	log.Fatalln(http.ListenAndServeTLS(listenAddress, tlsCertificate, tlsKeyFile, nil))
 }

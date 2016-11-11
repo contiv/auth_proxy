@@ -1,5 +1,20 @@
-FROM golang:1.7.3
+FROM ubuntu:16.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get -y upgrade && \
+    	    apt-get -y install curl build-essential docker.io
+
+RUN curl -O https://storage.googleapis.com/golang/go1.7.3.linux-amd64.tar.gz
+RUN tar -C /usr/local -xzf go1.7.3.linux-amd64.tar.gz && rm go1.7.3.linux-amd64.tar.gz
+
+ENV PATH="/usr/local/go/bin:$PATH"
+ENV GOPATH="/go"
+
+COPY ./ /go/src/github.com/contiv/ccn_proxy
 
 WORKDIR /go/src/github.com/contiv/ccn_proxy
 
-ENTRYPOINT ["/bin/bash", "./scripts/build-in-container.sh"]
+RUN scripts/build-in-container.sh
+
+ENTRYPOINT ["docker", "build"]
