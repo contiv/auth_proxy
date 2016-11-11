@@ -8,9 +8,11 @@ export CGO_ENABLED=0
 
 VERSION=${BUILD_VERSION-devbuild}
 
+# output the binary under the build/output directory in the code dir so that it's
+# available when we issue the `docker build` and COPY it into the final image.
 go build \
    -ldflags "-X main.ProgramVersion=$VERSION" \
-   -o /output/ccn_proxy \
+   -o ./build/output/ccn_proxy \
    github.com/contiv/ccn_proxy/ccn_proxy
 
-strip /output/ccn_proxy
+strip ./build/output/ccn_proxy

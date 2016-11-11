@@ -1,7 +1,6 @@
 FROM scratch
 
-WORKDIR /tmp
-
 COPY ./build/output/ccn_proxy /tmp/ccn_proxy
+WORKDIR /tmp
 
 ENTRYPOINT ["./ccn_proxy"]
