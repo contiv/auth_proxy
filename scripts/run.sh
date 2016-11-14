@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -euo pipefail
+set -euxo pipefail
 
 make generate-certificate
 
@@ -15,7 +15,7 @@ if [ -z "${DOCKER_HOST-}" ]; then
 	   --skip-netmaster-verification
 else
     echo "Copying certificates to docker-machine:"
-    cert_path="/home/docker/ccn_proxy/"
+    cert_path="/tmp/ccn_proxy/"
 
     docker-machine ssh $DOCKER_MACHINE_NAME mkdir -p $cert_path
     docker-machine scp './local_certs/local.key' $DOCKER_MACHINE_NAME:$cert_path
