@@ -4,3 +4,6 @@ ccn_proxy/ccn_proxy
 
 # local development certificates and keys
 local_certs
+
+# state info stored for a local etcd instance
+state/default.etcd/
