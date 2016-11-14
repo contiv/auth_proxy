@@ -86,3 +86,42 @@ func Role(roleStr string) (RoleType, error) {
 	}
 
 }
+
+//
+// KVStoreConfig encapsulates config data that determines KV store
+// details specific to a running instance of CCN_proxy
+//
+// Fields:
+//   StoreURL: URL of the distributed key-value store
+//             that will be shared by CCN proxy and CCN
+//
+type KVStoreConfig struct {
+	StoreURL string `json:"kvstore-url"`
+}
+
+//
+// WatchState encapsulates changes in the state stored in the KV store
+// and constitutes both the current and previous state
+//
+// Fields:
+//   Curr: current state for a key in the KV store
+//   Prec: previous state for a key in the KV store
+//
+type WatchState struct {
+	Curr State
+	Prev State
+}
+
+//
+// CommonState defines the fields common to all types.State
+// implementations. This struct will be embedded as an anonymous
+// field in all structs that implement types.State
+//
+// Fields:
+//   StateDriver: etcd or consul statedriver
+//   ID:          identifier for the state
+//
+type CommonState struct {
+	StateDriver StateDriver `json:"-"`
+	ID          string      `json:"id"`
+}

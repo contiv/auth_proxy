@@ -1,7 +1,7 @@
 {
 	"ImportPath": "github.com/contiv/ccn_proxy",
 	"GoVersion": "go1.7",
-	"GodepVersion": "v74",
+	"GodepVersion": "v75",
 	"Packages": [
 		"./..."
 	],
@@ -10,6 +10,21 @@
 			"ImportPath": "github.com/Sirupsen/logrus",
 			"Comment": "v0.10.0-38-g3ec0642",
 			"Rev": "3ec0642a7fb6488f65b06f9040adc67e3990296a"
+		},
+		{
+			"ImportPath": "github.com/coreos/etcd/client",
+			"Comment": "v3.1.0-rc.0-271-g7c8f13a",
+			"Rev": "7c8f13aed7fe251e7066ed6fc1a090699c2cae0e"
+		},
+		{
+			"ImportPath": "github.com/coreos/etcd/pkg/pathutil",
+			"Comment": "v3.1.0-rc.0-271-g7c8f13a",
+			"Rev": "7c8f13aed7fe251e7066ed6fc1a090699c2cae0e"
+		},
+		{
+			"ImportPath": "github.com/coreos/etcd/pkg/types",
+			"Comment": "v3.1.0-rc.0-271-g7c8f13a",
+			"Rev": "7c8f13aed7fe251e7066ed6fc1a090699c2cae0e"
 		},
 		{
 			"ImportPath": "github.com/dgrijalva/jwt-go",
@@ -22,9 +37,31 @@
 			"Rev": "e33f0a345ea7c37c15a0c8ee0e796e479c37d640"
 		},
 		{
+			"ImportPath": "github.com/hashicorp/consul/api",
+			"Comment": "v0.7.1-13-g8ef76ec",
+			"Rev": "8ef76ec85131c9fdde6f6da26431fb40b68881f4"
+		},
+		{
+			"ImportPath": "github.com/hashicorp/go-cleanhttp",
+			"Rev": "ad28ea4487f05916463e2423a55166280e8254b5"
+		},
+		{
+			"ImportPath": "github.com/hashicorp/serf/coordinate",
+			"Comment": "v0.8.0-31-gf679d75",
+			"Rev": "f679d7594a349263f6118db40d87122d3a474e7d"
+		},
+		{
 			"ImportPath": "github.com/satori/go.uuid",
 			"Comment": "v1.1.0-6-gb061729",
 			"Rev": "b061729afc07e77a8aa4fad0a2fd840958f1942a"
+		},
+		{
+			"ImportPath": "github.com/ugorji/go/codec",
+			"Rev": "faddd6128c66c4708f45fdc007f575f75e592a3c"
+		},
+		{
+			"ImportPath": "golang.org/x/net/context",
+			"Rev": "cac22060de4e495155959e69adcb4b45763ccb10"
 		},
 		{
 			"ImportPath": "golang.org/x/sys/unix",
