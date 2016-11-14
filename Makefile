@@ -22,6 +22,7 @@ generate-certificate:
 # godep rebuilds Godeps/Godeps.json
 # you will only need to run this if you add a new external dependency.
 godep:
+	[ -n "`which godep`" ] || go get github.com/tools/godep
 	godep save ./...
 
 # run builds the ccn_proxy image, generates a certificate if necessary, and runs
