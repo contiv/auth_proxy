@@ -29,5 +29,9 @@ export const AuthMatrix = {
     'networks/details':                         {'DevOps':'y', 'SysAdmin':'y'},
     'servicelbs/list':                          {'DevOps':'y', 'SysAdmin':'y'},
     'servicelbs/create':                        {'DevOps':'n', 'SysAdmin':'y'},
-    'servicelbs/details':                       {'DevOps':'y', 'SysAdmin':'y'}
+    'servicelbs/details':                       {'DevOps':'y', 'SysAdmin':'y'},
+    'appprofiles/list':                         {'DevOps':'y', 'SysAdmin':'y'},
+    'appprofiles/create':                       {'DevOps':'n', 'SysAdmin':'y'},
+    'appprofiles/details':                      {'DevOps':'y', 'SysAdmin':'y'},
+    'appprofiles/edit':                         {'DevOps':'n', 'SysAdmin':'y'}
 };

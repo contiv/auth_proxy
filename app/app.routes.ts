@@ -31,6 +31,9 @@ import { LogoutComponent } from "./login/logoutctrl";
 import { UserListComponent } from "./settings/users/userlist.component";
 import { UserCreateComponent } from "./settings/users/usercreate.component";
 import { UserDetailsComponent } from "./settings/users/userdetails.component";
+import { AppProfileListComponent } from "./appprofiles/appprofilelist.component";
+import { AppProfileCreateComponent } from "./appprofiles/appprofilecreate.component";
+import { AppProfileDetailsComponent } from "./appprofiles/appprofiledetails.component";
 
 const routes = [
     {path: 'login', component: LoginComponent, canActivate: [AuthGuard]},
@@ -88,7 +91,13 @@ const routes = [
             //Servicelbs
             {path: 'servicelbs/list', component: ServicelbListComponent},
             {path: 'servicelbs/create', component: ServicelbCreateComponent},
-            {path: 'servicelbs/details/:key', component: ServicelbDetailsComponent}
+            {path: 'servicelbs/details/:key', component: ServicelbDetailsComponent},
+
+            //Application profiles
+            {path: 'appprofiles/list', component: AppProfileListComponent},
+            {path: 'appprofiles/create', component: AppProfileCreateComponent},
+            {path: 'appprofiles/details/:key', component: AppProfileDetailsComponent},
+            {path: 'appprofiles/edit/:key', component: AppProfileDetailsComponent},
 
         ]
     }

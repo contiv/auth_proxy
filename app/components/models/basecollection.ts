@@ -43,7 +43,7 @@ export class BaseCollection {
     };
 
     /**
-     *
+     * Returns a deep copy of the cached object
      * @param key
      * @param reload Optional. Default is false
      * @param keyname
@@ -66,16 +66,16 @@ export class BaseCollection {
         });
 
         function findModel() {
-            return _.find(collection.models, function (c) {
+            return _.cloneDeep(_.find(collection.models, function (c) {
                 return c[keyname] == key;
-            })
+            }));
         }
 
         return promise;
     };
 
     /**
-     *
+     * Returns a deep copy of the cached object
      * @param model
      * @param reload Optional. Default is false
      * @returns {*}
@@ -96,7 +96,7 @@ export class BaseCollection {
         });
 
         function findModel() {
-            return _.find(collection.models, model)
+            return _.cloneDeep(_.find(collection.models, model));
         }
 
         return promise;

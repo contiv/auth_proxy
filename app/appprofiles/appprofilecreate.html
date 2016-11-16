@@ -1,0 +1,51 @@
+<form class="ui form" role="form"
+      (submit)="createAppProfile(formRef.valid)" novalidate #formRef="ngForm">
+    <div class="ui sixteen column grid">
+        <div class="nine wide column">
+            <div class="content">
+                <a [routerLink]="['../list']">
+                    <i class="large arrow left icon"></i>
+                </a>
+                <span style="font-size: 24px; margin-left: 6px">Application Profiles</span>
+                <span class="headingfontcolor" style="font-size: 24px"> (Create Application Profile)</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui active inverted dimmer" *ngIf="showLoader">
+        <div class="ui loader"></div>
+    </div>
+    <div class="ui basic segment">
+        <div class="field">
+            <div *ngIf="formRef.submitted">
+                <div [hidden]="formRef.valid" class="ui negative message">
+                    <ul class="list">
+                        <li *ngIf="newAppProfileName.errors?.required">Please enter
+                            application profile name
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label for="newAppProfileName">Application profile name</label>
+            <input type="text" id="newAppProfileName" name="newAppProfileName"
+                   [(ngModel)]="newAppProfile.appProfileName"
+                   placeholder="Enter name" required #newAppProfileName="ngModel">
+        </div>
+        <ctv-appgroupselection mode="edit" [appProfile]="newAppProfile"></ctv-appgroupselection>
+        <div class="ui grid">
+            <div class="right aligned sixteen wide column">
+                <div style="margin-top: 40px">
+                    <button type="button" class="ui basic button" (click)="cancelCreating()">
+                        Cancel
+                    </button>
+                    <button type="submit" class="ui blue button">Create</button>
+                </div>
+            </div>
+        </div>
+
+        <ctv-error *ngIf="showServerError" header="Error creating application profile" [error]="serverErrorMessage">
+        </ctv-error>
+    </div>
+</form>

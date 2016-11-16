@@ -24,7 +24,7 @@ export class NetworkdetailsComponent implements OnInit, OnDestroy{
     public networkDetailsCtrl: any;
     private refresh: Subscription;
     public network: any;
-    public infoselected: boolean
+    public infoselected: boolean;
     public statskey: string;
 
     constructor(private route: ActivatedRoute,
@@ -44,7 +44,7 @@ export class NetworkdetailsComponent implements OnInit, OnDestroy{
         this.network = {networkName: '', encap: '', subnet: '', gateway: ''};
         this.refresh=Observable.interval(5000).subscribe(() => {
             this.getApplicationGroups(true);
-        })
+        });
         this.networkDetailsCtrl = this;
     }
 

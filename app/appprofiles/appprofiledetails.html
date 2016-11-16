@@ -1,0 +1,91 @@
+<div class="ui sixteen column grid">
+    <div class="nine wide column">
+        <div [ngSwitch]="mode" class="content">
+            <a [routerLink]="['../../list']">
+                <i class="large arrow left icon"></i>
+            </a>
+            <span style="font-size: 24px; margin-left: 6px">Application Profiles</span>
+            <span *ngSwitchCase="'details'" class="headingfontcolor" style="font-size: 24px"> (Details)</span>
+            <span *ngSwitchCase="'edit'" class="headingfontcolor" style="font-size: 24px"> (Edit)</span>
+        </div>
+    </div>
+
+    <div [ngSwitch]="mode" class="right aligned seven wide column">
+        <div id="delete-appProfile-modal" class="ui small modal">
+            <div class="header">Remove Application Profile: {{appProfile.appProfileName}}
+            </div>
+            <div class="content">
+                <p>Are you sure you want to remove this application profile?</p>
+            </div>
+            <div class="actions">
+                <div class="ui negative button">No</div>
+                <div class="ui positive button" (click)="deleteAppProfile()">
+                    Yes
+                </div>
+            </div>
+        </div>
+        <button *ngSwitchCase="'edit'" class="ui disabled button"
+                (click)="editAppProfile()">
+            <i class="edit icon"></i>
+            Edit
+        </button>
+        <button *ngSwitchCase="'details'" class="ui basic button"
+                (click)="editAppProfile()">
+            <i class="edit icon"></i>
+            Edit
+        </button>
+        <button class="ui basic button" onclick="$('#delete-appProfile-modal').modal('show')">
+            <i class="trash icon"></i>
+            Remove
+        </button>
+    </div>
+</div>
+
+<div class="ui basic segment">
+    <div class="ui active inverted dimmer" *ngIf="showLoader">
+        <div class="ui loader"></div>
+    </div>
+    <div><h4 class="ui header">Basic Settings</h4></div>  <!-- Top Margin is less,When h4 is first child in div -->
+    <table class="ui very basic selectable table">
+        <tbody>
+        <tr>
+            <td class="four wide column">Application Profile Name</td>
+            <td>{{appProfile.appProfileName}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="ui section divider"></div>
+
+    <h4 class="ui header" style="margin-top: 40px">Application Groups</h4>
+
+    <div style="margin-top: 20px">
+
+    <div [ngSwitch]="mode">
+        <form class="ui form"
+              role="form"
+              (submit)="saveAppProfile(formRef.valid)" novalidate #formRef="ngForm">
+            <ctv-appgroupselection [mode]="mode" [appProfile]="appProfile"></ctv-appgroupselection>
+            <div class="ui grid" style="margin-top: 40px">
+                <div class="right aligned sixteen wide column">
+                    <button *ngSwitchCase="'edit'" type="button" class="ui basic button"
+                            (click)="cancelEditing()">Cancel
+                    </button>
+                    <button *ngSwitchCase="'edit'" type="submit" class="ui blue button">
+                        Save
+                    </button>
+                </div>
+            </div>
+            <ctv-error *ngIf="((showServerError) && (mode === 'edit'))"
+                       header="Error saving application profile"
+                       [error]="serverErrorMessage">
+            </ctv-error>
+        </form>
+        <ctv-error *ngIf="((showServerError) && (mode === 'details'))"
+                   header="Error deleting application profile"
+                   [error]="serverErrorMessage">
+        </ctv-error>
+    </div>
+
+</div>
+

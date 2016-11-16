@@ -11,6 +11,7 @@ import { ApplicationGroupsModule } from "./applicationgroups/applicationgroups.m
 import { SettingsModule } from "./settings/settings.module";
 import { NetworkModule } from "./networks/network.module";
 import { ServicelbModule } from "./service_lbs/servicelb.module";
+import { AppProfilesModule } from "./appprofiles/appprofile.module";
 import { OrganizationModule } from "./organizations/organization.module";
 import { UsersModule } from "./settings/users/users.module";
 import { NetprofilesModel } from "./components/models/netprofilesmodel";
@@ -21,6 +22,7 @@ import { PoliciesModel } from "./components/models/policiesmodel";
 import { RulesModel } from "./components/models/rulesmodel";
 import { ServicelbsModel } from "./components/models/servicelbsmodel";
 import { UsersModel } from "./components/models/usersmodel";
+import { AppProfilesModel } from "./components/models/appprofilesmodel";
 import { CRUDHelperService } from "./components/utils/crudhelperservice";
 import { InspectService } from "./components/utils/inspectservice";
 import { NetworkService } from "./components/utils/networkservice";
@@ -28,10 +30,10 @@ import { NodesService } from "./components/utils/nodesservice";
 import { MenuModule } from "./menu/menu.module";
 import { AppComponent } from "./app.component";
 import appRoutes from "./app.routes.ts";
-import {LoginModule} from "./login/login.module";
-import {AuthService} from "./components/utils/authservice";
-import {AuthGuard} from "./components/utils/authguard";
-import {ApiService} from "./components/utils/apiservice";
+import { LoginModule } from "./login/login.module";
+import { AuthService } from "./components/utils/authservice";
+import { AuthGuard } from "./components/utils/authguard";
+import { ApiService } from "./components/utils/apiservice";
 
 
 @NgModule({
@@ -46,6 +48,7 @@ import {ApiService} from "./components/utils/apiservice";
         SettingsModule,
         NetworkModule,
         ServicelbModule,
+        AppProfilesModule,
         OrganizationModule,
         LoginModule,
         UsersModule
@@ -62,6 +65,7 @@ import {ApiService} from "./components/utils/apiservice";
         RulesModel,
         ServicelbsModel,
         UsersModel,
+        AppProfilesModel,
         CRUDHelperService,
         InspectService,
         NetworkService,

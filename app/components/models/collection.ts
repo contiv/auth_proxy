@@ -35,6 +35,9 @@ export class Collection extends BaseCollection {
                     if ((responseData === undefined) || (responseData === '')) {
                         responseData = model;
                     }
+                    _.remove(collection.models, function (n) {
+                        return n['key'] == model['key'];
+                    });
                     collection.models.push(responseData);
                     resolve(responseData);
                 }, function errorCallback(response) {
