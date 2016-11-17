@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"flag"
 	"io/ioutil"
 	"net/http"
@@ -40,16 +41,16 @@ func authError(w http.ResponseWriter, statusCode int, msg string) {
 }
 
 // serverError logs a message + error and changes the HTTP status code to 500.
-func serverError(w http.ResponseWriter, msg string, err error) {
-	log.Errorln(msg, err)
+func serverError(w http.ResponseWriter, err error) {
+	log.Errorln(err.Error())
 	w.WriteHeader(http.StatusInternalServerError)
+	w.Write([]byte(err.Error()))
 }
 
 // proxyRequest takes a HTTP request we've received, duplicates it, adds a few
-// request headers, and sends the duplicated request to netmaster. It copies
-// the status code, response body, and response headers from netmaster onto the
-// response we send to our client.
-func proxyRequest(w http.ResponseWriter, req *http.Request) {
+// request headers, and sends the duplicated request to netmaster. It returns
+// the response + the response's body.
+func proxyRequest(w http.ResponseWriter, req *http.Request) (*http.Response, []byte, error) {
 	copy := new(http.Request)
 	*copy = *req
 
@@ -79,29 +80,26 @@ func proxyRequest(w http.ResponseWriter, req *http.Request) {
 
 	resp, err := netmasterClient.Do(copy)
 	if err != nil {
-		serverError(w, "Failed to perform duplicate request", err)
-		return
+		return nil, []byte{}, errors.New("Failed to perform duplicate request: " + err.Error())
 	}
 
 	defer resp.Body.Close()
 
 	data, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		serverError(w, "Failed to read body from response", err)
-		return
+		return nil, []byte{}, errors.New("Failed to read body from response: " + err.Error())
 	}
 
-	// set our status code to the status code we got from netmaster
+	// copy the response code + headers from netmaster to our response
 	w.WriteHeader(resp.StatusCode)
 
-	// use all of netmaster's response headers as our response headers
 	for name, headers := range resp.Header {
 		for _, header := range headers {
 			w.Header().Set(name, header)
 		}
 	}
 
-	w.Write(data)
+	return resp, data, nil
 }
 
 // loginHandler handles the login request and returns auth token with user capabilities
@@ -113,7 +111,7 @@ func proxyRequest(w http.ResponseWriter, req *http.Request) {
 func loginHandler(w http.ResponseWriter, req *http.Request) {
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
-		serverError(w, "Failed to read body from request", err)
+		serverError(w, errors.New("Failed to read body from request: "+err.Error()))
 		return
 	}
 
@@ -125,7 +123,7 @@ func loginHandler(w http.ResponseWriter, req *http.Request) {
 
 	lReq := &loginReq{}
 	if err := json.Unmarshal(body, lReq); err != nil {
-		serverError(w, "Failed to unmarshal credentials from request body", err)
+		serverError(w, errors.New("Failed to unmarshal credentials from request body: "+err.Error()))
 		return
 	}
 
@@ -146,54 +144,6 @@ func loginHandler(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("X-Auth-Token", tokenStr)
 	w.WriteHeader(http.StatusOK)
 	log.Debugf("Token String %q", tokenStr)
-}
-
-// handler handles the incoming request and proxies the request to netmaster only if the user has required privileges
-// on successful authorization, it proxies the request to netmaster
-// otherwise returns appropriate HTTP status code based on the error
-func handler(w http.ResponseWriter, req *http.Request) {
-	// NOTE: our current implementation focuses on just 2 local users admin(superuser) and ops(only network operations).
-	// this is mainly to provide some basic difference between 2 users
-	// this needs to be fine-grained once we have the backend and capabilities defined
-	tokenStr := req.Header.Get("X-Auth-Token")
-	if common.IsEmpty(tokenStr) {
-		authError(w, http.StatusUnauthorized, "Empty auth token")
-		return
-	}
-
-	authT, err := auth.ParseToken(tokenStr)
-	if err != nil {
-		authError(w, http.StatusBadRequest, "Bad token")
-		return
-	}
-
-	isSuperuser, err := authT.IsSuperuser()
-	if err != nil {
-		// this should never happen
-		// TODO: this returns "Bad token", but the error from IsSuperuser() returns
-		//       "Invalid token"... fix this inconsistency
-		authError(w, http.StatusBadRequest, "Bad token")
-		return
-	}
-
-	if isSuperuser {
-		log.Debug("Token belongs to a superuser; can perform any operation")
-		proxyRequest(w, req)
-		return
-	}
-
-	// FIXME: this needs to be changed once we have the real backend ready
-	// not superuser; check `user` capabilities
-	path := req.URL.Path
-	re := regexp.MustCompile("^*/api/v1/(?P<rootObject>[a-zA-Z0-9]+)/(?P<key>[a-zA-Z0-9]+)$")
-	if re.MatchString(path) {
-		if "networks" == re.FindStringSubmatch(path)[1] {
-			proxyRequest(w, req)
-			return
-		}
-	} // else; user is not allowed to perform this operation
-
-	authError(w, http.StatusUnauthorized, "Insufficient privileges")
 }
 
 func processFlags() {
@@ -231,6 +181,102 @@ func processFlags() {
 	flag.Parse()
 }
 
+// rbacFilter is a function which takes a token and response body and filters
+// the response body based on what the user represented by the token is
+// allowed to see.
+type rbacFilter func(*auth.Token, []byte) []byte
+
+// rbacFilterWrapper returns a HTTP handler function which:
+//     1. validates the access token (passed in the X-Auth-Token request header)
+//     2. ensures that the user represented by the token is allowed to operate on the resource in question (TODO)
+//     3. performs a duplicate of the original request against netmaster
+//     4. filters (if necessary) the response from netmaster to what the user should be able to see
+func rbacFilterWrapper(filter rbacFilter) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, req *http.Request) {
+
+		//
+		// Step 1. validate the access token
+		//
+
+		// NOTE: our current implementation focuses on just two local users admin(superuser) and ops(only network operations).
+		// this is mainly to provide some basic difference between two users
+		// this needs to be fine-grained once we have the backend and capabilities defined
+		tokenStr := req.Header.Get("X-Auth-Token")
+		if common.IsEmpty(tokenStr) {
+			authError(w, http.StatusUnauthorized, "Empty auth token")
+			return
+		}
+
+		token, err := auth.ParseToken(tokenStr)
+		if err != nil {
+			authError(w, http.StatusBadRequest, "Bad token")
+			return
+		}
+
+		isSuperuser, err := token.IsSuperuser()
+		if err != nil {
+			// this should never happen
+			// TODO: this returns "Bad token", but the error from IsSuperuser() returns
+			//       "Invalid token"... fix this inconsistency
+			authError(w, http.StatusBadRequest, "Bad token")
+			return
+		}
+
+		//
+		// Step 2. ensure the user is allowed to operate on the resource
+		//
+
+		// if not a superuser, validate that the user can perform the requested operation
+		if !isSuperuser {
+
+			//
+			// TODO: replace all of this code with a call to an injected rbacAuthorization function
+			//
+
+			path := req.URL.Path
+			re := regexp.MustCompile("^*/api/v1/(?P<rootObject>[a-zA-Z0-9]+)/(?P<key>[a-zA-Z0-9]+)$")
+			if re.MatchString(path) {
+				// TODO: only allow access to /networks for now
+				//       this is hardcoded in the absence of a real RBAC database
+				if "networks" != re.FindStringSubmatch(path)[1] {
+					authError(w, http.StatusUnauthorized, "Insufficient privileges")
+					return
+				}
+			}
+		}
+
+		//
+		// Step 3. proxy the request to netmaster
+		//
+		resp, body, err := proxyRequest(w, req)
+		if err != nil {
+			serverError(w, err)
+			return
+		}
+
+		//
+		// Step 4. filter the response body (if necessary)
+		//
+
+		// if the current user is a superuser OR the request to netmaster was not successful,
+		// we just send the unfiltered response back. there's no point in filtering error
+		// JSON.  we'll consider any 2XX status code a success.
+		// otherwise, we filter the result based on what the user is allowed to see using
+		// the supplied filter function.
+		if isSuperuser || resp.StatusCode/100 != 2 {
+			w.Write(body)
+		} else {
+			w.Write(filter(token, body))
+		}
+	}
+}
+
+// rbacWrapper has the exact same functionality as rbacFilterWrapper but it passes in a null filter
+// which does not modify the response body.
+func rbacWrapper(filter rbacFilter) func(http.ResponseWriter, *http.Request) {
+	return rbacFilterWrapper(auth.NullFilter)
+}
+
 func main() {
 
 	processFlags()
@@ -242,11 +288,48 @@ func main() {
 	// TODO: support a configurable timeout here for communication with netmaster
 	netmasterClient = &http.Client{}
 
+	//
+	// Authorization endpoint
+	//
 	http.HandleFunc("/api/v1/ccn_proxy/login", loginHandler)
-	http.HandleFunc("/api/v1/", handler) // any request coming to this path should be authorized
 
-	// TODO: add RBAC-related endpoints here
+	//
+	// RBAC-enforced endpoints with optional filtering of results
+	//
+	filteredRoutes := map[string]rbacFilter{
+		"appProfiles":        auth.FilterAppProfiles,
+		"Bgps":               auth.FilterBgps,
+		"endpointGroups":     auth.FilterEndpointGroups,
+		"extContractsGroups": auth.FilterExtContractsGroups,
+		"globals":            auth.FilterGlobals,
+		"netprofiles":        auth.FilterNetProfiles,
+		"networks":           auth.FilterNetworks,
+		// NOTE: "policys" is misspelled in netmaster's routes
+		"policys":        auth.FilterPolicies,
+		"rules":          auth.FilterRules,
+		"serviceLBs":     auth.FilterServiceLBs,
+		"tenants":        auth.FilterTenants,
+		"volumes":        auth.FilterVolumes,
+		"volumeProfiles": auth.FilterVolumeProfiles,
+	}
 
+	// TODO: add another map (or extend the above map) of "resource" -> "rbacAuthorization" functions.
+	//       rbacWrapper() and rbacFilterWrapper() will need to be extended to take an rbacAuthorization
+	//       function as an argument which will be used to control access to the resource in question.
+
+	for resource, filterFunc := range filteredRoutes {
+		// NOTE: netmaster's "list" routes require a trailing slash...
+		http.HandleFunc("/api/v1/"+resource+"/", rbacFilterWrapper(filterFunc))
+
+		// TODO: add other REST endpoints (show, create, delete, update, inspect, etc.)
+		_ = rbacWrapper(auth.NullFilter)
+	}
+
+	// TODO: add one-off endpoints (e.g., /api/v1/inspect/endpoints/{key}/)
+
+	//
+	// HTTPS server startup
+	//
 	log.Println(ProgramName, ProgramVersion, "starting up...")
 	log.Println("Proxying requests to", netmasterAddress)
 	log.Println("Listening for secure HTTPS requests on", listenAddress)
