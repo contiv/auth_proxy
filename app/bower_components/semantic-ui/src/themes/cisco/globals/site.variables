@@ -1,6 +1,26 @@
 /*******************************
      User Global Variables
 *******************************/
+/*-------------------
+       Fonts
+--------------------*/
+
+@fontPath          : '../../themes/cisco/assets/fonts';
+@fontName          : 'cisco-ucp';
+@fontSmoothing     : antialiased;
+
+@headerFont        : @fontName, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+@pageFont          : @fontName, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+
+@googleFontName    : 'Lato';
+@importGoogleFonts : false;
+@googleFontSizes   : '400,700,400italic,700italic';
+@googleSubset      : 'latin';
+
+@googleProtocol    : 'https://';
+@googleFontRequest : '@{googleFontName}:@{googleFontSizes}&subset=@{googleSubset}';
+
+
 @blue           : #049fd9;
 
 @secondaryColor      :#FFFFFF;
