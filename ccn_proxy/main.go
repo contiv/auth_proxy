@@ -1,7 +1,6 @@
 package main
 
 import (
-	"crypto/tls"
 	"encoding/json"
 	"flag"
 	"io/ioutil"
@@ -16,12 +15,11 @@ import (
 
 var (
 	// flags
-	listenAddress             string // address we listen on
-	netmasterAddress          string // address of the netmaster we proxy to
-	skipNetmasterVerification bool   // if set, skip verification of netmaster's certificate
-	tlsKeyFile                string // path to TLS key
-	tlsCertificate            string // path to TLS certificate
-	debug                     bool   // if set, log level is set to `debug`
+	debug            bool   // if set, log level is set to `debug`
+	listenAddress    string // address we listen on
+	netmasterAddress string // address of the netmaster we proxy to
+	tlsKeyFile       string // path to TLS key
+	tlsCertificate   string // path to TLS certificate
 
 	// globals
 	netmasterClient *http.Client // custom client which can skip cert verification
@@ -194,14 +192,8 @@ func processFlags() {
 	flag.StringVar(
 		&netmasterAddress,
 		"netmaster-address",
-		"localhost:9998",
+		"http://localhost:9998",
 		"address of the upstream netmaster",
-	)
-	flag.BoolVar(
-		&skipNetmasterVerification,
-		"skip-netmaster-verification",
-		false,
-		"if set, skip verification of netmaster's certificate",
 	)
 	flag.StringVar(
 		&tlsKeyFile,
@@ -233,14 +225,13 @@ func main() {
 	}
 
 	// TODO: support a configurable timeout here for communication with netmaster
-	netmasterClient = &http.Client{
-		Transport: &http.Transport{
-			TLSClientConfig: &tls.Config{InsecureSkipVerify: skipNetmasterVerification},
-		},
-	}
+	netmasterClient = &http.Client{}
 
+	// NOTE: for the initial release, we are only supporting TLS at the ccn_proxy.
+	//       ccn_proxy will be the only ingress point into the cluster, so we can
+	//       assume any other communication within the cluster is secure.
 	upstream = &url.URL{
-		Scheme: "https", // we only support HTTPS netmasters
+		Scheme: "http",
 		Host:   netmasterAddress,
 	}
 
@@ -252,10 +243,6 @@ func main() {
 	log.Println(ProgramName, ProgramVersion, "starting up...")
 	log.Println("Proxying requests to", netmasterAddress)
 	log.Println("Listening for secure HTTPS requests on", listenAddress)
-
-	if skipNetmasterVerification {
-		log.Warn("Skipping netmaster TLS verification when proxying requests was requested (--skip-netmaster-verification)")
-	}
 
 	log.Fatalln(http.ListenAndServeTLS(listenAddress, tlsCertificate, tlsKeyFile, nil))
 }

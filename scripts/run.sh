@@ -12,8 +12,7 @@ if [ -z "${DOCKER_HOST-}" ]; then
      -p 9999:9999 \
 	   -v $PWD/local_certs:/certs ccn_proxy:devbuild \
 	   --tls-key-file=/certs/local.key \
-	   --tls-certificate=/certs/cert.pem \
-	   --skip-netmaster-verification
+	   --tls-certificate=/certs/cert.pem
 else
     echo "Copying certificates to docker-machine:"
     cert_path="/tmp/ccn_proxy/"
@@ -27,6 +26,5 @@ else
      -p 9999:9999 \
 	   -v $cert_path:/certs ccn_proxy:devbuild \
 	   --tls-key-file=/certs/local.key \
-	   --tls-certificate=/certs/cert.pem \
-	   --skip-netmaster-verification
+	   --tls-certificate=/certs/cert.pem
 fi
