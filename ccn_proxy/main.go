@@ -2,12 +2,16 @@ package main
 
 import (
 	"crypto/tls"
+	"encoding/json"
 	"flag"
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"regexp"
 
 	log "github.com/Sirupsen/logrus"
+	"github.com/contiv/ccn_proxy/auth"
+	"github.com/contiv/ccn_proxy/common"
 )
 
 var (
@@ -17,6 +21,7 @@ var (
 	skipNetmasterVerification bool   // if set, skip verification of netmaster's certificate
 	tlsKeyFile                string // path to TLS key
 	tlsCertificate            string // path to TLS certificate
+	debug                     bool   // if set, log level is set to `debug`
 
 	// globals
 	netmasterClient *http.Client // custom client which can skip cert verification
@@ -30,13 +35,12 @@ var (
 	ProgramVersion = "unknown"
 )
 
-/*
-// authError logs a message and changes the HTTP status code to 401.
-func authError(w http.ResponseWriter, msg string) {
+// authError logs a message and changes the HTTP status code as requested.
+func authError(w http.ResponseWriter, statusCode int, msg string) {
 	log.Println(msg)
-	w.WriteHeader(http.StatusUnauthorized)
+	w.WriteHeader(statusCode)
+	w.Write([]byte(msg))
 }
-*/
 
 // serverError logs a message + error and changes the HTTP status code to 500.
 func serverError(w http.ResponseWriter, msg string, err error) {
@@ -93,37 +97,90 @@ func proxyRequest(w http.ResponseWriter, req *http.Request) {
 	w.Write(data)
 }
 
-// handler runs the LDAP lookup and authorization code before proxying the
-// request to netmaster.
+// loginHandler handles the login request and returns auth token with user capabilities
 // it can return various HTTP status codes:
 //     500 (something breaks)
 //     401 (authorization fails)
 //     any code that netmaster itself can return
+func loginHandler(w http.ResponseWriter, req *http.Request) {
+	body, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		serverError(w, "Failed to read body from request", err)
+		return
+	}
+
+	// this is to maintain uniformity in UI. Right now, all the requests are sent as JSON
+	type loginReq struct {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+
+	lReq := &loginReq{}
+	if err := json.Unmarshal(body, lReq); err != nil {
+		serverError(w, "Failed to unmarshal credentials from request body", err)
+		return
+	}
+
+	if common.IsEmpty(lReq.Username) || common.IsEmpty(lReq.Password) {
+		authError(w, http.StatusBadRequest, "Username and password must be provided")
+		return
+	}
+
+	// authenticate the user using `username` and `password`
+	tokenStr, err := auth.Authenticate(lReq.Username, lReq.Password)
+	if err != nil {
+		authError(w, http.StatusUnauthorized, "Invalid username/password")
+		return
+	}
+
+	w.Header().Set("X-Auth-Token", tokenStr)
+	w.WriteHeader(http.StatusOK)
+	log.Debugf("Token String %q", tokenStr)
+}
+
+// handler handles the incoming request and proxies the request to netmaster only if the user has required privileges
+// on successful authorization, it proxies the request to netmaster
+// otherwise returns appropriate HTTP status code based on the error
 func handler(w http.ResponseWriter, req *http.Request) {
-	/*
-		authn, err := doLDAPLookup()
-		if err != nil {
-			serverError(w, "LDAP lookup failed", err)
+	//NOTE: our current implementation focusses on just 2 local users admin(superuser), ops(only network operations).
+	// this is mainly to provide some basic difference between 2 users
+	// this needs to be enhanced to fine grained level once we have the backend and capabilities defined
+	tokenStr := req.Header.Get("X-Auth-Token")
+	if common.IsEmpty(tokenStr) {
+		authError(w, http.StatusUnauthorized, "Empty auth token")
+		return
+	}
+
+	authT, err := auth.ParseToken(tokenStr)
+	if err != nil {
+		authError(w, http.StatusBadRequest, "Bad token")
+		return
+	}
+
+	isSuperuser, err := authT.IsSuperuser()
+	if err != nil { // this should never happen
+		authError(w, http.StatusBadRequest, "Bad token")
+		return
+	}
+
+	if isSuperuser {
+		log.Debugf("Token belongs to a super user; can perform any operation")
+		proxyRequest(w, req)
+		return
+	}
+
+	// FIXME: this needs to be changed once we have the real backend ready
+	// not supersuer; check `user` capabilities
+	path := req.URL.Path
+	re := regexp.MustCompile("^*/api/v1/(?P<rootObject>[a-zA-Z0-9]+)/(?P<key>[a-zA-Z0-9]+)$")
+	if re.MatchString(path) {
+		if "networks" == re.FindStringSubmatch(path)[1] {
+			proxyRequest(w, req)
 			return
 		}
+	} // else; user is not allowed to perform this operation
 
-		if !authn {
-			authError(w, "LDAP authentication failed")
-			return
-		}
-
-		authz, err := doAuthorization()
-		if err != nil {
-			serverError(w, "Authorization failed", err)
-		}
-
-		if !authz {
-			authError(w, "user is not authorized")
-			return
-		}
-	*/
-
-	proxyRequest(w, req)
+	authError(w, http.StatusUnauthorized, "Insufficient previliges")
 }
 
 func processFlags() {
@@ -158,12 +215,22 @@ func processFlags() {
 		"cert.pem",
 		"path to TLS certificate",
 	)
+	flag.BoolVar(
+		&debug,
+		"debug",
+		false,
+		"if set, log level is set to debug",
+	)
 	flag.Parse()
 }
 
 func main() {
 
 	processFlags()
+
+	if debug {
+		log.SetLevel(log.DebugLevel)
+	}
 
 	// TODO: support a configurable timeout here for communication with netmaster
 	netmasterClient = &http.Client{
@@ -177,7 +244,8 @@ func main() {
 		Host:   netmasterAddress,
 	}
 
-	http.HandleFunc("/", handler)
+	http.HandleFunc("/api/v1/ccn_proxy/login", loginHandler)
+	http.HandleFunc("/api/v1/", handler) // any request coming to this path should be authorized
 
 	// TODO: add RBAC-related endpoints here
 
