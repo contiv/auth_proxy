@@ -16,7 +16,8 @@ import (
 //  error: nil on successful authentication otherwise ErrLocalAuthenticationFailed
 func Authenticate(username, password string) ([]*types.Principal, error) {
 	//TODO: this will be enhanced once we have the backend ready. this is mocked now to help UI team
-	if "admin" == username || "ops" == username { // currently supports only `admin` and `ops` users
+	// currently supports only `admin` and `ops` users
+	if "admin" == username || "ops" == username {
 		userPrincipals := []*types.Principal{}
 		role, err := types.Role(username)
 		if err != nil {

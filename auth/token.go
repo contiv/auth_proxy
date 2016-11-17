@@ -23,6 +23,8 @@ const (
 
 // Token represents the JSON Web Token which carries the authorization details
 type Token struct {
+	// TODO: this could probably be an embedded type since we're just adding more
+	//       functionality (i.e., functions) on top of the existing type
 	tkn *jwt.Token
 }
 
@@ -44,15 +46,16 @@ func NewToken() *Token {
 // NewTokenWithClaims is a utility method that creates a new token with the list of principals.
 // params:
 //  principals: a list of security principals for a user.
-//  In case of local user, this list should contain only a single principal.
-//  For ldap users, this list contains potentially multiple principals, each belonging to a ldap group.
+//  In the case of a local user, this list should contain only a single principal.
+//  For ldap users, this list potentially contains multiple principals, each belonging to a ldap group.
 // return values:
 //  *Token: a token object encapsulating authorization claims
 //  error: nil if successful, else as returned by AddRoleClaim
 func NewTokenWithClaims(principals []*types.Principal) (*Token, error) {
 	authZ := NewToken()
 
-	for _, principal := range principals { // add a claim for each principal
+	// add a claim for each principal
+	for _, principal := range principals {
 		if err := authZ.AddRoleClaim(principal); err != nil {
 			return nil, err
 		}
@@ -82,6 +85,9 @@ func (authZ *Token) AddRoleClaim(principal *types.Principal) error {
 			return err
 		}
 
+		// TODO: logic here appears to be incorrect... in the case where role > principal.Role,
+		//       the exact same code gets executed after control falls out of this block anyways
+
 		// principal's role is strictly more privileged than what is stored, update the token
 		if principal.Role < role { // highest role - Admin(0)
 			authZ.AddClaim(roleKey, principal.Role.String()) // overrides the `roleKey` with new value
@@ -92,7 +98,6 @@ func (authZ *Token) AddRoleClaim(principal *types.Principal) error {
 	// if the role is not part of claims, update the claim set with `Role`
 	authZ.AddClaim(roleKey, principal.Role.String())
 	return nil
-
 }
 
 // AddClaim adds a claim to an existing authorization token object. A claim is
@@ -190,7 +195,9 @@ func ParseToken(tokenStr string) (*Token, error) {
 //  error: invalid token
 func (authZ *Token) IsSuperuser() (bool, error) {
 	role, found := authZ.tkn.Claims.(jwt.MapClaims)["role"]
-	if !found { // if hit this case, its a BUG; our tokens will always contain `role`
+	if !found {
+		// if we hit this case, it's a BUG; our tokens will always contain `role`
+		log.Debugf("Token has no role? %#v", authZ)
 		return false, fmt.Errorf("Invalid token")
 	}
 

@@ -47,9 +47,9 @@ func serverError(w http.ResponseWriter, msg string, err error) {
 }
 
 // proxyRequest takes a HTTP request we've received, duplicates it, adds a few
-// custom request headers, and sends the request to the netmaster. It copies
-// the status code, response body, and response headers onto the response we
-// send to our client.
+// request headers, and sends the duplicated request to netmaster. It copies
+// the status code, response body, and response headers from netmaster onto the
+// response we send to our client.
 func proxyRequest(w http.ResponseWriter, req *http.Request) {
 	copy := new(http.Request)
 	*copy = *req
@@ -97,9 +97,10 @@ func proxyRequest(w http.ResponseWriter, req *http.Request) {
 
 // loginHandler handles the login request and returns auth token with user capabilities
 // it can return various HTTP status codes:
-//     500 (something breaks)
-//     401 (authorization fails)
-//     any code that netmaster itself can return
+//     200 (authorization succeeded)
+//     400 (username and/or password were not provided)
+//     401 (authorization failed)
+//     500 (something broke)
 func loginHandler(w http.ResponseWriter, req *http.Request) {
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
@@ -131,6 +132,8 @@ func loginHandler(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	// TODO: return token in JSON body: https://github.com/contiv/ccn_proxy/issues/11
+
 	w.Header().Set("X-Auth-Token", tokenStr)
 	w.WriteHeader(http.StatusOK)
 	log.Debugf("Token String %q", tokenStr)
@@ -140,9 +143,9 @@ func loginHandler(w http.ResponseWriter, req *http.Request) {
 // on successful authorization, it proxies the request to netmaster
 // otherwise returns appropriate HTTP status code based on the error
 func handler(w http.ResponseWriter, req *http.Request) {
-	//NOTE: our current implementation focusses on just 2 local users admin(superuser), ops(only network operations).
+	// NOTE: our current implementation focuses on just 2 local users admin(superuser) and ops(only network operations).
 	// this is mainly to provide some basic difference between 2 users
-	// this needs to be enhanced to fine grained level once we have the backend and capabilities defined
+	// this needs to be fine-grained once we have the backend and capabilities defined
 	tokenStr := req.Header.Get("X-Auth-Token")
 	if common.IsEmpty(tokenStr) {
 		authError(w, http.StatusUnauthorized, "Empty auth token")
@@ -156,19 +159,22 @@ func handler(w http.ResponseWriter, req *http.Request) {
 	}
 
 	isSuperuser, err := authT.IsSuperuser()
-	if err != nil { // this should never happen
+	if err != nil {
+		// this should never happen
+		// TODO: this returns "Bad token", but the error from IsSuperuser() returns
+		//       "Invalid token"... fix this inconsistency
 		authError(w, http.StatusBadRequest, "Bad token")
 		return
 	}
 
 	if isSuperuser {
-		log.Debugf("Token belongs to a super user; can perform any operation")
+		log.Debug("Token belongs to a superuser; can perform any operation")
 		proxyRequest(w, req)
 		return
 	}
 
 	// FIXME: this needs to be changed once we have the real backend ready
-	// not supersuer; check `user` capabilities
+	// not superuser; check `user` capabilities
 	path := req.URL.Path
 	re := regexp.MustCompile("^*/api/v1/(?P<rootObject>[a-zA-Z0-9]+)/(?P<key>[a-zA-Z0-9]+)$")
 	if re.MatchString(path) {
@@ -178,7 +184,7 @@ func handler(w http.ResponseWriter, req *http.Request) {
 		}
 	} // else; user is not allowed to perform this operation
 
-	authError(w, http.StatusUnauthorized, "Insufficient previliges")
+	authError(w, http.StatusUnauthorized, "Insufficient privileges")
 }
 
 func processFlags() {

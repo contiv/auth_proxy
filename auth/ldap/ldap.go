@@ -12,7 +12,7 @@ import (
 
 // This library contains APIs to talk to `Active Directory` using LDAP client
 // NOTE: http://lists.freeradius.org/pipermail/freeradius-users/2012-August/062055.html
-// Due to the issue mentioned in above link, we wont work with user who is just part of primary group
+// Due to the issue mentioned in above link, we won't work with user who is just part of primary group
 
 // Below are the details about LDAP `SearchRequest`
 // NewSearchRequest(
@@ -30,16 +30,15 @@ import (
 //  TimeLimit: specifies the maximum length of time, in seconds, that the server should spend processing the search.
 //    0 - indicates no time limit
 //  TypesOnly: (bool)
-//    `true`: then it indicates that entries that match the search criteria
+//    `true`: indicates that entries that match the search criteria
 //    should be returned containing only the attribute descriptions for the attributes contained in that entry
 //    but should not include the values for those attributes.
-//    `false`: then it indicates that the attribute values should be included in the entries that are returned.
+//    `false`: indicates that the attribute values should be included in the entries that are returned.
 //  SearchFilter: specifies the search criteria
 //  Attributes: set of attributes to request for inclusion in entries that match the search criteria and are returned to the client.
-//  Controls: yet to figure out what it is; but, its been given `nil` value everywhere
+//  Controls: yet to figure out what it is; but it's been given a `nil` value everywhere
 
-// Manager provides the implementation of LDAP Manager
-// fields:
+// Manager provides the implementation of LDAP Manager fields:
 //   ldap: AD configuration
 type Manager struct {
 	Config types.ADConfiguration
@@ -52,7 +51,7 @@ type Manager struct {
 // return values:
 //  ErrADConfigNotFound if the config is not found or as returned by ldapManager.Authenticate
 func Authenticate(username, password string) ([]*types.Principal, error) {
-	if cfg := GetADConfig(); cfg != nil { // get AD configuration
+	if cfg := GetADConfig(); cfg != nil {
 		ldapManager := Manager{Config: *cfg}
 		return ldapManager.Authenticate(username, password)
 	}
@@ -138,7 +137,7 @@ func (lm *Manager) Authenticate(username, password string) ([]*types.Principal, 
 //  on successful search, array of unique groups that user is part-of otherwise any relevant error
 func (lm *Manager) getUserGroups(ldapConn *ldap.Conn, groups []string) ([]string, error) {
 	if len(groups) == 0 {
-		// this happens when the user is just part of the primary group; we wont work on this case!
+		// this happens when the user is just part of the primary group; we won't attempt to handle this case!
 		// more details here: http://lists.freeradius.org/pipermail/freeradius-users/2012-August/062055.html
 		return []string{}, errors.ErrADGroupsNotFound
 	}
@@ -177,7 +176,8 @@ func (lm *Manager) getUserGroups(ldapConn *ldap.Conn, groups []string) ([]string
 			return []string{}, errors.ErrADMultipleEntries
 		}
 
-		subGroups := searchRes.Entries[0].GetAttributeValues("memberOf") // look for possible subgroups to be further processed
+		// look for possible subgroups to be further processed
+		subGroups := searchRes.Entries[0].GetAttributeValues("memberOf")
 		for _, sGrp := range subGroups {
 			if !processedGroups[sGrp] {
 				groups = append(groups, sGrp)
@@ -194,7 +194,7 @@ func (lm *Manager) getUserGroups(ldapConn *ldap.Conn, groups []string) ([]string
 	return result, nil
 }
 
-// connect establishes a LDAP connection with the given active directory configuration(receiver)
+// connect establishes a LDAP connection with the given Active Directory configuration(receiver)
 // return values:
 //  on successful connection with AD, returns a LDAP connection object otherwise ErrADConnectionFailed
 func (lm *Manager) connect() (*ldap.Conn, error) {
