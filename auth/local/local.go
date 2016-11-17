@@ -12,6 +12,7 @@ import (
 //  username: username to authenticate
 //  password: password of the user
 // return values:
+//  []*types.Principal on successful authentication else nil
 //  error: nil on successful authentication otherwise ErrLocalAuthenticationFailed
 func Authenticate(username, password string) ([]*types.Principal, error) {
 	//TODO: this will be enhanced once we have the backend ready. this is mocked now to help UI team
@@ -27,5 +28,6 @@ func Authenticate(username, password string) ([]*types.Principal, error) {
 		return userPrincipals, nil
 	}
 
+	//FIXME: to return appropriate error messages.e.g. ErrUserDoesnotExists
 	return nil, errors.ErrLocalAuthenticationFailed
 }

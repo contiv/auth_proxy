@@ -9,11 +9,6 @@ import (
 	log "github.com/Sirupsen/logrus"
 )
 
-// Manager is the implementation of authentication manager
-type Manager struct {
-	IsADSet bool // this parameter helps to identify where AD authentication can be performed or not
-}
-
 // Authenticate authenticates the user against local DB or AD using the given credentials
 // it returns a token which carries the role, capabilities, etc.
 // params:
@@ -21,28 +16,20 @@ type Manager struct {
 //    password: password of the user
 // return values:
 //    `Token` string on successful authentication otherwise ErrADConfigNotFound or any relevant error.
-func (authMgr *Manager) Authenticate(username, password string) (string, error) {
-	localUserPrincipals, err := local.Authenticate(username, password)
-	if err != nil { // local authentication failed; so, try LDAP
-		if authMgr.IsADSet {
-			if cfg := ldap.GetADConfig(); cfg != nil { // get AD configuration
-				ldapManager := ldap.Manager{Config: *cfg}
-				ldapUserPrincipals, lErr := ldapManager.Authenticate(username, password)
-				if lErr != nil {
-					return "", lErr
-				}
-
-				return authMgr.generateToken(ldapUserPrincipals, username)
-			}
-
-			log.Errorf("AD configuration not found")
-			return "", errors.ErrADConfigNotFound
-		}
-
-		return "", err // error from local authentication
+func Authenticate(username, password string) (string, error) {
+	userPrincipals, err := local.Authenticate(username, password)
+	if err == nil {
+		return generateToken(userPrincipals, username) // local authentication succeeded!
 	}
 
-	return authMgr.generateToken(localUserPrincipals, username) // local authentication succeeded!
+	if err == errors.ErrUserNotFound {
+		userPrincipals, err = ldap.Authenticate(username, password)
+		if err == nil {
+			return generateToken(userPrincipals, username) // ldap authentication succeeded!
+		}
+	}
+
+	return "", err // error from authentication
 }
 
 // generateToken generates JWT(JSON Web Token) with the given user principals
@@ -51,7 +38,7 @@ func (authMgr *Manager) Authenticate(username, password string) (string, error) 
 //  username: local or AD username of the user
 // return values:
 //    `Token` string on successful creation of JWT otherwise any relevant error from the subsequent function
-func (authMgr *Manager) generateToken(principals []*types.Principal, username string) (string, error) {
+func generateToken(principals []*types.Principal, username string) (string, error) {
 	log.Debugf("Generating token for user %q", username)
 
 	authZ, err := NewTokenWithClaims(principals) // create a new token with default `expiry` claim

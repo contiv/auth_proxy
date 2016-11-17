@@ -67,9 +67,10 @@ func (role RoleType) String() string {
 		return "ops"
 	case Admin:
 		return "admin"
+	default:
+		log.Debug("Illegal role type")
+		return ""
 	}
-
-	return ""
 }
 
 // Role returns the `RoleType` of given string
@@ -79,8 +80,9 @@ func Role(roleStr string) (RoleType, error) {
 		return Admin, nil
 	case Ops.String():
 		return Ops, nil
+	default:
+		log.Debug("Illegal role")
+		return Invalid, errors.ErrIllegalArgument
 	}
 
-	log.Debug("Illegal role type")
-	return Invalid, errors.ErrIllegalArgument
 }

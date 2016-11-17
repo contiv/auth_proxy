@@ -12,9 +12,6 @@ var (
 	// ErrADAccessDenied used when AD access is denied
 	ErrADAccessDenied = errors.New("AD access denied")
 
-	// ErrADUserNotFound used when AD user search query returns none
-	ErrADUserNotFound = errors.New("AD user not found")
-
 	// ErrADGroupsNotFound used when AD user is associated with just primary group
 	ErrADGroupsNotFound = errors.New("No groups found, cannot process")
 
@@ -26,4 +23,7 @@ var (
 
 	// ErrIllegalArgument used whenever an unexpected parameter/argument is encountered
 	ErrIllegalArgument = errors.New("Illegal argument")
+
+	// ErrUserNotFound used when the user is found
+	ErrUserNotFound = errors.New("User not found")
 )

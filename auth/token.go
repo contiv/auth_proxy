@@ -14,7 +14,7 @@ import (
 
 const (
 	// TokenValidityInHours represents the token validity; used to set token expiry
-	TokenValidityInHours = 1
+	TokenValidityInHours = 10
 
 	// TokenSigningKey is used for signing the token
 	// FIXME: this should be fetched from store
@@ -134,7 +134,7 @@ func (authZ *Token) Stringify() (string, error) {
 // params:
 //  object: a generic object for which a key needs to be encoded.
 // return values:
-//  string: encoding of the the claim for the object.
+//  string: encoding of the claim for the object.
 //  error: nil if successful, errors.ErrIllegalArgument if claims for a
 //    particular object type is not supported.
 func GenerateClaimKey(object interface{}) (string, error) {

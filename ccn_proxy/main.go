@@ -11,6 +11,7 @@ import (
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/contiv/ccn_proxy/auth"
+	"github.com/contiv/ccn_proxy/common"
 )
 
 var (
@@ -34,13 +35,12 @@ var (
 	ProgramVersion = "unknown"
 )
 
-/*
-// authError logs a message and changes the HTTP status code to 401.
-func authError(w http.ResponseWriter, msg string) {
+// authError logs a message and changes the HTTP status code as requested.
+func authError(w http.ResponseWriter, statusCode int, msg string) {
 	log.Println(msg)
-	w.WriteHeader(http.StatusUnauthorized)
+	w.WriteHeader(statusCode)
+	w.Write([]byte(msg))
 }
-*/
 
 // serverError logs a message + error and changes the HTTP status code to 500.
 func serverError(w http.ResponseWriter, msg string, err error) {
@@ -117,32 +117,28 @@ func loginHandler(w http.ResponseWriter, req *http.Request) {
 
 	lReq := &loginReq{}
 	if err := json.Unmarshal(body, lReq); err != nil {
-		serverError(w, "Failed to read body from request", err)
+		serverError(w, "Failed to unmarshal credentials from request body", err)
 		return
 	}
 
-	if auth.IsEmpty(lReq.Username) || auth.IsEmpty(lReq.Password) {
-		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte("Username and Password must be provided"))
+	if common.IsEmpty(lReq.Username) || common.IsEmpty(lReq.Password) {
+		authError(w, http.StatusBadRequest, "Username and password must be provided")
 		return
 	}
 
 	// authenticate the user using `username` and `password`
-	authM := auth.Manager{IsADSet: false} //FIXME: this needs to be configured through command line args or through some utility function
-	tokenStr, err := authM.Authenticate(lReq.Username, lReq.Password)
+	tokenStr, err := auth.Authenticate(lReq.Username, lReq.Password)
 	if err != nil {
-		w.WriteHeader(http.StatusUnauthorized)
-		w.Write([]byte("Invalid username and password"))
+		authError(w, http.StatusUnauthorized, "Invalid username/password")
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
 	w.Header().Set("X-Auth-Token", tokenStr)
+	w.WriteHeader(http.StatusOK)
 	log.Debugf("Token String %q", tokenStr)
-	return
 }
 
-// handler handles the incoming request and proxies the request to netmaster only if the user has required previleges
+// handler handles the incoming request and proxies the request to netmaster only if the user has required privileges
 // on successful authorization, it proxies the request to netmaster
 // otherwise returns appropriate HTTP status code based on the error
 func handler(w http.ResponseWriter, req *http.Request) {
@@ -150,29 +146,41 @@ func handler(w http.ResponseWriter, req *http.Request) {
 	// this is mainly to provide some basic difference between 2 users
 	// this needs to be enhanced to fine grained level once we have the backend and capabilities defined
 	tokenStr := req.Header.Get("X-Auth-Token")
-	if !auth.IsEmpty(tokenStr) {
-		if authT, err := auth.ParseToken(tokenStr); err == nil {
-			if isSuperuser, _ := authT.IsSuperuser(); isSuperuser {
-				log.Debugf("Token belongs to a super user; can perform any operation")
-				proxyRequest(w, req)
-				return
-			}
-
-			// FIXME: this needs to be changed once we have the real backend ready
-			// check `user` capabilities
-			path := req.URL.Path
-			re := regexp.MustCompile("^*/api/v1/(?P<rootObject>[a-zA-Z0-9]+)/(?P<key>[a-zA-Z0-9]+)$")
-			if re.MatchString(path) {
-				if "networks" == re.FindStringSubmatch(path)[1] {
-					proxyRequest(w, req)
-					return
-				}
-			} // else; user is not allowed to perform global operations
-		}
+	if common.IsEmpty(tokenStr) {
+		authError(w, http.StatusUnauthorized, "Empty auth token")
+		return
 	}
 
-	w.WriteHeader(http.StatusUnauthorized)
-	return
+	authT, err := auth.ParseToken(tokenStr)
+	if err != nil {
+		authError(w, http.StatusBadRequest, "Bad token")
+		return
+	}
+
+	isSuperuser, err := authT.IsSuperuser()
+	if err != nil { // this should never happen
+		authError(w, http.StatusBadRequest, "Bad token")
+		return
+	}
+
+	if isSuperuser {
+		log.Debugf("Token belongs to a super user; can perform any operation")
+		proxyRequest(w, req)
+		return
+	}
+
+	// FIXME: this needs to be changed once we have the real backend ready
+	// not supersuer; check `user` capabilities
+	path := req.URL.Path
+	re := regexp.MustCompile("^*/api/v1/(?P<rootObject>[a-zA-Z0-9]+)/(?P<key>[a-zA-Z0-9]+)$")
+	if re.MatchString(path) {
+		if "networks" == re.FindStringSubmatch(path)[1] {
+			proxyRequest(w, req)
+			return
+		}
+	} // else; user is not allowed to perform this operation
+
+	authError(w, http.StatusUnauthorized, "Insufficient previliges")
 }
 
 func processFlags() {

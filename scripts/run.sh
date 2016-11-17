@@ -9,6 +9,7 @@ make generate-certificate
 if [ -z "${DOCKER_HOST-}" ]; then
     echo "Running on local machine:"
     docker run --rm \
+     -p 9999:9999 \
 	   -v $PWD/local_certs:/certs ccn_proxy:devbuild \
 	   --tls-key-file=/certs/local.key \
 	   --tls-certificate=/certs/cert.pem \
@@ -23,6 +24,7 @@ else
 
     echo "Running on Docker Machine:"
     docker run --rm \
+     -p 9999:9999 \
 	   -v $cert_path:/certs ccn_proxy:devbuild \
 	   --tls-key-file=/certs/local.key \
 	   --tls-certificate=/certs/cert.pem \
