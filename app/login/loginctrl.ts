@@ -43,13 +43,18 @@ export class LoginComponent implements OnInit{
             .subscribe((result) => {
                 if(result){
                     this.crudHelperService.stopLoader(this);
-                    if (this.authService.redirectUrl.length > 0) {
-                        var redirectUrl = this.authService.redirectUrl;
-                        this.authService.redirectUrl = '';
-                        this.router.navigate([redirectUrl]);
+                    if(this.authService.firstRun){
+                        this.router.navigate(['/m/firstrun']);
                     }
                     else{
-                        this.router.navigate(['/m/dashboard']);
+                        if (this.authService.redirectUrl.length > 0) {
+                            var redirectUrl = this.authService.redirectUrl;
+                            this.authService.redirectUrl = '';
+                            this.router.navigate([redirectUrl]);
+                        }
+                        else{
+                            this.router.navigate(['/m/dashboard']);
+                        }
                     }
                 }
                 else{

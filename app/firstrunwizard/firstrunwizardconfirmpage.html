@@ -1,0 +1,67 @@
+<div class="ui segment" [ngClass]="{loading: showLoader}">
+    <div class="ui grid">
+        <div class="left floated sixteen wide column">
+            <div class="content" style="font-size: 24px">
+                <span>Verify Details and click Confirm</span>
+            </div>
+        </div>
+    </div>
+    <div class="ui section divider" style="margin-top: 30px"></div>
+    <h4 class="ui header">Network Defaults</h4>
+    <table class="ui very basic selectable table">
+        <tbody>
+            <tr>
+                <td class="ctv-header three wide column">Network infrastructure type</td>
+                <td>{{wizardService.setting.networkInfraType}}</td>
+            </tr>
+            <tr>
+                <td class="ctv-header three wide column">Allowed vlan range</td>
+                <td>{{wizardService.setting.vlans}}</td>
+            </tr>
+            <tr>
+                <td class="ctv-header three wide column">Allowed vxlan range</td>
+                <td>{{wizardService.setting.vxlans}}</td>
+            </tr>
+            <tr>
+                <td class="ctv-header three wide column">Forwarding mode</td>
+                <td>{{wizardService.setting.fwdMode}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="ui section divider" style="margin-top: 30px"></div>
+    <h4 class="ui header">Aci Settings</h4>
+    <table class="ui very basic selectable table">
+        <tbody>
+            <tr>
+                <td class="ctv-header three wide column">ACI Url</td>
+                <td>{{wizardService.extra_vars.apic_url}}</td>
+            </tr>
+            <tr>
+                <td class="ctv-header three wide column">ACI Username</td>
+                <td>{{wizardService.extra_vars.apic_username}}</td>
+            </tr>
+            <tr>
+                <td class="ctv-header three wide column">Leaf Nodes</td>
+                <td>{{wizardService.extra_vars.apic_leaf_nodes}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="ui grid">
+        <div class="left floated left aligned eight wide column">
+            <div style="margin-top: 40px">
+                <button type="button" class="ui blue button" (click)="goBack()">
+                    Back
+                </button>
+            </div>
+        </div>
+        <div class="right floated right aligned eight wide column">
+            <div style="margin-top: 40px">
+                <button type="button" class="ui blue button" (click)="process()">
+                    Confirm
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

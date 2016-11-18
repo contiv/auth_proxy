@@ -1,44 +1,49 @@
 <div id="sidebar" class="ui visible left vertical sidebar icon labeled menu">
+    <a class="white item" [routerLink]="['wizard']" routerLinkActive="active" *ngIf="firstRun">
+        Container Networking
+    </a>
 
-    <a class="white item" [routerLink]="['dashboard']" routerLinkActive="active">
+    <a class="white item" [routerLink]="['dashboard']" routerLinkActive="active" *ngIf="!firstRun">
         <i class="dashboard icon"></i>
         Dashboard
     </a>
 
-    <a class="white item" [routerLink]="['appprofiles/list']" routerLinkActive="active">
+    <a class="white item" [routerLink]="['appprofiles/list']" routerLinkActive="active" *ngIf="!firstRun">
         <i class="appgroup icon"></i>
         Application Profiles
     </a>
 
-    <a class="white item" [routerLink]="['applicationgroups/list']" routerLinkActive="active">
+    <a class="white item" [routerLink]="['applicationgroups/list']" routerLinkActive="active" *ngIf="!firstRun">
         <i class="appgroup icon"></i>
         Application Groups
     </a>
 
-    <a class="white item" [routerLink]="['networkpolicies/list']" routerLinkActive="active">
+    <a class="white item" [routerLink]="['networkpolicies/list']" routerLinkActive="active" *ngIf="!firstRun">
         <i class="networkpolicies icon"></i>
         Network Policies
     </a>
 
-    <a class="white item" [routerLink]="['servicelbs/list']" routerLinkActive="active">
+    <a class="white item" [routerLink]="['servicelbs/list']" routerLinkActive="active" *ngIf="!firstRun">
         <i class="loadbalancer icon"></i>
         Service Load Balancers
     </a>
 
-    <a class="white item" [routerLink]="['networks/list']" routerLinkActive="active">
+    <a class="white item" [routerLink]="['networks/list']" routerLinkActive="active" *ngIf="!firstRun">
         <i class="networks icon"></i>
         Networks
     </a>
 
-    <a class="white item" [routerLink]="['organizations/list']" routerLinkActive="active">
+    <a class="white item" [routerLink]="['organizations/list']" routerLinkActive="active" *ngIf="!firstRun">
         <i class="organizations icon"></i> 
         Organizations
     </a>
 
-    <a class="white item" [routerLink]="['settings']" routerLinkActive="active" *auth="'SysAdmin'">
-        <i class="global_settings icon"></i> 
-        Settings
-    </a>
+    <div *ngIf="!firstRun">
+        <a class="white item" [routerLink]="['settings']" routerLinkActive="active" *auth="'SysAdmin'">
+            <i class="global_settings icon"></i>
+            Settings
+        </a>
+    </div>
     <!-- <a class="white item" ui-sref="contiv.menu.visualization.list()" ui-sref-active="{'active':'contiv.menu.visualization'}">
         <i class="loadbalancer icon"></i>
         App Connectivity Graph

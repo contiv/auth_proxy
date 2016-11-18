@@ -35,8 +35,8 @@ export class NodesService {
             var url = ContivGlobals.NODES_SETTINGS_GET_ENDPOINT;
             nodeservice.apiService.get(url).map((res: Response) => res.json()).toPromise().then(function successCallback(result) {
                 resolve(result);
-                ctrl.setting = result;
-                var extraVars = ctrl.setting.extra_vars;
+                //ctrl.setting = result;
+                var extraVars = result.extra_vars;
                 var sched_provider = extraVars[NodesService.node_constants.SCHED_PROVIDER];
                 var network_mode = extraVars[NodesService.node_constants.CONTIV_NET_MODE];
 

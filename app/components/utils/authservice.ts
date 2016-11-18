@@ -27,6 +27,7 @@ export class AuthService {
     authTokenPayload: any;
     accessMatrix:any;
     authToken:string;
+    firstRun:boolean;
 
     constructor(private http: Http){
         this.isLoggedIn = false;
@@ -34,6 +35,7 @@ export class AuthService {
         this.accessMatrix = AuthMatrix;
         this.authTokenPayload = {};
         this.authToken='';
+        this.firstRun = false;
     }
 
     checkAccess(url: string): boolean{
@@ -142,6 +144,10 @@ export class AuthService {
         var bodyEncoded = token.split('.')[1];
         var bodyString = atob(bodyEncoded);
         this.authTokenPayload = JSON.parse(bodyString);
+        if(isNull(localStorage.getItem('firstRun')))
+            this.firstRun = true;
+        else
+            this.firstRun = false;
     }
 
     validateExpiry(): boolean{
