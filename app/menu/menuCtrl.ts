@@ -11,6 +11,7 @@ declare var jQuery:any;
     selector: 'menu',
     templateUrl: 'menu/menu.html'
 })
+
 export class MenuComponent implements DoCheck{
     public username: string
     public product_name:string = ContivGlobals.PRODUCT_NAME
