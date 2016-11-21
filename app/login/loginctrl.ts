@@ -2,6 +2,7 @@ import {Component, Inject, OnInit, ViewEncapsulation} from "@angular/core";
 import {CRUDHelperService} from "../components/utils/crudhelperservice";
 import {Router, ActivatedRoute} from "@angular/router";
 import {AuthService} from "../components/utils/authservice";
+import { ContivGlobals } from "../components/models/contivglobals";
 declare var jQuery:any;
 
 @Component({
@@ -18,6 +19,8 @@ export class LoginComponent implements OnInit{
     public loginCtrl: any;
     public username: string;
     public password: string;
+    public product_name:string = ContivGlobals.PRODUCT_NAME;
+    
     constructor(private router: Router,
                 private activatedRoute: ActivatedRoute,
                 crudHelperService: CRUDHelperService,

@@ -4,6 +4,7 @@
 import {Component, Inject, ViewEncapsulation, OnInit, OnChanges, DoCheck} from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import {AuthService} from "../components/utils/authservice";
+import { ContivGlobals } from "../components/models/contivglobals";
 declare var jQuery:any;
 
 @Component({
@@ -12,6 +13,7 @@ declare var jQuery:any;
 })
 export class MenuComponent implements DoCheck{
     username: string;
+    product_name:string = ContivGlobals.PRODUCT_NAME;
     public firstRun: boolean;
     constructor(private activatedRoute: ActivatedRoute,
                 private router: Router,
