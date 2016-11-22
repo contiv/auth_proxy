@@ -163,7 +163,7 @@ func (s *Server) Serve() {
 
 	tlsConfig := &tls.Config{Certificates: []tls.Certificate{cert}}
 
-	s.listener, err = tls.Listen("tcp", s.config.NetmasterAddress, tlsConfig)
+	s.listener, err = tls.Listen("tcp", s.config.ListenAddress, tlsConfig)
 	if err != nil {
 		log.Fatalln(err)
 		return
