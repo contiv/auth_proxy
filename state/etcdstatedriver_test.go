@@ -8,11 +8,16 @@ import (
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/contiv/ccn_proxy/common/types"
+	. "gopkg.in/check.v1"
 )
 
 const (
 	waitTimeout = 5 * time.Second
 )
+
+func Test(t *testing.T) {
+	TestingT(t)
+}
 
 // Setup configuration needed to access local etcd
 func setupEtcdDriver(t *testing.T) *EtcdStateDriver {
@@ -23,7 +28,7 @@ func setupEtcdDriver(t *testing.T) *EtcdStateDriver {
 
 	err := driver.Init(&config)
 	if err != nil {
-		t.Fatalf("driver init failedm err: %s", err)
+		t.Fatalf("driver init failed, err: %s", err)
 		return nil
 	}
 
@@ -402,6 +407,44 @@ func TestEtcdStateDriverWrite(t *testing.T) {
 func TestEtcdStateDriverRead(t *testing.T) {
 	driver := setupEtcdDriver(t)
 	commonTestStateDriverRead(t, driver)
+}
+
+// Test helper function to check read all keys from a dir in the KV store
+func commonTestStateDriverReadAll(t *testing.T, d types.StateDriver) {
+	testBytes := []byte{0xb, 0xa, 0xd, 0xb, 0xa, 0xb, 0xe}
+
+	// write one key
+	key1 := "/TopDir/TestKeyRawReadAll1"
+	err := d.Write(key1, testBytes)
+	if err != nil {
+		t.Fatalf("failed to write to etcd, err: %s", err)
+	}
+
+	// write another key
+	key2 := "/TopDir/TestKeyRawReadReadAll2"
+	err = d.Write(key2, testBytes)
+	if err != nil {
+		t.Fatalf("failed to write to etcd, err: %s", err)
+	}
+
+	dir := "/TopDir"
+	readBytes, err := d.ReadAll(dir)
+	if err != nil {
+		t.Fatalf("failed to read from etcd, err: %s", err)
+	}
+
+	for _, rbytes := range readBytes {
+		if !bytes.Equal(testBytes, rbytes) {
+			t.Fatalf("read bytes don't match written bytes. Wrote: %v Read: %v",
+				testBytes, rbytes)
+		}
+	}
+}
+
+// Test to check read keys under a directory from KV store
+func TestEtcdStateDriverReadAll(t *testing.T) {
+	driver := setupEtcdDriver(t)
+	commonTestStateDriverReadAll(t, driver)
 }
 
 // Example "state" struct that will be written to and read from

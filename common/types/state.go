@@ -30,6 +30,7 @@ type StateDriver interface {
 	Read(key string) ([]byte, error)
 	ReadAll(baseKey string) ([][]byte, error)
 	Write(key string, value []byte) error
+	Clear(key string) error
 	WatchAll(baseKey string, chValueChanges chan [2][]byte) error
 
 	ReadState(key string, value State,

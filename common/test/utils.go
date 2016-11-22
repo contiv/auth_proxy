@@ -6,7 +6,9 @@ import (
 	"strings"
 
 	log "github.com/Sirupsen/logrus"
+
 	"github.com/contiv/ccn_proxy/common"
+	"github.com/contiv/ccn_proxy/state"
 )
 
 // GetDatastore returns the value of `os.Getenv("USE_DATASTORE")` or `etcd` by default
@@ -16,7 +18,7 @@ func GetDatastore() string {
 		return datastore
 	}
 
-	return common.EtcdName
+	return state.EtcdName
 }
 
 // GetDatastoreAddress returns the data store address; mainly used for testing.
@@ -30,9 +32,9 @@ func GetDatastoreAddress() string {
 	}
 
 	switch GetDatastore() {
-	case common.EtcdName:
+	case state.EtcdName:
 		return "etcd://127.0.0.1:2379"
-	case common.ConsulName:
+	case state.ConsulName:
 		return "consul://127.0.0.1:8500"
 	default:
 		return ""
@@ -48,7 +50,7 @@ func CleanupDatastore(dsName string, paths []string) {
 	log.Info("Cleaning data store...")
 
 	switch dsName {
-	case common.EtcdName:
+	case state.EtcdName:
 		for _, path := range paths {
 			log.Infof("Cleaning %q", path)
 
@@ -65,7 +67,7 @@ func CleanupDatastore(dsName string, paths []string) {
 				}
 			}
 		}
-	case common.ConsulName:
+	case state.ConsulName:
 		for _, path := range paths {
 			log.Infof("Cleaning %q", path)
 

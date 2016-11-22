@@ -5,6 +5,14 @@ import (
 	"github.com/contiv/ccn_proxy/common/errors"
 )
 
+// DerivedFromPrincipalRole is a constant that is used to indicate
+// that the capability or access level (i.e. ClaimValue) to an
+// object (specified in ClaimKey, e.g: "tenant: TenantA") is based
+// on the principal's role. A principal's role is defined in
+// each Principal's object:
+//          e.g. Principal {UUID: "xxxx", Role: "admin|ops"}
+const DerivedFromPrincipalRole string = "DerivedFromPrincipalRole"
+
 // ADConfiguration entry
 //
 // Fields:
@@ -39,6 +47,10 @@ const (
 	Invalid                 // Invalid role, this needs to be the last role
 )
 
+// Tenant is a type to represent the name of the tenant in CCN
+type Tenant string
+
+//
 // Principal represents a 'user' to 'role' association. A 'user' can have many
 // 'roles', and thus can have multiple principals representing it during a
 // 'session'. This set is also known as the active role set (ARS).

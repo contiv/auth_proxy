@@ -41,9 +41,19 @@ const (
 	KeyNotFound
 	CommonStateFieldsMissing
 	InvalidCall
+	ReadingFromStore
 
+	Unauthorized
+	IllegalArguments
+	UnsupportedType
+	ParsingToken
+	Internal
+	ParsingRequest
+	UnmarshalingBody
+	UpdateAuthorization
+	PartialFailureToAddAuthz
+	PartialFailureToUpdateAuthz
 	StateDriverNotCreated
-
 	KeyExists
 	IllegalOperation
 	AccessDenied
@@ -83,6 +93,42 @@ var ErrIllegalOperation = NewError(IllegalOperation, "illegal operation")
 
 // ErrAccessDenied is used when the user access is denied
 var ErrAccessDenied = NewError(AccessDenied, "Access Denied")
+
+// ErrReadingFromStore indicates an error condition while reading from the KV store
+var ErrReadingFromStore = NewError(ReadingFromStore, "error reading from KV store")
+
+// ErrUnauthorized indicates that an authorization doesn't have a claim
+var ErrUnauthorized = NewError(Unauthorized, "unauthorized access")
+
+// ErrIllegalArguments indicates that illegal arguments were received for
+// an API call
+var ErrIllegalArguments = NewError(IllegalArguments, "illegal arguments")
+
+// ErrUnsupportedType indicates that an unsupported object type was used
+// in a function or method call, e.g. checkAccessClaim
+var ErrUnsupportedType = NewError(UnsupportedType, "Unsupported object type")
+
+// ErrParsingToken indicates an error when trying to parse
+// an authorization token
+var ErrParsingToken = NewError(ParsingToken, "failed to parse authz token")
+
+// ErrInternal is returned from functions where internal logic runs into inconsistency issues.
+var ErrInternal = NewError(Internal, "an internal error has occurred")
+
+// ErrParsingRequest indicates an error parsing the incoming HTTP request
+var ErrParsingRequest = NewError(ParsingRequest, "failed to parse HTTP request body")
+
+// ErrUnmarshalingBody indicates an error unmarshalling request body
+var ErrUnmarshalingBody = NewError(UnmarshalingBody, "failed to unmarshall request body")
+
+// ErrUpdateAuthorization indicates an error when updating an authorization
+var ErrUpdateAuthorization = NewError(UpdateAuthorization, "failed to update authorization")
+
+// ErrPartialFailureToAddAuthz indicates an error when a new authorizatin is being added to CCN
+var ErrPartialFailureToAddAuthz = NewError(PartialFailureToAddAuthz, "failed to add authorization")
+
+// ErrPartialFailureToUpdateAuthz indicates an error when an authorization is being update
+var ErrPartialFailureToUpdateAuthz = NewError(PartialFailureToUpdateAuthz, "failed to update authorization")
 
 //
 // CCNError describes an error response message used by CCN APIs

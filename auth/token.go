@@ -5,9 +5,10 @@ import (
 	"time"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/contiv/ccn_proxy/common/errors"
-	"github.com/contiv/ccn_proxy/common/types"
 	jwt "github.com/dgrijalva/jwt-go"
+
+	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
+	"github.com/contiv/ccn_proxy/common/types"
 )
 
 // This file contains all utility methods to create and handle JWT tokens
@@ -19,6 +20,8 @@ const (
 	// TokenSigningKey is used for signing the token
 	// FIXME: this should be fetched from store
 	TokenSigningKey = "ccn$!~56"
+
+	tenantClaimKey = "tenant:"
 )
 
 // Token represents the JSON Web Token which carries the authorization details
@@ -140,11 +143,17 @@ func (authZ *Token) Stringify() (string, error) {
 //    particular object type is not supported.
 func GenerateClaimKey(object interface{}) (string, error) {
 	switch object.(type) {
+
 	case types.RoleType:
 		return "role", nil
+
+	case types.Tenant:
+		tenantName := object.(types.Tenant)
+		return tenantClaimKey + string(tenantName), nil
+
 	default:
 		log.Errorf("Unsupported object %#v for authorization claim", object)
-		return "", errors.ErrIllegalArgument
+		return "", ccnerrors.ErrUnsupportedType
 	}
 }
 
@@ -198,4 +207,53 @@ func (authZ *Token) IsSuperuser() (bool, error) {
 	}
 
 	return role == types.Admin.String(), nil
+}
+
+//
+// CheckClaims checks for specific claims in an authorization token object.
+// These claims are evaluated based on object type, such as for a tenant or
+// for a role, and an associated policy.
+//
+// Parameters:
+//  (Receiver): authorization token object that should be carrying appropriate claims.
+//  objects: claim targets. These can be specific objects, such as tenants or networks
+//    or specific types, such as a role.
+//
+// Return values:
+//  error: nil if successful, else
+//    errors.ErrUnauthorized: if authorization claim for a particular object is not
+//    present, or if claims for a particular object type are not supported.
+//
+func (authZ *Token) CheckClaims(objects ...interface{}) error {
+
+	for i := 0; i < len(objects); i++ {
+
+		v := objects[i]
+
+		switch v.(type) {
+		case types.RoleType:
+
+			// check if role given in list of objects matches
+			// role in the token
+			role := v.(types.RoleType)
+			if err := authZ.checkRolePolicy(role); err != nil {
+				return err
+			}
+		case types.Tenant:
+			tenant := v.(types.Tenant)
+			i++
+			if err := authZ.checkTenantPolicy(tenant, objects[i]); err != nil {
+				return err
+			}
+
+			// TODO Add other policy checks as needed, e.g. wildcard policy
+
+		default:
+			log.Error("Unsupported type for authorization claim; got: %#v", v,
+				", expecting: types.RoleType or types.Tenant")
+			return ccnerrors.ErrUnauthorized
+		}
+	}
+
+	return nil
 }
