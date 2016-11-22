@@ -139,6 +139,7 @@ func (lm *Manager) getUserGroups(ldapConn *ldap.Conn, groups []string) ([]string
 	if len(groups) == 0 {
 		// this happens when the user is just part of the primary group; we won't attempt to handle this case!
 		// more details here: http://lists.freeradius.org/pipermail/freeradius-users/2012-August/062055.html
+		log.Debug("User is just part of primary group; can't proceed further")
 		return []string{}, errors.ErrADGroupsNotFound
 	}
 

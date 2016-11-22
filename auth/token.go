@@ -80,17 +80,13 @@ func (authZ *Token) AddRoleClaim(principal *types.Principal) error {
 
 	val, found := authZ.tkn.Claims.(jwt.MapClaims)[roleKey] // this type casting is required due to jwt library changes
 	if found {
-		role, err := types.Role(val.(string))
+		existingRole, err := types.Role(val.(string))
 		if err != nil {
 			return err
 		}
 
-		// TODO: logic here appears to be incorrect... in the case where role > principal.Role,
-		//       the exact same code gets executed after control falls out of this block anyways
-
-		// principal's role is strictly more privileged than what is stored, update the token
-		if principal.Role < role { // highest role - Admin(0)
-			authZ.AddClaim(roleKey, principal.Role.String()) // overrides the `roleKey` with new value
+		// principal's role is less privileged than what is stored, then return; otherwise update the token with new role
+		if principal.Role > existingRole { // highest role - Admin(0)
 			return nil
 		}
 	}

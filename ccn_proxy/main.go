@@ -19,6 +19,7 @@ var (
 	debug            bool   // if set, log level is set to `debug`
 	listenAddress    string // address we listen on
 	netmasterAddress string // address of the netmaster we proxy to
+	stateStore       string // address of the state store used by netmaster
 	tlsKeyFile       string // path to TLS key
 	tlsCertificate   string // path to TLS certificate
 
@@ -177,6 +178,12 @@ func processFlags() {
 		"debug",
 		false,
 		"if set, log level is set to debug",
+	)
+	flag.StringVar(
+		&stateStore,
+		"state-store",
+		"",
+		"address of the state store used by netmaster",
 	)
 	flag.Parse()
 }

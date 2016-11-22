@@ -30,5 +30,6 @@ func Authenticate(username, password string) ([]*types.Principal, error) {
 	}
 
 	//FIXME: to return appropriate error messages.e.g. ErrUserDoesnotExists
-	return nil, errors.ErrLocalAuthenticationFailed
+	//return nil, errors.ErrLocalAuthenticationFailed
+	return nil, errors.ErrUserNotFound
 }
