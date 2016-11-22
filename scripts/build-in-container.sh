@@ -13,6 +13,6 @@ VERSION=${BUILD_VERSION-devbuild}
 go build \
    -ldflags "-X main.ProgramVersion=$VERSION" \
    -o ./build/output/ccn_proxy \
-   github.com/contiv/ccn_proxy/ccn_proxy
+   github.com/contiv/ccn_proxy
 
 strip ./build/output/ccn_proxy
