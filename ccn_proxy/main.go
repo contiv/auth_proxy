@@ -23,7 +23,6 @@ var (
 
 	// globals
 	netmasterClient *http.Client // custom client which can skip cert verification
-	upstream        *url.URL     // URL object constructed from netmasterAddress
 
 	// ProgramName is used in logging output and the X-Forwarded-By header.
 	ProgramName = "CCN Proxy"
@@ -54,9 +53,17 @@ func proxyRequest(w http.ResponseWriter, req *http.Request) {
 	copy := new(http.Request)
 	*copy = *req
 
-	copy.URL = upstream
+	// NOTE: for the initial release, we are only supporting TLS at the ccn_proxy.
+	//       ccn_proxy will be the only ingress point into the cluster, so we can
+	//       assume any other communication within the cluster is secure.
+	copy.URL = &url.URL{
+		Scheme: "http",
+		Host:   netmasterAddress,
+		Path:   req.RequestURI,
+	}
 
-	// the RequestURI has to be cleared before sending a new request
+	// the RequestURI has to be cleared before sending a new request.
+	// the actual URL we will request upstream is set above in "URL"
 	copy.RequestURI = ""
 
 	// TODO: copy original request body to the cloned request?
@@ -67,6 +74,8 @@ func proxyRequest(w http.ResponseWriter, req *http.Request) {
 	//     X-Forwarded-By is the version string of this program which did the forwarding
 	req.Header.Add("X-Forwarded-For", req.RemoteAddr)
 	req.Header.Add("X-Forwarder", ProgramName+" "+ProgramVersion)
+
+	log.Debugf("Proxying request upstream to %s%s", copy.URL.Host, copy.URL.Path)
 
 	resp, err := netmasterClient.Do(copy)
 	if err != nil {
@@ -198,7 +207,7 @@ func processFlags() {
 	flag.StringVar(
 		&netmasterAddress,
 		"netmaster-address",
-		"http://localhost:9998",
+		"localhost:9998",
 		"address of the upstream netmaster",
 	)
 	flag.StringVar(
@@ -232,14 +241,6 @@ func main() {
 
 	// TODO: support a configurable timeout here for communication with netmaster
 	netmasterClient = &http.Client{}
-
-	// NOTE: for the initial release, we are only supporting TLS at the ccn_proxy.
-	//       ccn_proxy will be the only ingress point into the cluster, so we can
-	//       assume any other communication within the cluster is secure.
-	upstream = &url.URL{
-		Scheme: "http",
-		Host:   netmasterAddress,
-	}
 
 	http.HandleFunc("/api/v1/ccn_proxy/login", loginHandler)
 	http.HandleFunc("/api/v1/", handler) // any request coming to this path should be authorized
