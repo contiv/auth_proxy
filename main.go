@@ -1,9 +1,13 @@
 package main
 
 import (
+	"errors"
 	"flag"
+	"strings"
 	"time"
 
+	"github.com/contiv/ccn_proxy/common"
+	"github.com/contiv/ccn_proxy/common/types"
 	"github.com/contiv/ccn_proxy/proxy"
 
 	log "github.com/Sirupsen/logrus"
@@ -14,7 +18,7 @@ var (
 	debug            bool   // if set, log level is set to `debug`
 	listenAddress    string // address we listen on
 	netmasterAddress string // address of the netmaster we proxy to
-	stateStore       string // address of the state store used by netmaster
+	dataStoreAddress string // address of the data store used by netmaster
 	tlsKeyFile       string // path to TLS key
 	tlsCertificate   string // path to TLS certificate
 
@@ -59,12 +63,33 @@ func processFlags() {
 		"if set, log level is set to debug",
 	)
 	flag.StringVar(
-		&stateStore,
-		"state-store",
+		&dataStoreAddress,
+		"data-store-address",
 		"",
 		"address of the state store used by netmaster",
 	)
 	flag.Parse()
+}
+
+// initializeStateDriver initializes the state driver based on the given data store address
+// params:
+//  dataStoreAddress: address of the data store
+// return values:
+//  returns any error as NewStateDriver() + validation errors
+func initializeStateDriver(dataStoreAddress string) error {
+	if common.IsEmpty(dataStoreAddress) {
+		return errors.New("Empty data store address")
+	}
+
+	if strings.HasPrefix(dataStoreAddress, common.EtcdName+"://") {
+		_, err := common.NewStateDriver(common.EtcdName, &types.KVStoreConfig{StoreURL: dataStoreAddress})
+		return err
+	} else if strings.HasPrefix(dataStoreAddress, common.ConsulName+"://") {
+		_, err := common.NewStateDriver(common.ConsulName, &types.KVStoreConfig{StoreURL: dataStoreAddress})
+		return err
+	}
+
+	return errors.New("Invalid data store address")
 }
 
 func main() {
@@ -77,6 +102,11 @@ func main() {
 		log.SetLevel(log.DebugLevel)
 	}
 
+	if err := initializeStateDriver(dataStoreAddress); err != nil {
+		log.Fatalln(err)
+		return
+	}
+
 	p := proxy.NewServer(&proxy.Config{
 		Name:             ProgramName,
 		Version:          ProgramVersion,
@@ -84,8 +114,8 @@ func main() {
 		ListenAddress:    listenAddress,
 		TLSCertificate:   tlsCertificate,
 		TLSKeyFile:       tlsKeyFile,
-		StateStore:       stateStore,
 	})
+
 	go p.Serve()
 
 	for range time.Tick(time.Second) {

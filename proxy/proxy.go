@@ -35,10 +35,6 @@ type Config struct {
 	// TLSCertificate and TLSKeyFile are the cert and key we use to expose the HTTPS server
 	TLSCertificate string
 	TLSKeyFile     string
-
-	// StateStore is the host:port of the etcd or consul where the authorization database is stored.
-	// in most setups, this will be the same as what the netmaster we talk to is configured to use.
-	StateStore string
 }
 
 // Server represents a proxy server which can be running.
