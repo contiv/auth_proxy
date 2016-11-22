@@ -1,0 +1,27 @@
+<div class="ui basic segment" [ngClass]="{loading: showLoader}">
+    <div><h4 class="ui header">Basic Settings</h4></div>  <!-- Top Margin is less,When h4 is first child in div -->
+    <table class="ui very basic selectable table">
+        <tbody>
+        <tr>
+            <td class="three wide column">Name</td>
+            <td>{{applicationGroup.groupName}}</td>
+        </tr>
+        <tr>
+            <td class="three wide column">Network</td>
+            <td>{{applicationGroup.networkName}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="ui section divider" style="margin-top: 30px"></div>
+
+    <ctv-collapsible title="Isolation Policies">
+        <ctv-isolationpolicy [mode]="mode" [applicationgroup]="applicationGroup"></ctv-isolationpolicy>
+    </ctv-collapsible>
+
+    <div class="ui section divider"></div>
+
+    <ctv-collapsible title="Bandwidth Policies">
+        <ctv-bandwidthpolicy [mode]="mode" [applicationgroup]="applicationGroup"></ctv-bandwidthpolicy>
+    </ctv-collapsible>
+</div>

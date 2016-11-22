@@ -12,6 +12,8 @@ import { ApplicationGroupDetailsComponent } from "./applicationgroupdetailsctrl"
 import { IsolationPolicySelectionComponent } from "./isolationpolicydirective";
 import { BandwidthPolicySelectionComponent } from "./bandwidthpolicydirective";
 import { AppGrouplistComponent } from "./applicationgrouplistctrl";
+import {ApplicationGroupStatsComponent} from "./applicationgroupstats";
+import {ApplicationGroupInfoComponent} from "./applicationgroupinfoctrl";
 
 @NgModule({
     imports: [
@@ -26,7 +28,9 @@ import { AppGrouplistComponent } from "./applicationgrouplistctrl";
         ApplicationGroupDetailsComponent,
         IsolationPolicySelectionComponent,
         BandwidthPolicySelectionComponent,
-        AppGrouplistComponent
+        AppGrouplistComponent,
+        ApplicationGroupStatsComponent,
+        ApplicationGroupInfoComponent
     ],
     exports: [
         AppGrouplistComponent,
@@ -34,6 +38,8 @@ import { AppGrouplistComponent } from "./applicationgrouplistctrl";
         ApplicationGroupDetailsComponent,
         IsolationPolicySelectionComponent,
         BandwidthPolicySelectionComponent,
+        ApplicationGroupStatsComponent,
+        ApplicationGroupInfoComponent,
         FormsModule,
         CommonModule,
         RouterModule,

@@ -40,37 +40,20 @@
         </button>
     </div>
 </div>
+<div class="ui secondary pointing menu" *ngIf="mode=='details'">
+    <a class="blue item" [ngClass]="{active: infoselected}" (click)="infoselected=true">
+        <i class="details icon"></i>
+        DETAILS
+    </a>
+    <a class="blue item" [ngClass]="{active: !infoselected}" (click)="infoselected=false">
+        <i class="area chart icon"></i>
+        STATS
+    </a>
+</div>
 
-<div class="ui basic segment">
-    <div class="ui active inverted dimmer" *ngIf="showLoader">
-        <div class="ui loader"></div>
-    </div>
-    <div><h4 class="ui header">Basic Settings</h4></div>  <!-- Top Margin is less,When h4 is first child in div -->
-    <table class="ui very basic selectable table">
-        <tbody>
-        <tr>
-            <td class="three wide column">Name</td>
-            <td>{{applicationGroup.groupName}}</td>
-        </tr>
-        <tr>
-            <td class="three wide column">Network</td>
-            <td>{{applicationGroup.networkName}}</td>
-        </tr>
-        </tbody>
-    </table>
-
-    <div class="ui section divider" style="margin-top: 30px"></div>
-
-    <ctv-collapsible title="Isolation Policies">
-        <ctv-isolationpolicy [mode]="mode" [applicationgroup]="applicationGroup"></ctv-isolationpolicy>
-    </ctv-collapsible>
-
-    <div class="ui section divider"></div>
-
-    <ctv-collapsible title="Bandwidth Policies">
-        <ctv-bandwidthpolicy [mode]="mode" [applicationgroup]="applicationGroup"></ctv-bandwidthpolicy>
-    </ctv-collapsible>
-
+<div *ngIf="infoselected || mode == 'edit'">
+    <applicationgroupinfo [applicationGroup]="applicationGroup"
+                          [mode]="mode" [showLoader]="showLoader"></applicationgroupinfo>
     <div [ngSwitch]="mode" style="margin-top: 40px">
         <div class="ui grid">
             <div class="right aligned sixteen wide column">
@@ -92,6 +75,12 @@
                    [error]="serverErrorMessage">
         </ctv-error>
     </div>
-
 </div>
+
+<applicationgroupstats [statkey]="statskey"
+    *ngIf="!infoselected && mode != 'edit'"></applicationgroupstats>
+
+
+
+
 
