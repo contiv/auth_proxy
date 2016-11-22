@@ -27,6 +27,12 @@ func serverError(w http.ResponseWriter, err error) {
 	w.Write([]byte(err.Error()))
 }
 
+// setJSONContentType sets the Content-Type header to JSON.
+// we should ensure that all our of responses include this: https://github.com/contiv/ccn_proxy/issues/10
+func setJSONContentType(w http.ResponseWriter) {
+	w.Header().Set("Content-Type", "application/json")
+}
+
 // loginHandler handles the login request and returns auth token with user capabilities
 // it can return various HTTP status codes:
 //     200 (authorization succeeded)
@@ -34,6 +40,8 @@ func serverError(w http.ResponseWriter, err error) {
 //     401 (authorization failed)
 //     500 (something broke)
 func loginHandler(w http.ResponseWriter, req *http.Request) {
+	setJSONContentType(w)
+
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		serverError(w, errors.New("Failed to read body from request: "+err.Error()))
@@ -64,11 +72,22 @@ func loginHandler(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	// TODO: return token in JSON body: https://github.com/contiv/ccn_proxy/issues/11
-
-	w.Header().Set("X-Auth-Token", tokenStr)
-	w.WriteHeader(http.StatusOK)
 	log.Debugf("Token String %q", tokenStr)
+
+	type loginResponse struct {
+		Token string `json:"token"`
+	}
+
+	lr := loginResponse{Token: tokenStr}
+
+	data, err := json.Marshal(lr)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(data)
 }
 
 // rbacFilter is a function which takes a token and response body and filters
@@ -83,6 +102,8 @@ type rbacFilter func(*auth.Token, []byte) []byte
 //     4. filters (if necessary) the response from netmaster to what the user should be able to see
 func rbacFilterWrapper(s *Server, filter rbacFilter) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, req *http.Request) {
+
+		setJSONContentType(w)
 
 		//
 		// Step 1. validate the access token
