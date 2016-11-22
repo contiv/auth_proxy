@@ -13,7 +13,6 @@ import { AppGrouplistComponent } from "./applicationgroups/applicationgrouplistc
 import { ApplicationGroupCreateComponent } from "./applicationgroups/applicationgroupcreatectrl";
 import { ApplicationGroupDetailsComponent } from "./applicationgroups/applicationgroupdetailsctrl";
 import { SettingsMenuComponent } from "./settings/settingsmenu.component";
-import { ClusterSettingsComponent } from "./settings/clustersettingctrl";
 import { NetworkSettingsComponent } from "./settings/networksettingctrl";
 import { OrganizationListComponent } from "./organizations/organizationlistctrl";
 import { OrganizationCreateComponent } from "./organizations/organizationcreatectrl";
@@ -34,7 +33,10 @@ import { UserDetailsComponent } from "./settings/users/userdetails.component";
 import { AppProfileListComponent } from "./appprofiles/appprofilelist.component";
 import { AppProfileCreateComponent } from "./appprofiles/appprofilecreate.component";
 import { AppProfileDetailsComponent } from "./appprofiles/appprofiledetails.component";
-import {FirstrunWizardComponent} from "./firstrunwizard/firstrunwizardctrl";
+import { FirstrunWizardComponent } from "./firstrunwizard/firstrunwizardctrl";
+import { NodeListComponent } from "./settings/nodes/nodelist.component";
+import { NodeCreateComponent } from "./settings/nodes/nodecreate.component";
+import { NodeDetailsComponent } from "./settings/nodes/nodedetails.component";
 
 const routes = [
     {path: 'login', component: LoginComponent, canActivate: [AuthGuard]},
@@ -71,12 +73,15 @@ const routes = [
                 component: SettingsMenuComponent,
                 children: [
                     {path: '', redirectTo: 'users/list', pathMatch: 'full'},
-                    {path: 'cluster', component: ClusterSettingsComponent},
                     {path: 'networks', component: NetworkSettingsComponent},
                     {path: 'users/list', component: UserListComponent},
                     {path: 'users/create', component: UserCreateComponent},
                     {path: 'users/details/:key', component: UserDetailsComponent},
                     {path: 'users/edit/:key', component: UserDetailsComponent},
+                    {path: 'nodes/list', component: NodeListComponent},
+                    {path: 'nodes/create', component: NodeCreateComponent},
+                    {path: 'nodes/details/:key', component: NodeDetailsComponent},
+                    {path: 'nodes/edit/:key', component: NodeDetailsComponent}
                 ]
             },
 

@@ -56,7 +56,7 @@ export class BandwidthPolicyCreateComponent {
 
             bandwidthPolicyCreateCtrl.netprofilesModel.create(bandwidthPolicyCreateCtrl.newPolicy, undefined).then(function successCallback(result) {
                 bandwidthPolicyCreateCtrl.crudHelperService.stopLoader(bandwidthPolicyCreateCtrl);
-                this.returnToPolicies();
+                bandwidthPolicyCreateCtrl.returnToPolicies();
             }, function errorCallback(result) {
                 bandwidthPolicyCreateCtrl.crudHelperService.stopLoader(bandwidthPolicyCreateCtrl);
                 bandwidthPolicyCreateCtrl.crudHelperService.showServerError(bandwidthPolicyCreateCtrl, result);

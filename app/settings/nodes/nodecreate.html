@@ -1,0 +1,91 @@
+<form class="ui form" role="form"
+      (submit)="createNode(formRef.valid)" novalidate #formRef="ngForm">
+    <div class="ui sixteen column grid">
+        <div class="nine wide column">
+            <div class="content">
+                <a [routerLink]="['../list']">
+                    <i class="large arrow left icon"></i>
+                </a>
+                <span style="font-size: 24px; margin-left: 6px">Nodes</span>
+                <span class="headingfontcolor" style="font-size: 24px"> (Create Node)</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui active inverted dimmer" *ngIf="showLoader">
+        <div class="ui loader"></div>
+    </div>
+    <div class="ui basic segment">
+        <div class="field">
+            <div *ngIf="formRef.submitted">
+                <div [hidden]="formRef.valid" class="ui negative message">
+                    <ul class="list">
+                        <li *ngIf="newHostname.errors?.required">
+                            Please enter host name
+                        </li>
+                        <li *ngIf="newRouterIP.errors?.required">
+                            Please enter router IP
+                        </li>
+                        <li *ngIf="newAS.errors?.required">
+                            Please enter autonomous system
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="newHostname">Host name</label>
+            <input type="text" id="newHostname" name="newHostname"
+                   [(ngModel)]="newNode['hostname']"
+                   placeholder="Enter host name" required>
+        </div>
+
+        <div class="ui section divider" style="margin-top: 30px"></div>
+
+        <ctv-collapsible title="BGP">
+            <div class="field">
+                <label for="newRouterIP">Router IP</label>
+                <input type="text" id="newRouterIP" name="newRouterIP"
+                       [(ngModel)]="newNode['routerip']"
+                       placeholder="Enter router IP" required>
+            </div>
+
+            <div class="field">
+                <label for="newAS">Autonomous system</label>
+                <input type="number" id="newAS" name="newAS"
+                       [(ngModel)]="newNode['as']"
+                       placeholder="Enter autonomous system"
+                       required>
+            </div>
+
+            <div class="field">
+                <label for="newNeighborIP">Neighbor IP</label>
+                <input type="text" id="newNeighborIP" name="newNeighborIP"
+                       [(ngModel)]="newNode['neighbor']"
+                       placeholder="Enter neighbor IP">
+            </div>
+
+            <div class="field">
+                <label for="newNeighborAS">Neighbor autonomous system</label>
+                <input type="number" id="newNeighborAS" name="newNeighborAS"
+                       [(ngModel)]="newNode['neighbor-as']"
+                       placeholder="Enter neighbor autonomous system">
+            </div>
+        </ctv-collapsible>
+
+        <div class="ui grid">
+            <div class="right aligned sixteen wide column">
+                <div style="margin-top: 40px">
+                    <button type="button" class="ui basic button" (click)="cancelCreating()">
+                        Cancel
+                    </button>
+                    <button type="submit" class="ui blue button">Create</button>
+                </div>
+            </div>
+        </div>
+
+        <ctv-error *ngIf="showServerError" header="Error creating node" [error]="serverErrorMessage">
+        </ctv-error>
+    </div>
+</form>

@@ -7,8 +7,10 @@ import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 import { DirectivesModule } from "../components/directives/directives.module";
 import { NetworkSettingsComponent } from "./networksettingctrl";
-import { ClusterSettingsComponent } from "./clustersettingctrl";
-import {SettingsMenuComponent} from "./settingsmenu.component";
+import { SettingsMenuComponent } from "./settingsmenu.component";
+import { NodeListComponent } from "./nodes/nodelist.component";
+import { NodeCreateComponent } from "./nodes/nodecreate.component";
+import { NodeDetailsComponent } from "./nodes/nodedetails.component";
 
 @NgModule({
     imports: [
@@ -20,12 +22,16 @@ import {SettingsMenuComponent} from "./settingsmenu.component";
     declarations: [
         SettingsMenuComponent,
         NetworkSettingsComponent,
-        ClusterSettingsComponent
+        NodeListComponent,
+        NodeCreateComponent,
+        NodeDetailsComponent
     ],
     exports: [
         SettingsMenuComponent,
         NetworkSettingsComponent,
-        ClusterSettingsComponent,
+        NodeListComponent,
+        NodeCreateComponent,
+        NodeDetailsComponent,
         FormsModule,
         CommonModule,
         RouterModule,

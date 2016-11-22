@@ -23,6 +23,7 @@ import { RulesModel } from "./components/models/rulesmodel";
 import { ServicelbsModel } from "./components/models/servicelbsmodel";
 import { UsersModel } from "./components/models/usersmodel";
 import { AppProfilesModel } from "./components/models/appprofilesmodel";
+import { BgpsModel } from "./components/models/bgpsmodel";
 import { CRUDHelperService } from "./components/utils/crudhelperservice";
 import { InspectService } from "./components/utils/inspectservice";
 import { NetworkService } from "./components/utils/networkservice";
@@ -35,6 +36,7 @@ import {AuthService} from "./components/utils/authservice";
 import {AuthGuard} from "./components/utils/authguard";
 import {ApiService} from "./components/utils/apiservice";
 import {FirstrunWizardModule} from "./firstrunwizard/firstrunwizard.module";
+
 
 
 @NgModule({
@@ -68,6 +70,7 @@ import {FirstrunWizardModule} from "./firstrunwizard/firstrunwizard.module";
         ServicelbsModel,
         UsersModel,
         AppProfilesModel,
+        BgpsModel,
         CRUDHelperService,
         InspectService,
         NetworkService,

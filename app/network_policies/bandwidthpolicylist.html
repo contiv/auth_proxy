@@ -1,7 +1,7 @@
 <div class="ui basic segment" [ngClass]="{loading: showLoader}">
     <ctv-table #tableRef [defaultSortColumn]="'profileName'"
-               [items]="bandwidthPolicyListCtrl['policies']"
-               (filtereditems)="bandwidthPolicyListCtrl['filteredPolicies']=$event"
+               [items]="policies"
+               (filtereditems)="filteredPolicies=$event"
                [size]="12">
         <thead>
         <tr>
@@ -26,7 +26,7 @@
         </thead>
 
         <tbody>
-        <tr *ngFor="let policy of bandwidthPolicyListCtrl['filteredPolicies']">
+        <tr *ngFor="let policy of filteredPolicies">
             <td><a [routerLink]="['../bandwidth/details', policy.key]">{{policy.profileName}}</a></td>
             <td>{{policy.updatedBy}}</td>
             <td>{{policy.lastUpdate}}</td>
