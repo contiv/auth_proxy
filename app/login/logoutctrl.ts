@@ -15,13 +15,19 @@ declare var jQuery:any;
 
 export class LogoutComponent implements OnInit{
     public product_name:string = ContivGlobals.PRODUCT_NAME;
-    
+
     constructor(private router: Router,
                 private activatedRoute: ActivatedRoute){
+
+
     }
 
     ngOnInit(){
-        jQuery("body").addClass("background");
+        jQuery("body").addClass("logoutbackground");
+    }
+
+    ngOnDestroy(){
+        jQuery("body").removeClass("logoutbackground");
     }
 
     login(){

@@ -22,13 +22,12 @@
                 </div>
             </div>
 
-            <div class="ui stacked segment login-seg" style="margin-top: 180px">
+            <div class="login-seg" style="margin-top: 180px; background-color: white; padding: 20px; ">
                 <h1 class="header" style="margin-left:6px; margin-right:auto;">
                     <img class="ui image" src="images/cisco_logo.svg" height="30" style="display:inline;">
                     <br>
                     <span class="productname">{{product_name}}</span>
                 </h1>
-                <div class="ui section divider"></div>
 
 
                 <div class="field">
@@ -40,18 +39,18 @@
                            placeholder="Password" required>
                 </div>
 
-                <button [disabled]="!loginForm.valid" type="submit" class="ui fluid blue button">
-                    Log In
-                </button>
-                <div class="ui section divider"></div>
-                <div class="ui center aligned grid">
-                    <div class="column copyright">
-                        <h6 class="ui disabled header">
-                            Copyright (c) 2016 Cisco Systems, Inc. All rights reserved.
-                        </h6>
+                <div align="center">
+                    <button [disabled]="!loginForm.valid" class="ui fluid blue button primaryBtn">
+                        Log In
+                    </button>
+                </div>
 
+                <div class="center">
+                    <div class="copyright">
+                        Copyright (c) 2016 Cisco Systems, Inc. All rights reserved.
                     </div>
                 </div>
+
             </div>
 
         </form>

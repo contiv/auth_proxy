@@ -1,50 +1,26 @@
 <div class="ui middle aligned center aligned grid container">
     <div class="column" style="width: 450px;">
 
-        <div class="ui stacked segment login-seg" style="margin-top: 180px">
+        <div class="ui login-seg" style="margin-top: 180px; background-color: white; padding: 20px; ">
             <h1 class="header" style="margin-left:6px; margin-right:auto; text-align:center;">
                 <img class="ui image" src="images/cisco_logo.svg" height="30" style="display:inline;">
                 <br>
                 <span class="productname">{{product_name}}</span>
             </h1>
-            <div class="ui section divider"></div>
 
             <div class="column" style="text-align: center">
                 <h3>You have been logged out.</h3>
             </div>
 
-            <div class="column" style="text-align: center; margin-top:50px;">
-                <button type="button" class="ui blue button" (click)="login()">Login</button>
+            <div class="column" style="text-align: center; margin-top:50px;" align="center">
+                <button type="button" class="ui fluid blue button primaryBtn" (click)="login()" style="display: inline;">Login</button>
             </div>
            
-            <div class="ui section divider"></div>
-            <div class="ui center aligned grid">
+            <div class="center">
                 <div class="column copyright">
-                    <h6 class="ui disabled header">
                         Copyright (c) 2016 Cisco Systems, Inc. All rights reserved.
-                    </h6>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<!-- <div class="ui container logout">
-    <div class="ui segment">
-        <div class="ui one column centered grid">
-            <div class="column" style="text-align: center">
-                <h2>You have successfully logged out</h2>
-            </div>
-
-            <div class="column" style="text-align: center">
-                <h3>Click to login again</h3>
-            </div>
-
-            <div class="column" style="text-align: center">
-                <button type="button" class="ui blue button" (click)="login()">Login</button>
-            </div>
-
-        </div>
-    </div>
-</div> -->

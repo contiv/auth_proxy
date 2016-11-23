@@ -1,61 +1,11 @@
-<div id="sidebar" class="ui visible left vertical sidebar icon labeled menu">
-    <a class="white item" [routerLink]="['wizard']" routerLinkActive="active" *ngIf="firstRun">
-        Container Networking
-    </a>
 
-    <a class="white item" [routerLink]="['dashboard']" routerLinkActive="active" *ngIf="!firstRun">
-        <i class="dashboard icon"></i>
-        Dashboard
-    </a>
-
-    <a class="white item" [routerLink]="['appprofiles/list']" routerLinkActive="active" *ngIf="!firstRun">
-        <i class="appgroup icon"></i>
-        Application Profiles
-    </a>
-
-    <a class="white item" [routerLink]="['applicationgroups/list']" routerLinkActive="active" *ngIf="!firstRun">
-        <i class="appgroup icon"></i>
-        Application Groups
-    </a>
-
-    <a class="white item" [routerLink]="['networkpolicies/list']" routerLinkActive="active" *ngIf="!firstRun">
-        <i class="networkpolicies icon"></i>
-        Network Policies
-    </a>
-
-    <a class="white item" [routerLink]="['servicelbs/list']" routerLinkActive="active" *ngIf="!firstRun">
-        <i class="loadbalancer icon"></i>
-        Service Load Balancers
-    </a>
-
-    <a class="white item" [routerLink]="['networks/list']" routerLinkActive="active" *ngIf="!firstRun">
-        <i class="networks icon"></i>
-        Networks
-    </a>
-
-    <a class="white item" [routerLink]="['organizations/list']" routerLinkActive="active" *ngIf="!firstRun">
-        <i class="organizations icon"></i> 
-        Organizations
-    </a>
-
-    <div *ngIf="!firstRun">
-        <a class="white item" [routerLink]="['settings']" routerLinkActive="active" *auth="'SysAdmin'">
-            <i class="global_settings icon"></i>
-            Settings
-        </a>
-    </div>
-    <!-- <a class="white item" ui-sref="contiv.menu.visualization.list()" ui-sref-active="{'active':'contiv.menu.visualization'}">
-        <i class="loadbalancer icon"></i>
-        App Connectivity Graph
-    </a> -->
-</div>
 
 <div class="page header">
-    <div class="ui top attached menu">
-        <h1 class="header" style="margin-left:200px; margin-right:auto; margin-top: 12px;">
-            <img class="ui image" src="images/cisco_logo.svg" height="30" style="display: inline"><span class="productname">{{product_name}}</span>
+    <div class="ui top attached menu mainMenu" align="right">
+        <h1 class="header" style="margin-top: 2px; float: left; white-space: nowrap; ">
+            <img class="ui image" src="images/cisco_logo.svg" height="30" style="display: inline; margin-right: 20px;"><span class="productname">{{product_name}}</span>
         </h1>
-        <div class="right floated one wide column" style="margin-top: 12px; margin-right: 12px;">
+        <div class="utilnav">
             <button type="button" class="circular ui mini icon button"
                     (click)="help()">
                 <i class="large help icon"></i>
@@ -78,7 +28,56 @@
 
     </div>
 
-    <div [ngStyle]="{'margin-left.px':180,'margin-top.px':30, 'margin-right.px': 30}">
+    <!-- <div [ngStyle]="{'margin-left.px':180,'margin-top.px':30, 'margin-right.px': 30}">
         <router-outlet></router-outlet>
-    </div>
+    </div> -->
+</div>
+
+<div id="sidebar" class="ui visible left vertical sidebar icon labeled menu mainNav">
+    <a class="item active" *ngIf="firstRun">
+        First Run
+    </a>
+
+    <span *ngIf="!firstRun">
+
+        <a class="item" [routerLink]="['dashboard']" routerLinkActive="active">
+            Dashboard
+        </a>
+
+        <a class="item" [routerLink]="['appprofiles/list']" routerLinkActive="active">
+            Application Profiles
+        </a>
+
+        <a class="item" [routerLink]="['applicationgroups/list']" routerLinkActive="active">
+            Application Groups
+        </a>
+
+        <a class="item" [routerLink]="['networkpolicies/list']" routerLinkActive="active">
+            Network Policies
+        </a>
+
+        <a class="item" [routerLink]="['servicelbs/list']" routerLinkActive="active">
+            Service Load Balancers
+        </a>
+
+        <a class="item" [routerLink]="['networks/list']" routerLinkActive="active">
+            Networks
+        </a>
+
+        <a class="item" [routerLink]="['organizations/list']" routerLinkActive="active">
+            Organizations
+        </a>
+
+        <a class="item" [routerLink]="['settings']" routerLinkActive="active" *auth="'SysAdmin'">
+            Settings
+        </a>
+    </span>
+    <!-- <a class="white item" ui-sref="contiv.menu.visualization.list()" ui-sref-active="{'active':'contiv.menu.visualization'}">
+        <i class="loadbalancer icon"></i>
+        App Connectivity Graph
+    </a> -->
+</div>
+
+<div id="pageContent">
+    <router-outlet></router-outlet>
 </div>

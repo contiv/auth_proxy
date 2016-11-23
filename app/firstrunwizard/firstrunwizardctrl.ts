@@ -4,8 +4,10 @@
 
 
 
-import {Component, OnInit, OnDestroy} from "@angular/core";
-import {FirstRunWizardService} from "./firstrunwizardservice";
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { AuthService } from "../components/utils/authservice";
+import { FirstRunWizardService } from "./firstrunwizardservice";
 declare var jQuery:any;
 
 @Component({
@@ -15,9 +17,12 @@ declare var jQuery:any;
 })
 
 export class FirstrunWizardComponent implements OnInit, OnDestroy{
-    private wizardService: FirstRunWizardService;
     public pageNo: number;
-    constructor(wizardService: FirstRunWizardService){
+
+    constructor(private wizardService: FirstRunWizardService,
+            private activatedRoute: ActivatedRoute,
+            private router: Router,
+            private authService: AuthService){
         this.wizardService = wizardService;
         this.pageNo = 1;
         wizardService.getNetworkSettings();
@@ -33,5 +38,19 @@ export class FirstrunWizardComponent implements OnInit, OnDestroy{
 
     ngOnDestroy(){
         jQuery(".ui.fullscreen.modal").remove();
+    }
+
+    logout() {
+        this.authService.logout();
+        this.router.navigate(['/logout'],{relativeTo: this.activatedRoute});
+    }
+
+    skip() {
+        localStorage.setItem('firstRun','skip')
+        this.router.navigate(['/m/dashboard'],{relativeTo: this.activatedRoute});
+    }
+
+    runwizard() {
+        this.router.navigate(['/m/firstrunwizard'],{relativeTo: this.activatedRoute});
     }
 }

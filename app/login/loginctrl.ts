@@ -37,7 +37,11 @@ export class LoginComponent implements OnInit{
     ngOnInit(){
         this.crudHelperService.stopLoader(this);
         this.crudHelperService.hideServerError(this);
-        jQuery("body").addClass("background");
+        jQuery("body").addClass("loginbackground");
+    }
+
+    ngOnDestroy(){
+        jQuery("body").removeClass("loginbackground");
     }
 
     login(){

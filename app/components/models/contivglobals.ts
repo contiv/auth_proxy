@@ -51,6 +51,7 @@ export const ContivGlobals = {
     'VLAN_REGEX' : '^([0-9]{1,4}?-[0-9]{1,4}?)$',
 
     'VXLAN_REGEX' : '^([0-9]{1,8}?-[0-9]{1,8}?)$',
+    'NUMBER_REGEX' : '^[0-9]*$',
 
     // System strings
     'PRODUCT_NAME': 'Cisco Container Networking',

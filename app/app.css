@@ -28,3 +28,71 @@ table thead th[sortfield] span{
 
     background-size: cover;
 }
+
+@font-face {
+    font-family: "CiscoSansRegular";
+    src: url("assets/fonts/CiscoSansTTRegular.woff") format('woff');
+}
+@font-face {
+    font-family: "CiscoSansBold";
+    src: url("assets/fonts/CiscoSansTTBold.woff") format('woff');
+}
+@font-face {
+    font-family: "CiscoSansHeavy";
+    src: url("assets/fonts/CiscoSansTTHeavy.woff") format('woff');
+}
+@font-face {
+    font-family: "CiscoSansThin";
+    src: url("assets/fonts/CiscoSansTTThin.woff") format('woff');
+}
+@font-face {
+    font-family: "CiscoSansLight";
+    src: url("assets/fonts/CiscoSansTTLight.woff") format('woff');
+}
+@font-face {
+    font-family: "CiscoSansExtraLight";
+    src: url("assets/fonts/CiscoSansTTExtraLight.woff") format('woff');
+}
+
+body { overflow: hidden; }
+
+body.loginbackground { background: url(images/loginbackground.jpeg) no-repeat center center; background-size: cover; }
+body.logoutbackground { background: url(images/logoutbackground.jpeg) no-repeat center center; background-size: cover; }
+
+menu { margin: 0; padding: 0; z-index: 2000; }
+
+.productname { font-family: CiscoSansThin; font-size: 1.4rem; color: #aaa; }
+.copyright { font-family: CiscoSansThin; font-size: .7rem; color: #aaa; padding-top: 20px; }
+
+.ui.attached.mainMenu { height: 50px; box-shadow: 0 0 12px rgba(0,0,0,0.3) ; border: 1px white solid; padding: 0 20px; position: absolute;
+    z-index: 3000;
+    top: -1px;
+    width: 100%; }
+.utilnav { height: 50px; width: 100%; padding-top: 9px; }
+#sidebar { top: 50px; width: 180px; background-color: #efefef; z-index: 1000; box-shadow: none; border: 0; }
+#sidebar {
+    box-shadow: 0px 50px 50px -40px #efefef inset,
+        0px -50px 50px -40px #efefef inset,
+        -5px 0px 10px -5px rgba(0,0,0,0.3) inset,
+        5px 0px 10px -5px rgba(0,0,0,0.3) inset; 
+}
+#sidebar .item { padding-left: 20px; padding-top: 12px; text-align: left; font-family: CiscoSansRegular; font-size: 12px; color: #555; height: 36px; border-left: none; display: inline-block; width: 180px; background-color: transparent;
+    }
+#sidebar .item.active {
+    border-left: 10px solid #049fd9; 
+    padding-left: 10px; 
+    background-color: white; 
+    color: #222;
+    box-shadow: 0 0 4px rgba(0,0,0,0.3) ;
+}
+
+.ui.vertical.menu .item:before { height: 0; }
+
+#pageContent { margin-top: 50px; padding: 20px; margin-left: 180px; overflow: auto;}
+
+.ui.fluid.button,
+.ui.large.button { font-family: CiscoSansRegular; font-size: 13px; font-weight: 400; padding: 0 24px; height: 30px; background-color: #049fd9; border-radius: 3px; width: auto; }
+
+.ui.button.primaryBtn { background-color: #049fd9; }
+.ui.button.secondaryBtn { border: 1px solid #049fd9; background-color: white; color: #049fd9; }
+.ui.button.cancelBtn { border: 1px solid #999; background-color: white; color: #333; }
