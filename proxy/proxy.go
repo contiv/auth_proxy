@@ -8,9 +8,9 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/contiv/ccn_proxy/auth"
-
 	log "github.com/Sirupsen/logrus"
+	"github.com/contiv/ccn_proxy/auth"
+	"github.com/gorilla/mux"
 )
 
 // NewServer returns a new server with the specified config
@@ -106,50 +106,11 @@ func (s *Server) ProxyRequest(w http.ResponseWriter, req *http.Request) (*http.R
 
 // Serve creates a HTTP proxy listener and runs it in a goroutine.
 func (s *Server) Serve() {
-	//
-	// Authorization endpoint
-	//
-	http.HandleFunc("/api/v1/ccn_proxy/login", loginHandler)
+	router := mux.NewRouter()
 
-	//
-	// RBAC-enforced endpoints with optional filtering of results
-	//
-	filteredRoutes := map[string]rbacFilter{
-		"appProfiles":        auth.FilterAppProfiles,
-		"Bgps":               auth.FilterBgps,
-		"endpointGroups":     auth.FilterEndpointGroups,
-		"extContractsGroups": auth.FilterExtContractsGroups,
-		"globals":            auth.FilterGlobals,
-		"netprofiles":        auth.FilterNetProfiles,
-		"networks":           auth.FilterNetworks,
-		// NOTE: "policys" is misspelled in netmaster's routes
-		"policys":        auth.FilterPolicies,
-		"rules":          auth.FilterRules,
-		"serviceLBs":     auth.FilterServiceLBs,
-		"tenants":        auth.FilterTenants,
-		"volumes":        auth.FilterVolumes,
-		"volumeProfiles": auth.FilterVolumeProfiles,
-	}
+	addRoutes(s, router)
 
-	// TODO: add another map (or extend the above map) of "resource" -> "rbacAuthorization" functions.
-	//       rbacWrapper() and rbacFilterWrapper() will need to be extended to take an rbacAuthorization
-	//       function as an argument which will be used to control access to the resource in question.
-
-	for resource, filterFunc := range filteredRoutes {
-		// NOTE: netmaster's "list" routes require a trailing slash...
-		http.HandleFunc("/api/v1/"+resource+"/", rbacFilterWrapper(s, filterFunc))
-
-		// TODO: add other REST endpoints (show, create, delete, update, inspect, etc.)
-		_ = rbacWrapper(s, auth.NullFilter)
-	}
-
-	// TODO: add one-off endpoints (e.g., /api/v1/inspect/endpoints/{key}/)
-
-	//
-	// HTTPS server startup
-	//
-
-	server := &http.Server{}
+	server := &http.Server{Handler: router}
 
 	cert, err := tls.LoadX509KeyPair(s.config.TLSCertificate, s.config.TLSKeyFile)
 	if err != nil {
@@ -178,4 +139,45 @@ func (s *Server) Serve() {
 // Stop stops a running HTTP proxy listener.
 func (s *Server) Stop() {
 	s.stopChan <- true
+}
+
+func addRoutes(s *Server, router *mux.Router) {
+	//
+	// Authentication endpoint
+	//
+	router.Path("/api/v1/ccn_proxy/login").Methods("POST").HandlerFunc(loginHandler)
+
+	//
+	// RBAC-enforced endpoints with optional filtering of results
+	//
+	filteredRoutes := map[string]rbacFilter{
+		"appProfiles":        auth.FilterAppProfiles,
+		"Bgps":               auth.FilterBgps,
+		"endpointGroups":     auth.FilterEndpointGroups,
+		"extContractsGroups": auth.FilterExtContractsGroups,
+		"globals":            auth.FilterGlobals,
+		"netprofiles":        auth.FilterNetProfiles,
+		"networks":           auth.FilterNetworks,
+		// NOTE: "policys" is misspelled in netmaster's routes
+		"policys":        auth.FilterPolicies,
+		"rules":          auth.FilterRules,
+		"serviceLBs":     auth.FilterServiceLBs,
+		"tenants":        auth.FilterTenants,
+		"volumes":        auth.FilterVolumes,
+		"volumeProfiles": auth.FilterVolumeProfiles,
+	}
+
+	// TODO: add another map (or extend the above map) of "resource" -> "rbacAuthorization" functions.
+	//       rbacWrapper() and rbacFilterWrapper() will need to be extended to take an rbacAuthorization
+	//       function as an argument which will be used to control access to the resource in question.
+
+	for resource, filterFunc := range filteredRoutes {
+		// NOTE: netmaster routes require a trailing slash.
+		router.Path("/api/v1/" + resource + "/").Methods("GET").HandlerFunc(rbacFilterWrapper(s, filterFunc))
+
+		// add other REST endpoints (show, create, delete, update, etc.)
+		router.Path("/api/v1/"+resource+"/{key}/").Methods("GET", "POST", "PUT", "DELETE").HandlerFunc(rbacWrapper(s, auth.NullFilter))
+	}
+
+	// TODO: add one-off endpoints (e.g., /api/v1/inspect/endpoints/{key}/)
 }
