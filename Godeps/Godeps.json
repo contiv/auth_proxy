@@ -1,7 +1,7 @@
 {
 	"ImportPath": "github.com/contiv/ccn_proxy",
 	"GoVersion": "go1.7",
-	"GodepVersion": "v75",
+	"GodepVersion": "v74",
 	"Packages": [
 		"./..."
 	],
@@ -35,6 +35,11 @@
 			"ImportPath": "github.com/go-ldap/ldap",
 			"Comment": "v2.4.1-7-ge33f0a3",
 			"Rev": "e33f0a345ea7c37c15a0c8ee0e796e479c37d640"
+		},
+		{
+			"ImportPath": "github.com/gorilla/mux",
+			"Comment": "v1.1-27-g757bef9",
+			"Rev": "757bef944d0f21880861c2dd9c871ca543023cba"
 		},
 		{
 			"ImportPath": "github.com/hashicorp/consul/api",
