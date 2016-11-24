@@ -54,7 +54,7 @@ table thead th[sortfield] span{
     src: url("assets/fonts/CiscoSansTTExtraLight.woff") format('woff');
 }
 
-body { overflow: hidden; }
+/*body { overflow: hidden; } */
 
 body.loginbackground { background: url(images/loginbackground.jpeg) no-repeat center center; background-size: cover; }
 body.logoutbackground { background: url(images/logoutbackground.jpeg) no-repeat center center; background-size: cover; }
@@ -64,7 +64,7 @@ menu { margin: 0; padding: 0; z-index: 2000; }
 .productname { font-family: CiscoSansThin; font-size: 1.4rem; color: #aaa; }
 .copyright { font-family: CiscoSansThin; font-size: .7rem; color: #aaa; padding-top: 20px; }
 
-.ui.attached.mainMenu { height: 50px; box-shadow: 0 0 12px rgba(0,0,0,0.3) ; border: 1px white solid; padding: 0 20px; position: absolute;
+.ui.attached.mainMenu { height: 50px; box-shadow: 0 0 12px rgba(0,0,0,0.3) ; border: 1px white solid; padding: 0 20px; position: fixed;
     z-index: 3000;
     top: -1px;
     width: 100%; }

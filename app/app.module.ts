@@ -36,6 +36,7 @@ import {AuthService} from "./components/utils/authservice";
 import {AuthGuard} from "./components/utils/authguard";
 import {ApiService} from "./components/utils/apiservice";
 import {FirstrunWizardModule} from "./firstrunwizard/firstrunwizard.module";
+import {ChartService} from "./components/utils/chartservice";
 
 
 
@@ -78,6 +79,7 @@ import {FirstrunWizardModule} from "./firstrunwizard/firstrunwizard.module";
         AuthService,
         AuthGuard,
         ApiService,
+        ChartService,
         { provide: APP_BASE_HREF, useValue: '' },
         { provide: LocationStrategy, useClass: HashLocationStrategy }
     ],

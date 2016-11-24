@@ -1,0 +1,23 @@
+<h2 style="margin-left: 5px">{{EndpointType[endpointType]}}</h2>
+<div style="display: block;">
+    <canvas id="canvas1"
+            baseChart width="900" height="300"
+            [datasets]="lineChartData"
+            [labels]="lineChartLabels"
+            [options]="lineChartOptions"
+            [colors]="lineChartColors"
+            [legend]="lineChartLegend"
+            [chartType]="lineChartType">
+    </canvas>
+</div>
+<div class="ui grid">
+    <div class="ui two wide column">
+        <div class="ui button" (click)="leftpress()"><i class="large arrow left icon"></i></div>
+    </div>
+    <div class="ui two wide column">
+        <div class="ui button" (click)="rightpress()"><i class="large arrow right icon"></i></div>
+    </div>
+    <div class="ui center aligned four wide column">
+        <h5>Time Series</h5>
+    </div>
+</div>

@@ -66,6 +66,14 @@ export class CtvTableComponent implements OnChanges, OnInit {
     public showChunk(pageNo: number, searchText: string): boolean{
         this.table.searchText = searchText;
 
+        /*
+            This check is needed when you are having two tables on the same page and when you
+            are trying to switch table views using ng-if, like the toggle between Networks and
+            Application groups on the dashboard page.
+        */
+        if(this.sortObj.field.length == 0){
+            this.sortObj = this.initializeSort(this.defaultSortColumn);
+        }
         if(isUndefined(pageNo) || pageNo < 0){
             pageNo=0;
         }

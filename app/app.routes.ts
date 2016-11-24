@@ -53,6 +53,7 @@ const routes = [
             {path: 'firstrun', component: FirstrunWizardComponent},
 
             //Network Policies
+            {path: 'networkpolicies', redirectTo: 'networkpolicies/list', pathMatch: 'full'},
             {path: 'networkpolicies/list', component: NetworkPoliciesTabsComponent},
             {path: 'networkpolicies/isolation/create', component: IsolationPolicyCreateComponent},
             {path: 'networkpolicies/isolation/details/:key', component: IsolationPolicyDetailsComponent},
@@ -62,6 +63,7 @@ const routes = [
             {path: 'networkpolicies/bandwidth/edit/:key', component: BandwidthPolicyDetailsComponent},
 
             //Application Groups
+            {path: 'applicationgroups', redirectTo: 'applicationgroups/list', pathMatch: 'full'},
             {path: 'applicationgroups/list', component: AppGrouplistComponent},
             {path: 'applicationgroups/create', component: ApplicationGroupCreateComponent},
             {path: 'applicationgroups/details/:key', component: ApplicationGroupDetailsComponent},
@@ -86,21 +88,25 @@ const routes = [
             },
 
             //Organizations
+            {path: 'organizations', redirectTo: 'organizations/list', pathMatch: 'full'},
             {path: 'organizations/list', component: OrganizationListComponent},
             {path: 'organizations/create', component: OrganizationCreateComponent},
             {path: 'organizations/details/:key', component: OrganizationDetailsComponent},
 
             //Networks
+            {path: 'networks', redirectTo: 'networks/list', pathMatch: 'full'},
             {path: 'networks/list', component: NetworkListComponent},
             {path: 'networks/create', component: NetworkCreateComponent},
             {path: 'networks/details/:key', component: NetworkdetailsComponent},
 
             //Servicelbs
+            {path: 'servicelbs', redirectTo: 'servicelbs/list', pathMatch: 'full'},
             {path: 'servicelbs/list', component: ServicelbListComponent},
             {path: 'servicelbs/create', component: ServicelbCreateComponent},
             {path: 'servicelbs/details/:key', component: ServicelbDetailsComponent},
 
             //Application profiles
+            {path: 'appprofiles', redirectTo: 'appprofiles/list', pathMatch: 'full'},
             {path: 'appprofiles/list', component: AppProfileListComponent},
             {path: 'appprofiles/create', component: AppProfileCreateComponent},
             {path: 'appprofiles/details/:key', component: AppProfileDetailsComponent},

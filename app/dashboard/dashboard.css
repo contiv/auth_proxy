@@ -1,0 +1,21 @@
+tbody tr{
+    cursor: pointer;
+}
+
+tbody tr.notSelected:hover{
+    background-color: aliceblue;
+}
+
+.selected:hover{
+    background-color: #4D7198;
+    color: white;
+}
+
+.selected{
+    background-color: #4D7198;
+    color: white;
+}
+
+.notSelected{
+    background: none;
+}

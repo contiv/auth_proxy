@@ -1,0 +1,11 @@
+.large.arrow.left.icon{
+    margin-top: -7px;
+    position: relative;
+    left: 4px;
+}
+
+.large.arrow.right.icon{
+    margin-top: -7px;
+    position: relative;
+    left: -5px;
+}
