@@ -27,10 +27,9 @@ func serverError(w http.ResponseWriter, err error) {
 	w.Write([]byte(err.Error()))
 }
 
-// setJSONContentType sets the Content-Type header to JSON.
-// we should ensure that all our of responses include this: https://github.com/contiv/ccn_proxy/issues/10
-func setJSONContentType(w http.ResponseWriter) {
-	w.Header().Set("Content-Type", "application/json")
+// LoginResponse holds the token returned upon successful login.
+type LoginResponse struct {
+	Token string `json:"token"`
 }
 
 // loginHandler handles the login request and returns auth token with user capabilities
@@ -40,7 +39,7 @@ func setJSONContentType(w http.ResponseWriter) {
 //     401 (authorization failed)
 //     500 (something broke)
 func loginHandler(w http.ResponseWriter, req *http.Request) {
-	setJSONContentType(w)
+	common.SetJSONContentType(w)
 
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
@@ -74,11 +73,7 @@ func loginHandler(w http.ResponseWriter, req *http.Request) {
 
 	log.Debugf("Token String %q", tokenStr)
 
-	type loginResponse struct {
-		Token string `json:"token"`
-	}
-
-	lr := loginResponse{Token: tokenStr}
+	lr := LoginResponse{Token: tokenStr}
 
 	data, err := json.Marshal(lr)
 	if err != nil {
@@ -103,7 +98,7 @@ type rbacFilter func(*auth.Token, []byte) []byte
 func rbacFilterWrapper(s *Server, filter rbacFilter) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, req *http.Request) {
 
-		setJSONContentType(w)
+		common.SetJSONContentType(w)
 
 		//
 		// Step 1. validate the access token
@@ -145,7 +140,7 @@ func rbacFilterWrapper(s *Server, filter rbacFilter) func(http.ResponseWriter, *
 			//
 
 			path := req.URL.Path
-			re := regexp.MustCompile("^*/api/v1/(?P<rootObject>[a-zA-Z0-9]+)/(?P<key>[a-zA-Z0-9]+)$")
+			re := regexp.MustCompile("^*/api/v1/(?P<rootObject>[a-zA-Z0-9]+)/(?P<key>[a-zA-Z0-9]+)/$")
 			if re.MatchString(path) {
 				// TODO: only allow access to /networks for now
 				//       this is hardcoded in the absence of a real RBAC database
@@ -184,6 +179,6 @@ func rbacFilterWrapper(s *Server, filter rbacFilter) func(http.ResponseWriter, *
 
 // rbacWrapper has the exact same functionality as rbacFilterWrapper but it passes in a null filter
 // which does not modify the response body.
-func rbacWrapper(s *Server, filter rbacFilter) func(http.ResponseWriter, *http.Request) {
+func rbacWrapper(s *Server) func(http.ResponseWriter, *http.Request) {
 	return rbacFilterWrapper(s, auth.NullFilter)
 }

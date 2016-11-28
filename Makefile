@@ -13,6 +13,9 @@ build: checks
 checks:
 	@bash ./scripts/checks.sh
 
+# ci does everything necessary for a Github PR-triggered CI run
+ci: checks test
+
 # generate-certificate generates a local key and cert for running the proxy.
 # if an existing certificate and key exist, it will do nothing.
 # if either of them do not exist, they will both be recreated.
@@ -30,4 +33,12 @@ godep:
 run: build generate-certificate
 	@bash ./scripts/run.sh
 
-.PHONY: all build checks generate-certificate godep run
+# systemtests runs the system tests suite.
+systemtests:
+	go get gopkg.in/check.v1
+	go test -v -timeout 1m ./systemtests -check.v
+
+# test runs ALL the test suites.
+test: systemtests
+
+.PHONY: all build checks ci generate-certificate godep run systemtests test

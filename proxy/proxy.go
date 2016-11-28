@@ -7,10 +7,16 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"sync"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/contiv/ccn_proxy/auth"
 	"github.com/gorilla/mux"
+)
+
+const (
+	// LoginPath is the authentication endpoint on the proxy
+	LoginPath = "/api/v1/ccn_proxy/login"
 )
 
 // NewServer returns a new server with the specified config
@@ -39,14 +45,17 @@ type Config struct {
 
 // Server represents a proxy server which can be running.
 type Server struct {
-	config   *Config      // holds all the configuration for the proxy server
-	stopChan chan bool    // used by Stop() to stop the proxy server
-	listener net.Listener // the actual HTTPS server
+	config        *Config        // holds all the configuration for the proxy server
+	stopChan      chan bool      // used to shut down the server
+	listener      net.Listener   // the actual HTTPS server
+	wg            sync.WaitGroup // used to avoid a race condition when shutting down
+	useKeepalives bool           // controls whether the HTTPS server supports keepalives
 }
 
 // Init initializes anything the server requires before it can be used.
 func (s *Server) Init() {
 	s.stopChan = make(chan bool, 1)
+	s.useKeepalives = true // we should only really need to turn these off in testing
 }
 
 // ProxyRequest takes a HTTP request we've received, duplicates it, adds a few
@@ -68,9 +77,6 @@ func (s *Server) ProxyRequest(w http.ResponseWriter, req *http.Request) (*http.R
 	// the RequestURI has to be cleared before sending a new request.
 	// the actual URL we will request upstream is set above in "URL"
 	copy.RequestURI = ""
-
-	// TODO: copy original request body to the cloned request?
-	//       i forget if that's necessary or not in this case...
 
 	// add our custom headers:
 	//     X-Forwarded-For is our client's IP
@@ -104,6 +110,13 @@ func (s *Server) ProxyRequest(w http.ResponseWriter, req *http.Request) (*http.R
 	return resp, data, nil
 }
 
+// DisableKeepalives turns off keepalives for the proxy.  This should only be
+// needed for testing because of the tight constraints around start/stopping
+// and the problems that hanging connections can cause.
+func (s *Server) DisableKeepalives() {
+	s.useKeepalives = false
+}
+
 // Serve creates a HTTP proxy listener and runs it in a goroutine.
 func (s *Server) Serve() {
 	router := mux.NewRouter()
@@ -112,9 +125,13 @@ func (s *Server) Serve() {
 
 	server := &http.Server{Handler: router}
 
+	if !s.useKeepalives {
+		server.SetKeepAlivesEnabled(false)
+	}
+
 	cert, err := tls.LoadX509KeyPair(s.config.TLSCertificate, s.config.TLSKeyFile)
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalln("Failed to load TLS key pair:", err)
 		return
 	}
 
@@ -122,18 +139,30 @@ func (s *Server) Serve() {
 
 	s.listener, err = tls.Listen("tcp", s.config.ListenAddress, tlsConfig)
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalln("Failed to listen:", err)
 		return
 	}
 
 	log.Println("Proxying requests to", s.config.NetmasterAddress)
 	log.Println("Listening for secure HTTPS requests on", s.config.ListenAddress)
 
-	go server.Serve(s.listener)
+	s.wg.Add(1)
+	go func() {
+		err := server.Serve(s.listener)
+		if err != nil {
+			// this will usually be a "use of closed network socket"
+			// error when Stop() is called, but log it anyways.
+			log.Debug("Error serving: ", err)
+		}
+		s.wg.Done()
+	}()
 
 	log.Debug("Server started, waiting for stop message")
 	<-s.stopChan
 	log.Debug("Received stop message, shutting down proxy")
+	s.listener.Close()
+
+	s.wg.Wait()
 }
 
 // Stop stops a running HTTP proxy listener.
@@ -145,7 +174,7 @@ func addRoutes(s *Server, router *mux.Router) {
 	//
 	// Authentication endpoint
 	//
-	router.Path("/api/v1/ccn_proxy/login").Methods("POST").HandlerFunc(loginHandler)
+	router.Path(LoginPath).Methods("POST").HandlerFunc(loginHandler)
 
 	//
 	// RBAC-enforced endpoints with optional filtering of results
@@ -176,7 +205,7 @@ func addRoutes(s *Server, router *mux.Router) {
 		router.Path("/api/v1/" + resource + "/").Methods("GET").HandlerFunc(rbacFilterWrapper(s, filterFunc))
 
 		// add other REST endpoints (show, create, delete, update, etc.)
-		router.Path("/api/v1/"+resource+"/{key}/").Methods("GET", "POST", "PUT", "DELETE").HandlerFunc(rbacWrapper(s, auth.NullFilter))
+		router.Path("/api/v1/"+resource+"/{key}/").Methods("GET", "POST", "PUT", "DELETE").HandlerFunc(rbacWrapper(s))
 	}
 
 	// TODO: add one-off endpoints (e.g., /api/v1/inspect/endpoints/{key}/)
