@@ -12,7 +12,21 @@ Running `make` will generate a `ccn_proxy:devbuild` image.
 You can also specify a version, e.g., `BUILD_VERSION=0.1 make`.  This will
 generate a `ccn_proxy:0.1` image.
 
-## Testing locally
+## Running Tests
+
+Just run `make test`.  The proxy functionality is part of the `proxy` package
+and there is also a `MockServer` available in the `systemtests` directory
+which can pretend to be `netmaster` for the purposes of testing.  This allows
+us to mock the parts of `netmaster` we need (mainly that a given endpoint
+returns some expected JSON response) without the burden of actually compiling
+and running a full `netmaster` binary and all of its dependencies plus creating
+the necessary networks, tenants, etc. to get realistic responses from it.
+
+CCN's future end-to-end testing will cover a real `ccn_proxy` binary talking to
+a real `netmaster` binary so there's no point duplicating that here in our own
+testing.
+
+## Local Development
 
 You will need a local cert and key to start `ccn_proxy`.  You can run
 `make generate-certificate` to generate them if you don't already have them.
@@ -42,9 +56,9 @@ Subsequent requests must pass this token along in a `X-Auth-Token` request
 header.  All non-login requests are simply passed on to the `netmaster` if
 authentication and authorization are both successful.
 
-Example of a full request cycle:
+### Example of a full request cycle:
 
-1. A request for `/api/v1/networks` is sent in with a token in the `X-Auth-Token` header
+1. A request for `/api/v1/networks/` is sent in with a token in the `X-Auth-Token` header
 1. The user represented by the token is authenticated against a local DB or LDAP / Active Directory
 1. An authorization check is performed to see if the user is allowed to access the resource in question (networks)
 1. If both authentication and authorization are successful, the request is proxied to `netmaster`
@@ -55,5 +69,5 @@ request w. token ---> ccn_proxy ---> authorization ----> request forwarded to ne
                                                                                         \
                                                                                          netmaster
                                                                                         /
-<------- results filtered based on token and returned to client <------- proxy --------
+<----- results filtered based on token and returned to client <----- ccn_proxy --------
 ```
