@@ -17,11 +17,13 @@ export class FirstrunConfirmComponent implements OnInit{
     private wizardService: FirstRunWizardService;
     public showLoader: boolean
     @Output('updatePage') updatePage: EventEmitter<any>;
+    @Output('cancelPage') cancelPage: EventEmitter<any>;
     constructor(wizardservice: FirstRunWizardService,
                 private router: Router,
                 private activatedRoute: ActivatedRoute){
         this.wizardService = wizardservice;
         this.updatePage = new EventEmitter<any>();
+        this.cancelPage = new EventEmitter<any>();
         this.showLoader = false;
     }
 
@@ -29,7 +31,7 @@ export class FirstrunConfirmComponent implements OnInit{
     }
 
     process(){
-        this.updatePage.emit(4);
+        this.updatePage.emit(3);
         // Will be calling the update settings funciton of wizard service,
         // A loader will be shown un til all the updates are completed.
         this.showLoader = true;
@@ -53,6 +55,10 @@ export class FirstrunConfirmComponent implements OnInit{
     }
 
     goBack(){
-        this.updatePage.emit(2);
+        this.updatePage.emit(1);
+    }
+
+    cancel(){
+        this.cancelPage.emit();
     }
 }

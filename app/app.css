@@ -19,16 +19,6 @@ table thead th[sortfield] span{
     color: #b6b6b8
 }
 
-.background{
-    /* This image will be displayed fullscreen */
-    background: url('images/loginbackground.jpeg') no-repeat center center;
-
-    /* Workaround for some mobile browsers */
-    min-height: 100%;
-
-    background-size: cover;
-}
-
 @font-face {
     font-family: "CiscoSansRegular";
     src: url("assets/fonts/CiscoSansTTRegular.woff") format('woff');

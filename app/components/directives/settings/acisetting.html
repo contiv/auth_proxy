@@ -1,49 +1,50 @@
 <form class="ui form" role="form" #aciForm="ngForm" name="aciForm" (submit)="updateAciSetting(aciForm.valid)" novalidate>
-    <div class="field">
-        <label for="apicURL">URL</label>
-        <input type="text" id="apicURL" name="apicURL"
-               [(ngModel)]="extra_vars['apic_url']"
-               placeholder="Enter URL" required #apicURL="ngModel">
+    <div class="ui two column grid">
+        <div class="field column">
+            <label for="apicURL">URL</label>
+            <input type="text" id="apicURL" name="apicURL"
+                   [(ngModel)]="extra_vars['apic_url']"
+                   placeholder="Enter URL" required #apicURL="ngModel">
+        </div>
+        <div class="field column">
+            <label for="apicPhysicalDomain">Physical domain</label>
+            <input type="text" id="apicPhysicalDomain" name="apicPhysicalDomain"
+                   [(ngModel)]="extra_vars['apic_phys_domain']"
+                   placeholder="Enter physical domain name">
+        </div>
+        <div class="field column">
+            <label for="apicUserName">User name</label>
+            <input type="text" id="apicUserName" name="apicUserName"
+                   [(ngModel)]="extra_vars['apic_username']"
+                   placeholder="Enter user name" required #apicUserName="ngModel">
+        </div>
+        <div class="field column">
+            <label for="apicBridgeDomain">Bridge domain</label>
+            <input type="text" id="apicBridgeDomain" name="apicBridgeDomain"
+                   [(ngModel)]="extra_vars['apic_epg_bridge_domain']"
+                   placeholder="Enter bridge domain name">
+        </div>
+        <div class="field column">
+            <label for="apicPassword">Password</label>
+            <input type="password" id="apicPassword" name="apicPassword"
+                   [(ngModel)]="extra_vars['apic_password']"
+                   placeholder="Enter password" required #apicPassword="ngModel">
+        </div>
+        <div class="field column">
+            <label>
+                <input type="checkbox" name="apicContractsUnrestrictedMode" tabindex="0"
+                       [(ngModel)]="extra_vars['apic_contracts_unrestricted_mode']" name="apicContractsUnrestrictedMode">
+                Allow unrestricted communication between EPGs
+            </label>
+        </div>
+        <div class="field column">
+            <label for="apicLeafNodes">Leaf nodes</label>
+            <input type="text" id="apicLeafNodes" name="apicLeafNodes"
+                   [(ngModel)]="extra_vars['apic_leaf_nodes']"
+                   placeholder="Enter full path of leaf nodes, comma separated" required #apicLeafNodes="ngModel">
+        </div>
     </div>
-    <div class="field">
-        <label for="apicUserName">User name</label>
-        <input type="text" id="apicUserName" name="apicUserName"
-               [(ngModel)]="extra_vars['apic_username']"
-               placeholder="Enter user name" required #apicUserName="ngModel">
-    </div>
-    <div class="field">
-        <label for="apicPassword">Password</label>
-        <input type="password" id="apicPassword" name="apicPassword"
-               [(ngModel)]="extra_vars['apic_password']"
-               placeholder="Enter password" required #apicPassword="ngModel">
-    </div>
-    <div class="field">
-        <label for="apicLeafNodes">Leaf nodes</label>
-        <input type="text" id="apicLeafNodes" name="apicLeafNodes"
-               [(ngModel)]="extra_vars['apic_leaf_nodes']"
-               placeholder="Enter full path of leaf nodes, comma separated" required #apicLeafNodes="ngModel">
-    </div>
-
-    <div class="field">
-        <label for="apicPhysicalDomain">Physical domain</label>
-        <input type="text" id="apicPhysicalDomain" name="apicPhysicalDomain"
-               [(ngModel)]="extra_vars['apic_phys_domain']"
-               placeholder="Enter physical domain name">
-    </div>
-    <div class="field">
-        <label for="apicBridgeDomain">Bridge domain</label>
-        <input type="text" id="apicBridgeDomain" name="apicBridgeDomain"
-               [(ngModel)]="extra_vars['apic_epg_bridge_domain']"
-               placeholder="Enter bridge domain name">
-    </div>
-    <div class="field">
-        <label>
-            <input type="checkbox" name="apicContractsUnrestrictedMode" tabindex="0"
-                   [(ngModel)]="extra_vars['apic_contracts_unrestricted_mode']" name="apicContractsUnrestrictedMode">
-            Allow unrestricted communication between EPGs
-        </label>
-    </div>
-    <div class="field">
+    <div class="field" style="margin-top:15px;">
         <div *ngIf="aciForm.submitted">
             <div [hidden]="aciForm.valid" class="ui negative message">
                 <ul class="list">
@@ -64,22 +65,25 @@
             </div>
         </div>
     </div>
-    <div class="ui grid">
-        <div class="left floated left aligned eight wide column">
-            <div style="margin-top: 40px">
-                <button type="button" class="ui blue button" (click)="backTriggered.emit()" *ngIf="firstRunWiz">
-                    Back
-                </button>
+    <div *ngIf="firstRunWiz">
+        <div class="ui section divider" style="margin-top: 60px"></div>
+        <div class="ui grid">
+            <div class="right floated right aligned sixteen wide column">
+                <button type="button" class="ui basic button" (click)="cancel.emit()">Cancel</button>
+                <button type="button" class="ui basic blue button" (click)="goback.emit()"><i class="arrow left icon"></i>Go back</button>
+                <button type="button" class="ui blue basic button" (click)="skip.emit()">Skip this step</button>
+                <button type="submit" class="ui blue button">Continue<i class="arrow right icon"></i></button>
             </div>
         </div>
-        <div class="right floated right aligned eight wide column">
-            <div style="margin-top: 40px">
-                <button type="submit" class="ui blue button" *ngIf="!firstRunWiz">
-                    Update ACI Settings
-                </button>
-                <button type="submit" class="ui blue button" *ngIf="firstRunWiz">
-                    Next
-                </button>
+    </div>
+    <div *ngIf="!firstRunWiz">
+        <div class="ui grid">
+            <div class="right floated right aligned sixteen wide column">
+                <div style="margin-top: 40px">
+                    <button type="submit" class="ui blue button">
+                        Update Network Settings
+                    </button>
+                </div>
             </div>
         </div>
     </div>

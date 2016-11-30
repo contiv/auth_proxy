@@ -3,7 +3,7 @@
  */
 
 
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, OnDestroy} from "@angular/core";
 declare var jQuery:any;
 @Component({
     selector: 'unauthorized',
@@ -11,8 +11,12 @@ declare var jQuery:any;
 
 })
 
-export class UnauthorizedComponent implements OnInit{
+export class UnauthorizedComponent implements OnInit, OnDestroy{
     ngOnInit(){
-        jQuery("body").addClass("background");
+        jQuery("body").addClass("logoutbackground");
+    }
+
+    ngOnDestroy(){
+        jQuery("body").removeClass("logoutbackground");
     }
 }

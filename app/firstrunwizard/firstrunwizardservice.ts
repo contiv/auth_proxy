@@ -38,7 +38,7 @@ export class FirstRunWizardService{
     updateSettings(): Promise<any>{
         this.networkService.updateSettings(this.setting)
             .then((result) => {
-            })
+            });
         return this.nodesService.updateSettings(this.extra_vars);
     }
 }

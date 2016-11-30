@@ -1,8 +1,8 @@
-<div class="ui segment" [ngClass]="{loading: showLoader}">
+<div class="ui basic segment" [ngClass]="{loading: showLoader}">
     <div class="ui grid">
         <div class="left floated sixteen wide column">
             <div class="content" style="font-size: 24px">
-                <span>Verify Details and click Confirm</span>
+                <span>Verify all the configuration</span>
             </div>
         </div>
     </div>
@@ -30,7 +30,7 @@
     </table>
 
     <div class="ui section divider" style="margin-top: 30px"></div>
-    <h4 class="ui header">Aci Settings</h4>
+    <h4 class="ui header">ACI Settings</h4>
     <table class="ui very basic selectable table">
         <tbody>
             <tr>
@@ -48,20 +48,13 @@
         </tbody>
     </table>
 
+    <div class="ui section divider" style="margin-top: 60px"></div>
     <div class="ui grid">
-        <div class="left floated left aligned eight wide column">
-            <div style="margin-top: 40px">
-                <button type="button" class="ui blue button" (click)="goBack()">
-                    Back
-                </button>
-            </div>
-        </div>
-        <div class="right floated right aligned eight wide column">
-            <div style="margin-top: 40px">
-                <button type="button" class="ui blue button" (click)="process()">
-                    Confirm
-                </button>
-            </div>
+        <div class="right floated right aligned sixteen wide column">
+            <button type="button" class="ui basic button" (click)="cancel()">Cancel</button>
+            <button type="button" class="ui basic blue button" (click)="goBack()"><i class="arrow left icon"></i>Go back</button>
+            <button type="button" class="ui blue basic button" (click)="process()">Skip this step</button>
+            <button type="button" class="ui blue button" (click)="process()">Finish</button>
         </div>
     </div>
 </div>

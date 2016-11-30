@@ -16,15 +16,16 @@ declare var jQuery:any;
     styleUrls: ['firstrunwizard/firstrunwizard.css']
 })
 
-export class FirstrunWizardComponent implements OnInit, OnDestroy{
+export class FirstrunWizardComponent implements OnInit{
     public pageNo: number;
+    public welcomeActive: boolean;
 
     constructor(private wizardService: FirstRunWizardService,
             private activatedRoute: ActivatedRoute,
             private router: Router,
             private authService: AuthService){
-        this.wizardService = wizardService;
         this.pageNo = 1;
+        this.welcomeActive = true;
         wizardService.getNetworkSettings();
         wizardService.getAciSettings();
     }
@@ -34,10 +35,6 @@ export class FirstrunWizardComponent implements OnInit, OnDestroy{
 
     public updatePage(pageno: number){
         this.pageNo = ++pageno;
-    }
-
-    ngOnDestroy(){
-        jQuery(".ui.fullscreen.modal").remove();
     }
 
     logout() {
@@ -51,6 +48,6 @@ export class FirstrunWizardComponent implements OnInit, OnDestroy{
     }
 
     runwizard() {
-        this.router.navigate(['/m/firstrunwizard'],{relativeTo: this.activatedRoute});
+        this.welcomeActive = false;
     }
 }

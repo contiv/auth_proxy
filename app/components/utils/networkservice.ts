@@ -9,7 +9,7 @@ export class NetworkService {
 
     constructor(private http: Http, private apiService: ApiService) {}
 
-    getSettings() {
+    getSettings(): Promise<any> {
         var networkservice = this;
         let promise = new Promise(function (resolve, reject) {
             let url = ContivGlobals.NETWORK_SETTINGS_ENDPOINT;

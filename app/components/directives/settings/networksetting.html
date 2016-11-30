@@ -67,23 +67,24 @@
             <option value="routing">routing</option>
         </select>
     </div>
-
-    <div class="ui grid">
-        <div class="left floated left aligned eight wide column">
-            <div style="margin-top: 40px">
-                <button type="button" class="ui blue button" (click)="backTriggered.emit()" *ngIf="firstRunWiz">
-                    Back
-                </button>
+    <div *ngIf="firstRunWiz">
+        <div class="ui section divider" style="margin-top: 60px"></div>
+        <div class="ui grid">
+            <div class="right floated right aligned sixteen wide column">
+                <button type="button" class="ui basic button" (click)="cancel.emit()">Cancel</button>
+                <button type="button" class="ui blue basic button" (click)="skip.emit()">Skip this step</button>
+                <button type="submit" class="ui blue button">Continue<i class="arrow right icon"></i></button>
             </div>
         </div>
-        <div class="right floated right aligned eight wide column">
-            <div style="margin-top: 40px">
-                <button type="submit" class="ui blue button" *ngIf="!firstRunWiz">
-                    Update Network Settings
-                </button>
-                <button type="submit" class="ui blue button" *ngIf="firstRunWiz">
-                    Next
-                </button>
+    </div>
+    <div *ngIf="!firstRunWiz">
+        <div class="ui grid">
+            <div class="right floated right aligned sixteen wide column">
+                <div style="margin-top: 40px">
+                    <button type="submit" class="ui blue button">
+                        Update Network Settings
+                    </button>
+                </div>
             </div>
         </div>
     </div>

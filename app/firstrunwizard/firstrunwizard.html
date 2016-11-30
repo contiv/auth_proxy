@@ -1,4 +1,4 @@
-<div class="ui container">
+<div class="ui container" *ngIf="welcomeActive">
     <div class="ui grid">
         <div class="ui sixteen wide column">
             <h2>Welcome to Cisco Container Networking</h2>
@@ -17,43 +17,25 @@
 
             <button class="ui large blue button primaryBtn" (click)="runwizard()">Run Wizard</button>
 
-            <!-- <button class="ui large blue button primaryBtn" onclick="$('.ui.fullscreen.modal').modal('setting', 'closable', false).modal('show'); $('body').addClass('scrolling'); $('.ui.fullscreen.modal').addClass('scrolling');">Run Wizard</button> -->
         </div>
     </div>
 </div>
 
-<div class="ui fullscreen modal scrolling">
-    <div class="content">
-        <div class="ui container" style="width: 90%">
-            <div class="ui segment">
-                <div class="ui ordered four top attached steps" style="margin-bottom: 60px;">
-                    <!-- <div class="step" [ngClass]="{active: pageNo==1, completed: pageNo > 1}">
-                        <div class="content">
-                            <div class="title">Setup Wizard</div>
-                            <div class="description"></div>
-                        </div>
-                    </div> -->
-                    <div class="step" [ngClass]="{active: pageNo==1, completed: pageNo > 1}">
-                        <div class="content">
-                            <div class="title">Network Settings</div>
-                        </div>
-                    </div>
-                    <div class="step" [ngClass]="{active: pageNo==2, completed: pageNo > 2}">
-                        <div class="content">
-                            <div class="title">ACI Settings</div>
-                        </div>
-                    </div>
-                    <div class="step" [ngClass]="{active: pageNo==3, completed: pageNo > 3}">
-                        <div class="content">
-                            <div class="title">Confirmation</div>
-                        </div>
-                    </div>
-                </div>
-                <!-- <firstrunwizardpage1 *ngIf="pageNo==1" (updatePage)="updatePage($event);"></firstrunwizardpage1> -->
-                <firstrunnetworkdefault *ngIf="pageNo==1" (updatePage)="updatePage($event);"></firstrunnetworkdefault>
-                <firstrunacisettings *ngIf="pageNo==2" (updatePage)="updatePage($event);"></firstrunacisettings>
-                <firstrunwizardconfirmpage *ngIf="pageNo==3" (updatePage)="updatePage($event);"></firstrunwizardconfirmpage>
+
+<div class="ui basic segment" *ngIf="!welcomeActive">
+    <div class="ui grid">
+        <div class="ui sixteen wide column">
+            <div class="steps-container">
+                <ul class="progressbar">
+                    <li class="active" [ngClass]="{active: pageNo==1, completed: pageNo > 1}"><span>Configure Network</span></li>
+                    <li [ngClass]="{active: pageNo==2, completed: pageNo > 2}"><span>ACI Settings</span></li>
+                    <li [ngClass]="{active: pageNo==3, completed: pageNo > 3}"><span>Confirm Details</span></li>
+                </ul>
             </div>
         </div>
     </div>
+    <firstrunnetworkdefault *ngIf="pageNo==1" (updatePage)="updatePage($event);" (cancelPage)="welcomeActive=true"></firstrunnetworkdefault>
+    <firstrunacisettings *ngIf="pageNo==2" (updatePage)="updatePage($event); " (cancelPage)="welcomeActive=true"></firstrunacisettings>
+    <firstrunwizardconfirmpage *ngIf="pageNo==3" (updatePage)="updatePage($event);" (cancelPage)="welcomeActive=true"></firstrunwizardconfirmpage>
 </div>
+

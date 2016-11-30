@@ -14,11 +14,13 @@ export class FirstrunNetworkDefaultComponent implements OnInit{
     private wizardService: FirstRunWizardService;
     public setting: any;
     @Output('updatePage') updatePage: EventEmitter<any>;
+    @Output('cancelPage') cancelPage: EventEmitter<any>;
 
     constructor(wizardService: FirstRunWizardService){
         this.wizardService = wizardService;
         this.setting = this.wizardService.setting;
-        this.updatePage = new EventEmitter<any>()
+        this.updatePage = new EventEmitter<any>();
+        this.cancelPage = new EventEmitter<any>();
     }
     ngOnInit(){
         this.setting = this.wizardService.setting;
@@ -26,10 +28,15 @@ export class FirstrunNetworkDefaultComponent implements OnInit{
 
     updateNetworkSettings(setting: any){
         this.wizardService.setting = setting;
-        this.updatePage.emit(2);
+        this.updatePage.emit(1);
     }
 
-    goBack(){
-        this.updatePage.emit(0);
+    cancel(){
+        this.cancelPage.emit();
     }
+
+    skip(){
+        this.updatePage.emit(1);
+    }
+
 }

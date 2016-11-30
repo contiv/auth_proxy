@@ -12,7 +12,6 @@ import { DirectivesModule } from "../components/directives/directives.module";
 import {RouterModule} from "@angular/router";
 import {FirstRunWizardService} from "./firstrunwizardservice";
 import {FirstrunWizardComponent} from "./firstrunwizardctrl";
-import {FirstrunWizardpage1Component} from "./firstrunwizardpage1ctrl";
 import {FirstrunNetworkDefaultComponent} from "./firstrunnetworkdefaults";
 import {FirstrunACISettingsComponent} from "./firstrunacisettings";
 import {FirstrunConfirmComponent} from "./firstrunwizardconfirmpage";
@@ -27,14 +26,12 @@ import {FirstrunConfirmComponent} from "./firstrunwizardconfirmpage";
     ],
     declarations: [
         FirstrunWizardComponent,
-        FirstrunWizardpage1Component,
         FirstrunNetworkDefaultComponent,
         FirstrunACISettingsComponent,
         FirstrunConfirmComponent
     ],
     exports: [
         FirstrunWizardComponent,
-        FirstrunWizardpage1Component,
         FirstrunNetworkDefaultComponent,
         FirstrunACISettingsComponent,
         FirstrunConfirmComponent

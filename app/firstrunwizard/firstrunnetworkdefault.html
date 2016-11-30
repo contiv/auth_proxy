@@ -1,8 +1,8 @@
 <div class="ui grid" style="margin-bottom: 30px">
     <div class="left floated sixteen wide column">
         <div class="content" style="font-size: 24px">
-            <span>Network Defaults</span>
+            <span>Select Network Defaults</span>
         </div>
     </div>
 </div>
-<networksettingcomp [firstRunWiz]="true" (updateNetDef)="updateNetworkSettings($event)" [setting]="setting" (backTriggered)="goBack()"></networksettingcomp>
+<networksettingcomp [firstRunWiz]="true" (updateNetDef)="updateNetworkSettings($event)" [setting]="setting" (cancel)="cancel()" (skip)="skip()"></networksettingcomp>
