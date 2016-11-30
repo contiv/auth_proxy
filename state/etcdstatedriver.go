@@ -124,24 +124,27 @@ func (d *EtcdStateDriver) Read(key string) ([]byte, error) {
 	defer cancel()
 
 	resp, err := d.KeysAPI.Get(ctx, key, &client.GetOptions{Quorum: true})
-	if err != nil {
+
+	switch true {
+	case err == nil:
+		return []byte(resp.Node.Value), err
+	case client.IsKeyNotFound(err):
+		return nil, ccnerrors.ErrKeyNotFound
+	case err.Error() == client.ErrClusterUnavailable.Error():
 		// Retry few times if cluster is unavailable
-		if err.Error() == client.ErrClusterUnavailable.Error() {
-			for i := 0; i < maxEtcdRetries; i++ {
-				resp, err = d.KeysAPI.Get(ctx, key, &client.GetOptions{Quorum: true})
-				if err == nil {
-					break
-				}
-
-				// Retry after a delay
-				time.Sleep(time.Second)
+		for i := 0; i < maxEtcdRetries; i++ {
+			resp, err = d.KeysAPI.Get(ctx, key, &client.GetOptions{Quorum: true})
+			if err == nil {
+				return []byte(resp.Node.Value), err
 			}
-		} else {
-			return []byte{}, err
-		}
-	}
 
-	return []byte(resp.Node.Value), err
+			// Retry after a delay
+			time.Sleep(time.Second)
+		}
+		return []byte{}, err
+	default:
+		return []byte{}, err
+	}
 }
 
 //
