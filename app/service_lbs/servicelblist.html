@@ -1,17 +1,19 @@
 <div class="ui sixteen column grid">
-    <div class="left aligned twelve wide column">
+    <div class="left aligned eight wide column">
         <div class="content" style="font-size: 24px">Service Load Balancers</div>
     </div>
 
-    <div class="left aligned four wide column" *auth="'SysAdmin'">
-        <button class="ui blue button" (click)="create()">
+    <div class="right aligned eight wide column" *auth="'SysAdmin'">
+        <button class="ui blue large button primaryBtn" (click)="create()">
             <i class="add icon"></i>
             Create Service Load Balancer
         </button>
     </div>
 </div>
 
-<div class="ui basic segment">
+<ctv-search (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [placeholder]="'Search services...'"></ctv-search>
+
+<div class="ui basic segment ctvTable">
     <div class="ui active inverted dimmer" *ngIf="servicelbListCtrl.showLoader">
         <div class="ui loader"></div>
     </div>
@@ -25,9 +27,9 @@
                 <th><ctv-th [sortfield]="'networkName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Network</ctv-th></th>
                 <th><ctv-th [sortfield]="'ipAddress'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">IP Address</ctv-th></th>
                 <th><ctv-th [sortfield]="'selectors'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Label Selectors</ctv-th></th>
-                <th class="right floated three wide column">
+                <!-- <th class="right floated three wide column">
                     <ctv-search (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [placeholder]="'Search services...'"></ctv-search>
-                </th>
+                </th> -->
             </tr>
         </thead>
 
@@ -39,13 +41,13 @@
                 <td>
                     <div class="ui label tiny" *ngFor="let selector of servicelb.selectors">{{selector}}</div>
                 </td>
-                <td></td>
+                <!-- <td></td> -->
             </tr>
         </tbody>
 
         <tfoot>
             <tr>
-                <td colspan="5">
+                <td colspan="4">
                     <ctv-tpagination  [chunks]="tableRef.pageChunks"
                                       (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
                                       (prevChunk)="tableRef.showPrevChunk()"
