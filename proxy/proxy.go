@@ -177,6 +177,11 @@ func addRoutes(s *Server, router *mux.Router) {
 	router.Path(LoginPath).Methods("POST").HandlerFunc(loginHandler)
 
 	//
+	// User management endpoints
+	//
+	addUserMgmtRoutes(router)
+
+	//
 	// RBAC-enforced endpoints with optional filtering of results
 	//
 	filteredRoutes := map[string]rbacFilter{
@@ -209,4 +214,13 @@ func addRoutes(s *Server, router *mux.Router) {
 	}
 
 	// TODO: add one-off endpoints (e.g., /api/v1/inspect/endpoints/{key}/)
+}
+
+// addUserMgmtRoutes adds user management routes to the mux.Router.
+func addUserMgmtRoutes(router *mux.Router) {
+	router.Path("/api/v1/ccn_proxy/local_users").Methods("POST").HandlerFunc(addLocalUser)
+	router.Path("/api/v1/ccn_proxy/local_users/{username}").Methods("DELETE").HandlerFunc(deleteLocalUser)
+	router.Path("/api/v1/ccn_proxy/local_users/{username}").Methods("PATCH").HandlerFunc(updateLocalUser)
+	router.Path("/api/v1/ccn_proxy/local_users/{username}").Methods("GET").HandlerFunc(getLocalUser)
+	router.Path("/api/v1/ccn_proxy/local_users").Methods("GET").HandlerFunc(getLocalUsers)
 }

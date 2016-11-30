@@ -4,7 +4,9 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
+	"strings"
 
+	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
 	"github.com/contiv/ccn_proxy/common/types"
 	"github.com/contiv/ccn_proxy/state"
 )
@@ -82,11 +84,33 @@ func NewStateDriver(name string, config *types.KVStoreConfig) (types.StateDriver
 
 // GetStateDriver returns the singleton instance of state-driver
 // return values:
-//  return types.StateDriver if its already instantiated or any relevant error
+//  types.StateDriver: if its already instantiated
+//  error: ccnerrors.ErrStateDriverNotCreated
 func GetStateDriver() (types.StateDriver, error) {
 	if stateDriver == nil {
-		return nil, errors.New("StateDriver has not been created")
+		return nil, ccnerrors.ErrStateDriverNotCreated
 	}
 
 	return stateDriver, nil
+}
+
+// InitializeStateDriver initializes the state driver based on the given data store address
+// params:
+//  dataStoreAddress: address of the data store
+// return values:
+//  returns any error as NewStateDriver() + validation errors
+func InitializeStateDriver(dataStoreAddress string) error {
+	if IsEmpty(dataStoreAddress) {
+		return errors.New("Empty data store address")
+	}
+
+	if strings.HasPrefix(dataStoreAddress, EtcdName+"://") {
+		_, err := NewStateDriver(EtcdName, &types.KVStoreConfig{StoreURL: dataStoreAddress})
+		return err
+	} else if strings.HasPrefix(dataStoreAddress, ConsulName+"://") {
+		_, err := NewStateDriver(ConsulName, &types.KVStoreConfig{StoreURL: dataStoreAddress})
+		return err
+	}
+
+	return errors.New("Invalid data store address")
 }
