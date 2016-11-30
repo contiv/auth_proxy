@@ -65,6 +65,10 @@
 			"Rev": "faddd6128c66c4708f45fdc007f575f75e592a3c"
 		},
 		{
+			"ImportPath": "golang.org/x/crypto/pbkdf2",
+			"Rev": "ede567c8e044a5913dad1d1af3696d9da953104c"
+		},
+		{
 			"ImportPath": "golang.org/x/net/context",
 			"Rev": "cac22060de4e495155959e69adcb4b45763ccb10"
 		},
