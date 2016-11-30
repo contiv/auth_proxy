@@ -54,6 +54,6 @@ export const ContivGlobals = {
     'NUMBER_REGEX' : '^[0-9]*$',
 
     // System strings
-    'PRODUCT_NAME': 'Cisco Container Networking',
-    'PRODUCT_VERSION': 'TP1.0'
+    'PRODUCT_NAME': 'Unified Container Networking',
+    'PRODUCT_VERSION': 'TP_1.0.0'
 };

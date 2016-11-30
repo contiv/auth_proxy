@@ -1,9 +1,53 @@
 <!--<div class="content" style="font-size: 18px; margin-top: 30px">Resources</div> -->
+<div class="ui grid" style="margin-top: 15px">
+    <div class="row">
+        <div class="ui four wide column kpi">
+            <a class="ui fluid card" [routerLink]="['../servicelbs/list']">
+                <div class="content">
+                    <div class="kpiHeader">Service Load Balancers</div>
+                    <div class="description">
+                        <p class="center aligned kpiValue">{{servicelbs}}</p>
+                    </div>
 
+                </div>
+            </a>
+        </div>
+        <div class="ui four wide column kpi">
+            <a class="ui fluid card" [routerLink]="['../applicationgroups/list']">
+                <div class="content">
+                    <div class="kpiHeader">Application Groups</div>
+                    <div class="description">
+                        <p class="center aligned kpiValue">{{groups}}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="ui four wide column kpi">
+            <a class="ui fluid card" [routerLink]="['../networkpolicies/list']">
+                <div class="content">
+                    <div class="kpiHeader">Network Policies</div>
+                    <div class="description">
+                        <p class="center aligned kpiValue">{{networkpolicies}}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="ui four wide column kpi">
+            <a class="ui fluid card" [routerLink]="['../networks/list']">
+                <div class="content">
+                    <div class="kpiHeader">Networks</div>
+                    <div class="description">
+                        <p class="center aligned kpiValue">{{networks}}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
 
 <div class="ui grid" style="margin-top: 15px">
     <div class="row">
-        <div class="ui twelve wide column">
+        <div class="ui sixteen wide column">
             <div class="ui segment">
                 <div class="row">
                     <div class="ui buttons">
@@ -83,49 +127,6 @@
                     </ctv-table>
                 </div>
             </div>
-        </div>
-        <div class="ui right floated four wide column">
-            <a class="ui fluid card" [routerLink]="['../servicelbs/list']">
-                <div class="content">
-                    <div class="ui grey ribbon label">
-                        <i class="small networks icon" style="margin-left: 0.75em"></i> Service Load Balancers
-                    </div>
-                    <div class="description">
-                        <p class="center aligned" style="font-size: 5rem">{{servicelbs}}</p>
-                    </div>
-
-                </div>
-            </a>
-            <a class="ui fluid card" [routerLink]="['../applicationgroups/list']">
-                <div class="content">
-                    <div class="ui grey ribbon label">
-                        <i class="appgroup icon"></i> Application Groups
-                    </div>
-                    <div class="description">
-                        <p class="center aligned" style="font-size: 5rem">{{groups}}</p>
-                    </div>
-                </div>
-            </a>
-            <a class="ui fluid card" [routerLink]="['../networkpolicies/list']">
-                <div class="content">
-                    <div class="ui grey ribbon label">
-                        <i class="networkpolicies icon"></i> Network Policies
-                    </div>
-                    <div class="description">
-                        <p class="center aligned" style="font-size: 5rem">{{networkpolicies}}</p>
-                    </div>
-                </div>
-            </a>
-            <a class="ui fluid card" [routerLink]="['../networks/list']">
-                <div class="content">
-                    <div class="ui grey ribbon label">
-                        <i class="small networks icon" style="margin-left: 0.75em"></i> Networks
-                    </div>
-                    <div class="description">
-                        <p class="center aligned" style="font-size: 5rem">{{networks}}</p>
-                    </div>
-                </div>
-            </a>
         </div>
     </div>
 </div>

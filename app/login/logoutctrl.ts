@@ -15,7 +15,6 @@ declare var jQuery:any;
 
 export class LogoutComponent implements OnInit, OnDestroy{
     public product_name:string = ContivGlobals.PRODUCT_NAME;
-
     constructor(private router: Router,
                 private activatedRoute: ActivatedRoute){
 
