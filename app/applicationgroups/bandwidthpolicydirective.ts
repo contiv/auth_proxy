@@ -4,6 +4,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import * as _ from 'lodash';
 import { NetprofilesModel } from "../components/models/netprofilesmodel";
+import {isUndefined} from "util";
 /*
 angular.module("contiv.applicationgroups")
     .directive("ctvBandwidthpolicy", function () {
@@ -81,7 +82,7 @@ export class BandwidthPolicySelectionComponent implements OnChanges {
                 component.netProfiles = _.filter(result, {
                     'tenantName': 'default'        //TODO: Remove hardcoded tenant.
                 });
-                if (component.applicationgroup.netProfile !== '') {
+                if ((component.applicationgroup.netProfile !== '') && (!isUndefined(component.applicationgroup['netProfile']))) {
                     component.selectedNetprofile = _.find(component.netProfiles, function (policy) {
                         return policy.profileName === component.applicationgroup.netProfile;
                     });

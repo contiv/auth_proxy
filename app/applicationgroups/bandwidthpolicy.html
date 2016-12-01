@@ -14,9 +14,8 @@
             <td>
                 <select class="ui dropdown"
                         name="selectNetprofile"
-                        #selectedNetprofile
-                        ngModel
-                        (change)="updateApplicationgroup($event.target.value)">
+                        [ngModel]="selectedNetprofile"
+                        (ngModelChange)="updateApplicationgroup($event)">
                     <option value="">-- Please select bandwidth --</option>
                     <option *ngFor="let policy of (netProfiles | filter:netProfileSearchText)"
                             [ngValue]="policy">

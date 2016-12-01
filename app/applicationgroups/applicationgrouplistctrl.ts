@@ -30,6 +30,7 @@ export class AppGrouplistComponent implements OnInit, OnDestroy{
         this.refresh = Observable.interval(5000).subscribe(() => {
             this.getApplicationGroup(true);
         });
+        this.crudHelperService.startLoader(this);
     }
 
     ngOnInit(){
