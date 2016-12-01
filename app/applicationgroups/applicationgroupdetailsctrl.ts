@@ -87,6 +87,7 @@ export class ApplicationGroupDetailsComponent implements OnInit{
         applicationGroupDetailsCtrl.applicationGroupsModel.delete(applicationGroupDetailsCtrl.applicationGroup).then(
             function successCallback(result) {
                 applicationGroupDetailsCtrl.crudHelperService.stopLoader(applicationGroupDetailsCtrl);
+                applicationGroupDetailsCtrl.crudHelperService.showNotification("Application Group Deleted", result.toString());
                 applicationGroupDetailsCtrl.returnToApplicationGroup();
             }, function errorCallback(result) {
                 applicationGroupDetailsCtrl.crudHelperService.stopLoader(applicationGroupDetailsCtrl);
@@ -102,6 +103,7 @@ export class ApplicationGroupDetailsComponent implements OnInit{
         applicationGroupDetailsCtrl.applicationGroupsModel.save(applicationGroupDetailsCtrl.applicationGroup).then(
             function successCallback(result) {
                 applicationGroupDetailsCtrl.crudHelperService.stopLoader(applicationGroupDetailsCtrl);
+                applicationGroupDetailsCtrl.crudHelperService.showNotification("Application Group Updated", result.key.toString());
                 applicationGroupDetailsCtrl.returnToApplicationGroupDetails();
             }, function errorCallback(result) {
                 applicationGroupDetailsCtrl.crudHelperService.stopLoader(applicationGroupDetailsCtrl);

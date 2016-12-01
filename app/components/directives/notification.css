@@ -1,0 +1,14 @@
+.notifi{
+    z-index: 4000;
+    position: absolute;
+    display: block;
+}
+
+#header1{
+    margin-right: 40px;
+}
+
+.notifi p{
+    font-weight: bold;
+    margin-right: 40px;
+}

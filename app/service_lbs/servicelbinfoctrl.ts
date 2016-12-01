@@ -111,6 +111,7 @@ export class  ServicelbInfoComponent implements OnInit{
             .then((result) => {
                 servicelbInfoCtrl.ngZone.run(() => {
                     servicelbInfoCtrl.crudHelperService.stopLoader(servicelbInfoCtrl);
+                    servicelbInfoCtrl.crudHelperService.showNotification("Service Load Balancer Updated", result.key.toString());
                 });
                 servicelbInfoCtrl.returnToServicelbDetails();
             },(error) => {
@@ -130,6 +131,7 @@ export class  ServicelbInfoComponent implements OnInit{
             .then((result) => {
                     servicelbInfoCtrl.ngZone.run(() => {
                         servicelbInfoCtrl.crudHelperService.stopLoader(servicelbInfoCtrl);
+                        servicelbInfoCtrl.crudHelperService.showNotification("Service Load Balancer Deleted", result.toString());
                     });
                     servicelbInfoCtrl.returnToServicelbs();
                 },

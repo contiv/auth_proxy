@@ -51,6 +51,7 @@ export class AppProfileCreateComponent {
                 .then((result) => {
                     component.ngZone.run(() => {
                         component.crudHelperService.stopLoader(component);
+                        component.crudHelperService.showNotification("Application Profile Created", result.key.toString());
                     });
                     component.returnToAppProfiles();
                 }, (error) => {

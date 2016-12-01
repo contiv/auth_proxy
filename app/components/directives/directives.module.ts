@@ -14,6 +14,7 @@ import {NetworkSettingComponent} from "./settings/networksettingcomponent";
 import {AciSettingComponent} from "./settings/acisettingcomponent";
 import {LineGraphComponent} from "./linegraphcomponent";
 import {ChartsModule} from "ng2-charts";
+import {NotificationComponent} from "./notification";
 @NgModule({
     imports: [
         CommonModule, FormsModule, ChartsModule
@@ -30,7 +31,8 @@ import {ChartsModule} from "ng2-charts";
         AuthDirective,
         NetworkSettingComponent,
         AciSettingComponent,
-        LineGraphComponent
+        LineGraphComponent,
+        NotificationComponent
     ],
     exports: [
         ErrorMessageComponent,
@@ -44,7 +46,8 @@ import {ChartsModule} from "ng2-charts";
         AuthDirective,
         NetworkSettingComponent,
         AciSettingComponent,
-        LineGraphComponent
+        LineGraphComponent,
+        NotificationComponent
     ]
 })
 export class DirectivesModule {}

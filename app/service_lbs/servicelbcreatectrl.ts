@@ -56,7 +56,6 @@ export class ServicelbCreateComponent implements OnInit{
     }
 
     createServicelb(formvalid: boolean){
-        debugger;
         var servicelbCreateCtrl = this;
         this.createLabelSelectorStrings();
         if(formvalid){
@@ -65,6 +64,7 @@ export class ServicelbCreateComponent implements OnInit{
             this.servicelb.key = this.servicelb.tenantName + ':' + this.servicelb.serviceName;
             this.servicelbsModel.create(this.servicelb, undefined).then((result) => {
                 servicelbCreateCtrl.crudHelperService.stopLoader(servicelbCreateCtrl);
+                servicelbCreateCtrl.crudHelperService.showNotification("Service Load Balancer Created", result.key.toString());
                 this.returnToServicelbs();
             }, (error) => {
                 servicelbCreateCtrl.crudHelperService.stopLoader(servicelbCreateCtrl);

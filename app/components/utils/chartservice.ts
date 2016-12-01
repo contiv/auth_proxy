@@ -26,7 +26,7 @@ export class ChartService {
         this.graphData = {0: {}, 1: {}};
         this.source = new Subject<any>();
         this.stream = this.source.asObservable();
-        Observable.interval(5000).subscribe(() => {
+        Observable.interval(10000).subscribe(() => {
             if (this.authService.isLoggedIn){
                 this.getInspectData(ContivGlobals.NETWORKS_ENDPOINT, ContivGlobals.NETWORKS_INSPECT_ENDPOINT, EndpointType.Network);
                 this.getInspectData(ContivGlobals.APPLICATIONGROUPS_ENDPOINT, ContivGlobals.APPLICATIONGROUPS_INSPECT_ENDPOINT, EndpointType.ApplicationGroup);
@@ -54,10 +54,9 @@ export class ChartService {
                             else{
                                 this.generateGraphData(inspectkey, 0, endpointtype);
                             }
-                        });
+                        },(error) => {});
                 }
-            });
-
+            },(error) => {});
     }
 
     private generateGraphData(key: string, count: number, type: EndpointType){

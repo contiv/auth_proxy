@@ -51,6 +51,7 @@ export class BandwidthPolicyDetailsComponent {
         bandwidthPolicyDetailsCtrl.netprofilesModel.deleteUsingKey(bandwidthPolicyDetailsCtrl.policy.key, 'key', undefined).then(
             function successCallback(result) {
                 bandwidthPolicyDetailsCtrl.crudHelperService.stopLoader(bandwidthPolicyDetailsCtrl);
+                bandwidthPolicyDetailsCtrl.crudHelperService.showNotification("Bandwidth Policy Deleted", result);
                 bandwidthPolicyDetailsCtrl.returnToPolicies();
             }, function errorCallback(result) {
                 bandwidthPolicyDetailsCtrl.crudHelperService.stopLoader(bandwidthPolicyDetailsCtrl);
@@ -83,6 +84,7 @@ export class BandwidthPolicyDetailsComponent {
             bandwidthPolicyDetailsCtrl.policy.bandwidth = bandwidthPolicyDetailsCtrl.policy.bandwidthNumber + " " + bandwidthPolicyDetailsCtrl.policy.bandwidthUnit;
             bandwidthPolicyDetailsCtrl.netprofilesModel.save(bandwidthPolicyDetailsCtrl.policy).then(function successCallback(result) {
                 bandwidthPolicyDetailsCtrl.crudHelperService.stopLoader(bandwidthPolicyDetailsCtrl);
+                bandwidthPolicyDetailsCtrl.crudHelperService.showNotification("Bandwidth Policy Updated", result.key.toString());
                 bandwidthPolicyDetailsCtrl.returnToPolicyDetails();
             }, function errorCallback(result) {
                 bandwidthPolicyDetailsCtrl.crudHelperService.stopLoader(bandwidthPolicyDetailsCtrl);

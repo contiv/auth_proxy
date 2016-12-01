@@ -42,7 +42,6 @@ export class NetworkCreateComponent{
     }
 
     createNetwork(formvalid: any){
-        debugger;
         var networkCreateCtrl = this;
         if(formvalid){
             this.crudHelperService.hideServerError(this);
@@ -51,6 +50,7 @@ export class NetworkCreateComponent{
             this.networksModel.create(this.newNetwork,undefined)
                               .then((result) => {
                                   networkCreateCtrl.crudHelperService.stopLoader(networkCreateCtrl);
+                                  networkCreateCtrl.crudHelperService.showNotification("Network Created", result.key.toString());
                                   networkCreateCtrl.returnToNetworks();
                               }, (error) => {
                                   networkCreateCtrl.crudHelperService.stopLoader(networkCreateCtrl);

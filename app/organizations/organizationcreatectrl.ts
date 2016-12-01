@@ -44,6 +44,7 @@ export class OrganizationCreateComponent{
                 .then((result) => {
                     organizationCreateCtrl.ngZone.run(() => {
                         organizationCreateCtrl.crudHelperService.stopLoader(organizationCreateCtrl);
+                        organizationCreateCtrl.crudHelperService.showNotification("Organization Created", result.key);
                     });
                     organizationCreateCtrl.returnToOrganizations();
                 }, (error) => {

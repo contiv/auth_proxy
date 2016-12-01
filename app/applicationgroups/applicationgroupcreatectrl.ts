@@ -76,6 +76,7 @@ export class ApplicationGroupCreateComponent {
             applicationGroupCreateCtrl.applicationGroupsModel.create(applicationGroupCreateCtrl.applicationGroup,undefined).then(
                 function successCallback(result) {
                     applicationGroupCreateCtrl.crudHelperService.stopLoader(applicationGroupCreateCtrl);
+                    applicationGroupCreateCtrl.crudHelperService.showNotification("Application Group Created", result.key.toString());
                     applicationGroupCreateCtrl.returnToApplicationGroup();
                 }, function errorCallback(result) {
                     applicationGroupCreateCtrl.crudHelperService.stopLoader(applicationGroupCreateCtrl);

@@ -64,6 +64,7 @@ export class AppProfileDetailsComponent {
             function successCallback(result) {
                 component.ngZone.run(() => {
                     component.crudHelperService.stopLoader(component);
+                    component.crudHelperService.showNotification("Application Profile Deleted", result);
                 });
                 component.returnToAppProfile();
             }, function errorCallback(result) {
@@ -84,6 +85,7 @@ export class AppProfileDetailsComponent {
                 function successCallback(result) {
                     component.ngZone.run(() => {
                         component.crudHelperService.stopLoader(component);
+                        component.crudHelperService.showNotification("Application Profile Updated", result.key.toString());
                     });
                     component.returnToAppProfileDetails();
                 }, function errorCallback(result) {

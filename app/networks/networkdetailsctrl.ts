@@ -87,6 +87,7 @@ export class NetworkdetailsComponent implements OnInit, OnDestroy{
             this.networksModel.delete(networkDetailsCtrl['network'])
                 .then((result) => {
                     networkDetailsCtrl.crudHelperService.stopLoader(networkDetailsCtrl);
+                    networkDetailsCtrl.crudHelperService.showNotification("Network Deleted", result.toString());
                     networkDetailsCtrl.returnToNetworks();
                 }, (error) => {
                     networkDetailsCtrl.crudHelperService.stopLoader(networkDetailsCtrl);
