@@ -9,27 +9,42 @@ import (
 	"testing"
 	"time"
 
+	"github.com/contiv/ccn_proxy/common"
+	"github.com/contiv/ccn_proxy/common/test"
+	"github.com/contiv/ccn_proxy/common/types"
 	"github.com/contiv/ccn_proxy/proxy"
+	"github.com/contiv/ccn_proxy/usermgmt"
 
 	. "gopkg.in/check.v1"
 
 	log "github.com/Sirupsen/logrus"
 )
 
-const (
-	adminUsername = "admin"
-	adminPassword = "admin"
+var (
+	adminUsername = types.Admin.String()
+	adminPassword = types.Admin.String()
 
-	opsUsername = "ops"
-	opsPassword = "ops"
+	opsUsername = types.Ops.String()
+	opsPassword = types.Ops.String()
 )
 
 func Test(t *testing.T) {
+	datastore := test.GetDatastore()
+	datastoreAddress := test.GetDatastoreAddress()
 
-	// TODO: once we support a datastore to hold local users, add default
-	//       local users for admin and ops for testing purposes.  The users
-	//       added here will exist across all of the tests that run.
-	//       We should create admin and ops users using the constants above.
+	if err := common.InitializeStateDriver(datastoreAddress); err != nil {
+		log.Fatalln(err)
+	}
+
+	// cleanup users and principals
+	test.CleanupDatastore(datastore, []string{
+		usermgmt.GetPath(usermgmt.RootLocalUsers),
+		usermgmt.GetPath(usermgmt.RootPrincipals),
+	})
+
+	if err := usermgmt.AddDefaultUsers(); err != nil {
+		log.Fatalln(err)
+	}
 
 	TestingT(t)
 }

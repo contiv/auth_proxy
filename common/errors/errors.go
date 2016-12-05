@@ -46,6 +46,7 @@ const (
 
 	KeyExists
 	IllegalOperation
+	AccessDenied
 	// N.B. Add all new error codes above this line.  All error codes >=
 	// LastError are invalid.
 	LastError
@@ -79,6 +80,9 @@ var ErrKeyExists = NewError(KeyExists, "key exists already in data store")
 // ErrIllegalOperation is used when the user performs an operation which is not permitted in our system
 // e.g. updating/deleting built-in users
 var ErrIllegalOperation = NewError(IllegalOperation, "illegal operation")
+
+// ErrAccessDenied is used when the user access is denied
+var ErrAccessDenied = NewError(AccessDenied, "Access Denied")
 
 //
 // CCNError describes an error response message used by CCN APIs
