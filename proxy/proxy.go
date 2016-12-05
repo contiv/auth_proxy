@@ -206,7 +206,12 @@ func addRoutes(s *Server, router *mux.Router) {
 
 		// add other REST endpoints (show, create, delete, update, etc.)
 		router.Path("/api/v1/"+resource+"/{key}/").Methods("GET", "POST", "PUT", "DELETE").HandlerFunc(rbacWrapper(s))
+
+		// "inspect" routes are basically a namespace rather than being an action on a member of a collection...
+		router.Path("/api/v1/inspect/" + resource + "/{key}/").Methods("GET").HandlerFunc(rbacWrapper(s))
 	}
 
-	// TODO: add one-off endpoints (e.g., /api/v1/inspect/endpoints/{key}/)
+	// the endpoint inspect route doesn't actually have a matching model in netmaster
+	// "endpoint groups" are a totally separate model/endpoint
+	router.Path("/api/v1/inspect/endpoints/{key}/").Methods("GET").HandlerFunc(rbacWrapper(s))
 }
