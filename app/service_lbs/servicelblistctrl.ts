@@ -19,6 +19,8 @@ export class ServicelbListComponent implements OnInit, OnDestroy{
     private crudHelperService: CRUDHelperService;
     public servicelbListCtrl: any;
     private refresh: Subscription;
+    public searchResultCount:number;
+    public count:number;
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -28,6 +30,7 @@ export class ServicelbListComponent implements OnInit, OnDestroy{
         this.servicelbsModel = servicelbsModel;
         this.crudHelperService = crudHelperService;
         this.servicelbListCtrl = this;
+        this.count = 0;
         this['showLoader']=true;
         this.refresh=Observable.interval(5000).subscribe(() => {
             this.getServicelbs(true);

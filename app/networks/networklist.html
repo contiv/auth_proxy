@@ -1,17 +1,19 @@
 <div class="ui sixteen column grid">
-    <div class="left aligned thirteen wide column">
+    <div class="left aligned eight wide column">
         <div class="content" style="font-size: 24px">Networks</div>
     </div>
 
-    <div class="center aligned three wide column" *auth="'SysAdmin'">
-        <button class="ui blue button" (click)="create()">
+    <div class="right aligned eight wide column" *auth="'SysAdmin'">
+        <button class="ui blue large button primaryBtn" (click)="create()">
             <i class="add icon"></i>
             Create Network
         </button>
     </div>
 </div>
 
-<div class="ui basic segment">
+<ctv-search *ngIf="networkListComp['networks']" (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [count]="tableRef.count"></ctv-search>
+
+<div class="ui basic segment ctvTable">
 
     <div class="ui active inverted dimmer" *ngIf="networkListComp.showLoader">
         <div class="ui loader"></div>
@@ -27,24 +29,33 @@
             <th><ctv-th [sortfield]="'encap'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Encapsulation</ctv-th></th>
             <th><ctv-th [sortfield]="'subnet'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Subnet</ctv-th></th>
             <th><ctv-th [sortfield]="'gateway'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Gateway</ctv-th></th>
-            <th class="right floated three wide column">
-                <ctv-search (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [placeholder]="'Search networks...'"></ctv-search>
-            </th>
         </tr>
         </thead>
 
-        <tbody>
+        <tbody *ngIf="networkListComp['networks']">
         <tr *ngFor="let network of networkListComp['filterednetworks']">
             <td><a [routerLink]="['../details',network.key]">{{network.networkName}}</a></td>
             <td>{{network.encap}}</td>
             <td>{{network.subnet}}</td>
             <td>{{network.gateway}}</td>
-            <td></td>
         </tr>
         </tbody>
+
+        <tbody *ngIf="!networkListComp['networks']">
+            <tr>
+                <td colspan="2">No networks found. Would you like to <a href="javascript: void(0);" (click)="create()">create one?</a></td>
+            </tr>
+        </tbody>
+
+        <tbody *ngIf="networkListComp['networks'] && !tableRef.count">
+            <tr>
+                <td colspan="2">No records matched your filter criteria.</td>
+            </tr>
+        </tbody>
+
         <tfoot>
         <tr>
-            <td colspan="5">
+            <td colspan="4">
                 <ctv-tpagination [chunks]="tableRef.pageChunks"
                                  (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
                                  (prevChunk)="tableRef.showPrevChunk()"

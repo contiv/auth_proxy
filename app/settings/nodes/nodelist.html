@@ -1,9 +1,9 @@
 <div class="ui sixteen column grid">
-    <div class="twelve wide column">
+    <div class="left aligned eight wide column">
         <div class="content" style="font-size: 24px">Nodes</div>
     </div>
 
-    <div class="right aligned four wide column">
+    <div class="right aligned eight wide column">
         <button class="ui blue button" (click)="create()">
             <i class="add icon"></i>
             Create Node
@@ -11,7 +11,9 @@
     </div>
 </div>
 
-<div class="ui basic segment">
+<ctv-search *ngIf="nodes" (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [count]="tableRef.count"></ctv-search>
+
+<div class="ui basic segment ctvTable">
     <div class="ui active inverted dimmer" *ngIf="showLoader">
         <div class="ui loader"></div>
     </div>
@@ -24,18 +26,26 @@
                 <th><ctv-th [sortfield]="'hostname'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Name</ctv-th></th>
                 <th><ctv-th [sortfield]="'routerip'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Router IP</ctv-th></th>
                 <th><ctv-th [sortfield]="'as'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Autonomous system</ctv-th></th>
-                <th class="right aligned three wide column">
-                    <ctv-search (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [placeholder]="'Search nodes...'"></ctv-search>
-                </th>
             </tr>
         </thead>
 
-        <tbody>
+        <tbody *ngIf="nodes">
             <tr *ngFor="let node of nodes">
                 <td><a [routerLink]="['../details', node.key]">{{node.hostname}}</a></td>
                 <td>{{node.routerip}}</td>
                 <td>{{node.as}}</td>
-                <td></td>
+            </tr>
+        </tbody>
+
+        <tbody *ngIf="!nodes">
+            <tr>
+                <td colspan="3">No nodes found. Would you like to <a href="javascript: void(0);" (click)="create()">create one?</a></td>
+            </tr>
+        </tbody>
+
+        <tbody *ngIf="nodes && !tableRef.count">
+            <tr>
+                <td colspan="3">No records matched your filter criteria.</td>
             </tr>
         </tbody>
 

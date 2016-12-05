@@ -1,6 +1,6 @@
 <div class="ui sixteen column grid">
     <div class="eight wide column">
-        <div class="content" style="font-size: 24px">Network Policies</div>
+        <div class="content pageTitle">Network Policies</div>
     </div>
 
     <div class="right aligned eight wide column">
@@ -11,13 +11,13 @@
 
     </div>
 </div>
-<div class="ui secondary pointing menu">
-    <a class="blue item"
+<div class="ui tabular menu">
+    <a class="item"
        [ngClass]="{active: isolationPolicySelected}"
        (click)="selectPolicyTab(policyTab.isolation)">
         Isolation Policies
     </a>
-    <a class="blue item"
+    <a class="item"
        [ngClass]="{active: bandwidthPolicySelected}"
        (click)="selectPolicyTab(policyTab.bandwidth)">
         Bandwidth Policies

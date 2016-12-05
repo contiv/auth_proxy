@@ -1,6 +1,6 @@
 <div class="ui sixteen column grid">
     <div class="left aligned eight wide column">
-        <div class="content" style="font-size: 24px">Service Load Balancers</div>
+        <div class="content pageTitle">Service Load Balancers</div>
     </div>
 
     <div class="right aligned eight wide column" *auth="'SysAdmin'">
@@ -11,7 +11,7 @@
     </div>
 </div>
 
-<ctv-search (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [placeholder]="'Search services...'"></ctv-search>
+<ctv-search *ngIf="servicelbListCtrl.servicelbs" (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [count]="tableRef.count"></ctv-search>
 
 <div class="ui basic segment ctvTable">
     <div class="ui active inverted dimmer" *ngIf="servicelbListCtrl.showLoader">
@@ -27,13 +27,10 @@
                 <th><ctv-th [sortfield]="'networkName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Network</ctv-th></th>
                 <th><ctv-th [sortfield]="'ipAddress'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">IP Address</ctv-th></th>
                 <th><ctv-th [sortfield]="'selectors'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Label Selectors</ctv-th></th>
-                <!-- <th class="right floated three wide column">
-                    <ctv-search (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [placeholder]="'Search services...'"></ctv-search>
-                </th> -->
             </tr>
         </thead>
 
-        <tbody>
+        <tbody *ngIf="servicelbListCtrl.servicelbs">
             <tr *ngFor="let servicelb of servicelbListCtrl.filteredservicelbs">
                 <td><a [routerLink]="['../details', servicelb.key]">{{servicelb.serviceName}}</a></td>
                 <td>{{servicelb.networkName}}</td>
@@ -41,7 +38,18 @@
                 <td>
                     <div class="ui label tiny" *ngFor="let selector of servicelb.selectors">{{selector}}</div>
                 </td>
-                <!-- <td></td> -->
+            </tr>
+        </tbody>
+
+        <tbody *ngIf="!servicelbListCtrl.servicelbs">
+            <tr>
+                <td colspan="2">No service load balancers found. Would you like to <a href="javascript: void(0);" (click)="create()">create one?</a></td>
+            </tr>
+        </tbody>
+
+        <tbody *ngIf="servicelbListCtrl.servicelbs && !tableRef.count">
+            <tr>
+                <td colspan="2">No records matched your filter criteria.</td>
             </tr>
         </tbody>
 

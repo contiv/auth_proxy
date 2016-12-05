@@ -71,14 +71,20 @@
                         </tr>
                         </thead>
 
-                        <tbody>
+                        <tbody *ngIf="networkList">
                         <tr class="selectable" *ngFor="let network of filterednetworks" [ngClass]="{selected: key==network.key, notSelected: key!=network.key}" (click)="key=network.key">
                             <td>{{network.networkName}}</td>
                             <td>{{network.encap}}</td>
                             <td>{{network.subnet}}</td>
-                            <td></td>
                         </tr>
                         </tbody>
+
+                        <tbody *ngIf="!networkList">
+                            <tr>
+                                <td colspan="2">No rows found.</td>
+                            </tr>
+                        </tbody>
+
                         <tfoot>
                         <tr>
                             <td colspan="4">
@@ -105,14 +111,20 @@
                         </tr>
                         </thead>
 
-                        <tbody>
+                        <tbody *ngIf="applicationGroupList">
                         <tr *ngFor="let group of filteredgroups" [ngClass]="{selected: key==group.key, notSelected: key!=group.key}" (click)="key=group.key">
                             <td>{{group.groupName}}</td>
                             <td>{{group.networkName}}</td>
                             <td>{{group.policies.join(", ")}}</td>
-                            <td></td>
                         </tr>
                         </tbody>
+
+                        <tbody *ngIf="!applicationGroupList">
+                            <tr>
+                                <td colspan="2">No rows found.</td>
+                            </tr>
+                        </tbody>
+
                         <tfoot>
                         <tr>
                             <td colspan="4">

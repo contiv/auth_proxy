@@ -39,6 +39,7 @@ export class CtvTableComponent implements OnChanges, OnInit {
     @Input('defaultSortColumn') defaultSortColumn: string;
     public pageChunks:Chunk[];
     public sortObj: SortObj
+    public count:number;
 
     constructor(){
         this.filteredinputitems = new EventEmitter<any>();
@@ -119,6 +120,7 @@ export class CtvTableComponent implements OnChanges, OnInit {
             }
             var filtitems = this.limitItems(this.table.tableSize, this.table.pageNo * this.table.tableSize, sortedItems);
             this.filteredinputitems.emit(filtitems);
+            this.count = filtitems.length;
 
         }
         return false;
@@ -269,6 +271,7 @@ export class CtvSearchComponent{
 
     public searchText: string;
     @Input('placeholder') placeholder: string;
+    @Input('count') count: number;
     @Output('searchTextChange') searchTextChange: EventEmitter<any> = new EventEmitter<any>();
     public size:number;
 

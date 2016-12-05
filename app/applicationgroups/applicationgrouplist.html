@@ -11,7 +11,9 @@
     </div>
 </div>
 
-<div class="ui basic segment">
+<ctv-search *ngIf="applicationGroupListCtrl['groups']" (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [count]="tableRef.count"></ctv-search>
+
+<div class="ui basic segment ctvTable">
     <div class="ui active inverted dimmer" *ngIf="applicationGroupListCtrl.showLoader">
         <div class="ui loader"></div>
     </div>
@@ -24,24 +26,32 @@
                 <th><ctv-th [sortfield]="'groupName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Name</ctv-th></th>
                 <th><ctv-th [sortfield]="'networkName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Network</ctv-th></th>
                 <th><ctv-th [sortfield]="'policies'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Policies</ctv-th></th>
-                <th class="right floated three wide column">
-                    <ctv-search (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [placeholder]="'Search application groups...'"></ctv-search>
-                </th>
             </tr>
         </thead>
 
-        <tbody>
+        <tbody *ngIf="applicationGroupListCtrl['groups']">
             <tr *ngFor="let group of applicationGroupListCtrl['filteredgroups']">
                 <td><a [routerLink]="['../details', group.key]">{{group.groupName}}</a></td>
                 <td>{{group.networkName}}</td>
                 <td>{{group.policies.join(", ")}}</td>
-                <td></td>
+            </tr>
+        </tbody>
+
+        <tbody *ngIf="!applicationGroupListCtrl['groups']">
+            <tr>
+                <td colspan="3">No application groups found. Would you like to <a href="javascript: void(0);" (click)="create()">define one?</a></td>
+            </tr>
+        </tbody>
+
+        <tbody *ngIf="applicationGroupListCtrl['groups'] && !tableRef.count">
+            <tr>
+                <td colspan="2">No records matched your filter criteria.</td>
             </tr>
         </tbody>
 
         <tfoot>
             <tr>
-                <td colspan="4">
+                <td colspan="3">
                     <ctv-tpagination [chunks]="tableRef.pageChunks"
                                      (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
                                      (prevChunk)="tableRef.showPrevChunk()"

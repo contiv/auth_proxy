@@ -6,7 +6,7 @@
         <networksettingcomp [firstRunWiz]="false" (updateNetDef)="updateNetworkSettings($event)" [setting]="networkSettingCtrl.setting"></networksettingcomp>
     </ctv-collapsible>
     <div class="ui section divider" style="margin-top: 30px"></div>
-    <ctv-collapsible [title]="'Aci Settings'">
+    <ctv-collapsible [title]="'ACI Settings'">
         <acisettingcomp [firstRunWiz]="false" (updateAciDef)="updateAciSetting($event)" [extra_vars]="networkSettingCtrl.extra_vars"></acisettingcomp>
     </ctv-collapsible>
 </div>

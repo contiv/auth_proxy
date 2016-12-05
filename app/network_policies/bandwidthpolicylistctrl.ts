@@ -14,12 +14,14 @@ import {NetprofilesModel} from "../components/models/netprofilesmodel";
 export class BandwidthListComponent implements OnInit, OnDestroy {
     private crudHelperService:CRUDHelperService;
     private refresh:Subscription;
+    public bandwidthPolicyListCtrl:any;
     policies:any;
 
     constructor(private netprofilesModel:NetprofilesModel,
                 crudHelperService:CRUDHelperService,
                 private ngZone:NgZone) {
         this.crudHelperService = crudHelperService;
+        this.bandwidthPolicyListCtrl = this;
         this.refresh = Observable.interval(5000).subscribe(() => {
             this.getPolicies(true);
         })

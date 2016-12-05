@@ -1,6 +1,8 @@
-<div class="ui basic segment" [ngClass]="{loading: showLoader}">
+<ctv-search *ngIf="bandwidthPolicyListCtrl['policies']" (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [count]="tableRef.count"></ctv-search>
+
+<div class="ui basic segment ctvTable" [ngClass]="{loading: showLoader}">
     <ctv-table #tableRef [defaultSortColumn]="'profileName'"
-               [items]="policies"
+               [items]="bandwidthPolicyListCtrl['policies']"
                (filtereditems)="filteredPolicies=$event"
                [size]="12">
         <thead>
@@ -18,25 +20,32 @@
             <th>
                 <ctv-th [sortfield]="'lastUpdate'">Last update</ctv-th>
             </th>
-            <th class="right floated three wide column">
-                <ctv-search (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);"
-                            [placeholder]="'Search bandwidth policies...'"></ctv-search>
-            </th>
         </tr>
         </thead>
 
-        <tbody>
+        <tbody *ngIf="bandwidthPolicyListCtrl['policies']">
         <tr *ngFor="let policy of filteredPolicies">
             <td><a [routerLink]="['../bandwidth/details', policy.key]">{{policy.profileName}}</a></td>
             <td>{{policy.updatedBy}}</td>
             <td>{{policy.lastUpdate}}</td>
-            <td></td>
         </tr>
+        </tbody>
+
+        <tbody *ngIf="!bandwidthPolicyListCtrl['policies']">
+            <tr>
+                <td colspan="3">No bandwidth policies found. Would you like to <a href="javascript: void(0);" (click)="create()">create one?</a></td>
+            </tr>
+        </tbody>
+
+        <tbody *ngIf="bandwidthPolicyListCtrl['policies'] && !tableRef.count">
+            <tr>
+                <td colspan="3">No records matched your filter criteria.</td>
+            </tr>
         </tbody>
 
         <tfoot>
         <tr>
-            <td colspan="4">
+            <td colspan="3">
                 <ctv-tpagination [chunks]="tableRef.pageChunks"
                                  (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
                                  (prevChunk)="tableRef.showPrevChunk()"

@@ -1,4 +1,6 @@
-<div class="ui basic segment" [ngClass]="{loading: showLoader}">
+<ctv-search *ngIf="isolationPolicyListCtrl['policies']" (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [count]="tableRef.count"></ctv-search>
+
+<div class="ui basic segment ctvTable" [ngClass]="{loading: showLoader}">
     <ctv-table #tableRef [defaultSortColumn]="'policyName'"
                [items]="isolationPolicyListCtrl['policies']"
                (filtereditems)="isolationPolicyListCtrl['filteredPolicies']=$event"
@@ -20,14 +22,10 @@
                         [sortobject]="tableRef.sortObj">Last update
                 </ctv-th>
             </th>
-            <th class="right floated three wide column">
-                <ctv-search (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);"
-                            [placeholder]="'Search isolation policies...'"></ctv-search>
-            </th>
         </tr>
         </thead>
 
-        <tbody>
+        <tbody *ngIf="isolationPolicyListCtrl['policies']">
         <tr *ngFor="let policy of isolationPolicyListCtrl['filteredPolicies']">
             <td><a [routerLink]="['../isolation/details', policy.key]">{{policy.policyName}}</a></td>
             <td>{{policy.updatedBy}}</td>
@@ -35,6 +33,19 @@
             <td></td>
         </tr>
         </tbody>
+
+        <tbody *ngIf="!isolationPolicyListCtrl['policies']">
+            <tr>
+                <td colspan="2">No isolation policies found. Would you like to <a href="javascript: void(0);" (click)="create()">create one?</a></td>
+            </tr>
+        </tbody>
+
+        <tbody *ngIf="isolationPolicyListCtrl['policies'] && !tableRef.count">
+            <tr>
+                <td colspan="2">No records matched your filter criteria.</td>
+            </tr>
+        </tbody>
+
         <tfoot>
         <tr>
             <td colspan="4">

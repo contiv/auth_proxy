@@ -1,17 +1,19 @@
 <div class="ui sixteen column grid">
-    <div class="left aligned twelve wide column">
+    <div class="left aligned eight wide column">
         <div class="content" style="font-size: 24px">Organizations</div>
     </div>
 
-    <div class="center aligned four wide column">
-        <button class="ui blue button" (click)="create()" *auth="'SysAdmin'">
+    <div class="right aligned eight wide column">
+        <button class="ui blue large button primaryBtn" (click)="create()" *auth="'SysAdmin'">
             <i class="add icon"></i>
             Create Organization
         </button>
     </div>
 </div>
 
-<div class="ui basic segment">
+<ctv-search *ngIf="organizationsListCtrl.organizations" (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [count]="tableRef.count"></ctv-search>
+
+<div class="ui basic segment ctvTable">
     <div class="ui active inverted dimmer" *ngIf="organizationsListCtrl.showLoader">
         <div class="ui loader"></div>
     </div>
@@ -22,22 +24,32 @@
         <thead>
             <tr>
                 <th><ctv-th [sortfield]="'tenantName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Name</ctv-th></th>
-                <th class="right floated three wide column">
-                    <ctv-search (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [placeholder]="'Search organizations...'"></ctv-search>
-                </th>
             </tr>
         </thead>
 
-        <tbody>
+        <tbody *ngIf="organizationsListCtrl.organizations">
             <tr *ngFor="let organization of organizationsListCtrl.filteredorganizations">
                 <td><a [routerLink]="['../details', organization.key]">{{organization.tenantName}}</a></td>
-                <td></td>
             </tr>
         </tbody>
 
+        <tbody *ngIf="!organizationsListCtrl.organizations">
+            <tr>
+                <td colspan="2">No organizations found. Would you like to <a href="javascript: void(0);" (click)="create()">create one?</a></td>
+            </tr>
+        </tbody>
+
+        <tbody *ngIf="organizationsListCtrl.organizations && !tableRef.count">
+            <tr>
+                <td colspan="2">No records matched your filter criteria.</td>
+            </tr>
+        </tbody>
+
+        
+
         <tfoot>
             <tr>
-                <td colspan="5">
+                <td>
                     <ctv-tpagination [chunks]="tableRef.pageChunks"
                                      (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
                                      (prevChunk)="tableRef.showPrevChunk()"

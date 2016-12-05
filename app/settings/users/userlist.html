@@ -1,17 +1,19 @@
 <div class="ui sixteen column grid">
-    <div class="twelve wide column">
+    <div class="left aligned eight wide column">
         <div class="content" style="font-size: 24px">Users</div>
     </div>
 
-    <div class="right aligned four wide column">
-        <button class="ui blue button" (click)="create()">
+    <div class="right aligned eight wide column">
+        <button class="ui blue large button primaryBtn" (click)="create()">
             <i class="add icon"></i>
             Create User
         </button>
     </div>
 </div>
 
-<div class="ui basic segment">
+<ctv-search *ngIf="users" (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [count]="tableRef.count"></ctv-search>
+
+<div class="ui basic segment ctvTable">
     <div class="ui active inverted dimmer" *ngIf="showLoader">
         <div class="ui loader"></div>
     </div>
@@ -24,24 +26,32 @@
                 <th><ctv-th [sortfield]="'userName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Username</ctv-th></th>
                 <th><ctv-th [sortfield]="'role'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Role</ctv-th></th>
                 <th><ctv-th [sortfield]="'tenantName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Organization</ctv-th></th>
-                <th class="right floated three wide column">
-                    <ctv-search (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [placeholder]="'Search users...'"></ctv-search>
-                </th>
             </tr>
         </thead>
 
-        <tbody>
+        <tbody *ngIf="users">
             <tr *ngFor="let user of filteredusers">
                 <td><a [routerLink]="['../details', user.key]">{{user.userName}}</a></td>
                 <td>{{user.role}}</td>
                 <td>{{user.tenantName}}</td>
-                <td></td>
+            </tr>
+        </tbody>
+
+        <tbody *ngIf="!users">
+            <tr>
+                <td colspan="2">No users found. Would you like to <a href="javascript: void(0);" (click)="create()">create one?</a></td>
+            </tr>
+        </tbody>
+
+        <tbody *ngIf="users && !tableRef.count">
+            <tr>
+                <td colspan="2">No records matched your filter criteria.</td>
             </tr>
         </tbody>
 
         <tfoot>
             <tr>
-                <td colspan="4">
+                <td colspan="3">
                     <ctv-tpagination [chunks]="tableRef.pageChunks"
                                      (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
                                      (prevChunk)="tableRef.showPrevChunk()"
