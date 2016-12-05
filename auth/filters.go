@@ -10,6 +10,11 @@ func NullFilter(t *Token, body []byte) []byte {
 // TODO: filter out records the current user can't see
 // TODO: marshal struct back into JSON and return it
 
+// FilterAciGws filters the response from GET /api/v1/aciGws
+func FilterAciGws(t *Token, body []byte) []byte {
+	return []byte(`{"TODO:":"implement this"}`)
+}
+
 // FilterAppProfiles filters the response from GET /api/v1/appProfiles
 func FilterAppProfiles(t *Token, body []byte) []byte {
 	return []byte(`{"TODO":"implement this"}`)

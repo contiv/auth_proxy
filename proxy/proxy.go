@@ -180,6 +180,7 @@ func addRoutes(s *Server, router *mux.Router) {
 	// RBAC-enforced endpoints with optional filtering of results
 	//
 	filteredRoutes := map[string]rbacFilter{
+		"aciGws":             auth.FilterAciGws,
 		"appProfiles":        auth.FilterAppProfiles,
 		"Bgps":               auth.FilterBgps,
 		"endpointGroups":     auth.FilterEndpointGroups,
