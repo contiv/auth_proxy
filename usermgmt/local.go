@@ -238,8 +238,9 @@ func AddDefaultUsers() error {
 		}
 
 		var err error
-		// raw password will never be stored in the system
-		localUser.PasswordSalt, localUser.PasswordHash, err = common.GenPasswordHash(userR.String())
+
+		// use the role name for the default password (e.g., "admin" user password is "admin")
+		localUser.PasswordHash, err = common.GenPasswordHash(userR.String())
 		if err != nil {
 			return err
 		}

@@ -30,7 +30,7 @@ func Authenticate(username, password string) ([]*types.Principal, error) {
 		return nil, ccnerrors.ErrAccessDenied
 	}
 
-	if !common.ValidatePassword(user.PasswordSalt, password, user.PasswordHash) {
+	if !common.ValidatePassword(password, user.PasswordHash) {
 		log.Debugf("Incorrect password for user %q", username)
 		return nil, ccnerrors.ErrAccessDenied
 	}

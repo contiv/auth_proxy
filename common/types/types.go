@@ -104,19 +104,16 @@ type LocalUser struct {
 //
 // Fields:
 //  UserName: inherited from LocalUser
-//  Password: inherited from LocalUser. Not stored anywhere. Used to update password hash and salt.
+//  Password: inherited from LocalUser. Not stored anywhere. Used to update password hash.
 //  Disble: inherited from LocalUser.
 //  Principal: associated principal object.
 //  PrincipalID: For each local user, there should be a principal created in the system.
-//  PasswordSalt: a salt value that is applied to password before generating
-//    hash (to safeguard against dictionary attacks.)
 //  PasswordHash: of the password string.
 //
 type InternalLocalUser struct {
 	LocalUser
 	Principal    Principal
 	PrincipalID  string `json:"principal_id"`
-	PasswordSalt []byte `json:"password_salt"`
 	PasswordHash []byte `json:"password_hash"`
 }
 
