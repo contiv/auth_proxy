@@ -194,6 +194,7 @@ func AddLocalUser(user *types.InternalLocalUser) error {
 	_, err = stateDrv.Read(key)
 	switch err {
 	case nil:
+		log.Errorf("User '%s' already exists!", user.Username)
 		return ccnerrors.ErrKeyExists
 	case ccnerrors.ErrKeyNotFound:
 		if err := addUserPrincipal(&user.Principal, stateDrv); err != nil {
@@ -248,6 +249,8 @@ func AddDefaultUsers() error {
 		if err := AddLocalUser(&localUser); err != nil {
 			return err
 		}
+
+		log.Printf("Added local user '%s'", localUser.Username)
 	}
 
 	return nil

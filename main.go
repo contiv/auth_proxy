@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"os"
 	"time"
 
 	"github.com/contiv/ccn_proxy/common"
@@ -13,10 +14,11 @@ import (
 
 var (
 	// flags
+	dataStoreAddress string // address of the data store used by netmaster
 	debug            bool   // if set, log level is set to `debug`
 	listenAddress    string // address we listen on
 	netmasterAddress string // address of the netmaster we proxy to
-	dataStoreAddress string // address of the data store used by netmaster
+	initialSetup     bool   // if set, run the initial proxy setup (adding default users, etc.)
 	tlsKeyFile       string // path to TLS key
 	tlsCertificate   string // path to TLS certificate
 
@@ -28,8 +30,31 @@ var (
 	ProgramVersion = "unknown"
 )
 
+func performInitialSetup() {
+	log.Println("Performing initial setup")
+
+	log.Println("Adding default users with default passwords")
+	if err := usermgmt.AddDefaultUsers(); err != nil {
+		log.Fatalln(err)
+		// exit with a non-zero error code.
+		// this can be used by installers, etc. to determine whether the
+		// setup successfully completed or not.
+		os.Exit(1)
+	}
+
+	log.Println("Initial setup is complete.  Exiting.")
+	os.Exit(0)
+}
+
 func processFlags() {
 	// TODO: add a flag for LDAP host + port
+
+	flag.BoolVar(
+		&initialSetup,
+		"initial-setup",
+		false,
+		"if set, run the initial proxy setup (adding default users, etc.)",
+	)
 	flag.StringVar(
 		&listenAddress,
 		"listen-address",
@@ -85,9 +110,9 @@ func main() {
 		return
 	}
 
-	// Add default users to the system
-	if err := usermgmt.AddDefaultUsers(); err != nil {
-		log.Fatalln(err)
+	// if --initial-setup is specified, just perform setup and exit immediately
+	if initialSetup {
+		performInitialSetup()
 		return
 	}
 

@@ -101,7 +101,7 @@ func GetStateDriver() (types.StateDriver, error) {
 //  returns any error as NewStateDriver() + validation errors
 func InitializeStateDriver(dataStoreAddress string) error {
 	if IsEmpty(dataStoreAddress) {
-		return errors.New("Empty data store address")
+		return errors.New("Empty data store address, please set --data-store-address")
 	}
 
 	if strings.HasPrefix(dataStoreAddress, EtcdName+"://") {
