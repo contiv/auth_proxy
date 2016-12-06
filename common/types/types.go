@@ -56,8 +56,8 @@ const (
 //  Role: Role associated with a principal
 //
 type Principal struct {
-	UUID string
-	Role RoleType
+	UUID string   `json:"uuid"`
+	Role RoleType `json:"roletype"`
 }
 
 // String returns the string representation of `RoleType`
@@ -85,6 +85,39 @@ func Role(roleStr string) (RoleType, error) {
 		return Invalid, errors.ErrIllegalArgument
 	}
 
+}
+
+// LocalUser information
+//
+// Fields:
+//  UserName: of the user. Read only field. Must be unique.
+//  Password: of the user. Not stored anywhere. Used only for updates.
+//  Disable: if authorizations for this local user is disabled.
+//
+type LocalUser struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+	Disable  bool   `json:"disable"`
+}
+
+// InternalLocalUser information
+//
+// Fields:
+//  UserName: inherited from LocalUser
+//  Password: inherited from LocalUser. Not stored anywhere. Used to update password hash and salt.
+//  Disble: inherited from LocalUser.
+//  Principal: associated principal object.
+//  PrincipalID: For each local user, there should be a principal created in the system.
+//  PasswordSalt: a salt value that is applied to password before generating
+//    hash (to safeguard against dictionary attacks.)
+//  PasswordHash: of the password string.
+//
+type InternalLocalUser struct {
+	LocalUser
+	Principal    Principal
+	PrincipalID  string `json:"principal_id"`
+	PasswordSalt []byte `json:"password_salt"`
+	PasswordHash []byte `json:"password_hash"`
 }
 
 //

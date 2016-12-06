@@ -42,6 +42,11 @@ const (
 	CommonStateFieldsMissing
 	InvalidCall
 
+	StateDriverNotCreated
+
+	KeyExists
+	IllegalOperation
+	AccessDenied
 	// N.B. Add all new error codes above this line.  All error codes >=
 	// LastError are invalid.
 	LastError
@@ -65,6 +70,19 @@ var ErrCommonStateFieldsMissing = NewError(CommonStateFieldsMissing, "expected f
 // ErrInvalidCall indicates an error condition when an invalid call to a method or
 // function is being made
 var ErrInvalidCall = NewError(InvalidCall, "invalid method or function call")
+
+// ErrStateDriverNotCreated is used when the state driver is not initialized
+var ErrStateDriverNotCreated = NewError(StateDriverNotCreated, "state driver not created")
+
+// ErrKeyExists is used when the key already exists in the data store during insertion
+var ErrKeyExists = NewError(KeyExists, "key exists already in data store")
+
+// ErrIllegalOperation is used when the user performs an operation which is not permitted in our system
+// e.g. updating/deleting built-in users
+var ErrIllegalOperation = NewError(IllegalOperation, "illegal operation")
+
+// ErrAccessDenied is used when the user access is denied
+var ErrAccessDenied = NewError(AccessDenied, "Access Denied")
 
 //
 // CCNError describes an error response message used by CCN APIs

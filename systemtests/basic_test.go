@@ -28,11 +28,7 @@ func (s *systemtestSuite) TestLogin(c *C) {
 		// invalid credentials
 		//
 		token, resp, err = login("foo", "bar")
-
-		// TODO: this error should be nil, but it will not be if AD is
-		// not running.  once we have an AD setup or a mock AD server,
-		// we should fix this.
-		c.Assert(err, Not(IsNil))
+		c.Assert(err, IsNil)
 		c.Assert(resp.StatusCode, Equals, 401)
 		c.Assert(len(token), Equals, 0)
 	})

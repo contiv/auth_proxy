@@ -3,7 +3,7 @@ package auth
 import (
 	"github.com/contiv/ccn_proxy/auth/ldap"
 	"github.com/contiv/ccn_proxy/auth/local"
-	"github.com/contiv/ccn_proxy/common/errors"
+	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
 	"github.com/contiv/ccn_proxy/common/types"
 
 	log "github.com/Sirupsen/logrus"
@@ -22,7 +22,7 @@ func Authenticate(username, password string) (string, error) {
 		return generateToken(userPrincipals, username) // local authentication succeeded!
 	}
 
-	if err == errors.ErrUserNotFound {
+	if err == ccnerrors.ErrUserNotFound {
 		userPrincipals, err = ldap.Authenticate(username, password)
 		if err == nil {
 			return generateToken(userPrincipals, username) // ldap authentication succeeded!

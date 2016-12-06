@@ -9,27 +9,34 @@ import (
 
 	"github.com/contiv/ccn_proxy/auth"
 	"github.com/contiv/ccn_proxy/common"
+	"github.com/gorilla/mux"
 
 	log "github.com/Sirupsen/logrus"
 )
+
+// writeJSONResponse writes the given data in JSON format.
+func writeJSONResponse(w http.ResponseWriter, data interface{}) {
+	jData, err := json.Marshal(data)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	w.Write(jData)
+}
 
 // authError logs a message and changes the HTTP status code as requested.
 func authError(w http.ResponseWriter, statusCode int, msg string) {
 	log.Println(msg)
 	w.WriteHeader(statusCode)
-	w.Write([]byte(msg))
+	writeJSONResponse(w, errorResponse{Error: msg})
 }
 
 // serverError logs a message + error and changes the HTTP status code to 500.
 func serverError(w http.ResponseWriter, err error) {
 	log.Errorln(err.Error())
 	w.WriteHeader(http.StatusInternalServerError)
-	w.Write([]byte(err.Error()))
-}
-
-// LoginResponse holds the token returned upon successful login.
-type LoginResponse struct {
-	Token string `json:"token"`
+	writeJSONResponse(w, errorResponse{Error: err.Error()})
 }
 
 // loginHandler handles the login request and returns auth token with user capabilities
@@ -45,12 +52,6 @@ func loginHandler(w http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		serverError(w, errors.New("Failed to read body from request: "+err.Error()))
 		return
-	}
-
-	// this is to maintain uniformity in UI. Right now, all the requests are sent as JSON
-	type loginReq struct {
-		Username string `json:"username"`
-		Password string `json:"password"`
 	}
 
 	lReq := &loginReq{}
@@ -73,16 +74,8 @@ func loginHandler(w http.ResponseWriter, req *http.Request) {
 
 	log.Debugf("Token String %q", tokenStr)
 
-	lr := LoginResponse{Token: tokenStr}
-
-	data, err := json.Marshal(lr)
-	if err != nil {
-		log.Fatalln(err)
-		return
-	}
-
 	w.WriteHeader(http.StatusOK)
-	w.Write(data)
+	writeJSONResponse(w, LoginResponse{Token: tokenStr})
 }
 
 // rbacFilter is a function which takes a token and response body and filters
@@ -103,19 +96,8 @@ func rbacFilterWrapper(s *Server, filter rbacFilter) func(http.ResponseWriter, *
 		//
 		// Step 1. validate the access token
 		//
-
-		// NOTE: our current implementation focuses on just two local users admin(superuser) and ops(only network operations).
-		// this is mainly to provide some basic difference between two users
-		// this needs to be fine-grained once we have the backend and capabilities defined
-		tokenStr := req.Header.Get("X-Auth-Token")
-		if common.IsEmpty(tokenStr) {
-			authError(w, http.StatusUnauthorized, "Empty auth token")
-			return
-		}
-
-		token, err := auth.ParseToken(tokenStr)
-		if err != nil {
-			authError(w, http.StatusBadRequest, "Bad token")
+		isValid, token := isTokenValid(req.Header.Get("X-Auth-Token"), w)
+		if !isValid {
 			return
 		}
 
@@ -181,4 +163,93 @@ func rbacFilterWrapper(s *Server, filter rbacFilter) func(http.ResponseWriter, *
 // which does not modify the response body.
 func rbacWrapper(s *Server) func(http.ResponseWriter, *http.Request) {
 	return rbacFilterWrapper(s, auth.NullFilter)
+}
+
+// User management handler functions
+// NOTE: for now, these actions should be performed only by `admin` roles
+
+// addLocalUser adds a new local user to the system.
+// it can return various HTTP status codes:
+//    201 (user added to the system)
+//    400 (user exists in the system already/invalid role)
+//    500 (internal server error)
+func addLocalUser(w http.ResponseWriter, req *http.Request) {
+	//TODO: check token claims for authorization; only super user can create new users
+	body, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		serverError(w, errors.New("Failed to read body from request: "+err.Error()))
+		return
+	}
+
+	userCreateReq := &localUserCreateRequest{}
+	if err := json.Unmarshal(body, userCreateReq); err != nil {
+		serverError(w, errors.New("Failed to unmarshal user info. from request body: "+err.Error()))
+		return
+	}
+
+	statusCode, resp := addLocalUserHelper(userCreateReq)
+	processStatusCodes(statusCode, resp, w)
+}
+
+// deleteLocalUser deletes the given user from the system.
+// it can return various HTTP status codes:
+//    200 (user deleted from the system)
+//    404 (username not found)
+//    400 (cannot delete  built-in users)
+//    500 (internal server error)
+func deleteLocalUser(w http.ResponseWriter, req *http.Request) {
+	//TODO: check token claims for authorization; only super user can create new users
+	vars := mux.Vars(req)
+
+	statusCode, resp := deleteLocalUserHelper(vars["username"])
+	processStatusCodes(statusCode, resp, w)
+}
+
+// updateLocalUser updates the existing user with the given details.
+// it can return various HTTP status codes:
+//    204 (update was successful)
+//    404 (user not found)
+//    400 (cannot update built-in user)
+//    500 (internal server error)
+func updateLocalUser(w http.ResponseWriter, req *http.Request) {
+	//TODO: check token claims for authorization; only super user can create new users
+	vars := mux.Vars(req)
+
+	body, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		serverError(w, errors.New("Failed to read body from request: "+err.Error()))
+		return
+	}
+
+	userUpdateReq := &localUserCreateRequest{}
+	if err := json.Unmarshal(body, userUpdateReq); err != nil {
+		serverError(w, errors.New("Failed to unmarshal user info. from request body: "+err.Error()))
+		return
+	}
+
+	statusCode, resp := updateLocalUserHelper(vars["username"], userUpdateReq)
+	processStatusCodes(statusCode, resp, w)
+}
+
+// getLocalUsers returns all the local users available in the system
+// it can return various HTTP status codes:
+//    200 (fetch was successful)
+//    500 (internal server error)
+func getLocalUsers(w http.ResponseWriter, req *http.Request) {
+	//TODO: check token claims for authorization; only super user can create new users
+	statusCode, resp := getLocalUsersHelper()
+	processStatusCodes(statusCode, resp, w)
+}
+
+// getLocalUser returns the details for the given username
+// it can return various HTTP status codes:
+//  200 (fetch was successful)
+//  404 (bad request; user not found)
+//  500 (internal server error)
+func getLocalUser(w http.ResponseWriter, req *http.Request) {
+	//TODO: check token claims for authorization; only super user can create new users
+	vars := mux.Vars(req)
+
+	statusCode, resp := getLocalUserHelper(vars["username"])
+	processStatusCodes(statusCode, resp, w)
 }

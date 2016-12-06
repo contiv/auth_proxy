@@ -39,6 +39,11 @@ systemtests:
 	go test -v -timeout 1m ./systemtests -check.v
 
 # test runs ALL the test suites.
-test: systemtests
+test: systemtests unit-tests
 
-.PHONY: all build checks ci generate-certificate godep run systemtests test
+# unit-tests runs all the unit test suites.
+unit-tests:
+	USE_DATASTORE=consul go test -v -timeout 1m ./usermgmt -check.v
+	USE_DATASTORE=etcd   go test -v -timeout 1m ./usermgmt -check.v
+
+.PHONY: all build checks ci generate-certificate godep run systemtests test unit-tests

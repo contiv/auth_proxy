@@ -1,14 +1,12 @@
 package main
 
 import (
-	"errors"
 	"flag"
-	"strings"
 	"time"
 
 	"github.com/contiv/ccn_proxy/common"
-	"github.com/contiv/ccn_proxy/common/types"
 	"github.com/contiv/ccn_proxy/proxy"
+	"github.com/contiv/ccn_proxy/usermgmt"
 
 	log "github.com/Sirupsen/logrus"
 )
@@ -71,27 +69,6 @@ func processFlags() {
 	flag.Parse()
 }
 
-// initializeStateDriver initializes the state driver based on the given data store address
-// params:
-//  dataStoreAddress: address of the data store
-// return values:
-//  returns any error as NewStateDriver() + validation errors
-func initializeStateDriver(dataStoreAddress string) error {
-	if common.IsEmpty(dataStoreAddress) {
-		return errors.New("Empty data store address")
-	}
-
-	if strings.HasPrefix(dataStoreAddress, common.EtcdName+"://") {
-		_, err := common.NewStateDriver(common.EtcdName, &types.KVStoreConfig{StoreURL: dataStoreAddress})
-		return err
-	} else if strings.HasPrefix(dataStoreAddress, common.ConsulName+"://") {
-		_, err := common.NewStateDriver(common.ConsulName, &types.KVStoreConfig{StoreURL: dataStoreAddress})
-		return err
-	}
-
-	return errors.New("Invalid data store address")
-}
-
 func main() {
 
 	log.Println(ProgramName, ProgramVersion, "starting up...")
@@ -102,7 +79,14 @@ func main() {
 		log.SetLevel(log.DebugLevel)
 	}
 
-	if err := initializeStateDriver(dataStoreAddress); err != nil {
+	// Initialize data store
+	if err := common.InitializeStateDriver(dataStoreAddress); err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	// Add default users to the system
+	if err := usermgmt.AddDefaultUsers(); err != nil {
 		log.Fatalln(err)
 		return
 	}

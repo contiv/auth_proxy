@@ -2,9 +2,10 @@ package local
 
 import (
 	log "github.com/Sirupsen/logrus"
-	"github.com/contiv/ccn_proxy/common/errors"
+	"github.com/contiv/ccn_proxy/common"
+	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
 	"github.com/contiv/ccn_proxy/common/types"
-	uuid "github.com/satori/go.uuid"
+	"github.com/contiv/ccn_proxy/usermgmt"
 )
 
 // Authenticate authenticates the user against local DB with the given username and password
@@ -15,21 +16,27 @@ import (
 //  []*types.Principal on successful authentication else nil
 //  error: nil on successful authentication otherwise ErrLocalAuthenticationFailed
 func Authenticate(username, password string) ([]*types.Principal, error) {
-	//TODO: this will be enhanced once we have the backend ready. this is mocked now to help UI team
-	// currently supports only `admin` and `ops` users
-	if "admin" == username || "ops" == username {
-		userPrincipals := []*types.Principal{}
-		role, err := types.Role(username)
-		if err != nil {
-			return nil, err
+	user, err := usermgmt.GetLocalUser(username)
+	if err != nil {
+		if err == ccnerrors.ErrKeyNotFound {
+			return nil, ccnerrors.ErrUserNotFound
 		}
 
-		userPrincipals = append(userPrincipals, &types.Principal{UUID: uuid.NewV4().String(), Role: role})
-		log.Info("Local authentication successful")
-		return userPrincipals, nil
+		return nil, err
 	}
 
-	//FIXME: to return appropriate error messages.e.g. ErrUserDoesnotExists
-	//return nil, errors.ErrLocalAuthenticationFailed
-	return nil, errors.ErrUserNotFound
+	if user.LocalUser.Disable {
+		log.Debugf("Local user %q is disabled", username)
+		return nil, ccnerrors.ErrAccessDenied
+	}
+
+	if !common.ValidatePassword(user.PasswordSalt, password, user.PasswordHash) {
+		log.Debugf("Incorrect password for user %q", username)
+		return nil, ccnerrors.ErrAccessDenied
+	}
+
+	// TODO:this needs to be integrated with authZ module to fetch more principals based on the user role.
+	userPrincipals := []*types.Principal{}
+	userPrincipals = append(userPrincipals, &user.Principal)
+	return userPrincipals, nil
 }
