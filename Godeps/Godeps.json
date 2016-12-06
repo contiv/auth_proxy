@@ -1,7 +1,7 @@
 {
 	"ImportPath": "github.com/contiv/ccn_proxy",
 	"GoVersion": "go1.7",
-	"GodepVersion": "v74",
+	"GodepVersion": "v75",
 	"Packages": [
 		"./..."
 	],
@@ -65,7 +65,11 @@
 			"Rev": "faddd6128c66c4708f45fdc007f575f75e592a3c"
 		},
 		{
-			"ImportPath": "golang.org/x/crypto/pbkdf2",
+			"ImportPath": "golang.org/x/crypto/bcrypt",
+			"Rev": "ede567c8e044a5913dad1d1af3696d9da953104c"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/blowfish",
 			"Rev": "ede567c8e044a5913dad1d1af3696d9da953104c"
 		},
 		{
@@ -80,6 +84,10 @@
 			"ImportPath": "gopkg.in/asn1-ber.v1",
 			"Comment": "v1.1",
 			"Rev": "4e86f4367175e39f69d9358a5f17b4dda270378d"
+		},
+		{
+			"ImportPath": "gopkg.in/check.v1",
+			"Rev": "aa8c43564278bc4c58e8ca51bfc5f1c149925cf0"
 		}
 	]
 }

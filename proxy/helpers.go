@@ -112,7 +112,7 @@ func updateLocalUserInfo(username string, updateReq *localUserCreateRequest, act
 	// Update `password`
 	if !common.IsEmpty(updateReq.Password) {
 		var err error
-		updatedUserObj.PasswordSalt, updatedUserObj.PasswordHash, err = common.GenPasswordHash(updateReq.Password)
+		updatedUserObj.PasswordHash, err = common.GenPasswordHash(updateReq.Password)
 		if err != nil {
 			return http.StatusInternalServerError, []byte(fmt.Sprintf("Failed to create password hash for user %q", username))
 		}
@@ -220,7 +220,7 @@ func addLocalUserHelper(userCreateReq *localUserCreateRequest) (int, []byte) {
 		PrincipalID: pID,
 	}
 
-	user.PasswordSalt, user.PasswordHash, err = common.GenPasswordHash(userCreateReq.Password)
+	user.PasswordHash, err = common.GenPasswordHash(userCreateReq.Password)
 	if err != nil {
 		return http.StatusInternalServerError, []byte(fmt.Sprintf("Failed to create password hash for user %q", userCreateReq.Username))
 	}

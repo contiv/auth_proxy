@@ -1,64 +1,43 @@
 package common
 
 import (
-	"bytes"
-	"crypto/rand"
-	"crypto/sha256"
+	"golang.org/x/crypto/bcrypt"
 
 	log "github.com/Sirupsen/logrus"
-
-	"golang.org/x/crypto/pbkdf2"
 )
 
 const (
-	// NumKdfIterations represents the number of iterations to perform for key derivation, larger number
-	// implies bigger cost for dictionary attack, but also slower key derivation
-	numKdfIterations int = 4096
-	// KeyLength represents key size in bytes that is derived from the password
-	keyLength int = 32
+	// bcrypt.DefaultCost is 10, but this is too weak for modern hardware.
+	// 13 is a good choice for 2017:
+	//   - strong enough that it won't be considered weak any time soon
+	//   - doesn't take an egregious amount of time to generate hashes
+	cost = 13
 )
 
-// GenPasswordHash generates a hash(password + random salt). Using salt protects against dictionary attacks.
+// GenPasswordHash generates a hash from the provided password.
 // params:
-//  password: clear text password string
+//  password: plaintext password string
 // return values:
-//  []byte: salt used to generate the hash
 //  []byte: hash of password
-//  error: nil if successful, else as returned from rand.Read()
-func GenPasswordHash(password string) ([]byte, []byte, error) {
-	// Generate a 32-byte salt
-	salt := make([]byte, 32)
-	_, err := rand.Read(salt)
+//  error: nil if successful, otherwise the error from bcrypt.GenerateFromPassword()
+func GenPasswordHash(password string) ([]byte, error) {
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), cost)
 	if err != nil {
 		log.Error(err)
-		return nil, nil, err
+		return nil, err
 	}
 
-	// generate a key of length 32 bytes using SHA-256 hash function. This
-	// key is saved as the cryptographic hash of the password.
-	hash := pbkdf2.Key([]byte(password), salt, numKdfIterations, keyLength, sha256.New)
-
-	return salt, hash, nil
+	return hash, nil
 }
 
 // ValidatePassword returns true if the supplied password's hash matches
 // the correct password's hash, false otherwise.
 // params:
-//  salt: the salt string to use with password to generate hash
-//  suppliedPassword: password string to be validated
-//  correctPasswordHash: hash of password to compared against
+//  password: plaintext password from the user
+//  passwordHash: hash to compare the password against
 // return values:
-//  bool: if suppliedPassword matches correctPassword (or more precisely, if
-//  the hash of suppliedPassword matches the hash of correctPassword), false
-//  otherwise
-func ValidatePassword(salt []byte, suppliedPassword string, correctPasswordHash []byte) bool {
-	// generate a key of length 32 bytes using SHA-256 hash function. This
-	// key serves as the cryptographic hash of the password.
-	hash := pbkdf2.Key([]byte(suppliedPassword), salt, numKdfIterations, keyLength, sha256.New)
-
-	if !bytes.Equal(hash, []byte(correctPasswordHash)) {
-		return false
-	}
-
-	return true
+//  bool: true if the password matches the hash, otherwise false
+func ValidatePassword(password string, passwordHash []byte) bool {
+	// nil result means the password matched the hash
+	return nil == bcrypt.CompareHashAndPassword(passwordHash, []byte(password))
 }
