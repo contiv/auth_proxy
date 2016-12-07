@@ -46,10 +46,10 @@ type Config struct {
 // Server represents a proxy server which can be running.
 type Server struct {
 	config        *Config        // holds all the configuration for the proxy server
-	stopChan      chan bool      // used to shut down the server
 	listener      net.Listener   // the actual HTTPS server
-	wg            sync.WaitGroup // used to avoid a race condition when shutting down
+	stopChan      chan bool      // used to shut down the server
 	useKeepalives bool           // controls whether the HTTPS server supports keepalives
+	wg            sync.WaitGroup // used to avoid a race condition when shutting down
 }
 
 // Init initializes anything the server requires before it can be used.
@@ -161,13 +161,14 @@ func (s *Server) Serve() {
 	<-s.stopChan
 	log.Debug("Received stop message, shutting down proxy")
 	s.listener.Close()
-
-	s.wg.Wait()
 }
 
 // Stop stops a running HTTP proxy listener.
 func (s *Server) Stop() {
 	s.stopChan <- true
+
+	// wait until the listener has actually been stopped
+	s.wg.Wait()
 }
 
 func addRoutes(s *Server, router *mux.Router) {

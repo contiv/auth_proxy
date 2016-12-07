@@ -76,11 +76,12 @@ func (ms *MockServer) Serve() {
 	<-ms.stopChan
 
 	ms.listener.Close()
-
-	ms.wg.Wait()
 }
 
 // Stop stops the mock server.
 func (ms *MockServer) Stop() {
 	ms.stopChan <- true
+
+	// wait until the listener has actually been stopped
+	ms.wg.Wait()
 }
