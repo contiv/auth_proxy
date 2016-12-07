@@ -111,8 +111,6 @@ func runTest(f func(*proxy.Server, *MockServer)) {
 
 	ms.Stop()
 	p.Stop()
-
-	time.Sleep(25 * time.Millisecond)
 }
 
 // login returns the user's token or returns an error if authentication fails.
