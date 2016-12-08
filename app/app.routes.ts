@@ -76,10 +76,12 @@ const routes = [
                 children: [
                     {path: '', redirectTo: 'users/list', pathMatch: 'full'},
                     {path: 'networks', component: NetworkSettingsComponent},
+                    {path: 'users', redirectTo: 'users/list', pathMatch: 'full'},
                     {path: 'users/list', component: UserListComponent},
                     {path: 'users/create', component: UserCreateComponent},
                     {path: 'users/details/:key', component: UserDetailsComponent},
                     {path: 'users/edit/:key', component: UserDetailsComponent},
+                    {path: 'nodes', redirectTo: 'nodes/list', pathMatch: 'full'},
                     {path: 'nodes/list', component: NodeListComponent},
                     {path: 'nodes/create', component: NodeCreateComponent},
                     {path: 'nodes/details/:key', component: NodeDetailsComponent},

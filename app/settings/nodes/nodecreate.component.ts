@@ -28,9 +28,9 @@ export class NodeCreateComponent {
                 "key": "",
                 "hostname": "",
                 "routerip": "",
-                "as": 0,
+                "as": "0",
                 "neighbor": "",
-                "neighbor-as": 0
+                "neighbor-as": "0"
             };
         }
 

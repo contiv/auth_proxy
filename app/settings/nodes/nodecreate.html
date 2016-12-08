@@ -38,7 +38,7 @@
             <label for="newHostname">Host name</label>
             <input type="text" id="newHostname" name="newHostname"
                    [(ngModel)]="newNode['hostname']"
-                   placeholder="Enter host name" required>
+                   placeholder="Enter host name" required #newHostname="ngModel">
         </div>
 
         <div class="ui section divider" style="margin-top: 30px"></div>
@@ -48,15 +48,16 @@
                 <label for="newRouterIP">Router IP</label>
                 <input type="text" id="newRouterIP" name="newRouterIP"
                        [(ngModel)]="newNode['routerip']"
-                       placeholder="Enter router IP" required>
+                       placeholder="Enter router IP" required #newRouterIP="ngModel">
             </div>
 
             <div class="field">
                 <label for="newAS">Autonomous system</label>
-                <input type="number" id="newAS" name="newAS"
+                <input type="text" id="newAS" name="newAS"
                        [(ngModel)]="newNode['as']"
                        placeholder="Enter autonomous system"
-                       required>
+                       required
+                       #newAS="ngModel">
             </div>
 
             <div class="field">
@@ -68,7 +69,7 @@
 
             <div class="field">
                 <label for="newNeighborAS">Neighbor autonomous system</label>
-                <input type="number" id="newNeighborAS" name="newNeighborAS"
+                <input type="text" id="newNeighborAS" name="newNeighborAS"
                        [(ngModel)]="newNode['neighbor-as']"
                        placeholder="Enter neighbor autonomous system">
             </div>

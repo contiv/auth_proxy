@@ -1,4 +1,4 @@
-import { Component, Inject, NgZone } from '@angular/core';
+import { Component, Inject, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { CRUDHelperService } from "../../components/utils/crudhelperservice";
 import { BgpsModel } from "../../components/models/bgpsmodel";
@@ -7,9 +7,12 @@ import { BgpsModel } from "../../components/models/bgpsmodel";
     selector: 'nodedetails',
     templateUrl: 'settings/nodes/nodedetails.html'
 })
-export class NodeDetailsComponent {
+export class NodeDetailsComponent implements OnInit {
     node:any = {};
     mode:string = 'details';
+
+    infoselected: boolean;
+    statskey: string;
 
     constructor(private activatedRoute:ActivatedRoute,
                 private router:Router,
@@ -29,32 +32,37 @@ export class NodeDetailsComponent {
             }
         }
 
+        setMode();
+        this.statskey = this.activatedRoute.snapshot.params['key'];
+        this.infoselected = true;
+    }
+
+    ngOnInit() {
+        var component = this;
         component.crudHelperService.stopLoader(component);
         component.crudHelperService.hideServerError(component);
 
-        component.bgpsModel.getModelByKey(activatedRoute.snapshot.params['key'], false, 'key')
+        component.bgpsModel.getModelByKey(component.activatedRoute.snapshot.params['key'], false, 'key')
             .then(function successCallBack(node) {
                 component.node = node;
+                component.ngZone.run(() => {
+                    component.crudHelperService.stopLoader(component);
+                });
+            }, (error) => {
+                component.ngZone.run(() => {
+                    component.crudHelperService.stopLoader(component);
+                });
             });
-
-        setMode();
     }
 
     returnToNode() {
         this.router.navigate(['../../list'], {relativeTo: this.activatedRoute});
     }
 
-    returnToNodeDetails() {
-        this.router.navigate(['../../details', this.node.key], {relativeTo: this.activatedRoute});
-    }
-
     editNode() {
         this.router.navigate(['../../edit', this.node.key], {relativeTo: this.activatedRoute});
     }
 
-    cancelEditing() {
-        this.returnToNodeDetails();
-    }
 
     deleteNode() {
         var component = this;
@@ -74,24 +82,4 @@ export class NodeDetailsComponent {
             });
     }
 
-    saveNode(formvalid:boolean) {
-        var component = this;
-        if (formvalid) {
-            component.crudHelperService.hideServerError(component);
-            component.crudHelperService.startLoader(component);
-
-            component.bgpsModel.save(component.node).then(
-                function successCallback(result) {
-                    component.ngZone.run(() => {
-                        component.crudHelperService.stopLoader(component);
-                    });
-                    component.returnToNodeDetails();
-                }, function errorCallback(result) {
-                    component.ngZone.run(() => {
-                        component.crudHelperService.stopLoader(component);
-                    });
-                    component.crudHelperService.showServerError(component, result);
-                });
-        }
-    }
 }

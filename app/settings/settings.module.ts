@@ -11,6 +11,8 @@ import { SettingsMenuComponent } from "./settingsmenu.component";
 import { NodeListComponent } from "./nodes/nodelist.component";
 import { NodeCreateComponent } from "./nodes/nodecreate.component";
 import { NodeDetailsComponent } from "./nodes/nodedetails.component";
+import { NodeInfoComponent } from "./nodes/nodeinfo.component";
+import { NodeStatsComponent } from "./nodes/nodestats.component";
 
 @NgModule({
     imports: [
@@ -24,7 +26,9 @@ import { NodeDetailsComponent } from "./nodes/nodedetails.component";
         NetworkSettingsComponent,
         NodeListComponent,
         NodeCreateComponent,
-        NodeDetailsComponent
+        NodeDetailsComponent,
+        NodeInfoComponent,
+        NodeStatsComponent
     ],
     exports: [
         SettingsMenuComponent,
@@ -32,6 +36,8 @@ import { NodeDetailsComponent } from "./nodes/nodedetails.component";
         NodeListComponent,
         NodeCreateComponent,
         NodeDetailsComponent,
+        NodeInfoComponent,
+        NodeStatsComponent,
         FormsModule,
         CommonModule,
         RouterModule,

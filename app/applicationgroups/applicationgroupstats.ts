@@ -29,7 +29,7 @@ export class ApplicationGroupStatsComponent implements OnInit, OnDestroy{
             externalPktTag: '',
             numEndpoints: '',
             pktTag: ''
-        }
+        };
         this.config = {networkName: '', groupName: ''}
         this.endpoints = [];
         this.filteredendpoints = [];
