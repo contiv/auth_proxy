@@ -123,28 +123,27 @@ func (d *EtcdStateDriver) Read(key string) ([]byte, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), ctxTimeout)
 	defer cancel()
 
-	resp, err := d.KeysAPI.Get(ctx, key, &client.GetOptions{Quorum: true})
+	var err error
+	var resp *client.Response
 
-	switch true {
-	case err == nil:
-		return []byte(resp.Node.Value), err
-	case client.IsKeyNotFound(err):
-		return nil, ccnerrors.ErrKeyNotFound
-	case err.Error() == client.ErrClusterUnavailable.Error():
-		// Retry few times if cluster is unavailable
-		for i := 0; i < maxEtcdRetries; i++ {
-			resp, err = d.KeysAPI.Get(ctx, key, &client.GetOptions{Quorum: true})
-			if err == nil {
-				return []byte(resp.Node.Value), err
-			}
+	// i <= maxEtcdRetries to ensure that the initial `GET` call is also incorporated along with retries
+	for i := 0; i <= maxEtcdRetries; i++ {
+		resp, err = d.KeysAPI.Get(ctx, key, &client.GetOptions{Quorum: true})
 
-			// Retry after a delay
+		if err == nil {
+			// on successful read
+			return []byte(resp.Node.Value), nil
+		} else if client.IsKeyNotFound(err) {
+			return nil, ccnerrors.ErrKeyNotFound
+		} else if err.Error() == client.ErrClusterUnavailable.Error() {
+			// retry after a delay
 			time.Sleep(time.Second)
+			continue
 		}
-		return []byte{}, err
-	default:
-		return []byte{}, err
+
 	}
+
+	return []byte{}, err
 }
 
 //
@@ -162,17 +161,32 @@ func (d *EtcdStateDriver) ReadAll(baseKey string) ([][]byte, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), ctxTimeout)
 	defer cancel()
 
-	resp, err := d.KeysAPI.Get(ctx, baseKey, &client.GetOptions{Recursive: true, Quorum: true})
-	if err != nil {
-		return nil, err
+	var err error
+	var resp *client.Response
+
+	// i <= maxEtcdRetries to ensure that the initial `GET` call is also incorporated along with retries
+	for i := 0; i <= maxEtcdRetries; i++ {
+		resp, err = d.KeysAPI.Get(ctx, baseKey, &client.GetOptions{Recursive: true, Quorum: true})
+
+		if err == nil {
+			// on successful read
+			values := [][]byte{}
+			for _, node := range resp.Node.Nodes {
+				values = append(values, []byte(node.Value))
+			}
+
+			return values, nil
+		} else if client.IsKeyNotFound(err) {
+			return nil, ccnerrors.ErrKeyNotFound
+		} else if err.Error() == client.ErrClusterUnavailable.Error() {
+			// retry after a delay
+			time.Sleep(time.Second)
+			continue
+		}
+
 	}
 
-	values := [][]byte{}
-	for _, node := range resp.Node.Nodes {
-		values = append(values, []byte(node.Value))
-	}
-
-	return values, nil
+	return [][]byte{}, err
 }
 
 //

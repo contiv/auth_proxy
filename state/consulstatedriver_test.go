@@ -42,6 +42,12 @@ func TestConsulStateDriverRead(t *testing.T) {
 	commonTestStateDriverRead(t, driver)
 }
 
+// Test to check `ReadAll` from KV store
+func TestConsulStateDriverReadAll(t *testing.T) {
+	driver := setupConsulDriver(t)
+	commonTestStateDriverReadAll(t, driver)
+}
+
 func TestConsulStateDriverWriteState(t *testing.T) {
 	driver := setupConsulDriver(t)
 	commonTestStateDriverWriteState(t, driver)
