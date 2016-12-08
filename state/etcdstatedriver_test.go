@@ -7,6 +7,7 @@ import (
 	"time"
 
 	log "github.com/Sirupsen/logrus"
+	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
 	"github.com/contiv/ccn_proxy/common/types"
 	. "gopkg.in/check.v1"
 )
@@ -83,6 +84,13 @@ func commonTestStateDriverRead(t *testing.T, d types.StateDriver) {
 		t.Fatalf("read bytes don't match written bytes. Wrote: %v Read: %v",
 			testBytes, readBytes)
 	}
+
+	// test `ErrKeyNotFound`
+	key = "/xxx/yyy"
+	if _, err := d.Read(key); err != ccnerrors.ErrKeyNotFound {
+		t.Fatalf("expected `ErrKeyNotFound`, found: %s", err)
+	}
+
 }
 
 // Test helper function to check writes to KV store
@@ -438,6 +446,13 @@ func commonTestStateDriverReadAll(t *testing.T, d types.StateDriver) {
 			t.Fatalf("read bytes don't match written bytes. Wrote: %v Read: %v",
 				testBytes, rbytes)
 		}
+	}
+
+	// test `ErrKeyNotFound`
+	key := "/xxx/yyy"
+
+	if _, err := d.ReadAll(key); err != ccnerrors.ErrKeyNotFound {
+		t.Fatalf("expected `ErrKeyNotFound`, found: %s", err)
 	}
 }
 
