@@ -100,7 +100,7 @@ func updateLocalUserInfo(username string, updateReq *localUserCreateRequest, act
 	if !common.IsEmpty(updateReq.Role) {
 		role, err := types.Role(updateReq.Role)
 		if err != nil {
-			return http.StatusInternalServerError, []byte(fmt.Sprintf("Failed to map role %q", updateReq.Role))
+			return http.StatusBadRequest, []byte(fmt.Sprintf("Invalid role %q", updateReq.Role))
 		}
 		updatedUserObj.Principal.Role = role
 	}
@@ -200,7 +200,7 @@ func deleteLocalUserHelper(username string) (int, []byte) {
 //  []byte: http response message; this goes along with status code
 func addLocalUserHelper(userCreateReq *localUserCreateRequest) (int, []byte) {
 	if common.IsEmpty(userCreateReq.Username) || common.IsEmpty(userCreateReq.Password) {
-		return http.StatusBadRequest, []byte("username/password is empty")
+		return http.StatusBadRequest, []byte("Username/Password is empty")
 	}
 
 	role, err := types.Role(userCreateReq.Role)
@@ -242,7 +242,7 @@ func addLocalUserHelper(userCreateReq *localUserCreateRequest) (int, []byte) {
 
 		return http.StatusCreated, jData
 	case ccnerrors.ErrKeyExists:
-		return http.StatusBadRequest, []byte("user exists already")
+		return http.StatusBadRequest, []byte(fmt.Sprintf("User %q exists already", userCreateReq.Username))
 	default:
 		return http.StatusInternalServerError, []byte(err.Error())
 	}

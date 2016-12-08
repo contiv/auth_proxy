@@ -52,8 +52,6 @@ func CleanupDatastore(dsName string, paths []string) {
 	switch dsName {
 	case state.EtcdName:
 		for _, path := range paths {
-			log.Infof("Cleaning %q", path)
-
 			// if the datastore is running locally
 			_, err := exec.Command("/bin/sh", "-c", "etcdctl rm --recursive "+path).Output()
 			if err != nil {
@@ -69,8 +67,6 @@ func CleanupDatastore(dsName string, paths []string) {
 		}
 	case state.ConsulName:
 		for _, path := range paths {
-			log.Infof("Cleaning %q", path)
-
 			// if the datastore is running locally
 			_, err := exec.Command("/bin/sh", "-c", "consul kv delete  -recurse "+path).Output()
 			if err != nil {
