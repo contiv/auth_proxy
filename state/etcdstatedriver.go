@@ -249,20 +249,33 @@ func (d *EtcdStateDriver) WatchAll(baseKey string, chValueChanges chan [2][]byte
 }
 
 //
-// ClearState removes a key from etcd
+// Clear removes a key from etcd
 //
 // Parameters:
-//   key: key to be stored
+//   key: key to be removed
 //
 // Return value:
 //   error: Error returned by etcd client when deleting a key
 //
-func (d *EtcdStateDriver) ClearState(key string) error {
+func (d *EtcdStateDriver) Clear(key string) error {
 	ctx, cancel := context.WithTimeout(context.Background(), ctxTimeout)
 	defer cancel()
 
 	_, err := d.KeysAPI.Delete(ctx, key, nil)
 	return err
+}
+
+//
+// ClearState removes a key from etcd
+//
+// Parameters:
+//   key: key to be removed
+//
+// Return value:
+//   error: Error returned by etcd client when deleting a key
+//
+func (d *EtcdStateDriver) ClearState(key string) error {
+	return d.Clear(key)
 }
 
 //

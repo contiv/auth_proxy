@@ -317,6 +317,21 @@ func (d *ConsulStateDriver) WatchAll(baseKey string, chValueChanges chan [2][]by
 }
 
 //
+// Clear clears the value for a key in consul
+//
+// Parameters:
+//   key: key for which value is to be cleared
+//
+// Return value:
+//   error: Error returned by consul client when deleting a key
+//
+func (d *ConsulStateDriver) Clear(key string) error {
+	key = processKey(key)
+	_, err := d.Client.KV().Delete(key, nil)
+	return err
+}
+
+//
 // ClearState clears the state for a key in consul
 //
 // Parameters:
@@ -326,9 +341,7 @@ func (d *ConsulStateDriver) WatchAll(baseKey string, chValueChanges chan [2][]by
 //   error: Error returned by consul client when deleting a key
 //
 func (d *ConsulStateDriver) ClearState(key string) error {
-	key = processKey(key)
-	_, err := d.Client.KV().Delete(key, nil)
-	return err
+	return d.Clear(key)
 }
 
 //

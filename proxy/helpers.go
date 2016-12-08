@@ -3,15 +3,16 @@ package proxy
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
+
+	log "github.com/Sirupsen/logrus"
+	uuid "github.com/satori/go.uuid"
 
 	"github.com/contiv/ccn_proxy/auth"
 	"github.com/contiv/ccn_proxy/common"
 	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
 	"github.com/contiv/ccn_proxy/common/types"
 	"github.com/contiv/ccn_proxy/usermgmt"
-	uuid "github.com/satori/go.uuid"
 )
 
 // getLocalUserHelper helper function to get the details of given username.
@@ -275,12 +276,14 @@ func isTokenValid(tokenStr string, w http.ResponseWriter) (bool, *auth.Token) {
 	return true, token
 }
 
+//
 // processStatusCodes processes the given statusCode and
-// write the respective http response using the given writer.
+// writes the respective http response using the given writer.
 // params:
 //  statusCode: integer representing the http status code
 //  resp: response to be written along with statusCode
 //  w: http response writer
+//
 func processStatusCodes(statusCode int, resp []byte, w http.ResponseWriter) {
 	common.SetJSONContentType(w)
 	switch statusCode {
@@ -295,4 +298,38 @@ func processStatusCodes(statusCode int, resp []byte, w http.ResponseWriter) {
 		w.WriteHeader(statusCode)
 		writeJSONResponse(w, errorResponse{Error: respStr})
 	}
+}
+
+//
+// getTokenFromHeader retrieves the token from an HTTP request
+// header
+//
+// Parameters:
+//   req: HTTP request from whose header the authz token needs to be
+//        retrieved
+//
+// Return values:
+//   string: token as a string
+//   err:    ccnerrors.ErrParsingToken
+//           nil if token is retrieved successfully
+//
+func getTokenFromHeader(req *http.Request) (string, error) {
+
+	var err error
+	tokenStr := req.Header.Get("X-Auth-Token")
+	if common.IsEmpty(tokenStr) {
+		err = ccnerrors.ErrParsingToken
+	}
+	return tokenStr, err
+}
+
+// writeJSONResponse writes the given data in JSON format.
+func writeJSONResponse(w http.ResponseWriter, data interface{}) {
+	jData, err := json.Marshal(data)
+	if err != nil {
+		log.Fatalln(err)
+		return
+	}
+
+	w.Write(jData)
 }

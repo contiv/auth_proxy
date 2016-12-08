@@ -8,6 +8,7 @@ import (
 	"github.com/contiv/ccn_proxy/common"
 	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
 	"github.com/contiv/ccn_proxy/common/types"
+	"github.com/contiv/ccn_proxy/state"
 	uuid "github.com/satori/go.uuid"
 )
 
@@ -85,7 +86,7 @@ func getLocalUser(username string, stateDrv types.StateDriver) (*types.InternalL
 //  []types.InternalLocalUser: slice of local users
 //  error: as returned by consecutive func calls
 func GetLocalUsers() ([]*types.InternalLocalUser, error) {
-	stateDrv, err := common.GetStateDriver()
+	stateDrv, err := state.GetStateDriver()
 	if err != nil {
 		return nil, err
 	}
@@ -114,7 +115,7 @@ func GetLocalUsers() ([]*types.InternalLocalUser, error) {
 //  *types.InternalLocalUser: reference to the internal representation of the local user object
 //  error: as returned by getLocalUser(..)
 func GetLocalUser(username string) (*types.InternalLocalUser, error) {
-	stateDrv, err := common.GetStateDriver()
+	stateDrv, err := state.GetStateDriver()
 	if err != nil {
 		return nil, err
 	}
@@ -154,7 +155,7 @@ func DeleteLocalUser(username string) error {
 		return ccnerrors.ErrIllegalOperation
 	}
 
-	stateDrv, err := common.GetStateDriver()
+	stateDrv, err := state.GetStateDriver()
 	if err != nil {
 		return err
 	}
@@ -184,7 +185,7 @@ func DeleteLocalUser(username string) error {
 // return Values:
 //  error: ccnerrors.ErrKeyExists if the user already exists or any relevant error from state driver
 func AddLocalUser(user *types.InternalLocalUser) error {
-	stateDrv, err := common.GetStateDriver()
+	stateDrv, err := state.GetStateDriver()
 	if err != nil {
 		return err
 	}

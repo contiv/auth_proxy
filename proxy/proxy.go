@@ -9,8 +9,10 @@ import (
 	"net/url"
 	"sync"
 
-	log "github.com/Sirupsen/logrus"
 	"github.com/contiv/ccn_proxy/auth"
+
+	log "github.com/Sirupsen/logrus"
+	"github.com/contiv/ccn_proxy/common/types"
 	"github.com/gorilla/mux"
 )
 
@@ -181,6 +183,10 @@ func addRoutes(s *Server, router *mux.Router) {
 	//
 	addUserMgmtRoutes(router)
 
+	// Authorization endpoints
+	//
+	addAuthorizationRoutes(router)
+
 	//
 	// RBAC-enforced endpoints with optional filtering of results
 	//
@@ -229,4 +235,13 @@ func addUserMgmtRoutes(router *mux.Router) {
 	router.Path("/api/v1/ccn_proxy/local_users/{username}").Methods("PATCH").HandlerFunc(updateLocalUser)
 	router.Path("/api/v1/ccn_proxy/local_users/{username}").Methods("GET").HandlerFunc(getLocalUser)
 	router.Path("/api/v1/ccn_proxy/local_users").Methods("GET").HandlerFunc(getLocalUsers)
+}
+
+// addAuthorizationRoutes adds authorization routes
+func addAuthorizationRoutes(router *mux.Router) {
+	router.Path("/api/v1/ccn_proxy/authorizations").Methods("POST").HandlerFunc(addTenantAuthorization)
+	router.Path("/api/v1/ccn_proxy/authorizations/{authzUUID}").Methods("DELETE").HandlerFunc(deleteTenantAuthorization)
+	router.Path("/api/v1/ccn_proxy/authorizations/{authzUUID}").Methods("GET").HandlerFunc(getTenantAuthorization)
+	router.Path("/api/v1/ccn_proxy/authorizations/{authzUUID}").Methods("PATCH").HandlerFunc(updateTenantAuthorization)
+	router.Path("/api/v1/ccn_proxy/authorizations").Methods("GET").HandlerFunc(listTenantAuthorizations)
 }

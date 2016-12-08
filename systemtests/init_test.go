@@ -9,10 +9,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/contiv/ccn_proxy/common"
 	"github.com/contiv/ccn_proxy/common/test"
 	"github.com/contiv/ccn_proxy/common/types"
 	"github.com/contiv/ccn_proxy/proxy"
+	"github.com/contiv/ccn_proxy/state"
 	"github.com/contiv/ccn_proxy/usermgmt"
 
 	. "gopkg.in/check.v1"
@@ -32,7 +32,7 @@ func Test(t *testing.T) {
 	datastore := test.GetDatastore()
 	datastoreAddress := test.GetDatastoreAddress()
 
-	if err := common.InitializeStateDriver(datastoreAddress); err != nil {
+	if err := state.InitializeStateDriver(datastoreAddress); err != nil {
 		log.Fatalln(err)
 	}
 

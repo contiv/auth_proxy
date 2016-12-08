@@ -5,10 +5,10 @@ import (
 	"testing"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/contiv/ccn_proxy/common"
 	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
 	"github.com/contiv/ccn_proxy/common/test"
 	"github.com/contiv/ccn_proxy/common/types"
+	"github.com/contiv/ccn_proxy/state"
 	uuid "github.com/satori/go.uuid"
 
 	. "gopkg.in/check.v1"
@@ -35,7 +35,7 @@ func (s *usermgmtSuite) SetUpSuite(c *C) {
 	datastoreAddress := test.GetDatastoreAddress()
 
 	test.CleanupDatastore(datastore, datastorePaths)
-	if err := common.InitializeStateDriver(datastoreAddress); err != nil {
+	if err := state.InitializeStateDriver(datastoreAddress); err != nil {
 		log.Fatalln(err)
 	}
 

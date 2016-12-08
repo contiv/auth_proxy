@@ -1,4 +1,4 @@
-package common
+package state
 
 import (
 	"errors"
@@ -6,9 +6,9 @@ import (
 	"reflect"
 	"strings"
 
+	"github.com/contiv/ccn_proxy/common"
 	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
 	"github.com/contiv/ccn_proxy/common/types"
-	"github.com/contiv/ccn_proxy/state"
 )
 
 // struct that holds the driver type
@@ -19,10 +19,10 @@ type driver struct {
 // stateDriverRegistry is a registry that contains all the state driver details
 var stateDriverRegistry = map[string]driver{
 	EtcdName: {
-		Type: reflect.TypeOf(state.EtcdStateDriver{}),
+		Type: reflect.TypeOf(EtcdStateDriver{}),
 	},
 	ConsulName: {
-		Type: reflect.TypeOf(state.ConsulStateDriver{}),
+		Type: reflect.TypeOf(ConsulStateDriver{}),
 	},
 }
 
@@ -61,7 +61,7 @@ func initHelper(driverRegistry map[string]driver, driverName string) (interface{
 // return values:
 //  returns types.StateDriver on successful instantiation or any relevant error
 func NewStateDriver(name string, config *types.KVStoreConfig) (types.StateDriver, error) {
-	if IsEmpty(name) || nil == config {
+	if common.IsEmpty(name) || nil == config {
 		return nil, errors.New("Empty driver name or configuration")
 	}
 
@@ -100,7 +100,7 @@ func GetStateDriver() (types.StateDriver, error) {
 // return values:
 //  returns any error as NewStateDriver() + validation errors
 func InitializeStateDriver(dataStoreAddress string) error {
-	if IsEmpty(dataStoreAddress) {
+	if common.IsEmpty(dataStoreAddress) {
 		return errors.New("Empty data store address, please set --data-store-address")
 	}
 
