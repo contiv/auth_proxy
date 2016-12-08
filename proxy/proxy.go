@@ -12,7 +12,6 @@ import (
 	"github.com/contiv/ccn_proxy/auth"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/contiv/ccn_proxy/common/types"
 	"github.com/gorilla/mux"
 )
 
