@@ -249,8 +249,8 @@ func (authZ *Token) CheckClaims(objects ...interface{}) error {
 			// TODO Add other policy checks as needed, e.g. wildcard policy
 
 		default:
-			log.Error("Unsupported type for authorization claim; got: %#v", v,
-				", expecting: types.RoleType or types.Tenant")
+			log.Errorf("Unsupported type for authorization claim; got: %#v"+
+				", expecting: types.RoleType or types.Tenant", v)
 			return ccnerrors.ErrUnauthorized
 		}
 	}
