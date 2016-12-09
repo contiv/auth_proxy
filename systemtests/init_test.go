@@ -11,9 +11,9 @@ import (
 
 	"github.com/contiv/ccn_proxy/common/test"
 	"github.com/contiv/ccn_proxy/common/types"
+	"github.com/contiv/ccn_proxy/db"
 	"github.com/contiv/ccn_proxy/proxy"
 	"github.com/contiv/ccn_proxy/state"
-	"github.com/contiv/ccn_proxy/usermgmt"
 
 	. "gopkg.in/check.v1"
 
@@ -38,11 +38,11 @@ func Test(t *testing.T) {
 
 	// cleanup users and principals
 	test.CleanupDatastore(datastore, []string{
-		usermgmt.GetPath(usermgmt.RootLocalUsers),
-		usermgmt.GetPath(usermgmt.RootPrincipals),
+		db.GetPath(db.RootLocalUsers),
+		db.GetPath(db.RootPrincipals),
 	})
 
-	if err := usermgmt.AddDefaultUsers(); err != nil {
+	if err := db.AddDefaultUsers(); err != nil {
 		log.Fatalln(err)
 	}
 

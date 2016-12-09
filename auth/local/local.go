@@ -5,7 +5,7 @@ import (
 	"github.com/contiv/ccn_proxy/common"
 	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
 	"github.com/contiv/ccn_proxy/common/types"
-	"github.com/contiv/ccn_proxy/usermgmt"
+	"github.com/contiv/ccn_proxy/db"
 )
 
 // Authenticate authenticates the user against local DB with the given username and password
@@ -16,7 +16,7 @@ import (
 //  []*types.Principal on successful authentication else nil
 //  error: nil on successful authentication otherwise ErrLocalAuthenticationFailed
 func Authenticate(username, password string) ([]*types.Principal, error) {
-	user, err := usermgmt.GetLocalUser(username)
+	user, err := db.GetLocalUser(username)
 	if err != nil {
 		if err == ccnerrors.ErrKeyNotFound {
 			return nil, ccnerrors.ErrUserNotFound

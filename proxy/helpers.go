@@ -12,7 +12,7 @@ import (
 	"github.com/contiv/ccn_proxy/common"
 	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
 	"github.com/contiv/ccn_proxy/common/types"
-	"github.com/contiv/ccn_proxy/usermgmt"
+	"github.com/contiv/ccn_proxy/db"
 )
 
 // getLocalUserHelper helper function to get the details of given username.
@@ -23,7 +23,7 @@ import (
 //  []byte: http response message; this goes along with status code
 //          on successful fetch from data store, it contains `localUser` object
 func getLocalUserHelper(username string) (int, []byte) {
-	user, err := usermgmt.GetLocalUser(username)
+	user, err := db.GetLocalUser(username)
 
 	switch err {
 	case nil:
@@ -53,7 +53,7 @@ func getLocalUserHelper(username string) (int, []byte) {
 //  []byte: http response message; this goes along with status code
 //          on successful fetch from data store, it contains the list of localuser objects
 func getLocalUsersHelper() (int, []byte) {
-	users, err := usermgmt.GetLocalUsers()
+	users, err := db.GetLocalUsers()
 	if err != nil {
 		return http.StatusInternalServerError, []byte(err.Error())
 	}
@@ -119,7 +119,7 @@ func updateLocalUserInfo(username string, updateReq *localUserCreateRequest, act
 		}
 	}
 
-	err := usermgmt.UpdateLocalUser(username, updatedUserObj)
+	err := db.UpdateLocalUser(username, updatedUserObj)
 	switch err {
 	case nil:
 		lu := localUser{
@@ -156,7 +156,7 @@ func updateLocalUserHelper(username string, userUpdateReq *localUserCreateReques
 		return http.StatusBadRequest, []byte("Empty username")
 	}
 
-	localUser, err := usermgmt.GetLocalUser(username)
+	localUser, err := db.GetLocalUser(username)
 	switch err {
 	case nil:
 		return updateLocalUserInfo(username, userUpdateReq, localUser)
@@ -179,7 +179,7 @@ func deleteLocalUserHelper(username string) (int, []byte) {
 		return http.StatusBadRequest, []byte("Empty username")
 	}
 
-	err := usermgmt.DeleteLocalUser(username)
+	err := db.DeleteLocalUser(username)
 	switch err {
 	case nil:
 		return http.StatusNoContent, nil
@@ -226,7 +226,7 @@ func addLocalUserHelper(userCreateReq *localUserCreateRequest) (int, []byte) {
 		return http.StatusInternalServerError, []byte(fmt.Sprintf("Failed to create password hash for user %q", userCreateReq.Username))
 	}
 
-	err = usermgmt.AddLocalUser(&user)
+	err = db.AddLocalUser(&user)
 	switch err {
 	case nil:
 		lu := localUser{

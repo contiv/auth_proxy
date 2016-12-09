@@ -1,4 +1,4 @@
-package usermgmt
+package db
 
 import (
 	"encoding/json"
