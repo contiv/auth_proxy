@@ -38,7 +38,6 @@ export class ApplicationGroupDetailsComponent implements OnInit{
         }
 
         applicationGroupDetailsCtrl.crudHelperService.startLoader(applicationGroupDetailsCtrl);
-        applicationGroupDetailsCtrl.crudHelperService.hideServerError(applicationGroupDetailsCtrl);
 
         applicationGroupDetailsCtrl.applicationGroupsModel.getModelByKey(activatedRoute.snapshot.params['key'], false, 'key')
             .then(function (group) {
@@ -82,32 +81,31 @@ export class ApplicationGroupDetailsComponent implements OnInit{
 
     deleteApplicationGroup() {
         var applicationGroupDetailsCtrl = this;
-        applicationGroupDetailsCtrl.crudHelperService.hideServerError(applicationGroupDetailsCtrl);
         applicationGroupDetailsCtrl.crudHelperService.startLoader(applicationGroupDetailsCtrl);
         applicationGroupDetailsCtrl.applicationGroupsModel.delete(applicationGroupDetailsCtrl.applicationGroup).then(
             function successCallback(result) {
                 applicationGroupDetailsCtrl.crudHelperService.stopLoader(applicationGroupDetailsCtrl);
-                applicationGroupDetailsCtrl.crudHelperService.showNotification("Application Group Deleted", result.toString());
+                applicationGroupDetailsCtrl.crudHelperService.showNotification("Application group: Deleted", result.toString());
                 applicationGroupDetailsCtrl.returnToApplicationGroup();
             }, function errorCallback(result) {
                 applicationGroupDetailsCtrl.crudHelperService.stopLoader(applicationGroupDetailsCtrl);
-                applicationGroupDetailsCtrl.crudHelperService.showServerError(applicationGroupDetailsCtrl, result);
+                applicationGroupDetailsCtrl.crudHelperService.showServerError("Application group: Delete failed", result);
             });
     }
 
     saveApplicationGroup() {
         var applicationGroupDetailsCtrl = this;
-        applicationGroupDetailsCtrl.crudHelperService.hideServerError(applicationGroupDetailsCtrl);
         applicationGroupDetailsCtrl.crudHelperService.startLoader(applicationGroupDetailsCtrl);
 
         applicationGroupDetailsCtrl.applicationGroupsModel.save(applicationGroupDetailsCtrl.applicationGroup).then(
             function successCallback(result) {
                 applicationGroupDetailsCtrl.crudHelperService.stopLoader(applicationGroupDetailsCtrl);
-                applicationGroupDetailsCtrl.crudHelperService.showNotification("Application Group Updated", result.key.toString());
+                applicationGroupDetailsCtrl.crudHelperService.showNotification("Application group: Updated", result.key.toString());
                 applicationGroupDetailsCtrl.returnToApplicationGroupDetails();
             }, function errorCallback(result) {
                 applicationGroupDetailsCtrl.crudHelperService.stopLoader(applicationGroupDetailsCtrl);
-                applicationGroupDetailsCtrl.crudHelperService.showServerError(applicationGroupDetailsCtrl, result);
+                applicationGroupDetailsCtrl.crudHelperService.showServerError("Application group: Update failed", result);
+
             });
     }
 }

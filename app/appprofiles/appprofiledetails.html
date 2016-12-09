@@ -76,16 +76,9 @@
                     </button>
                 </div>
             </div>
-            <ctv-error *ngIf="((showServerError) && (mode === 'edit'))"
-                       header="Error saving application profile"
-                       [error]="serverErrorMessage">
-            </ctv-error>
         </form>
-        <ctv-error *ngIf="((showServerError) && (mode === 'details'))"
-                   header="Error deleting application profile"
-                   [error]="serverErrorMessage">
-        </ctv-error>
     </div>
 
 </div>
 
+</div>

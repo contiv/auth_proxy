@@ -38,8 +38,6 @@ export class  ServicelbInfoComponent implements OnInit{
         this.infoselected = true;
         this.statskey=''
         this.showLoader = true;
-        this['showServerError'] = false;
-        this['serverErrorMessage'] = '';
         this.mode = 'details';
         this.servicelb = {serviceName: '', networkName: '', ipAddress: '', selectors: [], ports: [], tenantName: 'default', key:''};
         this.labelSelectors =[];
@@ -102,7 +100,6 @@ export class  ServicelbInfoComponent implements OnInit{
     }
 
     saveServicelb(){
-        this.crudHelperService.hideServerError(this);
         this.crudHelperService.startLoader(this);
         var existingLabelsView = this.servicelb.selectors.slice();
         this.createLabelSelectorStrings();
@@ -111,34 +108,33 @@ export class  ServicelbInfoComponent implements OnInit{
             .then((result) => {
                 servicelbInfoCtrl.ngZone.run(() => {
                     servicelbInfoCtrl.crudHelperService.stopLoader(servicelbInfoCtrl);
-                    servicelbInfoCtrl.crudHelperService.showNotification("Service Load Balancer Updated", result.key.toString());
+                    servicelbInfoCtrl.crudHelperService.showNotification("Service load balancer: Updated", result.key.toString());
                 });
                 servicelbInfoCtrl.returnToServicelbDetails();
             },(error) => {
                 servicelbInfoCtrl.servicelb.selectors = existingLabelsView;
                 servicelbInfoCtrl.ngZone.run(() => {
                     servicelbInfoCtrl.crudHelperService.stopLoader(servicelbInfoCtrl);
-                    servicelbInfoCtrl.crudHelperService.showServerError(servicelbInfoCtrl, error);
+                    servicelbInfoCtrl.crudHelperService.showServerError("Service load balancer: Update failed", error);
                 });
             });
     }
 
     deleteServicelb() {
-        this.crudHelperService.hideServerError(this);
         this.crudHelperService.startLoader(this);
         var servicelbInfoCtrl = this;
         this.servicelbsModel.delete(this.servicelb)
             .then((result) => {
                     servicelbInfoCtrl.ngZone.run(() => {
                         servicelbInfoCtrl.crudHelperService.stopLoader(servicelbInfoCtrl);
-                        servicelbInfoCtrl.crudHelperService.showNotification("Service Load Balancer Deleted", result.toString());
+                        servicelbInfoCtrl.crudHelperService.showNotification("Service load balancer: Deleted", result.toString());
                     });
                     servicelbInfoCtrl.returnToServicelbs();
                 },
                 (error) => {
                     servicelbInfoCtrl.ngZone.run(() => {
                         servicelbInfoCtrl.crudHelperService.stopLoader(servicelbInfoCtrl);
-                        servicelbInfoCtrl.crudHelperService.showServerError(servicelbInfoCtrl, error);
+                        servicelbInfoCtrl.crudHelperService.showNotification("Service load balancer: Delete failed", error);
                     });
                 }
             );

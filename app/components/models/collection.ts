@@ -5,6 +5,7 @@ import {ApiService} from "../utils/apiservice";
 
 export class Collection extends BaseCollection {
     inspectStats: any;
+    cudOperationFlag: boolean;
 
     /**
      * Extends BaseCollection class to do create, update and delete using POST, PUT and DELETE verbs.
@@ -16,6 +17,7 @@ export class Collection extends BaseCollection {
     constructor(http: Http, url, apiService: ApiService) {
         super(http, url, apiService);
         this.inspectStats = {};
+        this.cudOperationFlag = false;
     }
 
     /**
@@ -28,6 +30,7 @@ export class Collection extends BaseCollection {
         var collection = this;
         var promise = new Promise(function (resolve, reject) {
             if (url === undefined) url = collection.url + model.key + '/';
+            collection.cudOperationFlag = true;
             collection.apiService.post(url, model).map((res: Response) => res.json()).toPromise()
                 .then(function successCallback(response) {
                     var responseData = response;
@@ -39,8 +42,10 @@ export class Collection extends BaseCollection {
                         return n['key'] == model['key'];
                     });
                     collection.models.push(responseData);
+                    collection.cudOperationFlag = false;
                     resolve(responseData);
                 }, function errorCallback(response) {
+                    collection.cudOperationFlag = false;
                     reject(response);
                 });
         });
@@ -60,14 +65,17 @@ export class Collection extends BaseCollection {
         var collection = this;
         var promise = new Promise(function (resolve, reject) {
             var url = collection.url + model.key + '/';
+            collection.cudOperationFlag = true;
             collection.apiService.put(url, model).map((res: Response) => res.json()).toPromise()
                 .then(function successCallback(response) {
                     _.remove(collection.models, function (n) {
                         return n['key'] == model['key'];
                     });
                     collection.models.push(response);
+                    collection.cudOperationFlag = false;
                     resolve(response);
                 }, function errorCallback(response) {
+                    collection.cudOperationFlag = false;
                     reject(response);
                 });
         });
@@ -84,13 +92,16 @@ export class Collection extends BaseCollection {
         var collection = this;
         var promise = new Promise(function (resolve, reject) {
             var url = collection.url + model.key + '/';
+            collection.cudOperationFlag = true;
             collection.apiService.delete(url).map((res: Response) => res.json()).toPromise()
                 .then(function successCallback(response) {
                     _.remove(collection.models, function (n) {
                         return n['key'] == model['key'];
                     });
+                    collection.cudOperationFlag = false;
                     resolve(response);
                 }, function errorCallback(response) {
+                    collection.cudOperationFlag = false;
                     reject(response);
                 });
         });
@@ -109,13 +120,16 @@ export class Collection extends BaseCollection {
         if (keyname === undefined) keyname = 'key';
         var promise = new Promise(function (resolve, reject) {
             if (url === undefined) url = collection.url + key + '/';
+            collection.cudOperationFlag = true;
             collection.apiService.delete(url).map((res: Response) => res.json()).toPromise()
                 .then(function successCallback(response) {
                     _.remove(collection.models, function (n) {
                         return n[keyname] == key;
                     });
+                    collection.cudOperationFlag = false;
                     resolve(response);
                 }, function errorCallback(response) {
+                    collection.cudOperationFlag = false;
                     reject(response);
                 });
         });
@@ -145,5 +159,3 @@ export class Collection extends BaseCollection {
         return promise;
     };
 }
-
-

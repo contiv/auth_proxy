@@ -23,7 +23,6 @@ export class BandwidthPolicyCreateComponent {
 
         function resetForm() {
             crudHelperService.stopLoader(bandwidthPolicyCreateCtrl);
-            crudHelperService.hideServerError(bandwidthPolicyCreateCtrl);
             bandwidthPolicyCreateCtrl.newPolicy = {
                 profileName: '',
                 tenantName: 'default', //TODO: Remove hardcoded tenant.
@@ -45,7 +44,6 @@ export class BandwidthPolicyCreateComponent {
     createPolicy(validform: boolean) {
         var bandwidthPolicyCreateCtrl = this;
         if (validform) {
-            bandwidthPolicyCreateCtrl.crudHelperService.hideServerError(bandwidthPolicyCreateCtrl);
             bandwidthPolicyCreateCtrl.crudHelperService.startLoader(bandwidthPolicyCreateCtrl);
 
             bandwidthPolicyCreateCtrl.newPolicy.key =
@@ -56,11 +54,11 @@ export class BandwidthPolicyCreateComponent {
 
             bandwidthPolicyCreateCtrl.netprofilesModel.create(bandwidthPolicyCreateCtrl.newPolicy, undefined).then(function successCallback(result) {
                 bandwidthPolicyCreateCtrl.crudHelperService.stopLoader(bandwidthPolicyCreateCtrl);
-                bandwidthPolicyCreateCtrl.crudHelperService.showNotification("Bandwidth Policy Created", result.key.toString());
+                bandwidthPolicyCreateCtrl.crudHelperService.showNotification("Bandwidth policy: Created", result.key.toString());
                 bandwidthPolicyCreateCtrl.returnToPolicies();
             }, function errorCallback(result) {
                 bandwidthPolicyCreateCtrl.crudHelperService.stopLoader(bandwidthPolicyCreateCtrl);
-                bandwidthPolicyCreateCtrl.crudHelperService.showServerError(bandwidthPolicyCreateCtrl, result);
+                bandwidthPolicyCreateCtrl.crudHelperService.showServerError("Bandwidth policy: Create failed", result);
             });
         }
     }

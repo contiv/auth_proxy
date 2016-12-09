@@ -14,6 +14,8 @@ import {Router, ActivatedRoute} from "@angular/router";
     template: require("./networklist.html")
 })
 
+
+
 export class NetworkListComponent implements OnInit, OnDestroy{
     private networksModel:NetworksModel;
     private crudHelperService: CRUDHelperService;

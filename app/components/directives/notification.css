@@ -1,14 +1,47 @@
-.notifi{
+#notificationMessage{
     z-index: 4000;
-    position: absolute;
+    position: fixed;
     display: block;
+    padding-top: 25px;
+    background: #5d5d5d;
+    padding-left: 0px;
+    padding-right: 40px;
 }
 
-#header1{
-    margin-right: 40px;
+#notificationMessage.ready, #notificationMessage.info{
+    padding-left: 30px;
+    padding-right: 50px;
 }
 
-.notifi p{
+#notificationMessage.minor{
+    padding-left: 0px;
+    padding-right: 40px;
+}
+
+#notificationText #header2, #notificationText p, #notificationText span{
+    color: white;
+}
+
+.close.icon{
+    color:white;
+    padding-right: 20px;
+}
+
+p{
     font-weight: bold;
-    margin-right: 40px;
+}
+
+p.ready, p.info{
+    width:400px
+}
+
+p.minor{
+    width:650px;
+}
+
+#notifyIcon{
+    position: relative;
+    padding-top: 4px;
+    top:15%;
+    font-size: 3em;
 }

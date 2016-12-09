@@ -32,7 +32,6 @@ export class UserCreateComponent{
 
         function resetForm() {
             crudHelperService.stopLoader(component);
-            crudHelperService.hideServerError(component);
             component.newUser = {
                 userName: '',
                 firstName: '',
@@ -59,19 +58,19 @@ export class UserCreateComponent{
         var component = this;
         if(formvalid){
             this.crudHelperService.startLoader(this);
-            this.crudHelperService.hideServerError(this);
             component.newUser.key = this.usersModel.generateKey(this.newUser);
             this.usersModel.create(component.newUser,undefined)
                 .then((result) => {
                     component.ngZone.run(() => {
                         component.crudHelperService.stopLoader(component);
+                        component.crudHelperService.showNotification("User: Created", result.key.toString());
                     });
                     component.returnToUsers();
                 }, (error) => {
                     component.ngZone.run(() => {
                         component.crudHelperService.stopLoader(component);
                     });
-                    component.crudHelperService.showServerError(component,error);
+                    component.crudHelperService.showServerError("User: Create failed",error);
                 });
         }
     }

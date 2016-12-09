@@ -9,6 +9,7 @@ import {ApplicationGroupsModel} from "../components/models/applicationgroupsmode
 import {NetworksModel} from "../components/models/networksmodel";
 import {isUndefined} from "util";
 import {ActivatedRoute, Router} from "@angular/router";
+import {NotificationType} from "../components/directives/notification";
 var _ = require('lodash');
 
 
@@ -39,11 +40,10 @@ export class NetworkdetailsComponent implements OnInit, OnDestroy{
         this.infoselected = true;
         this.statskey=''
         this['showLoader'] = true;
-        this['showServerError'] = false;
-        this['serverErrorMessage'] = '';
         this.network = {networkName: '', encap: '', subnet: '', gateway: ''};
         this.refresh=Observable.interval(5000).subscribe(() => {
-            this.getApplicationGroups(true);
+            if(this['showloader']!=true)
+                this.getApplicationGroups(true);
         });
         this.networkDetailsCtrl = this;
     }
@@ -81,19 +81,25 @@ export class NetworkdetailsComponent implements OnInit, OnDestroy{
 
     deleteNetwork(){
         var networkDetailsCtrl = this;
-        this.crudHelperService.hideServerError(networkDetailsCtrl);
         this.crudHelperService.startLoader(networkDetailsCtrl);
         if (!isUndefined(networkDetailsCtrl['network'])){
             this.networksModel.delete(networkDetailsCtrl['network'])
                 .then((result) => {
                     networkDetailsCtrl.crudHelperService.stopLoader(networkDetailsCtrl);
-                    networkDetailsCtrl.crudHelperService.showNotification("Network Deleted", result.toString());
+                    networkDetailsCtrl.crudHelperService.showNotification("Network: Deleted", result.toString());
                     networkDetailsCtrl.returnToNetworks();
                 }, (error) => {
                     networkDetailsCtrl.crudHelperService.stopLoader(networkDetailsCtrl);
-                    networkDetailsCtrl.crudHelperService.showServerError(networkDetailsCtrl, error);
+                    networkDetailsCtrl.crudHelperService.showServerError("Network: Delete failed", error);
                 })
         }
+        setTimeout(() => {
+            if(networkDetailsCtrl['showLoader']==true){
+                networkDetailsCtrl.crudHelperService.showNotification("Network: Delete task submitted", networkDetailsCtrl.network.key, NotificationType.info);
+                networkDetailsCtrl.crudHelperService.stopLoader(networkDetailsCtrl);
+            }
+            networkDetailsCtrl.returnToNetworks();
+        },2000)
 
     }
 

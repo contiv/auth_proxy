@@ -84,7 +84,6 @@ export class IsolationPolicyDetailsComponent {
         }
 
         isolationPolicyDetailsCtrl.crudHelperService.stopLoader(isolationPolicyDetailsCtrl);
-        isolationPolicyDetailsCtrl.crudHelperService.hideServerError(isolationPolicyDetailsCtrl);
 
         isolationPolicyDetailsCtrl.policiesModel.getModelByKey(activatedRoute.snapshot.params['key'], false, 'key')
             .then(function (policy) {
@@ -129,15 +128,14 @@ export class IsolationPolicyDetailsComponent {
 
     deletePolicy() {
         var isolationPolicyDetailsCtrl = this;
-        isolationPolicyDetailsCtrl.crudHelperService.hideServerError(isolationPolicyDetailsCtrl);
         isolationPolicyDetailsCtrl.crudHelperService.startLoader(isolationPolicyDetailsCtrl);
         isolationPolicyDetailsCtrl.policiesModel.delete(isolationPolicyDetailsCtrl.policy).then(function successCallback(result) {
             isolationPolicyDetailsCtrl.crudHelperService.stopLoader(isolationPolicyDetailsCtrl);
-            isolationPolicyDetailsCtrl.crudHelperService.showNotification("Isolation Policy Deleted", result);
+            isolationPolicyDetailsCtrl.crudHelperService.showNotification("Isolation policy: Deleted", result);
             isolationPolicyDetailsCtrl.returnToPolicies();
         }, function errorCallback(result) {
             isolationPolicyDetailsCtrl.crudHelperService.stopLoader(isolationPolicyDetailsCtrl);
-            isolationPolicyDetailsCtrl.crudHelperService.showServerError(isolationPolicyDetailsCtrl, result);
+            isolationPolicyDetailsCtrl.crudHelperService.showServerError("Isolation policy: Delete failed", result);
         });
     }
 
@@ -321,7 +319,6 @@ export class IsolationPolicyDetailsComponent {
     addIncomingRule() {
         var isolationPolicyDetailsCtrl = this;
         if (isolationPolicyDetailsCtrl.validateCIDR(isolationPolicyDetailsCtrl.newIncomingRule.fromIpAddress)) {
-            isolationPolicyDetailsCtrl.crudHelperService.hideServerError(isolationPolicyDetailsCtrl);
             isolationPolicyDetailsCtrl.crudHelperService.startLoader(isolationPolicyDetailsCtrl);
             isolationPolicyDetailsCtrl.generateRuleId(isolationPolicyDetailsCtrl.newIncomingRule);
             isolationPolicyDetailsCtrl.newIncomingRule.key = isolationPolicyDetailsCtrl.rulesModel.generateKey(isolationPolicyDetailsCtrl.newIncomingRule);
@@ -329,10 +326,10 @@ export class IsolationPolicyDetailsComponent {
                 isolationPolicyDetailsCtrl.crudHelperService.stopLoader(isolationPolicyDetailsCtrl);
                 isolationPolicyDetailsCtrl.incomingRules.push(result);
                 isolationPolicyDetailsCtrl.resetNewIncomingRule();
-                isolationPolicyDetailsCtrl.crudHelperService.showNotification("Isolation policy incoming rules added", result.key.toString());
+                isolationPolicyDetailsCtrl.crudHelperService.showNotification("Isolation policy: Incoming rules added", result.key.toString());
             }, function errorCallback(result) {
                 isolationPolicyDetailsCtrl.crudHelperService.stopLoader(isolationPolicyDetailsCtrl);
-                isolationPolicyDetailsCtrl.crudHelperService.showServerError(isolationPolicyDetailsCtrl, result);
+                isolationPolicyDetailsCtrl.crudHelperService.showServerError("Isolation policy: Adding incoming rules failed", result);
             });
         }
     }
@@ -343,7 +340,6 @@ export class IsolationPolicyDetailsComponent {
     addOutgoingRule() {
         var isolationPolicyDetailsCtrl = this;
         if (isolationPolicyDetailsCtrl.validateCIDR(isolationPolicyDetailsCtrl.newOutgoingRule.toIpAddress)) {
-            isolationPolicyDetailsCtrl.crudHelperService.hideServerError(isolationPolicyDetailsCtrl);
             isolationPolicyDetailsCtrl.crudHelperService.startLoader(isolationPolicyDetailsCtrl);
             isolationPolicyDetailsCtrl.generateRuleId(isolationPolicyDetailsCtrl.newOutgoingRule);
             isolationPolicyDetailsCtrl.newOutgoingRule.key = isolationPolicyDetailsCtrl.rulesModel.generateKey(isolationPolicyDetailsCtrl.newOutgoingRule);
@@ -351,10 +347,10 @@ export class IsolationPolicyDetailsComponent {
                 isolationPolicyDetailsCtrl.crudHelperService.stopLoader(isolationPolicyDetailsCtrl);
                 isolationPolicyDetailsCtrl.outgoingRules.push(result);
                 isolationPolicyDetailsCtrl.resetNewOutgoingRule();
-                isolationPolicyDetailsCtrl.crudHelperService.showNotification("Isolation policy outgoing rules added", result.key.toString());
+                isolationPolicyDetailsCtrl.crudHelperService.showNotification("Isolation policy: Outgoing rules added", result.key.toString());
             }, function errorCallback(result) {
                 isolationPolicyDetailsCtrl.crudHelperService.stopLoader(isolationPolicyDetailsCtrl);
-                isolationPolicyDetailsCtrl.crudHelperService.showServerError(isolationPolicyDetailsCtrl, result);
+                isolationPolicyDetailsCtrl.crudHelperService.showServerError("Isolation policy: Adding outgoing rules failed", result);
             });
         }
     }
@@ -364,17 +360,16 @@ export class IsolationPolicyDetailsComponent {
      */
     deleteIncomingRule(key) {
         var isolationPolicyDetailsCtrl = this;
-        isolationPolicyDetailsCtrl.crudHelperService.hideServerError(isolationPolicyDetailsCtrl);
         isolationPolicyDetailsCtrl.crudHelperService.startLoader(isolationPolicyDetailsCtrl);
         isolationPolicyDetailsCtrl.rulesModel.deleteUsingKey(key,'key', undefined).then(function successCallback(result) {
             isolationPolicyDetailsCtrl.crudHelperService.stopLoader(isolationPolicyDetailsCtrl);
             _.remove(isolationPolicyDetailsCtrl.incomingRules, function (n) {
                 return n.key == key;
             });
-            isolationPolicyDetailsCtrl.crudHelperService.showNotification("Isolation policy incoming rules deleted", result)
+            isolationPolicyDetailsCtrl.crudHelperService.showNotification("Isolation policy: Incoming rules deleted", result)
         }, function errorCallback(result) {
             isolationPolicyDetailsCtrl.crudHelperService.stopLoader(isolationPolicyDetailsCtrl);
-            isolationPolicyDetailsCtrl.crudHelperService.showServerError(isolationPolicyDetailsCtrl, result);
+            isolationPolicyDetailsCtrl.crudHelperService.showServerError("Isolation policy: Deleting incoming rules failed", result);
         });
     }
 
@@ -383,17 +378,16 @@ export class IsolationPolicyDetailsComponent {
      */
     deleteOutgoingRule(key) {
         var isolationPolicyDetailsCtrl = this;
-        isolationPolicyDetailsCtrl.crudHelperService.hideServerError(isolationPolicyDetailsCtrl);
         isolationPolicyDetailsCtrl.crudHelperService.startLoader(isolationPolicyDetailsCtrl);
         isolationPolicyDetailsCtrl.rulesModel.deleteUsingKey(key, 'key', undefined).then(function successCallback(result) {
             isolationPolicyDetailsCtrl.crudHelperService.stopLoader(isolationPolicyDetailsCtrl);
             _.remove(isolationPolicyDetailsCtrl.outgoingRules, function (n) {
                 return n.key == key;
             });
-            isolationPolicyDetailsCtrl.crudHelperService.showNotification("Isolation policy outgoing rules deleted", result)
+            isolationPolicyDetailsCtrl.crudHelperService.showNotification("Isolation policy: Outgoing rules deleted", result)
         }, function errorCallback(result) {
             isolationPolicyDetailsCtrl.crudHelperService.stopLoader(isolationPolicyDetailsCtrl);
-            isolationPolicyDetailsCtrl.crudHelperService.showServerError(isolationPolicyDetailsCtrl, result);
+            isolationPolicyDetailsCtrl.crudHelperService.showServerError("Isolation policy: Deleting outgoing rules failed", result);
         });
     }
 }

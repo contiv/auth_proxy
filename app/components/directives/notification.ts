@@ -4,7 +4,14 @@
 
 import {Component, DoCheck, OnInit} from "@angular/core";
 import {CRUDHelperService} from "../utils/crudhelperservice";
+import {isUndefined} from "util";
 declare var jQuery:any;
+
+export enum NotificationType {
+    confirm,
+    alert,
+    info
+}
 
 @Component({
     selector: 'notification',
@@ -13,50 +20,100 @@ declare var jQuery:any;
 })
 
 export class NotificationComponent implements DoCheck, OnInit{
+    public NotificationType = NotificationType;
     public message: string = '';
     public item: string = '';
-    private state: string = 'not-trigerred';
+    private notifyId: number = 0
+    public notificationType: NotificationType;
+    private notifyCounter: number = 0;
     constructor(private crudHelperService: CRUDHelperService){
     }
 
     ngOnInit(){
-        jQuery('.notifi').css(
-            {   right:0+'px',
-                top: ((8/100)*window.innerHeight) + 'px'
+        jQuery('.notify').css(
+            {   right:30+'px',
+                top: ((80/100)*window.innerHeight) + 'px'
             });
-        jQuery('.notifi').css({visibility: 'hidden'});
+        jQuery('.notify').css({visibility: 'hidden'});
         window.onresize = function(){
-            jQuery('.notifi').css(
-                {   right:0+'px',
-                    top: ((8/100)*window.innerHeight) + 'px'
+            jQuery('.notify').css(
+                {   right:30+'px',
+                    top: ((80/100)*window.innerHeight) + 'px'
                 });
         }
+        this.notifyId = 0;
     }
 
-    ngDoCheck(){
-        if (this.crudHelperService.displayNotifi){
-            this.message = this.crudHelperService.message;
-            this.item = this.crudHelperService.item;
-            this.crudHelperService.displayNotifi = false;
-            var self = this;
-            if (this.state !== 'not-trigerred' && this.state !== 'closed') {
-                jQuery('.notifi').transition('slide left');
+    runAnimation(start: boolean){
+        var self = this;
+        var animation = {
+            animation: 'fly up',
+            onStart: function(){
+                if(start)
+                    self.displayMessage();
             }
-            jQuery('.notifi').transition('slide left');
-            this.state = 'running';
+        }
+        jQuery('.notify').transition(animation);
+    }
 
-            setTimeout(function () {
-                if(self.state==='running'){
-                    jQuery('.notifi').transition('slide left');
-                    self.state = 'closed';
+    displayMessage(){
+        this.message = this.crudHelperService.message;
+        this.item = this.crudHelperService.item;
+        this.notificationType = this.crudHelperService.notificationType;
+        if(isUndefined(this.notificationType))
+            this.notificationType = NotificationType.confirm;
+    }
+
+    /*
+        Since notification is part of the Menu component. The ngDoCheck() block runs every time the angular
+        checks for changes in the Document tree.
+        CrudhelperService is the service using which all child components of menu communicate with the
+        notification component.
+        this.crudHelperService.displayNotify gets set to true when this.crudHelperService.showNotification is called.
+        When its true : -
+            a) if there is any earlier notification which is getting displayed then the notifyId would be positive integer.
+                In this case I will be closing the current notification by running this.runAnimation(false), The flag is false
+                so while closing the notification I dont change the message inside the Notification element.
+            b) if there is no earlier notification  I execute runAnimation() with flag true which swaps the message inside the notification element on
+                start of the animation.
+            c) The notification counter for the first time would be 1. This id is passed to notifyTimer which sets up a setTimeout.
+                The setTimeout only hides the notification with matching timerId and notifyId. If there is a new notification
+                before the previous setTimeout has closed the previous notification, Then we first close the previous notification and we increment the notifyId
+                and create a new timer for closing notification with id 2. Meanwhile after 20 sec if the setTimeout from previous
+                notification runs, we dont close the notification since the timer id of the previous notification is 1 but
+                the current notifyId is 2.
+    */
+    ngDoCheck(){
+        var self = this;
+        if (this.crudHelperService.displayNotify){
+            if (this.notifyId !== 0) {
+                this.runAnimation(false);
+                this.notifyId = 0;
+            }
+
+            this.crudHelperService.displayNotify = false;
+            this.runAnimation(true);
+            var currentnotifyId = ++this.notifyCounter;
+            this.notifyId = currentnotifyId;
+            var newTimer = new notifyTimer(currentnotifyId);
+
+        }
+
+        function notifyTimer(timerId){
+            var timerId = timerId;
+            setTimeout(function(){
+                if(timerId == self.notifyId){
+                    self.runAnimation(false);
+                    self.notifyId = 0;
                 }
-            }, 10000);
-
+            },15000)
         }
     }
 
-    close(){
-        jQuery('.notifi').transition('slide left');
-        this.state = 'closed';
+
+    close() {
+        this.runAnimation(false);
+        this.notifyId = 0;
     }
 }
+

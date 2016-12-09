@@ -26,8 +26,6 @@ export class LoginComponent implements OnInit{
                 crudHelperService: CRUDHelperService,
                 private authService: AuthService){
         this.showLoader = true;
-        this.showServerError = false;
-        this.serverErrorMessage = '';
         this.crudHelperService = crudHelperService;
         this.username = '';
         this.password = '';
@@ -36,7 +34,6 @@ export class LoginComponent implements OnInit{
 
     ngOnInit(){
         this.crudHelperService.stopLoader(this);
-        this.crudHelperService.hideServerError(this);
         jQuery("body").addClass("loginbackground");
     }
 

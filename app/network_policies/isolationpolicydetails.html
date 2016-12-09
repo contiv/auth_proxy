@@ -266,13 +266,5 @@
                 </button>
             </div>
         </div>
-        <ctv-error *ngIf="((showServerError) && (mode === 'edit'))"
-                   header="Error editing isolation policy"
-                   [error]="serverErrorMessage">
-        </ctv-error>
-        <ctv-error *ngIf="((showServerError) && (mode === 'details'))"
-                   header="Error deleting isolation policy"
-                   [error]="serverErrorMessage">
-        </ctv-error>
     </div>
 </div>

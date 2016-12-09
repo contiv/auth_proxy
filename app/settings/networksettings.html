@@ -10,5 +10,3 @@
         <acisettingcomp [firstRunWiz]="false" (updateAciDef)="updateAciSetting($event)" [extra_vars]="networkSettingCtrl.extra_vars"></acisettingcomp>
     </ctv-collapsible>
 </div>
-<ctv-error *ngIf="showServerError" header="Error updating settings" [error]="serverErrorMessage">
-</ctv-error>

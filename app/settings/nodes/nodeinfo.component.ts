@@ -38,7 +38,6 @@ export class NodeInfoComponent implements OnInit {
     ngOnInit() {
         var component = this;
         component.crudHelperService.stopLoader(component);
-        component.crudHelperService.hideServerError(component);
 
         component.bgpsModel.getModelByKey(component.activatedRoute.snapshot.params['key'], false, 'key')
             .then(function successCallBack(node) {
@@ -64,7 +63,6 @@ export class NodeInfoComponent implements OnInit {
     saveNode(formvalid:boolean) {
         var component = this;
         if (formvalid) {
-            component.crudHelperService.hideServerError(component);
             component.crudHelperService.startLoader(component);
 
             component.bgpsModel.save(component.node).then(
@@ -72,11 +70,13 @@ export class NodeInfoComponent implements OnInit {
                     component.ngZone.run(() => {
                         component.crudHelperService.stopLoader(component);
                     });
+                    component.crudHelperService.showNotification("Node: Bgp config updated", result.key.toString());
                     component.returnToNodeDetails();
                 }, function errorCallback(result) {
                     component.ngZone.run(() => {
                         component.crudHelperService.stopLoader(component);
                     });
+                    component.crudHelperService.showServerError("Node: Bgp config update failed", result);
                     component.crudHelperService.showServerError(component, result);
                 });
         }

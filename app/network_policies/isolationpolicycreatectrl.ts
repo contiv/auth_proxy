@@ -21,7 +21,6 @@ export class IsolationPolicyCreateComponent {
         var isolationPolicyCreateCtrl = this;
         function resetForm() {
             crudHelperService.stopLoader(isolationPolicyCreateCtrl);
-            crudHelperService.hideServerError(isolationPolicyCreateCtrl);
             isolationPolicyCreateCtrl.newPolicy = {
                 policyName: '',
                 tenantName: 'default'//TODO: Remove hardcoded tenant.
@@ -42,17 +41,16 @@ export class IsolationPolicyCreateComponent {
     createPolicy(validform: boolean) {
         var isolationPolicyCreateCtrl = this;
         if (validform) {
-            isolationPolicyCreateCtrl.crudHelperService.hideServerError(isolationPolicyCreateCtrl);
             isolationPolicyCreateCtrl.crudHelperService.startLoader(isolationPolicyCreateCtrl);
             isolationPolicyCreateCtrl.newPolicy.key =
                 isolationPolicyCreateCtrl.policiesModel.generateKey(isolationPolicyCreateCtrl.newPolicy);
             isolationPolicyCreateCtrl.policiesModel.create(isolationPolicyCreateCtrl.newPolicy, undefined).then(function successCallback(result) {
                 isolationPolicyCreateCtrl.crudHelperService.stopLoader(isolationPolicyCreateCtrl);
-                isolationPolicyCreateCtrl.crudHelperService.showNotification("Isolation Policy Created", result.key);
+                isolationPolicyCreateCtrl.crudHelperService.showNotification("Isolation policy: Created", result.key);
                 isolationPolicyCreateCtrl.returnToPolicies();
             }, function errorCallback(result) {
                 isolationPolicyCreateCtrl.crudHelperService.stopLoader(isolationPolicyCreateCtrl);
-                isolationPolicyCreateCtrl.crudHelperService.showServerError(isolationPolicyCreateCtrl, result);
+                isolationPolicyCreateCtrl.crudHelperService.showServerError("Isolation policy: Create failed", result);
             });
         }
     }

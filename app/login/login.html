@@ -9,11 +9,8 @@
 
             <div id="login-failed" class="ui small modal">
                 <div class="header">Login Failed</div>
-                <div class="content" *ngIf="!loginCtrl.showServerError">
+                <div class="content">
                     <p>Username or Password is wrong</p>
-                </div>
-                <div class="content" *ngIf="loginCtrl.showServerError">
-                    <p>{{serverErrorMessage}}</p>
                 </div>
                 <div class="actions">
                     <div class="ui positive button" onclick="$('#login-failed').modal('hide')">

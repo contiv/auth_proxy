@@ -66,14 +66,6 @@
                 </button>
             </div>
         </div>
-        <ctv-error *ngIf="((showServerError) && (mode === 'edit'))"
-                   header="Error saving application group"
-                   [error]="serverErrorMessage">
-        </ctv-error>
-        <ctv-error *ngIf="((showServerError) && (mode === 'details'))"
-                   header="Error deleting application group"
-                   [error]="serverErrorMessage">
-        </ctv-error>
     </div>
 </div>
 

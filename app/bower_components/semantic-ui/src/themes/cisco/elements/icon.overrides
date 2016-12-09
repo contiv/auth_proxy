@@ -29,12 +29,16 @@
 }
 .icon.info .path2:before {
     content: "\e93f";
-    margin-left: -1em;
+    position: absolute;
+    right: 3px;
+    top: 3px;
     color: rgb(255, 255, 255);
 }
 .icon.info .path3:before {
     content: "\e940";
-    margin-left: -1em;
+    position: absolute;
+    top: 3px;
+    right: 3px;
     color: rgb(255, 255, 255);
 }
 .icon.major .path1:before {
@@ -57,12 +61,16 @@
 }
 .icon.minor .path2:before {
     content: "\e945";
-    margin-left: -1em;
+    position: absolute;
+    right: 4px;
+    top: 4px;
     color: rgb(255, 255, 255);
 }
 .icon.minor .path3:before {
     content: "\e946";
-    margin-left: -1em;
+    position: absolute;
+    top: 4px;
+    right: 4px;
     color: rgb(255, 255, 255);
 }
 .icon.pending .path1:before {
@@ -90,7 +98,9 @@
 }
 .icon.ready .path2:before {
     content: "\e94c";
-    margin-left: -1em;
+    position: absolute;
+    right: 3px;
+    top: 4px;
     color: rgb(255, 255, 255);
 }
 .icon.soaking:before {

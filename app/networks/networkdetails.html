@@ -42,7 +42,3 @@
 
 <network-info [networkDetailsCtrl]="networkDetailsCtrl" *ngIf="infoselected"></network-info>
 <network-stat [statKey]="statskey" *ngIf="!infoselected"></network-stat>
-
-<ctv-error *ngIf="networkDetailsCtrl.showServerError" [header]="'Error deleting network'"
-           [error]="networkDetailsCtrl.serverErrorMessage">
-</ctv-error>

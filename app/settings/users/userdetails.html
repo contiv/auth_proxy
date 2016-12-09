@@ -155,15 +155,7 @@
                     </button>
                 </div>
             </div>
-            <ctv-error *ngIf="showServerError"
-                       header="Error saving user"
-                       [error]="serverErrorMessage">
-            </ctv-error>
         </form>
-        <ctv-error *ngIf="((showServerError) && (mode === 'details'))"
-                   header="Error deleting user"
-                   [error]="serverErrorMessage">
-        </ctv-error>
     </div>
 
 </div>

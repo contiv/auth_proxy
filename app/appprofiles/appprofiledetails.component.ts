@@ -30,7 +30,6 @@ export class AppProfileDetailsComponent {
         }
 
         component.crudHelperService.stopLoader(component);
-        component.crudHelperService.hideServerError(component);
 
         component.appProfilesModel.getModelByKey(activatedRoute.snapshot.params['key'], false, 'key')
             .then(function (appProfile) {
@@ -58,41 +57,39 @@ export class AppProfileDetailsComponent {
 
     deleteAppProfile() {
         var component = this;
-        component.crudHelperService.hideServerError(component);
         component.crudHelperService.startLoader(component);
         component.appProfilesModel.delete(component.appProfile).then(
             function successCallback(result) {
                 component.ngZone.run(() => {
                     component.crudHelperService.stopLoader(component);
-                    component.crudHelperService.showNotification("Application Profile Deleted", result);
+                    component.crudHelperService.showNotification("Application profile: Deleted", result);
                 });
                 component.returnToAppProfile();
             }, function errorCallback(result) {
                 component.ngZone.run(() => {
                     component.crudHelperService.stopLoader(component);
                 });
-                component.crudHelperService.showServerError(component, result);
+                component.crudHelperService.showServerError("Application profile: Delete failed", result);
             });
     }
 
     saveAppProfile(formvalid: boolean) {
         var component = this;
         if (formvalid) {
-            component.crudHelperService.hideServerError(component);
             component.crudHelperService.startLoader(component);
 
             component.appProfilesModel.save(component.appProfile).then(
                 function successCallback(result) {
                     component.ngZone.run(() => {
                         component.crudHelperService.stopLoader(component);
-                        component.crudHelperService.showNotification("Application Profile Updated", result.key.toString());
+                        component.crudHelperService.showNotification("Application profile: Updated", result.key.toString());
                     });
                     component.returnToAppProfileDetails();
                 }, function errorCallback(result) {
                     component.ngZone.run(() => {
                         component.crudHelperService.stopLoader(component);
                     });
-                    component.crudHelperService.showServerError(component, result);
+                    component.crudHelperService.showServerError("Application profile: Update failed", result);
                 });
         }
     }

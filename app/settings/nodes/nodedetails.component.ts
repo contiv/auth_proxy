@@ -40,7 +40,6 @@ export class NodeDetailsComponent implements OnInit {
     ngOnInit() {
         var component = this;
         component.crudHelperService.stopLoader(component);
-        component.crudHelperService.hideServerError(component);
 
         component.bgpsModel.getModelByKey(component.activatedRoute.snapshot.params['key'], false, 'key')
             .then(function successCallBack(node) {
@@ -66,20 +65,19 @@ export class NodeDetailsComponent implements OnInit {
 
     deleteNode() {
         var component = this;
-        component.crudHelperService.hideServerError(component);
         component.crudHelperService.startLoader(component);
         component.bgpsModel.delete(component.node).then(
             function successCallback(result) {
                 component.ngZone.run(() => {
                     component.crudHelperService.stopLoader(component);
                 });
+                component.crudHelperService.showNotification("Node: Deleted", result);
                 component.returnToNode();
             }, function errorCallback(result) {
                 component.ngZone.run(() => {
                     component.crudHelperService.stopLoader(component);
                 });
-                component.crudHelperService.showServerError(component, result);
+                component.crudHelperService.showServerError("Node: Delete failed", result);
             });
     }
-
 }

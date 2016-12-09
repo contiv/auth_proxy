@@ -45,28 +45,28 @@ export class NetworkSettingsComponent {
 
     updateNetworkSettings(settings:any) {
         var networkSettingCtrl = this;
-        networkSettingCtrl.crudHelperService.hideServerError(networkSettingCtrl);
         networkSettingCtrl.crudHelperService.startLoader(networkSettingCtrl);
         networkSettingCtrl.networkService.updateSettings(networkSettingCtrl.setting).then(function successCallback(result) {
             networkSettingCtrl.crudHelperService.stopLoader(networkSettingCtrl);
+            networkSettingCtrl.crudHelperService.showNotification("Network settings: Updated", result.key.toString());
             }, function errorCallback(result) {
                 networkSettingCtrl.crudHelperService.stopLoader(networkSettingCtrl);
-                networkSettingCtrl.crudHelperService.showServerError(networkSettingCtrl, result._body);
+                networkSettingCtrl.crudHelperService.showServerError("Network settings: Update failed", result);
         });
     }
 
     updateAciSetting(extra_vars:any){
         var networkSettingCtrl = this;
-        networkSettingCtrl.crudHelperService.hideServerError(networkSettingCtrl);
         networkSettingCtrl.crudHelperService.startLoader(networkSettingCtrl);
         networkSettingCtrl.nodesService.cleanupExtraVars(networkSettingCtrl);
         networkSettingCtrl.nodesService.createExtraVars(networkSettingCtrl);
         networkSettingCtrl.nodesService.updateSettings(extra_vars)
             .then((result) => {
                 networkSettingCtrl.crudHelperService.stopLoader(networkSettingCtrl);
+                networkSettingCtrl.crudHelperService.showNotification("ACI settings: Updated", result.key.toString());
             }, (error) => {
                 networkSettingCtrl.crudHelperService.stopLoader(networkSettingCtrl);
-                networkSettingCtrl.crudHelperService.showServerError(networkSettingCtrl, error._body);
+                networkSettingCtrl.crudHelperService.showServerError("ACI settings: Update failed", error);
             })
 
     }

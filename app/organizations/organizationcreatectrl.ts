@@ -38,20 +38,19 @@ export class OrganizationCreateComponent{
         var organizationCreateCtrl = this;
         if(formvalid){
             this.crudHelperService.startLoader(this);
-            this.crudHelperService.hideServerError(this);
             organizationCreateCtrl.newOrganization.key = organizationCreateCtrl.newOrganization.tenantName;
             this.organizationsModel.create(organizationCreateCtrl.newOrganization,undefined)
                 .then((result) => {
                     organizationCreateCtrl.ngZone.run(() => {
                         organizationCreateCtrl.crudHelperService.stopLoader(organizationCreateCtrl);
-                        organizationCreateCtrl.crudHelperService.showNotification("Organization Created", result.key);
+                        organizationCreateCtrl.crudHelperService.showNotification("Organization: Created", result.key);
                     });
                     organizationCreateCtrl.returnToOrganizations();
                 }, (error) => {
                     organizationCreateCtrl.ngZone.run(() => {
                         organizationCreateCtrl.crudHelperService.stopLoader(organizationCreateCtrl);
                     });
-                    organizationCreateCtrl.crudHelperService.showServerError(organizationCreateCtrl,error);
+                    organizationCreateCtrl.crudHelperService.showServerError("Organization: Create failed",error);
                 });
         }
     }

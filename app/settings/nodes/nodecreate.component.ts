@@ -23,7 +23,6 @@ export class NodeCreateComponent {
 
         function resetForm() {
             crudHelperService.stopLoader(component);
-            crudHelperService.hideServerError(component);
             component.newNode = {
                 "key": "",
                 "hostname": "",
@@ -49,19 +48,19 @@ export class NodeCreateComponent {
         var component = this;
         if (formvalid) {
             this.crudHelperService.startLoader(this);
-            this.crudHelperService.hideServerError(this);
             component.newNode.key = component.newNode.hostname;
             this.bgpsModel.create(component.newNode, undefined)
                 .then((result) => {
                     component.ngZone.run(() => {
                         component.crudHelperService.stopLoader(component);
+                        component.crudHelperService.showNotification("Node: Created", result.key.toString());
                     });
                     component.returnToNodes();
                 }, (error) => {
                     component.ngZone.run(() => {
                         component.crudHelperService.stopLoader(component);
                     });
-                    component.crudHelperService.showServerError(component, error);
+                    component.crudHelperService.showServerError("Node: Create failed", error);
                 });
         }
     }

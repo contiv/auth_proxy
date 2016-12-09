@@ -36,7 +36,6 @@ export class ApplicationGroupCreateComponent {
 
         function resetForm() {
             crudHelperService.stopLoader(applicationGroupCreateCtrl);
-            crudHelperService.hideServerError(applicationGroupCreateCtrl);
             applicationGroupCreateCtrl.applicationGroup = {
                 groupName: '',          // For Group Name
                 networkName: '',        // For Network Name
@@ -61,7 +60,6 @@ export class ApplicationGroupCreateComponent {
     createApplicationGroup(validform: boolean) {
         var applicationGroupCreateCtrl = this;
         if (validform) {
-            applicationGroupCreateCtrl.crudHelperService.hideServerError(applicationGroupCreateCtrl);
             applicationGroupCreateCtrl.crudHelperService.startLoader(applicationGroupCreateCtrl);
             applicationGroupCreateCtrl.applicationGroup.networkName =
                 applicationGroupCreateCtrl.selectedNetwork;
@@ -76,11 +74,11 @@ export class ApplicationGroupCreateComponent {
             applicationGroupCreateCtrl.applicationGroupsModel.create(applicationGroupCreateCtrl.applicationGroup,undefined).then(
                 function successCallback(result) {
                     applicationGroupCreateCtrl.crudHelperService.stopLoader(applicationGroupCreateCtrl);
-                    applicationGroupCreateCtrl.crudHelperService.showNotification("Application Group Created", result.key.toString());
+                    applicationGroupCreateCtrl.crudHelperService.showNotification("Application group: Created", result.key.toString());
                     applicationGroupCreateCtrl.returnToApplicationGroup();
                 }, function errorCallback(result) {
                     applicationGroupCreateCtrl.crudHelperService.stopLoader(applicationGroupCreateCtrl);
-                    applicationGroupCreateCtrl.crudHelperService.showServerError(applicationGroupCreateCtrl, result);
+                    applicationGroupCreateCtrl.crudHelperService.showServerError("Application group: Create failed", result);
                 });
         }
     }

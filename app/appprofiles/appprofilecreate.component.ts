@@ -21,7 +21,6 @@ export class AppProfileCreateComponent {
 
         function resetForm() {
             crudHelperService.stopLoader(component);
-            crudHelperService.hideServerError(component);
             component.newAppProfile = {
                 key: '',
                 appProfileName: '',
@@ -45,20 +44,19 @@ export class AppProfileCreateComponent {
         var component = this;
         if (formvalid) {
             this.crudHelperService.startLoader(this);
-            this.crudHelperService.hideServerError(this);
             component.newAppProfile.key = this.appProfilesModel.generateKey(this.newAppProfile);
             this.appProfilesModel.create(component.newAppProfile, undefined)
                 .then((result) => {
                     component.ngZone.run(() => {
                         component.crudHelperService.stopLoader(component);
-                        component.crudHelperService.showNotification("Application Profile Created", result.key.toString());
+                        component.crudHelperService.showNotification("Application profile: Created", result.key.toString());
                     });
                     component.returnToAppProfiles();
                 }, (error) => {
                     component.ngZone.run(() => {
                         component.crudHelperService.stopLoader(component);
                     });
-                    component.crudHelperService.showServerError(component, error);
+                    component.crudHelperService.showServerError("Application profile: Create failed", error);
                 });
         }
     }

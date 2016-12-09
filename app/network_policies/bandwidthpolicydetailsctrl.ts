@@ -39,23 +39,21 @@ export class BandwidthPolicyDetailsComponent {
                 bandwidthPolicyDetailsCtrl.policy = policy;
             });
         bandwidthPolicyDetailsCtrl.crudHelperService.stopLoader(bandwidthPolicyDetailsCtrl);
-        bandwidthPolicyDetailsCtrl.crudHelperService.hideServerError(bandwidthPolicyDetailsCtrl);
 
         setMode();
     }
 
     deletePolicy() {
         var bandwidthPolicyDetailsCtrl = this;
-        bandwidthPolicyDetailsCtrl.crudHelperService.hideServerError(bandwidthPolicyDetailsCtrl);
         bandwidthPolicyDetailsCtrl.crudHelperService.startLoader(bandwidthPolicyDetailsCtrl);
         bandwidthPolicyDetailsCtrl.netprofilesModel.deleteUsingKey(bandwidthPolicyDetailsCtrl.policy.key, 'key', undefined).then(
             function successCallback(result) {
                 bandwidthPolicyDetailsCtrl.crudHelperService.stopLoader(bandwidthPolicyDetailsCtrl);
-                bandwidthPolicyDetailsCtrl.crudHelperService.showNotification("Bandwidth Policy Deleted", result);
+                bandwidthPolicyDetailsCtrl.crudHelperService.showNotification("Bandwidth policy: Deleted", result);
                 bandwidthPolicyDetailsCtrl.returnToPolicies();
             }, function errorCallback(result) {
                 bandwidthPolicyDetailsCtrl.crudHelperService.stopLoader(bandwidthPolicyDetailsCtrl);
-                bandwidthPolicyDetailsCtrl.crudHelperService.showServerError(bandwidthPolicyDetailsCtrl, result);
+                bandwidthPolicyDetailsCtrl.crudHelperService.showServerError("Bandwidth policy: Delete failed", result);
             });
     }
 
@@ -79,16 +77,15 @@ export class BandwidthPolicyDetailsComponent {
     savePolicy(validform: boolean) {
         var bandwidthPolicyDetailsCtrl = this;
         if (validform) {
-            bandwidthPolicyDetailsCtrl.crudHelperService.hideServerError(bandwidthPolicyDetailsCtrl);
             bandwidthPolicyDetailsCtrl.crudHelperService.startLoader(bandwidthPolicyDetailsCtrl);
             bandwidthPolicyDetailsCtrl.policy.bandwidth = bandwidthPolicyDetailsCtrl.policy.bandwidthNumber + " " + bandwidthPolicyDetailsCtrl.policy.bandwidthUnit;
             bandwidthPolicyDetailsCtrl.netprofilesModel.save(bandwidthPolicyDetailsCtrl.policy).then(function successCallback(result) {
                 bandwidthPolicyDetailsCtrl.crudHelperService.stopLoader(bandwidthPolicyDetailsCtrl);
-                bandwidthPolicyDetailsCtrl.crudHelperService.showNotification("Bandwidth Policy Updated", result.key.toString());
+                bandwidthPolicyDetailsCtrl.crudHelperService.showNotification("Bandwidth policy: Updated", result.key.toString());
                 bandwidthPolicyDetailsCtrl.returnToPolicyDetails();
             }, function errorCallback(result) {
                 bandwidthPolicyDetailsCtrl.crudHelperService.stopLoader(bandwidthPolicyDetailsCtrl);
-                bandwidthPolicyDetailsCtrl.crudHelperService.showServerError(bandwidthPolicyDetailsCtrl, result);
+                bandwidthPolicyDetailsCtrl.crudHelperService.showServerError("Bandwidth policy: Update failed", result);
             });
         }
     }

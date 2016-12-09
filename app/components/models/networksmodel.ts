@@ -28,4 +28,16 @@ export class NetworksModel extends Collection {
                 return result;
             });
     }
+
+    get(reload: boolean):Promise<any>{
+        var collection = this;
+        if(collection.cudOperationFlag){
+            return new Promise(function(resolve, reject){
+                resolve(collection.models)
+            })
+        }
+        else{
+            return super.get(reload);
+        }
+    }
 }

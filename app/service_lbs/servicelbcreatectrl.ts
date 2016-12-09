@@ -59,16 +59,15 @@ export class ServicelbCreateComponent implements OnInit{
         var servicelbCreateCtrl = this;
         this.createLabelSelectorStrings();
         if(formvalid){
-            this.crudHelperService.hideServerError(this);
             this.crudHelperService.startLoader(this);
             this.servicelb.key = this.servicelb.tenantName + ':' + this.servicelb.serviceName;
             this.servicelbsModel.create(this.servicelb, undefined).then((result) => {
                 servicelbCreateCtrl.crudHelperService.stopLoader(servicelbCreateCtrl);
-                servicelbCreateCtrl.crudHelperService.showNotification("Service Load Balancer Created", result.key.toString());
+                servicelbCreateCtrl.crudHelperService.showNotification("Service load balancer: Created", result.key.toString());
                 this.returnToServicelbs();
             }, (error) => {
                 servicelbCreateCtrl.crudHelperService.stopLoader(servicelbCreateCtrl);
-                servicelbCreateCtrl.crudHelperService.showServerError(servicelbCreateCtrl, error);
+                servicelbCreateCtrl.crudHelperService.showServerError("Service load balancer: Create failed", error);
             });
         }
     }

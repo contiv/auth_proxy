@@ -42,7 +42,6 @@ export class UserDetailsComponent {
         }
 
         component.crudHelperService.stopLoader(component);
-        component.crudHelperService.hideServerError(component);
 
         component.usersModel.getModelByKey(activatedRoute.snapshot.params['key'], false, 'key')
             .then(function (user) {
@@ -71,26 +70,25 @@ export class UserDetailsComponent {
 
     deleteUser() {
         var component = this;
-        component.crudHelperService.hideServerError(component);
         component.crudHelperService.startLoader(component);
         component.usersModel.delete(component.user).then(
             function successCallback(result) {
                 component.ngZone.run(() => {
                     component.crudHelperService.stopLoader(component);
                 });
+                component.crudHelperService.showNotification("User: Deleted", result)
                 component.returnToUser();
             }, function errorCallback(result) {
                 component.ngZone.run(() => {
                     component.crudHelperService.stopLoader(component);
                 });
-                component.crudHelperService.showServerError(component, result);
+                component.crudHelperService.showServerError("User: Delete failed", result);
             });
     }
 
     saveUser(formvalid: boolean) {
         var component = this;
         if (formvalid) {
-            component.crudHelperService.hideServerError(component);
             component.crudHelperService.startLoader(component);
 
             component.usersModel.save(component.user).then(
@@ -98,12 +96,13 @@ export class UserDetailsComponent {
                     component.ngZone.run(() => {
                         component.crudHelperService.stopLoader(component);
                     });
+                    component.crudHelperService.showNotification("User: Updated", result.key.toString());
                     component.returnToUserDetails();
                 }, function errorCallback(result) {
                     component.ngZone.run(() => {
                         component.crudHelperService.stopLoader(component);
                     });
-                    component.crudHelperService.showServerError(component, result);
+                    component.crudHelperService.showServerError("User: Update failed", result);
                 });
         }
     }
