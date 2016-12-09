@@ -1,10 +1,12 @@
 package db
 
 import (
+	"os/exec"
 	"sort"
 	"testing"
 
 	log "github.com/Sirupsen/logrus"
+	"github.com/contiv/ccn_proxy/common"
 	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
 	"github.com/contiv/ccn_proxy/common/test"
 	"github.com/contiv/ccn_proxy/common/types"
@@ -26,6 +28,7 @@ var (
 	datastorePaths = []string{
 		GetPath(RootLocalUsers),
 		GetPath(RootPrincipals),
+		GetPath(RootLdapConfiguration),
 	}
 )
 
@@ -47,6 +50,9 @@ func (s *dbSuite) SetUpSuite(c *C) {
 		log.Fatalln(err)
 	}
 
+	// set `tls_key_file` in Globals
+	exec.Command("/bin/sh", "-c", "make generate-certificate")
+	common.Global().Set("tls_key_file", "../local_certs/local.key")
 }
 
 // TearDownSuite reverts the data store state + any further cleanup required.

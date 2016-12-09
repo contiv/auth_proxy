@@ -548,3 +548,74 @@ func listTenantAuthorizations(token *auth.Token, w http.ResponseWriter, req *htt
 	// process status codes
 	processStatusCodes(httpStatus, httpResponse, w)
 }
+
+// LDAP configuration management handler functions
+// NOTE: for now, these actions should be performed only by `admin` roles
+
+// addLdapConfiguration adds LDAP configuration to the system.
+// it can return various HTTP codes:
+//    201 (Created; configuration added to the system)
+//    404 (BadRequest; configuration exists in the system already)
+//    500 (internal server error)
+func addLdapConfiguration(token *auth.Token, w http.ResponseWriter, req *http.Request) {
+	body, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		serverError(w, errors.New("Failed to read body from request: "+err.Error()))
+		return
+	}
+
+	ls := &types.LdapConfiguration{}
+	if err := json.Unmarshal(body, ls); err != nil {
+		serverError(w, errors.New("Failed to unmarshal user info. from request body: "+err.Error()))
+		return
+	}
+
+	statusCode, resp := addLdapConfigurationHelper(ls)
+	processStatusCodes(statusCode, resp, w)
+
+}
+
+// getLdapConfiguration retrieves LDAP configuration from the system.
+// it can return various HTTP codes:
+//    200 (OK; fetch was successful)
+//    404 (NotFound, configuration not found)
+//    500 (internal server error)
+func getLdapConfiguration(token *auth.Token, w http.ResponseWriter, req *http.Request) {
+	statusCode, resp := getLdapConfigurationHelper()
+	processStatusCodes(statusCode, resp, w)
+
+}
+
+// deleteLdapConfiguration deletes the existing LDAP configuration in the system.
+// it can return various HTTP codes:
+//    204 (NoContent; configuration deleted from the system)
+//    404 (NotFound; configuration not found)
+//    500 (internal server error)
+func deleteLdapConfiguration(token *auth.Token, w http.ResponseWriter, req *http.Request) {
+	statusCode, resp := deleteLdapConfigurationHelper()
+	processStatusCodes(statusCode, resp, w)
+
+}
+
+// updateLdapConfiguration updates the existing LDAP configuration in the system.
+// it can return various HTTP codes:
+//    200 (OK; configuration updated)
+//    404 (NotFound, configuration not found)
+//    500 (internal server error)
+func updateLdapConfiguration(token *auth.Token, w http.ResponseWriter, req *http.Request) {
+	body, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		serverError(w, errors.New("Failed to read body from request: "+err.Error()))
+		return
+	}
+
+	ls := &types.LdapConfiguration{}
+	if err := json.Unmarshal(body, ls); err != nil {
+		serverError(w, errors.New("Failed to unmarshal user info. from request body: "+err.Error()))
+		return
+	}
+
+	statusCode, resp := updateLdapConfigurationHelper(ls)
+	processStatusCodes(statusCode, resp, w)
+
+}
