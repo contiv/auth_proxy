@@ -7,6 +7,7 @@ import { Collection } from "./collection";
 import {Observable} from "rxjs";
 import { ContivGlobals } from "./contivglobals";
 import {ApiService} from "../utils/apiservice";
+import {isUndefined} from "util";
 
 
 @Injectable()
@@ -23,6 +24,24 @@ export class ApplicationGroupsModel extends Collection {
         return group.tenantName + ':' + group.groupName;
     }
 
+    getInspectByKey(key:string, url: string, reload: boolean): Promise<any>{
+        return super.getInspectByKey(key,url,reload)
+            .then((result) => {
+                if(!isUndefined(result['Oper'].endpoints)){
+                    var processedEndpoints = [];
+                    var endpoints = result['Oper'].endpoints;
+                    for(var i=0; i<endpoints.length; i++){
+                        if(isUndefined(endpoints[i].containerID)){
+                            endpoints[i]['containerID'] = endpoints[i]['endpointID'];
+                            endpoints[i]['containerName'] = endpoints[i]['endpointID'].toString().substr(0,6);
+                        }
+                    }
+                    result['Oper'].endpoints = endpoints;
+                }
+                return result;
+            });
+    }
+
     public get(reload:boolean): Promise<any>{
         return super.get(reload)
                     .then((result) => {
@@ -37,6 +56,6 @@ export class ApplicationGroupsModel extends Collection {
                         }
                         return items;
                     });
-        }
+    }
 
 }

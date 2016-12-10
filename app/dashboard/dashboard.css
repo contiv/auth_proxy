@@ -19,3 +19,15 @@ tbody tr.notSelected:hover{
 .notSelected{
     background: none;
 }
+
+.tabular.menu a.item{
+    color:#049fd9
+}
+
+.tabular.menu a.item.active{
+    color:black;
+}
+
+.graphTable{
+    width:80%;
+}

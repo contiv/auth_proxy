@@ -1,11 +1,12 @@
-.large.arrow.left.icon{
-    margin-top: -7px;
-    position: relative;
-    left: 4px;
+#slider{
+    width:92%;
 }
 
-.large.arrow.right.icon{
-    margin-top: -7px;
-    position: relative;
-    left: -5px;
+span{
+    font-family: CiscoSansRegular;
+    font-weight: bold;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 8px;
+    font-size: 15px;
 }

@@ -133,7 +133,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 26:
+/***/ 23:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -744,7 +744,7 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(3);
-	var http_1 = __webpack_require__(23);
+	var http_1 = __webpack_require__(24);
 	var authservice_1 = __webpack_require__(53);
 	var ApiService = (function () {
 	    function ApiService(http, authService) {
@@ -1057,10 +1057,11 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 3/11/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var http_1 = __webpack_require__(23);
+	var http_1 = __webpack_require__(24);
 	var collection_1 = __webpack_require__(41);
 	var contivglobals_1 = __webpack_require__(14);
 	var apiservice_1 = __webpack_require__(33);
+	var util_1 = __webpack_require__(23);
 	var ApplicationGroupsModel = (function (_super) {
 	    __extends(ApplicationGroupsModel, _super);
 	    function ApplicationGroupsModel(http, apiService) {
@@ -1072,6 +1073,23 @@ webpackJsonp([2],{
 	     */
 	    ApplicationGroupsModel.prototype.generateKey = function (group) {
 	        return group.tenantName + ':' + group.groupName;
+	    };
+	    ApplicationGroupsModel.prototype.getInspectByKey = function (key, url, reload) {
+	        return _super.prototype.getInspectByKey.call(this, key, url, reload)
+	            .then(function (result) {
+	            if (!util_1.isUndefined(result['Oper'].endpoints)) {
+	                var processedEndpoints = [];
+	                var endpoints = result['Oper'].endpoints;
+	                for (var i = 0; i < endpoints.length; i++) {
+	                    if (util_1.isUndefined(endpoints[i].containerID)) {
+	                        endpoints[i]['containerID'] = endpoints[i]['endpointID'];
+	                        endpoints[i]['containerName'] = endpoints[i]['endpointID'].toString().substr(0, 6);
+	                    }
+	                }
+	                result['Oper'].endpoints = endpoints;
+	            }
+	            return result;
+	        });
 	    };
 	    ApplicationGroupsModel.prototype.get = function (reload) {
 	        return _super.prototype.get.call(this, reload)
@@ -1120,9 +1138,9 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(3);
-	var http_1 = __webpack_require__(23);
+	var http_1 = __webpack_require__(24);
 	var collection_1 = __webpack_require__(41);
-	var util_1 = __webpack_require__(26);
+	var util_1 = __webpack_require__(23);
 	var contivglobals_1 = __webpack_require__(14);
 	var apiservice_1 = __webpack_require__(33);
 	var NetworksModel = (function (_super) {
@@ -1191,9 +1209,9 @@ webpackJsonp([2],{
 	__webpack_require__(337);
 	__webpack_require__(338);
 	__webpack_require__(142);
-	var http_1 = __webpack_require__(23);
+	var http_1 = __webpack_require__(24);
 	var authMatrix_1 = __webpack_require__(162);
-	var util_1 = __webpack_require__(26);
+	var util_1 = __webpack_require__(23);
 	var AuthService = (function () {
 	    function AuthService(http) {
 	        this.http = http;
@@ -1353,7 +1371,7 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 11/21/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var http_1 = __webpack_require__(23);
+	var http_1 = __webpack_require__(24);
 	var collection_1 = __webpack_require__(41);
 	var contivglobals_1 = __webpack_require__(14);
 	var apiservice_1 = __webpack_require__(33);
@@ -1393,7 +1411,7 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(3);
-	var http_1 = __webpack_require__(23);
+	var http_1 = __webpack_require__(24);
 	var collection_1 = __webpack_require__(41);
 	var contivglobals_1 = __webpack_require__(14);
 	var apiservice_1 = __webpack_require__(33);
@@ -1433,7 +1451,7 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(3);
-	var http_1 = __webpack_require__(23);
+	var http_1 = __webpack_require__(24);
 	var collection_1 = __webpack_require__(41);
 	var contivglobals_1 = __webpack_require__(14);
 	var apiservice_1 = __webpack_require__(33);
@@ -1484,7 +1502,7 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 5/11/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var http_1 = __webpack_require__(23);
+	var http_1 = __webpack_require__(24);
 	var collection_1 = __webpack_require__(41);
 	var contivglobals_1 = __webpack_require__(14);
 	var apiservice_1 = __webpack_require__(33);
@@ -1598,11 +1616,11 @@ webpackJsonp([2],{
 	 * Created by hardik gandhi on 6/15/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var http_1 = __webpack_require__(23);
+	var http_1 = __webpack_require__(24);
 	var collection_1 = __webpack_require__(41);
 	var contivglobals_1 = __webpack_require__(14);
 	var apiservice_1 = __webpack_require__(33);
-	var util_1 = __webpack_require__(26);
+	var util_1 = __webpack_require__(23);
 	var NetprofilesModel = (function (_super) {
 	    __extends(NetprofilesModel, _super);
 	    function NetprofilesModel(http, apiService) {
@@ -1718,7 +1736,7 @@ webpackJsonp([2],{
 	};
 	var core_1 = __webpack_require__(3);
 	var crudhelperservice_1 = __webpack_require__(9);
-	var util_1 = __webpack_require__(26);
+	var util_1 = __webpack_require__(23);
 	(function (NotificationType) {
 	    NotificationType[NotificationType["confirm"] = 0] = "confirm";
 	    NotificationType[NotificationType["alert"] = 1] = "alert";
@@ -1848,7 +1866,7 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 11/11/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var http_1 = __webpack_require__(23);
+	var http_1 = __webpack_require__(24);
 	var collection_1 = __webpack_require__(41);
 	var contivglobals_1 = __webpack_require__(14);
 	var apiservice_1 = __webpack_require__(33);
@@ -1898,7 +1916,7 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 11/7/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var http_1 = __webpack_require__(23);
+	var http_1 = __webpack_require__(24);
 	var collection_1 = __webpack_require__(41);
 	var contivglobals_1 = __webpack_require__(14);
 	var apiservice_1 = __webpack_require__(33);
@@ -1977,7 +1995,7 @@ webpackJsonp([2],{
 	 * Created by cshampur on 7/17/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var util_1 = __webpack_require__(26);
+	var util_1 = __webpack_require__(23);
 	var InspectService = (function () {
 	    function InspectService() {
 	    }
@@ -2069,7 +2087,7 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 3/8/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var http_1 = __webpack_require__(23);
+	var http_1 = __webpack_require__(24);
 	var collection_1 = __webpack_require__(41);
 	var _ = __webpack_require__(29);
 	var contivglobals_1 = __webpack_require__(14);
@@ -2145,11 +2163,11 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(3);
-	var rxjs_1 = __webpack_require__(24);
+	var rxjs_1 = __webpack_require__(25);
 	var authservice_1 = __webpack_require__(53);
 	var contivglobals_1 = __webpack_require__(14);
 	var apiservice_1 = __webpack_require__(33);
-	var util_1 = __webpack_require__(26);
+	var util_1 = __webpack_require__(23);
 	(function (EndpointType) {
 	    EndpointType[EndpointType["Network"] = 0] = "Network";
 	    EndpointType[EndpointType["ApplicationGroup"] = 1] = "ApplicationGroup";
@@ -2236,7 +2254,7 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(3);
-	var http_1 = __webpack_require__(23);
+	var http_1 = __webpack_require__(24);
 	__webpack_require__(143);
 	var contivglobals_1 = __webpack_require__(14);
 	var apiservice_1 = __webpack_require__(33);
@@ -2541,7 +2559,7 @@ webpackJsonp([2],{
 	var router_1 = __webpack_require__(6);
 	var applicationgroupsmodel_1 = __webpack_require__(46);
 	var crudhelperservice_1 = __webpack_require__(9);
-	var rxjs_1 = __webpack_require__(24);
+	var rxjs_1 = __webpack_require__(25);
 	var AppGrouplistComponent = (function () {
 	    function AppGrouplistComponent(activatedRoute, router, appGroupModel, crudHelperService) {
 	        var _this = this;
@@ -2791,7 +2809,7 @@ webpackJsonp([2],{
 	var core_1 = __webpack_require__(3);
 	var router_1 = __webpack_require__(6);
 	var crudhelperservice_1 = __webpack_require__(9);
-	var rxjs_1 = __webpack_require__(24);
+	var rxjs_1 = __webpack_require__(25);
 	var appprofilesmodel_1 = __webpack_require__(93);
 	var AppProfileListComponent = (function () {
 	    function AppProfileListComponent(activatedRoute, router, appProfilesModel, crudHelperService, ngZone) {
@@ -2960,7 +2978,7 @@ webpackJsonp([2],{
 	var router_1 = __webpack_require__(6);
 	var authservice_1 = __webpack_require__(53);
 	var authMatrix_1 = __webpack_require__(162);
-	var util_1 = __webpack_require__(26);
+	var util_1 = __webpack_require__(23);
 	var AuthGuard = (function () {
 	    function AuthGuard(authService, router) {
 	        this.authService = authService;
@@ -3066,7 +3084,7 @@ webpackJsonp([2],{
 	var policiesmodel_1 = __webpack_require__(70);
 	var networksmodel_1 = __webpack_require__(47);
 	var servicelbsmodel_1 = __webpack_require__(71);
-	var util_1 = __webpack_require__(26);
+	var util_1 = __webpack_require__(23);
 	var chartservice_1 = __webpack_require__(117);
 	var DashboardComponent = (function () {
 	    function DashboardComponent(networksModel, applicationGroupsModel, policiesModel, servicelbsModel, ngZone) {
@@ -4191,10 +4209,10 @@ webpackJsonp([2],{
 	};
 	var core_1 = __webpack_require__(3);
 	var crudhelperservice_1 = __webpack_require__(9);
-	var rxjs_1 = __webpack_require__(24);
+	var rxjs_1 = __webpack_require__(25);
 	var applicationgroupsmodel_1 = __webpack_require__(46);
 	var networksmodel_1 = __webpack_require__(47);
-	var util_1 = __webpack_require__(26);
+	var util_1 = __webpack_require__(23);
 	var router_1 = __webpack_require__(6);
 	var notification_1 = __webpack_require__(92);
 	var _ = __webpack_require__(29);
@@ -4305,7 +4323,7 @@ webpackJsonp([2],{
 	var core_1 = __webpack_require__(3);
 	var networksmodel_1 = __webpack_require__(47);
 	var crudhelperservice_1 = __webpack_require__(9);
-	var rxjs_1 = __webpack_require__(24);
+	var rxjs_1 = __webpack_require__(25);
 	var router_1 = __webpack_require__(6);
 	var NetworkListComponent = (function () {
 	    function NetworkListComponent(router, activatedRoute, networksModel, crudHelperService) {
@@ -4521,7 +4539,7 @@ webpackJsonp([2],{
 	var core_1 = __webpack_require__(3);
 	var router_1 = __webpack_require__(6);
 	var crudhelperservice_1 = __webpack_require__(9);
-	var rxjs_1 = __webpack_require__(24);
+	var rxjs_1 = __webpack_require__(25);
 	var organizationsmodel_1 = __webpack_require__(69);
 	var OrganizationListComponent = (function () {
 	    function OrganizationListComponent(activatedRoute, router, organizationsModel, crudHelperService, ngZone) {
@@ -4909,7 +4927,7 @@ webpackJsonp([2],{
 	};
 	var core_1 = __webpack_require__(3);
 	var crudhelperservice_1 = __webpack_require__(9);
-	var rxjs_1 = __webpack_require__(24);
+	var rxjs_1 = __webpack_require__(25);
 	var servicelbsmodel_1 = __webpack_require__(71);
 	var router_1 = __webpack_require__(6);
 	var ServicelbListComponent = (function () {
@@ -4981,9 +4999,9 @@ webpackJsonp([2],{
 	};
 	var core_1 = __webpack_require__(3);
 	var crudhelperservice_1 = __webpack_require__(9);
-	var rxjs_1 = __webpack_require__(24);
+	var rxjs_1 = __webpack_require__(25);
 	var inspectservice_1 = __webpack_require__(95);
-	var util_1 = __webpack_require__(26);
+	var util_1 = __webpack_require__(23);
 	var servicelbsmodel_1 = __webpack_require__(71);
 	var contivglobals_1 = __webpack_require__(14);
 	var ServicelbStatComponent = (function () {
@@ -5337,7 +5355,7 @@ webpackJsonp([2],{
 	var core_1 = __webpack_require__(3);
 	var router_1 = __webpack_require__(6);
 	var crudhelperservice_1 = __webpack_require__(9);
-	var rxjs_1 = __webpack_require__(24);
+	var rxjs_1 = __webpack_require__(25);
 	var bgpsmodel_1 = __webpack_require__(68);
 	var NodeListComponent = (function () {
 	    function NodeListComponent(activatedRoute, router, bgpsModel, crudHelperService, ngZone) {
@@ -5650,7 +5668,7 @@ webpackJsonp([2],{
 	var core_1 = __webpack_require__(3);
 	var router_1 = __webpack_require__(6);
 	var crudhelperservice_1 = __webpack_require__(9);
-	var rxjs_1 = __webpack_require__(24);
+	var rxjs_1 = __webpack_require__(25);
 	var usersmodel_1 = __webpack_require__(94);
 	var UserListComponent = (function () {
 	    function UserListComponent(activatedRoute, router, usersModel, crudHelperService, ngZone) {
@@ -5755,7 +5773,7 @@ webpackJsonp([2],{
 	 */
 	var core_1 = __webpack_require__(3);
 	var platform_browser_1 = __webpack_require__(91);
-	var http_1 = __webpack_require__(23);
+	var http_1 = __webpack_require__(24);
 	var common_1 = __webpack_require__(19);
 	var dashboard_module_1 = __webpack_require__(395);
 	var networkpolicies_module_1 = __webpack_require__(404);
@@ -6111,9 +6129,9 @@ webpackJsonp([2],{
 	var applicationgroupsmodel_1 = __webpack_require__(46);
 	var crudhelperservice_1 = __webpack_require__(9);
 	var inspectservice_1 = __webpack_require__(95);
-	var rxjs_1 = __webpack_require__(24);
+	var rxjs_1 = __webpack_require__(25);
 	var contivglobals_1 = __webpack_require__(14);
-	var util_1 = __webpack_require__(26);
+	var util_1 = __webpack_require__(23);
 	var ApplicationGroupStatsComponent = (function () {
 	    function ApplicationGroupStatsComponent(applicationGroupsModel, crudHelperService, inspectService, ngZone) {
 	        var _this = this;
@@ -6208,7 +6226,7 @@ webpackJsonp([2],{
 	var core_1 = __webpack_require__(3);
 	var _ = __webpack_require__(29);
 	var netprofilesmodel_1 = __webpack_require__(76);
-	var util_1 = __webpack_require__(26);
+	var util_1 = __webpack_require__(23);
 	/*
 	angular.module("contiv.applicationgroups")
 	    .directive("ctvBandwidthpolicy", function () {
@@ -6822,8 +6840,8 @@ webpackJsonp([2],{
 	};
 	var core_1 = __webpack_require__(3);
 	var chartservice_1 = __webpack_require__(117);
-	var util_1 = __webpack_require__(26);
-	var util_2 = __webpack_require__(26);
+	var util_1 = __webpack_require__(23);
+	var util_2 = __webpack_require__(23);
 	var LineGraphComponent = (function () {
 	    function LineGraphComponent(chartService) {
 	        this.chartService = chartService;
@@ -6831,10 +6849,10 @@ webpackJsonp([2],{
 	        this.lineChartOptions = {};
 	        this.lineChartColors = [
 	            {
-	                backgroundColor: 'rgba(77,83,96,0.2)',
-	                borderColor: 'rgba(77,83,96,1)',
-	                pointBackgroundColor: 'rgba(77,83,96,1)',
-	                pointBorderColor: '#fff',
+	                backgroundColor: 'rgba(255,255,255,0',
+	                borderColor: 'rgba(4,159,217,1)',
+	                pointBackgroundColor: 'rgba(0,117,180,1)',
+	                pointBorderColor: 'rgba(0,117,180,1)',
 	                pointHoverBackgroundColor: '#fff',
 	                pointHoverBorderColor: 'rgba(77,83,96,1)'
 	            }
@@ -6863,6 +6881,7 @@ webpackJsonp([2],{
 	            var currKey = _this.key;
 	            var currEndpointType = _this.endpointType;
 	            if (resultKey === currKey && resultEndpointType === currEndpointType) {
+	                _this.scaleEnd++;
 	                if (!_this.inspectActivated) {
 	                    _this.start++;
 	                    _this.end++;
@@ -6926,6 +6945,14 @@ webpackJsonp([2],{
 	                            suggestedMax: max * 1.5
 	                        }
 	                    }]
+	            },
+	            elements: {
+	                line: {
+	                    borderWidth: 2
+	                },
+	                point: {
+	                    radius: 4
+	                }
 	            }
 	        };
 	    };
@@ -6940,28 +6967,23 @@ webpackJsonp([2],{
 	    LineGraphComponent.prototype.prepareChartData = function () {
 	        this.inspectActivated = false;
 	        this.end = this.chartService.graphData[this.endpointType][this.key].length - 1;
+	        this.scaleEnd = this.end;
 	        this.start = this.end - 14;
 	        this.lineChartOptions = {};
 	        this.loadGraphData();
 	        this.prevKey = this.key;
 	        this.prevEndpointType = this.endpointType;
 	    };
-	    LineGraphComponent.prototype.leftpress = function () {
-	        if (this.start > 0) {
+	    LineGraphComponent.prototype.slide = function (slideVal) {
+	        if (slideVal < this.scaleEnd) {
 	            this.inspectActivated = true;
-	            this.start--;
-	            this.end--;
-	            this.loadGraphData();
 	        }
-	    };
-	    LineGraphComponent.prototype.rightpress = function () {
-	        if (this.end < (this.chartService.graphData[this.endpointType][this.key].length - 1)) {
-	            this.end++;
-	            this.start++;
-	            this.loadGraphData();
-	            if (this.end == (this.chartService.graphData[this.endpointType][this.key].length - 1))
-	                this.inspectActivated = false;
+	        if (slideVal == this.scaleEnd) {
+	            this.inspectActivated = false;
 	        }
+	        this.end = slideVal;
+	        this.start = slideVal - 14;
+	        this.loadGraphData();
 	    };
 	    LineGraphComponent.prototype.ngOnDestroy = function () {
 	        this.subscription.unsubscribe();
@@ -7227,7 +7249,7 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(3);
-	var util_1 = __webpack_require__(26);
+	var util_1 = __webpack_require__(23);
 	var _ = __webpack_require__(29);
 	var CtvTableComponent = (function () {
 	    function CtvTableComponent() {
@@ -8120,7 +8142,7 @@ webpackJsonp([2],{
 	 */
 	var core_1 = __webpack_require__(3);
 	var crudhelperservice_1 = __webpack_require__(9);
-	var rxjs_1 = __webpack_require__(24);
+	var rxjs_1 = __webpack_require__(25);
 	var netprofilesmodel_1 = __webpack_require__(76);
 	var BandwidthListComponent = (function () {
 	    function BandwidthListComponent(netprofilesModel, crudHelperService, ngZone) {
@@ -8188,7 +8210,7 @@ webpackJsonp([2],{
 	var core_1 = __webpack_require__(3);
 	var policiesmodel_1 = __webpack_require__(70);
 	var crudhelperservice_1 = __webpack_require__(9);
-	var rxjs_1 = __webpack_require__(24);
+	var rxjs_1 = __webpack_require__(25);
 	var IsolationListComponent = (function () {
 	    function IsolationListComponent(policiesModel, crudHelperService, ngZone) {
 	        var _this = this;
@@ -8426,10 +8448,10 @@ webpackJsonp([2],{
 	};
 	var core_1 = __webpack_require__(3);
 	var crudhelperservice_1 = __webpack_require__(9);
-	var rxjs_1 = __webpack_require__(24);
+	var rxjs_1 = __webpack_require__(25);
 	var networksmodel_1 = __webpack_require__(47);
 	var inspectservice_1 = __webpack_require__(95);
-	var util_1 = __webpack_require__(26);
+	var util_1 = __webpack_require__(23);
 	var contivglobals_1 = __webpack_require__(14);
 	var NetworkStatComponent = (function () {
 	    function NetworkStatComponent(networksModel, crudHelperService, inspectSerrvice, ngZone) {
@@ -8820,7 +8842,7 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 12/7/16.
 	 */
 	var core_1 = __webpack_require__(3);
-	var rxjs_1 = __webpack_require__(24);
+	var rxjs_1 = __webpack_require__(25);
 	var contivglobals_1 = __webpack_require__(14);
 	var bgpsmodel_1 = __webpack_require__(68);
 	var crudhelperservice_1 = __webpack_require__(9);

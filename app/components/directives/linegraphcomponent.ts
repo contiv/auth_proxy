@@ -28,16 +28,17 @@ export class LineGraphComponent implements OnInit, DoCheck, OnDestroy{
     public lineChartOptions:any = {};
     public lineChartColors:Array<any> = [
         { // dark grey
-            backgroundColor: 'rgba(77,83,96,0.2)',
-            borderColor: 'rgba(77,83,96,1)',
-            pointBackgroundColor: 'rgba(77,83,96,1)',
-            pointBorderColor: '#fff',
+            backgroundColor: 'rgba(255,255,255,0',
+            borderColor: 'rgba(4,159,217,1)',
+            pointBackgroundColor: 'rgba(0,117,180,1)',
+            pointBorderColor: 'rgba(0,117,180,1)',
             pointHoverBackgroundColor: '#fff',
             pointHoverBorderColor: 'rgba(77,83,96,1)'
         }
     ];
     public lineChartLegend:boolean = true;
     public lineChartType:string = 'line';
+    public scaleEnd: number;
     constructor(private chartService: ChartService){
         this.lineChartData = [{
             label: '# of Endpoints',
@@ -61,6 +62,7 @@ export class LineGraphComponent implements OnInit, DoCheck, OnDestroy{
             var currKey = this.key;
             var currEndpointType = this.endpointType;
             if(resultKey===currKey && resultEndpointType === currEndpointType){
+                this.scaleEnd++;
                 if (!this.inspectActivated){
                     this.start++;
                     this.end++;
@@ -127,6 +129,14 @@ export class LineGraphComponent implements OnInit, DoCheck, OnDestroy{
                         suggestedMax: max * 1.5
                     }
                 }]
+            },
+            elements: {
+                line:{
+                    borderWidth: 2
+                    },
+                point:{
+                    radius: 4
+                    }
             }
         }
     }
@@ -143,6 +153,7 @@ export class LineGraphComponent implements OnInit, DoCheck, OnDestroy{
     private prepareChartData(){
         this.inspectActivated = false;
         this.end = this.chartService.graphData[this.endpointType][this.key].length - 1;
+        this.scaleEnd = this.end;
         this.start = this.end - 14 ;
         this.lineChartOptions = {};
         this.loadGraphData();
@@ -150,25 +161,16 @@ export class LineGraphComponent implements OnInit, DoCheck, OnDestroy{
         this.prevEndpointType = this.endpointType;
     }
 
-
-    leftpress(){
-        if (this.start > 0){
+    slide(slideVal: number){
+        if(slideVal < this.scaleEnd){
             this.inspectActivated = true;
-            this.start--;
-            this.end--;
-            this.loadGraphData();
         }
-    }
-
-    rightpress(){
-        if(this.end < (this.chartService.graphData[this.endpointType][this.key].length - 1)){
-            this.end++;
-            this.start++;
-            this.loadGraphData();
-            if(this.end == (this.chartService.graphData[this.endpointType][this.key].length - 1))
-                this.inspectActivated = false;
-
+        if(slideVal == this.scaleEnd){
+            this.inspectActivated = false;
         }
+        this.end = slideVal;
+        this.start = slideVal - 14;
+        this.loadGraphData();
     }
 
     ngOnDestroy(){

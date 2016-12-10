@@ -1,4 +1,3 @@
-<h2 style="margin-left: 5px">{{EndpointType[endpointType]}}</h2>
 <div style="display: block;">
     <canvas id="canvas1"
             baseChart width="900" height="300"
@@ -11,13 +10,16 @@
     </canvas>
 </div>
 <div class="ui grid">
-    <div class="ui two wide column">
-        <div class="ui button" (click)="leftpress()"><i class="large arrow left icon"></i></div>
+    <div class="ui one column centered row">
+        <div class="ui center aligned twelve wide column">
+            <h5>Time Series</h5>
+        </div>
     </div>
-    <div class="ui two wide column">
-        <div class="ui button" (click)="rightpress()"><i class="large arrow right icon"></i></div>
-    </div>
-    <div class="ui center aligned four wide column">
-        <h5>Time Series</h5>
+    <div class="ui one column centered row">
+        <div class="ui center aligned twelve wide column">
+            <span>0</span>
+            <input type="range" #slider [min]="'14'" [max]="scaleEnd" id="slider"  [value]="end" (change)="slide(slider.value)">
+            <span>{{scaleEnd}}</span>
+        </div>
     </div>
 </div>
