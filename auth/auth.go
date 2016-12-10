@@ -75,7 +75,7 @@ func getPrincipal(principalName string, isLocal bool) (string, string, error) {
 
 	// TODO: hardcoding dummy values till this becomes
 	// available
-	return "2222", "devops", nil
+	return "2222", types.Ops.String(), nil
 }
 
 //
@@ -142,7 +142,7 @@ func AddTenantAuthorization(token *Token, tenantName, principalName string,
 	defer common.Untrace(common.Trace())
 
 	// use principal name to get principal UUID
-	principalID, _, err := getPrincipal(principalName, isLocal)
+	principalID, role, err := getPrincipal(principalName, isLocal)
 	if err != nil {
 		return types.Authorization{}, err
 	}
@@ -164,10 +164,12 @@ func AddTenantAuthorization(token *Token, tenantName, principalName string,
 			StateDriver: sd,
 			ID:          uuid.NewV4().String(),
 		},
-		UUID:        uuid.NewV4().String(),
-		PrincipalID: principalID,
-		ClaimKey:    claimStr,
-		ClaimValue:  types.DerivedFromPrincipalRole,
+		UUID:          uuid.NewV4().String(),
+		PrincipalName: principalName,
+		PrincipalID:   principalID,
+		Local:         isLocal,
+		ClaimKey:      claimStr,
+		ClaimValue:    role,
 	}
 
 	// insert authorization
@@ -274,7 +276,7 @@ func UpdateTenantAuthorization(token *Token, authzUUID, tenantName,
 	defer common.Untrace(common.Trace())
 
 	// use principal name to get principal UUID
-	principalID, _, err := getPrincipal(principalName, isLocal)
+	principalID, role, err := getPrincipal(principalName, isLocal)
 	if err != nil {
 		return types.Authorization{}, err
 	}
@@ -296,10 +298,12 @@ func UpdateTenantAuthorization(token *Token, authzUUID, tenantName,
 			StateDriver: sd,
 			ID:          uuid.NewV4().String(),
 		},
-		UUID:        authzUUID,
-		PrincipalID: principalID,
-		ClaimKey:    claimStr,
-		ClaimValue:  types.DerivedFromPrincipalRole,
+		UUID:          authzUUID,
+		PrincipalName: principalName,
+		PrincipalID:   principalID,
+		Local:         isLocal,
+		ClaimKey:      claimStr,
+		ClaimValue:    role,
 	}
 
 	// delete authz from the KV store

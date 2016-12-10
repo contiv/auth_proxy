@@ -94,29 +94,6 @@ func processFlags() {
 	flag.Parse()
 }
 
-/*
-// initializeStateDriver initializes the state driver based on the given data store address
-// params:
-//  dataStoreAddress: address of the data store
-// return values:
-//  returns any error as NewStateDriver() + validation errors
-func initializeStateDriver(dataStoreAddress string) error {
-	if common.IsEmpty(dataStoreAddress) {
-		return errors.New("Empty data store address")
-	}
-
-	if strings.HasPrefix(dataStoreAddress, state.EtcdName+"://") {
-		_, err := state.NewStateDriver(state.EtcdName, &types.KVStoreConfig{StoreURL: dataStoreAddress})
-		return err
-	} else if strings.HasPrefix(dataStoreAddress, state.ConsulName+"://") {
-		_, err := state.NewStateDriver(state.ConsulName, &types.KVStoreConfig{StoreURL: dataStoreAddress})
-		return err
-	}
-
-	return errors.New("Invalid data store address")
-}
-*/
-
 func main() {
 
 	log.Println(ProgramName, ProgramVersion, "starting up...")

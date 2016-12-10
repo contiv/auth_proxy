@@ -49,16 +49,20 @@ const (
 //               types.State)
 //  UUID: unique ID for an authorization.
 //  PrincipalID: UUID of the subject.
+//  Local:    Bool indicating whether the principal is a local user. False indicates
+//            that the principal is an LDAP group
 //  ClaimKey: string encoding of the claim's key associated with the authorization
 //  ClaimValue: string encoding of the claim's value associated with the
 //    authorization
 //
 type Authorization struct {
 	CommonState
-	UUID        string `json:"uuid"`
-	PrincipalID string `json:"principalID"`
-	ClaimKey    string `json:"claimKey"`
-	ClaimValue  string `json:"claimValue"`
+	UUID          string `json:"uuid"`
+	PrincipalName string `json:"principalName"`
+	PrincipalID   string `json:"principalID"`
+	Local         bool   `json:"local"`
+	ClaimKey      string `json:"claimKey"`
+	ClaimValue    string `json:"claimValue"`
 }
 
 //

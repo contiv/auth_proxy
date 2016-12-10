@@ -59,6 +59,7 @@ func loginHandler(w http.ResponseWriter, req *http.Request) {
 	// authenticate the user using `username` and `password`
 	tokenStr, err := auth.Authenticate(lReq.Username, lReq.Password)
 	if err != nil {
+		log.Error("failed to authenticate user, err:", err)
 		authError(w, http.StatusUnauthorized, "Invalid username/password")
 		return
 	}
@@ -332,7 +333,10 @@ func addTenantAuthorization(token *auth.Token, w http.ResponseWriter, req *http.
 	switch err {
 	case nil:
 
-		jsonAuthz, err := json.Marshal(authz)
+		getAuthzReply := convertAuthz(authz)
+
+		// convert authorization reply to JSON
+		jsonAuthz, err := json.Marshal(getAuthzReply)
 		if err != nil {
 
 			log.Error("failed to marshal authorization, err:", err)
@@ -408,12 +412,7 @@ func getTenantAuthorization(token *auth.Token, w http.ResponseWriter, req *http.
 	case nil:
 		httpStatus = http.StatusOK
 
-		getAuthzReply := GetAuthorizationReply{
-			AuthzUUID:   authz.UUID,
-			PrincipalID: authz.PrincipalID,
-			ClaimKey:    authz.ClaimKey,
-			ClaimValue:  authz.ClaimValue,
-		}
+		getAuthzReply := convertAuthz(authz)
 
 		// convert authorization reply to JSON
 		jsonAuthzReply, err := json.Marshal(getAuthzReply)
@@ -482,7 +481,9 @@ func updateTenantAuthorization(token *auth.Token, w http.ResponseWriter, req *ht
 	switch err {
 
 	case nil:
-		jsonAuthz, err := json.Marshal(authz)
+		getAuthzReply := convertAuthz(authz)
+
+		jsonAuthzReply, err := json.Marshal(getAuthzReply)
 		if err != nil {
 
 			log.Error("failed to marshal authorization, err:", err)
@@ -494,7 +495,7 @@ func updateTenantAuthorization(token *auth.Token, w http.ResponseWriter, req *ht
 			return
 		}
 		httpStatus = http.StatusOK
-		httpResponse = jsonAuthz
+		httpResponse = jsonAuthzReply
 	default:
 		httpStatus = http.StatusInternalServerError
 		httpResponse = []byte(err.Error())
@@ -522,12 +523,7 @@ func listTenantAuthorizations(token *auth.Token, w http.ResponseWriter, req *htt
 		// convert authorizations to authorization reply msgs
 		var authzReplyList []GetAuthorizationReply
 		for _, authz := range authzList {
-			authzReply := GetAuthorizationReply{
-				AuthzUUID:   authz.UUID,
-				PrincipalID: authz.PrincipalID,
-				ClaimKey:    authz.ClaimKey,
-				ClaimValue:  authz.ClaimValue,
-			}
+			authzReply := convertAuthz(authz)
 			authzReplyList = append(authzReplyList, authzReply)
 		}
 
