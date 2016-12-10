@@ -13,6 +13,7 @@ export const ContivGlobals = {
     'SERVICELBS_ENDPOINT': '/netmaster/api/v1/serviceLBs/',
     'ORGANIZATIONS_ENDPOINT':'/netmaster/api/v1/tenants/',
     'NETWORK_SETTINGS_ENDPOINT': '/netmaster/api/v1/globals/',
+    'ACI_SETTINGS_ENDPOINT': '/netmaster/api/v1/aciGws/',
     'NETPROFILES_ENDPOINT': '/netmaster/api/v1/netprofiles/',
     'BGPS_ENDPOINT': '/netmaster/api/v1/Bgps/',
     'BGPS_INSPECT_ENDPOINT': '/netmaster/api/v1/inspect/Bgps/',

@@ -34,16 +34,24 @@
     <table class="ui very basic selectable table">
         <tbody>
             <tr>
-                <td class="ctv-header three wide column">ACI Url</td>
-                <td>{{wizardService.extra_vars.apic_url}}</td>
+                <td class="ctv-header three wide column">Physical domain</td>
+                <td>{{wizardService.aciSetting.physicalDomain}}</td>
             </tr>
             <tr>
-                <td class="ctv-header three wide column">ACI Username</td>
-                <td>{{wizardService.extra_vars.apic_username}}</td>
+                <td class="ctv-header three wide column">Node bindings</td>
+                <td>{{wizardService.aciSetting.nodeBindings}}</td>
             </tr>
             <tr>
-                <td class="ctv-header three wide column">Leaf Nodes</td>
-                <td>{{wizardService.extra_vars.apic_leaf_nodes}}</td>
+                <td class="ctv-header three wide column">Path bindings</td>
+                <td>{{wizardService.aciSetting.pathBindings}}</td>
+            </tr>
+            <tr>
+                <td class="ctv-header three wide column">Enforce security policies</td>
+                <td>{{wizardService.aciSetting.enforcePolicies}}</td>
+            </tr>
+            <tr>
+                <td class="ctv-header three wide column">Lookup objects in common tenant</td>
+                <td>{{wizardService.aciSetting.includeCommonTenant}}</td>
             </tr>
         </tbody>
     </table>

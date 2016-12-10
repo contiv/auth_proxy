@@ -36,14 +36,14 @@ export class FirstrunConfirmComponent implements OnInit{
         // A loader will be shown un til all the updates are completed.
         this.showLoader = true;
 
-        /*
+
         this.wizardService.updateSettings()
             .then((result) => {
                 this.loadDashboard();
             }, (error) => {
                 this.loadDashboard();
             });
-        */
+        
         this.loadDashboard();
     }
 

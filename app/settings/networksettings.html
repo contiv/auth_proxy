@@ -3,10 +3,10 @@
         <div class="ui loader"></div>
     </div>
     <ctv-collapsible [title]="'Network Settings'">
-        <networksettingcomp [firstRunWiz]="false" (updateNetDef)="updateNetworkSettings($event)" [setting]="networkSettingCtrl.setting"></networksettingcomp>
+        <networksettingcomp [firstRunWiz]="false" (updateNetDef)="updateNetworkSettings($event)" [setting]="setting"></networksettingcomp>
     </ctv-collapsible>
     <div class="ui section divider" style="margin-top: 30px"></div>
     <ctv-collapsible [title]="'ACI Settings'">
-        <acisettingcomp [firstRunWiz]="false" (updateAciDef)="updateAciSetting($event)" [extra_vars]="networkSettingCtrl.extra_vars"></acisettingcomp>
+        <acisettingcomp [firstRunWiz]="false" (updateAciDef)="updateAciSetting($event)" [setting]="aciSetting"></acisettingcomp>
     </ctv-collapsible>
 </div>

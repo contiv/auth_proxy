@@ -1,27 +1,23 @@
 import { Component } from '@angular/core';
 import { CRUDHelperService } from "../components/utils/crudhelperservice";
 import { NetworkService } from "../components/utils/networkservice";
-import {ContivGlobals} from "../components/models/contivglobals";
-import {NodesService} from "../components/utils/nodesservice";
-
+import { ContivGlobals } from "../components/models/contivglobals";
 
 @Component({
     selector: 'networksetting',
     templateUrl: 'settings/networksettings.html'
 })
 export class NetworkSettingsComponent {
-    public setting: any;
-    public extra_vars:  any;
-    public networkSettingCtrl: any;
+    setting: any;
+    aciSetting: any;
 
     constructor(private crudHelperService:  CRUDHelperService,
-                private networkService: NetworkService,
-                private nodesService: NodesService){
+                private networkService: NetworkService){
         this.setting = {};
+        this.aciSetting = {};
         this['showLoader']=true;
         this['showServerError'] = false;
         this['serverErrorMessage'] = '';
-        this.extra_vars = {};
         var networkSettingCtrl = this;
 
         function getNetworkSettings() {
@@ -36,17 +32,19 @@ export class NetworkSettingsComponent {
 
         getNetworkSettings();
 
-        nodesService.getSettings(networkSettingCtrl)
+        networkService.getAciSettings()
             .then((result) => {
+                networkSettingCtrl.aciSetting = result;
+                networkSettingCtrl.crudHelperService.stopLoader(networkSettingCtrl);
+            }, (error) => {
                 networkSettingCtrl.crudHelperService.stopLoader(networkSettingCtrl);
             });
-        this.networkSettingCtrl = this;
     }
 
     updateNetworkSettings(settings:any) {
         var networkSettingCtrl = this;
         networkSettingCtrl.crudHelperService.startLoader(networkSettingCtrl);
-        networkSettingCtrl.networkService.updateSettings(networkSettingCtrl.setting).then(function successCallback(result) {
+        networkSettingCtrl.networkService.updateSettings(settings).then(function successCallback(result) {
             networkSettingCtrl.crudHelperService.stopLoader(networkSettingCtrl);
             networkSettingCtrl.crudHelperService.showNotification("Network settings: Updated", result.key.toString());
             }, function errorCallback(result) {
@@ -55,12 +53,10 @@ export class NetworkSettingsComponent {
         });
     }
 
-    updateAciSetting(extra_vars:any){
+    updateAciSetting(settings:any){
         var networkSettingCtrl = this;
         networkSettingCtrl.crudHelperService.startLoader(networkSettingCtrl);
-        networkSettingCtrl.nodesService.cleanupExtraVars(networkSettingCtrl);
-        networkSettingCtrl.nodesService.createExtraVars(networkSettingCtrl);
-        networkSettingCtrl.nodesService.updateSettings(extra_vars)
+        networkSettingCtrl.networkService.updateAciSettings(settings)
             .then((result) => {
                 networkSettingCtrl.crudHelperService.stopLoader(networkSettingCtrl);
                 networkSettingCtrl.crudHelperService.showNotification("ACI settings: Updated", result.key.toString());
