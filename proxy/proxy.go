@@ -229,19 +229,21 @@ func addRoutes(s *Server, router *mux.Router) {
 }
 
 // addUserMgmtRoutes adds user management routes to the mux.Router.
+// All user management routes are admin-only.
 func addUserMgmtRoutes(router *mux.Router) {
-	router.Path("/api/v1/ccn_proxy/local_users").Methods("POST").HandlerFunc(addLocalUser)
-	router.Path("/api/v1/ccn_proxy/local_users/{username}").Methods("DELETE").HandlerFunc(deleteLocalUser)
-	router.Path("/api/v1/ccn_proxy/local_users/{username}").Methods("PATCH").HandlerFunc(updateLocalUser)
-	router.Path("/api/v1/ccn_proxy/local_users/{username}").Methods("GET").HandlerFunc(getLocalUser)
-	router.Path("/api/v1/ccn_proxy/local_users").Methods("GET").HandlerFunc(getLocalUsers)
+	router.Path("/api/v1/ccn_proxy/local_users").Methods("POST").HandlerFunc(adminOnly(addLocalUser))
+	router.Path("/api/v1/ccn_proxy/local_users/{username}").Methods("DELETE").HandlerFunc(adminOnly(deleteLocalUser))
+	router.Path("/api/v1/ccn_proxy/local_users/{username}").Methods("PATCH").HandlerFunc(adminOnly(updateLocalUser))
+	router.Path("/api/v1/ccn_proxy/local_users/{username}").Methods("GET").HandlerFunc(adminOnly(getLocalUser))
+	router.Path("/api/v1/ccn_proxy/local_users").Methods("GET").HandlerFunc(adminOnly(getLocalUsers))
 }
 
-// addAuthorizationRoutes adds authorization routes
+// addAuthorizationRoutes adds authorization routes to the mux.Router
+// All authorization management routes are admin-only.
 func addAuthorizationRoutes(router *mux.Router) {
-	router.Path("/api/v1/ccn_proxy/authorizations").Methods("POST").HandlerFunc(addTenantAuthorization)
-	router.Path("/api/v1/ccn_proxy/authorizations/{authzUUID}").Methods("DELETE").HandlerFunc(deleteTenantAuthorization)
-	router.Path("/api/v1/ccn_proxy/authorizations/{authzUUID}").Methods("GET").HandlerFunc(getTenantAuthorization)
-	router.Path("/api/v1/ccn_proxy/authorizations/{authzUUID}").Methods("PATCH").HandlerFunc(updateTenantAuthorization)
-	router.Path("/api/v1/ccn_proxy/authorizations").Methods("GET").HandlerFunc(listTenantAuthorizations)
+	router.Path("/api/v1/ccn_proxy/authorizations").Methods("POST").HandlerFunc(adminOnly(addTenantAuthorization))
+	router.Path("/api/v1/ccn_proxy/authorizations/{authzUUID}").Methods("DELETE").HandlerFunc(adminOnly(deleteTenantAuthorization))
+	router.Path("/api/v1/ccn_proxy/authorizations/{authzUUID}").Methods("GET").HandlerFunc(adminOnly(getTenantAuthorization))
+	router.Path("/api/v1/ccn_proxy/authorizations/{authzUUID}").Methods("PATCH").HandlerFunc(adminOnly(updateTenantAuthorization))
+	router.Path("/api/v1/ccn_proxy/authorizations").Methods("GET").HandlerFunc(adminOnly(listTenantAuthorizations))
 }

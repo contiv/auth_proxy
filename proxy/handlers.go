@@ -10,6 +10,7 @@ import (
 	"github.com/contiv/ccn_proxy/auth"
 	"github.com/contiv/ccn_proxy/common"
 	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
+	"github.com/contiv/ccn_proxy/common/types"
 	"github.com/gorilla/mux"
 
 	log "github.com/Sirupsen/logrus"
@@ -155,16 +156,58 @@ func rbacWrapper(s *Server) func(http.ResponseWriter, *http.Request) {
 	return rbacFilterWrapper(s, auth.NullFilter)
 }
 
+// adminOnly takes a HTTP handler and ensures that the client's token has admin
+// privileges before allowing the handler to run its code.
+// if the client is not an admin, the request attempt is logged and a 403 is returned.
+func adminOnly(handler func(*auth.Token, http.ResponseWriter, *http.Request)) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, req *http.Request) {
+
+		// retrieve token from request header
+		tokenStr, err := getTokenFromHeader(req)
+		if err != nil {
+			// token cannot be retrieved from header
+			httpStatus := http.StatusInternalServerError
+			httpResponse := []byte(ccnerrors.ErrUnauthorized.Error())
+			processStatusCodes(httpStatus, httpResponse, w)
+			return
+		}
+
+		// convert token from string to Token type
+		token, err := auth.ParseToken(tokenStr)
+		if err != nil {
+			httpStatus := http.StatusInternalServerError
+			httpResponse := []byte(ccnerrors.ErrParsingToken.Error())
+			processStatusCodes(httpStatus, httpResponse, w)
+			return
+		}
+
+		// Check that caller has role=admin claim.
+		if err := token.CheckClaims(types.Admin); err != nil {
+			// TODO: log the violator's details here
+			// TODO: consider having a separate security logger which
+			//       goes to a separate file for auditing purposes
+			log.Error("unauthorized:unable to find role=admin claim:", err)
+
+			httpStatus := http.StatusForbidden
+			httpResponse := []byte("access denied")
+			processStatusCodes(httpStatus, httpResponse, w)
+		}
+
+		// if there were no errors, call the handler we wrapped
+		handler(token, w, req)
+	}
+}
+
 // User management handler functions
-// NOTE: for now, these actions should be performed only by `admin` roles
+// These actions can only be performed by administrators.
+// They are protected at the router by the adminOnly() function above.
 
 // addLocalUser adds a new local user to the system.
 // it can return various HTTP status codes:
 //    201 (user added to the system)
 //    400 (user exists in the system already/invalid role)
 //    500 (internal server error)
-func addLocalUser(w http.ResponseWriter, req *http.Request) {
-	//TODO: check token claims for authorization; only super user can create new users
+func addLocalUser(token *auth.Token, w http.ResponseWriter, req *http.Request) {
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		serverError(w, errors.New("Failed to read body from request: "+err.Error()))
@@ -187,8 +230,7 @@ func addLocalUser(w http.ResponseWriter, req *http.Request) {
 //    404 (username not found)
 //    400 (cannot delete  built-in users)
 //    500 (internal server error)
-func deleteLocalUser(w http.ResponseWriter, req *http.Request) {
-	//TODO: check token claims for authorization; only super user can create new users
+func deleteLocalUser(token *auth.Token, w http.ResponseWriter, req *http.Request) {
 	vars := mux.Vars(req)
 
 	statusCode, resp := deleteLocalUserHelper(vars["username"])
@@ -201,8 +243,7 @@ func deleteLocalUser(w http.ResponseWriter, req *http.Request) {
 //    404 (user not found)
 //    400 (cannot update built-in user)
 //    500 (internal server error)
-func updateLocalUser(w http.ResponseWriter, req *http.Request) {
-	//TODO: check token claims for authorization; only super user can create new users
+func updateLocalUser(token *auth.Token, w http.ResponseWriter, req *http.Request) {
 	vars := mux.Vars(req)
 
 	body, err := ioutil.ReadAll(req.Body)
@@ -225,8 +266,7 @@ func updateLocalUser(w http.ResponseWriter, req *http.Request) {
 // it can return various HTTP status codes:
 //    200 (fetch was successful)
 //    500 (internal server error)
-func getLocalUsers(w http.ResponseWriter, req *http.Request) {
-	//TODO: check token claims for authorization; only super user can create new users
+func getLocalUsers(token *auth.Token, w http.ResponseWriter, req *http.Request) {
 	statusCode, resp := getLocalUsersHelper()
 	processStatusCodes(statusCode, resp, w)
 }
@@ -236,14 +276,16 @@ func getLocalUsers(w http.ResponseWriter, req *http.Request) {
 //  200 (fetch was successful)
 //  404 (bad request; user not found)
 //  500 (internal server error)
-func getLocalUser(w http.ResponseWriter, req *http.Request) {
-	//TODO: check token claims for authorization; only super user can create new users
+func getLocalUser(token *auth.Token, w http.ResponseWriter, req *http.Request) {
 	vars := mux.Vars(req)
 
 	statusCode, resp := getLocalUserHelper(vars["username"])
 	processStatusCodes(statusCode, resp, w)
-
 }
+
+// Authorization handler functions
+// These actions can only be performed by administrators.
+// They are protected at the router by the adminOnly() function above.
 
 //
 // addTenantAuthorization adds a tenant authorization
@@ -251,7 +293,7 @@ func getLocalUser(w http.ResponseWriter, req *http.Request) {
 //    201 (authz added)
 //    500 (internal server error)
 //
-func addTenantAuthorization(w http.ResponseWriter, req *http.Request) {
+func addTenantAuthorization(token *auth.Token, w http.ResponseWriter, req *http.Request) {
 	defer common.Untrace(common.Trace())
 
 	var httpStatus int
@@ -284,18 +326,8 @@ func addTenantAuthorization(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	// retrieve token from request header
-	tokenStr, err := getTokenFromHeader(req)
-	if err != nil {
-		// token cannot be retrieved from header
-		httpStatus = http.StatusInternalServerError
-		httpResponse = []byte(ccnerrors.ErrUnauthorized.Error())
-		processStatusCodes(httpStatus, httpResponse, w)
-		return
-	}
-
 	// invoke helper to add authz
-	authz, err := auth.AddTenantAuthorization(tokenStr,
+	authz, err := auth.AddTenantAuthorization(token,
 		addAuthzReq.TenantName, addAuthzReq.PrincipalName, addAuthzReq.Local)
 	switch err {
 	case nil:
@@ -308,7 +340,7 @@ func addTenantAuthorization(w http.ResponseWriter, req *http.Request) {
 			httpResponse = []byte(ccnerrors.ErrPartialFailureToAddAuthz.Error())
 
 			// @TODO clean up created authorization
-			err = auth.DeleteTenantAuthorization(tokenStr, authz.UUID)
+			err = auth.DeleteTenantAuthorization(token, authz.UUID)
 			if err != nil {
 				log.Error("Failed to delete authz after partially failed ",
 					" authz creation, Manual cleanup from KV store needed!")
@@ -328,7 +360,7 @@ func addTenantAuthorization(w http.ResponseWriter, req *http.Request) {
 }
 
 // deleteTenantAuthorization deletes a tenant authorization
-func deleteTenantAuthorization(w http.ResponseWriter, req *http.Request) {
+func deleteTenantAuthorization(token *auth.Token, w http.ResponseWriter, req *http.Request) {
 
 	defer common.Untrace(common.Trace())
 
@@ -339,18 +371,8 @@ func deleteTenantAuthorization(w http.ResponseWriter, req *http.Request) {
 	vars := mux.Vars(req)
 	authzUUID := vars["authzUUID"]
 
-	// retrieve token from request header
-	tokenStr, err := getTokenFromHeader(req)
-	if err != nil {
-		// token cannot be retrieved from header
-		httpStatus = http.StatusInternalServerError
-		httpResponse = []byte(ccnerrors.ErrUnauthorized.Error())
-		processStatusCodes(httpStatus, httpResponse, w)
-		return
-	}
-
 	// invoke helper to delete authz
-	err = auth.DeleteTenantAuthorization(tokenStr, authzUUID)
+	err := auth.DeleteTenantAuthorization(token, authzUUID)
 	switch err {
 	case nil:
 		httpStatus = http.StatusNoContent
@@ -369,7 +391,7 @@ func deleteTenantAuthorization(w http.ResponseWriter, req *http.Request) {
 }
 
 // getTenantAuthorization returns the specified tenant authorization
-func getTenantAuthorization(w http.ResponseWriter, req *http.Request) {
+func getTenantAuthorization(token *auth.Token, w http.ResponseWriter, req *http.Request) {
 
 	defer common.Untrace(common.Trace())
 
@@ -380,18 +402,8 @@ func getTenantAuthorization(w http.ResponseWriter, req *http.Request) {
 	vars := mux.Vars(req)
 	authzUUID := vars["authzUUID"]
 
-	// retrieve token from request header
-	tokenStr, err := getTokenFromHeader(req)
-	if err != nil {
-		// token cannot be retrieved from header
-		httpStatus = http.StatusInternalServerError
-		httpResponse = []byte(ccnerrors.ErrUnauthorized.Error())
-		processStatusCodes(httpStatus, httpResponse, w)
-		return
-	}
-
 	// invoke helper to get authz
-	authz, err := auth.GetTenantAuthorization(tokenStr, authzUUID)
+	authz, err := auth.GetTenantAuthorization(token, authzUUID)
 	switch err {
 	case nil:
 		httpStatus = http.StatusOK
@@ -425,7 +437,7 @@ func getTenantAuthorization(w http.ResponseWriter, req *http.Request) {
 }
 
 // updateTenantAuthorization updates the specified tenant authorization
-func updateTenantAuthorization(w http.ResponseWriter, req *http.Request) {
+func updateTenantAuthorization(token *auth.Token, w http.ResponseWriter, req *http.Request) {
 
 	defer common.Untrace(common.Trace())
 
@@ -463,18 +475,8 @@ func updateTenantAuthorization(w http.ResponseWriter, req *http.Request) {
 	vars := mux.Vars(req)
 	authzUUID := vars["authzUUID"]
 
-	// retrieve token from request header
-	tokenStr, err := getTokenFromHeader(req)
-	if err != nil {
-		// token cannot be retrieved from header
-		httpStatus = http.StatusInternalServerError
-		httpResponse = []byte(ccnerrors.ErrUnauthorized.Error())
-		processStatusCodes(httpStatus, httpResponse, w)
-		return
-	}
-
 	// invoke helper to get authz
-	authz, err := auth.UpdateTenantAuthorization(tokenStr,
+	authz, err := auth.UpdateTenantAuthorization(token,
 		authzUUID, updateAuthzReq.TenantName,
 		updateAuthzReq.PrincipalName, updateAuthzReq.Local)
 	switch err {
@@ -504,25 +506,15 @@ func updateTenantAuthorization(w http.ResponseWriter, req *http.Request) {
 }
 
 // listTenantAuthorization lists all tenant authorizations
-func listTenantAuthorizations(w http.ResponseWriter, req *http.Request) {
+func listTenantAuthorizations(token *auth.Token, w http.ResponseWriter, req *http.Request) {
 
 	defer common.Untrace(common.Trace())
 
 	var httpStatus int
 	var httpResponse []byte
 
-	// retrieve token from request header
-	tokenStr, err := getTokenFromHeader(req)
-	if err != nil {
-		// token cannot be retrieved from header
-		httpStatus = http.StatusInternalServerError
-		httpResponse = []byte(ccnerrors.ErrUnauthorized.Error())
-		processStatusCodes(httpStatus, httpResponse, w)
-		return
-	}
-
 	// invoke helper to get authz
-	authzList, err := auth.ListTenantAuthorizations(tokenStr)
+	authzList, err := auth.ListTenantAuthorizations(token)
 	switch err {
 	case nil:
 		httpStatus = http.StatusOK
