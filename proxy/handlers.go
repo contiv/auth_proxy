@@ -176,6 +176,7 @@ func adminOnly(handler func(*auth.Token, http.ResponseWriter, *http.Request)) fu
 		// convert token from string to Token type
 		token, err := auth.ParseToken(tokenStr)
 		if err != nil {
+			log.Infof("From here???")
 			httpStatus := http.StatusInternalServerError
 			httpResponse := []byte(ccnerrors.ErrParsingToken.Error())
 			processStatusCodes(httpStatus, httpResponse, w)
@@ -205,8 +206,8 @@ func adminOnly(handler func(*auth.Token, http.ResponseWriter, *http.Request)) fu
 
 // addLocalUser adds a new local user to the system.
 // it can return various HTTP status codes:
-//    201 (user added to the system)
-//    400 (user exists in the system already/invalid role)
+//    201 (Created; user added to the system)
+//    400 (BadRequest; user exists in the system already/invalid role)
 //    500 (internal server error)
 func addLocalUser(token *auth.Token, w http.ResponseWriter, req *http.Request) {
 	body, err := ioutil.ReadAll(req.Body)
@@ -215,7 +216,7 @@ func addLocalUser(token *auth.Token, w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	userCreateReq := &localUserCreateRequest{}
+	userCreateReq := &types.LocalUser{}
 	if err := json.Unmarshal(body, userCreateReq); err != nil {
 		serverError(w, errors.New("Failed to unmarshal user info. from request body: "+err.Error()))
 		return
@@ -227,9 +228,9 @@ func addLocalUser(token *auth.Token, w http.ResponseWriter, req *http.Request) {
 
 // deleteLocalUser deletes the given user from the system.
 // it can return various HTTP status codes:
-//    200 (user deleted from the system)
-//    404 (username not found)
-//    400 (cannot delete  built-in users)
+//    200 (OK; user deleted from the system)
+//    404 (NotFound; username not found)
+//    400 (BadRequest; cannot delete  built-in users)
 //    500 (internal server error)
 func deleteLocalUser(token *auth.Token, w http.ResponseWriter, req *http.Request) {
 	vars := mux.Vars(req)
@@ -240,9 +241,9 @@ func deleteLocalUser(token *auth.Token, w http.ResponseWriter, req *http.Request
 
 // updateLocalUser updates the existing user with the given details.
 // it can return various HTTP status codes:
-//    204 (update was successful)
-//    400 (invalid role/cannot update built-in user)
-//    404 (user not found)
+//    204 (NoContent; update was successful)
+//    400 (BadRequest; invalid role/cannot update built-in user)
+//    404 (NotFound; user not found)
 //    500 (internal server error)
 func updateLocalUser(token *auth.Token, w http.ResponseWriter, req *http.Request) {
 	vars := mux.Vars(req)
@@ -253,7 +254,7 @@ func updateLocalUser(token *auth.Token, w http.ResponseWriter, req *http.Request
 		return
 	}
 
-	userUpdateReq := &localUserCreateRequest{}
+	userUpdateReq := &types.LocalUser{}
 	if err := json.Unmarshal(body, userUpdateReq); err != nil {
 		serverError(w, errors.New("Failed to unmarshal user info. from request body: "+err.Error()))
 		return
@@ -265,7 +266,7 @@ func updateLocalUser(token *auth.Token, w http.ResponseWriter, req *http.Request
 
 // getLocalUsers returns all the local users available in the system
 // it can return various HTTP status codes:
-//    200 (fetch was successful)
+//    200 (OK; fetch was successful)
 //    500 (internal server error)
 func getLocalUsers(token *auth.Token, w http.ResponseWriter, req *http.Request) {
 	statusCode, resp := getLocalUsersHelper()
@@ -274,8 +275,8 @@ func getLocalUsers(token *auth.Token, w http.ResponseWriter, req *http.Request) 
 
 // getLocalUser returns the details for the given username
 // it can return various HTTP status codes:
-//  200 (fetch was successful)
-//  404 (bad request; user not found)
+//  200 (OK; fetch was successful)
+//  404 (NotFound; bad request; user not found)
 //  500 (internal server error)
 func getLocalUser(token *auth.Token, w http.ResponseWriter, req *http.Request) {
 	vars := mux.Vars(req)

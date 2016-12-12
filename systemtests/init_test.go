@@ -39,7 +39,7 @@ func Test(t *testing.T) {
 	// cleanup users and principals
 	test.CleanupDatastore(datastore, []string{
 		db.GetPath(db.RootLocalUsers),
-		db.GetPath(db.RootPrincipals),
+		db.GetPath(db.RootLdapConfiguration),
 	})
 
 	if err := db.AddDefaultUsers(); err != nil {
