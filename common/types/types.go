@@ -5,13 +5,11 @@ import (
 	"github.com/contiv/ccn_proxy/common/errors"
 )
 
-// DerivedFromPrincipalRole is a constant that is used to indicate
-// that the capability or access level (i.e. ClaimValue) to an
-// object (specified in ClaimKey, e.g: "tenant: TenantA") is based
-// on the principal's role. A principal's role is defined in
-// each Principal's object:
-//          e.g. Principal {UUID: "xxxx", Role: "admin|ops"}
-const DerivedFromPrincipalRole string = "DerivedFromPrincipalRole"
+const (
+	// TenantClaimKey is a prefix added to Claim keys in the
+	// authorization or token object to represent tenants
+	TenantClaimKey = "tenant:"
+)
 
 // ADConfiguration entry
 //

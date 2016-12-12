@@ -20,8 +20,6 @@ const (
 	// TokenSigningKey is used for signing the token
 	// FIXME: this should be fetched from store
 	TokenSigningKey = "ccn$!~56"
-
-	tenantClaimKey = "tenant:"
 )
 
 // Token represents the JSON Web Token which carries the authorization details
@@ -149,7 +147,7 @@ func GenerateClaimKey(object interface{}) (string, error) {
 
 	case types.Tenant:
 		tenantName := object.(types.Tenant)
-		return tenantClaimKey + string(tenantName), nil
+		return types.TenantClaimKey + string(tenantName), nil
 
 	default:
 		log.Errorf("Unsupported object %#v for authorization claim", object)

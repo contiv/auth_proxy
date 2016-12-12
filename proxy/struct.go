@@ -28,14 +28,16 @@ type localUserCreateRequest struct {
 // Fields:
 //  PrincipalName: name of the user for whom an authorization needs to be added. This
 //    can be a local user or an LDAP group
-//  TenantName: Tenant name that the above user will have access to
 //  Local: true if the name corresponds to a local user, false if it's an LDAP
 //    group.
+//  Role:  Level of access to the tenant specified by TenantName
+//  TenantName: Tenant name that the above user will have access to
 //
 type AddTenantAuthorizationRequest struct {
-	PrincipalName string
-	TenantName    string
-	Local         bool
+	PrincipalName string `json:"principalName"`
+	Local         bool   `json:"local"`
+	Role          string `json:"role"`
+	TenantName    string `json:"tenantName"`
 }
 
 //
@@ -43,16 +45,20 @@ type AddTenantAuthorizationRequest struct {
 // operation.
 //
 // Fields:
-//  PrincipalID: UUID of the subject.
-//  ClaimKey: string encoding of the claim's key associated with the authorization
-//  ClaimValue: string encoding of the claim's value associated with the
-//    authorization
+//  AuthzUUID: An unique identifier for each authorization
+//  PrincipalName: name of the user for whom an authorization needs to be added. This
+//    can be a local user or an LDAP group
+//  Local: true if the name corresponds to a local user, false if it's an LDAP
+//    group.
+//  Role:  Level of access to the tenant specified by TenantName
+//  TenantName: Tenant name that the above user will have access to
 //
 type GetAuthorizationReply struct {
-	AuthzUUID   string
-	PrincipalID string
-	ClaimKey    string
-	ClaimValue  string
+	AuthzUUID     string
+	PrincipalName string
+	Local         bool
+	Role          string
+	TenantName    string
 }
 
 //

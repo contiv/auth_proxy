@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 
 	log "github.com/Sirupsen/logrus"
 	uuid "github.com/satori/go.uuid"
@@ -315,6 +316,7 @@ func processStatusCodes(statusCode int, resp []byte, w http.ResponseWriter) {
 //
 func getTokenFromHeader(req *http.Request) (string, error) {
 
+	defer common.Untrace(common.Trace())
 	var err error
 	tokenStr := req.Header.Get("X-Auth-Token")
 	if common.IsEmpty(tokenStr) {
@@ -332,4 +334,27 @@ func writeJSONResponse(w http.ResponseWriter, data interface{}) {
 	}
 
 	w.Write(jData)
+}
+
+//
+// convertAuthz converts the Authorization object into reply struct
+// for Add tenant authorization and Get tenant authorization API
+// calls
+//
+// Parameter:
+//   authz: Authorization object
+//
+// Return values:
+//   GetAuthorizationReply: Reply struct for add and get tenant
+//                          authorization APIs
+//
+func convertAuthz(authz types.Authorization) GetAuthorizationReply {
+	getAuthzReply := GetAuthorizationReply{
+		AuthzUUID:     authz.UUID,
+		PrincipalName: authz.PrincipalName,
+		TenantName:    strings.TrimPrefix(authz.ClaimKey, types.TenantClaimKey),
+		Local:         authz.Local,
+		Role:          authz.ClaimValue,
+	}
+	return getAuthzReply
 }
