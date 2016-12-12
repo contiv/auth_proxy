@@ -122,6 +122,7 @@ func checkAccessClaim(granted types.RoleType, desired interface{}) error {
 // This API must be called with role=admin authorization claim.
 //
 // Parameters:
+//  token: authorization token
 //  tenantName: tenant name
 //  principalName: Name of user for whom the authorization is to be added,
 //            Can either be a local user or an LDAP group.
@@ -135,22 +136,10 @@ func checkAccessClaim(granted types.RoleType, desired interface{}) error {
 //    : error from state.InsertTenantAuthorization if adding a tenant authorization
 //      fails.
 //
-func AddTenantAuthorization(tokenStr, tenantName, principalName string,
+func AddTenantAuthorization(token *Token, tenantName, principalName string,
 	isLocal bool) (types.Authorization, error) {
 
 	defer common.Untrace(common.Trace())
-
-	// convert token from string to Token type
-	token, err := ParseToken(tokenStr)
-	if err != nil {
-		return types.Authorization{}, ccnerrors.ErrParsingToken
-	}
-
-	// Check that caller has role=admin claim.
-	if err := token.CheckClaims(types.Admin); err != nil {
-		log.Error("unauthorized:unable to find role=admin claim:", err)
-		return types.Authorization{}, err
-	}
 
 	// use principal name to get principal UUID
 	principalID, _, err := getPrincipal(principalName, isLocal)
@@ -196,7 +185,7 @@ func AddTenantAuthorization(tokenStr, tenantName, principalName string,
 // This API must be called with role=Admin authorization claim.
 //
 // Parameters:
-//  tokenStr: authorization token
+//  token: authorization token
 //  authUUID: UUID of the tenant authorization object
 //
 // Return values:
@@ -206,26 +195,12 @@ func AddTenantAuthorization(tokenStr, tenantName, principalName string,
 //    : error from state.DeleteTenantAuthorization if deleting a tenant authorization
 //      fails
 //
-func DeleteTenantAuthorization(tokenStr, authUUID string) error {
+func DeleteTenantAuthorization(token *Token, authUUID string) error {
 
 	defer common.Untrace(common.Trace())
 
-	// convert token from string to Token type
-	token, err := ParseToken(tokenStr)
-	if err != nil {
-		return ccnerrors.ErrParsingToken
-	}
-
-	// Return error if an authZ token isn't found or if it doesn't contain
-	// appropriate claim.
-	if err := token.CheckClaims(types.Admin); err != nil {
-		log.Error("unauthorized:unable to find role=admin claim:", err)
-		return err
-	}
-
 	// Return error if authorization doesn't exist
-	_, err = state.GetAuthorization(authUUID)
-	if err != nil {
+	if _, err := state.GetAuthorization(authUUID); err != nil {
 		log.Warn("failed to get authorization, err: ", err)
 		return err
 	}
@@ -247,7 +222,7 @@ func DeleteTenantAuthorization(tokenStr, authUUID string) error {
 // This API must be called with role=Admin authorization claim.
 //
 // Parameters:
-//  tokenStr: token string
+//  token: authorization token
 //  authzUUID : UUID of the authorization that needs to be returned
 //
 // Return values:
@@ -256,23 +231,10 @@ func DeleteTenantAuthorization(tokenStr, authUUID string) error {
 //    call.
 //    errors.ErrIllegalArguments: if auth doesn't match poolID
 //    : error from state.GetTenantAuthorization if auth lookup fails
-func GetTenantAuthorization(tokenStr, authzUUID string) (
+func GetTenantAuthorization(token *Token, authzUUID string) (
 	types.Authorization, error) {
 
 	defer common.Untrace(common.Trace())
-
-	// convert token from string to Token type
-	token, err := ParseToken(tokenStr)
-	if err != nil {
-		return types.Authorization{}, ccnerrors.ErrParsingToken
-	}
-
-	// Return error if an authZ token isn't found or if it doesn't contain
-	// appropriate claim.
-	if err := token.CheckClaims(types.Admin); err != nil {
-		log.Error("unauthorized:unable to find role=admin claim:", err)
-		return types.Authorization{}, err
-	}
 
 	// Return error if authorization doesn't exist
 	authz, err := state.GetAuthorization(authzUUID)
@@ -292,6 +254,7 @@ func GetTenantAuthorization(tokenStr, authzUUID string) (
 // This API must be called with role=admin authorization claim.
 //
 // Parameters:
+//  token: authorization token
 //  tenantName: tenant name
 //  principalName: User for whom the authorization is to be updated,
 //            Can either be a local user or an LDAP group.
@@ -305,22 +268,10 @@ func GetTenantAuthorization(tokenStr, authzUUID string) (
 //    : error from state.InsertTenantAuthorization if adding a tenant authorization
 //      fails.
 //
-func UpdateTenantAuthorization(tokenStr, authzUUID, tenantName,
+func UpdateTenantAuthorization(token *Token, authzUUID, tenantName,
 	principalName string, isLocal bool) (types.Authorization, error) {
 
 	defer common.Untrace(common.Trace())
-
-	// convert token from string to Token type
-	token, err := ParseToken(tokenStr)
-	if err != nil {
-		return types.Authorization{}, ccnerrors.ErrParsingToken
-	}
-
-	// Check that caller has role=admin claim.
-	if err := token.CheckClaims(types.Admin); err != nil {
-		log.Error("unauthorized:unable to find role=admin claim:", err)
-		return types.Authorization{}, err
-	}
 
 	// use principal name to get principal UUID
 	principalID, _, err := getPrincipal(principalName, isLocal)
@@ -373,7 +324,7 @@ func UpdateTenantAuthorization(tokenStr, authzUUID, tenantName,
 // This API must be called with role=Admin authorization claim.
 //
 // Parameters:
-//  tokenStr: token string
+//  token: authorization token
 //
 // Return values:
 //  error: nil if successful, else
@@ -381,21 +332,9 @@ func UpdateTenantAuthorization(tokenStr, authzUUID, tenantName,
 //    call.
 //    : error from state.ListTenantAuthorizations if auth lookup fails
 //
-func ListTenantAuthorizations(tokenStr string) ([]types.Authorization, error) {
+func ListTenantAuthorizations(token *Token) ([]types.Authorization, error) {
 
 	defer common.Untrace(common.Trace())
-
-	// convert token from string to Token type
-	token, err := ParseToken(tokenStr)
-	if err != nil {
-		return nil, ccnerrors.ErrParsingToken
-	}
-
-	// Check that caller has role=admin claim.
-	if err := token.CheckClaims(types.Admin); err != nil {
-		log.Error("unauthorized:unable to find role=admin claim:", err)
-		return nil, err
-	}
 
 	// read all authorizations
 	tenantAuths, err := state.ListAuthorizations()
