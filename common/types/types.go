@@ -13,30 +13,6 @@ import (
 //          e.g. Principal {UUID: "xxxx", Role: "admin|ops"}
 const DerivedFromPrincipalRole string = "DerivedFromPrincipalRole"
 
-// ADConfiguration entry
-//
-// Fields:
-//  Server: FQDN or IP address of AD server
-//  Port: listening port of AD server
-//  BaseDN: Distinguished name for base entity. E.g.,
-//    dc=ccn, dc=example, dc=com. All searches be scoped to this BaseDN
-//  ServiceAccountDN: service account details. Requires full DN. Our system
-//    will use this account to communicate with AD. Hence this
-//    account must have appropriate privileges, specifically for lookup
-//  ServiceAccountPassword: password of the service account
-//  StartTLS: if set, connection with AD will be established using TLS
-//  InsecureSkipVerify: if set, skips insecurity verification
-//
-type ADConfiguration struct {
-	Server                 string
-	Port                   uint16
-	BaseDN                 string
-	ServiceAccountDN       string
-	ServiceAccountPassword string `sql:"size:4096"`
-	StartTLS               bool
-	InsecureSkipVerify     bool
-}
-
 // RoleType each role type is associated with a group and set of capabilities
 type RoleType uint
 
@@ -93,8 +69,8 @@ func Role(roleStr string) (RoleType, error) {
 	case Ops.String():
 		return Ops, nil
 	default:
-		log.Debug("Illegal role")
-		return Invalid, errors.ErrIllegalArgument
+		log.Debugf("Unsupported role %q", roleStr)
+		return Invalid, errors.ErrUnsupportedType
 	}
 
 }
