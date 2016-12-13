@@ -23,6 +23,9 @@
                     <ul class="list">
                         <li *ngIf="newNetworkName.errors?.required">Please enter network name
                         </li>
+                        <li *ngIf="newNetworkTenant.errors?.required">
+                            Please select tenant
+                        </li>
                         <li *ngIf="newNetworkSubnet.errors?.required">Please enter subnet</li>
                         <li *ngIf="newNetworkSubnet.errors?.pattern">Please enter subnet in CIDR
                             notation
@@ -36,6 +39,16 @@
             <input type="text" id="newNetworkName" name="newNetworkName"
                    [(ngModel)]="networkCreateCtrl.newNetwork.networkName"
                    placeholder="Enter name" required #newNetworkName="ngModel">
+        </div>
+        <div class="field">
+            <label for="newNetworkTenant">Tenant</label>
+            <select id="newNetworkTenant" class="ui dropdown"
+                    name="newNetworkTenant"
+                    [(ngModel)]="networkCreateCtrl.newNetwork.tenantName"
+                    required #newNetworkTenant="ngModel">
+                <option value="">-- Please select tenant --</option>
+                <option *ngFor="let tenant of networkCreateCtrl.tenants" [ngValue]="tenant.tenantName">{{tenant.tenantName}}</option>
+            </select>
         </div>
         <div class="field">
             <label for="newNetworkEncapsulation">Encapsulation</label>

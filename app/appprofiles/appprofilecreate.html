@@ -23,6 +23,9 @@
                         <li *ngIf="newAppProfileName.errors?.required">Please enter
                             application profile name
                         </li>
+                        <li *ngIf="newAppProfileTenantRef.errors?.required">
+                            Please select tenant
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -33,7 +36,18 @@
                    [(ngModel)]="newAppProfile.appProfileName"
                    placeholder="Enter name" required #newAppProfileName="ngModel">
         </div>
-        <ctv-appgroupselection mode="edit" [appProfile]="newAppProfile"></ctv-appgroupselection>
+        <div class="field">
+            <label for="newAppProfileTenant">Tenant</label>
+            <select id="newAppProfileTenant" class="ui dropdown"
+                    name="newAppProfileTenant"
+                    ngModel
+                    (change)="updateTenant($event.target.value, appGroupSelRef)"
+                    required #newAppProfileTenantRef="ngModel">
+                <option value="">-- Please select tenant --</option>
+                <option *ngFor="let tenant of tenants" [value]="tenant.tenantName">{{tenant.tenantName}}</option>
+            </select>
+        </div>
+        <ctv-appgroupselection mode="edit" [appProfile]="newAppProfile" #appGroupSelRef></ctv-appgroupselection>
         <div class="ui grid">
             <div class="right aligned sixteen wide column">
                 <div style="margin-top: 40px">

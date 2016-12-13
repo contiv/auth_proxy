@@ -36,7 +36,7 @@ export class  ServicelbInfoComponent implements OnInit{
         this.servicelbsModel = servicelbsModel;
         this.crudHelperService = crudHelperService;
         this.infoselected = true;
-        this.statskey=''
+        this.statskey='';
         this.showLoader = true;
         this.mode = 'details';
         this.servicelb = {serviceName: '', networkName: '', ipAddress: '', selectors: [], ports: [], tenantName: 'default', key:''};

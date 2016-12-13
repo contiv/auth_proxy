@@ -23,6 +23,9 @@
                         <li *ngIf="newApplicationGroupNameRef.errors?.required">Please
                             enter application group name
                         </li>
+                        <li *ngIf="newApplicationGroupTenantRef.errors?.required">
+                            Please select tenant
+                        </li>
                         <li *ngIf="newApplicationGroupNetworkRef.errors?.required">Please
                             select network
                         </li>
@@ -40,17 +43,27 @@
                    placeholder="Enter name" required>
         </div>
         <div class="field">
+            <label for="newApplicationGroupTenant">Tenant</label>
+            <select id="newApplicationGroupTenant" class="ui dropdown"
+                    name="newApplicationGroupTenant"
+                    ngModel
+                    (change)="updateTenant($event.target.value, isolationPolicyRef, bandwidthPolicyRef)"
+                    required #newApplicationGroupTenantRef="ngModel">
+                <option value="">-- Please select tenant --</option>
+                <option *ngFor="let tenant of tenants" [value]="tenant.tenantName">{{tenant.tenantName}}</option>
+            </select>
+        </div>
+        <div class="field">
             <label for="newApplicationGroupNetwork">Network</label>
             <select id="newApplicationGroupNetwork"
                     class="ui dropdown"
                     #newApplicationGroupNetworkRef="ngModel"
                     name="newApplicationGroupNetwork"
-                    ngModel
-                    (change)="updateNetwork($event.target.value)"
+                    [(ngModel)]="applicationGroup.networkName"
                     required>
                 <option value="">-- Please select network --</option>
                 <option *ngFor="let network of networks"
-                        [value]="network.networkName">
+                        [ngValue]="network.networkName">
                     {{network.networkName}}
                 </option>
             </select>
@@ -59,13 +72,13 @@
         <div class="ui section divider" style="margin-top: 30px"></div>
 
         <ctv-collapsible title="Isolation Policies">
-            <ctv-isolationpolicy mode="edit" [applicationgroup]="applicationGroup"></ctv-isolationpolicy>
+            <ctv-isolationpolicy mode="edit" [applicationgroup]="applicationGroup" #isolationPolicyRef></ctv-isolationpolicy>
         </ctv-collapsible>
 
         <div class="ui section divider"></div>
 
         <ctv-collapsible title="Bandwidth Policies">
-            <ctv-bandwidthpolicy mode="edit" [applicationgroup]="applicationGroup"></ctv-bandwidthpolicy>
+            <ctv-bandwidthpolicy mode="edit" [applicationgroup]="applicationGroup" #bandwidthPolicyRef></ctv-bandwidthpolicy>
         </ctv-collapsible>
 
         <div class="ui grid">

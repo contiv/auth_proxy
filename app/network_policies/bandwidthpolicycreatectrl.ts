@@ -2,21 +2,25 @@
 /**
  * Created by hardik gandhi on 6/14/16.
  */
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { NetprofilesModel } from "../components/models/netprofilesmodel";
 import { CRUDHelperService } from "../components/utils/crudhelperservice";
 import { PolicyTab } from "./networkpoliciestabsctrl";
+import { OrganizationsModel } from "../components/models/organizationsmodel";
 
 @Component({
     selector: 'bandwidthpolicycreate',
     templateUrl: 'network_policies/bandwidthpolicycreate.html'
 })
-export class BandwidthPolicyCreateComponent {
-    newPolicy;
+export class BandwidthPolicyCreateComponent implements OnInit {
+    newPolicy:any;
+    tenants:any[] = [];
 
     constructor(private activatedRoute: ActivatedRoute,
                 private router: Router,
+                private ngZone: NgZone,
+                private organizationsModel: OrganizationsModel,
                 private netprofilesModel: NetprofilesModel,
                 private crudHelperService: CRUDHelperService){
         var bandwidthPolicyCreateCtrl = this;
@@ -25,12 +29,33 @@ export class BandwidthPolicyCreateComponent {
             crudHelperService.stopLoader(bandwidthPolicyCreateCtrl);
             bandwidthPolicyCreateCtrl.newPolicy = {
                 profileName: '',
-                tenantName: 'default', //TODO: Remove hardcoded tenant.
+                tenantName: '',
                 bandwidth: '',
                 DSCP: ''
             };
         }
         resetForm();
+    }
+
+    ngOnInit() {
+        var component = this;
+        component.crudHelperService.startLoader(component);
+
+        function getTenants(reload: boolean) {
+            component.organizationsModel.get(reload)
+                .then((result) => {
+                    component.tenants = result;
+                    component.ngZone.run(() => {
+                        component.crudHelperService.stopLoader(component);
+                    });
+                }, (error) => {
+                    component.ngZone.run(() => {
+                        component.crudHelperService.stopLoader(component);
+                    });
+                });
+        }
+
+        getTenants(false);
     }
 
     returnToPolicies() {

@@ -68,7 +68,7 @@ export class IsolationPolicyDetailsComponent {
             isolationPolicyDetailsCtrl.networksModel.get(false).then(function (result) {
                 //_.filter() returns a new array
                 isolationPolicyDetailsCtrl.networks = _.filter(result, {
-                    'tenantName': 'default'//TODO: Remove hardcoded tenant.
+                    'tenantName': isolationPolicyDetailsCtrl['policy'].tenantName
                 });
             });
         }
@@ -81,7 +81,7 @@ export class IsolationPolicyDetailsComponent {
                 .then(function (result) {
                     //_.filter() returns a new array
                     isolationPolicyDetailsCtrl.applicationGroups = _.filter(result, {
-                        'tenantName': 'default'//TODO: Remove hardcoded tenant.
+                        'tenantName': isolationPolicyDetailsCtrl['policy'].tenantName
                     });
                 });
         }
@@ -91,11 +91,11 @@ export class IsolationPolicyDetailsComponent {
         isolationPolicyDetailsCtrl.policiesModel.getModelByKey(activatedRoute.snapshot.params['key'], false, 'key')
             .then(function (policy) {
                 isolationPolicyDetailsCtrl.policy = policy;
-                isolationPolicyDetailsCtrl.rulesModel.getIncomingRules(policy.policyName, 'default').then(function (result) {
+                isolationPolicyDetailsCtrl.rulesModel.getIncomingRules(policy.policyName, policy.tenantName).then(function (result) {
                     isolationPolicyDetailsCtrl.incomingRules = result;
                     isolationPolicyDetailsCtrl.resetNewIncomingRule();
                 });
-                isolationPolicyDetailsCtrl.rulesModel.getOutgoingRules(policy.policyName, 'default').then(function (result) {
+                isolationPolicyDetailsCtrl.rulesModel.getOutgoingRules(policy.policyName, policy.tenantName).then(function (result) {
                     isolationPolicyDetailsCtrl.outgoingRules = result;
                     isolationPolicyDetailsCtrl.resetNewOutgoingRule();
                 });
@@ -170,7 +170,7 @@ export class IsolationPolicyDetailsComponent {
             protocol: 'tcp',//to make it default selected option in UI
             port: 0,
             direction: 'in',
-            tenantName: 'default',
+            tenantName: this.policy.tenantName,
             policyName: this.policy.policyName
         };
         this.newIncomingSelectedApplicationGroup = '';
@@ -194,7 +194,7 @@ export class IsolationPolicyDetailsComponent {
             protocol: 'tcp',//to make it default selected option in UI
             port: 0,
             direction: 'out',
-            tenantName: 'default',
+            tenantName: this.policy.tenantName,
             policyName: this.policy.policyName
         };
         this.newOutgoingSelectedApplicationGroup = '';

@@ -38,7 +38,7 @@ export class NetworkdetailsComponent implements OnInit, OnDestroy{
         this.networksModel = networksModel;
         this.crudHelperService = crudHelperService;
         this.infoselected = true;
-        this.statskey=''
+        this.statskey='';
         this['showLoader'] = true;
         this.network = {networkName: '', encap: '', subnet: '', gateway: ''};
         this.refresh=Observable.interval(5000).subscribe(() => {
@@ -51,7 +51,7 @@ export class NetworkdetailsComponent implements OnInit, OnDestroy{
     ngOnInit(){
         this.crudHelperService.startLoader(this);
         this.statskey = this.route.snapshot.params['key'];
-        this.getNetworksModel(false);
+        this.getNetwork(false);
     }
 
     getApplicationGroups(reload: boolean){
@@ -59,7 +59,10 @@ export class NetworkdetailsComponent implements OnInit, OnDestroy{
         if(!isUndefined(networkDetailsCtrl['network'])){
             this.applicationGroupsModel.get(reload)
                 .then(function successCallback(result){
-                        networkDetailsCtrl['applicationGroups'] = _.filter(result, {'networkName': networkDetailsCtrl['network'].networkName})
+                        networkDetailsCtrl['applicationGroups'] = _.filter(result, {
+                            'networkName': networkDetailsCtrl['network'].networkName,
+                            'tenantName': networkDetailsCtrl['network'].tenantName
+                        });
                         networkDetailsCtrl.crudHelperService.stopLoader(networkDetailsCtrl);
                     },
                     function errorCallback(result){
@@ -68,7 +71,7 @@ export class NetworkdetailsComponent implements OnInit, OnDestroy{
         }
     }
 
-    getNetworksModel(reload: boolean){
+    getNetwork(reload: boolean){
         var networkDetailsCtrl = this;
         this.networksModel.getModelByKey(this.route.snapshot.params['key'], reload, 'key')
             .then((result) => {

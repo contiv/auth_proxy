@@ -24,6 +24,7 @@
         <thead>
             <tr>
                 <th><ctv-th [sortfield]="'appProfileName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Name</ctv-th></th>
+                <th><ctv-th [sortfield]="'tenantName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Tenant</ctv-th></th>
                 <th><ctv-th [sortfield]="'endpointGroups'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Application groups</ctv-th></th>
             </tr>
         </thead>
@@ -31,6 +32,7 @@
         <tbody *ngIf="appProfiles">
             <tr *ngFor="let appProfile of filteredAppProfiles">
                 <td><a [routerLink]="['../details', appProfile.key]">{{appProfile.appProfileName}}</a></td>
+                <td>{{appProfile.tenantName}}</td>
                 <td>{{appProfile.endpointGroups?.join(", ")}}</td>
             </tr>
         </tbody>
@@ -43,7 +45,7 @@
 
         <tfoot>
             <tr>
-                <td colspan="2">
+                <td colspan="3">
                     <ctv-tpagination [chunks]="tableRef.pageChunks"
                                      (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
                                      (prevChunk)="tableRef.showPrevChunk()"

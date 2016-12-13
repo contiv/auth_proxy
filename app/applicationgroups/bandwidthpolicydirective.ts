@@ -4,60 +4,8 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import * as _ from 'lodash';
 import { NetprofilesModel } from "../components/models/netprofilesmodel";
-import {isUndefined} from "util";
-/*
-angular.module("contiv.applicationgroups")
-    .directive("ctvBandwidthpolicy", function () {
-        return {
-            restrict: 'E',
-            scope: {
-                mode: "=",
-                applicationgroup: '='
-            },
+import { isUndefined } from "util";
 
-            controller: [
-                '$scope',
-                'NetprofilesModel',
-                function ($scope,
-                          NetprofilesModel) {
-                    $scope.netProfiles = [];
-                    $scope.selectedNetprofile = {
-                        policy: {}
-                    };
-
-                    /**
-                     * Get profiles for the given tenant.
-                     */
-                    /*function getNetprofiles() {
-                        NetprofilesModel.get().then(function (result) {
-                            $scope.netProfiles = _.filter(result, {
-                                'tenantName': 'default'        //TODO: Remove hardcoded tenant.
-                            });
-                            if ($scope.applicationgroup.netProfile !== '') {
-                                $scope.selectedNetprofile.policy = _.find($scope.netProfiles, function (policy) {
-                                    return policy.profileName === $scope.applicationgroup.netProfile;
-                                });
-                            }
-                        });
-                    }
-
-                    /**
-                     * Assign profileName to applicationgroup whichever user has given
-                     */
-                    /*$scope.updateApplicationgroup = function () {
-                        if ($scope.selectedNetprofile.policy === null) {
-                            $scope.applicationgroup.netProfile = '';
-                        } else {
-                            $scope.applicationgroup.netProfile = $scope.selectedNetprofile.policy.profileName;
-                        }
-                    };
-
-                    getNetprofiles();
-                }],
-
-            templateUrl: 'applicationgroups/bandwidthpolicy.html'
-        }
-    });*/
 @Component({
     selector: 'ctv-bandwidthpolicy',
     templateUrl: 'applicationgroups/bandwidthpolicy.html'
@@ -70,26 +18,29 @@ export class BandwidthPolicySelectionComponent implements OnChanges {
     selectedNetprofile:any = {};
     netProfileSearchText:string = '';
 
-    constructor(private netprofilesModel:NetprofilesModel) {}
+    constructor(private netprofilesModel:NetprofilesModel) {
+    }
 
     ngOnChanges() {
         var component = this;
-        /**
-         * Get profiles for the given tenant.
-         */
-        function getNetprofiles() {
-            component.netprofilesModel.get(false).then(function (result) {
-                component.netProfiles = _.filter(result, {
-                    'tenantName': 'default'        //TODO: Remove hardcoded tenant.
-                });
-                if ((component.applicationgroup.netProfile !== '') && (!isUndefined(component.applicationgroup['netProfile']))) {
-                    component.selectedNetprofile = _.find(component.netProfiles, function (policy) {
-                        return policy.profileName === component.applicationgroup.netProfile;
-                    });
-                }
+        component.getNetprofiles();
+    }
+
+    /**
+     * Get profiles for the given tenant.
+     */
+    getNetprofiles() {
+        var component = this;
+        component.netprofilesModel.get(false).then(function (result) {
+            component.netProfiles = _.filter(result, {
+                'tenantName': component.applicationgroup.tenantName
             });
-        }
-        getNetprofiles();
+            if ((component.applicationgroup.netProfile !== '') && (!isUndefined(component.applicationgroup['netProfile']))) {
+                component.selectedNetprofile = _.find(component.netProfiles, function (policy) {
+                    return policy.profileName === component.applicationgroup.netProfile;
+                });
+            }
+        });
     }
 
     updateApplicationgroup(netprofile) {

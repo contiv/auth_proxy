@@ -24,6 +24,7 @@
         <thead>
             <tr>
                 <th><ctv-th [sortfield]="'serviceName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Name</ctv-th></th>
+                <th><ctv-th [sortfield]="'tenantName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Tenant</ctv-th></th>
                 <th><ctv-th [sortfield]="'networkName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Network</ctv-th></th>
                 <th><ctv-th [sortfield]="'ipAddress'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">IP Address</ctv-th></th>
                 <th><ctv-th [sortfield]="'selectors'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Label Selectors</ctv-th></th>
@@ -33,6 +34,7 @@
         <tbody *ngIf="servicelbListCtrl.servicelbs">
             <tr *ngFor="let servicelb of servicelbListCtrl.filteredservicelbs">
                 <td><a [routerLink]="['../details', servicelb.key]">{{servicelb.serviceName}}</a></td>
+                <td>{{servicelb.tenantName}}</td>
                 <td>{{servicelb.networkName}}</td>
                 <td>{{servicelb.ipAddress}}</td>
                 <td>
@@ -55,7 +57,7 @@
 
         <tfoot>
             <tr>
-                <td colspan="4">
+                <td colspan="5">
                     <ctv-tpagination  [chunks]="tableRef.pageChunks"
                                       (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
                                       (prevChunk)="tableRef.showPrevChunk()"

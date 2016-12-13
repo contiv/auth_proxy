@@ -25,6 +25,8 @@
                         <li *ngIf="servicelbName.errors?.required">Please enter service load
                             balancer name
                         </li>
+                        <li *ngIf="servicelbTenantRef.errors?.required">Please select tenant
+                        </li>
                         <li *ngIf="servicelbNetwork.errors?.required">Please select network
                         </li>
                     </ul>
@@ -36,6 +38,17 @@
             <label for="servicelbName">Service load balancer name</label>
             <input type="text" id="servicelbName" name="servicelbName"
                    [(ngModel)]="servicelbCreateCtrl.servicelb.serviceName" placeholder="Enter name" required #servicelbName="ngModel">
+        </div>
+        <div class="field">
+            <label for="servicelbTenant">Tenant</label>
+            <select id="servicelbTenant" class="ui dropdown"
+                    name="servicelbTenant"
+                    ngModel
+                    (change)="updateTenant($event.target.value)"
+                    required #servicelbTenantRef="ngModel">
+                <option value="">-- Please select tenant --</option>
+                <option *ngFor="let tenant of tenants" [value]="tenant.tenantName">{{tenant.tenantName}}</option>
+            </select>
         </div>
         <div class="field">
             <label for="servicelbNetwork">Network</label>

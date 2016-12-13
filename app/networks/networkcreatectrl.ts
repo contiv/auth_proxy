@@ -1,35 +1,55 @@
 /**
  * Created by cshampur on 10/14/16.
  */
-
-import {Component, Inject, Directive} from "@angular/core";
-import {NetworksModel} from "../components/models/networksmodel";
-import {CRUDHelperService} from "../components/utils/crudhelperservice";
-import {Router, ActivatedRoute} from "@angular/router";
-import {ContivGlobals} from "../components/models/contivglobals";
-import {NotificationType} from "../components/directives/notification";
+import { Component, Inject, Directive, OnInit, NgZone } from "@angular/core";
+import { NetworksModel } from "../components/models/networksmodel";
+import { CRUDHelperService } from "../components/utils/crudhelperservice";
+import { Router, ActivatedRoute } from "@angular/router";
+import { ContivGlobals } from "../components/models/contivglobals";
+import { NotificationType } from "../components/directives/notification";
+import { OrganizationsModel } from "../components/models/organizationsmodel";
 
 @Component({
     selector: 'networkcreate',
     templateUrl: 'networks/networkcreate.html'
 })
 
-export class NetworkCreateComponent{
-    private networksModel:NetworksModel;
-    private crudHelperService: CRUDHelperService;
-    public networkCreateCtrl: any;
-    public newNetwork: any;
+export class NetworkCreateComponent implements OnInit {
+    networkCreateCtrl: any;
+    newNetwork: any;
+    tenants: any[] = [];
 
     constructor(private router: Router,
                 private activatedRoute: ActivatedRoute,
-                networksModel: NetworksModel,
-                crudHelperService: CRUDHelperService){
-        this.networksModel = networksModel;
-        this.crudHelperService = crudHelperService;
+                private ngZone: NgZone,
+                private networksModel: NetworksModel,
+                private organizationsModel: OrganizationsModel,
+                private crudHelperService: CRUDHelperService){
         this['showLoader']=false;
         this['cidrPattern'] = ContivGlobals.CIDR_REGEX;
-        this.newNetwork = {networkName: '', encap: 'vxlan', subnet:'', gateway:'', tenantName: 'default', key:''};
+        this.newNetwork = {networkName: '', encap: 'vxlan', subnet:'', gateway:'', tenantName: '', key:''};
         this.networkCreateCtrl = this;
+    }
+
+    ngOnInit() {
+        var component = this;
+        component.crudHelperService.startLoader(component);
+
+        function getTenants(reload: boolean) {
+            component.organizationsModel.get(reload)
+                .then((result) => {
+                    component.tenants = result;
+                    component.ngZone.run(() => {
+                        component.crudHelperService.stopLoader(component);
+                    });
+                }, (error) => {
+                    component.ngZone.run(() => {
+                        component.crudHelperService.stopLoader(component);
+                    });
+                });
+        }
+
+        getTenants(false);
     }
 
     returnToNetworks(){

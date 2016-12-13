@@ -23,50 +23,52 @@ export class IsolationPolicySelectionComponent implements OnChanges {
 
     constructor(private policiesModel:PoliciesModel,
                 private rulesModel:RulesModel) {
-        var component = this;
 
-        /**
-         * Get policies for the given tenant.
-         */
-        function getIsolationPolicies() {
-            component.policiesModel.get(false).then(function (result) {
-                component.isolationPolicies = _.filter(result, {
-                    'tenantName': 'default'//TODO: Remove hardcoded tenant.
-                });
-            });
-        }
-
-        getIsolationPolicies();
     }
 
     ngOnChanges() {
         var component = this;
+
         /**
          * Get incoming and outgoing rules for each policy present in applicationgroup
          */
         function getRules() {
             component.applicationgroup.policies.forEach(function (policy) {
                 //To display rules of selected policies
-                component.rulesModel.getIncomingRules(policy, 'default')
+                component.rulesModel.getIncomingRules(policy, component.applicationgroup.tenantName)
                     .then(function (rules) {
                         Array.prototype.push.apply(component.incomingRules, rules);
                     });
-                component.rulesModel.getOutgoingRules(policy, 'default')
+                component.rulesModel.getOutgoingRules(policy, component.applicationgroup.tenantName)
                     .then(function (rules) {
                         Array.prototype.push.apply(component.outgoingRules, rules);
                     });
             });
         }
+
         /**
          *  To check 'details' or 'edit' mode (not create mode)
          */
         if (component.mode === 'details' || (component.mode === 'edit' && component.applicationgroup.groupName != "")) {
+            component.getIsolationPolicies();
             //Application Groups might not have any policies associated with them so define an empty array
             if (component.applicationgroup.policies === undefined) {
                 component.applicationgroup.policies = [];
             }
             getRules();
         }
+    }
+
+    /**
+     * Get policies for the given tenant.
+     */
+    getIsolationPolicies() {
+        var component = this;
+        component.policiesModel.get(false).then(function (result) {
+            component.isolationPolicies = _.filter(result, {
+                'tenantName': component.applicationgroup.tenantName
+            });
+        });
     }
 
     /**
@@ -81,11 +83,11 @@ export class IsolationPolicySelectionComponent implements OnChanges {
             component.selectedPolicies.push(currentPolicyName);
 
             //To display rules of selected policies
-            component.rulesModel.getIncomingRules(currentPolicyName, 'default')
+            component.rulesModel.getIncomingRules(currentPolicyName, component.applicationgroup.tenantName)
                 .then(function (rules) {
                     Array.prototype.push.apply(component.incomingRules, rules);
                 });
-            component.rulesModel.getOutgoingRules(currentPolicyName, 'default')
+            component.rulesModel.getOutgoingRules(currentPolicyName, component.applicationgroup.tenantName)
                 .then(function (rules) {
                     Array.prototype.push.apply(component.outgoingRules, rules);
                 });

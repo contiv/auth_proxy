@@ -25,6 +25,9 @@
                         <li *ngIf="policyNameRef.errors?.required">
                             Please enter policy name
                         </li>
+                        <li *ngIf="policyTenantRef.errors?.required">
+                            Please select tenant
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -34,6 +37,16 @@
             <label for="newPolicyName">Policy name</label>
             <input #policyNameRef="ngModel" type="text" id="newPolicyName" name="newPolicyName"
                    [(ngModel)]="newPolicy.policyName" placeholder="Enter name" required>
+        </div>
+        <div class="field">
+            <label for="newPolicyTenant">Tenant</label>
+            <select id="newPolicyTenant" class="ui dropdown"
+                    name="newPolicyTenant"
+                    [(ngModel)]="newPolicy.tenantName"
+                    required #policyTenantRef="ngModel">
+                <option value="">-- Please select tenant --</option>
+                <option *ngFor="let tenant of tenants" [ngValue]="tenant.tenantName">{{tenant.tenantName}}</option>
+            </select>
         </div>
 
         <div class="ui grid">

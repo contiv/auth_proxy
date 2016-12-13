@@ -13,12 +13,9 @@
                 </ctv-th>
             </th>
             <th>
-                <ctv-th [sortfield]="'updatedBy'" (sortdata)="tableRef.applysort($event)"
-                        [sortobject]="tableRef.sortObj">Updated by
+                <ctv-th [sortfield]="'tenantName'" (sortdata)="tableRef.applysort($event)"
+                        [sortobject]="tableRef.sortObj">Tenant
                 </ctv-th>
-            </th>
-            <th>
-                <ctv-th [sortfield]="'lastUpdate'">Last update</ctv-th>
             </th>
         </tr>
         </thead>
@@ -26,8 +23,7 @@
         <tbody *ngIf="bandwidthPolicyListCtrl['policies']">
         <tr *ngFor="let policy of filteredPolicies">
             <td><a [routerLink]="['../bandwidth/details', policy.key]">{{policy.profileName}}</a></td>
-            <td>{{policy.updatedBy}}</td>
-            <td>{{policy.lastUpdate}}</td>
+            <td>{{policy.tenantName}}</td>
         </tr>
         </tbody>
 
@@ -45,7 +41,7 @@
 
         <tfoot>
         <tr>
-            <td colspan="3">
+            <td colspan="2">
                 <ctv-tpagination [chunks]="tableRef.pageChunks"
                                  (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
                                  (prevChunk)="tableRef.showPrevChunk()"

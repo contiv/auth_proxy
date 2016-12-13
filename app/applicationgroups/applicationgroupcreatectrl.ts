@@ -1,11 +1,12 @@
 /**
  * Created by vjain3 on 3/11/16.
  */
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { NetworksModel } from "../components/models/networksmodel";
 import { ApplicationGroupsModel } from "../components/models/applicationgroupsmodel";
 import { CRUDHelperService } from "../components/utils/crudhelperservice";
+import { OrganizationsModel } from "../components/models/organizationsmodel";
 
 @Component({
     selector: 'applicationgroupcreate',
@@ -13,26 +14,19 @@ import { CRUDHelperService } from "../components/utils/crudhelperservice";
 })
 export class ApplicationGroupCreateComponent {
     networks:any[] = [];
+    tenants:any[] = [];
     applicationGroup:any = {};
-    selectedNetwork:string = '';
 
-    constructor(private activatedRoute: ActivatedRoute,
-                private router: Router,
+    constructor(private activatedRoute:ActivatedRoute,
+                private router:Router,
+                private ngZone:NgZone,
+                private organizationsModel:OrganizationsModel,
                 private networksModel:NetworksModel,
                 private applicationGroupsModel:ApplicationGroupsModel,
                 private crudHelperService:CRUDHelperService) {
 
         var applicationGroupCreateCtrl = this;
-        /**
-         * Get networks for the given tenant.
-         */
-        function getNetworks() {
-            networksModel.get(false).then(function (result) {
-                applicationGroupCreateCtrl.networks = _.filter(result, {
-                    'tenantName': 'default'//TODO: Remove hardcoded tenant.
-                });
-            });
-        }
+
 
         function resetForm() {
             crudHelperService.stopLoader(applicationGroupCreateCtrl);
@@ -41,28 +35,46 @@ export class ApplicationGroupCreateComponent {
                 networkName: '',        // For Network Name
                 policies: [],           // For Isolation policies
                 netProfile: '',         // For Bandwidth policy Name
-                tenantName: 'default'//TODO: Remove hardcoded tenant.
+                tenantName: ''
             };
         }
 
-        getNetworks();
         resetForm();
     }
 
+    ngOnInit() {
+        var component = this;
+        component.crudHelperService.startLoader(component);
+
+        function getTenants(reload:boolean) {
+            component.organizationsModel.get(reload)
+                .then((result) => {
+                    component.tenants = result;
+                    component.ngZone.run(() => {
+                        component.crudHelperService.stopLoader(component);
+                    });
+                }, (error) => {
+                    component.ngZone.run(() => {
+                        component.crudHelperService.stopLoader(component);
+                    });
+                });
+        }
+
+        getTenants(false);
+    }
+
     returnToApplicationGroup() {
-        this.router.navigate(['../list'], { relativeTo: this.activatedRoute });
+        this.router.navigate(['../list'], {relativeTo: this.activatedRoute});
     }
 
     cancelCreating() {
         this.returnToApplicationGroup();
     }
 
-    createApplicationGroup(validform: boolean) {
+    createApplicationGroup(validform:boolean) {
         var applicationGroupCreateCtrl = this;
         if (validform) {
             applicationGroupCreateCtrl.crudHelperService.startLoader(applicationGroupCreateCtrl);
-            applicationGroupCreateCtrl.applicationGroup.networkName =
-                applicationGroupCreateCtrl.selectedNetwork;
 
             applicationGroupCreateCtrl.applicationGroup.key =
                 applicationGroupCreateCtrl.applicationGroupsModel.generateKey(applicationGroupCreateCtrl.applicationGroup);
@@ -71,7 +83,7 @@ export class ApplicationGroupCreateComponent {
              * applicationGroup consist of Group Name, Network Name, Isolation Policies, Bandwidth Policy
              */
 
-            applicationGroupCreateCtrl.applicationGroupsModel.create(applicationGroupCreateCtrl.applicationGroup,undefined).then(
+            applicationGroupCreateCtrl.applicationGroupsModel.create(applicationGroupCreateCtrl.applicationGroup, undefined).then(
                 function successCallback(result) {
                     applicationGroupCreateCtrl.crudHelperService.stopLoader(applicationGroupCreateCtrl);
                     applicationGroupCreateCtrl.crudHelperService.showNotification("Application group: Created", result.key.toString());
@@ -83,7 +95,22 @@ export class ApplicationGroupCreateComponent {
         }
     }
 
-    updateNetwork(networkName) {
-        this.selectedNetwork = networkName;
+    /**
+     * Get networks for the given tenant.
+     */
+    getNetworks(tenantName:string) {
+        var component = this;
+        component.networksModel.get(false).then(function (result) {
+            component.networks = _.filter(result, {
+                'tenantName': tenantName
+            });
+        });
+    }
+
+    updateTenant(tenantName:string, isolationPolicyComponent: any, bandwidthPolicyComponent: any) {
+        this.applicationGroup.tenantName = tenantName;
+        this.getNetworks(tenantName);
+        isolationPolicyComponent.getIsolationPolicies();
+        bandwidthPolicyComponent.getNetprofiles();
     }
 }

@@ -24,6 +24,9 @@
                         <li *ngIf="profileNameRef.errors?.required">Please enter profile
                             name
                         </li>
+                        <li *ngIf="policyTenantRef.errors?.required">
+                            Please select tenant
+                        </li>
                         <li *ngIf="bandwidthNumberRef.errors?.required">Please enter
                             bandwidth
                         </li>
@@ -44,6 +47,16 @@
                    [(ngModel)]="newPolicy.profileName" placeholder="Enter profile name" required>
         </div>
 
+        <div class="field">
+            <label for="newPolicyTenant">Tenant</label>
+            <select id="newPolicyTenant" class="ui dropdown"
+                    name="newPolicyTenant"
+                    [(ngModel)]="newPolicy.tenantName"
+                    required #policyTenantRef="ngModel">
+                <option value="">-- Please select tenant --</option>
+                <option *ngFor="let tenant of tenants" [ngValue]="tenant.tenantName">{{tenant.tenantName}}</option>
+            </select>
+        </div>
 
         <div style="margin-top: 20px" class="fields">
             <div class="thirteen wide field">

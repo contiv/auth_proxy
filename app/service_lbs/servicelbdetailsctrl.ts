@@ -34,7 +34,7 @@ export class ServicelbDetailsComponent implements OnInit{
                 private activatedRoute: ActivatedRoute
                 ){
         this.infoselected = true;
-        this.statskey=''
+        this.statskey='';
         this.mode = 'details';
         this.serviceName='';
         this.servicelbDetailsCtrl = this;

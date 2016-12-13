@@ -13,13 +13,8 @@
                 </ctv-th>
             </th>
             <th>
-                <ctv-th [sortfield]="'updatedBy'" (sortdata)="tableRef.applysort($event)"
-                        [sortobject]="tableRef.sortObj">Updated by
-                </ctv-th>
-            </th>
-            <th>
-                <ctv-th [sortfield]="'lastUpdate'" (sortdata)="tableRef.applysort($event)"
-                        [sortobject]="tableRef.sortObj">Last update
+                <ctv-th [sortfield]="'tenantName'" (sortdata)="tableRef.applysort($event)"
+                        [sortobject]="tableRef.sortObj">Tenant
                 </ctv-th>
             </th>
         </tr>
@@ -28,9 +23,7 @@
         <tbody *ngIf="isolationPolicyListCtrl['policies']">
         <tr *ngFor="let policy of isolationPolicyListCtrl['filteredPolicies']">
             <td><a [routerLink]="['../isolation/details', policy.key]">{{policy.policyName}}</a></td>
-            <td>{{policy.updatedBy}}</td>
-            <td>{{policy.lastUpdate}}</td>
-            <td></td>
+            <td>{{policy.tenantName}}</td>
         </tr>
         </tbody>
 
@@ -48,7 +41,7 @@
 
         <tfoot>
         <tr>
-            <td colspan="4">
+            <td colspan="2">
                 <ctv-tpagination [chunks]="tableRef.pageChunks"
                                  (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
                                  (prevChunk)="tableRef.showPrevChunk()"

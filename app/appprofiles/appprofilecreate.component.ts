@@ -3,20 +3,23 @@ import { ActivatedRoute, Router } from "@angular/router";
 import * as _ from 'lodash';
 import { CRUDHelperService } from "../components/utils/crudhelperservice";
 import { AppProfilesModel } from "../components/models/appprofilesmodel";
+import { OrganizationsModel } from "../components/models/organizationsmodel";
 
 @Component({
     selector: 'appprofilecreate',
     templateUrl: 'appprofiles/appprofilecreate.html'
 })
 
-export class AppProfileCreateComponent {
+export class AppProfileCreateComponent implements OnInit {
     newAppProfile:any = {};
+    tenants:any[] = [];
 
     constructor(private activatedRoute:ActivatedRoute,
                 private router:Router,
+                private ngZone:NgZone,
+                private organizationsModel:OrganizationsModel,
                 private crudHelperService:CRUDHelperService,
-                private appProfilesModel:AppProfilesModel,
-                private ngZone:NgZone) {
+                private appProfilesModel:AppProfilesModel) {
         var component = this;
 
         function resetForm() {
@@ -25,11 +28,32 @@ export class AppProfileCreateComponent {
                 key: '',
                 appProfileName: '',
                 endpointGroups: [],
-                tenantName: 'default'//TODO: Remove hardcoded tenant.
+                tenantName: ''
             };
         }
 
         resetForm();
+    }
+
+    ngOnInit() {
+        var component = this;
+        component.crudHelperService.startLoader(component);
+
+        function getTenants(reload:boolean) {
+            component.organizationsModel.get(reload)
+                .then((result) => {
+                    component.tenants = result;
+                    component.ngZone.run(() => {
+                        component.crudHelperService.stopLoader(component);
+                    });
+                }, (error) => {
+                    component.ngZone.run(() => {
+                        component.crudHelperService.stopLoader(component);
+                    });
+                });
+        }
+
+        getTenants(false);
     }
 
     returnToAppProfiles() {
@@ -61,4 +85,8 @@ export class AppProfileCreateComponent {
         }
     }
 
+    updateTenant(tenantName:string, appGroupSelComponent: any) {
+        this.newAppProfile.tenantName = tenantName;
+        appGroupSelComponent.getApplicationGroups();
+    }
 }
