@@ -46,7 +46,6 @@ var (
 	datastore      = ""
 	datastorePaths = []string{
 		GetPath(RootLocalUsers),
-		GetPath(RootPrincipals),
 		GetPath(RootLdapConfiguration),
 	}
 )
@@ -164,54 +163,41 @@ func (s *dbSuite) TestUpdateLocalUser(c *C) {
 
 		// change the username and update
 		newObj := &types.LocalUser{
-			Username:     user.Username + "_u",
+			Username:     user.Username,
 			PasswordHash: uUser.PasswordHash,
 			Disable:      uUser.Disable,
-			FirstName:    uUser.FirstName,
-			LastName:     uUser.LastName,
+			FirstName:    uUser.FirstName + "_u",
+			LastName:     uUser.LastName + "_u",
 		}
 
 		err = UpdateLocalUser(user.Username, newObj)
 		c.Assert(err, IsNil)
 		newObj.PasswordHash = uUser.PasswordHash
 
-		// search the data store for old username
-		oldUser, err := GetLocalUser(user.Username)
-		c.Assert(err, Equals, ccnerrors.ErrKeyNotFound)
-		c.Assert(oldUser, IsNil)
-
 		// search the data store for new username
-		newUser, err := GetLocalUser(user.Username + "_u")
+		newUser, err := GetLocalUser(user.Username)
 		c.Assert(err, IsNil)
 		c.Assert(newUser, DeepEquals, newObj)
 	}
 
 	// revert the changes
 	for _, user := range newUsers {
-		updateTo := user.Username
-		user.Username = user.Username + "_u"
-
 		uUser, err := GetLocalUser(user.Username)
 		c.Assert(err, IsNil)
 
 		// change the username and update
 		newObj := &types.LocalUser{
-			Username:     updateTo,
+			Username:     uUser.Username, // same as user.Username
 			PasswordHash: uUser.PasswordHash,
 			Disable:      uUser.Disable,
-			FirstName:    uUser.FirstName,
-			LastName:     uUser.LastName,
+			FirstName:    user.FirstName,
+			LastName:     user.LastName,
 		}
 		err = UpdateLocalUser(user.Username, newObj)
 		c.Assert(err, IsNil)
 		newObj.PasswordHash = uUser.PasswordHash
 
-		// search the data store for old username
-		oldUser, err := GetLocalUser(user.Username)
-		c.Assert(err, Equals, ccnerrors.ErrKeyNotFound)
-		c.Assert(oldUser, IsNil)
-
-		newUser, err := GetLocalUser(updateTo)
+		newUser, err := GetLocalUser(user.Username)
 		c.Assert(err, IsNil)
 		c.Assert(newUser, DeepEquals, newObj)
 	}
@@ -244,5 +230,55 @@ func (s *dbSuite) TestGetLocalUsers(c *C) {
 	sort.Strings(allUsers)
 
 	c.Assert(usernames, DeepEquals, allUsers)
+
+}
+
+func (s *dbSuite) TestUpdateBuiltInUsers(c *C) {
+	s.addBuiltInUsers(c)
+
+	// update all the details except `password`
+	for _, username := range builtInUsers {
+		user, err := GetLocalUser(username)
+		c.Assert(err, IsNil)
+
+		uUser := &types.LocalUser{
+			Username:     user.Username,
+			Disable:      true,
+			FirstName:    "BuiltIn",
+			LastName:     "User",
+			PasswordHash: user.PasswordHash,
+		}
+
+		err = UpdateLocalUser(username, uUser)
+		c.Assert(err, IsNil)
+		uUser.PasswordHash = user.PasswordHash
+
+		obtainedUser, err := GetLocalUser(username)
+		c.Assert(err, IsNil)
+		c.Assert(obtainedUser, DeepEquals, uUser)
+	}
+
+	// update password and check hash
+	for _, username := range builtInUsers {
+		user, err := GetLocalUser(username)
+		c.Assert(err, IsNil)
+
+		uUser := &types.LocalUser{
+			Username: user.Username,
+			Password: user.Username + "_U",
+		}
+
+		err = UpdateLocalUser(username, uUser)
+		c.Assert(err, IsNil)
+
+		obtainedUser, err := GetLocalUser(username)
+		c.Assert(err, IsNil)
+		c.Assert(string(obtainedUser.PasswordHash), Not(Equals), string(user.PasswordHash))
+
+		// all other attributes got default value
+		c.Assert(obtainedUser.LastName, Equals, "")
+		c.Assert(obtainedUser.FirstName, Equals, "")
+		c.Assert(obtainedUser.Disable, Equals, false)
+	}
 
 }

@@ -176,7 +176,6 @@ func adminOnly(handler func(*auth.Token, http.ResponseWriter, *http.Request)) fu
 		// convert token from string to Token type
 		token, err := auth.ParseToken(tokenStr)
 		if err != nil {
-			log.Infof("From here???")
 			httpStatus := http.StatusInternalServerError
 			httpResponse := []byte(ccnerrors.ErrParsingToken.Error())
 			processStatusCodes(httpStatus, httpResponse, w)
@@ -242,7 +241,6 @@ func deleteLocalUser(token *auth.Token, w http.ResponseWriter, req *http.Request
 // updateLocalUser updates the existing user with the given details.
 // it can return various HTTP status codes:
 //    204 (NoContent; update was successful)
-//    400 (BadRequest; invalid role/cannot update built-in user)
 //    404 (NotFound; user not found)
 //    500 (internal server error)
 func updateLocalUser(token *auth.Token, w http.ResponseWriter, req *http.Request) {
