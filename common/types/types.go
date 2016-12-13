@@ -55,6 +55,8 @@ func Role(roleStr string) (RoleType, error) {
 //
 // Fields:
 //  UserName: of the user. Read only field. Must be unique.
+//  FirstName: of the user
+//  LastName: of the user
 //  Password: of the user. Not stored anywhere. Used only for updates.
 //  Disable: if authorizations for this local user is disabled.
 //  PasswordHash: of the password string.
@@ -62,6 +64,8 @@ func Role(roleStr string) (RoleType, error) {
 type LocalUser struct {
 	Username     string `json:"username"`
 	Password     string `json:"password,omitempty"`
+	FirstName    string `json:"first_name"`
+	LastName     string `json:"last_name"`
 	Disable      bool   `json:"disable"`
 	PasswordHash []byte `json:"password_hash,omitempty"`
 }

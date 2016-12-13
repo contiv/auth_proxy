@@ -244,8 +244,10 @@ func getLocalUsersHelper() (int, []byte) {
 	localUsers := []types.LocalUser{}
 	for _, user := range users {
 		lu := types.LocalUser{
-			Username: user.Username,
-			Disable:  user.Disable,
+			Username:  user.Username,
+			FirstName: user.FirstName,
+			LastName:  user.LastName,
+			Disable:   user.Disable,
 		}
 
 		localUsers = append(localUsers, lu)
@@ -272,9 +274,21 @@ func updateLocalUserInfo(username string, updateReq *types.LocalUser, actual *ty
 	updatedUserObj := &types.LocalUser{
 		// username == actual.Username
 		Username:     actual.Username,
+		FirstName:    actual.FirstName,
+		LastName:     actual.LastName,
 		Disable:      actual.Disable,
 		PasswordHash: actual.PasswordHash,
 		// `Password` will be empty
+	}
+
+	// Update `first_name`
+	if !common.IsEmpty(updateReq.FirstName) {
+		updatedUserObj.FirstName = updateReq.FirstName
+	}
+
+	// Update `last_name`
+	if !common.IsEmpty(updateReq.LastName) {
+		updatedUserObj.LastName = updateReq.LastName
 	}
 
 	// Update `disable`

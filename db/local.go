@@ -201,6 +201,7 @@ func AddDefaultUsers() error {
 			// default user accounts are `enabled` always; it cannot be disabled
 			Disable:  false,
 			Password: userR.String(),
+			// FirstName, LastName = "" for built-in users
 		}
 
 		err := AddLocalUser(&localUser)
