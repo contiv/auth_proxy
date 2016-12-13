@@ -13,6 +13,7 @@ import { BandwidthPolicyCreateComponent } from "./bandwidthpolicycreatectrl";
 import { BandwidthPolicyDetailsComponent } from "./bandwidthpolicydetailsctrl";
 import { IsolationListComponent } from "./isolationpolicylistctrl";
 import { BandwidthListComponent } from "./bandwidthpolicylistctrl";
+import {IsolationPolicyStatComponent} from "./isolationpolicystats";
 
 @NgModule({
     imports: [
@@ -29,7 +30,8 @@ import { BandwidthListComponent } from "./bandwidthpolicylistctrl";
         BandwidthPolicyDetailsComponent,
         BandwidthPolicyCreateComponent,
         IsolationListComponent,
-        BandwidthListComponent
+        BandwidthListComponent,
+        IsolationPolicyStatComponent
     ],
     exports: [
         NetworkPoliciesTabsComponent,
@@ -39,6 +41,7 @@ import { BandwidthListComponent } from "./bandwidthpolicylistctrl";
         BandwidthPolicyDetailsComponent,
         IsolationListComponent,
         BandwidthListComponent,
+        IsolationPolicyStatComponent,
         FormsModule,
         CommonModule,
         RouterModule,

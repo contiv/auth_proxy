@@ -1,0 +1,67 @@
+<div class="ui basic segment" [ngClass]="{loading: isolationPolicyStatsComp.showLoader}">
+    <table class="ui very basic selectable table">
+        <tbody>
+        <tr>
+            <td class="ctv-header three wide column">Name</td>
+            <td>{{isolationPolicyStatsComp['config']['policyName']}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header three wide column">Tenant Name</td>
+            <td>{{isolationPolicyStatsComp['config']['tenantName']}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header three wide column">Number of Endpoints</td>
+            <td>{{isolationPolicyStatsComp.isolationPolicyInspectStats.numEndpoints}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="ui section divider"></div>
+    <ctv-collapsible title="End Points">
+        <ctv-table #tableRef [defaultSortColumn]="'containerName'"
+                   [items]="isolationPolicyStatsComp['endpoints']"
+                   (filtereditems)="isolationPolicyStatsComp['filteredendpoints']=$event;"
+                   [size]="12">
+            <thead>
+            <tr>
+                <div class="ui grid" style="margin-top: 25px;margin-left: 25px;margin-bottom: 1px;">
+                    <th class="five wide column"><ctv-th [sortfield]="'containerName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj"> Container Name </ctv-th></th>
+                    <th class="four wide column"><ctv-th [sortfield]="'ipAddress'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj"> IP Address </ctv-th></th>
+                    <th class="three wide column"><ctv-th [sortfield]="'homingHost'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj"> Host </ctv-th></th>
+                    <th class="four wide column">
+                        <ctv-search (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [placeholder]="'Search Containers...'"></ctv-search>
+                    </th>
+                </div>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr *ngFor="let endpoint of isolationPolicyStatsComp['filteredendpoints']">
+                <td>
+                    <ctv-accordion [items]="isolationPolicyStatsComp['containerDetails'][endpoint.containerID]">
+                        <div class="ui grid" style="margin-top: -33px; margin-left: 30px;">
+                            <div class="five wide column">{{endpoint.containerName.substr(1)}}</div>
+                            <div class="four wide column">{{endpoint.ipAddress.join(' ')}}</div>
+                            <div class="four wide column">{{endpoint.homingHost}}</div>
+                        </div>
+                    </ctv-accordion>
+                </td>
+                <td></td>
+            </tr>
+            </tbody>
+
+            <tfoot>
+            <tr>
+                <td colspan="5">
+                    <ctv-tpagination [chunks]="tableRef.pageChunks"
+                                     (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
+                                     (prevChunk)="tableRef.showPrevChunk()"
+                                     (nextChunk)="tableRef.showNextChunk()">
+
+                    </ctv-tpagination>
+                </td>
+            </tr>
+            </tfoot>
+        </ctv-table>
+    </ctv-collapsible>
+</div>

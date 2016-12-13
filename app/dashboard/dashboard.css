@@ -20,14 +20,6 @@ tbody tr.notSelected:hover{
     background: none;
 }
 
-.tabular.menu a.item{
-    color:#049fd9
-}
-
-.tabular.menu a.item.active{
-    color:black;
-}
-
 .graphTable{
     width:80%;
 }

@@ -7,6 +7,7 @@ export const ContivGlobals = {
     'NETWORKS_INSPECT_ENDPOINT':'/netmaster/api/v1/inspect/networks/',
     'SERVICELBS_INSPECT_ENDPOINT':'/netmaster/api/v1/inspect/serviceLBs/',
     'POLICIES_ENDPOINT': '/netmaster/api/v1/policys/',
+    'POLICIES_INSPECT_ENDPOINT': '/netmaster/api/v1/inspect/policys/',
     'RULES_ENDPOINT': '/netmaster/api/v1/rules/',
     'APPLICATIONGROUPS_ENDPOINT': '/netmaster/api/v1/endpointGroups/',
     'APPLICATIONGROUPS_INSPECT_ENDPOINT': 'netmaster/api/v1/inspect/endpointGroups/',

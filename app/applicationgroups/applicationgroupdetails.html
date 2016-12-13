@@ -40,12 +40,12 @@
         </button>
     </div>
 </div>
-<div class="ui secondary pointing menu" *ngIf="mode=='details'">
-    <a class="blue item" [ngClass]="{active: infoselected}" (click)="infoselected=true">
+<div class="ui tabular menu" *ngIf="mode=='details'">
+    <a class="item" [ngClass]="{active: infoselected}" (click)="infoselected=true">
         <i class="details icon"></i>
         DETAILS
     </a>
-    <a class="blue item" [ngClass]="{active: !infoselected}" (click)="infoselected=false">
+    <a class="item" [ngClass]="{active: !infoselected}" (click)="infoselected=false">
         <i class="area chart icon"></i>
         STATS
     </a>

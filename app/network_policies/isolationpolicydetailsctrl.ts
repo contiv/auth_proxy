@@ -36,6 +36,8 @@ export class IsolationPolicyDetailsComponent {
     newOutgoingSelectedNetwork:string = '';
     incorrectCIDR:boolean = false;
     validateCIDRFlag:boolean = false;
+    infoselected: boolean = true;
+    statskey: string = ''
 
     constructor(private activatedRoute: ActivatedRoute,
                 private router: Router,
@@ -45,6 +47,7 @@ export class IsolationPolicyDetailsComponent {
                 private applicationGroupsModel:ApplicationGroupsModel,
                 private crudHelperService:CRUDHelperService) {
         var isolationPolicyDetailsCtrl = this;
+        this.statskey = activatedRoute.snapshot.params['key'];
 
         /**
          * To show edit or details screen based on the route

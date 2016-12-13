@@ -210,3 +210,10 @@ input[type=range]:focus::-webkit-slider-runnable-track {
     background: #E8E8E8;
 }
 
+.ui.tabular.menu a.item{
+    color:#049fd9
+}
+
+.ui.tabular.menu a.item.active{
+    color:black;
+}
