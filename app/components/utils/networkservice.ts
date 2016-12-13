@@ -65,4 +65,19 @@ export class NetworkService {
         return this.apiService.post(ContivGlobals.ACI_SETTINGS_ENDPOINT
             + 'aciGw/', setting).map((res: Response) => res.json()).toPromise();
     }
+
+    getGlobalInspect(): Promise<any> {
+        var networkservice = this;
+        let promise = new Promise(function (resolve, reject) {
+            let url = ContivGlobals.GLOBAL_NETWORK_INSPECT_ENDPOINT + 'global/';
+            networkservice.apiService.get(url).map((res: Response) => res.json()).toPromise()
+                .then(function successCallback(result) {
+                    resolve(result);
+                }, function errorCallback(result) {
+                    reject(result);
+                });
+        });
+
+        return promise;
+    }
 }

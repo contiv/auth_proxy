@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription, Observable } from "rxjs";
 import { CRUDHelperService } from "../components/utils/crudhelperservice";
 import { NetworkService } from "../components/utils/networkservice";
 import { ContivGlobals } from "../components/models/contivglobals";
@@ -7,14 +8,17 @@ import { ContivGlobals } from "../components/models/contivglobals";
     selector: 'networksetting',
     templateUrl: 'settings/networksettings.html'
 })
-export class NetworkSettingsComponent {
+export class NetworkSettingsComponent implements OnInit, OnDestroy {
+    private refresh: Subscription;
     setting: any;
     aciSetting: any;
+    globalInspectStats:any;
 
     constructor(private crudHelperService:  CRUDHelperService,
                 private networkService: NetworkService){
         this.setting = {};
         this.aciSetting = {};
+        this.globalInspectStats = {};
         this['showLoader']=true;
         this['showServerError'] = false;
         this['serverErrorMessage'] = '';
@@ -39,6 +43,14 @@ export class NetworkSettingsComponent {
             }, (error) => {
                 networkSettingCtrl.crudHelperService.stopLoader(networkSettingCtrl);
             });
+
+        this.refresh = Observable.interval(5000).subscribe(() => {
+            this.getGlobalInspect();
+        });
+    }
+
+    ngOnInit() {
+        this.getGlobalInspect();
     }
 
     updateNetworkSettings(settings:any) {
@@ -65,5 +77,17 @@ export class NetworkSettingsComponent {
                 networkSettingCtrl.crudHelperService.showServerError("ACI settings: Update failed", error);
             })
 
+    }
+
+    getGlobalInspect(){
+        var networkSettingCtrl = this;
+        networkSettingCtrl.networkService.getGlobalInspect()
+            .then((result) => {
+                    networkSettingCtrl['globalInspectStats'] = result['Oper'];
+                })
+    }
+
+    ngOnDestroy(){
+        this.refresh.unsubscribe();
     }
 }
