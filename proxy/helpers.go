@@ -13,8 +13,194 @@ import (
 	"github.com/contiv/ccn_proxy/common"
 	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
 	"github.com/contiv/ccn_proxy/common/types"
-	"github.com/contiv/ccn_proxy/usermgmt"
+	"github.com/contiv/ccn_proxy/db"
 )
+
+// This file contains all the HTTP handler helper functions.
+
+// updateLdapConfigurationInfo helper function for `updateLdapConfigurationHelper`.
+// params:
+//  ldapConfiguration: configuration to be updated in the data store
+//  actual: existing configuration in the data store
+// return values:
+//  int: http status code
+//  []byte: http response message; this goes along with status code
+//          this could be an error message or JSON response based on the execution flow or nil
+func updateLdapConfigurationInfo(ldapConfiguration *types.LdapConfiguration, actual *types.LdapConfiguration) (int, []byte) {
+	ldapConfigurationUpdateObj := &types.LdapConfiguration{
+		Server:                 actual.Server,
+		Port:                   actual.Port,
+		BaseDN:                 actual.BaseDN,
+		ServiceAccountDN:       actual.ServiceAccountDN,
+		ServiceAccountPassword: actual.ServiceAccountPassword,
+		StartTLS:               actual.StartTLS,
+		InsecureSkipVerify:     actual.InsecureSkipVerify,
+	}
+
+	// update `Server`
+	if !common.IsEmpty(ldapConfiguration.Server) {
+		ldapConfigurationUpdateObj.Server = ldapConfiguration.Server
+	}
+
+	// update `Port`; Range checking 0-65535 is not needed as `Port` is of type `uint16`
+	if ldapConfiguration.Port > 0 {
+		ldapConfigurationUpdateObj.Port = ldapConfiguration.Port
+	}
+
+	// update `BaseDN`
+	if !common.IsEmpty(ldapConfiguration.BaseDN) {
+		ldapConfigurationUpdateObj.BaseDN = ldapConfiguration.BaseDN
+	}
+
+	// update `ServiceAccountDN`
+	if !common.IsEmpty(ldapConfiguration.ServiceAccountDN) {
+		ldapConfigurationUpdateObj.ServiceAccountDN = ldapConfiguration.ServiceAccountDN
+	}
+
+	// update `ServiceAccountPassword`
+	if !common.IsEmpty(ldapConfiguration.ServiceAccountPassword) {
+		ldapConfigurationUpdateObj.ServiceAccountPassword = ldapConfiguration.ServiceAccountPassword
+	}
+
+	// update `StartTLS`
+	if actual.StartTLS != ldapConfiguration.StartTLS {
+		ldapConfigurationUpdateObj.StartTLS = ldapConfiguration.StartTLS
+	}
+
+	// update `InsecureSkipVerify`
+	if actual.InsecureSkipVerify != ldapConfiguration.InsecureSkipVerify {
+		ldapConfigurationUpdateObj.InsecureSkipVerify = ldapConfiguration.InsecureSkipVerify
+	}
+
+	err := db.UpdateLdapConfiguration(ldapConfigurationUpdateObj)
+
+	switch err {
+	case nil:
+		ldapConfigurationUpdateObj.ServiceAccountPassword = ""
+		jData, err := json.Marshal(ldapConfigurationUpdateObj)
+		if err != nil {
+			return http.StatusInternalServerError, []byte(err.Error())
+		}
+
+		return http.StatusOK, jData
+	case ccnerrors.ErrKeyNotFound:
+		return http.StatusNotFound, nil
+	default:
+		log.Debugf("Failed to delete LDAP configuration: %#v", err)
+		return http.StatusInternalServerError, []byte("Failed to delete LDAP setting from the data store")
+	}
+
+}
+
+// updateLdapConfigurationHelper helper function to update LDAP configuration in the data store.
+// params:
+//  ldapConfiguration: configuration to be updated in the data store
+// return values:
+//  int: http status code
+//  []byte: http response message; this goes along with status code
+//          this could be an error message or JSON response based on the execution flow or nil
+func updateLdapConfigurationHelper(ldapConfiguration *types.LdapConfiguration) (int, []byte) {
+	actual, err := db.GetLdapConfiguration()
+
+	switch err {
+	case nil:
+		return updateLdapConfigurationInfo(ldapConfiguration, actual)
+	case ccnerrors.ErrKeyNotFound:
+		return http.StatusNotFound, nil
+	default:
+		log.Debugf("Failed to retrieve LDAP configuration: %#v", err)
+		return http.StatusInternalServerError, []byte("Failed to retrieve LDAP setting from the data store")
+	}
+
+}
+
+// deleteLdapConfigurationHelper helper function to delete LDAP configuration from the data store.
+// return values:
+//  int: http status code
+//  []byte: http response message; this goes along with status code
+//          this could be an error message or JSON response based on the execution flow or nil
+func deleteLdapConfigurationHelper() (int, []byte) {
+	err := db.DeleteLdapConfiguration()
+
+	switch err {
+	case nil:
+		return http.StatusNoContent, nil
+	case ccnerrors.ErrKeyNotFound:
+		return http.StatusNotFound, nil
+	default:
+		log.Debugf("Failed to delete LDAP configuration: %#v", err)
+		return http.StatusInternalServerError, []byte("Failed to delete LDAP configuration from the data store")
+	}
+
+}
+
+// getLdapConfigurationHelper helper function to retrieve LDAP configuration from the data store.
+// return values:
+//  int: http status code
+//  []byte: http response message; this goes along with status code
+//          this could be an error message or JSON response based on the execution flow or nil
+func getLdapConfigurationHelper() (int, []byte) {
+	ldapConfiguration, err := db.GetLdapConfiguration()
+
+	switch err {
+	case nil:
+		// return the configuration with no password
+		ldapConfiguration.ServiceAccountPassword = ""
+		jData, err := json.Marshal(ldapConfiguration)
+		if err != nil {
+			return http.StatusInternalServerError, []byte(err.Error())
+		}
+
+		return http.StatusOK, jData
+	case ccnerrors.ErrKeyNotFound:
+		return http.StatusNotFound, nil
+	default:
+		log.Debugf("Failed to retrieve LDAP configuration: %#v", err)
+		return http.StatusInternalServerError, []byte("Failed to retrieve LDAP configuration from the data store")
+	}
+
+}
+
+// addLdapConfigurationHelper helper function to add given ldap configuration to the data store.
+// params:
+//  ldapConfiguration: configuration to be added to the data store
+// return values:
+//  int: http status code
+//  []byte: http response message; this goes along with status code
+//          this could be an error message or JSON response based on the execution flow
+func addLdapConfigurationHelper(ldapConfiguration *types.LdapConfiguration) (int, []byte) {
+	if common.IsEmpty(ldapConfiguration.Server) || (ldapConfiguration.Port == 0 || ldapConfiguration.Port > 65535) {
+		return http.StatusBadRequest, []byte("Invalid Server/Port details")
+	}
+
+	if common.IsEmpty(ldapConfiguration.ServiceAccountDN) || common.IsEmpty(ldapConfiguration.ServiceAccountPassword) {
+		return http.StatusBadRequest, []byte("Empty service account DN/Password")
+	}
+
+	if common.IsEmpty(ldapConfiguration.BaseDN) {
+		return http.StatusBadRequest, []byte("Empty base DN")
+	}
+
+	err := db.AddLdapConfiguration(ldapConfiguration)
+
+	switch err {
+	case nil:
+		// return same object with no password
+		ldapConfiguration.ServiceAccountPassword = ""
+		jData, err := json.Marshal(ldapConfiguration)
+		if err != nil {
+			return http.StatusInternalServerError, []byte(err.Error())
+		}
+
+		return http.StatusCreated, jData
+	case ccnerrors.ErrKeyExists:
+		return http.StatusBadRequest, []byte("LDAP setttings exists already. Request `update` if some config needs change")
+	default:
+		log.Debugf("Failed to add LDAP configuration: %#v", err)
+		return http.StatusInternalServerError, []byte("Failed to add LDAP configuration to the system")
+	}
+
+}
 
 // getLocalUserHelper helper function to get the details of given username.
 // params:
@@ -24,7 +210,7 @@ import (
 //  []byte: http response message; this goes along with status code
 //          on successful fetch from data store, it contains `localUser` object
 func getLocalUserHelper(username string) (int, []byte) {
-	user, err := usermgmt.GetLocalUser(username)
+	user, err := db.GetLocalUser(username)
 
 	switch err {
 	case nil:
@@ -54,7 +240,7 @@ func getLocalUserHelper(username string) (int, []byte) {
 //  []byte: http response message; this goes along with status code
 //          on successful fetch from data store, it contains the list of localuser objects
 func getLocalUsersHelper() (int, []byte) {
-	users, err := usermgmt.GetLocalUsers()
+	users, err := db.GetLocalUsers()
 	if err != nil {
 		return http.StatusInternalServerError, []byte(err.Error())
 	}
@@ -101,7 +287,7 @@ func updateLocalUserInfo(username string, updateReq *localUserCreateRequest, act
 	if !common.IsEmpty(updateReq.Role) {
 		role, err := types.Role(updateReq.Role)
 		if err != nil {
-			return http.StatusInternalServerError, []byte(fmt.Sprintf("Failed to map role %q", updateReq.Role))
+			return http.StatusBadRequest, []byte(fmt.Sprintf("Invalid role %q", updateReq.Role))
 		}
 		updatedUserObj.Principal.Role = role
 	}
@@ -120,7 +306,7 @@ func updateLocalUserInfo(username string, updateReq *localUserCreateRequest, act
 		}
 	}
 
-	err := usermgmt.UpdateLocalUser(username, updatedUserObj)
+	err := db.UpdateLocalUser(username, updatedUserObj)
 	switch err {
 	case nil:
 		lu := localUser{
@@ -157,7 +343,7 @@ func updateLocalUserHelper(username string, userUpdateReq *localUserCreateReques
 		return http.StatusBadRequest, []byte("Empty username")
 	}
 
-	localUser, err := usermgmt.GetLocalUser(username)
+	localUser, err := db.GetLocalUser(username)
 	switch err {
 	case nil:
 		return updateLocalUserInfo(username, userUpdateReq, localUser)
@@ -180,7 +366,7 @@ func deleteLocalUserHelper(username string) (int, []byte) {
 		return http.StatusBadRequest, []byte("Empty username")
 	}
 
-	err := usermgmt.DeleteLocalUser(username)
+	err := db.DeleteLocalUser(username)
 	switch err {
 	case nil:
 		return http.StatusNoContent, nil
@@ -201,7 +387,7 @@ func deleteLocalUserHelper(username string) (int, []byte) {
 //  []byte: http response message; this goes along with status code
 func addLocalUserHelper(userCreateReq *localUserCreateRequest) (int, []byte) {
 	if common.IsEmpty(userCreateReq.Username) || common.IsEmpty(userCreateReq.Password) {
-		return http.StatusBadRequest, []byte("username/password is empty")
+		return http.StatusBadRequest, []byte("Username/Password is empty")
 	}
 
 	role, err := types.Role(userCreateReq.Role)
@@ -227,7 +413,7 @@ func addLocalUserHelper(userCreateReq *localUserCreateRequest) (int, []byte) {
 		return http.StatusInternalServerError, []byte(fmt.Sprintf("Failed to create password hash for user %q", userCreateReq.Username))
 	}
 
-	err = usermgmt.AddLocalUser(&user)
+	err = db.AddLocalUser(&user)
 	switch err {
 	case nil:
 		lu := localUser{
@@ -243,7 +429,7 @@ func addLocalUserHelper(userCreateReq *localUserCreateRequest) (int, []byte) {
 
 		return http.StatusCreated, jData
 	case ccnerrors.ErrKeyExists:
-		return http.StatusBadRequest, []byte("user exists already")
+		return http.StatusBadRequest, []byte(fmt.Sprintf("User %q exists already", userCreateReq.Username))
 	default:
 		return http.StatusInternalServerError, []byte(err.Error())
 	}

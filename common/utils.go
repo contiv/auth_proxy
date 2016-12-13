@@ -1,12 +1,19 @@
 package common
 
 import (
+	"fmt"
 	"net/http"
 	"runtime"
 	"strings"
 
 	log "github.com/Sirupsen/logrus"
+	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
 )
+
+// GlobalMap is a map to hold variables(key:value pair) that can be accessed anywhere in ccc_proxy
+type GlobalMap map[string]string
+
+var global GlobalMap
 
 // IsEmpty checks if the given string is empty or not
 // params:
@@ -15,6 +22,46 @@ import (
 //  true if the string is empty otherwise false
 func IsEmpty(str string) bool {
 	return len(strings.TrimSpace(str)) == 0
+}
+
+// Global returns `GlobalMap` singleton object
+func Global() GlobalMap {
+	if global == nil {
+		global = map[string]string{}
+	}
+
+	return global
+}
+
+// Set adds a key:value pair in `GlobalMap`
+// params:
+//  key: string; to be set in map
+//  value: string; value for the key
+// return values:
+//  error: nil on success or relevant error
+func (g GlobalMap) Set(key, value string) error {
+	if IsEmpty(key) {
+		return fmt.Errorf("Cannot set globals: empty key")
+	}
+
+	g[key] = value
+	return nil
+}
+
+// Get retrieves the value of the given key from `GlobalMap`
+// params:
+//  key: to be fetched from map
+// return values:
+//  string: g[key] on success
+//  error: relevant error if it fails to retrieve the given key's value
+func (g GlobalMap) Get(key string) (string, error) {
+	val, found := g[key]
+	if !found {
+		log.Debugf("Failed to fetch key %q from global map", key)
+		return "", ccnerrors.ErrKeyNotFound
+	}
+
+	return val, nil
 }
 
 var doTracing = false

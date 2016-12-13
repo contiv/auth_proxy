@@ -1,16 +1,18 @@
-package usermgmt
+package db
 
 import (
-	"github.com/contiv/ccn_proxy/common/types"
 	"path"
+
+	"github.com/contiv/ccn_proxy/common/types"
 )
 
 // This file contains all DS constants + functions related to local user management.
 
 // various data store paths.
 var (
-	RootLocalUsers = "local_users"
-	RootPrincipals = "principals"
+	RootLocalUsers        = "local_users"
+	RootPrincipals        = "principals"
+	RootLdapConfiguration = "ldap_configuration"
 )
 
 // GetPath joins the given list of strings using path separator with `root` data store path.

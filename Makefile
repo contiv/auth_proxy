@@ -44,8 +44,8 @@ unit-tests:
 	USE_DATASTORE_ADDRESS=etcd://127.0.0.1:2379 go test -run TestEtcd* -v -timeout 1m ./state -check.v
 	USE_DATASTORE_ADDRESS=consul://127.0.0.1:8500 go test -run TestConsul* -v -timeout 1m ./state -check.v
 	USE_DATASTORE_ADDRESS=etcd://127.0.0.1:2379 go test -v -timeout 1m ./state/test -check.v
-	USE_DATASTORE=consul go test -v -timeout 1m ./usermgmt -check.v
-	USE_DATASTORE=etcd   go test -v -timeout 1m ./usermgmt -check.v
+	USE_DATASTORE=consul go test -v -timeout 1m ./db  -check.v
+	USE_DATASTORE=etcd   go test -v -timeout 1m ./db -check.v
 
 # test runs ALL the test suites.
 test: systemtests unit-tests

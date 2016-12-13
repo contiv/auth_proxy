@@ -5,8 +5,10 @@ import (
 	"fmt"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/contiv/ccn_proxy/common/errors"
+	"github.com/contiv/ccn_proxy/common"
+	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
 	"github.com/contiv/ccn_proxy/common/types"
+	"github.com/contiv/ccn_proxy/db"
 	ldap "github.com/go-ldap/ldap"
 )
 
@@ -39,9 +41,9 @@ import (
 //  Controls: yet to figure out what it is; but it's been given a `nil` value everywhere
 
 // Manager provides the implementation of LDAP Manager fields:
-//   ldap: AD configuration
+//   Config: LDAP/AD configuration
 type Manager struct {
-	Config types.ADConfiguration
+	Config types.LdapConfiguration
 }
 
 // Authenticate is a helper function which just sets the configuration and calls ldap authentication
@@ -49,15 +51,25 @@ type Manager struct {
 //  username: username to authenticate
 //  password: password of the user
 // return values:
-//  ErrADConfigNotFound if the config is not found or as returned by ldapManager.Authenticate
+//  ErrLDAPConfigurationNotFound if the config is not found or as returned by ldapManager.Authenticate
 func Authenticate(username, password string) ([]*types.Principal, error) {
-	if cfg := GetADConfig(); cfg != nil {
+	cfg, err := db.GetLdapConfiguration()
+	if err != nil {
+		return nil, err
+	}
+
+	cfg.ServiceAccountPassword, err = common.Decrypt(cfg.ServiceAccountPassword)
+	if err != nil {
+		return nil, err
+	}
+
+	if cfg != nil {
 		ldapManager := Manager{Config: *cfg}
 		return ldapManager.Authenticate(username, password)
 	}
 
-	log.Errorf("AD configuration not found")
-	return nil, errors.ErrADConfigNotFound
+	log.Errorf("LDAP/AD configuration not found")
+	return nil, ccnerrors.ErrLDAPConfigurationNotFound
 }
 
 // Authenticate authenticates the given username and password against `AD` using LDAP client
@@ -66,7 +78,7 @@ func Authenticate(username, password string) ([]*types.Principal, error) {
 //  password: password of the user
 // return values:
 //  []*types.Principal on successful authentication else nil
-//  error: nil on successful authentication otherwise ErrADAccessDenied, ErrUserNotFound, etc.
+//  error: nil on successful authentication otherwise ErrLDAPAccessDenied, ErrUserNotFound, etc.
 func (lm *Manager) Authenticate(username, password string) ([]*types.Principal, error) {
 	// list of attributes to be fetched from the matching records
 	var attributes = []string{
@@ -84,7 +96,7 @@ func (lm *Manager) Authenticate(username, password string) ([]*types.Principal, 
 	// bind AD service account to perform search using the connection established above
 	if err := ldapConn.Bind(lm.Config.ServiceAccountDN, lm.Config.ServiceAccountPassword); err != nil {
 		log.Errorf("LDAP bind operation failed for AD service account %q: %v", lm.Config.ServiceAccountDN, err)
-		return nil, errors.ErrADAccessDenied
+		return nil, ccnerrors.ErrLDAPAccessDenied
 	}
 
 	searchRequest := ldap.NewSearchRequest(
@@ -98,20 +110,20 @@ func (lm *Manager) Authenticate(username, password string) ([]*types.Principal, 
 	searchRes, err := ldapConn.Search(searchRequest)
 	if err != nil {
 		log.Errorf("LDAP search operation failed for %q: %v", username, err)
-		return nil, errors.ErrADAccessDenied
+		return nil, ccnerrors.ErrLDAPAccessDenied
 	} else if len(searchRes.Entries) == 0 { // none matched the search criteria
 		log.Errorf("User %q not found in AD server", username)
-		return nil, errors.ErrUserNotFound
+		return nil, ccnerrors.ErrUserNotFound
 	} else if len(searchRes.Entries) > 1 { // > 1 user found with the given search criteria
 		log.Errorf("Found %q entries while searching for %q", len(searchRes.Entries), username)
-		return nil, errors.ErrADMultipleEntries
+		return nil, ccnerrors.ErrLDAPMultipleEntries
 	}
 
 	// validate user `password`
 	adUsername := searchRes.Entries[0].DN                       // this need not be specified in attribute list; results will always carry DN
 	if err := ldapConn.Bind(adUsername, password); err != nil { // bind using the given username and password
 		log.Errorf("LDAP bind operation failed for AD user account: %v", err)
-		return nil, errors.ErrADAccessDenied
+		return nil, ccnerrors.ErrLDAPAccessDenied
 	}
 
 	// get user AD groups
@@ -140,7 +152,7 @@ func (lm *Manager) getUserGroups(ldapConn *ldap.Conn, groups []string) ([]string
 		// this happens when the user is just part of the primary group; we won't attempt to handle this case!
 		// more details here: http://lists.freeradius.org/pipermail/freeradius-users/2012-August/062055.html
 		log.Debug("User is just part of primary group; can't proceed further")
-		return []string{}, errors.ErrADGroupsNotFound
+		return []string{}, ccnerrors.ErrLDAPGroupsNotFound
 	}
 
 	var attributes = []string{
@@ -170,11 +182,11 @@ func (lm *Manager) getUserGroups(ldapConn *ldap.Conn, groups []string) ([]string
 		searchRes, err := ldapConn.Search(searchRequest)
 		if err != nil {
 			log.Errorf("LDAP search operation failed for AD group %q, error %#v", adGroup, err)
-			return nil, errors.ErrADAccessDenied
+			return nil, ccnerrors.ErrLDAPAccessDenied
 		}
 
 		if len(searchRes.Entries) > 1 { // we should never hit this case!
-			return []string{}, errors.ErrADMultipleEntries
+			return []string{}, ccnerrors.ErrLDAPMultipleEntries
 		}
 
 		// look for possible subgroups to be further processed
@@ -197,12 +209,12 @@ func (lm *Manager) getUserGroups(ldapConn *ldap.Conn, groups []string) ([]string
 
 // connect establishes a LDAP connection with the given Active Directory configuration(receiver)
 // return values:
-//  on successful connection with AD, returns a LDAP connection object otherwise ErrADConnectionFailed
+//  on successful connection with AD, returns a LDAP connection object otherwise ErrLDAPConnectionFailed
 func (lm *Manager) connect() (*ldap.Conn, error) {
 	ldapConn, err := ldap.Dial("tcp", fmt.Sprintf("%s:%d", lm.Config.Server, lm.Config.Port))
 	if err != nil {
 		log.Errorf("Failed to connect to AD server:%v", err)
-		return nil, fmt.Errorf("%v, %v", errors.ErrADConnectionFailed, err)
+		return nil, fmt.Errorf("%v, %v", ccnerrors.ErrLDAPConnectionFailed, err)
 	}
 
 	// switch to TLS if specified; this needs to have certs in place
@@ -211,7 +223,7 @@ func (lm *Manager) connect() (*ldap.Conn, error) {
 		err = ldapConn.StartTLS(&tls.Config{InsecureSkipVerify: lm.Config.InsecureSkipVerify})
 		if err != nil {
 			log.Errorf("Failed to initiate TLS with AD server: %v", err)
-			return nil, fmt.Errorf("%v, %v", errors.ErrADConnectionFailed, err)
+			return nil, fmt.Errorf("%v, %v", ccnerrors.ErrLDAPConnectionFailed, err)
 		}
 	}
 

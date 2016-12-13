@@ -1,10 +1,12 @@
-package usermgmt
+package db
 
 import (
+	"os/exec"
 	"sort"
 	"testing"
 
 	log "github.com/Sirupsen/logrus"
+	"github.com/contiv/ccn_proxy/common"
 	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
 	"github.com/contiv/ccn_proxy/common/test"
 	"github.com/contiv/ccn_proxy/common/types"
@@ -14,38 +16,47 @@ import (
 	. "gopkg.in/check.v1"
 )
 
-type usermgmtSuite struct{}
+type dbSuite struct{}
 
-var _ = Suite(&usermgmtSuite{})
+var _ = Suite(&dbSuite{})
 
 var (
 	invalidUsers   = []string{"xxx", "yyy", "zzz"}
 	newUsers       = []string{"aaa", "bbb", "ccc"}
-	builtinUsers   = []string{types.Admin.String(), types.Ops.String()}
+	builtInUsers   = []string{types.Admin.String(), types.Ops.String()}
 	datastore      = ""
 	datastorePaths = []string{
 		GetPath(RootLocalUsers),
 		GetPath(RootPrincipals),
+		GetPath(RootLdapConfiguration),
 	}
 )
 
+func (s *dbSuite) SetUpTest(c *C) {
+	test.CleanupDatastore(datastore, datastorePaths)
+}
+
 // SetUpSuite sets up the environment for tests.
-func (s *usermgmtSuite) SetUpSuite(c *C) {
+func (s *dbSuite) SetUpSuite(c *C) {
 	datastore = test.GetDatastore()
 	datastoreAddress := test.GetDatastoreAddress()
 
-	test.CleanupDatastore(datastore, datastorePaths)
+	log.Info("As part of the data store cleanup, the following paths will be deleted.")
+	for _, path := range datastorePaths {
+		log.Infof("%q", path)
+	}
+
 	if err := state.InitializeStateDriver(datastoreAddress); err != nil {
 		log.Fatalln(err)
 	}
 
-	if err := AddDefaultUsers(); err != nil {
-		log.Fatalln(err)
-	}
+	// set `tls_key_file` in Globals
+	exec.Command("/bin/sh", "-c", "make generate-certificate")
+	common.Global().Set("tls_key_file", "../local_certs/local.key")
 }
 
 // TearDownSuite reverts the data store state + any further cleanup required.
-func (s *usermgmtSuite) TearDownSuite(c *C) {
+func (s *dbSuite) TearDownSuite(c *C) {
 	test.CleanupDatastore(datastore, datastorePaths)
 }
 
@@ -53,9 +64,35 @@ func TestMgmtSuite(t *testing.T) {
 	TestingT(t)
 }
 
+// addBuiltInUsers adds built-in users to the data store.
+func (s *dbSuite) addBuiltInUsers(c *C) {
+	for _, username := range builtInUsers {
+		roleType, rErr := types.Role(username)
+		c.Assert(rErr, IsNil)
+
+		principalID := uuid.NewV4().String()
+		user := &types.InternalLocalUser{
+			LocalUser: types.LocalUser{
+				Username: username,
+				Disable:  false,
+			},
+			Principal: types.Principal{
+				UUID: principalID,
+				Role: roleType,
+			},
+			PrincipalID: principalID,
+		}
+
+		err := AddLocalUser(user)
+		c.Assert(err, IsNil)
+	}
+}
+
 // TestGetLocalUser tests `GetLocalUser(...)`
-func (s *usermgmtSuite) TestGetLocalUser(c *C) {
-	for _, username := range builtinUsers {
+func (s *dbSuite) TestGetLocalUser(c *C) {
+	s.addBuiltInUsers(c)
+
+	for _, username := range builtInUsers {
 		user, err := GetLocalUser(username)
 		c.Assert(err, IsNil)
 
@@ -77,7 +114,7 @@ func (s *usermgmtSuite) TestGetLocalUser(c *C) {
 }
 
 // TestAddLocalUser tests `AddLocalUser(...)`
-func (s *usermgmtSuite) TestAddLocalUser(c *C) {
+func (s *dbSuite) TestAddLocalUser(c *C) {
 	// add new users
 	for _, username := range newUsers {
 		principalID := uuid.NewV4().String()
@@ -104,10 +141,12 @@ func (s *usermgmtSuite) TestAddLocalUser(c *C) {
 }
 
 // TestDeleteLocalUser tests `DeleteLocalUser(...)`
-// NOTE: this needs to run after `TestAddLocalUser`
-func (s *usermgmtSuite) TestDeleteLocalUser(c *C) {
+func (s *dbSuite) TestDeleteLocalUser(c *C) {
+	s.addBuiltInUsers(c)
+	s.TestAddLocalUser(c)
+
 	// delete built-in users
-	for _, username := range builtinUsers {
+	for _, username := range builtInUsers {
 		err := DeleteLocalUser(username)
 		c.Assert(err, Equals, ccnerrors.ErrIllegalOperation)
 	}
@@ -121,14 +160,12 @@ func (s *usermgmtSuite) TestDeleteLocalUser(c *C) {
 		err = DeleteLocalUser(username)
 		c.Assert(err, Equals, ccnerrors.ErrKeyNotFound)
 	}
-
-	//add the users back again; revert
-	s.TestAddLocalUser(c)
 }
 
 // TestUpdateLocalUser test `UpdateLocalUser(...)`
-// NOTE: this needs to run after `TestAddLocalUser`
-func (s *usermgmtSuite) TestUpdateLocalUser(c *C) {
+func (s *dbSuite) TestUpdateLocalUser(c *C) {
+	s.TestAddLocalUser(c)
+
 	for _, username := range newUsers {
 		user, err := GetLocalUser(username)
 		c.Assert(err, IsNil)
@@ -174,8 +211,10 @@ func (s *usermgmtSuite) TestUpdateLocalUser(c *C) {
 }
 
 // TestGetLocalUsers tests `GetLocalUsers(...)`
-// NOTE: this needs to run after `TestAddLocalUser`
-func (s *usermgmtSuite) TestGetLocalUsers(c *C) {
+func (s *dbSuite) TestGetLocalUsers(c *C) {
+	s.TestAddLocalUser(c)
+	s.addBuiltInUsers(c)
+
 	users, err := GetLocalUsers()
 	c.Assert(err, IsNil)
 
@@ -184,7 +223,7 @@ func (s *usermgmtSuite) TestGetLocalUsers(c *C) {
 		usernames = append(usernames, user.LocalUser.Username)
 	}
 
-	allUsers := append(newUsers, builtinUsers...)
+	allUsers := append(newUsers, builtInUsers...)
 	sort.Strings(usernames)
 	sort.Strings(allUsers)
 

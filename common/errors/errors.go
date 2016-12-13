@@ -1,35 +1,6 @@
 package errors
 
-import (
-	"errors"
-	"strconv"
-)
-
-var (
-	// ErrADConnectionFailed used when connection couldn't be established with `Active Directory`
-	ErrADConnectionFailed = errors.New("AD connection failed")
-
-	// ErrADConfigNotFound used when AD configuration is not found from DB or config file or ?
-	ErrADConfigNotFound = errors.New("AD configuration not found")
-
-	// ErrADAccessDenied used when AD access is denied
-	ErrADAccessDenied = errors.New("AD access denied")
-
-	// ErrADGroupsNotFound used when AD user is associated with just primary group
-	ErrADGroupsNotFound = errors.New("No groups found, cannot process")
-
-	// ErrADMultipleEntries used when AD search returns multiple results when 1 is expected
-	ErrADMultipleEntries = errors.New("Expected single entry; found multiple entries in AD")
-
-	// ErrLocalAuthenticationFailed used when local authentication fails
-	ErrLocalAuthenticationFailed = errors.New("Local authentication failed")
-
-	// ErrIllegalArgument used whenever an unexpected parameter/argument is encountered
-	ErrIllegalArgument = errors.New("Illegal argument")
-
-	// ErrUserNotFound used when the user is found
-	ErrUserNotFound = errors.New("User not found")
-)
+import "strconv"
 
 //
 // Error codes
@@ -57,6 +28,15 @@ const (
 	KeyExists
 	IllegalOperation
 	AccessDenied
+
+	UserNotFound
+	LDAPConfigurationNotFound
+	LDAPConnectionFailed
+	LDAPAccessDenied
+	LDAPGroupsNotFound
+	LDAPMultipleEntries
+	LocalAuthenticationFailed
+
 	// N.B. Add all new error codes above this line.  All error codes >=
 	// LastError are invalid.
 	LastError
@@ -129,6 +109,27 @@ var ErrPartialFailureToAddAuthz = NewError(PartialFailureToAddAuthz, "failed to 
 
 // ErrPartialFailureToUpdateAuthz indicates an error when an authorization is being update
 var ErrPartialFailureToUpdateAuthz = NewError(PartialFailureToUpdateAuthz, "failed to update authorization")
+
+// ErrUserNotFound used when the user is found
+var ErrUserNotFound = NewError(UserNotFound, "User not found")
+
+// ErrLDAPConfigurationNotFound used when LDAP/AD configuration is not found from the data store
+var ErrLDAPConfigurationNotFound = NewError(LDAPConfigurationNotFound, "LDAP/AD settings not found")
+
+// ErrLDAPConnectionFailed used when connection couldn't be established with `LDAP/Active Directory`
+var ErrLDAPConnectionFailed = NewError(LDAPConnectionFailed, "LDAP/AD connection failed")
+
+// ErrLDAPAccessDenied used when LDAP/AD access is denied
+var ErrLDAPAccessDenied = NewError(LDAPAccessDenied, "LDAP/AD access denied")
+
+// ErrLDAPGroupsNotFound used when LDAP/AD user is associated with just primary group
+var ErrLDAPGroupsNotFound = NewError(LDAPGroupsNotFound, "No groups found, cannot process")
+
+// ErrLDAPMultipleEntries used when LDAP/AD search returns multiple results when 1 is expected
+var ErrLDAPMultipleEntries = NewError(LDAPMultipleEntries, "Expected single entry; found multiple entries in AD")
+
+// ErrLocalAuthenticationFailed used when local authentication fails
+var ErrLocalAuthenticationFailed = NewError(LocalAuthenticationFailed, "Local authentication failed")
 
 //
 // CCNError describes an error response message used by CCN APIs
