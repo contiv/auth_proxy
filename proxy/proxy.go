@@ -205,12 +205,10 @@ func addRoutes(s *Server, router *mux.Router) {
 		"netprofiles":        auth.FilterNetProfiles,
 		"networks":           auth.FilterNetworks,
 		// NOTE: "policys" is misspelled in netmaster's routes
-		"policys":        auth.FilterPolicies,
-		"rules":          auth.FilterRules,
-		"serviceLBs":     auth.FilterServiceLBs,
-		"tenants":        auth.FilterTenants,
-		"volumes":        auth.FilterVolumes,
-		"volumeProfiles": auth.FilterVolumeProfiles,
+		"policys":    auth.FilterPolicies,
+		"rules":      auth.FilterRules,
+		"serviceLBs": auth.FilterServiceLBs,
+		"tenants":    auth.FilterTenants,
 	}
 
 	// TODO: add another map (or extend the above map) of "resource" -> "rbacAuthorization" functions.
