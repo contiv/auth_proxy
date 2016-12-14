@@ -521,7 +521,7 @@ func listTenantAuthorizations(token *auth.Token, w http.ResponseWriter, req *htt
 		httpStatus = http.StatusOK
 
 		// convert authorizations to authorization reply msgs
-		var authzReplyList []GetAuthorizationReply
+		authzReplyList := []GetAuthorizationReply{}
 		for _, authz := range authzList {
 			authzReply := convertAuthz(authz)
 			authzReplyList = append(authzReplyList, authzReply)

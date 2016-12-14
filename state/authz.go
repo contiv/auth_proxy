@@ -83,7 +83,7 @@ func ListAuthorizations() (
 		return nil, ccnerrors.ErrReadingFromStore
 	}
 
-	var list []types.Authorization
+	list := []types.Authorization{}
 	for _, auth := range allAuthZList {
 		tmp, ok := auth.(*types.Authorization)
 		if ok {
@@ -124,7 +124,7 @@ func ListAuthorizationsByPrincipal(ID string) (
 		return nil, ccnerrors.ErrReadingFromStore
 	}
 
-	var match []types.Authorization
+	match := []types.Authorization{}
 	for _, auth := range allAuthZList {
 		tmp, ok := auth.(*types.Authorization)
 		if ok {
@@ -215,7 +215,7 @@ func ListAuthorizationsByClaim(claim string) (
 		return nil, ccnerrors.ErrReadingFromStore
 	}
 
-	var match []types.Authorization
+	match := []types.Authorization{}
 	for _, auth := range allAuthZList {
 		tmp, ok := auth.(*types.Authorization)
 		if ok {
@@ -304,7 +304,7 @@ func ListAuthorizationsByClaimAndPrincipal(claim string, ID string) (
 		return nil, ccnerrors.ErrReadingFromStore
 	}
 
-	var match []types.Authorization
+	match := []types.Authorization{}
 	for _, auth := range allAuthZList {
 		tmp, ok := auth.(*types.Authorization)
 		if ok {
