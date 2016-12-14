@@ -47,6 +47,7 @@ func (s *systemtestSuite) TestRequestProxying(c *C) {
 		token := adminToken(c)
 
 		resp, body := proxyGet(c, token, endpoint)
+		c.Assert(resp.StatusCode, Equals, 200)
 		c.Assert(data, Equals, string(body))
 
 		// check that the Content-Type header was set properly.

@@ -36,11 +36,11 @@ func Authenticate(username, password string) (string, error) {
 
 // generateToken generates JWT(JSON Web Token) with the given user principals
 // params:
-//  principals: user principals
+//  principals: user principals; []string containing LDAP groups or username based on the authentication type(LDAP/Local)
 //  username: local or AD username of the user
 // return values:
 //    `Token` string on successful creation of JWT otherwise any relevant error from the subsequent function
-func generateToken(principals []*types.Principal, username string) (string, error) {
+func generateToken(principals []string, username string) (string, error) {
 	log.Debugf("Generating token for user %q", username)
 
 	authZ, err := NewTokenWithClaims(principals) // create a new token with default `expiry` claim

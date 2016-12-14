@@ -39,7 +39,7 @@ func Test(t *testing.T) {
 	// cleanup users and principals
 	test.CleanupDatastore(datastore, []string{
 		db.GetPath(db.RootLocalUsers),
-		db.GetPath(db.RootPrincipals),
+		db.GetPath(db.RootLdapConfiguration),
 	})
 
 	if err := db.AddDefaultUsers(); err != nil {
@@ -130,7 +130,7 @@ func login(username, password string) (string, *http.Response, error) {
 		return "", nil, err
 	}
 
-	resp, data, err := insecurePostJSONBody("", proxy.LoginPath, loginBytes)
+	resp, data, err := insecureJSONBody("", proxy.LoginPath, "POST", loginBytes)
 	if err != nil {
 		return "", resp, err
 	}
@@ -200,7 +200,6 @@ func proxyGet(c *C, token, path string) (*http.Response, []byte) {
 
 	resp, err := insecureClient().Do(req)
 	c.Assert(err, IsNil)
-	c.Assert(resp.StatusCode, Equals, 200)
 
 	defer resp.Body.Close()
 
@@ -210,26 +209,60 @@ func proxyGet(c *C, token, path string) (*http.Response, []byte) {
 	return resp, data
 }
 
-// proxyPost is a convenience function which sends an insecure HTTPS POST
-// request with the specified body to the proxy.
-func proxyPost(c *C, token, path string, body []byte) (*http.Response, []byte) {
-	resp, body, err := insecurePostJSONBody(token, path, body)
+// proxyDelete is a convenience function which sends an insecure HTTPS DELETE
+// request to the proxy.
+func proxyDelete(c *C, token, path string) (*http.Response, []byte) {
+	url := "https://" + proxyHost + path
+
+	log.Info("GET to ", url)
+
+	req, err := http.NewRequest("DELETE", url, nil)
 	c.Assert(err, IsNil)
-	c.Assert(resp.StatusCode/100, Equals, 2) // 2xx is okay
+
+	if len(token) > 0 {
+		log.Println("Setting X-Auth-token to:", token)
+		req.Header.Set("X-Auth-Token", token)
+	}
+
+	resp, err := insecureClient().Do(req)
+	c.Assert(err, IsNil)
+
+	defer resp.Body.Close()
+
+	data, err := ioutil.ReadAll(resp.Body)
+	c.Assert(err, IsNil)
+
+	return resp, data
+}
+
+// proxyPatch is a convenience function which sends an insecure HTTPS PATCH
+// request with the specified body to the proxy.
+func proxyPatch(c *C, token, path string, body []byte) (*http.Response, []byte) {
+	resp, body, err := insecureJSONBody(token, path, "PATCH", body)
+	c.Assert(err, IsNil)
 
 	return resp, body
 }
 
-// insecurePostBody sends an insecure HTTPS POST request with the specified
+// proxyPost is a convenience function which sends an insecure HTTPS POST
+// request with the specified body to the proxy.
+func proxyPost(c *C, token, path string, body []byte) (*http.Response, []byte) {
+	resp, body, err := insecureJSONBody(token, path, "POST", body)
+	c.Assert(err, IsNil)
+
+	return resp, body
+}
+
+// insecureJSONBody sends an insecure HTTPS POST request with the specified
 // JSON payload as the body.
-func insecurePostJSONBody(token, path string, body []byte) (*http.Response, []byte, error) {
+func insecureJSONBody(token, path, requestType string, body []byte) (*http.Response, []byte, error) {
 	url := "https://" + proxyHost + path
 
-	log.Info("POST to ", url)
+	log.Info(requestType, " to ", url)
 
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(body))
+	req, err := http.NewRequest(requestType, url, bytes.NewBuffer(body))
 	if err != nil {
-		log.Debugf("POST request creation failed: %s", err)
+		log.Debugf("%v request creation failed: %s", requestType, err)
 		return nil, nil, err
 	}
 
@@ -242,7 +275,7 @@ func insecurePostJSONBody(token, path string, body []byte) (*http.Response, []by
 
 	resp, err := insecureClient().Do(req)
 	if err != nil {
-		log.Debugf("POST request failed: %s", err)
+		log.Debugf("%v request failed: %s", requestType, err)
 		return nil, nil, err
 	}
 

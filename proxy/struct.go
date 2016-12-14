@@ -13,14 +13,6 @@ type LoginResponse struct {
 	Token string `json:"token"`
 }
 
-// localUserCreateRequest represents localuser create object.
-type localUserCreateRequest struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-	Disable  bool   `json:"disable"`
-	Role     string `json:"role"`
-}
-
 //
 // AddTenantAuthorizationRequest message is sent for AddTenantAuthorization
 // operation.
@@ -76,11 +68,4 @@ type ListAuthorizationsReply struct {
 // errorResponse represent error response; used to write error messages to http response.
 type errorResponse struct {
 	Error string `json:"error"`
-}
-
-// localUser is the return type of `getLocalUsers`
-type localUser struct {
-	Username string `json:"username"`
-	Role     string `json:"role"`
-	Disable  bool   `json:"disable"`
 }

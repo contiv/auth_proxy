@@ -4,7 +4,6 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/contiv/ccn_proxy/common"
 	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
-	"github.com/contiv/ccn_proxy/common/types"
 	"github.com/contiv/ccn_proxy/db"
 )
 
@@ -13,9 +12,9 @@ import (
 //  username: username to authenticate
 //  password: password of the user
 // return values:
-//  []*types.Principal on successful authentication else nil
+//  []string containing the `PrincipalName`(username) on successful authentication else nil
 //  error: nil on successful authentication otherwise ErrLocalAuthenticationFailed
-func Authenticate(username, password string) ([]*types.Principal, error) {
+func Authenticate(username, password string) ([]string, error) {
 	user, err := db.GetLocalUser(username)
 	if err != nil {
 		if err == ccnerrors.ErrKeyNotFound {
@@ -25,7 +24,7 @@ func Authenticate(username, password string) ([]*types.Principal, error) {
 		return nil, err
 	}
 
-	if user.LocalUser.Disable {
+	if user.Disable {
 		log.Debugf("Local user %q is disabled", username)
 		return nil, ccnerrors.ErrAccessDenied
 	}
@@ -35,8 +34,7 @@ func Authenticate(username, password string) ([]*types.Principal, error) {
 		return nil, ccnerrors.ErrAccessDenied
 	}
 
-	// TODO:this needs to be integrated with authZ module to fetch more principals based on the user role.
-	userPrincipals := []*types.Principal{}
-	userPrincipals = append(userPrincipals, &user.Principal)
-	return userPrincipals, nil
+	// local user's JWT will only contain the `username` + default claims (exp, role, etc.. )
+	// user.Username is the PrincipalName for localuser
+	return []string{user.Username}, nil
 }

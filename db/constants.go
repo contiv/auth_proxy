@@ -11,7 +11,6 @@ import (
 // various data store paths.
 var (
 	RootLocalUsers        = "local_users"
-	RootPrincipals        = "principals"
 	RootLdapConfiguration = "ldap_configuration"
 )
 
