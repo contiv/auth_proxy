@@ -36,7 +36,7 @@ run: build generate-certificate
 # systemtests runs the system tests suite.
 systemtests:
 	go get gopkg.in/check.v1
-	go test -v -timeout 1m ./systemtests -check.v
+	go test -v -timeout 5m ./systemtests -check.v
 
 # unittests runs all the unit tests
 unit-tests: 

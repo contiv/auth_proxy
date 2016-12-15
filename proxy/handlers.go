@@ -5,7 +5,6 @@ import (
 	"errors"
 	"io/ioutil"
 	"net/http"
-	"regexp"
 
 	"github.com/contiv/ccn_proxy/auth"
 	"github.com/contiv/ccn_proxy/common"
@@ -68,86 +67,6 @@ func loginHandler(w http.ResponseWriter, req *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	writeJSONResponse(w, LoginResponse{Token: tokenStr})
-}
-
-// rbacFilter is a function which takes a token and response body and filters
-// the response body based on what the user represented by the token is
-// allowed to see.
-type rbacFilter func(*auth.Token, []byte) []byte
-
-// rbacFilterWrapper returns a HTTP handler function which:
-//     1. validates the access token (passed in the X-Auth-Token request header)
-//     2. ensures that the user represented by the token is allowed to operate on the resource in question (TODO)
-//     3. performs a duplicate of the original request against netmaster
-//     4. filters (if necessary) the response from netmaster to what the user should be able to see
-func rbacFilterWrapper(s *Server, filter rbacFilter) func(http.ResponseWriter, *http.Request) {
-	return func(w http.ResponseWriter, req *http.Request) {
-
-		common.SetJSONContentType(w)
-
-		//
-		// Step 1. validate the access token
-		//
-		isValid, token := isTokenValid(req.Header.Get("X-Auth-Token"), w)
-		if !isValid {
-			return
-		}
-
-		isSuperuser := token.IsSuperuser()
-
-		//
-		// Step 2. ensure the user is allowed to operate on the resource
-		//
-
-		// if not a superuser, validate that the user can perform the requested operation
-		if !isSuperuser {
-
-			//
-			// TODO: replace all of this code with a call to an injected rbacAuthorization function
-			//
-
-			path := req.URL.Path
-			re := regexp.MustCompile("^*/api/v1/(?P<rootObject>[a-zA-Z0-9]+)/(?P<key>[a-zA-Z0-9]+)/$")
-			if re.MatchString(path) {
-				// TODO: only allow access to /networks for now
-				//       this is hardcoded in the absence of a real RBAC database
-				if "networks" != re.FindStringSubmatch(path)[1] {
-					authError(w, http.StatusUnauthorized, "Insufficient privileges")
-					return
-				}
-			}
-		}
-
-		//
-		// Step 3. proxy the request to netmaster
-		//
-		resp, body, err := s.ProxyRequest(w, req)
-		if err != nil {
-			serverError(w, err)
-			return
-		}
-
-		//
-		// Step 4. filter the response body (if necessary)
-		//
-
-		// if the current user is a superuser OR the request to netmaster was not successful,
-		// we just send the unfiltered response back. there's no point in filtering error
-		// JSON.  we'll consider any 2XX status code a success.
-		// otherwise, we filter the result based on what the user is allowed to see using
-		// the supplied filter function.
-		if isSuperuser || resp.StatusCode/100 != 2 {
-			w.Write(body)
-		} else {
-			w.Write(filter(token, body))
-		}
-	}
-}
-
-// rbacWrapper has the exact same functionality as rbacFilterWrapper but it passes in a null filter
-// which does not modify the response body.
-func rbacWrapper(s *Server) func(http.ResponseWriter, *http.Request) {
-	return rbacFilterWrapper(s, auth.NullFilter)
 }
 
 // adminOnly takes a HTTP handler and ensures that the client's token has admin

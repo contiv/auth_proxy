@@ -9,8 +9,6 @@ import (
 	"net/url"
 	"sync"
 
-	"github.com/contiv/ccn_proxy/auth"
-
 	log "github.com/Sirupsen/logrus"
 	"github.com/gorilla/mux"
 )
@@ -193,42 +191,16 @@ func addRoutes(s *Server, router *mux.Router) {
 	addLdapConfigurationMgmtRoutes(router)
 
 	//
-	// RBAC-enforced endpoints with optional filtering of results
+	// Netmaster endpoints
 	//
-	filteredRoutes := map[string]rbacFilter{
-		"aciGws":             auth.FilterAciGws,
-		"appProfiles":        auth.FilterAppProfiles,
-		"Bgps":               auth.FilterBgps,
-		"endpointGroups":     auth.FilterEndpointGroups,
-		"extContractsGroups": auth.FilterExtContractsGroups,
-		"globals":            auth.FilterGlobals,
-		"netprofiles":        auth.FilterNetProfiles,
-		"networks":           auth.FilterNetworks,
-		// NOTE: "policys" is misspelled in netmaster's routes
-		"policys":    auth.FilterPolicies,
-		"rules":      auth.FilterRules,
-		"serviceLBs": auth.FilterServiceLBs,
-		"tenants":    auth.FilterTenants,
-	}
+	addNetmasterRoutes(s, router)
+}
 
-	// TODO: add another map (or extend the above map) of "resource" -> "rbacAuthorization" functions.
-	//       rbacWrapper() and rbacFilterWrapper() will need to be extended to take an rbacAuthorization
-	//       function as an argument which will be used to control access to the resource in question.
-
-	for resource, filterFunc := range filteredRoutes {
-		// NOTE: netmaster routes require a trailing slash.
-		router.Path("/api/v1/" + resource + "/").Methods("GET").HandlerFunc(rbacFilterWrapper(s, filterFunc))
-
-		// add other REST endpoints (show, create, delete, update, etc.)
-		router.Path("/api/v1/"+resource+"/{key}/").Methods("GET", "POST", "PUT", "DELETE").HandlerFunc(rbacWrapper(s))
-
-		// "inspect" routes are basically a namespace rather than being an action on a member of a collection...
-		router.Path("/api/v1/inspect/" + resource + "/{key}/").Methods("GET").HandlerFunc(rbacWrapper(s))
-	}
-
-	// the endpoint inspect route doesn't actually have a matching model in netmaster
-	// "endpoint groups" are a totally separate model/endpoint
-	router.Path("/api/v1/inspect/endpoints/{key}/").Methods("GET").HandlerFunc(rbacWrapper(s))
+// addNetmasterRoutes adds all netmaster routes to mux.Router
+func addNetmasterRoutes(s *Server, router *mux.Router) {
+	router.Path("/api/v1/{resource}/").Methods("GET").HandlerFunc(enforceRBAC(s))
+	router.Path("/api/v1/{resource}/{name}/").Methods("GET", "POST", "PUT", "DELETE").HandlerFunc(enforceRBAC(s))
+	router.Path("/api/v1/inspect/{resource}/{name}/").Methods("GET").HandlerFunc(enforceRBAC(s))
 }
 
 // addUserMgmtRoutes adds user management routes to the mux.Router.
