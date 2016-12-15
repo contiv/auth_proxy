@@ -24,6 +24,7 @@ import { ServicelbsModel } from "./components/models/servicelbsmodel";
 import { UsersModel } from "./components/models/usersmodel";
 import { AppProfilesModel } from "./components/models/appprofilesmodel";
 import { BgpsModel } from "./components/models/bgpsmodel";
+import { ContractGroupsModel } from "./components/models/contractgroupsmodel";
 import { CRUDHelperService } from "./components/utils/crudhelperservice";
 import { InspectService } from "./components/utils/inspectservice";
 import { NetworkService } from "./components/utils/networkservice";
@@ -71,6 +72,7 @@ import { ChartService } from "./components/utils/chartservice";
         UsersModel,
         AppProfilesModel,
         BgpsModel,
+        ContractGroupsModel,
         CRUDHelperService,
         InspectService,
         NetworkService,

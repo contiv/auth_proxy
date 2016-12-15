@@ -1,0 +1,75 @@
+<div [ngSwitch]="mode" class="field">
+    <table *ngSwitchCase="'edit'" class="ui very basic collapsing unstackable table">
+        <tbody>
+        <tr>
+            <td>
+                <div class="ui left icon input">
+                    <input name="contractGroupSearchText"
+                           type="text"
+                           [(ngModel)]="contractGroupSearchText"
+                           placeholder="Filter by external contract group name">
+                    <i class="search icon"></i>
+                </div>
+            </td>
+            <td>
+                <select #selectContractGroupRef
+                        name="selectContractGroups"
+                        class="ui dropdown"
+                        ngModel>
+                    <option value="">-- Please select external contract group --</option>
+                    <option *ngFor="let contractGroup of (contractGroups | filter:contractGroupSearchText)"
+                            [value]="contractGroup.contractsGroupName">
+                        {{contractGroup.contractsGroupName}}
+                    </option>
+                </select>
+            </td>
+            <td>
+                <button type="button" class="ui icon button"
+                        (click)="addContractGroup(selectContractGroupRef.value)">
+                    <i class="blue add icon"></i>
+                </button>
+            </td>
+        </tr>
+        <tr *ngFor="let contractGroupName of applicationgroup.extContractsGrps">
+            <td>{{contractGroupName}}</td>
+            <td></td>
+            <td>
+                <button type="button" class="ui icon button"
+                        (click)="removeContractGroup(contractGroupName)">
+                    <i class="trash icon"></i>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table *ngSwitchCase="'details'" class="ui very basic unstackable table">
+        <tbody>
+        <tr *ngFor="let contractGroupName of applicationgroup.extContractsGrps">
+            <td>{{contractGroupName}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h5 class="ui header">External contract groups</h5>
+    <table class="ui very basic unstackable table" style="margin-top: 40px">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Tenant</th>
+            <th>Type</th>
+            <th>Contracts</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let contractGroup of selectedContractGroups">
+            <td>{{contractGroup.contractsGroupName}}</td>
+            <td>{{contractGroup.tenantName}}</td>
+            <td>{{contractGroup.contractsType}}</td>
+            <td>{{contractGroup.contracts?.join(", ")}}</td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>

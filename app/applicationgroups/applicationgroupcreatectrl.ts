@@ -35,6 +35,7 @@ export class ApplicationGroupCreateComponent {
                 networkName: '',        // For Network Name
                 policies: [],           // For Isolation policies
                 netProfile: '',         // For Bandwidth policy Name
+                extContractsGrps: [],   // For External contract groups
                 tenantName: ''
             };
         }
@@ -107,10 +108,14 @@ export class ApplicationGroupCreateComponent {
         });
     }
 
-    updateTenant(tenantName:string, isolationPolicyComponent: any, bandwidthPolicyComponent: any) {
+    updateTenant(tenantName:string,
+                 isolationPolicyComponent:any,
+                 bandwidthPolicyComponent:any,
+                 contractGroupComponent:any) {
         this.applicationGroup.tenantName = tenantName;
         this.getNetworks(tenantName);
         isolationPolicyComponent.getIsolationPolicies();
         bandwidthPolicyComponent.getNetprofiles();
+        contractGroupComponent.getContractGroups();
     }
 }

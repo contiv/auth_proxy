@@ -11,9 +11,10 @@ import { ApplicationGroupCreateComponent } from "./applicationgroupcreatectrl";
 import { ApplicationGroupDetailsComponent } from "./applicationgroupdetailsctrl";
 import { IsolationPolicySelectionComponent } from "./isolationpolicydirective";
 import { BandwidthPolicySelectionComponent } from "./bandwidthpolicydirective";
+import { ContractGroupSelectionComponent } from "./contractgroup.component";
 import { AppGrouplistComponent } from "./applicationgrouplistctrl";
-import {ApplicationGroupStatsComponent} from "./applicationgroupstats";
-import {ApplicationGroupInfoComponent} from "./applicationgroupinfoctrl";
+import { ApplicationGroupStatsComponent } from "./applicationgroupstats";
+import { ApplicationGroupInfoComponent } from "./applicationgroupinfoctrl";
 
 @NgModule({
     imports: [
@@ -28,6 +29,7 @@ import {ApplicationGroupInfoComponent} from "./applicationgroupinfoctrl";
         ApplicationGroupDetailsComponent,
         IsolationPolicySelectionComponent,
         BandwidthPolicySelectionComponent,
+        ContractGroupSelectionComponent,
         AppGrouplistComponent,
         ApplicationGroupStatsComponent,
         ApplicationGroupInfoComponent
@@ -38,6 +40,7 @@ import {ApplicationGroupInfoComponent} from "./applicationgroupinfoctrl";
         ApplicationGroupDetailsComponent,
         IsolationPolicySelectionComponent,
         BandwidthPolicySelectionComponent,
+        ContractGroupSelectionComponent,
         ApplicationGroupStatsComponent,
         ApplicationGroupInfoComponent,
         FormsModule,

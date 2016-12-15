@@ -6,7 +6,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 export enum PolicyTab {
     isolation,
-    bandwidth
+    bandwidth,
+    contractGroup
 }
 
 @Component({
@@ -16,6 +17,8 @@ export enum PolicyTab {
 export class NetworkPoliciesTabsComponent {
     isolationPolicySelected:boolean = true;
     bandwidthPolicySelected:boolean = false;
+    contractGroupSelected:boolean = false;
+
     policyTab = PolicyTab;
 
 
@@ -31,6 +34,9 @@ export class NetworkPoliciesTabsComponent {
         if (this.bandwidthPolicySelected) {
             this.router.navigate(['../bandwidth/create'], { relativeTo: this.activatedRoute });
         }
+        if (this.contractGroupSelected) {
+            this.router.navigate(['../contractgroup/create'], { relativeTo: this.activatedRoute });
+        }
     }
 
     selectPolicyTab(tab:PolicyTab) {
@@ -38,14 +44,22 @@ export class NetworkPoliciesTabsComponent {
             case PolicyTab.isolation:
                 this.isolationPolicySelected = true;
                 this.bandwidthPolicySelected = false;
+                this.contractGroupSelected = false;
                 break;
             case PolicyTab.bandwidth:
                 this.isolationPolicySelected = false;
                 this.bandwidthPolicySelected = true;
+                this.contractGroupSelected = false;
+                break;
+            case PolicyTab.contractGroup:
+                this.isolationPolicySelected = false;
+                this.bandwidthPolicySelected = false;
+                this.contractGroupSelected = true;
                 break;
             default:
                 this.isolationPolicySelected = true;
                 this.bandwidthPolicySelected = false;
+                this.contractGroupSelected = false;
                 break;
         }
     }

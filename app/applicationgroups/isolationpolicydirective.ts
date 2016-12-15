@@ -3,7 +3,6 @@
  */
 import { Component, Input, OnChanges } from '@angular/core';
 import * as _ from 'lodash';
-import { ApplicationGroupsModel } from "../components/models/applicationgroupsmodel";
 import { PoliciesModel } from "../components/models/policiesmodel";
 import { RulesModel } from "../components/models/rulesmodel";
 

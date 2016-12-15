@@ -47,7 +47,7 @@
             <select id="newApplicationGroupTenant" class="ui dropdown"
                     name="newApplicationGroupTenant"
                     ngModel
-                    (change)="updateTenant($event.target.value, isolationPolicyRef, bandwidthPolicyRef)"
+                    (change)="updateTenant($event.target.value, isolationPolicyRef, bandwidthPolicyRef, contractGroupRef)"
                     required #newApplicationGroupTenantRef="ngModel">
                 <option value="">-- Please select tenant --</option>
                 <option *ngFor="let tenant of tenants" [value]="tenant.tenantName">{{tenant.tenantName}}</option>
@@ -79,6 +79,12 @@
 
         <ctv-collapsible title="Bandwidth Policies">
             <ctv-bandwidthpolicy mode="edit" [applicationgroup]="applicationGroup" #bandwidthPolicyRef></ctv-bandwidthpolicy>
+        </ctv-collapsible>
+
+        <div class="ui section divider"></div>
+
+        <ctv-collapsible title="External Contract Groups (ACI)">
+            <ctv-contractgroup mode="edit" [applicationgroup]="applicationGroup" #contractGroupRef></ctv-contractgroup>
         </ctv-collapsible>
 
         <div class="ui grid">

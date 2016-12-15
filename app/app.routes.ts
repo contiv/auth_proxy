@@ -37,6 +37,8 @@ import { FirstrunWizardComponent } from "./firstrunwizard/firstrunwizardctrl";
 import { NodeListComponent } from "./settings/nodes/nodelist.component";
 import { NodeCreateComponent } from "./settings/nodes/nodecreate.component";
 import { NodeDetailsComponent } from "./settings/nodes/nodedetails.component";
+import { ContractGroupCreateComponent } from "./network_policies/contractgroupcreate.component";
+import { ContractGroupDetailsComponent } from "./network_policies/contractgroupdetails.component";
 
 const routes = [
     {path: 'login', component: LoginComponent, canActivate: [AuthGuard]},
@@ -61,6 +63,8 @@ const routes = [
             {path: 'networkpolicies/bandwidth/create', component: BandwidthPolicyCreateComponent},
             {path: 'networkpolicies/bandwidth/details/:key', component: BandwidthPolicyDetailsComponent},
             {path: 'networkpolicies/bandwidth/edit/:key', component: BandwidthPolicyDetailsComponent},
+            {path: 'networkpolicies/contractgroup/create', component: ContractGroupCreateComponent},
+            {path: 'networkpolicies/contractgroup/details/:key', component: ContractGroupDetailsComponent},
 
             //Application Groups
             {path: 'applicationgroups', redirectTo: 'applicationgroups/list', pathMatch: 'full'},

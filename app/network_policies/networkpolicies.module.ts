@@ -13,7 +13,10 @@ import { BandwidthPolicyCreateComponent } from "./bandwidthpolicycreatectrl";
 import { BandwidthPolicyDetailsComponent } from "./bandwidthpolicydetailsctrl";
 import { IsolationListComponent } from "./isolationpolicylistctrl";
 import { BandwidthListComponent } from "./bandwidthpolicylistctrl";
-import {IsolationPolicyStatComponent} from "./isolationpolicystats";
+import { IsolationPolicyStatComponent } from "./isolationpolicystats";
+import { ContractGroupListComponent } from "./contractgrouplist.component";
+import { ContractGroupCreateComponent } from "./contractgroupcreate.component";
+import { ContractGroupDetailsComponent } from "./contractgroupdetails.component";
 
 @NgModule({
     imports: [
@@ -31,7 +34,10 @@ import {IsolationPolicyStatComponent} from "./isolationpolicystats";
         BandwidthPolicyCreateComponent,
         IsolationListComponent,
         BandwidthListComponent,
-        IsolationPolicyStatComponent
+        IsolationPolicyStatComponent,
+        ContractGroupListComponent,
+        ContractGroupCreateComponent,
+        ContractGroupDetailsComponent
     ],
     exports: [
         NetworkPoliciesTabsComponent,
@@ -42,6 +48,9 @@ import {IsolationPolicyStatComponent} from "./isolationpolicystats";
         IsolationListComponent,
         BandwidthListComponent,
         IsolationPolicyStatComponent,
+        ContractGroupListComponent,
+        ContractGroupCreateComponent,
+        ContractGroupDetailsComponent,
         FormsModule,
         CommonModule,
         RouterModule,

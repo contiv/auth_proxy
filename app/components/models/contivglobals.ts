@@ -20,6 +20,7 @@ export const ContivGlobals = {
     'BGPS_ENDPOINT': '/netmaster/api/v1/Bgps/',
     'BGPS_INSPECT_ENDPOINT': '/netmaster/api/v1/inspect/Bgps/',
     'APP_PROFILES_ENDPOINT': '/netmaster/api/v1/appProfiles/',
+    'CONTRACTS_ENDPOINT': '/netmaster/api/v1/extContractsGroups/',
     'VISUALIZATION_ENDPOINT': '/visualization/',
 
     //REST endpoints for VOLMASTER

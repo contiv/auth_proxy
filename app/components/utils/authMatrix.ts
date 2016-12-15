@@ -12,6 +12,8 @@ export const AuthMatrix = {
     'networkpolicies/bandwidth/create':         {'DevOps':'y', 'SysAdmin':'y'},
     'networkpolicies/bandwidth/details':        {'DevOps':'y', 'SysAdmin':'y'},
     'networkpolicies/bandwidth/edit':           {'DevOps':'n', 'SysAdmin':'y'},
+    'networkpolicies/contractgroup/create':     {'DevOps':'y', 'SysAdmin':'y'},
+    'networkpolicies/contractgroup/details':    {'DevOps':'y', 'SysAdmin':'y'},
     'applicationgroups/list':                   {'DevOps':'y', 'SysAdmin':'y'},
     'applicationgroups/create':                 {'DevOps':'n', 'SysAdmin':'y'},
     'applicationgroups/details':                {'DevOps':'y', 'SysAdmin':'y'},

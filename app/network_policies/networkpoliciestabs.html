@@ -22,9 +22,15 @@
        (click)="selectPolicyTab(policyTab.bandwidth)">
         Bandwidth Policies
     </a>
+    <a class="item"
+       [ngClass]="{active: contractGroupSelected}"
+       (click)="selectPolicyTab(policyTab.contractGroup)">
+        External Contract Groups (ACI)
+    </a>
 </div>
 
 <isolationpolicylist *ngIf="isolationPolicySelected"></isolationpolicylist>
 <bandwidthpolicylist *ngIf="bandwidthPolicySelected"></bandwidthpolicylist>
+<contractgrouplist *ngIf="contractGroupSelected"></contractgrouplist>
 
 

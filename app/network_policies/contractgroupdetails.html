@@ -1,0 +1,60 @@
+<div class="ui sixteen column grid">
+    <div class="nine wide column">
+        <div class="content">
+            <a (click)="returnToContractGroups()">
+                <i class="large arrow left icon"></i>
+            </a>
+            <span style="font-size: 24px; margin-left: 6px">External Contract Groups</span>
+            <span class="headingfontcolor" style="font-size: 24px"> (Details)</span>
+        </div>
+    </div>
+
+    <div class="right aligned seven wide column">
+        <div id="delete-contractgroup-modal" class="ui small modal">
+            <div class="header">Remove External Contract Group: {{contractGroup.contractsGroupName}}</div>
+            <div class="content">
+                <p>Are you sure you want to remove this external contract group?</p>
+            </div>
+            <div class="actions">
+                <div class="ui negative button">No</div>
+                <div class="ui positive blue button" (click)="deleteContractGroup()">
+                    Yes
+                </div>
+            </div>
+        </div>
+
+        <button class="ui basic button" onclick="$('#delete-contractgroup-modal').modal('show')">
+            <i class="trash icon"></i>
+            Remove
+        </button>
+    </div>
+</div>
+
+<div class="ui basic segment">
+    <div class="ui active inverted dimmer" *ngIf="showLoader">
+        <div class="ui loader"></div>
+    </div>
+
+        <h4 class="ui header">Basic Settings</h4>
+        <table class="ui very basic selectable table">
+            <tbody>
+            <tr>
+                <td class="ctv-header three wide column">External Contract Group Name</td>
+                <td>{{contractGroup.contractsGroupName}}</td>
+            </tr>
+            <tr>
+                <td class="ctv-header three wide column">Tenant</td>
+                <td>{{contractGroup.tenantName}}</td>
+            </tr>
+            <tr>
+                <td class="ctv-header three wide column">External Contract Group Type</td>
+                <td>{{contractGroup.contractsType}}</td>
+            </tr>
+            <tr>
+                <td class="ctv-header three wide column">Contracts</td>
+                <td>{{contractGroup.contracts?.join(", ")}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+</div>
