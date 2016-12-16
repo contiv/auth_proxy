@@ -38,19 +38,21 @@ func Test(t *testing.T) {
 
 	// create two authorizations
 	a1 = types.Authorization{
-		CommonState: commonState,
-		UUID:        "1111",
-		PrincipalID: "2222",
-		ClaimKey:    "tenant: Tenant1",
-		ClaimValue:  "devops",
+		CommonState:   commonState,
+		UUID:          "1111",
+		PrincipalID:   "2222",
+		PrincipalName: "2222",
+		ClaimKey:      "tenant: Tenant1",
+		ClaimValue:    "devops",
 	}
 
 	a2 = types.Authorization{
-		CommonState: commonState,
-		UUID:        "3333",
-		PrincipalID: "2222",
-		ClaimKey:    "tenant: Tenant2",
-		ClaimValue:  "devops",
+		CommonState:   commonState,
+		UUID:          "3333",
+		PrincipalID:   "2222",
+		PrincipalName: "2222",
+		ClaimKey:      "tenant: Tenant2",
+		ClaimValue:    "devops",
 	}
 	TestingT(t)
 }

@@ -205,30 +205,3 @@ func AddLocalUser(user *types.LocalUser) error {
 		return err
 	}
 }
-
-// AddDefaultUsers adds pre-defined  users(admin,ops) to the system.
-// Default users cannot be changed(update/delete) anytime.
-func AddDefaultUsers() error {
-	for _, userR := range []types.RoleType{types.Admin, types.Ops} {
-		log.Printf("Adding local user %q to the system", userR.String())
-
-		localUser := types.LocalUser{
-			Username: userR.String(),
-			// default user accounts are `enabled` always; it cannot be disabled
-			Disable:  false,
-			Password: userR.String(),
-			// FirstName, LastName = "" for built-in users
-		}
-
-		err := AddLocalUser(&localUser)
-		if err == nil || err == ccnerrors.ErrKeyExists {
-			continue
-		}
-
-		// TODO: add default authorization as well
-
-		return err
-	}
-
-	return nil
-}

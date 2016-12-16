@@ -5,8 +5,8 @@ import (
 	"os"
 	"time"
 
+	"github.com/contiv/ccn_proxy/auth"
 	"github.com/contiv/ccn_proxy/common"
-	"github.com/contiv/ccn_proxy/db"
 	"github.com/contiv/ccn_proxy/proxy"
 	"github.com/contiv/ccn_proxy/state"
 
@@ -35,7 +35,7 @@ func performInitialSetup() {
 	log.Println("Performing initial setup")
 
 	log.Println("Adding default users with default passwords")
-	if err := db.AddDefaultUsers(); err != nil {
+	if err := auth.AddDefaultUsers(); err != nil {
 		log.Fatalln(err)
 		// exit with a non-zero error code.
 		// this can be used by installers, etc. to determine whether the

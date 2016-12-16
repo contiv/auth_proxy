@@ -6,6 +6,7 @@ import (
 	"github.com/contiv/ccn_proxy/common"
 	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
 	"github.com/contiv/ccn_proxy/common/types"
+	"github.com/contiv/ccn_proxy/db"
 	"github.com/contiv/ccn_proxy/state"
 
 	log "github.com/Sirupsen/logrus"
@@ -118,11 +119,9 @@ func checkAccessClaim(granted types.RoleType, desired interface{}) error {
 // specific named principal in the KV store. Success of various tenant related
 // operations will depend on the named principal's capabilities, determined by
 // the role that is associated with the claim.
-//
-// This API must be called with role=admin authorization claim.
+// TODO: Also update role claim for principal if needed
 //
 // Parameters:
-//  token: authorization token
 //  tenantName: tenant name
 //  principalName: Name of user for whom the authorization is to be added,
 //            Can either be a local user or an LDAP group.
@@ -136,7 +135,7 @@ func checkAccessClaim(granted types.RoleType, desired interface{}) error {
 //    : error from state.InsertTenantAuthorization if adding a tenant authorization
 //      fails.
 //
-func AddTenantAuthorization(token *Token, tenantName, principalName string,
+func AddTenantAuthorization(tenantName, principalName string,
 	isLocal bool) (types.Authorization, error) {
 
 	defer common.Untrace(common.Trace())
@@ -184,10 +183,9 @@ func AddTenantAuthorization(token *Token, tenantName, principalName string,
 
 //
 // DeleteTenantAuthorization deletes an authorization for a tenant.
-// This API must be called with role=Admin authorization claim.
+// TODO: Also update role claim for principal if needed
 //
 // Parameters:
-//  token: authorization token
 //  authUUID: UUID of the tenant authorization object
 //
 // Return values:
@@ -197,7 +195,7 @@ func AddTenantAuthorization(token *Token, tenantName, principalName string,
 //    : error from state.DeleteTenantAuthorization if deleting a tenant authorization
 //      fails
 //
-func DeleteTenantAuthorization(token *Token, authUUID string) error {
+func DeleteTenantAuthorization(authUUID string) error {
 
 	defer common.Untrace(common.Trace())
 
@@ -221,10 +219,7 @@ func DeleteTenantAuthorization(token *Token, authUUID string) error {
 // GetTenantAuthorization returns a specific tenant authorization
 // identified by the authzUUID
 //
-// This API must be called with role=Admin authorization claim.
-//
 // Parameters:
-//  token: authorization token
 //  authzUUID : UUID of the authorization that needs to be returned
 //
 // Return values:
@@ -233,7 +228,7 @@ func DeleteTenantAuthorization(token *Token, authUUID string) error {
 //    call.
 //    errors.ErrIllegalArguments: if auth doesn't match poolID
 //    : error from state.GetTenantAuthorization if auth lookup fails
-func GetTenantAuthorization(token *Token, authzUUID string) (
+func GetTenantAuthorization(authzUUID string) (
 	types.Authorization, error) {
 
 	defer common.Untrace(common.Trace())
@@ -252,11 +247,9 @@ func GetTenantAuthorization(token *Token, authzUUID string) (
 
 //
 // UpdateTenantAuthorization updates an authorization in the KV store
-//
-// This API must be called with role=admin authorization claim.
+// TODO: Also update role claim for principal if needed
 //
 // Parameters:
-//  token: authorization token
 //  tenantName: tenant name
 //  principalName: User for whom the authorization is to be updated,
 //            Can either be a local user or an LDAP group.
@@ -270,7 +263,7 @@ func GetTenantAuthorization(token *Token, authzUUID string) (
 //    : error from state.InsertTenantAuthorization if adding a tenant authorization
 //      fails.
 //
-func UpdateTenantAuthorization(token *Token, authzUUID, tenantName,
+func UpdateTenantAuthorization(authzUUID, tenantName,
 	principalName string, isLocal bool) (types.Authorization, error) {
 
 	defer common.Untrace(common.Trace())
@@ -325,18 +318,13 @@ func UpdateTenantAuthorization(token *Token, authzUUID, tenantName,
 //
 // ListTenantAuthorizations returns all tenant authorizations.
 //
-// This API must be called with role=Admin authorization claim.
-//
-// Parameters:
-//  token: authorization token
-//
 // Return values:
 //  error: nil if successful, else
 //    errors.ErrUnauthorized: if caller isn't authorized to make this API
 //    call.
 //    : error from state.ListTenantAuthorizations if auth lookup fails
 //
-func ListTenantAuthorizations(token *Token) ([]types.Authorization, error) {
+func ListTenantAuthorizations() ([]types.Authorization, error) {
 
 	defer common.Untrace(common.Trace())
 
@@ -349,4 +337,83 @@ func ListTenantAuthorizations(token *Token) ([]types.Authorization, error) {
 
 	log.Info("Listing all tenant authorizations successful")
 	return tenantAuths, nil
+}
+
+//
+// AddRoleAuthorization stores a role claim for a specific named principal in
+// the KV store. This claim represents the highest privilege role available to
+// a principal.
+//
+// Parameters:
+//  principalName: Name of user for whom the authorization is to be added,
+//            Can either be a local user or an LDAP group.
+//  isLocal: true if the named principal is a local user, false if ldap group.
+//  role: role that needs to be added as claim value
+//
+// Return values:
+//  types.Authorization: new authorization that was added
+//  error: nil if successful, else
+//    errors.NonExistentLocalUserError: if a local user doesn't exist
+//    errors.NonExistentLdapGroupError: if ldap group doesn't exist
+//    : error from db.InsertAuthorization if adding authorization
+//      fails.
+//
+func AddRoleAuthorization(principalName string,
+	isLocal bool, role types.RoleType) (types.Authorization, error) {
+
+	defer common.Untrace(common.Trace())
+
+	// create an authorization
+	sd, err := state.GetStateDriver()
+	if err != nil {
+		return types.Authorization{}, err
+	}
+	roleAuthz := types.Authorization{
+		CommonState: types.CommonState{
+			StateDriver: sd,
+			ID:          uuid.NewV4().String(),
+		},
+		UUID:          uuid.NewV4().String(),
+		PrincipalName: principalName,
+		Local:         isLocal,
+		ClaimKey:      types.RoleClaimKey,
+		ClaimValue:    role.String(),
+	}
+
+	// insert authorization
+	if err := state.InsertAuthorization(&roleAuthz); err != nil {
+		log.Error("failed in adding role claim:", err)
+		return types.Authorization{}, err
+	}
+
+	log.Info("Adding role authorization successful")
+	return roleAuthz, nil
+}
+
+// AddDefaultUsers adds pre-defined  users(admin,ops) to the system. Names of
+// these users is same as that of role type (admin or ops). Also adds admin role
+// authorization for admin user.
+func AddDefaultUsers() error {
+	for _, userR := range []types.RoleType{types.Admin, types.Ops} {
+		log.Printf("Adding local user %q to the system", userR.String())
+
+		localUser := types.LocalUser{
+			Username: userR.String(),
+			Disable:  false,
+			Password: userR.String(),
+			// FirstName, LastName = "" for built-in users
+		}
+
+		err := db.AddLocalUser(&localUser)
+		if err == nil || err == ccnerrors.ErrKeyExists {
+			continue
+		}
+
+		return err
+	}
+
+	// Add admin role claim for admin user.
+	AddRoleAuthorization(types.Admin.String(), true, types.Admin)
+
+	return nil
 }

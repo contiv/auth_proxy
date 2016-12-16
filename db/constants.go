@@ -6,7 +6,7 @@ import (
 	"github.com/contiv/ccn_proxy/common/types"
 )
 
-// This file contains all DS constants + functions related to local user management.
+// This file contains all DS constants
 
 // various data store paths.
 var (
