@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import {Injectable, OnInit} from "@angular/core";
 import {Response} from "@angular/http";
 import {Subscription, Observable, Subject} from "rxjs";
 import {AuthService} from "./authservice";
@@ -12,7 +12,7 @@ export enum EndpointType {
 }
 
 @Injectable()
-export class ChartService {
+export class ChartService{
     private refresh: Subscription;
     private networks: any;
     private netInspect: any;
@@ -26,16 +26,7 @@ export class ChartService {
         this.graphData = {0: {}, 1: {}};
         this.source = new Subject<any>();
         this.stream = this.source.asObservable();
-        Observable.interval(10000).subscribe(() => {
-            if (this.authService.isLoggedIn){
-                this.getInspectData(ContivGlobals.NETWORKS_ENDPOINT, ContivGlobals.NETWORKS_INSPECT_ENDPOINT, EndpointType.Network);
-                this.getInspectData(ContivGlobals.APPLICATIONGROUPS_ENDPOINT, ContivGlobals.APPLICATIONGROUPS_INSPECT_ENDPOINT, EndpointType.ApplicationGroup);
-            }
-        });
-        if (this.authService.isLoggedIn){
-            this.getInspectData(ContivGlobals.NETWORKS_ENDPOINT, ContivGlobals.NETWORKS_INSPECT_ENDPOINT, EndpointType.Network);
-            this.getInspectData(ContivGlobals.APPLICATIONGROUPS_ENDPOINT, ContivGlobals.APPLICATIONGROUPS_INSPECT_ENDPOINT, EndpointType.ApplicationGroup);
-        }
+        this.startpolling();
     }
 
     private getInspectData(listEndPoint:string, inspectEndpoint:string, endpointtype:EndpointType){
@@ -70,5 +61,27 @@ export class ChartService {
             this.graphData[type][key].push(count);
             this.source.next({iKey: key, count: count, type: type});
         }
+    }
+
+    /* This method is called by menuctrl.ts after the user logs out of the system */
+    public cleanBuffer(){
+        this.networks = [];
+        this.netInspect = {};
+        this.graphData = {0: {}, 1: {}};
+        this.refresh.unsubscribe();
+    }
+
+    /* This method is called by loginctrl.ts after the user logs into the system */
+    public startpolling(){
+        if (this.authService.isLoggedIn){
+            this.getInspectData(ContivGlobals.NETWORKS_ENDPOINT, ContivGlobals.NETWORKS_INSPECT_ENDPOINT, EndpointType.Network);
+            this.getInspectData(ContivGlobals.APPLICATIONGROUPS_ENDPOINT, ContivGlobals.APPLICATIONGROUPS_INSPECT_ENDPOINT, EndpointType.ApplicationGroup);
+        }
+        this.refresh = Observable.interval(10000).subscribe(() => {
+            if (this.authService.isLoggedIn){
+                this.getInspectData(ContivGlobals.NETWORKS_ENDPOINT, ContivGlobals.NETWORKS_INSPECT_ENDPOINT, EndpointType.Network);
+                this.getInspectData(ContivGlobals.APPLICATIONGROUPS_ENDPOINT, ContivGlobals.APPLICATIONGROUPS_INSPECT_ENDPOINT, EndpointType.ApplicationGroup);
+            }
+        });
     }
 }

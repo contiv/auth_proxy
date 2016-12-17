@@ -1,0 +1,61 @@
+<div class="ui sixteen column grid">
+    <div class="left floated left aligned ten wide column">
+        <div class="content" style="font-size: 24px">Tenants</div>
+    </div>
+    <div class="right floated right aligned four wide column">
+        <button class="ui blue button" (click)="create()" *auth="'admin'">
+            <i class="add icon"></i>
+            Create Tenant
+        </button>
+    </div>
+</div>
+
+<ctv-search *ngIf="organizationsListCtrl.organizations" (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [count]="tableRef.count"></ctv-search>
+
+<div class="ui basic segment ctvTable">
+    <div class="ui active inverted dimmer" *ngIf="organizationsListCtrl.showLoader">
+        <div class="ui loader"></div>
+    </div>
+    <ctv-table #tableRef [defaultSortColumn]="'tenantName'"
+               [items]="organizationsListCtrl.organizations"
+               (filtereditems)="organizationsListCtrl.filteredorganizations=$event"
+               [size]="12">
+        <thead>
+            <tr>
+                <th><ctv-th [sortfield]="'tenantName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Name</ctv-th></th>
+            </tr>
+        </thead>
+
+        <tbody *ngIf="organizationsListCtrl.organizations">
+            <tr *ngFor="let organization of organizationsListCtrl.filteredorganizations">
+                <td><a [routerLink]="['../details', organization.key]">{{organization.tenantName}}</a></td>
+            </tr>
+        </tbody>
+
+        <tbody *ngIf="!organizationsListCtrl.organizations">
+            <tr>
+                <td colspan="2">No tenant found. Would you like to <a href="javascript: void(0);" (click)="create()">create one?</a></td>
+            </tr>
+        </tbody>
+
+        <tbody *ngIf="organizationsListCtrl.organizations && !tableRef.count">
+            <tr>
+                <td colspan="2">No records matched your filter criteria.</td>
+            </tr>
+        </tbody>
+
+        
+
+        <tfoot>
+            <tr>
+                <td>
+                    <ctv-tpagination [chunks]="tableRef.pageChunks"
+                                     (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
+                                     (prevChunk)="tableRef.showPrevChunk()"
+                                     (nextChunk)="tableRef.showNextChunk()">
+                    </ctv-tpagination>
+                </td>
+            </tr>
+        </tfoot>
+    </ctv-table>
+</div>

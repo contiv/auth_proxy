@@ -42,8 +42,8 @@
             <tr>
                 <div class="ui grid" style="margin-top: 25px;margin-left: 25px;margin-bottom: 1px;">
                     <th class="five wide column"><ctv-th [sortfield]="'containerName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj"> Container Name </ctv-th></th>
-                    <th class="four wide column"><ctv-th [sortfield]="'ipAddress'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj"> IP Address </ctv-th></th>
-                    <th class="three wide column"><ctv-th [sortfield]="'homingHost'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj"> Host </ctv-th></th>
+                    <th class="four wide column" style="padding-left: 18px !important;"><ctv-th [sortfield]="'ipAddress'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj"> IP Address </ctv-th></th>
+                    <th class="three wide column" style="padding-left: 44px !important;"><ctv-th [sortfield]="'homingHost'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj"> Host </ctv-th></th>
                     <th class="four wide column">
                         <ctv-search (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [placeholder]="'Search Containers...'"></ctv-search>
                     </th>

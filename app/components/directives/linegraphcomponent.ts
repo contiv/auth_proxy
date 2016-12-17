@@ -42,7 +42,7 @@ export class LineGraphComponent implements OnInit, DoCheck, OnDestroy{
     constructor(private chartService: ChartService){
         this.lineChartData = [{
             label: '# of Endpoints',
-            data: [2, 2, 2, 2],
+            data: [0, 0, 0, 0],
         }];
         this.adjustScale(100);
         this.lineChartLabels = ['0T', '1T', '2T', '3T'];

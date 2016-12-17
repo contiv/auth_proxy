@@ -60,11 +60,7 @@
             Networks
         </a>
 
-        <a class="item" [routerLink]="['organizations']" routerLinkActive="active">
-            Organizations
-        </a>
-
-        <a class="item" [routerLink]="['settings']" routerLinkActive="active" *auth="'SysAdmin'">
+        <a class="item" [routerLink]="['settings']" routerLinkActive="active" *auth="'admin'">
             Settings
         </a>
     </span>

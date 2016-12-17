@@ -814,6 +814,15 @@ i.icons .inverted.corner.icon {
 .icon.volumes:before {
   content: "\e905";
 }
+.icon.toast_confirm:before {
+  content: "\ea82";
+}
+.icon.toast_info:before {
+  content: "\ea83";
+}
+.icon.toast_warning:before {
+  content: "\ea84";
+}
 
 
 /*******************************

@@ -1,0 +1,71 @@
+<div class="ui basic segment" [ngClass]="{loading: showLoader}">
+    <form class="ui form" role="form"
+          (submit)="createAuthorization(formRef.valid)" novalidate #formRef="ngForm">
+        <div class="ui sixteen column grid">
+            <div class="nine wide column">
+                <div class="content">
+                    <a [routerLink]="['../list']">
+                        <i class="large arrow left icon"></i>
+                    </a>
+                    <span style="font-size: 24px; margin-left: 6px">Authorization</span>
+                    <span class="headingfontcolor" style="font-size: 24px"> (Create Authorization)</span>
+                </div>
+            </div>
+        </div>
+        <div class="ui basic segment">
+            <div class="field">
+                <div *ngIf="formRef.submitted">
+                    <div [hidden]="formRef.valid" class="ui negative message">
+                        <ul class="list">
+                            <li *ngIf="username.errors?.required">Please select
+                                user name
+                            </li>
+                            <li *ngIf="role.errors?.required">Please select
+                                user role
+                            </li>
+                            <li *ngIf="tenant.errors?.required">Please select
+                                tenant
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                <label for="username">Username</label>
+                <select class="ui dropdown" id="username" name="username" [(ngModel)]="authorization.PrincipalName" required #username="ngModel">
+                    <option [value]="user.username" *ngFor="let user of users">{{user.username}}</option>
+                </select>
+            </div>
+            <div class="field">
+                <label for="role">Role</label>
+                <select class="ui dropdown" id="role" name="role" [(ngModel)]="authorization.Role" required #role="ngModel">
+                    <option value="admin">Admin</option>
+                    <option value="ops">DevOps</option>
+                </select>
+            </div>
+            <div class="field">
+                <label for="tenant">Tenant</label>
+                <select class="ui dropdown" id="tenant" name="tenant" [(ngModel)]="authorization.TenantName" required #tenant="ngModel">
+                    <option [value]="tenant.tenantName" *ngFor="let tenant of tenants">{{tenant.tenantName}}</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>
+                    <input type="checkbox" name="local" tabindex="0"
+                           [(ngModel)]="authorization.Local">
+                    Local User
+                </label>
+            </div>
+            <div class="ui grid">
+                <div class="right aligned sixteen wide column">
+                    <div style="margin-top: 40px">
+                        <button type="button" class="ui basic button" (click)="cancelCreating()">
+                            Cancel
+                        </button>
+                        <button type="submit" class="ui blue button">Create</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,105 @@
+<div class="ui basic segment" [ngClass]="{loading: showLoader}">
+    <div class="ui grid">
+        <div class="ui eight wide column">
+            <div [ngSwitch]="mode" class="content">
+                <a [routerLink]="['../../list']">
+                    <i class="large arrow left icon"></i>
+                </a>
+                <span style="font-size: 24px; margin-left: 6px">Authorization</span>
+                <span *ngSwitchCase="'details'" class="headingfontcolor" style="font-size: 24px"> (Details)</span>
+                <span *ngSwitchCase="'edit'" class="headingfontcolor" style="font-size: 24px"> (Edit)</span>
+            </div>
+        </div>
+
+        <div [ngSwitch]="mode" class="ui right floated right aligned eight wide column">
+            <div id="delete-auth-modal" class="ui small modal">
+                <div class="header">Remove Authorization: {{authorization.PrincipalName}}
+                    for Tenant: {{authorization.TenantName}}
+                </div>
+                <div class="content">
+                    <p>Are you sure you want to remove this authorization?</p>
+                </div>
+                <div class="actions">
+                    <div class="ui negative button">No</div>
+                    <div class="ui positive button" (click)="deleteAuthorization()">
+                        Yes
+                    </div>
+                </div>
+            </div>
+            <button *ngSwitchCase="'edit'" class="ui disabled button"
+                    (click)="editAuthorization()">
+                <i class="edit icon"></i>
+                Edit
+            </button>
+            <button *ngSwitchCase="'details'" class="ui basic button"
+                    (click)="editAuthorization()">
+                <i class="edit icon"></i>
+                Edit
+            </button>
+            <button class="ui basic button" onclick="$('#delete-auth-modal').modal('show')">
+                <i class="trash icon"></i>
+                Remove
+            </button>
+        </div>
+        <div class="row" [ngSwitch]="mode">
+            <div class="ui ten wide column">
+                <table class="ui very basic selectable table" style="width: 100%">
+                    <tbody>
+                        <tr>
+                            <td>Authorization UUID</td>
+                            <td>{{authorization.AuthzUUID}}</td>
+                        </tr>
+                        <tr>
+                            <td>Username</td>
+                            <td>{{authorization.PrincipalName}}</td>
+                        </tr>
+                        <tr>
+                            <td>Local</td>
+                            <td>{{authorization.Local}}</td>
+                        </tr>
+                        <tr *ngSwitchCase="'details'">
+                            <td>Role</td>
+                            <td>{{authorization.Role}}</td>
+                        </tr>
+                        <tr *ngSwitchCase="'details'">
+                            <td>TenantName</td>
+                            <td>{{authorization.TenantName}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div [ngSwitch]="mode" class="row">
+            <div class="ui sixteen wide column" *ngSwitchCase="'edit'">
+                <form class="ui form"
+                      role="form"
+                      *ngSwitchCase="'edit'"
+                      (submit)="saveAuthorization(formRef.valid)" novalidate #formRef="ngForm">
+                    <div class="field">
+                        <label for="role">Role</label>
+                        <select class="ui dropdown" id="role" name="role" [(ngModel)]="authorization.Role">
+                            <option value="admin">Admin</option>
+                            <option value="ops">DevOps</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <select class="ui dropdown" id="tenantname" name="tenantname" [(ngModel)]="authorization.TenantName">
+                            <option *ngFor="let tenant of tenants">{{tenant.tenantName}}</option>
+                        </select>
+                    </div>
+                    <div class="ui grid" style="margin-top: 40px">
+                        <div class="right aligned sixteen wide column">
+                            <button *ngSwitchCase="'edit'" type="button" class="ui basic button"
+                                    (click)="cancelEditing()">Cancel
+                            </button>
+                            <button *ngSwitchCase="'edit'" type="submit" class="ui blue button">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -3,6 +3,15 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { CRUDHelperService } from "../../components/utils/crudhelperservice";
 import { UsersModel } from "../../components/models/usersmodel";
 import { OrganizationsModel } from "../../components/models/organizationsmodel";
+import {ContivGlobals} from "../../components/models/contivglobals";
+
+export interface User{
+    username: string;
+    password?: string;
+    first_name: string;
+    last_name: string;
+    disable: false;
+}
 
 @Component({
     selector: 'usercreate',
@@ -10,39 +19,27 @@ import { OrganizationsModel } from "../../components/models/organizationsmodel";
 })
 
 export class UserCreateComponent{
-    newUser: any = {};
+    newUser: User = {username: '', password: '', first_name: '', last_name: '', disable: false};
     organizations:any[] = [];
 
     constructor(private activatedRoute: ActivatedRoute,
                 private router: Router,
                 private crudHelperService: CRUDHelperService,
                 private usersModel: UsersModel,
-                private organizationsModel: OrganizationsModel,
                 private ngZone: NgZone){
         var component = this;
-
-        /**
-         * Get organizations.
-         */
-        function getOrganizations() {
-            organizationsModel.get(false).then(function (result) {
-                component.organizations = result;
-            });
-        }
 
         function resetForm() {
             crudHelperService.stopLoader(component);
             component.newUser = {
-                userName: '',
-                firstName: '',
-                lastName: '',
-                role: 'DevOps',
-                enabled: false,
-                tenantName: 'default'//TODO: Remove hardcoded tenant.
-            };
+                username: '',
+                password: '',
+                first_name: '',
+                last_name: '',
+                disable: false
+            }
         }
 
-        getOrganizations();
         resetForm();
     }
 
@@ -58,13 +55,12 @@ export class UserCreateComponent{
         var component = this;
         if(formvalid){
             this.crudHelperService.startLoader(this);
-            component.newUser.key = this.usersModel.generateKey(this.newUser);
-            this.usersModel.create(component.newUser,undefined)
+            this.usersModel.create(component.newUser,ContivGlobals.USERS_ENDPOINT, 'username')
                 .then((result) => {
                     component.ngZone.run(() => {
                         component.crudHelperService.stopLoader(component);
-                        component.crudHelperService.showNotification("User: Created", result.key.toString());
                     });
+                    component.crudHelperService.showNotification("User: Created",result.username);
                     component.returnToUsers();
                 }, (error) => {
                     component.ngZone.run(() => {

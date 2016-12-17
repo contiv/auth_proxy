@@ -22,6 +22,7 @@ export const ContivGlobals = {
     'APP_PROFILES_ENDPOINT': '/netmaster/api/v1/appProfiles/',
     'CONTRACTS_ENDPOINT': '/netmaster/api/v1/extContractsGroups/',
     'VISUALIZATION_ENDPOINT': '/visualization/',
+    'AUTHORIZATION_ENDPOINT': '/ccn_proxy/authorizations',
 
     //REST endpoints for VOLMASTER
     'VOLUMES_ENDPOINT': '/volmaster/volumes/',
@@ -44,8 +45,10 @@ export const ContivGlobals = {
     'NODES_SETTINGS_SET_ENDPOINT': '/globals',
     'NODES_SETTINGS_GET_ENDPOINT': '/info/globals',
 
+    //REST endpoint for Login
+    'LOGIN_ENDPOINT': '/ccn_proxy/login',
     //REST endpoints for USER
-    'USERS_ENDPOINT': '/components/models/users.json',
+    'USERS_ENDPOINT': '/ccn_proxy/local_users',
 
     //Refresh interval in milliseconds
     'REFRESH_INTERVAL': 5000,

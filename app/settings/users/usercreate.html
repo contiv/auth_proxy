@@ -23,8 +23,8 @@
                         <li *ngIf="newUserName.errors?.required">Please enter
                             user name
                         </li>
-                        <li *ngIf="newUserOrganization.errors?.required">
-                            Please select organization
+                        <li *ngIf="newUserPassword.errors?.required">Please enter
+                            user password
                         </li>
                     </ul>
                 </div>
@@ -33,48 +33,32 @@
         <div class="field">
             <label for="newUserName">Username</label>
             <input type="text" id="newUserName" name="newUserName"
-                   [(ngModel)]="newUser.userName"
-                   placeholder="Enter name" required #newUserName="ngModel">
+                   [(ngModel)]="newUser.username"
+                   placeholder="Enter username" required #newUserName="ngModel">
         </div>
         <div class="field">
-            <label for="newFirstName">First name</label>
-            <input type="text" id="newFirstName" name="newFirstName"
-                   [(ngModel)]="newUser.firstName"
-                   placeholder="Enter first name" #newFirstName="ngModel">
+            <label for="newUserPassword">Password</label>
+            <input type="password" id="newUserPassword" name="newUserPassword"
+                   [(ngModel)]="newUser.password"
+                   placeholder="Enter password" required #newUserPassword="ngModel">
         </div>
         <div class="field">
-            <label for="newLastName">Last name</label>
-            <input type="text" id="newLastName" name="newLastName"
-                   [(ngModel)]="newUser.lastName"
-                   placeholder="Enter last name"  #newLastName="ngModel">
+            <label for="newUserFirstName">First Name</label>
+            <input type="text" id="newUserFirstName" name="newUserFirstName"
+                   [(ngModel)]="newUser.first_name"
+                   placeholder="Enter first name" #newUserFirstName="ngModel">
         </div>
         <div class="field">
-            <label for="newUserOrganization">Organization</label>
-            <select id="newUserOrganization"
-                    class="ui dropdown"
-                    #newUserOrganization="ngModel"
-                    name="newUserOrganization"
-                    [(ngModel)]="newUser['tenantName']"
-                    required>
-                <option value="">-- Please select organization --</option>
-                <option *ngFor="let organization of organizations"
-                        [value]="organization.tenantName">
-                    {{organization.tenantName}}
-                </option>
-            </select>
-        </div>
-        <div class="field">
-            <label for="newRole">Role</label>
-            <select class="ui dropdown" id="newRole" name="role" [(ngModel)]="newUser.role">
-                <option value="Admin">Admin</option>
-                <option value="DevOps">DevOps</option>
-            </select>
+            <label for="newUserLastName">Last Name</label>
+            <input type="text" id="newUserLastName" name="newUserLastName"
+                   [(ngModel)]="newUser.last_name"
+                   placeholder="Enter last name" #newUserLastName="ngModel">
         </div>
         <div class="field">
             <label>
-                <input type="checkbox" name="newUserEnabled" tabindex="0"
-                       [(ngModel)]="newUser.enabled">
-                Enabled
+                <input type="checkbox" name="newUserDisabled" tabindex="0"
+                       [(ngModel)]="newUser.disable">
+                Disabled
             </label>
         </div>
         <div class="ui grid">

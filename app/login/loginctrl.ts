@@ -3,6 +3,7 @@ import {CRUDHelperService} from "../components/utils/crudhelperservice";
 import {Router, ActivatedRoute} from "@angular/router";
 import {AuthService} from "../components/utils/authservice";
 import { ContivGlobals } from "../components/models/contivglobals";
+import {ChartService} from "../components/utils/chartservice";
 declare var jQuery:any;
 
 @Component({
@@ -24,7 +25,8 @@ export class LoginComponent implements OnInit{
     constructor(private router: Router,
                 private activatedRoute: ActivatedRoute,
                 crudHelperService: CRUDHelperService,
-                private authService: AuthService){
+                private authService: AuthService,
+                private chartService: ChartService){
         this.showLoader = true;
         this.crudHelperService = crudHelperService;
         this.username = '';
@@ -59,6 +61,7 @@ export class LoginComponent implements OnInit{
                         else{
                             this.router.navigate(['/m/dashboard']);
                         }
+                        this.chartService.startpolling();
                     }
                 }
                 else{

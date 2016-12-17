@@ -5,6 +5,7 @@ import { Component, Inject, ViewEncapsulation, OnInit, OnChanges, DoCheck } from
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthService } from "../components/utils/authservice";
 import { ContivGlobals } from "../components/models/contivglobals";
+import {ChartService} from "../components/utils/chartservice";
 declare var jQuery:any;
 
 @Component({
@@ -19,8 +20,9 @@ export class MenuComponent implements DoCheck{
 
     constructor(private activatedRoute: ActivatedRoute,
                 private router: Router,
-                private authService: AuthService) {
-        this.username = authService.authTokenPayload['role'];
+                private authService: AuthService,
+                private chartService: ChartService) {
+        this.username = authService.authTokenPayload['username'];
     }
 
     ngOnInit(){
@@ -33,6 +35,7 @@ export class MenuComponent implements DoCheck{
 
     logout() {
         this.authService.logout();
+        this.chartService.cleanBuffer();
         this.router.navigate(['/logout'],{relativeTo: this.activatedRoute});
     }
 }

@@ -14,9 +14,6 @@ import { ApplicationGroupCreateComponent } from "./applicationgroups/application
 import { ApplicationGroupDetailsComponent } from "./applicationgroups/applicationgroupdetailsctrl";
 import { SettingsMenuComponent } from "./settings/settingsmenu.component";
 import { NetworkSettingsComponent } from "./settings/networksettingctrl";
-import { OrganizationListComponent } from "./organizations/organizationlistctrl";
-import { OrganizationCreateComponent } from "./organizations/organizationcreatectrl";
-import { OrganizationDetailsComponent } from "./organizations/organizationdetailsctrl";
 import { NetworkListComponent } from "./networks/networklistctrl";
 import { NetworkdetailsComponent } from "./networks/networkdetailsctrl";
 import { NetworkCreateComponent } from "./networks/networkcreatectrl";
@@ -39,6 +36,12 @@ import { NodeCreateComponent } from "./settings/nodes/nodecreate.component";
 import { NodeDetailsComponent } from "./settings/nodes/nodedetails.component";
 import { ContractGroupCreateComponent } from "./network_policies/contractgroupcreate.component";
 import { ContractGroupDetailsComponent } from "./network_policies/contractgroupdetails.component";
+import { AuthorizationListComponent } from "./settings/authorization/authorizationlist";
+import { AuthorizationDetailsComponent } from "./settings/authorization/authorizationdetails";
+import { AuthorizationCreateComponent } from "./settings/authorization/authorizationcreate";
+import { OrganizationListComponent } from "./settings/tenants/organizationlistctrl";
+import { OrganizationCreateComponent } from "./settings/tenants/organizationcreatectrl";
+import { OrganizationDetailsComponent } from "./settings/tenants/organizationdetailsctrl";
 
 const routes = [
     {path: 'login', component: LoginComponent, canActivate: [AuthGuard]},
@@ -80,24 +83,32 @@ const routes = [
                 children: [
                     {path: '', redirectTo: 'users/list', pathMatch: 'full'},
                     {path: 'networks', component: NetworkSettingsComponent},
+                    {path: 'nodes', redirectTo: 'nodes/list', pathMatch: 'full'},
+                    {path: 'nodes/list', component: NodeListComponent},
+                    {path: 'nodes/create', component: NodeCreateComponent},
+                    {path: 'nodes/details/:key', component: NodeDetailsComponent},
+                    {path: 'nodes/edit/:key', component: NodeDetailsComponent},
+                    //Users
                     {path: 'users', redirectTo: 'users/list', pathMatch: 'full'},
                     {path: 'users/list', component: UserListComponent},
                     {path: 'users/create', component: UserCreateComponent},
                     {path: 'users/details/:key', component: UserDetailsComponent},
                     {path: 'users/edit/:key', component: UserDetailsComponent},
-                    {path: 'nodes', redirectTo: 'nodes/list', pathMatch: 'full'},
-                    {path: 'nodes/list', component: NodeListComponent},
-                    {path: 'nodes/create', component: NodeCreateComponent},
-                    {path: 'nodes/details/:key', component: NodeDetailsComponent},
-                    {path: 'nodes/edit/:key', component: NodeDetailsComponent}
+                    //Authorizations
+                    {path: 'authorization', redirectTo: 'authorization/list', pathMatch: 'full'},
+                    {path: 'authorization/list', component: AuthorizationListComponent},
+                    {path: 'authorization/create', component: AuthorizationCreateComponent},
+                    {path: 'authorization/details/:key', component: AuthorizationDetailsComponent},
+                    {path: 'authorization/edit/:key', component: AuthorizationDetailsComponent},
+                    //Tenants
+                    {path: 'organizations', redirectTo: 'organizations/list', pathMatch: 'full'},
+                    {path: 'organizations/list', component: OrganizationListComponent},
+                    {path: 'organizations/create', component: OrganizationCreateComponent},
+                    {path: 'organizations/details/:key', component: OrganizationDetailsComponent},
                 ]
             },
 
-            //Organizations
-            {path: 'organizations', redirectTo: 'organizations/list', pathMatch: 'full'},
-            {path: 'organizations/list', component: OrganizationListComponent},
-            {path: 'organizations/create', component: OrganizationCreateComponent},
-            {path: 'organizations/details/:key', component: OrganizationDetailsComponent},
+
 
             //Networks
             {path: 'networks', redirectTo: 'networks/list', pathMatch: 'full'},

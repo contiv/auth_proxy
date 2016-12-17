@@ -7962,6 +7962,18 @@ i.icons .inverted.corner.icon {
   content: "\e905";
 }
 
+.icon.toast_confirm:before {
+  content: "\ea82";
+}
+
+.icon.toast_info:before {
+  content: "\ea83";
+}
+
+.icon.toast_warning:before {
+  content: "\ea84";
+}
+
 /*******************************
          Site Overrides
 *******************************/
@@ -31034,7 +31046,7 @@ html.ios body {
   }
 
   100% {
-    opacity: 1;
+    opacity: 0.85;
     -webkit-transform: translateY(0%);
     transform: translateY(0%);
   }
@@ -31048,7 +31060,7 @@ html.ios body {
   }
 
   100% {
-    opacity: 1;
+    opacity: 0.85;
     -webkit-transform: translateY(0%);
     transform: translateY(0%);
   }
@@ -31162,7 +31174,7 @@ html.ios body {
 
 @-webkit-keyframes fadeOutUp {
   0% {
-    opacity: 1;
+    opacity: 0.85;
     -webkit-transform: translateY(0%);
     transform: translateY(0%);
   }
@@ -31176,7 +31188,7 @@ html.ios body {
 
 @keyframes fadeOutUp {
   0% {
-    opacity: 1;
+    opacity: 0.85;
     -webkit-transform: translateY(0%);
     transform: translateY(0%);
   }

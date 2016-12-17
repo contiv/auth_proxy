@@ -1,162 +1,112 @@
-<div class="ui sixteen column grid">
-    <div class="three wide column">
-        <div [ngSwitch]="mode" class="content">
-            <a [routerLink]="['../../list']">
-                <i class="large arrow left icon"></i>
-            </a>
-            <span style="font-size: 24px; margin-left: 6px">Users</span>
-            <span *ngSwitchCase="'details'" class="headingfontcolor" style="font-size: 24px"> (Details)</span>
-            <span *ngSwitchCase="'edit'" class="headingfontcolor" style="font-size: 24px"> (Edit)</span>
+<div class="ui basic segment" [ngClass]="{loading: showLoader}">
+    <div class="ui grid">
+        <div class="ui eight wide column">
+            <div [ngSwitch]="mode" class="content">
+                <a [routerLink]="['../../list']">
+                    <i class="large arrow left icon"></i>
+                </a>
+                <span style="font-size: 24px; margin-left: 6px">Users</span>
+                <span *ngSwitchCase="'details'" class="headingfontcolor" style="font-size: 24px"> (Details)</span>
+                <span *ngSwitchCase="'edit'" class="headingfontcolor" style="font-size: 24px"> (Edit)</span>
+            </div>
         </div>
-    </div>
 
-    <div [ngSwitch]="mode" class="right aligned thirteen wide column">
-        <div id="delete-user-modal" class="ui small modal">
-            <div class="header">Remove User: {{user.userName}}
-            </div>
-            <div class="content">
-                <p>Are you sure you want to remove this user?</p>
-            </div>
-            <div class="actions">
-                <div class="ui negative button">No</div>
-                <div class="ui positive button" (click)="deleteUser()">
-                    Yes
+        <div [ngSwitch]="mode" class="ui right floated right aligned eight wide column">
+            <div id="delete-user-modal" class="ui small modal">
+                <div class="header">Remove User: {{user.username}}</div>
+                <div class="content">
+                    <p>Are you sure you want to remove this user?</p>
                 </div>
-            </div>
-        </div>
-        <button *ngSwitchCase="'edit'" class="ui disabled button"
-                (click)="editUser()">
-            <i class="edit icon"></i>
-            Edit
-        </button>
-        <button *ngSwitchCase="'details'" class="ui basic button"
-                (click)="editUser()">
-            <i class="edit icon"></i>
-            Edit
-        </button>
-        <button class="ui basic button" onclick="$('#delete-user-modal').modal('show')">
-            <i class="trash icon"></i>
-            Remove
-        </button>
-    </div>
-</div>
-
-<div class="ui basic segment">
-    <div class="ui active inverted dimmer" *ngIf="showLoader">
-        <div class="ui loader"></div>
-    </div>
-    <div><h4 class="ui header">Basic Settings</h4></div>  <!-- Top Margin is less,When h4 is first child in div -->
-    <table class="ui very basic selectable table">
-        <tbody>
-        <div [ngSwitch]="mode">
-            <div *ngSwitchCase="'details'">
-                <tr>
-                    <td class="three wide column">Username</td>
-                    <td>{{user.userName}}</td>
-                </tr>
-                <tr>
-                    <td class="three wide column">First Name</td>
-                    <td>{{user.firstName}}</td>
-                </tr>
-                <tr>
-                    <td class="three wide column">Last Name</td>
-                    <td>{{user.lastName}}</td>
-                </tr>
-                <tr>
-                    <td class="three wide column">Organization</td>
-                    <td>{{user.tenantName}}</td>
-                </tr>
-                <tr>
-                    <td class="three wide column">Role</td>
-                    <td>{{user.role}}</td>
-                </tr>
-                <tr>
-                    <td class="three wide column">Enabled</td>
-                    <td>{{user.enabled?'Yes':'No'}}</td>
-                </tr>
-            </div>
-        </div>
-        </tbody>
-    </table>
-
-    <div [ngSwitch]="mode">
-        <form class="ui form"
-              role="form"
-              *ngSwitchCase="'edit'"
-              (submit)="saveUser(formRef.valid)" novalidate #formRef="ngForm">
-            <div class="field">
-                <div *ngIf="formRef.submitted">
-                    <div [hidden]="formRef.valid" class="ui negative message">
-                        <ul class="list">
-                            <li *ngIf="userName.errors?.required">Please enter
-                                user name
-                            </li>
-                            <li *ngIf="userOrganization.errors?.required">
-                                Please select organization
-                            </li>
-                        </ul>
+                <div class="actions">
+                    <div class="ui negative button">No</div>
+                    <div class="ui positive button" (click)="deleteUser()">
+                        Yes
                     </div>
                 </div>
             </div>
-            <div class="field">
-                <label for="userName">Username</label>
-                <input type="text" id="userName" name="userName"
-                       [(ngModel)]="user.userName"
-                       placeholder="Enter name" required #userName="ngModel">
+            <button *ngSwitchCase="'edit'" class="ui disabled button"
+                    (click)="editUser()">
+                <i class="edit icon"></i>
+                Edit
+            </button>
+            <button *ngSwitchCase="'details'" class="ui basic button"
+                    (click)="editUser()">
+                <i class="edit icon"></i>
+                Edit
+            </button>
+            <button class="ui basic button" onclick="$('#delete-user-modal').modal('show')">
+                <i class="trash icon"></i>
+                Remove
+            </button>
+        </div>
+        <div class="row" [ngSwitch]="mode">
+            <div class="ui eight wide column">
+                <h4 class="ui header">Basic Settings</h4>
+                <table class="ui very basic selectable table" style="width: 100%" >
+                    <tbody>
+                    <tr>
+                        <td>Username</td>
+                        <td>{{user.username}}</td>
+                    </tr>
+                    <tr *ngSwitchCase="'details'">
+                        <td>Firstname</td>
+                        <td>{{user.first_name}}</td>
+                    </tr>
+                    <tr *ngSwitchCase="'details'">
+                        <td>Lastname</td>
+                        <td>{{user.last_name}}</td>
+                    </tr>
+                    <tr *ngSwitchCase="'details'">
+                        <td>Disabled</td>
+                        <td>{{user.disable?'Yes':'No'}}</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="field">
-                <label for="newFirstName">First name</label>
-                <input type="text" id="newFirstName" name="newFirstName"
-                       [(ngModel)]="user.firstName"
-                       placeholder="Enter first name" #newFirstName="ngModel">
+        </div>
+        <div [ngSwitch]="mode" class="row">
+            <div class="ui sixteen wide column" *ngSwitchCase="'edit'">
+                <form class="ui form"
+                      role="form"
+                      *ngSwitchCase="'edit'"
+                      (submit)="saveUser(formRef.valid)" novalidate #formRef="ngForm">
+                    <div class="field">
+                        <label for="firstname">First Name</label>
+                        <input type="text" id="firstname" name="firstname"
+                               [(ngModel)]="user.first_name"
+                               placeholder="Enter First Name" #firstname="ngModel">
+                    </div>
+                    <div class="field">
+                        <label for="lastname">Last Name</label>
+                        <input type="text" id="lastname" name="lastname"
+                               [(ngModel)]="user.last_name"
+                               placeholder="Enter Last Name" #lastname="ngModel">
+                    </div>
+                    <div class="field">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password"
+                               [(ngModel)]="user.password"
+                               placeholder="Reset Password" #password="ngModel">
+                    </div>
+                    <div class="field">
+                        <label>
+                            <input type="checkbox" name="userdisabled" tabindex="0"
+                                   [(ngModel)]="user.disable">
+                            Disabled
+                        </label>
+                    </div>
+                    <div class="ui grid" style="margin-top: 40px">
+                        <div class="right aligned sixteen wide column">
+                            <button *ngSwitchCase="'edit'" type="button" class="ui basic button"
+                                    (click)="cancelEditing()">Cancel
+                            </button>
+                            <button *ngSwitchCase="'edit'" type="submit" class="ui blue button">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="field">
-                <label for="newLastName">Last name</label>
-                <input type="text" id="newLastName" name="newLastName"
-                       [(ngModel)]="user.lastName"
-                       placeholder="Enter last name" #newLastName="ngModel">
-            </div>
-            <div class="field">
-                <label for="userOrganization">Organization</label>
-                <select id="userOrganization"
-                        class="ui dropdown"
-                        #userOrganization="ngModel"
-                        name="userOrganization"
-                        [(ngModel)]="user['tenantName']"
-                        required>
-                    <option value="">-- Please select organization --</option>
-                    <option *ngFor="let organization of organizations"
-                            [value]="organization.tenantName">
-                        {{organization.tenantName}}
-                    </option>
-                </select>
-            </div>
-            <div class="field">
-                <label for="newRole">Role</label>
-                <select class="ui dropdown" id="newRole" name="role" [(ngModel)]="user.role">
-                    <option value="Admin">Admin</option>
-                    <option value="DevOps">DevOps</option>
-                </select>
-            </div>
-            <div class="field">
-                <label>
-                    <input type="checkbox" name="userEnabled" tabindex="0"
-                           [(ngModel)]="user.enabled">
-                    Enabled
-                </label>
-            </div>
-            <div class="ui grid" style="margin-top: 40px">
-                <div class="right aligned sixteen wide column">
-                    <button *ngSwitchCase="'edit'" type="button" class="ui basic button"
-                            (click)="cancelEditing()">Cancel
-                    </button>
-                    <button *ngSwitchCase="'edit'" type="submit" class="ui blue button">
-                        Save
-                    </button>
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
-
 </div>
-

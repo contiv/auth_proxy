@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { CRUDHelperService } from "../../components/utils/crudhelperservice";
 import { Observable, Subscription } from "rxjs";
 import { UsersModel } from "../../components/models/usersmodel";
+import {User} from "./usercreate.component";
 
 
 @Component({
@@ -13,7 +14,7 @@ import { UsersModel } from "../../components/models/usersmodel";
 export class UserListComponent implements OnInit, OnDestroy{
 
     private refresh: Subscription;
-
+    public users: Array<User>;
     constructor(private activatedRoute: ActivatedRoute,
                 private router: Router,
                 private usersModel: UsersModel,

@@ -47,7 +47,8 @@ export class NotificationComponent implements DoCheck, OnInit{
     runAnimation(start: boolean){
         var self = this;
         var animation = {
-            animation: 'fly up',
+            animation: 'fade up',
+            duration: '600ms',
             onStart: function(){
                 if(start)
                     self.displayMessage();

@@ -11,6 +11,7 @@ import 'rxjs/add/operator/delay';
 import {Http, Headers, RequestOptions, Response} from "@angular/http";
 import {AuthMatrix} from "./authMatrix";
 import {isNull} from "util";
+import {ContivGlobals} from "../models/contivglobals";
 
 interface User{
     username: string;
@@ -52,12 +53,27 @@ export class AuthService {
     }
 
     login(user: User): Observable<any> {
-        var data = this.encodeUrlData(user);
         this.headers = new Headers();
-        this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        this.headers.append('Content-Type', 'application/json');
         var options = new RequestOptions({headers: this.headers});
 
-        // This is just a mock
+        /* Use the below code if you are calling netmaster apis through CCN_Proxy */
+        return this.http.post(ContivGlobals.LOGIN_ENDPOINT, user, options)
+            .map((res) => {
+                var s = this.extractToken(res);
+                if (s){
+                    this.isLoggedIn = true;
+                    return true;
+                }
+                else{
+                    this.isLoggedIn = false;
+                    return false;
+                }
+            })
+            .catch((error:any) => Observable.throw(error));
+
+
+        /* This is just a mock. Use the below code if you are calling netmaster apis directly
         return new Observable((observer) => {
             if (user.username != "devops" && user.username != "admin")
                 observer.next(false);
@@ -65,10 +81,10 @@ export class AuthService {
                 var res = '';
 
                 if (user.username == "devops" && user.password == "devops")
-                    var res = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBTExfQ0xVU1RFUlNfQVVUSCI6dHJ1ZSwiZXhwIjoxNDk4NjQ3NjIxLCJyb2xlIjoiRGV2T3BzIn0=.WXE_VtvyE_pg8paoVDwVIavZNHB-LmBLGJgY4REgvYk";
+                    var res = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6dHJ1ZSwiZXhwIjoxNDgxODAwNDc0LCJpc3MiOiJjY25fcHJveHkiLCJyb2xlIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIn0.U9-yhzl-Q7BKYIROdNf-BwtvXVukTpJL-_Z0Jsddfmc";
 
                 if (user.username == "admin" && user.password == "admin")
-                    var res = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBTExfQ0xVU1RFUlNfQVVUSCI6dHJ1ZSwiZXhwIjoxNDk4NjQ3NjIxLCJyb2xlIjoiU3lzQWRtaW4ifQ==.WXE_VtvyE_pg8paoVDwVIavZNHB-LmBLGJgY4REgvYk";
+                    var res = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6dHJ1ZSwiZXhwIjoxNDgxODAwNDc0LCJpc3MiOiJjY25fcHJveHkiLCJyb2xlIjoib3BzIiwidXNlcm5hbWUiOiJvcHMifQ==.U9-yhzl-Q7BKYIROdNf-BwtvXVukTpJL-_Z0Jsddfmc";
 
                 if (res == ''){
                     observer.next(false);
@@ -86,24 +102,7 @@ export class AuthService {
 
 
         });
-
-        // This Code will be active after CCN Proxy is live...
-
-        /*
-        return this.http.post("/1/system/login", data, options)
-            .map((res) => {
-                var s = this.extractToken(res);
-                if (s){
-                    this.isLoggedIn = true;
-                    return true;
-                }
-                else{
-                    this.isLoggedIn = false;
-                    return false;
-                }
-            })
-            .catch((error:any) => Observable.throw(error));
-            */
+        */
     }
 
     logout(): void {
@@ -125,7 +124,9 @@ export class AuthService {
     }
 
     extractToken(res: Response): boolean {
-        var xAuthToken = res.headers.get("x-auth-token");
+        /* CCN_Proxy is now sending the token as part of the body */
+
+        var xAuthToken = res.json()['token'];
         if (xAuthToken.length > 0) {
             localStorage.setItem("authToken", xAuthToken);
             localStorage.setItem("loginTime", new Date().toLocaleString());

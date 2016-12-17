@@ -3,13 +3,15 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { UsersModel } from "../../components/models/usersmodel";
 import { CRUDHelperService } from "../../components/utils/crudhelperservice";
 import { OrganizationsModel } from "../../components/models/organizationsmodel";
+import { User } from "./usercreate.component";
+import { ContivGlobals } from "../../components/models/contivglobals";
 
 @Component({
     selector: 'userdetails',
     templateUrl: 'settings/users/userdetails.html'
 })
 export class UserDetailsComponent {
-    user:any = {};
+    user:User = {username: '', password: '', first_name: '', last_name: '', disable: false};
     organizations:any[] = [];
     mode:string = 'details';
 
@@ -17,9 +19,9 @@ export class UserDetailsComponent {
                 private router: Router,
                 private ngZone: NgZone,
                 private usersModel:UsersModel,
-                private organizationsModel: OrganizationsModel,
                 private crudHelperService:CRUDHelperService) {
         var component = this;
+        this.user = {username: '', first_name: '', last_name: '', disable: false};
 
         /**
          * To show edit or details screen based on the route
@@ -32,23 +34,13 @@ export class UserDetailsComponent {
             }
         }
 
-        /**
-         * Get organizations.
-         */
-        function getOrganizations() {
-            organizationsModel.get(false).then(function (result) {
-                component.organizations = result;
-            });
-        }
-
         component.crudHelperService.stopLoader(component);
 
-        component.usersModel.getModelByKey(activatedRoute.snapshot.params['key'], false, 'key')
+        component.usersModel.getModelByKey(activatedRoute.snapshot.params['key'], false, 'username')
             .then(function (user) {
                 component.user = user;
             });
 
-        getOrganizations();
         setMode();
     }
 
@@ -57,11 +49,11 @@ export class UserDetailsComponent {
     }
 
     returnToUserDetails() {
-        this.router.navigate(['../../details', this.user.key], { relativeTo: this.activatedRoute });
+        this.router.navigate(['../../details', this.user.username], { relativeTo: this.activatedRoute });
     }
 
     editUser() {
-        this.router.navigate(['../../edit', this.user.key], { relativeTo: this.activatedRoute });
+        this.router.navigate(['../../edit', this.user.username], { relativeTo: this.activatedRoute });
     }
 
     cancelEditing() {
@@ -71,12 +63,14 @@ export class UserDetailsComponent {
     deleteUser() {
         var component = this;
         component.crudHelperService.startLoader(component);
-        component.usersModel.delete(component.user).then(
+        var username = component.user['username'];
+        var url = ContivGlobals.USERS_ENDPOINT + '/' + username
+        component.usersModel.deleteUsingKey(username, 'username', url).then(
             function successCallback(result) {
                 component.ngZone.run(() => {
                     component.crudHelperService.stopLoader(component);
                 });
-                component.crudHelperService.showNotification("User: Deleted", result)
+                component.crudHelperService.showNotification("User: Deleted", result);
                 component.returnToUser();
             }, function errorCallback(result) {
                 component.ngZone.run(() => {
@@ -96,7 +90,7 @@ export class UserDetailsComponent {
                     component.ngZone.run(() => {
                         component.crudHelperService.stopLoader(component);
                     });
-                    component.crudHelperService.showNotification("User: Updated", result.key.toString());
+                    component.crudHelperService.showNotification("User: Updated", result.username.toString());
                     component.returnToUserDetails();
                 }, function errorCallback(result) {
                     component.ngZone.run(() => {

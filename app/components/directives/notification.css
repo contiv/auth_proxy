@@ -6,6 +6,7 @@
     background: #5d5d5d;
     padding-left: 0px;
     padding-right: 40px;
+    opacity: 0.85;
 }
 
 #notificationMessage.ready, #notificationMessage.info{
@@ -20,15 +21,13 @@
 
 #notificationText #header2, #notificationText p, #notificationText span{
     color: white;
+    font-family: CiscoSansBold;
+    font-size:14px;
 }
 
 .close.icon{
     color:white;
     padding-right: 20px;
-}
-
-p{
-    font-weight: bold;
 }
 
 p.ready, p.info{
@@ -44,4 +43,29 @@ p.minor{
     padding-top: 4px;
     top:15%;
     font-size: 3em;
+}
+
+.toast_confirm.icon{
+    color: #00c905;
+}
+
+.toast_warning.icon{
+    color: #F4B400;
+}
+
+.toast_info.icon{
+    color: #008FCE;
+}
+
+
+#backgroundIcon{
+    position: absolute;
+    border-radius: 50%;
+    width: 37px;
+    height: 37px;
+    z-index: -1;
+    display: block;
+    left: 3%;
+    top: -21%;
+    background-color: white;
 }

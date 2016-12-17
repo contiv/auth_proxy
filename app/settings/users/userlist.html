@@ -17,23 +17,23 @@
     <div class="ui active inverted dimmer" *ngIf="showLoader">
         <div class="ui loader"></div>
     </div>
-    <ctv-table #tableRef [defaultSortColumn]="'tenantName'"
+    <ctv-table #tableRef [defaultSortColumn]="'username'"
                [items]="users"
                (filtereditems)="filteredusers=$event"
                [size]="12">
         <thead>
             <tr>
-                <th><ctv-th [sortfield]="'userName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Username</ctv-th></th>
-                <th><ctv-th [sortfield]="'role'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Role</ctv-th></th>
-                <th><ctv-th [sortfield]="'tenantName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Organization</ctv-th></th>
+                <th><ctv-th [sortfield]="'username'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Username</ctv-th></th>
+                <th><ctv-th [sortfield]="'first_name'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">First Name</ctv-th></th>
+                <th><ctv-th [sortfield]="'last_name'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Last Name</ctv-th></th>
             </tr>
         </thead>
 
         <tbody *ngIf="users">
             <tr *ngFor="let user of filteredusers">
-                <td><a [routerLink]="['../details', user.key]">{{user.userName}}</a></td>
-                <td>{{user.role}}</td>
-                <td>{{user.tenantName}}</td>
+                <td><a [routerLink]="['../details', user.username]">{{user.username}}</a></td>
+                <td>{{user.first_name}}</td>
+                <td>{{user.last_name}}</td>
             </tr>
         </tbody>
 
@@ -51,7 +51,7 @@
 
         <tfoot>
             <tr>
-                <td colspan="3">
+                <td colspan="2">
                     <ctv-tpagination [chunks]="tableRef.pageChunks"
                                      (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
                                      (prevChunk)="tableRef.showPrevChunk()"

@@ -4,7 +4,7 @@
 
 
 import {Injectable} from "@angular/core";
-import {Http, Headers, RequestOptions} from "@angular/http";
+import {Http, Headers, RequestOptions, Response} from "@angular/http";
 import {Observable} from "rxjs";
 import {AuthService} from "./authservice";
 @Injectable()
@@ -35,12 +35,17 @@ export class ApiService{
         return this.http.delete(url,options);
     }
 
+    patch(url:string, body:any): Observable<any>{
+        var options = this.prepareHeader('patch')
+        return this.http.patch(url, body, options);
+    }
+
     prepareHeader(method: string): RequestOptions{
         this.headers = new Headers();
         if(method!='get' && method!='delete')
             this.headers.append('Content-Type', 'application/json');
         if (this.authService.authToken.length > 0)
-            this.headers.append('Authorization', `Bearer ${this.authService.authToken}`);
+            this.headers.append('X-Auth-Token', this.authService.authToken);
         var options = new RequestOptions({headers: this.headers});
         return options;
     }
