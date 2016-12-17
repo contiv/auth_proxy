@@ -132,11 +132,11 @@ func TestAuthZReadAll(t *testing.T) {
 
 	// check if any of the read values match 1st written value
 	if !(*tmp1 == a1 || *tmp2 == a1) {
-		t.Fatal("Neither read values:", *tmp1, " match written value:", a1)
+		t.Fatal("Neither read values:", *tmp1, *tmp2, " match written value:", a1)
 	}
 	// check if any of the read values match 2nd written value
 	if !(*tmp1 == a2 || *tmp2 == a2) {
-		t.Fatal("Neither read values:", *tmp2, " match written value:", a2)
+		t.Fatal("Neither read values:", *tmp1, *tmp2, " match written value:", a2)
 	}
 
 }

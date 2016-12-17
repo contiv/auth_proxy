@@ -245,6 +245,7 @@ func addUserMgmtRoutes(router *mux.Router) {
 
 // addAuthorizationRoutes adds authorization routes to the mux.Router
 // All authorization management routes are admin-only.
+// FIXME: These routes should also handle admin role authorization that applies to all tenants
 func addAuthorizationRoutes(router *mux.Router) {
 	router.Path("/api/v1/ccn_proxy/authorizations").Methods("POST").HandlerFunc(adminOnly(addTenantAuthorization))
 	router.Path("/api/v1/ccn_proxy/authorizations/{authzUUID}").Methods("DELETE").HandlerFunc(adminOnly(deleteTenantAuthorization))

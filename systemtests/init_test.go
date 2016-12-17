@@ -9,6 +9,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/contiv/ccn_proxy/auth"
 	"github.com/contiv/ccn_proxy/common/test"
 	"github.com/contiv/ccn_proxy/common/types"
 	"github.com/contiv/ccn_proxy/db"
@@ -40,9 +41,10 @@ func Test(t *testing.T) {
 	test.CleanupDatastore(datastore, []string{
 		db.GetPath(db.RootLocalUsers),
 		db.GetPath(db.RootLdapConfiguration),
+		db.GetPath("authorizations"),
 	})
 
-	if err := db.AddDefaultUsers(); err != nil {
+	if err := auth.AddDefaultUsers(); err != nil {
 		log.Fatalln(err)
 	}
 

@@ -9,6 +9,11 @@ const (
 	// TenantClaimKey is a prefix added to Claim keys in the
 	// authorization or token object to represent tenants
 	TenantClaimKey = "tenant:"
+
+	// RoleClaimKey is a const string which represents highest
+	// available role available to a principal in token object or
+	// authorization db
+	RoleClaimKey = "role"
 )
 
 // RoleType each role type is associated with a group and set of capabilities

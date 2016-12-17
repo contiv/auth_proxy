@@ -286,7 +286,7 @@ func DeleteAuthorizationsByClaim(claim string) error {
 //  error: Any error encountered when reading from the KV store
 //         nil if operation is successful
 //
-func ListAuthorizationsByClaimAndPrincipal(claim string, ID string) (
+func ListAuthorizationsByClaimAndPrincipal(claim string, principal string) (
 	[]types.Authorization, error) {
 
 	defer common.Untrace(common.Trace())
@@ -308,7 +308,7 @@ func ListAuthorizationsByClaimAndPrincipal(claim string, ID string) (
 	for _, auth := range allAuthZList {
 		tmp, ok := auth.(*types.Authorization)
 		if ok {
-			if (tmp.ClaimKey == claim) && (tmp.PrincipalID == ID) {
+			if (tmp.ClaimKey == claim) && (tmp.PrincipalName == principal) {
 				match = append(match, *tmp)
 			}
 		}

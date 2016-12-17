@@ -34,7 +34,6 @@ func Authenticate(username, password string) ([]string, error) {
 		return nil, ccnerrors.ErrAccessDenied
 	}
 
-	// local user's JWT will only contain the `username` + default claims (exp, role, etc.. )
 	// user.Username is the PrincipalName for localuser
 	return []string{user.Username}, nil
 }

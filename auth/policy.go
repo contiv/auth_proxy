@@ -68,7 +68,16 @@ func (authZ *Token) checkTenantPolicy(tenant types.Tenant, desiredAccess interfa
 		return ccnerrors.NewError(ccnerrors.Internal, msg)
 	}
 
-	// check for explicit authorization to the tenant
+	// Gather tenant authorizations for principals claim present in token
+	// and look for authorizations for given tenant with desiredAccess. We
+	// don't cache authorizations in token itself, rather we rely on
+	// lookups in authorization database.
+	//
+	// NOTE: Once we move to an external authz provider model, we will
+	// potentially have to modify this workflow to return tokens that
+	// include exact desired claims. For an example, see docker registry
+	// oauth integration.
+	//
 	claims := authZ.tkn.Claims.(jwt.MapClaims)
 	if v, ok := claims[claimStr]; ok {
 

@@ -2,6 +2,7 @@ package auth
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	log "github.com/Sirupsen/logrus"
@@ -9,6 +10,7 @@ import (
 
 	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
 	"github.com/contiv/ccn_proxy/common/types"
+	state "github.com/contiv/ccn_proxy/state"
 )
 
 // This file contains all utility methods to create and handle JWT tokens
@@ -20,6 +22,9 @@ const (
 	// TokenSigningKey is used for signing the token
 	// FIXME: this should be fetched from store
 	TokenSigningKey = "ccn$!~56"
+
+	// This claim is only added to the token, and is not part of authorization db
+	principalsClaimKey = "principals"
 )
 
 // Token represents the JSON Web Token which carries the authorization details
@@ -51,37 +56,103 @@ func NewToken() *Token {
 //  For ldap users, this list potentially contains multiple principals, each belonging to a ldap group.
 // return values:
 //  *Token: a token object encapsulating authorization claims
-//  error: nil if successful, else as returned by AddRoleClaim
+//  error: nil if successful, else as returned by sub-routines.
 func NewTokenWithClaims(principals []string) (*Token, error) {
 	authZ := NewToken()
 
-	// add a claim for each principal
-	for _, principal := range principals {
-		// NOTE: principal here is the group_name or username based on the authentication type(LDAP/Local)
-		authZ.AddClaim(principal, true)
+	// Add principals to token as a claim. Also update the highest role
+	// claim based on prinipals' authorizations.
 
+	if err := authZ.AddPrincipalsClaim(principals); err != nil {
+		return nil, err
+	}
+
+	for _, principal := range principals {
 		authZ.AddRoleClaim(principal)
-		// TODO: Add role by iterating through the list of authorization for this principal
 	}
 
 	return authZ, nil
 }
 
-// AddRoleClaim adds/updates a role claim of type key="role" value=<RoleType> e.g. value="admin", value="ops"
-// to the token. This claim represents the highest capability role available to
-// the user, hence an update is only performed if principal's role claim is
-// higher than current value of role claim.
+// AddPrincipalsClaim adds a role claim of type
+// key="principals" to the token.
+//
+// Value of this claim is used to find authorization claims of associated principals at runtime.
+// If this list changes (e.g., if user's ldap group membership changes), user needs to re-authenticate
+// to get updated access.
+//
 // params:
-//  principal: principal(username/group_name) associated with a user
+//  principals: security principals associated with a user
+// return values:
+//  error: nil if successful, else relevant error if claim is malformed.
+func (authZ *Token) AddPrincipalsClaim(principals []string) error {
+	// Serialize principals slice as a single string
+	authZ.AddClaim(principalsClaimKey, strings.Join(principals, ","))
+	return nil
+}
+
+// AddRoleClaim adds/updates a role claim of type key="role" value=<RoleType>
+// e.g. value="admin", value="ops" to the token. This claim represents the
+// highest capability role available to the user, hence an update is only
+// performed if principal's role claim is higher than current value of role
+// claim.
+//
+// This claim is currently only useful for UI to offer differentiation in terms
+// of look and feel based on the type of operations a user can perform. RBAC
+// implementation at API level doesn't look at the role claim in Token - rather
+// it pulls the current state from state store based on principals. This makes
+// authorization changes almost instantaneous, at an increased cost of round
+// trip communication with state store.
+//
+// params:
+//  principal: a security principal associated with a user
 // return values:
 //  error: nil if successful, else relevant error if claim is malformed.
 func (authZ *Token) AddRoleClaim(principal string) error {
-	// TODO: Iterate over the list of authz's of the given principal
 
-	// FIXME: this is just to let the current systemtests PASS
-	if principal == types.Admin.String() || principal == types.Ops.String() {
-		authZ.AddClaim("role", principal)
+	authz, err := state.ListAuthorizationsByClaimAndPrincipal(types.RoleClaimKey, principal)
+	if err != nil {
+		return err
 	}
+
+	l := len(authz)
+	switch {
+	// If no authorizations are found, this user has not been authorized to
+	// access any resources yet. Return success without adding the claim.
+	case l == 0:
+		return nil
+
+	default:
+		grantedRole, err := types.Role(authz[0].ClaimValue)
+		// Invalid claim in authorizations db, skip over
+		if err != nil {
+			return nil
+		}
+
+		// Check if token already has a role claim.
+		v, ok := authZ.tkn.Claims.(jwt.MapClaims)[types.RoleClaimKey]
+		// Role claim available, update only if grantedRole has more
+		// privileges than role already available
+		if ok {
+			availableRole, err := types.Role(v.(string))
+			if err == nil {
+				// Higher privilege role available, update
+				if availableRole > grantedRole {
+					authZ.AddClaim(types.RoleClaimKey, grantedRole.String())
+				}
+			} else {
+				msg := "malformed token, error:" + err.Error()
+				log.Error(msg)
+				return ccnerrors.NewError(ccnerrors.Internal, msg)
+			}
+		} else {
+			// No role claim available, add
+			// Add key="role" value=<string representation of role
+			// as obtained from stored authorization>
+			authZ.AddClaim(types.RoleClaimKey, grantedRole.String())
+		}
+	}
+
 	return nil
 }
 
@@ -125,13 +196,13 @@ func (authZ *Token) Stringify() (string, error) {
 //  object: a generic object for which a key needs to be encoded.
 // return values:
 //  string: encoding of the claim for the object.
-//  error: nil if successful, errors.ErrIllegalArgument if claims for a
+//  error: nil if successful, errors.ErrUnsupportedType if claims for a
 //    particular object type is not supported.
 func GenerateClaimKey(object interface{}) (string, error) {
 	switch object.(type) {
 
 	case types.RoleType:
-		return "role", nil
+		return types.RoleClaimKey, nil
 
 	case types.Tenant:
 		tenantName := object.(types.Tenant)
@@ -178,21 +249,55 @@ func ParseToken(tokenStr string) (*Token, error) {
 	}
 }
 
-// IsSuperuser checks if the token belongs to a superuser (i.e. `admin` in our system)
+// IsSuperuser checks if the token belongs to a superuser (i.e. `admin` in our
+// system). It queries the authorization database to obtain this information.
 // params:
-//  (Receiver): authorization token object which carries all appropriate claims
+// (Receiver): authorization token object which carries all principals
+//  associated with the user.
 // return values:
 //  true if the token belongs to superuser else false
-//  error: invalid token
-func (authZ *Token) IsSuperuser() (bool, error) {
-	role, found := authZ.tkn.Claims.(jwt.MapClaims)["role"]
+func (authZ *Token) IsSuperuser() bool {
+	v, found := authZ.tkn.Claims.(jwt.MapClaims)[principalsClaimKey]
 	if !found {
-		// if we hit this case, it's a BUG; our tokens will always contain `role`
-		log.Debugf("Token has no role? %#v", authZ)
-		return false, fmt.Errorf("Invalid token")
+		log.Warn("Illegal token, no principals claim present")
+		return false
 	}
 
-	return role == types.Admin.String(), nil
+	principalsStr, ok := v.(string)
+	if !ok {
+		log.Error("Illegal token, no principals present")
+		return false
+	}
+
+	// Deserialize principals as a slice
+	principals := strings.Split(principalsStr, ",")
+
+	for _, p := range principals {
+		// Get role claim for the principal
+		authz, err := state.ListAuthorizationsByClaimAndPrincipal(types.RoleClaimKey, p)
+		// If not found, ignore error and move on to next principal
+		if err != nil || len(authz) == 0 {
+			log.Debug("no admin claim found for principal ", p)
+			continue
+		}
+
+		// If not a valid role, ignore error and move on to next principal
+		r, err := types.Role(authz[0].ClaimValue)
+		if err != nil {
+			log.Error("invalid role claim found for principal ", p)
+			continue
+		}
+
+		// If any principal has admin role, user overall has admin privileges.
+		if r == types.Admin {
+			log.Debug("admin role claim found for principal ", p)
+			return true
+		}
+	}
+
+	// No principal has admin role claim
+	log.Debug("no principals with admin claim present")
+	return false
 }
 
 //

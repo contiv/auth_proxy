@@ -93,14 +93,7 @@ func rbacFilterWrapper(s *Server, filter rbacFilter) func(http.ResponseWriter, *
 			return
 		}
 
-		isSuperuser, err := token.IsSuperuser()
-		if err != nil {
-			// this should never happen
-			// TODO: this returns "Bad token", but the error from IsSuperuser() returns
-			//       "Invalid token"... fix this inconsistency
-			authError(w, http.StatusBadRequest, "Bad token")
-			return
-		}
+		isSuperuser := token.IsSuperuser()
 
 		//
 		// Step 2. ensure the user is allowed to operate on the resource
@@ -160,7 +153,8 @@ func rbacWrapper(s *Server) func(http.ResponseWriter, *http.Request) {
 // adminOnly takes a HTTP handler and ensures that the client's token has admin
 // privileges before allowing the handler to run its code.
 // if the client is not an admin, the request attempt is logged and a 403 is returned.
-func adminOnly(handler func(*auth.Token, http.ResponseWriter, *http.Request)) func(http.ResponseWriter, *http.Request) {
+// handlers that are called can assume superuser privileges.
+func adminOnly(handler func(http.ResponseWriter, *http.Request)) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, req *http.Request) {
 
 		// retrieve token from request header
@@ -182,12 +176,12 @@ func adminOnly(handler func(*auth.Token, http.ResponseWriter, *http.Request)) fu
 			return
 		}
 
-		// Check that caller has role=admin claim.
-		if err := token.CheckClaims(types.Admin); err != nil {
+		// Check that caller has admin privileges
+		if !token.IsSuperuser() {
 			// TODO: log the violator's details here
 			// TODO: consider having a separate security logger which
 			//       goes to a separate file for auditing purposes
-			log.Error("unauthorized:unable to find role=admin claim:", err)
+			log.Error("unauthorized: caller doesn't have admin privileges")
 
 			httpStatus := http.StatusForbidden
 			httpResponse := []byte("access denied")
@@ -195,7 +189,7 @@ func adminOnly(handler func(*auth.Token, http.ResponseWriter, *http.Request)) fu
 		}
 
 		// if there were no errors, call the handler we wrapped
-		handler(token, w, req)
+		handler(w, req)
 	}
 }
 
@@ -208,7 +202,7 @@ func adminOnly(handler func(*auth.Token, http.ResponseWriter, *http.Request)) fu
 //    201 (Created; user added to the system)
 //    400 (BadRequest; user exists in the system already/invalid role)
 //    500 (internal server error)
-func addLocalUser(token *auth.Token, w http.ResponseWriter, req *http.Request) {
+func addLocalUser(w http.ResponseWriter, req *http.Request) {
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		serverError(w, errors.New("Failed to read body from request: "+err.Error()))
@@ -231,7 +225,7 @@ func addLocalUser(token *auth.Token, w http.ResponseWriter, req *http.Request) {
 //    404 (NotFound; username not found)
 //    400 (BadRequest; cannot delete  built-in users)
 //    500 (internal server error)
-func deleteLocalUser(token *auth.Token, w http.ResponseWriter, req *http.Request) {
+func deleteLocalUser(w http.ResponseWriter, req *http.Request) {
 	vars := mux.Vars(req)
 
 	statusCode, resp := deleteLocalUserHelper(vars["username"])
@@ -243,7 +237,7 @@ func deleteLocalUser(token *auth.Token, w http.ResponseWriter, req *http.Request
 //    204 (NoContent; update was successful)
 //    404 (NotFound; user not found)
 //    500 (internal server error)
-func updateLocalUser(token *auth.Token, w http.ResponseWriter, req *http.Request) {
+func updateLocalUser(w http.ResponseWriter, req *http.Request) {
 	vars := mux.Vars(req)
 
 	body, err := ioutil.ReadAll(req.Body)
@@ -266,7 +260,7 @@ func updateLocalUser(token *auth.Token, w http.ResponseWriter, req *http.Request
 // it can return various HTTP status codes:
 //    200 (OK; fetch was successful)
 //    500 (internal server error)
-func getLocalUsers(token *auth.Token, w http.ResponseWriter, req *http.Request) {
+func getLocalUsers(w http.ResponseWriter, req *http.Request) {
 	statusCode, resp := getLocalUsersHelper()
 	processStatusCodes(statusCode, resp, w)
 }
@@ -276,7 +270,7 @@ func getLocalUsers(token *auth.Token, w http.ResponseWriter, req *http.Request) 
 //  200 (OK; fetch was successful)
 //  404 (NotFound; bad request; user not found)
 //  500 (internal server error)
-func getLocalUser(token *auth.Token, w http.ResponseWriter, req *http.Request) {
+func getLocalUser(w http.ResponseWriter, req *http.Request) {
 	vars := mux.Vars(req)
 
 	statusCode, resp := getLocalUserHelper(vars["username"])
@@ -293,7 +287,7 @@ func getLocalUser(token *auth.Token, w http.ResponseWriter, req *http.Request) {
 //    201 (authz added)
 //    500 (internal server error)
 //
-func addTenantAuthorization(token *auth.Token, w http.ResponseWriter, req *http.Request) {
+func addTenantAuthorization(w http.ResponseWriter, req *http.Request) {
 	defer common.Untrace(common.Trace())
 
 	var httpStatus int
@@ -327,8 +321,8 @@ func addTenantAuthorization(token *auth.Token, w http.ResponseWriter, req *http.
 	}
 
 	// invoke helper to add authz
-	authz, err := auth.AddTenantAuthorization(token,
-		addAuthzReq.TenantName, addAuthzReq.PrincipalName, addAuthzReq.Local)
+	authz, err := auth.AddTenantAuthorization(addAuthzReq.TenantName,
+		addAuthzReq.PrincipalName, addAuthzReq.Local)
 	switch err {
 	case nil:
 
@@ -343,7 +337,7 @@ func addTenantAuthorization(token *auth.Token, w http.ResponseWriter, req *http.
 			httpResponse = []byte(ccnerrors.ErrPartialFailureToAddAuthz.Error())
 
 			// @TODO clean up created authorization
-			err = auth.DeleteTenantAuthorization(token, authz.UUID)
+			err = auth.DeleteTenantAuthorization(authz.UUID)
 			if err != nil {
 				log.Error("Failed to delete authz after partially failed ",
 					" authz creation, Manual cleanup from KV store needed!")
@@ -363,7 +357,7 @@ func addTenantAuthorization(token *auth.Token, w http.ResponseWriter, req *http.
 }
 
 // deleteTenantAuthorization deletes a tenant authorization
-func deleteTenantAuthorization(token *auth.Token, w http.ResponseWriter, req *http.Request) {
+func deleteTenantAuthorization(w http.ResponseWriter, req *http.Request) {
 
 	defer common.Untrace(common.Trace())
 
@@ -375,7 +369,7 @@ func deleteTenantAuthorization(token *auth.Token, w http.ResponseWriter, req *ht
 	authzUUID := vars["authzUUID"]
 
 	// invoke helper to delete authz
-	err := auth.DeleteTenantAuthorization(token, authzUUID)
+	err := auth.DeleteTenantAuthorization(authzUUID)
 	switch err {
 	case nil:
 		httpStatus = http.StatusNoContent
@@ -394,7 +388,7 @@ func deleteTenantAuthorization(token *auth.Token, w http.ResponseWriter, req *ht
 }
 
 // getTenantAuthorization returns the specified tenant authorization
-func getTenantAuthorization(token *auth.Token, w http.ResponseWriter, req *http.Request) {
+func getTenantAuthorization(w http.ResponseWriter, req *http.Request) {
 
 	defer common.Untrace(common.Trace())
 
@@ -406,7 +400,7 @@ func getTenantAuthorization(token *auth.Token, w http.ResponseWriter, req *http.
 	authzUUID := vars["authzUUID"]
 
 	// invoke helper to get authz
-	authz, err := auth.GetTenantAuthorization(token, authzUUID)
+	authz, err := auth.GetTenantAuthorization(authzUUID)
 	switch err {
 	case nil:
 		httpStatus = http.StatusOK
@@ -435,7 +429,7 @@ func getTenantAuthorization(token *auth.Token, w http.ResponseWriter, req *http.
 }
 
 // updateTenantAuthorization updates the specified tenant authorization
-func updateTenantAuthorization(token *auth.Token, w http.ResponseWriter, req *http.Request) {
+func updateTenantAuthorization(w http.ResponseWriter, req *http.Request) {
 
 	defer common.Untrace(common.Trace())
 
@@ -474,8 +468,7 @@ func updateTenantAuthorization(token *auth.Token, w http.ResponseWriter, req *ht
 	authzUUID := vars["authzUUID"]
 
 	// invoke helper to get authz
-	authz, err := auth.UpdateTenantAuthorization(token,
-		authzUUID, updateAuthzReq.TenantName,
+	authz, err := auth.UpdateTenantAuthorization(authzUUID, updateAuthzReq.TenantName,
 		updateAuthzReq.PrincipalName, updateAuthzReq.Local)
 	switch err {
 
@@ -506,7 +499,7 @@ func updateTenantAuthorization(token *auth.Token, w http.ResponseWriter, req *ht
 }
 
 // listTenantAuthorization lists all tenant authorizations
-func listTenantAuthorizations(token *auth.Token, w http.ResponseWriter, req *http.Request) {
+func listTenantAuthorizations(w http.ResponseWriter, req *http.Request) {
 
 	defer common.Untrace(common.Trace())
 
@@ -514,7 +507,7 @@ func listTenantAuthorizations(token *auth.Token, w http.ResponseWriter, req *htt
 	var httpResponse []byte
 
 	// invoke helper to get authz
-	authzList, err := auth.ListTenantAuthorizations(token)
+	authzList, err := auth.ListTenantAuthorizations()
 	switch err {
 	case nil:
 		httpStatus = http.StatusOK
@@ -552,7 +545,7 @@ func listTenantAuthorizations(token *auth.Token, w http.ResponseWriter, req *htt
 //    201 (Created; configuration added to the system)
 //    404 (BadRequest; configuration exists in the system already)
 //    500 (internal server error)
-func addLdapConfiguration(token *auth.Token, w http.ResponseWriter, req *http.Request) {
+func addLdapConfiguration(w http.ResponseWriter, req *http.Request) {
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		serverError(w, errors.New("Failed to read body from request: "+err.Error()))
@@ -575,7 +568,7 @@ func addLdapConfiguration(token *auth.Token, w http.ResponseWriter, req *http.Re
 //    200 (OK; fetch was successful)
 //    404 (NotFound, configuration not found)
 //    500 (internal server error)
-func getLdapConfiguration(token *auth.Token, w http.ResponseWriter, req *http.Request) {
+func getLdapConfiguration(w http.ResponseWriter, req *http.Request) {
 	statusCode, resp := getLdapConfigurationHelper()
 	processStatusCodes(statusCode, resp, w)
 
@@ -586,7 +579,7 @@ func getLdapConfiguration(token *auth.Token, w http.ResponseWriter, req *http.Re
 //    204 (NoContent; configuration deleted from the system)
 //    404 (NotFound; configuration not found)
 //    500 (internal server error)
-func deleteLdapConfiguration(token *auth.Token, w http.ResponseWriter, req *http.Request) {
+func deleteLdapConfiguration(w http.ResponseWriter, req *http.Request) {
 	statusCode, resp := deleteLdapConfigurationHelper()
 	processStatusCodes(statusCode, resp, w)
 
@@ -597,7 +590,7 @@ func deleteLdapConfiguration(token *auth.Token, w http.ResponseWriter, req *http
 //    200 (OK; configuration updated)
 //    404 (NotFound, configuration not found)
 //    500 (internal server error)
-func updateLdapConfiguration(token *auth.Token, w http.ResponseWriter, req *http.Request) {
+func updateLdapConfiguration(w http.ResponseWriter, req *http.Request) {
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		serverError(w, errors.New("Failed to read body from request: "+err.Error()))
