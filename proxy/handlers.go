@@ -296,7 +296,7 @@ func addAuthorization(w http.ResponseWriter, req *http.Request) {
 	// parse request body
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
-		log.Error("failed to parse request body, err:", err)
+		log.Warn("failed to parse request body for adding authorization, err:", err)
 		serverError(w, ccnerrors.ErrParsingRequest)
 		return
 	}
@@ -304,13 +304,14 @@ func addAuthorization(w http.ResponseWriter, req *http.Request) {
 	// unmarshal request body
 	addAuthzReq := &AddAuthorizationRequest{}
 	if err := json.Unmarshal(body, addAuthzReq); err != nil {
-		log.Error("failed to unmarshal request body, err:", err)
+		log.Warn("failed to unmarshal authorization, err:", err)
 		serverError(w, ccnerrors.ErrUnmarshalingBody)
 		return
 	}
 
 	// input validation
 	if common.IsEmpty(addAuthzReq.PrincipalName) {
+		log.Warnf("principal name missing from authorization: %#v", addAuthzReq)
 
 		httpStatus = http.StatusBadRequest
 		httpResponse = []byte("principal name is missing")
@@ -321,6 +322,8 @@ func addAuthorization(w http.ResponseWriter, req *http.Request) {
 
 	role, err := types.Role(addAuthzReq.Role)
 	if err != nil {
+		log.Warnf("illegal role specified in authorization: %#v", addAuthzReq)
+
 		httpStatus = http.StatusBadRequest
 		httpResponse = []byte("illegal role specified")
 
@@ -329,6 +332,8 @@ func addAuthorization(w http.ResponseWriter, req *http.Request) {
 
 	// If role specific is ops, a tenant name must be specified
 	if role == types.Ops && common.IsEmpty(addAuthzReq.TenantName) {
+		log.Warnf("ops role without specifying tenant in authorization: %#v", addAuthzReq)
+
 		httpStatus = http.StatusBadRequest
 		httpResponse = []byte("ops role requires a tenant to be specified")
 
@@ -351,7 +356,7 @@ func addAuthorization(w http.ResponseWriter, req *http.Request) {
 			httpStatus = http.StatusInternalServerError
 			httpResponse = []byte(ccnerrors.ErrPartialFailureToAddAuthz.Error())
 
-			// @TODO clean up created authorization
+			// clean up created authorization
 			err = auth.DeleteAuthorization(authz.UUID)
 			if err != nil {
 				log.Error("Failed to delete authz after partially failed ",
@@ -363,6 +368,7 @@ func addAuthorization(w http.ResponseWriter, req *http.Request) {
 		httpStatus = http.StatusCreated
 		httpResponse = jsonAuthz
 	default:
+
 		httpStatus = http.StatusInternalServerError
 		httpResponse = []byte(ccnerrors.ErrUnauthorized.Error())
 	}

@@ -42,7 +42,7 @@ func Authenticate(username, password string) (string, error) {
 // return values:
 //    `Token` string on successful creation of JWT otherwise any relevant error from the subsequent function
 func generateToken(principals []string, username string) (string, error) {
-	log.Debugf("Generating token for user %q", username)
+	log.Debugf("generating token for user %q", username)
 
 	authZ, err := NewTokenWithClaims(principals) // create a new token with default `expiry` claim
 	if err != nil {
@@ -209,7 +209,7 @@ func addTenantAuthorization(tenantName string, role types.RoleType, principalNam
 		return types.Authorization{}, err
 	}
 
-	log.Debug("Adding tenant authorization %#v", tenantAuthz)
+	log.Debug("successfully added tenant authorization %#v", tenantAuthz)
 	return tenantAuthz, nil
 }
 
@@ -231,12 +231,15 @@ func addTenantAuthorization(tenantName string, role types.RoleType, principalNam
 //    TODO: errors.NonExistentLdapGroupError: if ldap group doesn't exist
 //    : error from state.InsertAuthorization if adding/updating a role authorization
 //      fails.
+//    : error from state.ListAuthorizationsByClaimAndPrincipal if listing authorizations
+//      fails.
 func addUpdateRoleAuthorization(role types.RoleType, principalName string,
 	isLocal bool) (types.Authorization, error) {
 
 	authz, err := state.ListAuthorizationsByClaimAndPrincipal(types.RoleClaimKey, principalName)
 	if err != nil {
-		log.Error("failed in listing role claim:", err)
+		log.Error("failed in listing role claim for principal ", principalName, ", error:", err)
+		return err
 	}
 
 	l := len(authz)
@@ -250,7 +253,7 @@ func addUpdateRoleAuthorization(role types.RoleType, principalName string,
 		grantedRole, err := types.Role(roleAuthz.ClaimValue)
 		// Invalid claim in authorizations db
 		if err != nil {
-			log.Error("illegal role authorization %#v", roleAuthz)
+			log.Error("illegal role in authorization %#v", roleAuthz)
 			return types.Authorization{}, err
 		}
 
@@ -263,17 +266,17 @@ func addUpdateRoleAuthorization(role types.RoleType, principalName string,
 				return types.Authorization{}, err
 			}
 
-			log.Debug("updated existing role:", grantedRole.String(), "with role:", role.String())
+			log.Info("updated role claim for principal ", principalName, ", previous:", grantedRole.String(), ", updated:", role.String())
 			return roleAuthz, nil
 		}
 
-		log.Debug("not updating existing role:", roleAuthz.ClaimValue, "with role:", role.String())
+		log.Info("not updating role claim for principal ", principalName, ", previous:", grantedRole.String(), ", requested:", role.String())
 		return roleAuthz, nil
 
 	default:
 		// There should only be one role authz claim, so return error
 		log.Error("multiple role authorizations found, expected 1, found ", l)
-		return types.Authorization{}, err
+		return types.Authorization{}, ccnerrors.ErrInternal
 
 	}
 }
@@ -308,7 +311,7 @@ func DeleteAuthorization(authUUID string) error {
 		return err
 	}
 
-	log.Info("Deleting authorization successful")
+	log.Info("successfully deleted authorization ", authUUID)
 	return nil
 }
 
@@ -405,11 +408,11 @@ func addRoleAuthorization(principalName string,
 
 	// insert authorization
 	if err := state.InsertAuthorization(&roleAuthz); err != nil {
-		log.Error("failed in adding role claim:", err)
+		log.Error("failed in adding role authorization %#v ", roleAuthz, ", error:", err)
 		return types.Authorization{}, err
 	}
 
-	log.Info("Adding role authorization successful")
+	log.Infof("successfully added role authorization %#v", roleAuthz)
 	return roleAuthz, nil
 }
 
@@ -418,7 +421,7 @@ func addRoleAuthorization(principalName string,
 // authorization for admin user.
 func AddDefaultUsers() error {
 	for _, userR := range []types.RoleType{types.Admin, types.Ops} {
-		log.Printf("Adding local user %q to the system", userR.String())
+		log.Infof("Adding local user %q to the system", userR.String())
 
 		localUser := types.LocalUser{
 			Username: userR.String(),

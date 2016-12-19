@@ -89,7 +89,7 @@ func (authZ *Token) checkRolePolicy(desired types.RoleType) error {
 		default:
 			// check failed, continue with next principal
 			log.Debug("role claim check failed for principal ", p,
-				"desired ", desired.String(), " granted ", granted.String())
+				", desired ", desired.String(), ", granted ", granted.String(), ", continuing ...")
 			continue
 		}
 	}
