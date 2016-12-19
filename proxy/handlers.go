@@ -282,12 +282,12 @@ func getLocalUser(w http.ResponseWriter, req *http.Request) {
 // They are protected at the router by the adminOnly() function above.
 
 //
-// addTenantAuthorization adds a tenant authorization
+// addAuthorization adds an authorization
 // Returns these HTTP status codes:
 //    201 (authz added)
 //    500 (internal server error)
 //
-func addTenantAuthorization(w http.ResponseWriter, req *http.Request) {
+func addAuthorization(w http.ResponseWriter, req *http.Request) {
 	defer common.Untrace(common.Trace())
 
 	var httpStatus int
@@ -302,7 +302,7 @@ func addTenantAuthorization(w http.ResponseWriter, req *http.Request) {
 	}
 
 	// unmarshal request body
-	addAuthzReq := &AddTenantAuthorizationRequest{}
+	addAuthzReq := &AddAuthorizationRequest{}
 	if err := json.Unmarshal(body, addAuthzReq); err != nil {
 		log.Error("failed to unmarshal request body, err:", err)
 		serverError(w, ccnerrors.ErrUnmarshalingBody)
@@ -310,19 +310,34 @@ func addTenantAuthorization(w http.ResponseWriter, req *http.Request) {
 	}
 
 	// input validation
-	if common.IsEmpty(addAuthzReq.TenantName) ||
-		common.IsEmpty(addAuthzReq.PrincipalName) {
+	if common.IsEmpty(addAuthzReq.PrincipalName) {
 
 		httpStatus = http.StatusBadRequest
-		httpResponse = []byte("tenant name or principal name is missing")
+		httpResponse = []byte("principal name is missing")
 
 		processStatusCodes(httpStatus, httpResponse, w)
 		return
 	}
 
+	role, err := types.Role(addAuthzReq.Role)
+	if err != nil {
+		httpStatus = http.StatusBadRequest
+		httpResponse = []byte("illegal role specified")
+
+		processStatusCodes(httpStatus, httpResponse, w)
+	}
+
+	// If role specific is ops, a tenant name must be specified
+	if role == types.Ops && common.IsEmpty(addAuthzReq.TenantName) {
+		httpStatus = http.StatusBadRequest
+		httpResponse = []byte("ops role requires a tenant to be specified")
+
+		processStatusCodes(httpStatus, httpResponse, w)
+	}
+
 	// invoke helper to add authz
-	authz, err := auth.AddTenantAuthorization(addAuthzReq.TenantName,
-		addAuthzReq.PrincipalName, addAuthzReq.Local)
+	authz, err := auth.AddAuthorization(addAuthzReq.TenantName,
+		role, addAuthzReq.PrincipalName, addAuthzReq.Local)
 	switch err {
 	case nil:
 
@@ -337,7 +352,7 @@ func addTenantAuthorization(w http.ResponseWriter, req *http.Request) {
 			httpResponse = []byte(ccnerrors.ErrPartialFailureToAddAuthz.Error())
 
 			// @TODO clean up created authorization
-			err = auth.DeleteTenantAuthorization(authz.UUID)
+			err = auth.DeleteAuthorization(authz.UUID)
 			if err != nil {
 				log.Error("Failed to delete authz after partially failed ",
 					" authz creation, Manual cleanup from KV store needed!")
@@ -356,8 +371,8 @@ func addTenantAuthorization(w http.ResponseWriter, req *http.Request) {
 	processStatusCodes(httpStatus, httpResponse, w)
 }
 
-// deleteTenantAuthorization deletes a tenant authorization
-func deleteTenantAuthorization(w http.ResponseWriter, req *http.Request) {
+// deleteAuthorization deletes an authorization
+func deleteAuthorization(w http.ResponseWriter, req *http.Request) {
 
 	defer common.Untrace(common.Trace())
 
@@ -369,7 +384,7 @@ func deleteTenantAuthorization(w http.ResponseWriter, req *http.Request) {
 	authzUUID := vars["authzUUID"]
 
 	// invoke helper to delete authz
-	err := auth.DeleteTenantAuthorization(authzUUID)
+	err := auth.DeleteAuthorization(authzUUID)
 	switch err {
 	case nil:
 		httpStatus = http.StatusNoContent
@@ -387,8 +402,8 @@ func deleteTenantAuthorization(w http.ResponseWriter, req *http.Request) {
 
 }
 
-// getTenantAuthorization returns the specified tenant authorization
-func getTenantAuthorization(w http.ResponseWriter, req *http.Request) {
+// getAuthorization returns the specified authorization
+func getAuthorization(w http.ResponseWriter, req *http.Request) {
 
 	defer common.Untrace(common.Trace())
 
@@ -400,7 +415,7 @@ func getTenantAuthorization(w http.ResponseWriter, req *http.Request) {
 	authzUUID := vars["authzUUID"]
 
 	// invoke helper to get authz
-	authz, err := auth.GetTenantAuthorization(authzUUID)
+	authz, err := auth.GetAuthorization(authzUUID)
 	switch err {
 	case nil:
 		httpStatus = http.StatusOK
@@ -428,78 +443,8 @@ func getTenantAuthorization(w http.ResponseWriter, req *http.Request) {
 
 }
 
-// updateTenantAuthorization updates the specified tenant authorization
-func updateTenantAuthorization(w http.ResponseWriter, req *http.Request) {
-
-	defer common.Untrace(common.Trace())
-
-	var httpStatus int
-	var httpResponse []byte
-
-	// parse request body
-	body, err := ioutil.ReadAll(req.Body)
-	if err != nil {
-		log.Error("failed to parse request body, err:", err)
-		serverError(w, ccnerrors.ErrParsingRequest)
-		return
-	}
-
-	// unmarshal request body
-	updateAuthzReq := &AddTenantAuthorizationRequest{}
-	if err := json.Unmarshal(body, updateAuthzReq); err != nil {
-		log.Error("failed to unmarshal request body, err:", err)
-		serverError(w, ccnerrors.ErrUnmarshalingBody)
-		return
-	}
-
-	// input validation
-	if common.IsEmpty(updateAuthzReq.TenantName) ||
-		common.IsEmpty(updateAuthzReq.PrincipalName) {
-
-		httpStatus = http.StatusBadRequest
-		httpResponse = []byte("tenant name or principal name is missing")
-
-		processStatusCodes(httpStatus, httpResponse, w)
-		return
-	}
-
-	// retrieve authz UUID from URL
-	vars := mux.Vars(req)
-	authzUUID := vars["authzUUID"]
-
-	// invoke helper to get authz
-	authz, err := auth.UpdateTenantAuthorization(authzUUID, updateAuthzReq.TenantName,
-		updateAuthzReq.PrincipalName, updateAuthzReq.Local)
-	switch err {
-
-	case nil:
-		getAuthzReply := convertAuthz(authz)
-
-		jsonAuthzReply, err := json.Marshal(getAuthzReply)
-		if err != nil {
-
-			log.Error("failed to marshal authorization, err:", err)
-			httpStatus = http.StatusInternalServerError
-			httpResponse = []byte(ccnerrors.ErrPartialFailureToUpdateAuthz.Error())
-
-			log.Error("Partially failed authz update; Manual cleanup from KV store needed!")
-			processStatusCodes(httpStatus, httpResponse, w)
-			return
-		}
-		httpStatus = http.StatusOK
-		httpResponse = jsonAuthzReply
-	default:
-		httpStatus = http.StatusInternalServerError
-		httpResponse = []byte(err.Error())
-	}
-
-	// process status codes
-	processStatusCodes(httpStatus, httpResponse, w)
-
-}
-
-// listTenantAuthorization lists all tenant authorizations
-func listTenantAuthorizations(w http.ResponseWriter, req *http.Request) {
+// listAuthorization lists all authorizations
+func listAuthorizations(w http.ResponseWriter, req *http.Request) {
 
 	defer common.Untrace(common.Trace())
 
@@ -507,7 +452,7 @@ func listTenantAuthorizations(w http.ResponseWriter, req *http.Request) {
 	var httpResponse []byte
 
 	// invoke helper to get authz
-	authzList, err := auth.ListTenantAuthorizations()
+	authzList, err := auth.ListAuthorizations()
 	switch err {
 	case nil:
 		httpStatus = http.StatusOK

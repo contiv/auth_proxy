@@ -115,14 +115,15 @@ func checkAccessClaim(granted types.RoleType, desired interface{}) error {
 }
 
 //
-// AddTenantAuthorization stores authorization claim(s) for a tenant for a
-// specific named principal in the KV store. Success of various tenant related
-// operations will depend on the named principal's capabilities, determined by
-// the role that is associated with the claim.
-// TODO: Also update role claim for principal if needed
+// AddAuthorization stores authorization claim(s) for a specific named
+// principal in the KV store. Success of various tenant related operations will
+// depend on the named principal's capabilities, determined by the role that is
+// associated with the claim.
+// TODO: principal and tenant should exist
 //
 // Parameters:
-//  tenantName: tenant name
+//  tenantName: tenant name, if specified
+//  role: type of role that specifies permissions associated with tenant or global permissions
 //  principalName: Name of user for whom the authorization is to be added,
 //            Can either be a local user or an LDAP group.
 //  isLocal: true if the named principal is a local user, false if ldap group.
@@ -130,23 +131,55 @@ func checkAccessClaim(granted types.RoleType, desired interface{}) error {
 // Return values:
 //  types.Authorization: new authorization that was added
 //  error: nil if successful, else
-//    errors.NonExistentLocalUserError: if a local user doesn't exist
-//    errors.NonExistentLdapGroupError: if ldap group doesn't exist
-//    : error from state.InsertTenantAuthorization if adding a tenant authorization
-//      fails.
 //
-func AddTenantAuthorization(tenantName, principalName string,
+func AddAuthorization(tenantName string, role types.RoleType, principalName string,
 	isLocal bool) (types.Authorization, error) {
 
 	defer common.Untrace(common.Trace())
+	var authz types.Authorization
+	var err error
 
-	// use principal name to get principal UUID
-	principalID, role, err := getPrincipal(principalName, isLocal)
-	if err != nil {
-		return types.Authorization{}, err
+	// Adding authorization is generally a two part operation
+	// - Adding tenant claim
+	// - Adding/updating role claim. This caches "highest" access role available for principal.
+
+	switch role {
+	// Short circuit to just adding/updating role claim since we don't care
+	// about tenant specific info for admins
+	case types.Admin:
+		authz, err = addUpdateRoleAuthorization(role, principalName, isLocal)
+	default:
+		authz, err = addTenantAuthorization(tenantName, role, principalName, isLocal)
+		if err == nil {
+			// Ignore role authorization claim
+			_, err = addUpdateRoleAuthorization(role, principalName, isLocal)
+		}
 	}
 
-	// generate claim key
+	// Upstream callers should ignore value of authz if err != nil
+	return authz, err
+}
+
+// addTenantAuthorization stores authorization claim(s) for a
+// specific named principal and a teant. Success of various tenant related
+// operations will depend on the named principal's capabilities, determined by
+// the role that is associated with the claim.
+//
+// Parameters:
+//  tenantName: tenant name
+//  role: type of role that specifies permissions associated with tenant
+//  principalName: Name of user for whom the authorization is to be added,
+//            Can either be a local user or an LDAP group.
+//  isLocal: true if the named principal is a local user, false if ldap group.
+//
+// Return values:
+//    TODO: errors.NonExistentLocalUserError: if a local user doesn't exist
+//    TODO: errors.NonExistentLdapGroupError: if ldap group doesn't exist
+//    : error from state.InsertAuthorization if adding a tenant authorization
+//      fails.
+func addTenantAuthorization(tenantName string, role types.RoleType, principalName string,
+	isLocal bool) (types.Authorization, error) {
+
 	claimStr, err := GenerateClaimKey(types.Tenant(tenantName))
 	if err != nil {
 		log.Error("failed in generating claim:", err)
@@ -165,24 +198,88 @@ func AddTenantAuthorization(tenantName, principalName string,
 		},
 		UUID:          uuid.NewV4().String(),
 		PrincipalName: principalName,
-		PrincipalID:   principalID,
 		Local:         isLocal,
 		ClaimKey:      claimStr,
-		ClaimValue:    role,
+		ClaimValue:    role.String(),
 	}
 
-	// insert authorization
+	// insert tenant authorization
 	if err := state.InsertAuthorization(&tenantAuthz); err != nil {
 		log.Error("failed in adding tenant claim:", err)
 		return types.Authorization{}, err
 	}
 
-	log.Info("Adding tenant authorization successful")
+	log.Debug("Adding tenant authorization %#v", tenantAuthz)
 	return tenantAuthz, nil
 }
 
+// addUpdaterRoleAuthorization adds/updates authorization claim for a specific
+// named principal's role. This claim "caches" the highest privilege role claim
+// for the principal. This authorization is used by APIs that only need to
+// check for role claim (e.g., admin role claim for global object).  Update is
+// only perfomed if role specified is higher privilege than existing role claim
+// for the principal.
 //
-// DeleteTenantAuthorization deletes an authorization for a tenant.
+// Parameters:
+//  role: type of role that specifies permissions associated with tenant
+//  principalName: Name of user for whom the authorization is to be added,
+//            Can either be a local user or an LDAP group.
+//  isLocal: true if the named principal is a local user, false if ldap group.
+//
+// Return values:
+//    TODO: errors.NonExistentLocalUserError: if a local user doesn't exist
+//    TODO: errors.NonExistentLdapGroupError: if ldap group doesn't exist
+//    : error from state.InsertAuthorization if adding/updating a role authorization
+//      fails.
+func addUpdateRoleAuthorization(role types.RoleType, principalName string,
+	isLocal bool) (types.Authorization, error) {
+
+	authz, err := state.ListAuthorizationsByClaimAndPrincipal(types.RoleClaimKey, principalName)
+	if err != nil {
+		log.Error("failed in listing role claim:", err)
+	}
+
+	l := len(authz)
+	switch {
+	case l == 0:
+		// Add role authz
+		return addRoleAuthorization(principalName, isLocal, role)
+
+	case l == 1:
+		roleAuthz := authz[0]
+		grantedRole, err := types.Role(roleAuthz.ClaimValue)
+		// Invalid claim in authorizations db
+		if err != nil {
+			log.Error("illegal role authorization %#v", roleAuthz)
+			return types.Authorization{}, err
+		}
+
+		// Need to update iff role < grantedRole
+		if role < grantedRole {
+			roleAuthz.ClaimValue = role.String()
+			// Inserting an existing authz updates it
+			if err := state.InsertAuthorization(&roleAuthz); err != nil {
+				log.Error("failed in updating role claim:", err)
+				return types.Authorization{}, err
+			}
+
+			log.Debug("updated existing role:", grantedRole.String(), "with role:", role.String())
+			return roleAuthz, nil
+		}
+
+		log.Debug("not updating existing role:", roleAuthz.ClaimValue, "with role:", role.String())
+		return roleAuthz, nil
+
+	default:
+		// There should only be one role authz claim, so return error
+		log.Error("multiple role authorizations found, expected 1, found ", l)
+		return types.Authorization{}, err
+
+	}
+}
+
+//
+// DeleteAuthorization deletes an authorization for a tenant.
 // TODO: Also update role claim for principal if needed
 //
 // Parameters:
@@ -192,10 +289,10 @@ func AddTenantAuthorization(tenantName, principalName string,
 //  error: nil if successful, else
 //    types.UnauthorizedError: if caller isn't authorized to make this API
 //    call.
-//    : error from state.DeleteTenantAuthorization if deleting a tenant authorization
+//    : error from state.DeleteAuthorization if deleting a authorization
 //      fails
 //
-func DeleteTenantAuthorization(authUUID string) error {
+func DeleteAuthorization(authUUID string) error {
 
 	defer common.Untrace(common.Trace())
 
@@ -211,12 +308,12 @@ func DeleteTenantAuthorization(authUUID string) error {
 		return err
 	}
 
-	log.Info("Deleting tenant authorization successful")
+	log.Info("Deleting authorization successful")
 	return nil
 }
 
 //
-// GetTenantAuthorization returns a specific tenant authorization
+// GetAuthorization returns a specific authorization
 // identified by the authzUUID
 //
 // Parameters:
@@ -224,11 +321,8 @@ func DeleteTenantAuthorization(authUUID string) error {
 //
 // Return values:
 //  error: nil if successful, else
-//    errors.ErrUnauthorized: if caller isn't authorized to make this API
-//    call.
-//    errors.ErrIllegalArguments: if auth doesn't match poolID
-//    : error from state.GetTenantAuthorization if auth lookup fails
-func GetTenantAuthorization(authzUUID string) (
+//    : error from state.GetAuthorization if auth lookup fails
+func GetAuthorization(authzUUID string) (
 	types.Authorization, error) {
 
 	defer common.Untrace(common.Trace())
@@ -240,107 +334,36 @@ func GetTenantAuthorization(authzUUID string) (
 		return types.Authorization{}, err
 	}
 
-	log.Info("Getting tenant authorization successful")
+	log.Debugf("Get authorization successful: %#v", authz)
 	return authz, nil
 
 }
 
 //
-// UpdateTenantAuthorization updates an authorization in the KV store
-// TODO: Also update role claim for principal if needed
-//
-// Parameters:
-//  tenantName: tenant name
-//  principalName: User for whom the authorization is to be updated,
-//            Can either be a local user or an LDAP group.
-//  isLocal: true if the user is a local user, false if ldap group.
-//
-// Return values:
-//  types.Authorization: updated authorization instance
-//  error: nil if successful, else
-//    : error from state.DeleteTenantAuthorization if deleting a tenant authorization
-//      fails.
-//    : error from state.InsertTenantAuthorization if adding a tenant authorization
-//      fails.
-//
-func UpdateTenantAuthorization(authzUUID, tenantName,
-	principalName string, isLocal bool) (types.Authorization, error) {
-
-	defer common.Untrace(common.Trace())
-
-	// use principal name to get principal UUID
-	principalID, role, err := getPrincipal(principalName, isLocal)
-	if err != nil {
-		return types.Authorization{}, err
-	}
-
-	// generate claim key
-	claimStr, err := GenerateClaimKey(types.Tenant(tenantName))
-	if err != nil {
-		log.Error("failed in generating claim:", err)
-		return types.Authorization{}, err
-	}
-
-	// create an authorization
-	sd, err := state.GetStateDriver()
-	if err != nil {
-		return types.Authorization{}, err
-	}
-	tenantAuthz := types.Authorization{
-		CommonState: types.CommonState{
-			StateDriver: sd,
-			ID:          uuid.NewV4().String(),
-		},
-		UUID:          authzUUID,
-		PrincipalName: principalName,
-		PrincipalID:   principalID,
-		Local:         isLocal,
-		ClaimKey:      claimStr,
-		ClaimValue:    role,
-	}
-
-	// delete authz from the KV store
-	if err := state.DeleteAuthorization(authzUUID); err != nil {
-		log.Warn("failed to delete tenant authz, err:", err)
-		return types.Authorization{}, ccnerrors.ErrUpdateAuthorization
-	}
-
-	// insert updated authorization
-	if err := state.InsertAuthorization(&tenantAuthz); err != nil {
-		log.Error("failed in adding tenant authz, err:", err)
-		return types.Authorization{}, ccnerrors.ErrUpdateAuthorization
-	}
-
-	log.Info("Updating tenant authorization successful")
-	return tenantAuthz, nil
-}
-
-//
-// ListTenantAuthorizations returns all tenant authorizations.
+// ListAuthorizations returns all authorizations.
 //
 // Return values:
 //  error: nil if successful, else
 //    errors.ErrUnauthorized: if caller isn't authorized to make this API
 //    call.
-//    : error from state.ListTenantAuthorizations if auth lookup fails
+//    : error from state.ListAuthorizations if auth lookup fails
 //
-func ListTenantAuthorizations() ([]types.Authorization, error) {
+func ListAuthorizations() ([]types.Authorization, error) {
 
 	defer common.Untrace(common.Trace())
 
 	// read all authorizations
-	tenantAuths, err := state.ListAuthorizations()
+	auths, err := state.ListAuthorizations()
 	if err != nil {
 		log.Error("failed to list all authorizations, err:", err)
 		return nil, err
 	}
 
-	log.Info("Listing all tenant authorizations successful")
-	return tenantAuths, nil
+	return auths, nil
 }
 
 //
-// AddRoleAuthorization stores a role claim for a specific named principal in
+// addRoleAuthorization stores a role claim for a specific named principal in
 // the KV store. This claim represents the highest privilege role available to
 // a principal.
 //
@@ -358,7 +381,7 @@ func ListTenantAuthorizations() ([]types.Authorization, error) {
 //    : error from db.InsertAuthorization if adding authorization
 //      fails.
 //
-func AddRoleAuthorization(principalName string,
+func addRoleAuthorization(principalName string,
 	isLocal bool, role types.RoleType) (types.Authorization, error) {
 
 	defer common.Untrace(common.Trace())
@@ -413,7 +436,7 @@ func AddDefaultUsers() error {
 	}
 
 	// Add admin role claim for admin user.
-	AddRoleAuthorization(types.Admin.String(), true, types.Admin)
+	addRoleAuthorization(types.Admin.String(), true, types.Admin)
 
 	return nil
 }

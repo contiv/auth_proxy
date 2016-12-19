@@ -245,13 +245,11 @@ func addUserMgmtRoutes(router *mux.Router) {
 
 // addAuthorizationRoutes adds authorization routes to the mux.Router
 // All authorization management routes are admin-only.
-// FIXME: These routes should also handle admin role authorization that applies to all tenants
 func addAuthorizationRoutes(router *mux.Router) {
-	router.Path("/api/v1/ccn_proxy/authorizations").Methods("POST").HandlerFunc(adminOnly(addTenantAuthorization))
-	router.Path("/api/v1/ccn_proxy/authorizations/{authzUUID}").Methods("DELETE").HandlerFunc(adminOnly(deleteTenantAuthorization))
-	router.Path("/api/v1/ccn_proxy/authorizations/{authzUUID}").Methods("GET").HandlerFunc(adminOnly(getTenantAuthorization))
-	router.Path("/api/v1/ccn_proxy/authorizations/{authzUUID}").Methods("PATCH").HandlerFunc(adminOnly(updateTenantAuthorization))
-	router.Path("/api/v1/ccn_proxy/authorizations").Methods("GET").HandlerFunc(adminOnly(listTenantAuthorizations))
+	router.Path("/api/v1/ccn_proxy/authorizations").Methods("POST").HandlerFunc(adminOnly(addAuthorization))
+	router.Path("/api/v1/ccn_proxy/authorizations/{authzUUID}").Methods("DELETE").HandlerFunc(adminOnly(deleteAuthorization))
+	router.Path("/api/v1/ccn_proxy/authorizations/{authzUUID}").Methods("GET").HandlerFunc(adminOnly(getAuthorization))
+	router.Path("/api/v1/ccn_proxy/authorizations").Methods("GET").HandlerFunc(adminOnly(listAuthorizations))
 }
 
 // addLdapConfigurationMgmtRoutes adds LDAP configuration management routes to mux.Router.

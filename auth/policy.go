@@ -1,46 +1,100 @@
 package auth
 
 import (
+	"strings"
+
 	log "github.com/Sirupsen/logrus"
 	jwt "github.com/dgrijalva/jwt-go"
 
 	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
 	"github.com/contiv/ccn_proxy/common/types"
+	"github.com/contiv/ccn_proxy/state"
 )
 
+// getPrincipals returns the stored principals info from the token.
 //
-// checkRolePolicy checks the authorization token for a role claim that matches
-// the specified role. The policy matches if role to check for is contained in
-// role present in the token.
+// Return values:
+//  []string: slice of strings representing principals
+//  error: nil if successful, else
+//    : cnnerrors.Internal if principals claim is not present in token
+func (authZ *Token) getPrincipals() ([]string, error) {
+	v, found := authZ.tkn.Claims.(jwt.MapClaims)[principalsClaimKey]
+	if !found {
+		msg := "Illegal token, no principals claim present"
+		log.Warn(msg)
+		return nil, ccnerrors.NewError(ccnerrors.Internal, msg)
+	}
+
+	principalsStr, ok := v.(string)
+	if !ok {
+		msg := "Illegal token, no principals present"
+		log.Warn(msg)
+		return nil, ccnerrors.NewError(ccnerrors.Internal, msg)
+	}
+
+	// Deserialize principals as a slice
+	principals := strings.Split(principalsStr, ",")
+	return principals, nil
+}
+
+//
+// checkRolePolicy checks the authorization db for a role claim that matches
+// the specified role.
 //
 // Parameters:
 //  (Receiver): authorization token object
 //  desired: desired role for which to search a claim
 //
 // Return values:
-//  error: nil if policy check is successful, types.InternalError if claim
-//  statement is malformed, types.UnauthorizedError if unauthorized by policy.
+//  error: nil if policy check is successful, types.InternalError if token
+//  is malformed, types.UnauthorizedError if unauthorized by policy.
 //
 func (authZ *Token) checkRolePolicy(desired types.RoleType) error {
 
-	// convert desired role name to a claim string
-	claimStr, err := GenerateClaimKey(desired)
+	// Gather role authorizations for principals claim present in token and
+	// look for desired role. We don't cache authorizations in token
+	// itself, rather we rely on lookups in authorization database.
+	//
+	// NOTE: Once we move to an external authz provider model, we will
+	// potentially have to modify this workflow to return tokens that
+	// include exact desired claims. For an example, see docker registry
+	// oauth integration.
+	//
+	principals, err := authZ.getPrincipals()
 	if err != nil {
-		msg := "malformed claim statement, error:" + err.Error()
-		log.Error(msg)
-		return ccnerrors.NewError(ccnerrors.Internal, msg)
+		return err
 	}
 
-	claims := authZ.tkn.Claims.(jwt.MapClaims)
-	v, ok := claims[claimStr]
-	if ok {
-		granted, err := types.Role(v.(string))
-		if err == nil {
-			return checkAccessClaim(granted, desired)
+	for _, p := range principals {
+
+		// Get role claim for the principal
+		authz, err := state.ListAuthorizationsByClaimAndPrincipal(types.RoleClaimKey, p)
+		// If not found, ignore error and move on to next principal
+		if err != nil || len(authz) == 0 {
+			log.Debug("no role claim found for principal ", p)
+			continue
+		}
+
+		granted, err := types.Role(authz[0].ClaimValue)
+		if err != nil {
+			log.Debug("malformed authorization, error:", err)
+			continue
+		}
+
+		err = checkAccessClaim(granted, desired)
+		switch err {
+		case nil:
+			// check succeeded, return success
+			return nil
+		default:
+			// check failed, continue with next principal
+			log.Debug("role claim check failed for principal ", p,
+				"desired ", desired.String(), " granted ", granted.String())
+			continue
 		}
 	}
 
-	log.Debug("access denied for claim:", claimStr)
+	log.Debug("access denied for claim role:", desired.String())
 	return ccnerrors.ErrUnauthorized
 }
 
@@ -78,23 +132,35 @@ func (authZ *Token) checkTenantPolicy(tenant types.Tenant, desiredAccess interfa
 	// include exact desired claims. For an example, see docker registry
 	// oauth integration.
 	//
-	claims := authZ.tkn.Claims.(jwt.MapClaims)
-	if v, ok := claims[claimStr]; ok {
+	principals, err := authZ.getPrincipals()
+	if err != nil {
+		return err
+	}
+
+	for _, p := range principals {
+		// Get tenant claim for the principal
+		authz, err := state.ListAuthorizationsByClaimAndPrincipal(claimStr, p)
+		// If not found, ignore error and move on to next principal
+		if err != nil || len(authz) == 0 {
+			log.Debug("no tenant claim found for principal ", p)
+			continue
+		}
 
 		// If this claim is present, value is the role assigned with
 		// the tenant.
-		role, err := types.Role(v.(string))
+		role, err := types.Role(authz[0].ClaimValue)
 		if err != nil {
 			msg := "malformed claim statement, error:" + err.Error()
 			log.Error(msg)
-			return ccnerrors.NewError(ccnerrors.Internal, msg)
+			// continue processing
+			continue
 		}
 
 		if checkAccessClaim(role, desiredAccess) == nil {
 			// Success
 			return nil
 		}
-		log.Debug("access denied for claim:", claimStr, " with role:", role.String())
+
 	}
 
 	// @TODO: Add wildcard claims
@@ -113,6 +179,7 @@ func (authZ *Token) checkTenantPolicy(tenant types.Tenant, desiredAccess interfa
 		}
 	*/
 
+	// If no principal found that can satisfy the claim, return error
 	log.Debug("access denied for claim:", claimStr)
 	return ccnerrors.ErrUnauthorized
 }

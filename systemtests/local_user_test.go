@@ -72,7 +72,6 @@ func (s *systemtestSuite) userUpdate(c *C) {
 
 			// try login using `username`
 			testuserToken := loginAs(c, username, username)
-			c.Assert(len(testuserToken), Not(Equals), 0)
 
 			// update `testuser` details
 			data = `{"first_name":"Temp", "last_name": "User"}`
