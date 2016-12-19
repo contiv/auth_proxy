@@ -240,7 +240,7 @@ func addUpdateRoleAuthorization(role types.RoleType, principalName string,
 	if err != nil {
 		log.Error("failed in listing role claim for principal ",
 			principalName, ", error:", err)
-		return err
+		return types.Authorization{}, err
 	}
 
 	l := len(authz)
