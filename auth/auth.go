@@ -238,14 +238,15 @@ func addUpdateRoleAuthorization(role types.RoleType, principalName string,
 
 	authz, err := state.ListAuthorizationsByClaimAndPrincipal(types.RoleClaimKey, principalName)
 	if err != nil {
-		log.Error("failed in listing role claim for principal ", principalName, ", error:", err)
+		log.Error("failed in listing role claim for principal ",
+			principalName, ", error:", err)
 		return err
 	}
 
 	l := len(authz)
 	switch {
 	case l == 0:
-		// Add role authz
+		// A role authz doesn't exist, add one
 		return addRoleAuthorization(principalName, isLocal, role)
 
 	case l == 1:
@@ -266,11 +267,13 @@ func addUpdateRoleAuthorization(role types.RoleType, principalName string,
 				return types.Authorization{}, err
 			}
 
-			log.Info("updated role claim for principal ", principalName, ", previous:", grantedRole.String(), ", updated:", role.String())
+			log.Info("updated role claim for principal ", principalName,
+				", previous:", grantedRole.String(), ", updated:", role.String())
 			return roleAuthz, nil
 		}
 
-		log.Info("not updating role claim for principal ", principalName, ", previous:", grantedRole.String(), ", requested:", role.String())
+		log.Info("not updating role claim for principal ", principalName,
+			", previous:", grantedRole.String(), ", requested:", role.String())
 		return roleAuthz, nil
 
 	default:
