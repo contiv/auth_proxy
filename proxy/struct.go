@@ -14,18 +14,18 @@ type LoginResponse struct {
 }
 
 //
-// AddTenantAuthorizationRequest message is sent for AddTenantAuthorization
+// AddAuthorizationRequest message is sent for AddAuthorization
 // operation.
 //
 // Fields:
-//  PrincipalName: name of the user for whom an authorization needs to be added. This
+//  PrincipalName: name of a security principal for whom an authorization needs to be added. This
 //    can be a local user or an LDAP group
 //  Local: true if the name corresponds to a local user, false if it's an LDAP
 //    group.
-//  Role:  Level of access to the tenant specified by TenantName
-//  TenantName: Tenant name that the above user will have access to
+//  Role:  Level of access granted to principal
+//  TenantName: Tenant name that the above principal will have access to. Based on role type, this may not be set. For example, a tenant name is ignored if role is admin.
 //
-type AddTenantAuthorizationRequest struct {
+type AddAuthorizationRequest struct {
 	PrincipalName string `json:"principalName"`
 	Local         bool   `json:"local"`
 	Role          string `json:"role"`
