@@ -230,7 +230,7 @@ func addUpdateRoleAuthorization(role types.RoleType, principalName string,
 		grantedRole, err := types.Role(roleAuthz.ClaimValue)
 		// Invalid claim in authorizations db
 		if err != nil {
-			log.Error("illegal role in authorization %#v", roleAuthz)
+			log.Errorf("illegal role in authorization %#v", roleAuthz)
 			return types.Authorization{}, err
 		}
 
@@ -387,7 +387,7 @@ func addRoleAuthorization(principalName string,
 
 	// insert authorization
 	if err := state.InsertAuthorization(&roleAuthz); err != nil {
-		log.Error("failed in adding role authorization %#v ", roleAuthz, ", error:", err)
+		log.Errorf("failed in adding role authorization %#v, error:%#v", roleAuthz, err)
 		return types.Authorization{}, err
 	}
 
