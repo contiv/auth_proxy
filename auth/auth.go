@@ -56,30 +56,6 @@ func generateToken(principals []string, username string) (string, error) {
 }
 
 //
-// getPrincipal determines the principal ID and role for the given
-// user identified by their user name (for local users) or their
-// LDAP group name (for LDAP users)
-//
-// Parameters:
-//   principalName: name of the user whose principal ID and role is needed
-//   isLocal:  true indicates the user is local, false indicates user
-//             belongs to an LDAP group
-//
-// Return values:
-//   string: principal UUID
-//   string: primary role of the user
-//   error:  nil if successful
-//
-func getPrincipal(principalName string, isLocal bool) (string, string, error) {
-
-	// check local users and LDAP
-
-	// TODO: hardcoding dummy values till this becomes
-	// available
-	return "2222", types.Ops.String(), nil
-}
-
-//
 // checkAccessClaim checks whether the granted role has desired level of access
 // which is specified as a role itself.
 //
@@ -254,7 +230,7 @@ func addUpdateRoleAuthorization(role types.RoleType, principalName string,
 		grantedRole, err := types.Role(roleAuthz.ClaimValue)
 		// Invalid claim in authorizations db
 		if err != nil {
-			log.Error("illegal role in authorization %#v", roleAuthz)
+			log.Errorf("illegal role in authorization %#v", roleAuthz)
 			return types.Authorization{}, err
 		}
 
@@ -411,7 +387,7 @@ func addRoleAuthorization(principalName string,
 
 	// insert authorization
 	if err := state.InsertAuthorization(&roleAuthz); err != nil {
-		log.Error("failed in adding role authorization %#v ", roleAuthz, ", error:", err)
+		log.Errorf("failed in adding role authorization %#v, error:%#v", roleAuthz, err)
 		return types.Authorization{}, err
 	}
 

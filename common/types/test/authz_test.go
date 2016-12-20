@@ -3,8 +3,11 @@ package test
 import (
 	"testing"
 
+	"github.com/contiv/ccn_proxy/common/test"
 	"github.com/contiv/ccn_proxy/common/types"
+	"github.com/contiv/ccn_proxy/db"
 	"github.com/contiv/ccn_proxy/state"
+
 	. "gopkg.in/check.v1"
 )
 
@@ -27,6 +30,13 @@ func Test(t *testing.T) {
 	if err != nil {
 		t.Fatal("failed to create a new state driver, err:", err)
 	}
+
+	// cleanup data store
+	test.CleanupDatastore(state.EtcdName, []string{
+		db.GetPath(db.RootLocalUsers),
+		db.GetPath(db.RootLdapConfiguration),
+		db.GetPath("authorizations"),
+	})
 
 	// create common state
 	commonState = types.CommonState{
