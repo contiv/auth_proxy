@@ -18,6 +18,10 @@ import (
 const (
 	// LoginPath is the authentication endpoint on the proxy
 	LoginPath = "/api/v1/ccn_proxy/login"
+
+	// uiDirectory is the location in the container where the baked-in UI lives
+	// and where an external UI directory can be bindmounted over using -v
+	uiDirectory = "/ui"
 )
 
 // NewServer returns a new server with the specified config
@@ -173,6 +177,13 @@ func (s *Server) Stop() {
 }
 
 func addRoutes(s *Server, router *mux.Router) {
+
+	//
+	// UI: static files which are served from the root
+	//
+	root := "/"
+	router.PathPrefix(root).Handler(http.StripPrefix(root, http.FileServer(http.Dir(uiDirectory))))
+
 	//
 	// Authentication endpoint
 	//

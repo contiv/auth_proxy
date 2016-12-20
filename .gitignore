@@ -7,3 +7,6 @@ local_certs
 
 # state info stored for a local etcd instance
 state/default.etcd/
+
+# build dependencies (e.g., UI, etc.)
+build/dependencies
