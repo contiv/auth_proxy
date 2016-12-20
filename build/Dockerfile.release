@@ -1,6 +1,8 @@
 FROM scratch
 
-COPY ./build/output/ccn_proxy /tmp/ccn_proxy
-WORKDIR /tmp
+COPY ./build/dependencies/contiv-ui/app /ui
+COPY ./build/output/ccn_proxy /ccn_proxy
+
+WORKDIR /
 
 ENTRYPOINT ["./ccn_proxy"]
