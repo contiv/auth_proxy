@@ -42,6 +42,7 @@ import { AuthorizationCreateComponent } from "./settings/authorization/authoriza
 import { OrganizationListComponent } from "./settings/tenants/organizationlistctrl";
 import { OrganizationCreateComponent } from "./settings/tenants/organizationcreatectrl";
 import { OrganizationDetailsComponent } from "./settings/tenants/organizationdetailsctrl";
+import { LdapConfigComponent } from "./settings/ldapconfiguration";
 
 const routes = [
     {path: 'login', component: LoginComponent, canActivate: [AuthGuard]},
@@ -83,6 +84,7 @@ const routes = [
                 children: [
                     {path: '', redirectTo: 'users/list', pathMatch: 'full'},
                     {path: 'networks', component: NetworkSettingsComponent},
+                    {path: 'ldap', component: LdapConfigComponent},
                     {path: 'nodes', redirectTo: 'nodes/list', pathMatch: 'full'},
                     {path: 'nodes/list', component: NodeListComponent},
                     {path: 'nodes/create', component: NodeCreateComponent},

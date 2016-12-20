@@ -8,7 +8,7 @@ import { ContivGlobals } from "../components/models/contivglobals";
     selector: 'networksetting',
     templateUrl: 'settings/networksettings.html'
 })
-export class NetworkSettingsComponent implements OnInit, OnDestroy {
+export class NetworkSettingsComponent implements OnDestroy {
     private refresh: Subscription;
     setting: any;
     aciSetting: any;
@@ -25,32 +25,30 @@ export class NetworkSettingsComponent implements OnInit, OnDestroy {
         var networkSettingCtrl = this;
 
         function getNetworkSettings() {
+            networkSettingCtrl.crudHelperService.startLoader(networkSettingCtrl);
             networkSettingCtrl.networkService.getSettings().then(function successCallback(result) {
                 networkSettingCtrl.setting = result;
-                networkSettingCtrl.crudHelperService.stopLoader(networkSettingCtrl);
-
-            }, function errorCallback(result) {
-                networkSettingCtrl.crudHelperService.stopLoader(networkSettingCtrl);
+                getAciSettings();
+            },  function errorCallback(result) {
+                getAciSettings();
             });
         }
 
         getNetworkSettings();
 
-        networkService.getAciSettings()
-            .then((result) => {
-                networkSettingCtrl.aciSetting = result;
-                networkSettingCtrl.crudHelperService.stopLoader(networkSettingCtrl);
-            }, (error) => {
-                networkSettingCtrl.crudHelperService.stopLoader(networkSettingCtrl);
-            });
+        function getAciSettings(){
+                networkService.getAciSettings()
+                .then((result) => {
+                    networkSettingCtrl.aciSetting = result;
+                    networkSettingCtrl.getGlobalInspect(false);
+                }, (error) => {
+                    networkSettingCtrl.getGlobalInspect(false);
+                });
+        }
 
         this.refresh = Observable.interval(5000).subscribe(() => {
-            this.getGlobalInspect();
+            this.getGlobalInspect(true);
         });
-    }
-
-    ngOnInit() {
-        this.getGlobalInspect();
     }
 
     updateNetworkSettings(settings:any) {
@@ -79,12 +77,17 @@ export class NetworkSettingsComponent implements OnInit, OnDestroy {
 
     }
 
-    getGlobalInspect(){
+    getGlobalInspect(reload: boolean){
         var networkSettingCtrl = this;
         networkSettingCtrl.networkService.getGlobalInspect()
             .then((result) => {
                     networkSettingCtrl['globalInspectStats'] = result['Oper'];
-                })
+                    if(!reload)
+                        networkSettingCtrl.crudHelperService.stopLoader(networkSettingCtrl);
+                }, (error) => {
+                if(!reload)
+                    networkSettingCtrl.crudHelperService.stopLoader(networkSettingCtrl);
+            });
     }
 
     ngOnDestroy(){

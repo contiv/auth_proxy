@@ -49,6 +49,7 @@ export const ContivGlobals = {
     'LOGIN_ENDPOINT': '/ccn_proxy/login',
     //REST endpoints for USER
     'USERS_ENDPOINT': '/ccn_proxy/local_users',
+    'LDAP_ENDPOINT': '/ccn_proxy/ldap_configuration',
 
     //Refresh interval in milliseconds
     'REFRESH_INTERVAL': 5000,

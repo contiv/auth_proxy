@@ -13,6 +13,7 @@ import { NodeCreateComponent } from "./nodes/nodecreate.component";
 import { NodeDetailsComponent } from "./nodes/nodedetails.component";
 import { NodeInfoComponent } from "./nodes/nodeinfo.component";
 import { NodeStatsComponent } from "./nodes/nodestats.component";
+import { LdapConfigComponent } from "./ldapconfiguration";
 
 @NgModule({
     imports: [
@@ -28,7 +29,8 @@ import { NodeStatsComponent } from "./nodes/nodestats.component";
         NodeCreateComponent,
         NodeDetailsComponent,
         NodeInfoComponent,
-        NodeStatsComponent
+        NodeStatsComponent,
+        LdapConfigComponent
     ],
     exports: [
         SettingsMenuComponent,
@@ -38,6 +40,7 @@ import { NodeStatsComponent } from "./nodes/nodestats.component";
         NodeDetailsComponent,
         NodeInfoComponent,
         NodeStatsComponent,
+        LdapConfigComponent,
         FormsModule,
         CommonModule,
         RouterModule,

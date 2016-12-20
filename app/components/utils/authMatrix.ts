@@ -31,6 +31,7 @@ export const AuthMatrix = {
     'settings/authorization/create':            {'ops':'n', 'admin':'y'},
     'settings/authorization/edit':              {'ops':'n', 'admin':'y'},
     'settings/networks':                        {'ops':'n', 'admin':'y'},
+    'settings/ldap':                            {'ops':'n', 'admin':'y'},
     'settings/organizations/list':              {'ops':'y', 'admin':'y'},
     'settings/organizations/create':            {'ops':'n', 'admin':'y'},
     'settings/organizations/details':           {'ops':'y', 'admin':'y'},

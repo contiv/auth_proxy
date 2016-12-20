@@ -1,0 +1,93 @@
+<div class="ui basic segment" [ngClass]="{loading: showLoader}">
+    <form class="ui form" role="form" #formRef="ngForm"
+          (ngSubmit)="updateLdapConfig(formRef.valid)" novalidate>
+        <div class="field">
+            <div *ngIf="formRef.submitted">
+                <div *ngIf="!formRef.valid" class="ui negative message">
+                    <ul class="list">
+                        <li *ngIf="server.errors?.required">
+                            Please enter ldap server address
+                        </li>
+                        <li *ngIf="port.errors?.required">
+                            Please enter ldap server port number
+                        </li>
+                        <li *ngIf="base_dn.errors?.required">
+                            Please enter ldap base dn
+                        </li>
+                        <li *ngIf="service_account_dn.errors?.required">
+                            Please enter ladap service account dn
+                        </li>
+                        <li *ngIf="service_account_password.errors?.required">
+                            Please enter ldap service account password
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="server">Server</label>
+            <input #server="ngModel"
+                   type="text"
+                   id="server"
+                   name="server"
+                   [(ngModel)]="ldapConfig.server" placeholder="Enter server address" required>
+        </div>
+        <div class="field">
+            <label for="port">Port</label>
+            <input #port="ngModel"
+                   type="number"
+                   id="port"
+                   name="port"
+                   [(ngModel)]="ldapConfig.port" placeholder="Enter port number" required>
+        </div>
+        <div class="field">
+            <label for="base_dn">Base_dn</label>
+            <input #base_dn="ngModel"
+                   type="text"
+                   id="base_dn"
+                   name="base_dn"
+                   [(ngModel)]="ldapConfig.base_dn" placeholder="Enter base_dn" required>
+        </div>
+        <div class="field">
+            <label for="service_account_dn">Service_account_dn</label>
+            <input #service_account_dn="ngModel"
+                   type="text"
+                   id="service_account_dn"
+                   name="service_account_dn"
+                   [(ngModel)]="ldapConfig.service_account_dn" placeholder="Enter service_account_dn" required>
+        </div>
+        <div class="field">
+            <label for="service_account_password">service_account_password</label>
+            <input #service_account_password="ngModel"
+                   type="password"
+                   id="service_account_password"
+                   name="service_account_password"
+                   [(ngModel)]="ldapConfig.service_account_password" placeholder="Enter service_account_password" required>
+        </div>
+        <div class="field">
+            <label>
+                <input type="checkbox" name="StartTLS" tabindex="0"
+                       [(ngModel)]="ldapConfig.StartTLS">
+                StartTLS
+            </label>
+        </div>
+        <div class="field">
+            <label>
+                <input type="checkbox" name="InsecureSkipVerify" tabindex="0"
+                       [(ngModel)]="ldapConfig.InsecureSkipVerify">
+                InsecureSkipVerify
+            </label>
+        </div>
+
+        <div class="ui grid">
+            <div class="right floated right aligned sixteen wide column">
+                <div style="margin-top: 10px">
+                    <button type="submit" class="ui blue button">
+                        Update LDAP Config
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

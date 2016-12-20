@@ -4,17 +4,18 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ErrorMessageComponent } from "./errormessagedirective";
-import {CtvTableComponent, CtvThComponent, CtvSearchComponent, CtvTpaginationComponent} from "./tabledirective";
-import {FormsModule} from "@angular/forms";
-import {CtvAccordionComponent} from "./accordiondirective";
-import {CtvCollapsibleComponent} from "./collapsibledirective";
-import {CtvNamevalueComponent} from "./namevaluedirective";
-import {AuthDirective} from "./authdirective";
-import {NetworkSettingComponent} from "./settings/networksettingcomponent";
-import {AciSettingComponent} from "./settings/acisettingcomponent";
-import {LineGraphComponent} from "./linegraphcomponent";
-import {ChartsModule} from "ng2-charts";
-import {NotificationComponent} from "./notification";
+import { CtvTableComponent, CtvThComponent, CtvSearchComponent, CtvTpaginationComponent} from "./tabledirective";
+import { FormsModule} from "@angular/forms";
+import { CtvAccordionComponent} from "./accordiondirective";
+import { CtvCollapsibleComponent} from "./collapsibledirective";
+import { CtvNamevalueComponent} from "./namevaluedirective";
+import { AuthDirective} from "./authdirective";
+import { NetworkSettingComponent } from "./settings/networksettingcomponent";
+import { AciSettingComponent } from "./settings/acisettingcomponent";
+import { LineGraphComponent } from "./linegraphcomponent";
+import { ChartsModule } from "ng2-charts";
+import { NotificationComponent } from "./notification";
+import { LdapSettingsComponent } from "./settings/ldapsettingcomponent";
 @NgModule({
     imports: [
         CommonModule, FormsModule, ChartsModule
@@ -32,7 +33,8 @@ import {NotificationComponent} from "./notification";
         NetworkSettingComponent,
         AciSettingComponent,
         LineGraphComponent,
-        NotificationComponent
+        NotificationComponent,
+        LdapSettingsComponent
     ],
     exports: [
         ErrorMessageComponent,
@@ -47,7 +49,8 @@ import {NotificationComponent} from "./notification";
         NetworkSettingComponent,
         AciSettingComponent,
         LineGraphComponent,
-        NotificationComponent
+        NotificationComponent,
+        LdapSettingsComponent
     ]
 })
 export class DirectivesModule {}
