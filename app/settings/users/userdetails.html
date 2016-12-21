@@ -1,19 +1,14 @@
-<div class="ui basic segment" [ngClass]="{loading: showLoader}">
-    <div class="ui grid">
-        <div class="ui eight wide column">
-            <div [ngSwitch]="mode" class="content">
-                <a [routerLink]="['../../list']">
-                    <i class="large arrow left icon"></i>
-                </a>
-                <span style="font-size: 24px; margin-left: 6px">Users</span>
-                <span *ngSwitchCase="'details'" class="headingfontcolor" style="font-size: 24px"> (Details)</span>
-                <span *ngSwitchCase="'edit'" class="headingfontcolor" style="font-size: 24px"> (Edit)</span>
-            </div>
+<div class="ui sixteen column grid pageHeader" [ngClass]="{loading: showLoader}">
+    <div [ngSwitch]="userDetailsCtrl.mode" class="ui row">
+        <div class="left aligned eight wide column">
+            <div *ngSwitchCase="'details'" class="content pageTitle">Details: {{userDetailsCtrl.user.userName}}</div>
+            <div *ngSwitchCase="'edit'" class="content pageTitle">Editing: {{userDetailsCtrl.user.userName}}</div>
         </div>
+        <div class="right aligned eight wide column">
 
-        <div [ngSwitch]="mode" class="ui right floated right aligned eight wide column">
             <div id="delete-user-modal" class="ui small modal">
-                <div class="header">Remove User: {{user.username}}</div>
+                <div class="header">Remove User: {{user.userName}}
+                </div>
                 <div class="content">
                     <p>Are you sure you want to remove this user?</p>
                 </div>
@@ -24,88 +19,156 @@
                     </div>
                 </div>
             </div>
-            <button *ngSwitchCase="'edit'" class="ui disabled button"
+
+            <button *ngSwitchCase="'edit'" class="ui large button cancelBtn"
+                    (click)="cancelEditing()">
+                Cancel
+            </button>
+            <button *ngSwitchCase="'details'" class="ui large button cancelBtn"
+                    (click)="cancelDetails()">
+                Close
+            </button>
+            <button *ngSwitchCase="'details'" class="ui large button secondaryBtn"
                     (click)="editUser()">
-                <i class="edit icon"></i>
                 Edit
             </button>
-            <button *ngSwitchCase="'details'" class="ui basic button"
-                    (click)="editUser()">
-                <i class="edit icon"></i>
-                Edit
-            </button>
-            <button class="ui basic button" onclick="$('#delete-user-modal').modal('show')">
+            <button class="ui blue large button secondaryBtn" onclick="$('#delete-user-modal').modal('show')">
                 <i class="trash icon"></i>
                 Remove
             </button>
+
         </div>
-        <div class="row" [ngSwitch]="mode">
-            <div class="ui eight wide column">
-                <h4 class="ui header">Basic Settings</h4>
-                <table class="ui very basic selectable table" style="width: 100%" >
-                    <tbody>
-                    <tr>
-                        <td>Username</td>
-                        <td>{{user.username}}</td>
-                    </tr>
-                    <tr *ngSwitchCase="'details'">
-                        <td>Firstname</td>
-                        <td>{{user.first_name}}</td>
-                    </tr>
-                    <tr *ngSwitchCase="'details'">
-                        <td>Lastname</td>
-                        <td>{{user.last_name}}</td>
-                    </tr>
-                    <tr *ngSwitchCase="'details'">
-                        <td>Disabled</td>
-                        <td>{{user.disable?'Yes':'No'}}</td>
-                    </tr>
-                    </tbody>
-                </table>
+    </div>
+
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div class="breadcrumbs">
+                <span class="crumb">
+                    <a [routerLink]="['../../list']">
+                        User Management
+                    </a>
+                </span>
+                <span class="crumb">
+                    {{user.userName}}
+                </span>
             </div>
         </div>
-        <div [ngSwitch]="mode" class="row">
-            <div class="ui sixteen wide column" *ngSwitchCase="'edit'">
-                <form class="ui form"
-                      role="form"
-                      *ngSwitchCase="'edit'"
-                      (submit)="saveUser(formRef.valid)" novalidate #formRef="ngForm">
-                    <div class="field">
-                        <label for="firstname">First Name</label>
-                        <input type="text" id="firstname" name="firstname"
-                               [(ngModel)]="user.first_name"
-                               placeholder="Enter First Name" #firstname="ngModel">
-                    </div>
-                    <div class="field">
-                        <label for="lastname">Last Name</label>
-                        <input type="text" id="lastname" name="lastname"
-                               [(ngModel)]="user.last_name"
-                               placeholder="Enter Last Name" #lastname="ngModel">
-                    </div>
-                    <div class="field">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password"
-                               [(ngModel)]="user.password"
-                               placeholder="Reset Password" #password="ngModel">
-                    </div>
-                    <div class="field">
-                        <label>
-                            <input type="checkbox" name="userdisabled" tabindex="0"
-                                   [(ngModel)]="user.disable">
-                            Disabled
-                        </label>
-                    </div>
-                    <div class="ui grid" style="margin-top: 40px">
-                        <div class="right aligned sixteen wide column">
-                            <button *ngSwitchCase="'edit'" type="button" class="ui basic button"
-                                    (click)="cancelEditing()">Cancel
-                            </button>
-                            <button *ngSwitchCase="'edit'" type="submit" class="ui blue button">
-                                Save
-                            </button>
+    </div>
+
+    <div class="ui row"  [ngSwitch]="userDetailsCtrl.mode">
+        <div class="ui sixteen wide column">
+
+            <div class="ui basic segment">
+                <div class="ui active inverted dimmer" *ngIf="showLoader">
+                    <div class="ui loader"></div>
+                </div>
+
+                <table *ngSwitchCase="'details'" class="ui very basic selectable table">
+                    <tbody>
+                        <tr>
+                            <td class="key">Username</td>
+                            <td class="value">{{user.username}}</td>
+                        </tr>
+                        <tr >
+                            <td class="key">Firstname</td>
+                            <td class="value">{{user.first_name}}</td>
+                        </tr>
+                        <tr>
+                            <td class="key">Lastname</td>
+                            <td class="value">{{user.last_name}}</td>
+                        </tr>
+                        <tr>
+                            <td class="key">Disabled</td>
+                            <td class="value">{{user.disable?'Yes':'No'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div *ngSwitchCase="'edit'">
+                    <form class="ui form"
+                          role="form"
+                          (submit)="saveUser(formRef.valid)" novalidate #formRef="ngForm">
+
+                        <div class="field">
+                            <div *ngIf="formRef.submitted">
+                                <div [hidden]="formRef.valid" class="ui negative message">
+                                    <ul class="list">
+                                        <li *ngIf="userName.errors?.required">Please enter
+                                            user name
+                                        </li>
+                                        <li *ngIf="userOrganization.errors?.required">
+                                            Please select organization
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </form>
+
+                        <div class="ui sizteen column grid">
+                            <div class="ui row">
+
+                                <div class="ui four wide column">
+                                    <div class="field">
+                                        <label for="userName">Username</label>
+                                        <input type="text" id="userName" name="username"
+                                               [(ngModel)]="user.username"
+                                               placeholder="Enter name" required #username="ngModel">
+                                    </div>
+                                </div>
+                                <div class="ui four wide column">
+                                    <div class="field">
+                                        <label for="firstname">First Name</label>
+                                        <input type="text" id="firstname" name="firstname"
+                                               [(ngModel)]="user.first_name"
+                                               placeholder="Enter First Name" #firstname="ngModel">
+                                    </div>
+                                </div>
+                                <div class="ui four wide column">
+                                    <div class="field">
+                                        <label for="lastname">Last Name</label>
+                                        <input type="text" id="lastname" name="lastname"
+                                               [(ngModel)]="user.last_name"
+                                               placeholder="Enter Last Name" #lastname="ngModel">
+                                    </div>
+                                </div>
+                                <div class="ui four wide column">
+                                    <div class="field">
+                                        <label for="password">Password</label>
+                                        <input type="password" id="password" name="password"
+                                               [(ngModel)]="user.password"
+                                               placeholder="Reset Password" #password="ngModel">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="ui row">
+
+                                <div class="ui four wide column">
+                                    <label>&nbsp;<br>
+                                        <input type="checkbox" name="userdisabled" tabindex="0" class="alignLabel"
+                                                   [(ngModel)]="user.disable">
+                                            Disabled
+                                    </label>
+                                </div>
+
+                            </div>
+                            <div class="ui row">
+
+                                <div class="right aligned fifteen wide column buttonRow">
+                                    <button type="button" class="ui large button cancelBtn" (click)="cancelEditing()">
+                                        Cancel
+                                    </button>
+                                    <button type="submit" class="ui blue large button primaryBtn">
+                                        Save
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
             </div>
         </div>
     </div>

@@ -1,57 +1,77 @@
-<div class="ui sixteen column grid">
-    <div class="one wide column">
-        <a [routerLink]="['../../list']">
-            <i class="large arrow left icon"></i>
-        </a>
-    </div>
-    <div class="left floated ten wide column">
-        <div [ngSwitch]="servicelbDetailsCtrl.mode" class="content" style="font-size: 24px">
-            <span>Service Load Balancers</span>
-            <span *ngSwitchCase="'details'" class="headingfontcolor"> (Details)</span>
-            <span *ngSwitchCase="'edit'" class="headingfontcolor"> (Edit)</span>
+<div class="ui sixteen column grid pageHeader">
+    <div [ngSwitch]="servicelbDetailsCtrl.mode" class="ui row">
+        <div class="left aligned eight wide column">
+            <div *ngSwitchCase="'details'" class="content pageTitle">Details: {{servicelbDetailsCtrl.serviceName}}</div>
+            <div *ngSwitchCase="'edit'" class="content pageTitle">Editing: {{servicelbDetailsCtrl.serviceName}}</div>
         </div>
-    </div>
-    <div [ngSwitch]="servicelbDetailsCtrl.mode" class="right aligned five wide column">
-        <div id="delete-service-modal" class="ui small modal">
-            <div class="header">Remove Service: {{servicelbDetailsCtrl.serviceName}}</div>
-            <div class="content">
-                <p>Are you sure you want to remove this service?</p>
-            </div>
-            <div class="actions">
-                <div class="ui negative button">No</div>
-                <div class="ui positive button" (click)="deleteServicelb()">
-                    Yes
+        <div class="right aligned eight wide column">
+
+            <div id="delete-service-modal" class="ui small modal">
+                <div class="header">Remove Service: {{servicelbDetailsCtrl.serviceName}}</div>
+                <div class="content">
+                    <p>Are you sure you want to remove this service?</p>
+                </div>
+                <div class="actions">
+                    <div class="ui negative button">No</div>
+                    <div class="ui positive button" (click)="deleteServicelb()">
+                        Yes
+                    </div>
                 </div>
             </div>
+
+            <button *ngSwitchCase="'edit'" type="button" class="ui large button cancelBtn"
+                    (click)="cancelEditing()">
+                Cancel
+            </button>
+            <button *ngSwitchCase="'details'" type="button" class="ui large button cancelBtn"
+                    (click)="cancelDetails()">
+                Close
+            </button>
+            <button *ngSwitchCase="'details'" class="ui blue large button secondaryBtn"
+                    (click)="loadEdit()">
+                Edit
+            </button>
+            <button class="ui blue large button secondaryBtn" onclick="$('#delete-service-modal').modal('show')">
+                <i class="trash icon"></i>
+                Remove
+            </button>
+
         </div>
-        <button *ngSwitchCase="'edit'" class="ui disabled button">
-            <i class="edit icon"></i>
-            Edit
-        </button>
-        <button *ngSwitchCase="'details'" class="ui basic button"
-                (click)="loadEdit()">
-            <i class="edit icon"></i>
-            Edit
-        </button>
-        <button class="ui basic button" onclick="$('#delete-service-modal').modal('show')">
-            <i class="trash icon"></i>
-            Remove
-        </button>
+    </div>
+
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div class="breadcrumbs">
+                <span class="crumb">
+                    <a href="/#/m/servicelbs/list">
+                        Service Load Balancer List
+                    </a>
+                </span>
+                <span class="crumb">
+                    {{servicelbDetailsCtrl.serviceName}}
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+
+            <div class="ui tabular menu" *ngIf="servicelbDetailsCtrl.mode=='details'">
+                <a class="item" [ngClass]="{active: infoselected}" (click)="infoselected=true">
+                    Details
+                </a>
+                <a class="item" [ngClass]="{active: !infoselected}" (click)="infoselected=false">
+                    Stats
+                </a>
+            </div>
+
+            <servicelb-info [(mode)]="mode" *ngIf="infoselected || servicelbDetailsCtrl.mode == 'edit'"
+                (serviceName)="serviceName=$event"></servicelb-info>
+
+            <servicelb-stat [statkey]="servicelbDetailsCtrl.statskey"
+                            *ngIf="!infoselected && servicelbDetailsCtrl.mode != 'edit'"></servicelb-stat>
+
+        </div>
     </div>
 </div>
-<div class="ui tabular menu" *ngIf="servicelbDetailsCtrl.mode=='details'">
-    <a class="item" [ngClass]="{active: infoselected}" (click)="infoselected=true">
-        <i class="details icon"></i>
-        DETAILS
-    </a>
-    <a class="item" [ngClass]="{active: !infoselected}" (click)="infoselected=false">
-        <i class="area chart icon"></i>
-        STATS
-    </a>
-</div>
-
-<servicelb-info [(mode)]="mode" *ngIf="infoselected || servicelbDetailsCtrl.mode == 'edit'"
-                (serviceName)="serviceName=$event"></servicelb-info>
-<servicelb-stat [statkey]="servicelbDetailsCtrl.statskey"
-                *ngIf="!infoselected && servicelbDetailsCtrl.mode != 'edit'"></servicelb-stat>
-

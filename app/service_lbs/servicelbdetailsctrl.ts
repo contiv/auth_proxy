@@ -48,6 +48,14 @@ export class ServicelbDetailsComponent implements OnInit{
     returnToServicelbs() {
         this.router.navigate(['../../list'], {relativeTo: this.activatedRoute});
     }
+    
+    cancelDetails() {
+        this.returnToServicelbs()
+    }
+
+    cancelEditing() {
+        this.returnToServicelbs()
+    }
 
     loadDetails() {
         this.mode = "details";

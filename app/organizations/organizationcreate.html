@@ -1,0 +1,84 @@
+<div class="ui sixteen column grid">
+    <div class="ui row pageHeader">
+        <div class="left aligned eight wide column">
+            <div class="content pageTitle">Create Tenant</div>
+        </div>
+        <div class="right aligned eight wide column">&nbsp;</div>
+    </div>
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div class="breadcrumbs">
+                <span class="crumb">
+                    <!-- <a href="/#/m/servicelbs/list"> -->
+                    <a [routerLink]="['../list']">
+                        Tenant List
+                    </a>
+                </span>
+                <span class="crumb">Create</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+
+            <form id="organizationCreationForm" name="organizationCreateCtrl.form" class="ui form" role="form"
+                  (submit)="organizationCreateCtrl.createOrganization(organizationCreateFrom.valid)" novalidate #organizationCreateFrom="ngForm">
+                <!-- <div class="ui sixteen column grid">
+                    <div class="one wide column">
+                        <a [routerLink]="['../list']">
+                            <i class="large arrow left icon"></i>
+                        </a>
+                    </div>
+                    <div class="left floated twelve wide column">
+                        <div class="content" style="font-size: 24px">
+                            <span>Organizations</span>
+                            <span class="headingfontcolor"> (Create Organization)</span>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="ui active inverted dimmer" *ngIf="organizationCreateCtrl.showLoader">
+                    <div class="ui loader"></div>
+                </div>
+                <div class="ui basic segment">
+
+                    <div class="field">
+                        <div *ngIf="organizationCreateFrom.submitted">
+                            <div [hidden]="organizationCreateFrom.valid" class="ui negative message">
+                                <ul class="list">
+                                    <li *ngIf="newOrganizationName.errors?.required">Please enter
+                                        organization name
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="description">Create a tenant by name. You can assign users to tenancies under Settings > User Management. </div>
+
+                    <div class="ui four wide column field">
+                        <label for="newOrganizationName">Tenant name</label>
+                        <input type="text" id="newOrganizationName" name="newOrganizationName"
+                               [(ngModel)]="organizationCreateCtrl.newOrganization.tenantName"
+                               placeholder="Enter name" required #newOrganizationName="ngModel">
+                    </div>
+
+                    <div class="ui grid">
+                        <div class="right aligned sixteen wide column buttonRow">
+                            <button type="button" class="ui button large cancelBtn" (click)="organizationCreateCtrl.cancelCreating()">
+                                Cancel
+                            </button>
+                            <button type="submit" class="ui blue large button primaryBtn">
+                                Create
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

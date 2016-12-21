@@ -31,6 +31,7 @@ export class BandwidthPolicyCreateComponent implements OnInit {
                 profileName: '',
                 tenantName: '',
                 bandwidth: '',
+                bandwidthUnit: 'mbps',
                 DSCP: ''
             };
         }

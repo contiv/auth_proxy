@@ -1,15 +1,11 @@
 <div class="ui sixteen column grid">
-    <div class="nine wide column">
-        <div class="content">
-            <a (click)="returnToContractGroups()">
-                <i class="large arrow left icon"></i>
-            </a>
-            <span style="font-size: 24px; margin-left: 6px">External Contract Groups</span>
-            <span class="headingfontcolor" style="font-size: 24px"> (Details)</span>
+    <div class="ui eight wide column">
+        <div class="content pageTitle">
+            Details: {{contractGroup.contractsGroupName}}
         </div>
     </div>
+    <div class="right aligned eight wide column">
 
-    <div class="right aligned seven wide column">
         <div id="delete-contractgroup-modal" class="ui small modal">
             <div class="header">Remove External Contract Group: {{contractGroup.contractsGroupName}}</div>
             <div class="content">
@@ -23,7 +19,11 @@
             </div>
         </div>
 
-        <button class="ui basic button" onclick="$('#delete-contractgroup-modal').modal('show')">
+        <button class="ui large button secondaryBtn" (click)="returnToContractGroups()">
+            Close
+        </button>
+
+        <button class="ui blue large button secondaryBtn" onclick="$('#delete-contractgroup-modal').modal('show')">
             <i class="trash icon"></i>
             Remove
         </button>
@@ -35,24 +35,23 @@
         <div class="ui loader"></div>
     </div>
 
-        <h4 class="ui header">Basic Settings</h4>
         <table class="ui very basic selectable table">
             <tbody>
             <tr>
-                <td class="ctv-header three wide column">External Contract Group Name</td>
-                <td>{{contractGroup.contractsGroupName}}</td>
+                <td class="ctv-header three wide column key">External Contract Group Name</td>
+                <td class="value">{{contractGroup.contractsGroupName}}</td>
             </tr>
             <tr>
-                <td class="ctv-header three wide column">Tenant</td>
-                <td>{{contractGroup.tenantName}}</td>
+                <td class="ctv-header three wide column key">Tenant</td>
+                <td class="value">{{contractGroup.tenantName}}</td>
             </tr>
             <tr>
-                <td class="ctv-header three wide column">External Contract Group Type</td>
-                <td>{{contractGroup.contractsType}}</td>
+                <td class="ctv-header three wide column key">External Contract Group Type</td>
+                <td class="value">{{contractGroup.contractsType}}</td>
             </tr>
             <tr>
-                <td class="ctv-header three wide column">Contracts</td>
-                <td>{{contractGroup.contracts?.join(", ")}}</td>
+                <td class="ctv-header three wide column key">Contracts</td>
+                <td class="value">{{contractGroup.contracts?.join(", ")}}</td>
             </tr>
             </tbody>
         </table>

@@ -1,103 +1,160 @@
-<form class="ui form" role="form" #formRef="ngForm"
-      (ngSubmit)="createApplicationGroup(formRef.valid)"
-      novalidate>
-    <div class="ui sixteen column grid">
-        <div class="nine wide column">
-            <div class="content">
-                <a [routerLink]="['../list']">
-                    <i class="large arrow left icon"></i>
-                </a>
-                <span style="font-size: 24px; margin-left: 6px">Application Groups</span>
-                <span class="headingfontcolor" style="font-size: 24px"> (Create Application Group)</span>
+<div class="ui sixteen column grid">
+    <div class="ui row pageHeader">
+        <div class="left aligned eight wide column">
+            <div class="content pageTitle">Create Application Group</div>
+        </div>
+        <div class="right aligned eight wide column">&nbsp;</div>
+    </div>
+
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div class="breadcrumbs">
+                <span class="crumb">
+                    <a href="/#/m/applicationgroups/list">
+                        Application Groups List
+                    </a>
+                </span>
+                <span class="crumb current">Create</span>
             </div>
         </div>
     </div>
-    <div class="ui active inverted dimmer" *ngIf="showLoader">
-        <div class="ui loader"></div>
-    </div>
-    <div class="ui basic segment">
-        <div class="field">
-            <div *ngIf="formRef.submitted">
-                <div *ngIf="!formRef.valid" class="ui negative message">
-                    <ul class="list">
-                        <li *ngIf="newApplicationGroupNameRef.errors?.required">Please
-                            enter application group name
-                        </li>
-                        <li *ngIf="newApplicationGroupTenantRef.errors?.required">
-                            Please select tenant
-                        </li>
-                        <li *ngIf="newApplicationGroupNetworkRef.errors?.required">Please
-                            select network
-                        </li>
-                    </ul>
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+
+            <form class="ui form" role="form" #formRef="ngForm"
+                  (ngSubmit)="createApplicationGroup(formRef.valid)"
+                  novalidate>
+                <div class="ui active inverted dimmer" *ngIf="showLoader">
+                    <div class="ui loader"></div>
                 </div>
-            </div>
-        </div>
-        <div class="field">
-            <label for="newApplicationGroupName">Application group name</label>
-            <input #newApplicationGroupNameRef="ngModel"
-                   type="text"
-                   id="newApplicationGroupName"
-                   name="newApplicationGroupName"
-                   [(ngModel)]="applicationGroup.groupName"
-                   placeholder="Enter name" required>
-        </div>
-        <div class="field">
-            <label for="newApplicationGroupTenant">Tenant</label>
-            <select id="newApplicationGroupTenant" class="ui dropdown"
-                    name="newApplicationGroupTenant"
-                    ngModel
-                    (change)="updateTenant($event.target.value, isolationPolicyRef, bandwidthPolicyRef, contractGroupRef)"
-                    required #newApplicationGroupTenantRef="ngModel">
-                <option value="">-- Please select tenant --</option>
-                <option *ngFor="let tenant of tenants" [value]="tenant.tenantName">{{tenant.tenantName}}</option>
-            </select>
-        </div>
-        <div class="field">
-            <label for="newApplicationGroupNetwork">Network</label>
-            <select id="newApplicationGroupNetwork"
-                    class="ui dropdown"
-                    #newApplicationGroupNetworkRef="ngModel"
-                    name="newApplicationGroupNetwork"
-                    [(ngModel)]="applicationGroup.networkName"
-                    required>
-                <option value="">-- Please select network --</option>
-                <option *ngFor="let network of networks"
-                        [ngValue]="network.networkName">
-                    {{network.networkName}}
-                </option>
-            </select>
-        </div>
+                <div class="ui basic segment">
 
-        <div class="ui section divider" style="margin-top: 30px"></div>
+                    <div class="field">
+                        <div *ngIf="formRef.submitted">
+                            <div *ngIf="!formRef.valid" class="ui negative message">
+                                <ul class="list">
+                                    <li *ngIf="newApplicationGroupNameRef.errors?.required">Please
+                                        enter application group name
+                                    </li>
+                                    <li *ngIf="newApplicationGroupTenantRef.errors?.required">
+                                        Please select tenant
+                                    </li>
+                                    <li *ngIf="newApplicationGroupNetworkRef.errors?.required">Please
+                                        select network
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
 
-        <ctv-collapsible title="Isolation Policies">
-            <ctv-isolationpolicy mode="edit" [applicationgroup]="applicationGroup" #isolationPolicyRef></ctv-isolationpolicy>
-        </ctv-collapsible>
 
-        <div class="ui section divider"></div>
+                    <div class="ui sixteen column grid">
+                        <div class="ui row">
+                            <div class="left aligned four wide column">
+                                <div class="field">
+                                    <label for="newApplicationGroupName">Application group name</label>
+                                    <input #newApplicationGroupNameRef="ngModel"
+                                           type="text"
+                                           id="newApplicationGroupName"
+                                           name="newApplicationGroupName"
+                                           [(ngModel)]="applicationGroup.groupName"
+                                           placeholder="Enter name" required>
+                                </div>
+                            </div>
+                            <div class="left aligned four wide column">
+                                <div class="field">
+                                    <label for="newApplicationGroupTenant">Tenant</label>
+                                    <select id="newApplicationGroupTenant" class="ui dropdown"
+                                            name="newApplicationGroupTenant"
+                                            ngModel
+                                            (change)="updateTenant($event.target.value, isolationPolicyRef, bandwidthPolicyRef, contractGroupRef)"
+                                            required #newApplicationGroupTenantRef="ngModel">
+                                        <option value="">-- Select a tenant --</option>
+                                        <option *ngFor="let tenant of tenants" [value]="tenant.tenantName">{{tenant.tenantName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="left aligned four wide column">
+                                <div class="field" *ngIf="applicationGroup.tenantName">
+                                    <label for="newApplicationGroupNetwork">Network</label>
+                                    <select *ngIf="networks.length" id="newApplicationGroupNetwork"
+                                            class="ui dropdown"
+                                            #newApplicationGroupNetworkRef="ngModel"
+                                            name="newApplicationGroupNetwork"
+                                            ngModel
+                                            (change)="updateNetwork($event.target.value)"
+                                            required>
+                                        <option value="">-- Select a network --</option>
+                                        <option *ngFor="let network of networks"
+                                                [value]="network.networkName">
+                                            {{network.networkName}}
+                                        </option>
+                                    </select>
 
-        <ctv-collapsible title="Bandwidth Policies">
-            <ctv-bandwidthpolicy mode="edit" [applicationgroup]="applicationGroup" #bandwidthPolicyRef></ctv-bandwidthpolicy>
-        </ctv-collapsible>
+                                    <select *ngIf="!networks.length"
+                                            class="ui dropdown"
+                                            required>
+                                        <option value="">-- The tenant has no networks --</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="left aligned four wide column">
+                                &nbsp;
+                            </div>
+                        </div>
 
-        <div class="ui section divider"></div>
+                        <div class="ui row">
+                            <div class="left aligned sixteen wide column">
+                                <ctv-collapsible title="Isolation Policies To Apply" class="policySelection">
+                                    <ctv-isolationpolicy mode="edit" [applicationgroup]="applicationGroup" #isolationPolicyRef></ctv-isolationpolicy>
+                                </ctv-collapsible>
+                            </div>
+                        </div>
 
-        <ctv-collapsible title="External Contract Groups (ACI)">
-            <ctv-contractgroup mode="edit" [applicationgroup]="applicationGroup" #contractGroupRef></ctv-contractgroup>
-        </ctv-collapsible>
+                        <div class="ui row">
+                            <div class="left aligned sixteen wide column">
 
-        <div class="ui grid">
-            <div class="right aligned sixteen wide column">
-                <div style="margin-top: 40px">
-                    <button type="button" class="ui basic button"
-                            (click)="cancelCreating()">Cancel
-                    </button>
-                    <button type="submit" class="ui blue button">
-                        Create
-                    </button>
+                                <ctv-collapsible title="Bandwidth Policy To Apply" class="policySelection">
+                                    <ctv-bandwidthpolicy mode="edit" [applicationgroup]="applicationGroup" #bandwidthPolicyRef></ctv-bandwidthpolicy>
+                                </ctv-collapsible>
+
+                            </div>
+                        </div>
+
+                        <div class="ui row">
+                            <div class="left aligned sixteen wide column">
+
+                                <ctv-collapsible title="External Contract Groups (ACI)" class="policySelection">
+                                    <ctv-contractgroup mode="edit" [applicationgroup]="applicationGroup" #contractGroupRef></ctv-contractgroup>
+                                </ctv-collapsible>
+
+                            </div>
+                        </div>
+
+                        <div class="ui row">
+                            <div class="right aligned sixteen wide column">
+
+                                <div class="buttonRow">
+                                    <button type="button" class="ui large button cancelBtn" (click)="cancelCreating()">
+                                        Cancel
+                                    </button>
+                                    <button type="submit" class="ui blue large button pimaryBtn">
+                                        Create
+                                    </button>
+                                </div>
+
+                                <ctv-error *ngIf="showServerError" header="Error creating application group"
+                                           [error]="serverErrorMessage">
+                                </ctv-error>
+
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
-            </div>
+            </form>
+
         </div>
     </div>
-</form>
+</div>

@@ -1,78 +1,104 @@
+
 <div class="ui sixteen column grid">
-    <div class="nine wide column">
-        <div [ngSwitch]="mode" class="content">
-            <a [routerLink]="['../../list']">
-                <i class="large arrow left icon"></i>
-            </a>
-            <span style="font-size: 24px; margin-left: 6px">Application Groups</span>
-            <span *ngSwitchCase="'details'" class="headingfontcolor" style="font-size: 24px"> (Details)</span>
-            <span *ngSwitchCase="'edit'" class="headingfontcolor" style="font-size: 24px"> (Edit)</span>
+    <div class="ui row">
+        <div class="left aligned eight wide column pageHeader" [ngSwitch]="mode">
+            <div *ngSwitchCase="'details'" class="content pageTitle">Details: {{applicationGroup.groupName}}</div>
+            <div *ngSwitchCase="'edit'"class="content pageTitle">Editing: {{applicationGroup.groupName}}</div>
         </div>
-    </div>
+        <div class="right aligned eight wide column">
 
-    <div [ngSwitch]="mode" class="right aligned seven wide column">
-        <div id="delete-group-modal" class="ui small modal">
-            <div class="header">Remove Application Group: {{applicationGroup.groupName}}
-            </div>
-            <div class="content">
-                <p>Are you sure you want to remove this application group?</p>
-            </div>
-            <div class="actions">
-                <div class="ui negative button">No</div>
-                <div class="ui positive button" (click)="deleteApplicationGroup()">
-                    Yes
+            <div [ngSwitch]="mode" class="right aligned seven wide column">
+                <div id="delete-group-modal" class="ui small modal">
+                    <div class="header">Remove Application Group: {{applicationGroup.groupName}}
+                    </div>
+                    <div class="content">
+                        <p>Are you sure you want to <strong>remove</strong> this application group?</p>
+                    </div>
+                    <div class="actions">
+                        <div class="ui negative button">No</div>
+                        <div class="ui positive button" (click)="deleteApplicationGroup()">
+                            Yes
+                        </div>
+                    </div>
                 </div>
+                <button *ngSwitchCase="'details'" type="button" class="ui large button cancelBtn"
+                        (click)="cancelDetails()">
+                    Close
+                </button>
+                <button *ngSwitchCase="'edit'" type="button" class="ui large button cancelBtn"
+                        (click)="cancelEditing()">
+                    Cancel
+                </button>
+                <button *ngSwitchCase="'details'" class="ui blue large button secondaryBtn"
+                        (click)="editApplicationGroup()">
+                    <!-- <i class="edit icon"></i> -->
+                    Edit
+                </button>
+                <button class="ui blue large button secondaryBtn" onclick="$('#delete-group-modal').modal('show')">
+                    <i class="trash icon"></i>
+                    Remove
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div class="breadcrumbs">
+                <span class="crumb">
+                    <a href="/#/m/applicationgroups/list">
+                        Application Groups List
+                    </a>
+                </span>
+                <span class="crumb">{{applicationGroup.groupName}}</span>
             </div>
         </div>
-        <button *ngSwitchCase="'edit'" class="ui disabled button"
-                (click)="editApplicationGroup()">
-            <i class="edit icon"></i>
-            Edit
-        </button>
-        <button *ngSwitchCase="'details'" class="ui basic button"
-                (click)="editApplicationGroup()">
-            <i class="edit icon"></i>
-            Edit
-        </button>
-        <button class="ui basic button" onclick="$('#delete-group-modal').modal('show')">
-            <i class="trash icon"></i>
-            Remove
-        </button>
     </div>
-</div>
-<div class="ui tabular menu" *ngIf="mode=='details'">
-    <a class="item" [ngClass]="{active: infoselected}" (click)="infoselected=true">
-        <i class="details icon"></i>
-        DETAILS
-    </a>
-    <a class="item" [ngClass]="{active: !infoselected}" (click)="infoselected=false">
-        <i class="area chart icon"></i>
-        STATS
-    </a>
-</div>
 
-<div *ngIf="infoselected || mode == 'edit'">
-    <applicationgroupinfo [applicationGroup]="applicationGroup"
-                          [mode]="mode" [showLoader]="showLoader"></applicationgroupinfo>
-    <div [ngSwitch]="mode" style="margin-top: 40px">
-        <div class="ui grid">
+    <div class="ui row tabs">
+        <div class="aligned left ui sixteen wide column">
+            <div class="ui tabular menu" *ngIf="mode=='details'">
+                <a class="item" [ngClass]="{active: infoselected}" (click)="infoselected=true">
+                    Details
+                </a>
+                <a class="item" [ngClass]="{active: !infoselected}" (click)="infoselected=false">
+                    Stats
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="infoselected || mode == 'edit'">
+
+        <applicationgroupinfo [applicationGroup]="applicationGroup"
+                              [mode]="mode" [showLoader]="showLoader"></applicationgroupinfo>
+
+        <div class="ui row" [ngSwitch]="mode" style="margin-top: 40px">
+
             <div class="right aligned sixteen wide column">
-                <button *ngSwitchCase="'edit'" type="button" class="ui basic button"
-                        (click)="cancelEditing()">Cancel
+                <button *ngSwitchCase="'edit'" type="button" class="ui large button cancelBtn"
+                        (click)="cancelEditing()">
+                    Cancel
                 </button>
-                <button *ngSwitchCase="'edit'" type="button" class="ui blue button"
+                <button *ngSwitchCase="'edit'" type="button" class="ui blue large button primaryBtn"
                         (click)="saveApplicationGroup()">
                     Save
                 </button>
             </div>
+
+            <ctv-error *ngIf="((showServerError) && (mode === 'edit'))"
+                       header="Error saving application group"
+                       [error]="serverErrorMessage">
+            </ctv-error>
+            <ctv-error *ngIf="((showServerError) && (mode === 'details'))"
+                       header="Error deleting application group"
+                       [error]="serverErrorMessage">
+            </ctv-error>
         </div>
     </div>
+
+    <applicationgroupstats [statkey]="statskey"
+        *ngIf="!infoselected && mode != 'edit'"></applicationgroupstats>
+
 </div>
-
-<applicationgroupstats [statkey]="statskey"
-    *ngIf="!infoselected && mode != 'edit'"></applicationgroupstats>
-
-
-
-
-

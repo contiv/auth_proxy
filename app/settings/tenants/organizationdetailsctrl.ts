@@ -49,6 +49,8 @@ export class OrganizationDetailsComponent implements OnInit{
         this.router.navigate(['../../list'], { relativeTo: this.activatedRoute });
     }
 
+    close() { this.returnToOrganization() }
+
     deleteOrganization(){
         var organizationDetailsCtrl = this;
         this.showLoader = true;

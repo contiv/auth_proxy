@@ -8,7 +8,7 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 10/6/16.
 	 */
 	var platform_browser_dynamic_1 = __webpack_require__(122);
-	var app_module_1 = __webpack_require__(394);
+	var app_module_1 = __webpack_require__(395);
 	platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1.AppModule);
 	
 
@@ -668,7 +668,7 @@ webpackJsonp([2],{
 	}
 	exports.isPrimitive = isPrimitive;
 
-	exports.isBuffer = __webpack_require__(946);
+	exports.isBuffer = __webpack_require__(947);
 
 	function objectToString(o) {
 	  return Object.prototype.toString.call(o);
@@ -712,7 +712,7 @@ webpackJsonp([2],{
 	 *     prototype.
 	 * @param {function} superCtor Constructor function to inherit prototype from.
 	 */
-	exports.inherits = __webpack_require__(945);
+	exports.inherits = __webpack_require__(946);
 
 	exports._extend = function(origin, add) {
 	  // Don't do anything if add isn't an object
@@ -730,7 +730,7 @@ webpackJsonp([2],{
 	  return Object.prototype.hasOwnProperty.call(obj, prop);
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(356)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(390)))
 
 /***/ },
 
@@ -857,19 +857,19 @@ webpackJsonp([2],{
 	 */
 	var core_1 = __webpack_require__(2);
 	var common_1 = __webpack_require__(20);
-	var errormessagedirective_1 = __webpack_require__(407);
-	var tabledirective_1 = __webpack_require__(413);
+	var errormessagedirective_1 = __webpack_require__(408);
+	var tabledirective_1 = __webpack_require__(414);
 	var forms_1 = __webpack_require__(26);
-	var accordiondirective_1 = __webpack_require__(404);
-	var collapsibledirective_1 = __webpack_require__(406);
-	var namevaluedirective_1 = __webpack_require__(409);
-	var authdirective_1 = __webpack_require__(405);
-	var networksettingcomponent_1 = __webpack_require__(412);
-	var acisettingcomponent_1 = __webpack_require__(410);
-	var linegraphcomponent_1 = __webpack_require__(408);
+	var accordiondirective_1 = __webpack_require__(405);
+	var collapsibledirective_1 = __webpack_require__(407);
+	var namevaluedirective_1 = __webpack_require__(410);
+	var authdirective_1 = __webpack_require__(406);
+	var networksettingcomponent_1 = __webpack_require__(413);
+	var acisettingcomponent_1 = __webpack_require__(411);
+	var linegraphcomponent_1 = __webpack_require__(409);
 	var ng2_charts_1 = __webpack_require__(147);
 	var notification_1 = __webpack_require__(98);
-	var ldapsettingcomponent_1 = __webpack_require__(411);
+	var ldapsettingcomponent_1 = __webpack_require__(412);
 	var DirectivesModule = (function () {
 	    function DirectivesModule() {
 	    }
@@ -929,7 +929,7 @@ webpackJsonp([2],{
 	    function __() { this.constructor = d; }
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
-	var basecollection_1 = __webpack_require__(414);
+	var basecollection_1 = __webpack_require__(415);
 	var _ = __webpack_require__(28);
 	var util_1 = __webpack_require__(19);
 	var Collection = (function (_super) {
@@ -1449,6 +1449,7 @@ webpackJsonp([2],{
 	        this.bandwidthPolicySelected = false;
 	        this.contractGroupSelected = false;
 	        this.policyTab = PolicyTab;
+	        this.policyMode = 'isolation';
 	        this.selectPolicyTab(+activatedRoute.snapshot.params['policyTab']);
 	    }
 	    NetworkPoliciesTabsComponent.prototype.createNetworkPolicy = function () {
@@ -1468,21 +1469,25 @@ webpackJsonp([2],{
 	                this.isolationPolicySelected = true;
 	                this.bandwidthPolicySelected = false;
 	                this.contractGroupSelected = false;
+	                this.policyMode = 'isolation';
 	                break;
 	            case PolicyTab.bandwidth:
 	                this.isolationPolicySelected = false;
 	                this.bandwidthPolicySelected = true;
 	                this.contractGroupSelected = false;
+	                this.policyMode = 'bandwidth';
 	                break;
 	            case PolicyTab.contractGroup:
 	                this.isolationPolicySelected = false;
 	                this.bandwidthPolicySelected = false;
 	                this.contractGroupSelected = true;
+	                this.policyMode = 'contractgroup';
 	                break;
 	            default:
 	                this.isolationPolicySelected = true;
 	                this.bandwidthPolicySelected = false;
 	                this.contractGroupSelected = false;
+	                this.policyMode = 'isolation';
 	                break;
 	        }
 	    };
@@ -1504,7 +1509,7 @@ webpackJsonp([2],{
 /***/ 61:
 /***/ function(module, exports, __webpack_require__) {
 
-	var freeGlobal = __webpack_require__(242);
+	var freeGlobal = __webpack_require__(351);
 
 	/** Detect free variable `self`. */
 	var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
@@ -2092,8 +2097,8 @@ webpackJsonp([2],{
 /***/ 90:
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsNative = __webpack_require__(654),
-	    getValue = __webpack_require__(661);
+	var baseIsNative = __webpack_require__(656),
+	    getValue = __webpack_require__(663);
 
 	/**
 	 * Gets the native function at `key` of `object`.
@@ -2367,9 +2372,9 @@ webpackJsonp([2],{
 /***/ 111:
 /***/ function(module, exports, __webpack_require__) {
 
-	var Symbol = __webpack_require__(241),
-	    getRawTag = __webpack_require__(659),
-	    objectToString = __webpack_require__(665);
+	var Symbol = __webpack_require__(350),
+	    getRawTag = __webpack_require__(661),
+	    objectToString = __webpack_require__(667);
 
 	/** `Object#toString` result references. */
 	var nullTag = '[object Null]',
@@ -2817,6 +2822,9 @@ webpackJsonp([2],{
 	    ApplicationGroupDetailsComponent.prototype.cancelEditing = function () {
 	        this.returnToApplicationGroupDetails();
 	    };
+	    ApplicationGroupDetailsComponent.prototype.cancelDetails = function () {
+	        this.returnToApplicationGroup();
+	    };
 	    ApplicationGroupDetailsComponent.prototype.deleteApplicationGroup = function () {
 	        var applicationGroupDetailsCtrl = this;
 	        applicationGroupDetailsCtrl.crudHelperService.startLoader(applicationGroupDetailsCtrl);
@@ -2914,7 +2922,7 @@ webpackJsonp([2],{
 	    AppGrouplistComponent = __decorate([
 	        core_1.Component({
 	            selector: 'app-group',
-	            template: __webpack_require__(676)
+	            template: __webpack_require__(677)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof applicationgroupsmodel_1.ApplicationGroupsModel !== 'undefined' && applicationgroupsmodel_1.ApplicationGroupsModel) === 'function' && _c) || Object, (typeof (_d = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _d) || Object])
 	    ], AppGrouplistComponent);
@@ -3223,7 +3231,7 @@ webpackJsonp([2],{
 	var core_1 = __webpack_require__(2);
 	var forms_1 = __webpack_require__(26);
 	var common_1 = __webpack_require__(20);
-	var filterpipe_1 = __webpack_require__(415);
+	var filterpipe_1 = __webpack_require__(416);
 	var PipesModule = (function () {
 	    function PipesModule() {
 	    }
@@ -3664,7 +3672,7 @@ webpackJsonp([2],{
 	        core_1.Component({
 	            selector: 'login',
 	            templateUrl: 'login/login.html',
-	            styles: [__webpack_require__(944)]
+	            styles: [__webpack_require__(945)]
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, (typeof (_b = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _b) || Object, (typeof (_c = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _c) || Object, (typeof (_d = typeof authservice_1.AuthService !== 'undefined' && authservice_1.AuthService) === 'function' && _d) || Object, (typeof (_e = typeof chartservice_1.ChartService !== 'undefined' && chartservice_1.ChartService) === 'function' && _e) || Object])
 	    ], LoginComponent);
@@ -3861,6 +3869,7 @@ webpackJsonp([2],{
 	                profileName: '',
 	                tenantName: '',
 	                bandwidth: '',
+	                bandwidthUnit: 'mbps',
 	                DSCP: ''
 	            };
 	        }
@@ -3996,6 +4005,9 @@ webpackJsonp([2],{
 	    };
 	    BandwidthPolicyDetailsComponent.prototype.cancelEditing = function () {
 	        this.returnToPolicyDetails();
+	    };
+	    BandwidthPolicyDetailsComponent.prototype.cancelDetails = function () {
+	        this.returnToPolicies();
 	    };
 	    BandwidthPolicyDetailsComponent.prototype.savePolicy = function (validform) {
 	        var bandwidthPolicyDetailsCtrl = this;
@@ -4230,7 +4242,16 @@ webpackJsonp([2],{
 	        this.policiesModel = policiesModel;
 	        this.crudHelperService = crudHelperService;
 	        this.tenants = [];
+	        this.policyMode = 'isolation';
 	        var component = this;
+	        function setMode() {
+	            if (activatedRoute.routeConfig.path.includes('isolation')) {
+	                component.policyMode = 'isolation';
+	            }
+	            else {
+	                component.policyMode = 'bandwidth';
+	            }
+	        }
 	        function resetForm() {
 	            crudHelperService.stopLoader(component);
 	            component.newPolicy = {
@@ -4238,6 +4259,7 @@ webpackJsonp([2],{
 	                tenantName: ''
 	            };
 	        }
+	        setMode();
 	        resetForm();
 	    }
 	    IsolationPolicyCreateComponent.prototype.ngOnInit = function () {
@@ -4412,6 +4434,9 @@ webpackJsonp([2],{
 	    };
 	    IsolationPolicyDetailsComponent.prototype.editPolicy = function () {
 	        this.router.navigate(['../../edit', this.policy.key], { relativeTo: this.activatedRoute });
+	    };
+	    IsolationPolicyDetailsComponent.prototype.cancelDetails = function () {
+	        this.returnToPolicies();
 	    };
 	    IsolationPolicyDetailsComponent.prototype.cancelEditing = function () {
 	        this.returnToPolicyDetails();
@@ -4960,7 +4985,7 @@ webpackJsonp([2],{
 	    NetworkListComponent = __decorate([
 	        core_1.Component({
 	            selector: 'networkList',
-	            template: __webpack_require__(677)
+	            template: __webpack_require__(678)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, (typeof (_b = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _b) || Object, (typeof (_c = typeof networksmodel_1.NetworksModel !== 'undefined' && networksmodel_1.NetworksModel) === 'function' && _c) || Object, (typeof (_d = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _d) || Object])
 	    ], NetworkListComponent);
@@ -5013,7 +5038,7 @@ webpackJsonp([2],{
 	            ipAddress: '',
 	            selectors: [],
 	            ports: [],
-	            tenantName: 'default',
+	            tenantName: '',
 	            key: ''
 	        };
 	        this.servicelbCreateCtrl = this;
@@ -5131,6 +5156,12 @@ webpackJsonp([2],{
 	    };
 	    ServicelbDetailsComponent.prototype.returnToServicelbs = function () {
 	        this.router.navigate(['../../list'], { relativeTo: this.activatedRoute });
+	    };
+	    ServicelbDetailsComponent.prototype.cancelDetails = function () {
+	        this.returnToServicelbs();
+	    };
+	    ServicelbDetailsComponent.prototype.cancelEditing = function () {
+	        this.returnToServicelbs();
 	    };
 	    ServicelbDetailsComponent.prototype.loadDetails = function () {
 	        this.mode = "details";
@@ -6311,6 +6342,7 @@ webpackJsonp([2],{
 	    OrganizationDetailsComponent.prototype.returnToOrganization = function () {
 	        this.router.navigate(['../../list'], { relativeTo: this.activatedRoute });
 	    };
+	    OrganizationDetailsComponent.prototype.close = function () { this.returnToOrganization(); };
 	    OrganizationDetailsComponent.prototype.deleteOrganization = function () {
 	        var organizationDetailsCtrl = this;
 	        this.showLoader = true;
@@ -6521,6 +6553,8 @@ webpackJsonp([2],{
 	        this.user = { username: '', password: '', first_name: '', last_name: '', disable: false };
 	        this.organizations = [];
 	        this.mode = 'details';
+	        this.userDetailsCtrl = {};
+	        this.userDetailsCtrl = this;
 	        var component = this;
 	        this.user = { username: '', first_name: '', last_name: '', disable: false };
 	        /**
@@ -6552,6 +6586,9 @@ webpackJsonp([2],{
 	    };
 	    UserDetailsComponent.prototype.cancelEditing = function () {
 	        this.returnToUserDetails();
+	    };
+	    UserDetailsComponent.prototype.cancelDetails = function () {
+	        this.returnToUser();
 	    };
 	    UserDetailsComponent.prototype.deleteUser = function () {
 	        var component = this;
@@ -6637,6 +6674,8 @@ webpackJsonp([2],{
 	    UserListComponent.prototype.ngOnInit = function () {
 	        this.crudHelperService.startLoader(this);
 	        this.getUsers(false);
+	        // update breadcrumbs
+	        $('.crumb2').html('User Management');
 	    };
 	    UserListComponent.prototype.getUsers = function (reload) {
 	        var component = this;
@@ -6673,7 +6712,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 241:
+/***/ 350:
 /***/ function(module, exports, __webpack_require__) {
 
 	var root = __webpack_require__(61);
@@ -6686,7 +6725,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 242:
+/***/ 351:
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
@@ -6698,7 +6737,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 243:
+/***/ 352:
 /***/ function(module, exports) {
 
 	/** Used for built-in method references. */
@@ -6723,7 +6762,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 244:
+/***/ 353:
 /***/ function(module, exports) {
 
 	/** Used for built-in method references. */
@@ -6756,11 +6795,11 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 245:
+/***/ 354:
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseGetTag = __webpack_require__(111),
-	    isObject = __webpack_require__(247);
+	    isObject = __webpack_require__(356);
 
 	/** `Object#toString` result references. */
 	var asyncTag = '[object AsyncFunction]',
@@ -6800,7 +6839,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 246:
+/***/ 355:
 /***/ function(module, exports) {
 
 	/** Used as references for various `Number` constants. */
@@ -6842,7 +6881,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 247:
+/***/ 356:
 /***/ function(module, exports) {
 
 	/**
@@ -6880,7 +6919,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 393:
+/***/ 394:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6914,7 +6953,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 394:
+/***/ 395:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6934,13 +6973,13 @@ webpackJsonp([2],{
 	var platform_browser_1 = __webpack_require__(97);
 	var http_1 = __webpack_require__(22);
 	var common_1 = __webpack_require__(20);
-	var dashboard_module_1 = __webpack_require__(416);
-	var networkpolicies_module_1 = __webpack_require__(427);
-	var settings_module_1 = __webpack_require__(436);
-	var network_module_1 = __webpack_require__(428);
-	var servicelb_module_1 = __webpack_require__(431);
-	var appprofile_module_1 = __webpack_require__(403);
-	var users_module_1 = __webpack_require__(438);
+	var dashboard_module_1 = __webpack_require__(417);
+	var networkpolicies_module_1 = __webpack_require__(428);
+	var settings_module_1 = __webpack_require__(437);
+	var network_module_1 = __webpack_require__(429);
+	var servicelb_module_1 = __webpack_require__(432);
+	var appprofile_module_1 = __webpack_require__(404);
+	var users_module_1 = __webpack_require__(439);
 	var netprofilesmodel_1 = __webpack_require__(78);
 	var applicationgroupsmodel_1 = __webpack_require__(47);
 	var networksmodel_1 = __webpack_require__(48);
@@ -6955,19 +6994,19 @@ webpackJsonp([2],{
 	var crudhelperservice_1 = __webpack_require__(7);
 	var inspectservice_1 = __webpack_require__(81);
 	var networkservice_1 = __webpack_require__(124);
-	var menu_module_1 = __webpack_require__(422);
-	var app_component_1 = __webpack_require__(393);
-	var login_module_1 = __webpack_require__(421);
+	var menu_module_1 = __webpack_require__(423);
+	var app_component_1 = __webpack_require__(394);
+	var login_module_1 = __webpack_require__(422);
 	var authservice_1 = __webpack_require__(54);
 	var authguard_1 = __webpack_require__(170);
 	var apiservice_1 = __webpack_require__(27);
-	var firstrunwizard_module_1 = __webpack_require__(419);
+	var firstrunwizard_module_1 = __webpack_require__(420);
 	var chartservice_1 = __webpack_require__(80);
 	var authorizationmodel_1 = __webpack_require__(100);
-	var applicationgroups_module_1 = __webpack_require__(397);
-	var app_routes_1 = __webpack_require__(395);
-	var authorization_module_1 = __webpack_require__(433);
-	var organization_module_1 = __webpack_require__(437);
+	var applicationgroups_module_1 = __webpack_require__(398);
+	var app_routes_1 = __webpack_require__(396);
+	var authorization_module_1 = __webpack_require__(434);
+	var organization_module_1 = __webpack_require__(438);
 	var AppModule = (function () {
 	    function AppModule() {
 	    }
@@ -7028,7 +7067,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 395:
+/***/ 396:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7165,7 +7204,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 396:
+/***/ 397:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7216,7 +7255,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 397:
+/***/ 398:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7240,12 +7279,12 @@ webpackJsonp([2],{
 	var pipes_module_1 = __webpack_require__(168);
 	var applicationgroupcreatectrl_1 = __webpack_require__(162);
 	var applicationgroupdetailsctrl_1 = __webpack_require__(163);
-	var isolationpolicydirective_1 = __webpack_require__(401);
-	var bandwidthpolicydirective_1 = __webpack_require__(399);
-	var contractgroup_component_1 = __webpack_require__(400);
+	var isolationpolicydirective_1 = __webpack_require__(402);
+	var bandwidthpolicydirective_1 = __webpack_require__(400);
+	var contractgroup_component_1 = __webpack_require__(401);
 	var applicationgrouplistctrl_1 = __webpack_require__(164);
-	var applicationgroupstats_1 = __webpack_require__(398);
-	var applicationgroupinfoctrl_1 = __webpack_require__(396);
+	var applicationgroupstats_1 = __webpack_require__(399);
+	var applicationgroupinfoctrl_1 = __webpack_require__(397);
 	var ApplicationGroupsModule = (function () {
 	    function ApplicationGroupsModule() {
 	    }
@@ -7293,7 +7332,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 398:
+/***/ 399:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7391,7 +7430,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 399:
+/***/ 400:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7471,7 +7510,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 400:
+/***/ 401:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7588,7 +7627,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 401:
+/***/ 402:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7724,7 +7763,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 402:
+/***/ 403:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7833,7 +7872,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 403:
+/***/ 404:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7854,7 +7893,7 @@ webpackJsonp([2],{
 	var appprofilelist_component_1 = __webpack_require__(167);
 	var appprofilecreate_component_1 = __webpack_require__(165);
 	var appprofiledetails_component_1 = __webpack_require__(166);
-	var appgroupselection_component_1 = __webpack_require__(402);
+	var appgroupselection_component_1 = __webpack_require__(403);
 	var pipes_module_1 = __webpack_require__(168);
 	var AppProfilesModule = (function () {
 	    function AppProfilesModule() {
@@ -7895,7 +7934,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 404:
+/***/ 405:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7937,7 +7976,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 405:
+/***/ 406:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7988,7 +8027,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 406:
+/***/ 407:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8032,7 +8071,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 407:
+/***/ 408:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8081,7 +8120,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 408:
+/***/ 409:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8271,7 +8310,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 409:
+/***/ 410:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8358,7 +8397,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 410:
+/***/ 411:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8423,7 +8462,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 411:
+/***/ 412:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8443,7 +8482,7 @@ webpackJsonp([2],{
 	var apiservice_1 = __webpack_require__(27);
 	var contivglobals_1 = __webpack_require__(11);
 	var crudhelperservice_1 = __webpack_require__(7);
-	var isEmpty = __webpack_require__(671);
+	var isEmpty = __webpack_require__(673);
 	var LdapSettingsComponent = (function () {
 	    function LdapSettingsComponent(apiService, crudHelperService) {
 	        this.apiService = apiService;
@@ -8506,7 +8545,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 412:
+/***/ 413:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8574,7 +8613,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 413:
+/***/ 414:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8879,7 +8918,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 414:
+/***/ 415:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8985,7 +9024,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 415:
+/***/ 416:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9036,7 +9075,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 416:
+/***/ 417:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9090,7 +9129,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 417:
+/***/ 418:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9154,7 +9193,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 418:
+/***/ 419:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9215,7 +9254,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 419:
+/***/ 420:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9241,9 +9280,9 @@ webpackJsonp([2],{
 	var router_1 = __webpack_require__(5);
 	var firstrunwizardservice_1 = __webpack_require__(82);
 	var firstrunwizardctrl_1 = __webpack_require__(172);
-	var firstrunnetworkdefaults_1 = __webpack_require__(418);
-	var firstrunacisettings_1 = __webpack_require__(417);
-	var firstrunwizardconfirmpage_1 = __webpack_require__(420);
+	var firstrunnetworkdefaults_1 = __webpack_require__(419);
+	var firstrunacisettings_1 = __webpack_require__(418);
+	var firstrunwizardconfirmpage_1 = __webpack_require__(421);
 	var FirstrunWizardModule = (function () {
 	    function FirstrunWizardModule() {
 	    }
@@ -9278,7 +9317,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 420:
+/***/ 421:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9357,7 +9396,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 421:
+/***/ 422:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9413,7 +9452,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 422:
+/***/ 423:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9466,7 +9505,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 423:
+/***/ 424:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9533,7 +9572,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 424:
+/***/ 425:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9599,7 +9638,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 425:
+/***/ 426:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9666,7 +9705,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 426:
+/***/ 427:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9764,7 +9803,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 427:
+/***/ 428:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9790,10 +9829,10 @@ webpackJsonp([2],{
 	var isolationpolicydetailsctrl_1 = __webpack_require__(182);
 	var bandwidthpolicycreatectrl_1 = __webpack_require__(177);
 	var bandwidthpolicydetailsctrl_1 = __webpack_require__(178);
-	var isolationpolicylistctrl_1 = __webpack_require__(425);
-	var bandwidthpolicylistctrl_1 = __webpack_require__(423);
-	var isolationpolicystats_1 = __webpack_require__(426);
-	var contractgrouplist_component_1 = __webpack_require__(424);
+	var isolationpolicylistctrl_1 = __webpack_require__(426);
+	var bandwidthpolicylistctrl_1 = __webpack_require__(424);
+	var isolationpolicystats_1 = __webpack_require__(427);
+	var contractgrouplist_component_1 = __webpack_require__(425);
 	var contractgroupcreate_component_1 = __webpack_require__(179);
 	var contractgroupdetails_component_1 = __webpack_require__(180);
 	var NetworkPoliciesModule = (function () {
@@ -9848,7 +9887,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 428:
+/***/ 429:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9869,9 +9908,9 @@ webpackJsonp([2],{
 	var common_1 = __webpack_require__(20);
 	var directives_module_1 = __webpack_require__(37);
 	var networklistctrl_1 = __webpack_require__(185);
-	var networkstatsctrl_1 = __webpack_require__(430);
+	var networkstatsctrl_1 = __webpack_require__(431);
 	var networkdetailsctrl_1 = __webpack_require__(184);
-	var networkinfoctrl_1 = __webpack_require__(429);
+	var networkinfoctrl_1 = __webpack_require__(430);
 	var networkcreatectrl_1 = __webpack_require__(183);
 	var router_1 = __webpack_require__(5);
 	var NetworkModule = (function () {
@@ -9909,7 +9948,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 429:
+/***/ 430:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9951,7 +9990,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 430:
+/***/ 431:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10051,7 +10090,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 431:
+/***/ 432:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10073,7 +10112,7 @@ webpackJsonp([2],{
 	var directives_module_1 = __webpack_require__(37);
 	var servicelblistctrl_1 = __webpack_require__(189);
 	var servicelbstatsctrl_1 = __webpack_require__(190);
-	var servicelbportsdirective_1 = __webpack_require__(432);
+	var servicelbportsdirective_1 = __webpack_require__(433);
 	var servicelbcreatectrl_1 = __webpack_require__(186);
 	var servicelbinfoctrl_1 = __webpack_require__(188);
 	var servicelbdetailsctrl_1 = __webpack_require__(187);
@@ -10115,7 +10154,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 432:
+/***/ 433:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10183,7 +10222,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 433:
+/***/ 434:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10242,7 +10281,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 434:
+/***/ 435:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10343,7 +10382,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 435:
+/***/ 436:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10431,7 +10470,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 436:
+/***/ 437:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10457,8 +10496,8 @@ webpackJsonp([2],{
 	var nodelist_component_1 = __webpack_require__(198);
 	var nodecreate_component_1 = __webpack_require__(196);
 	var nodedetails_component_1 = __webpack_require__(197);
-	var nodeinfo_component_1 = __webpack_require__(434);
-	var nodestats_component_1 = __webpack_require__(435);
+	var nodeinfo_component_1 = __webpack_require__(435);
+	var nodestats_component_1 = __webpack_require__(436);
 	var ldapconfiguration_1 = __webpack_require__(194);
 	var SettingsModule = (function () {
 	    function SettingsModule() {
@@ -10505,7 +10544,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 437:
+/***/ 438:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10564,7 +10603,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 438:
+/***/ 439:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10623,10 +10662,10 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 644:
+/***/ 646:
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(645)();
+	exports = module.exports = __webpack_require__(647)();
 	// imports
 
 
@@ -10638,7 +10677,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 645:
+/***/ 647:
 /***/ function(module, exports) {
 
 	/*
@@ -10695,7 +10734,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 648:
+/***/ 650:
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(90),
@@ -10709,7 +10748,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 649:
+/***/ 651:
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(90),
@@ -10723,7 +10762,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 650:
+/***/ 652:
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(90),
@@ -10737,7 +10776,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 651:
+/***/ 653:
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(90),
@@ -10751,7 +10790,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 652:
+/***/ 654:
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(90),
@@ -10765,7 +10804,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 653:
+/***/ 655:
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseGetTag = __webpack_require__(111),
@@ -10790,13 +10829,13 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 654:
+/***/ 656:
 /***/ function(module, exports, __webpack_require__) {
 
-	var isFunction = __webpack_require__(245),
-	    isMasked = __webpack_require__(662),
-	    isObject = __webpack_require__(247),
-	    toSource = __webpack_require__(244);
+	var isFunction = __webpack_require__(354),
+	    isMasked = __webpack_require__(664),
+	    isObject = __webpack_require__(356),
+	    toSource = __webpack_require__(353);
 
 	/**
 	 * Used to match `RegExp`
@@ -10844,11 +10883,11 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 655:
+/***/ 657:
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseGetTag = __webpack_require__(111),
-	    isLength = __webpack_require__(246),
+	    isLength = __webpack_require__(355),
 	    isObjectLike = __webpack_require__(146);
 
 	/** `Object#toString` result references. */
@@ -10911,11 +10950,11 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 656:
+/***/ 658:
 /***/ function(module, exports, __webpack_require__) {
 
-	var isPrototype = __webpack_require__(243),
-	    nativeKeys = __webpack_require__(663);
+	var isPrototype = __webpack_require__(352),
+	    nativeKeys = __webpack_require__(665);
 
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -10948,7 +10987,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 657:
+/***/ 659:
 /***/ function(module, exports) {
 
 	/**
@@ -10969,7 +11008,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 658:
+/***/ 660:
 /***/ function(module, exports, __webpack_require__) {
 
 	var root = __webpack_require__(61);
@@ -10982,10 +11021,10 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 659:
+/***/ 661:
 /***/ function(module, exports, __webpack_require__) {
 
-	var Symbol = __webpack_require__(241);
+	var Symbol = __webpack_require__(350);
 
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -11035,16 +11074,16 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 660:
+/***/ 662:
 /***/ function(module, exports, __webpack_require__) {
 
-	var DataView = __webpack_require__(648),
-	    Map = __webpack_require__(649),
-	    Promise = __webpack_require__(650),
-	    Set = __webpack_require__(651),
-	    WeakMap = __webpack_require__(652),
+	var DataView = __webpack_require__(650),
+	    Map = __webpack_require__(651),
+	    Promise = __webpack_require__(652),
+	    Set = __webpack_require__(653),
+	    WeakMap = __webpack_require__(654),
 	    baseGetTag = __webpack_require__(111),
-	    toSource = __webpack_require__(244);
+	    toSource = __webpack_require__(353);
 
 	/** `Object#toString` result references. */
 	var mapTag = '[object Map]',
@@ -11100,7 +11139,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 661:
+/***/ 663:
 /***/ function(module, exports) {
 
 	/**
@@ -11120,10 +11159,10 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 662:
+/***/ 664:
 /***/ function(module, exports, __webpack_require__) {
 
-	var coreJsData = __webpack_require__(658);
+	var coreJsData = __webpack_require__(660);
 
 	/** Used to detect methods masquerading as native. */
 	var maskSrcKey = (function() {
@@ -11147,10 +11186,10 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 663:
+/***/ 665:
 /***/ function(module, exports, __webpack_require__) {
 
-	var overArg = __webpack_require__(666);
+	var overArg = __webpack_require__(668);
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
 	var nativeKeys = overArg(Object.keys, Object);
@@ -11160,10 +11199,10 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 664:
+/***/ 666:
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(242);
+	/* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(351);
 
 	/** Detect free variable `exports`. */
 	var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
@@ -11180,7 +11219,7 @@ webpackJsonp([2],{
 	/** Used to access faster Node.js helpers. */
 	var nodeUtil = (function() {
 	  try {
-	    return freeProcess && freeProcess.binding('util');
+	    return freeProcess && freeProcess.binding && freeProcess.binding('util');
 	  } catch (e) {}
 	}());
 
@@ -11190,7 +11229,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 665:
+/***/ 667:
 /***/ function(module, exports) {
 
 	/** Used for built-in method references. */
@@ -11219,7 +11258,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 666:
+/***/ 668:
 /***/ function(module, exports) {
 
 	/**
@@ -11241,10 +11280,10 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 667:
+/***/ 669:
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsArguments = __webpack_require__(653),
+	var baseIsArguments = __webpack_require__(655),
 	    isObjectLike = __webpack_require__(146);
 
 	/** Used for built-in method references. */
@@ -11284,7 +11323,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 668:
+/***/ 670:
 /***/ function(module, exports) {
 
 	/**
@@ -11317,11 +11356,11 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 669:
+/***/ 671:
 /***/ function(module, exports, __webpack_require__) {
 
-	var isFunction = __webpack_require__(245),
-	    isLength = __webpack_require__(246);
+	var isFunction = __webpack_require__(354),
+	    isLength = __webpack_require__(355);
 
 	/**
 	 * Checks if `value` is array-like. A value is considered array-like if it's
@@ -11357,11 +11396,11 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 670:
+/***/ 672:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(61),
-	    stubFalse = __webpack_require__(673);
+	    stubFalse = __webpack_require__(675);
 
 	/** Detect free variable `exports`. */
 	var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
@@ -11403,17 +11442,17 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 671:
+/***/ 673:
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseKeys = __webpack_require__(656),
-	    getTag = __webpack_require__(660),
-	    isArguments = __webpack_require__(667),
-	    isArray = __webpack_require__(668),
-	    isArrayLike = __webpack_require__(669),
-	    isBuffer = __webpack_require__(670),
-	    isPrototype = __webpack_require__(243),
-	    isTypedArray = __webpack_require__(672);
+	var baseKeys = __webpack_require__(658),
+	    getTag = __webpack_require__(662),
+	    isArguments = __webpack_require__(669),
+	    isArray = __webpack_require__(670),
+	    isArrayLike = __webpack_require__(671),
+	    isBuffer = __webpack_require__(672),
+	    isPrototype = __webpack_require__(352),
+	    isTypedArray = __webpack_require__(674);
 
 	/** `Object#toString` result references. */
 	var mapTag = '[object Map]',
@@ -11487,12 +11526,12 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 672:
+/***/ 674:
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsTypedArray = __webpack_require__(655),
-	    baseUnary = __webpack_require__(657),
-	    nodeUtil = __webpack_require__(664);
+	var baseIsTypedArray = __webpack_require__(657),
+	    baseUnary = __webpack_require__(659),
+	    nodeUtil = __webpack_require__(666);
 
 	/* Node.js helper references. */
 	var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
@@ -11521,7 +11560,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 673:
+/***/ 675:
 /***/ function(module, exports) {
 
 	/**
@@ -11546,25 +11585,25 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 676:
-/***/ function(module, exports) {
-
-	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"left aligned eight wide column\">\n        <div class=\"content\" style=\"font-size: 24px\">Application Groups</div>\n    </div>\n\n    <div class=\"right aligned eight wide column\">\n        <button class=\"ui blue large button primaryBtn\" (click)=\"create()\">\n            <i class=\"add icon\"></i>\n            Create Application Group\n        </button>\n    </div>\n</div>\n\n<ctv-search *ngIf=\"applicationGroupListCtrl['groups']\" (searchTextChange)=\"tableRef.showChunk(tableRef.table.pageNo,$event);\" [count]=\"tableRef.count\"></ctv-search>\n\n<div class=\"ui basic segment ctvTable\">\n    <div class=\"ui active inverted dimmer\" *ngIf=\"applicationGroupListCtrl.showLoader\">\n        <div class=\"ui loader\"></div>\n    </div>\n    <ctv-table #tableRef [defaultSortColumn]=\"'groupName'\"\n               [items]=\"applicationGroupListCtrl['groups']\"\n               (filtereditems)=\"applicationGroupListCtrl['filteredgroups']=$event;\"\n               [size]=\"12\">\n        <thead>\n            <tr>\n                <th><ctv-th [sortfield]=\"'groupName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Name</ctv-th></th>\n                <th><ctv-th [sortfield]=\"'tenantName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Tenant</ctv-th></th>\n                <th><ctv-th [sortfield]=\"'networkName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Network</ctv-th></th>\n                <th><ctv-th [sortfield]=\"'policies'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Policies</ctv-th></th>\n            </tr>\n        </thead>\n\n        <tbody *ngIf=\"applicationGroupListCtrl['groups']\">\n            <tr *ngFor=\"let group of applicationGroupListCtrl['filteredgroups']\">\n                <td><a [routerLink]=\"['../details', group.key]\">{{group.groupName}}</a></td>\n                <td>{{group.tenantName}}</td>\n                <td>{{group.networkName}}</td>\n                <td>{{group.policies.join(\", \")}}</td>\n            </tr>\n        </tbody>\n\n        <tbody *ngIf=\"!applicationGroupListCtrl['groups']\">\n            <tr>\n                <td colspan=\"3\">No application groups found. Would you like to <a href=\"javascript: void(0);\" (click)=\"create()\">define one?</a></td>\n            </tr>\n        </tbody>\n\n        <tbody *ngIf=\"applicationGroupListCtrl['groups'] && !tableRef.count\">\n            <tr>\n                <td colspan=\"2\">No records matched your filter criteria.</td>\n            </tr>\n        </tbody>\n\n        <tfoot>\n            <tr>\n                <td colspan=\"4\">\n                    <ctv-tpagination [chunks]=\"tableRef.pageChunks\"\n                                     (showPage)=\"tableRef.showChunk($event, tableRef.table.searchText)\"\n                                     (prevChunk)=\"tableRef.showPrevChunk()\"\n                                     (nextChunk)=\"tableRef.showNextChunk()\">\n\n                    </ctv-tpagination>\n                </td>\n            </tr>\n        </tfoot>\n    </ctv-table>\n</div>"
-
-/***/ },
-
 /***/ 677:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"left aligned eight wide column\">\n        <div class=\"content\" style=\"font-size: 24px\">Networks</div>\n    </div>\n    <div class=\"right aligned eight wide column\" *auth=\"'admin'\">\n        <button class=\"ui blue button\" (click)=\"create()\">\n            <i class=\"add icon\"></i>\n            Create Network\n        </button>\n    </div>\n</div>\n\n<ctv-search *ngIf=\"networkListComp['networks']\" (searchTextChange)=\"tableRef.showChunk(tableRef.table.pageNo,$event);\" [count]=\"tableRef.count\"></ctv-search>\n\n<div class=\"ui basic segment ctvTable\">\n\n    <div class=\"ui active inverted dimmer\" *ngIf=\"networkListComp.showLoader\">\n        <div class=\"ui loader\"></div>\n    </div>\n\n    <ctv-table #tableRef [defaultSortColumn]=\"'networkName'\"\n               [items]=\"networkListComp['networks']\"\n               (filtereditems)=\"networkListComp['filterednetworks']=$event;\"\n               [size]=\"12\">\n        <thead>\n        <tr>\n            <th><ctv-th [sortfield]=\"'networkName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Name</ctv-th></th>\n            <th><ctv-th [sortfield]=\"'tenantName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Tenant</ctv-th></th>\n            <th><ctv-th [sortfield]=\"'encap'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Encapsulation</ctv-th></th>\n            <th><ctv-th [sortfield]=\"'subnet'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Subnet</ctv-th></th>\n            <th><ctv-th [sortfield]=\"'gateway'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Gateway</ctv-th></th>\n        </tr>\n        </thead>\n\n        <tbody *ngIf=\"networkListComp['networks']\">\n        <tr *ngFor=\"let network of networkListComp['filterednetworks']\">\n            <td><a [routerLink]=\"['../details',network.key]\">{{network.networkName}}</a></td>\n            <td>{{network.tenantName}}</td>\n            <td>{{network.encap}}</td>\n            <td>{{network.subnet}}</td>\n            <td>{{network.gateway}}</td>\n        </tr>\n        </tbody>\n\n        <tbody *ngIf=\"!networkListComp['networks']\">\n            <tr>\n                <td colspan=\"2\">No networks found. Would you like to <a href=\"javascript: void(0);\" (click)=\"create()\">create one?</a></td>\n            </tr>\n        </tbody>\n\n        <tbody *ngIf=\"networkListComp['networks'] && !tableRef.count\">\n            <tr>\n                <td colspan=\"2\">No records matched your filter criteria.</td>\n            </tr>\n        </tbody>\n\n        <tfoot>\n        <tr>\n            <td colspan=\"5\">\n                <ctv-tpagination [chunks]=\"tableRef.pageChunks\"\n                                 (showPage)=\"tableRef.showChunk($event, tableRef.table.searchText)\"\n                                 (prevChunk)=\"tableRef.showPrevChunk()\"\n                                 (nextChunk)=\"tableRef.showNextChunk()\">\n                </ctv-tpagination>\n            </td>\n        </tr>\n        </tfoot>\n    </ctv-table>\n</div>"
+	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div class=\"content pageTitle\">Application Groups</div>\n        </div>\n        <div class=\"right aligned eight wide column\">\n            <button class=\"ui blue large button primaryBtn\" (click)=\"create()\">\n                <i class=\"add icon\"></i>\n                Create Application Group\n            </button>\n        </div>\n    </div>\n\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">Application Groups List</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row searchRow\">\n        <div class=\"ui sixteen wide column\">\n            <ctv-search *ngIf=\"applicationGroupListCtrl['groups']\" (searchTextChange)=\"tableRef.showChunk(tableRef.table.pageNo,$event);\" [count]=\"tableRef.count\"></ctv-search>\n        </div>\n    </div>\n\n    <div class=\"ui row ctvTable\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"ui active inverted dimmer\" *ngIf=\"applicationGroupListCtrl.showLoader\">\n                <div class=\"ui loader\"></div>\n            </div>\n            <ctv-table #tableRef [defaultSortColumn]=\"'groupName'\"\n                       [items]=\"applicationGroupListCtrl['groups']\"\n                       (filtereditems)=\"applicationGroupListCtrl['filteredgroups']=$event;\"\n                       [size]=\"12\">\n                <thead>\n                    <tr>\n                        <th><ctv-th [sortfield]=\"'groupName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Name</ctv-th></th>\n                        <th><ctv-th [sortfield]=\"'tenantName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Tenant</ctv-th></th>\n                        <th><ctv-th [sortfield]=\"'networkName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Network</ctv-th></th>\n                        <th><ctv-th [sortfield]=\"'policies'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Policies</ctv-th></th>\n                    </tr>\n                </thead>\n\n                <tbody *ngIf=\"applicationGroupListCtrl['groups']\">\n                    <tr *ngFor=\"let group of applicationGroupListCtrl['filteredgroups']\">\n                        <td><a [routerLink]=\"['../details', group.key]\">{{group.groupName}}</a></td>\n                    <td>{{group.tenantName}}</td>\n                    <td>{{group.networkName}}</td>\n                    <td>{{group.policies.join(\", \")}}</td>\n                    </tr>\n                </tbody>\n\n                <tbody *ngIf=\"!applicationGroupListCtrl['groups']\">\n                    <tr class=\"noDataFound\">\n                        <td colspan=\"4\">No application groups found. Would you like to <a href=\"javascript: void(0);\" (click)=\"create()\">define one?</a></td>\n                    </tr>\n                </tbody>\n\n                <tbody *ngIf=\"applicationGroupListCtrl['groups'] && !tableRef.count\">\n                    <tr class=\"noDataFound\">\n                        <td colspan=\"4\">No records matched your filter criteria.</td>\n                    </tr>\n                </tbody>\n\n                <tfoot>\n                    <tr class=\"pagination\">\n                        <td colspan=\"4\">\n                            <ctv-tpagination [chunks]=\"tableRef.pageChunks\"\n                                             (showPage)=\"tableRef.showChunk($event, tableRef.table.searchText)\"\n                                             (prevChunk)=\"tableRef.showPrevChunk()\"\n                                             (nextChunk)=\"tableRef.showNextChunk()\">\n                            </ctv-tpagination>\n                        </td>\n                    </tr>\n                </tfoot>\n            </ctv-table>\n        </div>\n    </div>\n</div>\n"
 
 /***/ },
 
-/***/ 944:
+/***/ 678:
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div class=\"content pageTitle\">Networks</div>\n        </div>\n\n        <div class=\"right aligned eight wide column\">\n            <button class=\"ui blue large button primaryBtn\" (click)=\"create()\" *auth=\"'admin'\">\n                <i class=\"add icon\"></i>\n                Create Network\n            </button>\n        </div>\n    </div>\n\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">Networks List</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n\n            <ctv-search *ngIf=\"networkListComp['networks']\" (searchTextChange)=\"tableRef.showChunk(tableRef.table.pageNo,$event);\" [count]=\"tableRef.count\"></ctv-search>\n\n            <div class=\"ui basic segment ctvTable\">\n\n                <div class=\"ui active inverted dimmer\" *ngIf=\"networkListComp.showLoader\">\n                    <div class=\"ui loader\"></div>\n                </div>\n\n                <ctv-table #tableRef [defaultSortColumn]=\"'networkName'\"\n                           [items]=\"networkListComp['networks']\"\n                           (filtereditems)=\"networkListComp['filterednetworks']=$event;\"\n                           [size]=\"12\">\n                    <thead>\n                    <tr>\n                        <th><ctv-th [sortfield]=\"'networkName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Name</ctv-th></th>\n                        <th><ctv-th [sortfield]=\"'tenantName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Tenant</ctv-th></th>\n                        <th><ctv-th [sortfield]=\"'encap'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Encapsulation</ctv-th></th>\n                        <th><ctv-th [sortfield]=\"'subnet'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Subnet</ctv-th></th>\n                        <th><ctv-th [sortfield]=\"'gateway'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Gateway</ctv-th></th>\n                    </tr>\n                    </thead>\n\n                    <tbody *ngIf=\"networkListComp['networks']\">\n                    <tr *ngFor=\"let network of networkListComp['filterednetworks']\">\n                        <td><a [routerLink]=\"['../details',network.key]\">{{network.networkName}}</a></td>\n                        <td>{{network.tenantName}}</td>\n                        <td>{{network.encap}}</td>\n                        <td>{{network.subnet}}</td>\n                        <td>{{network.gateway}}</td>\n                    </tr>\n                    </tbody>\n\n                    <tbody *ngIf=\"!networkListComp['networks']\">\n                        <tr class=\"noDataFound\">\n                            <td colspan=\"5\">No networks found. Would you like to <a href=\"javascript: void(0);\" (click)=\"create()\">create one?</a></td>\n                        </tr>\n                    </tbody>\n\n                    <tbody *ngIf=\"networkListComp['networks'] && !tableRef.count\">\n                        <tr class=\"noDataFound\"><td colspan=\"5\">No records matched your filter criteria.</td></tr>\n                    </tbody>\n\n                    <tfoot>\n                    <tr class=\"pagination\">\n                        <td colspan=\"5\">\n                            <ctv-tpagination [chunks]=\"tableRef.pageChunks\"\n                                             (showPage)=\"tableRef.showChunk($event, tableRef.table.searchText)\"\n                                             (prevChunk)=\"tableRef.showPrevChunk()\"\n                                             (nextChunk)=\"tableRef.showNextChunk()\">\n                            </ctv-tpagination>\n                        </td>\n                    </tr>\n                    </tfoot>\n                </ctv-table>\n            </div>\n\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+
+/***/ 945:
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	        var result = __webpack_require__(644);
+	        var result = __webpack_require__(646);
 
 	        if (typeof result === "string") {
 	            module.exports = result;
@@ -11575,7 +11614,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 945:
+/***/ 946:
 /***/ function(module, exports) {
 
 	if (typeof Object.create === 'function') {
@@ -11605,7 +11644,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 946:
+/***/ 947:
 /***/ function(module, exports) {
 
 	module.exports = function isBuffer(arg) {

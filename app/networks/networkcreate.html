@@ -1,85 +1,123 @@
-<form id="networkCreationForm" name="networkCreateForm" class="ui form" role="form"
-      (submit)="networkCreateCtrl.createNetwork(networkCreateForm.valid)" novalidate #networkCreateForm="ngForm">
-    <div class="ui sixteen column grid">
-        <div class="one wide column">
-            <a [routerLink]="['../list']">
-                <i class="large arrow left icon"></i>
-            </a>
-        </div>
-        <div class="left floated fifteen wide column">
-            <div class="content" style="font-size: 24px">
-                <span>Networks</span>
-                <span class="headingfontcolor"> (Create Network)</span>
-            </div>
-        </div>
-    </div>
-    <div class="ui active inverted dimmer" *ngIf="networkCreateCtrl.showLoader">
-        <div class="ui loader"></div>
-    </div>
-    <div class="ui basic segment">
-        <div class="field">
-            <div *ngIf="networkCreateForm.submitted">
-                <div [hidden]="networkCreateForm.valid" class="ui negative message">
-                    <ul class="list">
-                        <li *ngIf="newNetworkName.errors?.required">Please enter network name
-                        </li>
-                        <li *ngIf="newNetworkTenant.errors?.required">
-                            Please select tenant
-                        </li>
-                        <li *ngIf="newNetworkSubnet.errors?.required">Please enter subnet</li>
-                        <li *ngIf="newNetworkSubnet.errors?.pattern">Please enter subnet in CIDR
-                            notation
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="field">
-            <label for="newNetworkName">Network name</label>
-            <input type="text" id="newNetworkName" name="newNetworkName"
-                   [(ngModel)]="networkCreateCtrl.newNetwork.networkName"
-                   placeholder="Enter name" required #newNetworkName="ngModel">
-        </div>
-        <div class="field">
-            <label for="newNetworkTenant">Tenant</label>
-            <select id="newNetworkTenant" class="ui dropdown"
-                    name="newNetworkTenant"
-                    [(ngModel)]="networkCreateCtrl.newNetwork.tenantName"
-                    required #newNetworkTenant="ngModel">
-                <option value="">-- Please select tenant --</option>
-                <option *ngFor="let tenant of networkCreateCtrl.tenants" [ngValue]="tenant.tenantName">{{tenant.tenantName}}</option>
-            </select>
-        </div>
-        <div class="field">
-            <label for="newNetworkEncapsulation">Encapsulation</label>
-            <select id="newNetworkEncapsulation" class="ui dropdown" [(ngModel)]="networkCreateCtrl.newNetwork.encap" name="newNetworkEncap">
-                <option value="vxlan">vxlan</option>
-                <option value="vlan">vlan</option>
-            </select>
-        </div>
-        <div class="field">
-            <label for="newNetworkSubnet">Subnet</label>
-            <input type="text" id="newNetworkSubnet" name="newNetworkSubnet"
-                   [(ngModel)]="networkCreateCtrl.newNetwork.subnet"
-                   placeholder="CIDR notation, for example: 20.1.1.0/24" required
-                   [pattern]="networkCreateCtrl.cidrPattern" #newNetworkSubnet="ngModel">
-        </div>
-        <div class="field">
-            <label for="newNetworkGateway">Gateway</label>
-            <input type="text" id="newNetworkGateway" [(ngModel)]="networkCreateCtrl.newNetwork.gateway"
-                   placeholder="Enter gateway" name="newNetworkGateway">
+<div class="ui sixteen column grid">
+    <div class="ui row pageHeader">
+        <div class="left aligned eight wide column">
+            <div class="content pageTitle">Create Network</div>
         </div>
 
-        <div class="ui grid">
-            <div class="right aligned sixteen wide column">
-                <div style="margin-top: 40px">
-                    <button type="button" class="ui basic button" (click)="networkCreateCtrl.cancelCreating()">Cancel
-                    </button>
-                    <button type="submit" class="ui blue button">
-                        Create
-                    </button>
-                </div>
+        <div class="right aligned eight wide column">&nbsp;</div>
+    </div>
+
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div class="breadcrumbs">
+                <span class="crumb">
+                    <a href="/#/m/networks/list">
+                        Networks List
+                    </a>
+                </span>
+                <span class="crumb">Create</span>
             </div>
         </div>
     </div>
-</form>
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+
+            <form id="networkCreationForm" name="networkCreateForm" class="ui form" role="form"
+                  (submit)="networkCreateCtrl.createNetwork(networkCreateForm.valid)" novalidate #networkCreateForm="ngForm">
+
+                <div class="ui active inverted dimmer" *ngIf="networkCreateCtrl.showLoader">
+                    <div class="ui loader"></div>
+                </div>
+
+                <div class="ui sixteen column grid" style="margin: 0;">
+                    <div class="ui row">
+
+                        <div class="ui eight wide column field">
+                            <div *ngIf="networkCreateForm.submitted">
+                                <div [hidden]="networkCreateForm.valid" class="ui negative message">
+                                    <ul class="list">
+                                        <li *ngIf="newNetworkName.errors?.required">Please enter network name
+                                        </li>
+                                        <li *ngIf="newNetworkTenant.errors?.required">
+                                            Please select tenant
+                                        </li>
+                                        <li *ngIf="newNetworkSubnet.errors?.required">Please enter subnet</li>
+                                        <li *ngIf="newNetworkSubnet.errors?.pattern">Please enter subnet in CIDR
+                                            notation
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui row">
+
+                        <div class="ui four wide column field">
+                            <label for="newNetworkName">Network name</label>
+                            <input type="text" id="newNetworkName" name="newNetworkName"
+                                   [(ngModel)]="networkCreateCtrl.newNetwork.networkName"
+                                   placeholder="Enter name" required #newNetworkName="ngModel">
+                        </div>
+                        <div class="ui four wide column field">
+                            <div class="field">
+                                <label for="newNetworkTenant">Tenant</label>
+                                <select id="newNetworkTenant" class="ui dropdown"
+                                        name="newNetworkTenant"
+                                        [(ngModel)]="networkCreateCtrl.newNetwork.tenantName"
+                                        required #newNetworkTenant="ngModel">
+                                    <option value="">-- Please select tenant --</option>
+                                    <option *ngFor="let tenant of networkCreateCtrl.tenants" [ngValue]="tenant.tenantName">{{tenant.tenantName}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="ui row" style="margin-top: 20px;">
+                        <div class="ui four wide column field">
+                            <label for="newNetworkEncapsulation">Encapsulation</label>
+                            <select id="newNetworkEncapsulation" class="ui dropdown" [(ngModel)]="networkCreateCtrl.newNetwork.encap" name="newNetworkEncap">
+                                <option value="vxlan">vxlan</option>
+                                <option value="vlan">vlan</option>
+                            </select>
+                        </div>
+                        <div class="ui four wide column field">
+                            <label for="newNetworkSubnet">Subnet</label>
+                            <input type="text" id="newNetworkSubnet" name="newNetworkSubnet"
+                                   [(ngModel)]="networkCreateCtrl.newNetwork.subnet"
+                                   placeholder="CIDR notation, for example: 20.1.1.0/24" required
+                                   [pattern]="networkCreateCtrl.cidrPattern" #newNetworkSubnet="ngModel">
+                        </div>
+                        <div class="ui four wide column field">
+                            <label for="newNetworkGateway">Gateway</label>
+                            <input type="text" id="newNetworkGateway" [(ngModel)]="networkCreateCtrl.newNetwork.gateway"
+                                   placeholder="Enter gateway" name="newNetworkGateway">
+                        </div>
+                    </div>
+
+                    <div class="ui row">
+                        <div class="right aligned sixteen wide column">
+                            <div class="buttonRow">
+                                <button type="button" class="ui large button cancelBtn" (click)="networkCreateCtrl.cancelCreating()">
+                                    Cancel
+                                </button>
+                                <button type="submit" class="ui blue large button primaryBtn">
+                                    Create
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ctv-error *ngIf="networkCreateCtrl.showServerError" [header]="'Error creating network'"
+                               [error]="networkCreateCtrl.serverErrorMessage">
+                    </ctv-error>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

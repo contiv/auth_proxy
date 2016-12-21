@@ -1,67 +1,81 @@
 <div class="ui sixteen column grid">
-    <div class="left aligned eight wide column">
-        <div class="content" style="font-size: 24px">Application Groups</div>
+    <div class="ui row pageHeader">
+        <div class="left aligned eight wide column">
+            <div class="content pageTitle">Application Groups</div>
+        </div>
+        <div class="right aligned eight wide column">
+            <button class="ui blue large button primaryBtn" (click)="create()">
+                <i class="add icon"></i>
+                Create Application Group
+            </button>
+        </div>
     </div>
 
-    <div class="right aligned eight wide column">
-        <button class="ui blue large button primaryBtn" (click)="create()">
-            <i class="add icon"></i>
-            Create Application Group
-        </button>
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div class="breadcrumbs">
+                <span class="crumb">Application Groups List</span>
+            </div>
+        </div>
     </div>
-</div>
 
-<ctv-search *ngIf="applicationGroupListCtrl['groups']" (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [count]="tableRef.count"></ctv-search>
-
-<div class="ui basic segment ctvTable">
-    <div class="ui active inverted dimmer" *ngIf="applicationGroupListCtrl.showLoader">
-        <div class="ui loader"></div>
+    <div class="ui row searchRow">
+        <div class="ui sixteen wide column">
+            <ctv-search *ngIf="applicationGroupListCtrl['groups']" (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [count]="tableRef.count"></ctv-search>
+        </div>
     </div>
-    <ctv-table #tableRef [defaultSortColumn]="'groupName'"
-               [items]="applicationGroupListCtrl['groups']"
-               (filtereditems)="applicationGroupListCtrl['filteredgroups']=$event;"
-               [size]="12">
-        <thead>
-            <tr>
-                <th><ctv-th [sortfield]="'groupName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Name</ctv-th></th>
-                <th><ctv-th [sortfield]="'tenantName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Tenant</ctv-th></th>
-                <th><ctv-th [sortfield]="'networkName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Network</ctv-th></th>
-                <th><ctv-th [sortfield]="'policies'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Policies</ctv-th></th>
-            </tr>
-        </thead>
 
-        <tbody *ngIf="applicationGroupListCtrl['groups']">
-            <tr *ngFor="let group of applicationGroupListCtrl['filteredgroups']">
-                <td><a [routerLink]="['../details', group.key]">{{group.groupName}}</a></td>
-                <td>{{group.tenantName}}</td>
-                <td>{{group.networkName}}</td>
-                <td>{{group.policies.join(", ")}}</td>
-            </tr>
-        </tbody>
+    <div class="ui row ctvTable">
+        <div class="ui sixteen wide column">
+            <div class="ui active inverted dimmer" *ngIf="applicationGroupListCtrl.showLoader">
+                <div class="ui loader"></div>
+            </div>
+            <ctv-table #tableRef [defaultSortColumn]="'groupName'"
+                       [items]="applicationGroupListCtrl['groups']"
+                       (filtereditems)="applicationGroupListCtrl['filteredgroups']=$event;"
+                       [size]="12">
+                <thead>
+                    <tr>
+                        <th><ctv-th [sortfield]="'groupName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Name</ctv-th></th>
+                        <th><ctv-th [sortfield]="'tenantName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Tenant</ctv-th></th>
+                        <th><ctv-th [sortfield]="'networkName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Network</ctv-th></th>
+                        <th><ctv-th [sortfield]="'policies'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Policies</ctv-th></th>
+                    </tr>
+                </thead>
 
-        <tbody *ngIf="!applicationGroupListCtrl['groups']">
-            <tr>
-                <td colspan="3">No application groups found. Would you like to <a href="javascript: void(0);" (click)="create()">define one?</a></td>
-            </tr>
-        </tbody>
+                <tbody *ngIf="applicationGroupListCtrl['groups']">
+                    <tr *ngFor="let group of applicationGroupListCtrl['filteredgroups']">
+                        <td><a [routerLink]="['../details', group.key]">{{group.groupName}}</a></td>
+                    <td>{{group.tenantName}}</td>
+                    <td>{{group.networkName}}</td>
+                    <td>{{group.policies.join(", ")}}</td>
+                    </tr>
+                </tbody>
 
-        <tbody *ngIf="applicationGroupListCtrl['groups'] && !tableRef.count">
-            <tr>
-                <td colspan="2">No records matched your filter criteria.</td>
-            </tr>
-        </tbody>
+                <tbody *ngIf="!applicationGroupListCtrl['groups']">
+                    <tr class="noDataFound">
+                        <td colspan="4">No application groups found. Would you like to <a href="javascript: void(0);" (click)="create()">define one?</a></td>
+                    </tr>
+                </tbody>
 
-        <tfoot>
-            <tr>
-                <td colspan="4">
-                    <ctv-tpagination [chunks]="tableRef.pageChunks"
-                                     (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
-                                     (prevChunk)="tableRef.showPrevChunk()"
-                                     (nextChunk)="tableRef.showNextChunk()">
+                <tbody *ngIf="applicationGroupListCtrl['groups'] && !tableRef.count">
+                    <tr class="noDataFound">
+                        <td colspan="4">No records matched your filter criteria.</td>
+                    </tr>
+                </tbody>
 
-                    </ctv-tpagination>
-                </td>
-            </tr>
-        </tfoot>
-    </ctv-table>
+                <tfoot>
+                    <tr class="pagination">
+                        <td colspan="4">
+                            <ctv-tpagination [chunks]="tableRef.pageChunks"
+                                             (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
+                                             (prevChunk)="tableRef.showPrevChunk()"
+                                             (nextChunk)="tableRef.showNextChunk()">
+                            </ctv-tpagination>
+                        </td>
+                    </tr>
+                </tfoot>
+            </ctv-table>
+        </div>
+    </div>
 </div>

@@ -40,20 +40,20 @@
         </tbody>
 
         <tbody *ngIf="!contractGroups">
-        <tr>
-            <td colspan="2">No external contract groups found. Would you like to <a href="javascript: void(0);" (click)="create()">create one?</a></td>
+        <tr class="noDataFound">
+            <td colspan="4">No external contract groups found.</td>
         </tr>
         </tbody>
 
         <tbody *ngIf="contractGroups && !tableRef.count">
-        <tr>
-            <td colspan="2">No records matched your filter criteria.</td>
+        <tr class="noDataFound">
+            <td colspan="4">No records matched your filter criteria.</td>
         </tr>
         </tbody>
 
         <tfoot>
-        <tr>
-            <td colspan="2">
+        <tr class="pagination">
+            <td colspan="4">
                 <ctv-tpagination [chunks]="tableRef.pageChunks"
                                  (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
                                  (prevChunk)="tableRef.showPrevChunk()"

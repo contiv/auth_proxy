@@ -1,66 +1,104 @@
-<form class="ui form" role="form" #formRef="ngForm"
-      (ngSubmit)="createPolicy(formRef.valid)" novalidate>
-    <div class="ui sixteen column grid">
-        <div class="one wide column">
-            <a (click)="returnToPolicies()">
-                <i class="large arrow left icon"></i>
-            </a>
+<div class="ui sixteen column grid">
+    <div class="ui row pageHeader">
+        <div class="left aligned eight wide column">
+            <div class="content pageTitle">Create Isolation Policy</div>
         </div>
-        <div class="left floated fifteen wide column">
-            <div class="content" style="font-size: 24px">
-                <span>Isolation Policies</span>
-                <span class="headingfontcolor"> (Create Isolation Policy)</span>
+        <div class="right aligned eight wide column">&nbsp;</div>
+    </div>
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div class="breadcrumbs">
+                <span class="crumb">
+                    <a href="/#/m/networkpolicies/list">
+                        Network Policies List
+                    </a>
+                </span>
+                <span class="crumb">
+                    <a href="/#/m/networkpolicies/list">
+                        Isolation Policies
+                    </a>
+                </span>
+                <span class="crumb current">Create</span>
             </div>
         </div>
     </div>
 
-    <div class="ui active inverted dimmer" *ngIf="showLoader">
-        <div class="ui loader"></div>
-    </div>
-    <div class="ui basic segment">
-        <div class="field">
-            <div *ngIf="formRef.submitted">
-                <div *ngIf="!formRef.valid" class="ui negative message">
-                    <ul class="list">
-                        <li *ngIf="policyNameRef.errors?.required">
-                            Please enter policy name
-                        </li>
-                        <li *ngIf="policyTenantRef.errors?.required">
-                            Please select tenant
-                        </li>
-                    </ul>
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+
+            <form class="ui form" role="form" #formRef="ngForm"
+                  (ngSubmit)="createPolicy(formRef.valid)" novalidate>
+
+                <div class="ui active inverted dimmer" *ngIf="showLoader">
+                    <div class="ui loader"></div>
                 </div>
-            </div>
-        </div>
 
-        <div class="field">
-            <label for="newPolicyName">Policy name</label>
-            <input #policyNameRef="ngModel" type="text" id="newPolicyName" name="newPolicyName"
-                   [(ngModel)]="newPolicy.policyName" placeholder="Enter name" required>
-        </div>
-        <div class="field">
-            <label for="newPolicyTenant">Tenant</label>
-            <select id="newPolicyTenant" class="ui dropdown"
-                    name="newPolicyTenant"
-                    [(ngModel)]="newPolicy.tenantName"
-                    required #policyTenantRef="ngModel">
-                <option value="">-- Please select tenant --</option>
-                <option *ngFor="let tenant of tenants" [ngValue]="tenant.tenantName">{{tenant.tenantName}}</option>
-            </select>
-        </div>
+                <div class="ui basic segment">
 
-        <div class="ui grid">
-            <div class="right aligned sixteen wide column">
-                <div style="margin-top: 40px">
+                    <div class="field">
+                        <div *ngIf="formRef.submitted">
+                            <div *ngIf="!formRef.valid" class="ui negative message">
+                                <ul class="list">
+                                    <li *ngIf="policyNameRef.errors?.required">
+                                        Please enter policy name
+                                    </li>
+                                    <li *ngIf="policyTenantRef.errors?.required">
+                                        Please select tenant
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
 
-                    <button type="button" class="ui basic button" (click)="cancelCreating()">
-                        Cancel
-                    </button>
-                    <button type="submit" class="ui blue button">
-                        Create
-                    </button>
+                    <div class="description">
+                        <em>Name and create the policy now, after it is created you will edit it to define policy rules.</em>
+                    </div>
+
+                    <div class="ui sixteen column grid">
+                        <div class="ui row">
+                            <div class="ui eight wide column">
+                                <div class="field">
+                                    <label for="newPolicyName">Policy name</label>
+                                    <input #policyNameRef="ngModel" type="text" id="newPolicyName" name="newPolicyName"
+                                           [(ngModel)]="newPolicy.policyName" placeholder="Enter name" required>
+                                </div>
+                            </div>
+                            <div class="ui eight wide column">
+                                <div class="field">
+                                    <label for="newPolicyTenant">Tenant</label>
+                                    <select id="newPolicyTenant" class="ui dropdown"
+                                            name="newPolicyTenant"
+                                            [(ngModel)]="newPolicy.tenantName"
+                                            required #policyTenantRef="ngModel">
+                                        <option value="">-- Select a tenant --</option>
+                                        <option *ngFor="let tenant of tenants" [ngValue]="tenant.tenantName">{{tenant.tenantName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui grid">
+                        <div class="right aligned sixteen wide column">
+                            <div class="buttonRow">
+
+                                <button type="button" class="ui large button cancelBtn" (click)="cancelCreating()">
+                                    Cancel
+                                </button>
+                                <button type="submit" class="ui blue large button primaryBtn">
+                                    Create
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+
+                <ctv-error *ngIf="showServerError" header="Error creating policy"
+                           [error]="serverErrorMessage">
+                </ctv-error>
+
+            </form>
+
         </div>
     </div>
-</form>
+</div>

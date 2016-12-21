@@ -14,12 +14,15 @@ export class UserDetailsComponent {
     user:User = {username: '', password: '', first_name: '', last_name: '', disable: false};
     organizations:any[] = [];
     mode:string = 'details';
+    public userDetailsCtrl:any = {}
 
     constructor(private activatedRoute: ActivatedRoute,
                 private router: Router,
                 private ngZone: NgZone,
                 private usersModel:UsersModel,
                 private crudHelperService:CRUDHelperService) {
+
+        this.userDetailsCtrl = this;
         var component = this;
         this.user = {username: '', first_name: '', last_name: '', disable: false};
 
@@ -58,6 +61,10 @@ export class UserDetailsComponent {
 
     cancelEditing() {
         this.returnToUserDetails();
+    }
+
+    cancelDetails() {
+        this.returnToUser();
     }
 
     deleteUser() {

@@ -36,7 +36,7 @@ export class ServicelbCreateComponent implements OnInit {
             ipAddress: '',
             selectors: [],
             ports: [],
-            tenantName: 'default',
+            tenantName: '',
             key: ''
         };
         this.servicelbCreateCtrl = this;

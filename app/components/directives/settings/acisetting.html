@@ -1,47 +1,47 @@
 <form class="ui form" role="form" #aciForm="ngForm" name="aciForm" (submit)="updateAciSetting(aciForm.valid)" novalidate>
     <div class="ui two column grid">
-        <div class="field column">
-            <label for="apicPhysicalDomain">Physical domain</label>
-            <input type="text" id="apicPhysicalDomain" name="apicPhysicalDomain"
-                   [(ngModel)]="setting.physicalDomain"
-                   placeholder="Enter physical domain name" required #apicPhysicalDomain="ngModel">
+        <div class="ui row">
+            <div class="field column">
+                <label for="apicPhysicalDomain">Physical domain</label>
+                <input type="text" id="apicPhysicalDomain" name="apicPhysicalDomain"
+                       [(ngModel)]="setting.physicalDomain"
+                       placeholder="Enter physical domain name" required #apicPhysicalDomain="ngModel">
+            </div>
+            <div class="field column">
+                <label for="apicLeafNodes">Node bindings</label>
+                <input type="text" id="apicLeafNodes" name="apicLeafNodes"
+                       [(ngModel)]="setting.nodeBindings"
+                       placeholder="Enter comma separated nodes of the form topology/pod-1/node-101">
+            </div>
         </div>
-        <div class="field column">
-            <label for="apicLeafNodes">Node bindings</label>
-            <input type="text" id="apicLeafNodes" name="apicLeafNodes"
-                   [(ngModel)]="setting.nodeBindings"
-                   placeholder="Enter comma separated nodes of the form topology/pod-1/node-101">
+        <div class="ui row">
+            <div class="field column">
+                <label for="apicPathBindings">Path bindings</label>
+                <input type="text" id="apicPathBindings" name="apicPathBindings"
+                       [(ngModel)]="setting.pathBindings"
+                       placeholder="Enter comma separated paths of the form topology/pod-1/paths-101/pathep-[eth1/14]">
+            </div>
+            <div class="field column"></div>
         </div>
-
-        <div class="field column">
-            <label for="apicPathBindings">Path bindings</label>
-            <input type="text" id="apicPathBindings" name="apicPathBindings"
-                   [(ngModel)]="setting.pathBindings"
-                   placeholder="Enter comma separated paths of the form topology/pod-1/paths-101/pathep-[eth1/14]">
-        </div>
-
-        <div class="field column"></div>
-
-        <div class="field column">
-            <label>
-                <input type="checkbox" name="apicEnforcePolicies" tabindex="0"
-                       [checked]="setting.enforcePolicies == 'yes'"
-                       (change)="$event.target.checked?setting.enforcePolicies='yes':setting.enforcePolicies='no'"
-                       name="apicEnforcePolicies">
-                Enforce security policies
-            </label>
-        </div>
-
-        <div class="field column"></div>
-
-        <div class="field column">
-            <label>
-                <input type="checkbox" name="apicIncludeCommonTenant" tabindex="0"
-                       [checked]="setting.includeCommonTenant == 'yes'"
-                       (change)="$event.target.checked?setting.includeCommonTenant='yes':setting.includeCommonTenant='no'"
-                       name="apicIncludeCommonTenant">
-                Lookup objects in common tenant
-            </label>
+        <div class="ui row">
+            <div class="field column">
+                <label>&nbsp;<br>
+                    <input type="checkbox" name="apicEnforcePolicies" tabindex="0"
+                           [checked]="setting.enforcePolicies == 'yes'"
+                           (change)="$event.target.checked?setting.enforcePolicies='yes':setting.enforcePolicies='no'"
+                           class="alignLabel">
+                    Enforce security policies
+                </label>
+            </div>
+            <div class="field column">
+                <label>&nbsp;<br>
+                    <input type="checkbox" name="apicIncludeCommonTenant" tabindex="0"
+                           [checked]="setting.includeCommonTenant == 'yes'"
+                           (change)="$event.target.checked?setting.includeCommonTenant='yes':setting.includeCommonTenant='no'"
+                           class="alignLabel">
+                    Lookup objects in common tenant
+                </label>
+            </div>
         </div>
 
     </div>
@@ -70,8 +70,8 @@
     <div *ngIf="!firstRunWiz">
         <div class="ui grid">
             <div class="right floated right aligned sixteen wide column">
-                <div style="margin-top: 40px">
-                    <button type="submit" class="ui blue button">
+                <div>
+                    <button type="submit" class="ui blue large button primaryBtn">
                         Update ACI Settings
                     </button>
                 </div>

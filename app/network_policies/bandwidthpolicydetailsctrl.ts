@@ -74,6 +74,10 @@ export class BandwidthPolicyDetailsComponent {
         this.returnToPolicyDetails();
     }
 
+    cancelDetails() {
+        this.returnToPolicies();
+    }
+
     savePolicy(validform: boolean) {
         var bandwidthPolicyDetailsCtrl = this;
         if (validform) {

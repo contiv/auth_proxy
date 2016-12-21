@@ -79,6 +79,10 @@ export class ApplicationGroupDetailsComponent implements OnInit{
         this.returnToApplicationGroupDetails();
     }
 
+    cancelDetails() {
+        this.returnToApplicationGroup();
+    }
+
     deleteApplicationGroup() {
         var applicationGroupDetailsCtrl = this;
         applicationGroupDetailsCtrl.crudHelperService.startLoader(applicationGroupDetailsCtrl);

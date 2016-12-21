@@ -27,46 +27,53 @@
         </div>
     </div>
 
-    <div class="field">
-        <label for="networkInfrastructure">Network infrastructure type</label>
-        <select #networkInfrastructureRef="ngModel"
-                id="networkInfrastructure"
-                name="networkInfrastructure"
-                class="ui dropdown"
-                [(ngModel)]="setting['networkInfraType']" required>
-            <option value="">-- Please select network infrastructure type --</option>
-            <option value="default">default</option>
-            <option value="aci">aci</option>
-        </select>
+    <div class="ui two column grid">
+        <div class="ui row">
+            <div class="ui column field">
+                <label for="networkInfrastructure">Network infrastructure type</label>
+                <select #networkInfrastructureRef="ngModel"
+                        id="networkInfrastructure"
+                        name="networkInfrastructure"
+                        class="ui dropdown"
+                        [(ngModel)]="setting['networkInfraType']" required>
+                    <option value="">-- Please select network infrastructure type --</option>
+                    <option value="default">default</option>
+                    <option value="aci">aci</option>
+                </select>
+            </div>
+            <div class="ui column field">
+                <label for="allowedVlanRange">Allowed vlan range</label>
+                <input #allowedVlanRangeRef="ngModel"
+                       type="text"
+                       id="allowedVlanRange"
+                       name="allowedVlanRange"
+                       [(ngModel)]="setting['vlans']" placeholder="1-4094" required [pattern]="vlanPattern">
+            </div>
+        </div>
+        <div class="ui row">
+            <div class="ui column field">
+                <label for="allowedVxlanRange">Allowed vxlan range</label>
+                <input #allowedVxlanRangeRef="ngModel"
+                       type="text"
+                       id="allowedVxlanRange"
+                       name="allowedVxlanRange"
+                       [(ngModel)]="setting['vxlans']" placeholder="1-10000" required [pattern]="vxlanPattern">
+            </div>
+            <div class="ui column field">
+                <label for="forwardingmode">Forwarding mode</label>
+                <select #forwardingmodeRef="ngModel"
+                        id="forwardingmode"
+                        name="forwardingmode"
+                        class="ui dropdown"
+                        [(ngModel)]="setting['fwdMode']" required>
+                    <option value="">-- Please select the network forwarding mode --</option>
+                    <option value="bridge">bridge</option>
+                    <option value="routing">routing</option>
+                </select>
+            </div>
+        </div>
     </div>
-    <div class="field">
-        <label for="allowedVlanRange">Allowed vlan range</label>
-        <input #allowedVlanRangeRef="ngModel"
-               type="text"
-               id="allowedVlanRange"
-               name="allowedVlanRange"
-               [(ngModel)]="setting['vlans']" placeholder="1-4094" required [pattern]="vlanPattern">
-    </div>
-    <div class="field">
-        <label for="allowedVxlanRange">Allowed vxlan range</label>
-        <input #allowedVxlanRangeRef="ngModel"
-               type="text"
-               id="allowedVxlanRange"
-               name="allowedVxlanRange"
-               [(ngModel)]="setting['vxlans']" placeholder="1-10000" required [pattern]="vxlanPattern">
-    </div>
-    <div class="field">
-        <label for="forwardingmode">Forwarding mode</label>
-        <select #forwardingmodeRef="ngModel"
-                id="forwardingmode"
-                name="forwardingmode"
-                class="ui dropdown"
-                [(ngModel)]="setting['fwdMode']" required>
-            <option value="">-- Please select the network forwarding mode --</option>
-            <option value="bridge">bridge</option>
-            <option value="routing">routing</option>
-        </select>
-    </div>
+
     <div *ngIf="firstRunWiz">
         <div class="ui section divider" style="margin-top: 60px"></div>
         <div class="ui grid">
@@ -77,11 +84,12 @@
             </div>
         </div>
     </div>
+
     <div *ngIf="!firstRunWiz">
         <div class="ui grid">
             <div class="right floated right aligned sixteen wide column">
-                <div style="margin-top: 40px">
-                    <button type="submit" class="ui blue button">
+                <div style="margin-top: 20px">
+                    <button type="submit" class="ui blue large button primaryBtn">
                         Update Network Settings
                     </button>
                 </div>

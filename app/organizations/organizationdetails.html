@@ -1,0 +1,71 @@
+<div class="ui sixteen column grid">
+    <div class="ui row pageHeader">
+        <div class="left aligned eight wide column">
+            <div class="content pageTitle">Details: {{organizationDetailsCtrl.organization.tenantName}}</div>
+        </div>
+        <div class="right aligned eight wide column">
+            <button class="ui button large cancelBtn" (click)="close()">
+                Close
+            </button>
+            <button class="ui large button secondaryBtn" onclick="$('#delete-organization-modal').modal('show')">
+                <i class="trash icon"></i>
+                Remove
+            </button>
+        </div>
+    </div>
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div class="breadcrumbs">
+                <span class="crumb">
+                    <!-- <a href="/#/m/servicelbs/list"> -->
+                    <a [routerLink]="['../../list']">
+                        Tenant List
+                    </a>
+                </span>
+                <span class="crumb">{{organizationDetailsCtrl.organization.tenantName}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+
+            <div class="right aligned three wide column">
+                <div id="delete-organization-modal" class="ui small modal">
+                    <div class="header">Remove Tenant: {{organizationDetailsCtrl.organization.tenantName}}</div>
+                    <div class="content">
+                        <p>Are you sure you want to remove this tenant?</p>
+                    </div>
+                    <div class="actions">
+                        <div class="ui negative button">No</div>
+                        <div class="ui positive button" (click)="organizationDetailsCtrl.deleteOrganization()">
+                            Yes
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui basic segment">
+                <div class="ui active inverted dimmer" *ngIf="organizationDetailsCtrl.showLoader">
+                    <div class="ui loader"></div>
+                </div>
+
+                <div class="ctvTable">
+                    <table class="ui very basic selectable table">
+                        <tbody>
+                        <tr>
+                            <td class="ctv-header three wide column key">Name</td>
+                            <td class="value">{{organizationDetailsCtrl.organization.tenantName}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <ctv-error *ngIf="organizationDetailsCtrl.showServerError" header="Error deleting organization"
+                           [error]="organizationDetailsCtrl.serverErrorMessage">
+                </ctv-error>
+            </div>
+
+        </div>
+    </div>
+</div>

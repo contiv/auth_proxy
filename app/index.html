@@ -25,3 +25,74 @@
 <script src="main.bundle.js"></script>
 </body>
 </html>
+
+<style>
+.ui.grid>.row { padding: .5rem; padding-bottom: 0; }
+.ui.grid>.row.breadcrumbRow { padding: .2rem inherit; }
+.ui.grid>.row.searchRow { padding: 0; }
+
+.breadcrumbs { font-size: 10px; }
+.breadcrumbs .crumb { user-select: none; }
+.breadcrumbs .crumb:after { padding-left: .5em; padding-right: .5em; content: '/'; }
+
+.breadcrumbs .crumb:last-child:after { content: ''; }
+.breadcrumbs .crumb:first-child:after { padding-left: .5em; padding-right: .5em; content: '/'; } /* override for 1st breadcrumb */
+
+.description {
+	font-family: CiscoSansRegular;
+	font-size: 12px;
+	font-weight: 400;
+	font-style: italic;
+	margin: 20px;
+}
+
+.noDataFound { font-style: italic; opacity: .5; user-select: none; }
+.ui.very.basic.table tbody tr.noDataFound td { user-select: none; }
+
+form { margin-top: 15px; }
+label { cursor: pointer; }
+.ui.form input[type=checkbox].alignLabel { margin-right: 5px; vertical-align: middle; }
+
+.policyOutput h4.ui.header {
+	font-family: CiscoSansBold;
+    font-size: 13px;
+    color: rgba(0,0,0,.87);
+    user-select: none;
+}
+
+.policyOutput h5.ui.header {
+	font-family: CiscoSansBold;
+    font-size: 12px;
+    color: #5d5d5d;
+    font-style: italic;
+    user-select: none;
+}
+
+ctv-collapsible,
+.ctv-collapsible { display: block; margin-top: 30px; }
+
+ctv-collapsible h4.ui.header,
+h4.ui.header.ctv-collapsible-label {
+	font-family: CiscoSansBold;
+    font-size: 13px;
+    color: rgba(0,0,0,.87);
+    cursor: pointer;}
+    user-select: none;
+
+ctv-collapsible .ui.header>.icon,
+.ctv-collapsible .ui.header>.icon {
+	font-size: 15px;
+	color: rgba(0,0,0,.87);
+	margin-top: -2px;
+	margin-right: 0 !important;
+	user-select: none;
+}
+
+.ctv-collapsible-content { padding-left: 30px; padding-top: 12px; }
+
+.ui.basic.table td.key { font-family: CiscoSansRegular !important; color: #5d5d5d; white-space: nowrap; }
+.ui.basic.table td.value {  }
+
+.buttonRow { margin-top: 20px; }
+
+</style>

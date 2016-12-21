@@ -12,9 +12,11 @@ import { OrganizationsModel } from "../components/models/organizationsmodel";
     selector: 'isolationpolicycreate',
     templateUrl: 'network_policies/isolationpolicycreate.html'
 })
+
 export class IsolationPolicyCreateComponent implements OnInit {
     newPolicy:any;
     tenants:any[] = [];
+    policyMode:string = 'isolation'
 
     constructor(private activatedRoute: ActivatedRoute,
                 private router: Router,
@@ -22,7 +24,16 @@ export class IsolationPolicyCreateComponent implements OnInit {
                 private organizationsModel: OrganizationsModel,
                 private policiesModel: PoliciesModel,
                 private crudHelperService: CRUDHelperService) {
+
         var component = this;
+
+        function setMode() {
+            if (activatedRoute.routeConfig.path.includes('isolation')) {
+                component.policyMode = 'isolation';
+            } else {
+                component.policyMode = 'bandwidth';
+            }
+        }
 
         function resetForm() {
             crudHelperService.stopLoader(component);
@@ -31,6 +42,8 @@ export class IsolationPolicyCreateComponent implements OnInit {
                 tenantName: ''
             };
         }
+
+        setMode();
 
         resetForm();
     }

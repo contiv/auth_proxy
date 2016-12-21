@@ -118,6 +118,10 @@ export class IsolationPolicyDetailsComponent {
         this.router.navigate(['../../edit', this.policy.key], { relativeTo: this.activatedRoute });
     }
 
+    cancelDetails() {
+        this.returnToPolicies();
+    }
+
     cancelEditing() {
         this.returnToPolicyDetails();
     }

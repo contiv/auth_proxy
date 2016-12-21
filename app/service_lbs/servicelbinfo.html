@@ -1,64 +1,96 @@
 <div class="ui basic segment" [ngClass]="{loading: servicelbInfoCtrl.showLoader}">
-    <h4 class="ui header">Service Details</h4>
+
     <table class="ui very basic selectable table">
         <tbody>
         <tr>
-            <td class="ctv-header three wide column">Name</td>
-            <td>{{servicelbInfoCtrl.servicelb.serviceName}}</td>
+            <td class="ctv-header three wide column key">Name</td>
+            <td class="value">{{servicelbInfoCtrl.servicelb.serviceName}}</td>
         </tr>
         <tr>
-            <td class="ctv-header three wide column">Tenant</td>
-            <td>{{servicelbInfoCtrl.servicelb.tenantName}}</td>
+            <td class="ctv-header three wide column key">Tenant</td>
+            <td class="value">{{servicelbInfoCtrl.servicelb.tenantName}}</td>
         </tr>
         <tr>
-            <td class="ctv-header three wide column">Network</td>
-            <td>{{servicelbInfoCtrl.servicelb.networkName}}</td>
+            <td class="ctv-header three wide column key">Network</td>
+            <td class="value">{{servicelbInfoCtrl.servicelb.networkName}}</td>
         </tr>
         <tr>
-            <td class="ctv-header three wide column">IP address</td>
-            <td>{{servicelbInfoCtrl.servicelb.ipAddress}}</td>
+            <td class="ctv-header three wide column key">IP address</td>
+            <td class="value">{{servicelbInfoCtrl.servicelb.ipAddress}}</td>
         </tr>
         </tbody>
     </table>
-    <div [ngSwitch]="servicelbInfoCtrl.mode">
-        <div *ngSwitchCase="'details'">
-            <div class="ui section divider" style="margin-top: 40px"></div>
-            <h4 class="ui header" style="margin-top: 40px">Label Selectors</h4>
-            <table class="ui very basic selectable table">
-                <tbody>
-                    <tr *ngFor="let selector of servicelbInfoCtrl.servicelb.selectors">
-                        <td class="ctv-header three wide column">{{selector.split('=')[0]}}</td>
-                        <td>{{selector.split('=')[1]}}</td>
-                    </tr>
-                </tbody>
-            </table>
 
-            <div class="ui section divider" style="margin-top: 40px"></div>
-            <h4 class="ui header" style="margin-top: 40px">Ports</h4>
-            <table class="ui very basic unstackable table">
-                <tbody>
-                <tr>
-                    <td class="ctv-header">Service port</td>
-                    <td class="ctv-header">Provider port</td>
-                    <td class="ctv-header">Protocol</td>
-                </tr>
-                <tr *ngFor="let port of servicelbInfoCtrl.servicelb.ports">
-                    <td>{{port.split(':')[0]}}</td>
-                    <td>{{port.split(':')[1]}}</td>
-                    <td>{{port.split(':')[2]}}</td>
-                </tr>
-                </tbody>
-            </table>
+    <div [ngSwitch]="servicelbInfoCtrl.mode">
+
+        <div *ngSwitchCase="'details'">
+
+            <div class="ctv-collapsible">
+                <h4 class="ui header ctv-collapsible-label">Label Selectors</h4>
+                <table class="ui very basic selectable table">
+
+                    <thead>
+                        <tr>
+                            <th class="ctv-header">Name</th>
+                            <th class="ctv-header">Value</th>
+                        </tr>
+                    </thead>
+
+                    <tbody *ngIf="servicelbInfoCtrl.servicelb.selectors.length">
+                        <tr *ngFor="let selector of servicelbInfoCtrl.servicelb.selectors">
+                            <td class="ctv-header three wide column key">{{selector.split('=')[0]}}</td>
+                            <td class="value">{{selector.split('=')[1]}}</td>
+                        </tr>
+                    </tbody>
+
+                    <tbody *ngIf="!servicelbInfoCtrl.servicelb.selectors.length">
+                        <tr class="noDataFound">
+                            <td colspan="3">No labels found.</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+            <div class="ctv-collapsible">
+                <h4 class="ui header ctv-collapsible-label">Ports</h4>
+                <table class="ui very basic unstackable table">
+
+                    <thead>
+                        <tr>
+                            <th class="ctv-header">Service port</th>
+                            <th class="ctv-header">Provider port</th>
+                            <th class="ctv-header">Protocol</th>
+                        </tr>
+                    </thead>
+
+                    <tbody *ngIf="servicelbInfoCtrl.servicelb.ports.length">
+                        <tr *ngFor="let port of servicelbInfoCtrl.servicelb.ports">
+                            <td>{{port.split(':')[0]}}</td>
+                            <td>{{port.split(':')[1]}}</td>
+                            <td>{{port.split(':')[2]}}</td>
+                        </tr>
+                    </tbody>
+
+                    <tbody *ngIf="!servicelbInfoCtrl.servicelb.ports.length">
+                        <tr class="noDataFound">
+                            <td colspan="3">No ports found.</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
         </div>
         <div *ngSwitchCase="'edit'">
-            <div class="ui section divider" style="margin-top: 30px"></div>
-            <div class="field">
+
+            <div class="ui form field">
                 <ctv-collapsible title="Label Selectors">
                     <ctv-namevalue [items]="servicelbInfoCtrl.labelSelectors" (itemsChange)="servicelbInfoCtrl.labelSelectors=$event"></ctv-namevalue>
                 </ctv-collapsible>
             </div>
-            <div class="ui section divider"></div>
-            <div class="field">
+
+            <div class="ui form field">
                 <ctv-collapsible title="Ports">
                     <ctv-servicelbports [items]="servicelbInfoCtrl.servicelb.ports" (itemsChange)="servicelbInfoCtrl.servicelb.ports=$event"></ctv-servicelbports>
                 </ctv-collapsible>
@@ -66,10 +98,11 @@
         </div>
         <div class="ui grid" style="margin-top: 40px">
             <div class="right aligned sixteen wide column">
-                <button *ngSwitchCase="'edit'" type="button" class="ui basic button"
-                        (click)="servicelbInfoCtrl.cancelEditing()">Cancel
+                <button *ngSwitchCase="'edit'" type="button" class="ui large button cancelBtn"
+                        (click)="servicelbInfoCtrl.cancelEditing()">
+                    Cancel
                 </button>
-                <button *ngSwitchCase="'edit'" type="button" class="ui blue button"
+                <button *ngSwitchCase="'edit'" type="button" class="ui blue large button primaryBtn"
                         (click)="servicelbInfoCtrl.saveServicelb()">
                     Save
                 </button>

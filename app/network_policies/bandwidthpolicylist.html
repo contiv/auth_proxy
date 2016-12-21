@@ -29,18 +29,18 @@
 
         <tbody *ngIf="!bandwidthPolicyListCtrl['policies']">
             <tr>
-                <td colspan="3">No bandwidth policies found. Would you like to <a href="javascript: void(0);" (click)="create()">create one?</a></td>
+                <td colspan="2">No bandwidth policies found.</td>
             </tr>
         </tbody>
 
         <tbody *ngIf="bandwidthPolicyListCtrl['policies'] && !tableRef.count">
             <tr>
-                <td colspan="3">No records matched your filter criteria.</td>
+                <td colspan="2">No records matched your filter criteria.</td>
             </tr>
         </tbody>
 
         <tfoot>
-        <tr>
+        <tr class="pagination">
             <td colspan="2">
                 <ctv-tpagination [chunks]="tableRef.pageChunks"
                                  (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"

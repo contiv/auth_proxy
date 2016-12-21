@@ -2,73 +2,69 @@
 <table class="ui very basic selectable table">
     <tbody>
     <tr>
-        <td class="ctv-header three wide column">Name</td>
+        <td class="ctv-header three wide column key">Name</td>
         <td>{{networkStatsCtrl['config']['networkName']}}</td>
     </tr>
     <tr>
-        <td class="ctv-header three wide column">Allocated Addresses Count</td>
-        <td>{{networkStatsCtrl.networkInspectStats.allocatedAddressesCount}}</td>
+        <td class="ctv-header three wide column key">Allocated Addresses Count</td>
+        <td class="value">{{networkStatsCtrl.networkInspectStats.allocatedAddressesCount}}</td>
     </tr>
     <tr>
-        <td class="ctv-header three wide column">Allocated IP-Addresses</td>
-        <td>{{networkStatsCtrl.networkInspectStats.allocatedIPAddresses}}</td>
+        <td class="ctv-header three wide column key">Allocated IP-Addresses</td>
+        <td class="value">{{networkStatsCtrl.networkInspectStats.allocatedIPAddresses}}</td>
     </tr>
     <tr>
-        <td class="ctv-header three wide column">DNS Server-IP</td>
-        <td>{{networkStatsCtrl.networkInspectStats.dnsServerIP}}</td>
+        <td class="ctv-header three wide column key">DNS Server-IP</td>
+        <td class="value">{{networkStatsCtrl.networkInspectStats.dnsServerIP}}</td>
     </tr>
     <tr>
-        <td class="ctv-header three wide column">External Packet Tag</td>
-        <td>{{networkStatsCtrl.networkInspectStats.externalPktTag}}</td>
+        <td class="ctv-header three wide column key">External Packet Tag</td>
+        <td class="value">{{networkStatsCtrl.networkInspectStats.externalPktTag}}</td>
     </tr>
     <tr>
-        <td class="ctv-header three wide column">Number of Endpoints</td>
-        <td>{{networkStatsCtrl.networkInspectStats.numEndpoints}}</td>
+        <td class="ctv-header three wide column key">Number of Endpoints</td>
+        <td class="value">{{networkStatsCtrl.networkInspectStats.numEndpoints}}</td>
     </tr>
     <tr>
-        <td class="ctv-header three wide column">Packet Tag</td>
-        <td>{{networkStatsCtrl.networkInspectStats.pktTag}}</td>
+        <td class="ctv-header three wide column key">Packet Tag</td>
+        <td class="value">{{networkStatsCtrl.networkInspectStats.pktTag}}</td>
     </tr>
     </tbody>
 </table>
 
-<div class="ui section divider"></div>
 <ctv-collapsible title="End Points">
+
+    <ctv-search (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [placeholder]=""></ctv-search>
+
     <ctv-table #tableRef [defaultSortColumn]="'containerName'"
                [items]="networkStatsCtrl['endpoints']"
                (filtereditems)="networkStatsCtrl['filteredendpoints']=$event;"
                [size]="12">
         <thead>
             <tr>
-                <div class="ui grid" style="margin-top: 25px;margin-left: 25px;margin-bottom: 1px;">
-                    <th class="five wide column"><ctv-th [sortfield]="'containerName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj"> Container Name </ctv-th></th>
-                    <th class="four wide column" style="padding-left: 18px !important;"><ctv-th [sortfield]="'ipAddress'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj"> IP Address </ctv-th></th>
-                    <th class="three wide column" style="padding-left: 44px !important;"><ctv-th [sortfield]="'homingHost'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj"> Host </ctv-th></th>
-                    <th class="four wide column">
-                        <ctv-search (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [placeholder]="'Search Containers...'"></ctv-search>
-                    </th>
-                </div>
+                <th class="five wide column"><ctv-th [sortfield]="'containerName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj"> Container Name </ctv-th></th>
+                <th class="five wide column" style="padding-left: 18px !important;"><ctv-th [sortfield]="'ipAddress'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj"> IP Address </ctv-th></th>
+                <th class="five wide column" style="padding-left: 44px !important;"><ctv-th [sortfield]="'homingHost'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj"> Host </ctv-th></th>
             </tr>
         </thead>
 
         <tbody>
             <tr *ngFor="let endpoint of networkStatsCtrl['filteredendpoints']">
-                <td>
+                <td colspan="3" style="padding-left: 0 !important;">
                     <ctv-accordion [items]="networkStatsCtrl['containerDetails'][endpoint.containerID]">
-                        <div class="ui grid" style="margin-top: -33px; margin-left: 30px;">
+                        <div class="ui grid" style="margin-top: -33px; margin-left: 20px;">
                             <div class="five wide column">{{endpoint.containerName.substr(1)}}</div>
-                            <div class="four wide column">{{endpoint.ipAddress.join(' ')}}</div>
-                            <div class="four wide column">{{endpoint.homingHost}}</div>
+                            <div class="five wide column">{{endpoint.ipAddress.join(' ')}}</div>
+                            <div class="five wide column">{{endpoint.homingHost}}</div>
                         </div>
                     </ctv-accordion>
                 </td>
-                <td></td>
             </tr>
         </tbody>
 
         <tfoot>
-            <tr>
-                <td colspan="5">
+            <tr class="pagination">
+                <td colspan="3">
                     <ctv-tpagination [chunks]="tableRef.pageChunks"
                                      (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
                                      (prevChunk)="tableRef.showPrevChunk()"

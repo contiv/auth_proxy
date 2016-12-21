@@ -1,13 +1,14 @@
-<div [ngSwitch]="mode" class="field">
-    <table *ngSwitchCase="'edit'" class="ui very basic collapsing unstackable table">
+<div [ngSwitch]="mode" class="field" style="margin-top: 20px;">
+    <label>Add application groups to associate with this profile</label>
+    <table *ngSwitchCase="'edit'" class="ui very basic collapsing unstackable table noRowBorders" style="margin-top:0; ">
         <tbody>
-        <tr>
+        <tr style="background-color: transparent !important;">
             <td>
                 <div class="ui left icon input">
                     <input name="applicationGroupSearchText"
                            type="text"
                            [(ngModel)]="applicationGroupSearchText"
-                           placeholder="Filter by application group name"
+                           placeholder="filter menu options"
                            size="30">
                     <i class="search icon"></i>
                 </div>
@@ -17,7 +18,7 @@
                         name="selectApplicationGroups"
                         class="ui dropdown"
                         ngModel>
-                    <option value="">-- Please select application group --</option>
+                    <option value="">-- Select an application group --</option>
                     <option *ngFor="let group of (applicationGroups | filter:applicationGroupSearchText)"
                             [value]="group.groupName">
                         {{group.groupName}}
@@ -25,15 +26,16 @@
                 </select>
             </td>
             <td>
-                <button type="button" class="ui icon button"
+                <button type="button" class="ui icon button iconBtn primaryIconBtn"
                         (click)="addApplicationGroup(selectApplicationGroupRef.value)">
-                    <i class="blue add icon"></i>
+                    <i class="add icon"></i>
                 </button>
             </td>
         </tr>
-
         </tbody>
     </table>
+
+    <label>Current profile application groups</label>
 
     <ctv-table #tableRef
                [defaultSortColumn]="'groupName'"
@@ -44,7 +46,7 @@
         <tr>
             <th>
                 <ctv-th [sortfield]="'groupName'" (sortdata)="tableRef.applysort($event)"
-                        [sortobject]="tableRef.sortObj"> Group name
+                        [sortobject]="tableRef.sortObj"> Application group name
                 </ctv-th>
             </th>
             <th>
@@ -58,24 +60,34 @@
             </th>
         </tr>
         </thead>
-        <tbody>
+
+        <tbody *ngIf="selectedApplicationGroups">
         <tr *ngFor="let group of filteredSelectedApplicationGroups">
-            <td class="three wide column">
+            <td>
                 <a [routerLink]="['/m/applicationgroups/details', group.key]">{{group.groupName}}</a>
             </td>
             <td>{{group.policies.join(", ")}}</td>
             <td>
                 <button *ngSwitchCase="'edit'"
                         type="button"
-                        class="ui icon button"
+                        class="ui icon button iconBtn secondaryIconBtn"
                         (click)="removeApplicationGroup(group.groupName)">
                     <i class="trash icon"></i>
                 </button>
             </td>
         </tr>
         </tbody>
+
+        <tbody *ngIf="selectedApplicationGroups.length==0">
+        <tr class="noDataFound">
+            <td colspan="3">
+                No application groups have been added to this profile.
+            </td>
+        </tr>
+        </tbody>
+
         <tfoot>
-        <tr>
+        <tr class="pagination">
             <td colspan="5">
                 <ctv-tpagination [chunks]="tableRef.pageChunks"
                                  (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"

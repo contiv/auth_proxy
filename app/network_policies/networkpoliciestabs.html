@@ -1,36 +1,54 @@
 <div class="ui sixteen column grid">
-    <div class="eight wide column">
-        <div class="content pageTitle">Network Policies</div>
+    <div class="ui row pageHeader">
+        <div class="left aligned eight wide column">
+            <div class="content pageTitle">Network Policies</div>
+        </div>
+        <div class="right aligned eight wide column">
+          <button class="ui blue large button primaryBtn" (click)="createNetworkPolicy()">
+              <i class="add icon"></i>
+              Create Policy
+          </button>
+        </div>
+    </div>
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div [ngSwitch]="policyMode" class="breadcrumbs">
+                <span class="crumb">
+                  <a href="/#/m/networkpolicies/list">
+                      Network Policies List
+                  </a></span>
+                <span *ngSwitchCase="'isolation'" class="crumb">Isolation Policies</span>
+                <span *ngSwitchCase="'bandwidth'" class="crumb">Bandwidth Policy</span>
+                <span *ngSwitchCase="'contractgroup'" class="crumb">External Contract Group</span>
+            </div>
+        </div>
     </div>
 
-    <div class="right aligned eight wide column">
-        <button class="ui blue large button primaryBtn" (click)="createNetworkPolicy()">
-            <i class="add icon"></i>
-            Create Policy
-        </button>
+    <div class="ui row">
+        <div class="ui sixteen wide column">
 
+          <div class="ui tabular menu">
+              <a class="item"
+                 [ngClass]="{active: isolationPolicySelected}"
+                 (click)="selectPolicyTab(policyTab.isolation)">
+                  Isolation Policies
+              </a>
+              <a class="item"
+                 [ngClass]="{active: bandwidthPolicySelected}"
+                 (click)="selectPolicyTab(policyTab.bandwidth)">
+                  Bandwidth Policies
+              </a>
+              <a class="item"
+                 [ngClass]="{active: contractGroupSelected}"
+                 (click)="selectPolicyTab(policyTab.contractGroup)">
+                  External Contract Groups (ACI)
+              </a>
+          </div>
+
+          <isolationpolicylist *ngIf="isolationPolicySelected"></isolationpolicylist>
+          <bandwidthpolicylist *ngIf="bandwidthPolicySelected"></bandwidthpolicylist>
+          <contractgrouplist *ngIf="contractGroupSelected"></contractgrouplist>
+
+        </div>
     </div>
 </div>
-<div class="ui tabular menu">
-    <a class="item"
-       [ngClass]="{active: isolationPolicySelected}"
-       (click)="selectPolicyTab(policyTab.isolation)">
-        Isolation Policies
-    </a>
-    <a class="item"
-       [ngClass]="{active: bandwidthPolicySelected}"
-       (click)="selectPolicyTab(policyTab.bandwidth)">
-        Bandwidth Policies
-    </a>
-    <a class="item"
-       [ngClass]="{active: contractGroupSelected}"
-       (click)="selectPolicyTab(policyTab.contractGroup)">
-        External Contract Groups (ACI)
-    </a>
-</div>
-
-<isolationpolicylist *ngIf="isolationPolicySelected"></isolationpolicylist>
-<bandwidthpolicylist *ngIf="bandwidthPolicySelected"></bandwidthpolicylist>
-<contractgrouplist *ngIf="contractGroupSelected"></contractgrouplist>
-
-

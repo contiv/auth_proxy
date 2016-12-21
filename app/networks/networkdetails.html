@@ -1,44 +1,70 @@
+
 <div class="ui sixteen column grid">
-    <div class="one wide column">
-        <a [routerLink]="['../../list']">
-            <i class="large arrow left icon"></i>
-        </a>
-    </div>
-    <div class="left floated twelve wide column">
-        <div class="content" style="font-size: 24px">
-            <span>Networks</span>
-            <span class="headingfontcolor"> (Details)</span>
+    <div class="ui row pageHeader">
+        <div class="left aligned eight wide column">
+            <div class="content pageTitle">Details: {{networkDetailsCtrl.network.networkName}}</div>
+        </div>
+
+        <div class="right aligned eight wide column">
+        <button class="ui blue large button cancelBtn">
+                <i class="trash icon"></i>
+                Close
+            </button>
+            <button class="ui blue large button secondaryBtn" onclick="$('#delete-network-modal').modal('show')">
+                <i class="trash icon"></i>
+                Remove
+            </button>
         </div>
     </div>
-    <div class="right aligned three wide column">
-        <div id="delete-network-modal" class="ui small modal">
-            <div class="header">Remove Network: {{networkDetailsCtrl.network.networkName}}</div>
-            <div class="content">
-                <p>Are you sure you want to remove this network?</p>
+
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div class="breadcrumbs">
+                <span class="crumb">
+                    <a href="/#/m/networks/list">
+                        Networks List
+                    </a>
+                </span>
+                <span class="crumb">{{networkDetailsCtrl.network.networkName}}</span>
             </div>
-            <div class="actions">
-                <div class="ui negative button">No</div>
-                <div class="ui positive button" (click)="deleteNetwork()">
-                    Yes
+        </div>
+    </div>
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+
+            <div class="right aligned three wide column">
+                <div id="delete-network-modal" class="ui small modal">
+                    <div class="header">Remove Network: {{networkDetailsCtrl.network.networkName}}</div>
+                    <div class="content">
+                        <p>Are you sure you want to remove this network?</p>
+                    </div>
+                    <div class="actions">
+                        <div class="ui negative button">No</div>
+                        <div class="ui positive button" (click)="deleteNetwork()">
+                            Yes
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <div class="ui tabular menu">
+                <a class="item" [ngClass]="{active: infoselected}" (click)="infoselected=true">
+                    General
+                </a>
+                <a class="item" [ngClass]="{active: !infoselected}" (click)="infoselected=false">
+                    Stats
+                </a>
+            </div>
+
+            <network-info [networkDetailsCtrl]="networkDetailsCtrl" *ngIf="infoselected"></network-info>
+
+            <network-stat [statKey]="statskey" *ngIf="!infoselected"></network-stat>
+
+            <ctv-error *ngIf="networkDetailsCtrl.showServerError" [header]="'Error deleting network'"
+                       [error]="networkDetailsCtrl.serverErrorMessage">
+            </ctv-error>
+
         </div>
-        <button class="ui basic button" onclick="$('#delete-network-modal').modal('show')">
-            <i class="trash icon"></i>
-            Remove
-        </button>
     </div>
 </div>
-<div class="ui tabular menu">
-    <a class="item" [ngClass]="{active: infoselected}" (click)="infoselected=true">
-        <i class="details icon"></i>
-        DETAILS
-    </a>
-    <a class="item" [ngClass]="{active: !infoselected}" (click)="infoselected=false">
-        <i class="area chart icon"></i>
-        STATS
-    </a>
-</div>
-
-<network-info [networkDetailsCtrl]="networkDetailsCtrl" *ngIf="infoselected"></network-info>
-<network-stat [statKey]="statskey" *ngIf="!infoselected"></network-stat>

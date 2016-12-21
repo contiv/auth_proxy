@@ -1,75 +1,124 @@
-<form class="ui form" role="form"
-      (submit)="createUser(formRef.valid)" novalidate #formRef="ngForm">
-    <div class="ui sixteen column grid">
-        <div class="nine wide column">
-            <div class="content">
-                <a [routerLink]="['../list']">
-                    <i class="large arrow left icon"></i>
-                </a>
-                <span style="font-size: 24px; margin-left: 6px">Users</span>
-                <span class="headingfontcolor" style="font-size: 24px"> (Create User)</span>
+<div class="ui sixteen column grid">
+    <div class="ui row pageHeader">
+        <div class="left aligned eight wide column">
+            <div class="content pageTitle">Create User</div>
+        </div>
+        <div class="right aligned eight wide column">&nbsp;</div>
+    </div>
+
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div class="breadcrumbs">
+                <span class="crumb">
+                    <a [routerLink]="['../list']">
+                        User List
+                    </a>
+                </span>
+                <span class="crumb">Create</span>
             </div>
         </div>
     </div>
 
-    <div class="ui active inverted dimmer" *ngIf="showLoader">
-        <div class="ui loader"></div>
-    </div>
-    <div class="ui basic segment">
-        <div class="field">
-            <div *ngIf="formRef.submitted">
-                <div [hidden]="formRef.valid" class="ui negative message">
-                    <ul class="list">
-                        <li *ngIf="newUserName.errors?.required">Please enter
-                            user name
-                        </li>
-                        <li *ngIf="newUserPassword.errors?.required">Please enter
-                            user password
-                        </li>
-                    </ul>
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+
+            <form class="ui form" role="form"
+                  (submit)="createUser(formRef.valid)" novalidate #formRef="ngForm">
+
+                <div class="ui active inverted dimmer" *ngIf="showLoader">
+                    <div class="ui loader"></div>
                 </div>
-            </div>
-        </div>
-        <div class="field">
-            <label for="newUserName">Username</label>
-            <input type="text" id="newUserName" name="newUserName"
-                   [(ngModel)]="newUser.username"
-                   placeholder="Enter username" required #newUserName="ngModel">
-        </div>
-        <div class="field">
-            <label for="newUserPassword">Password</label>
-            <input type="password" id="newUserPassword" name="newUserPassword"
-                   [(ngModel)]="newUser.password"
-                   placeholder="Enter password" required #newUserPassword="ngModel">
-        </div>
-        <div class="field">
-            <label for="newUserFirstName">First Name</label>
-            <input type="text" id="newUserFirstName" name="newUserFirstName"
-                   [(ngModel)]="newUser.first_name"
-                   placeholder="Enter first name" #newUserFirstName="ngModel">
-        </div>
-        <div class="field">
-            <label for="newUserLastName">Last Name</label>
-            <input type="text" id="newUserLastName" name="newUserLastName"
-                   [(ngModel)]="newUser.last_name"
-                   placeholder="Enter last name" #newUserLastName="ngModel">
-        </div>
-        <div class="field">
-            <label>
-                <input type="checkbox" name="newUserDisabled" tabindex="0"
-                       [(ngModel)]="newUser.disable">
-                Disabled
-            </label>
-        </div>
-        <div class="ui grid">
-            <div class="right aligned sixteen wide column">
-                <div style="margin-top: 40px">
-                    <button type="button" class="ui basic button" (click)="cancelCreating()">
-                        Cancel
-                    </button>
-                    <button type="submit" class="ui blue button">Create</button>
+
+                <div class="ui basic segment">
+
+                    <div class="field">
+                        <div *ngIf="formRef.submitted">
+                            <div [hidden]="formRef.valid" class="ui negative message">
+                                <ul class="list">
+                                    <li *ngIf="newUserOrganization.errors?.required">
+                                        Please select tenant
+                                    </li>
+                                    <li *ngIf="newUserName.errors?.required">
+                                        Please enter user name
+                                    </li>
+                                    <li *ngIf="newUserPassword.errors?.required">
+                                        Please enter user password
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui sixteen column grid">
+                        <div class="ui row">
+
+                            <div class="ui four wide column">
+                                <div class="field">
+                                    <label for="newUserName">Username</label>
+                                    <input type="text" id="newUserName" name="newUserName"
+                                           [(ngModel)]="newUser.username"
+                                           placeholder="Enter name" required #newUserName="ngModel">
+                                </div>
+                            </div>
+                            <div class="ui four wide column">
+                                <div class="field">
+                                    <label for="newUserPassword">Password</label>
+                                    <input type="password" id="newUserPassword" name="newUserPassword"
+                                           [(ngModel)]="newUser.password"
+                                           placeholder="Enter password" required #newUserPassword="ngModel">
+                                </div>
+                            </div>
+                            <div class="ui four wide column">
+                                <div class="field">
+                                    <label for="newFirstName">First name</label>
+                                    <input type="text" id="newFirstName" name="newFirstName"
+                                           [(ngModel)]="newUser.first_name"
+                                           placeholder="Enter first name" #newFirstName="ngModel">
+                                </div>
+                            </div>
+                            <div class="ui four wide column">
+                                <div class="field">
+                                    <label for="newLastName">Last name</label>
+                                    <input type="text" id="newLastName" name="newLastName"
+                                           [(ngModel)]="newUser.last_name"
+                                           placeholder="Enter last name"  #newLastName="ngModel">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row">
+
+                            <div class="ui four wide column">
+                                <div class="field">
+                                    <label for="enabled23">&nbsp;<br>
+                                    <input type="checkbox" name="newUserDisabled" tabindex="0"
+                                               [(ngModel)]="newUser.disable">
+                                        Disabled
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="ui row">
+                            <div class="right aligned sixteen wide column buttonRow">
+
+                                <button type="button" class="ui large button cancelBtn" (click)="cancelCreating()">
+                                    Cancel
+                                </button>
+                                <button type="submit" class="ui blue large button primaryBtn">
+                                    Create
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <ctv-error *ngIf="showServerError" header="Error creating user" [error]="serverErrorMessage">
+                    </ctv-error>
+
                 </div>
-            </div>
-        </div>
+            </form>
+
+         </div>
     </div>
-</form>
+</div>

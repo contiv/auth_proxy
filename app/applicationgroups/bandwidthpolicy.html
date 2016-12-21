@@ -1,52 +1,60 @@
-<div *ngIf="mode=='edit'" class="field">
-    <table class="ui very basic collapsing unstackable table">
+<div *ngIf="mode=='edit'" class="field policyOutput">
+    <table class="ui very basic collapsing unstackable table noRowBorders">
         <tbody>
-        <tr>
+        <tr class="noHover">
             <td>
                 <div class="ui left icon input">
                     <input name="netProfileSearchText"
                            type="text"
                            [(ngModel)]="netProfileSearchText"
-                           placeholder="Filter by profile name">
+                           placeholder="filter menu options">
                     <i class="search icon"></i>
                 </div>
             </td>
             <td>
                 <select class="ui dropdown"
                         name="selectNetprofile"
+                        [class.noDataFound]="!netProfiles.length"
                         [ngModel]="selectedNetprofile"
                         (ngModelChange)="updateApplicationgroup($event)">
-                    <option value="">-- Please select bandwidth --</option>
+                    <option *ngIf="netProfiles.length" value="">-- Select a bandwidth policy --</option>
+                    <option *ngIf="!netProfiles.length" value="">No policies defined</option>
                     <option *ngFor="let policy of (netProfiles | filter:netProfileSearchText)"
                             [ngValue]="policy">
                         {{policy.profileName}}
                     </option>
                 </select>
             </td>
-
         </tr>
         </tbody>
     </table>
+
+    <h5 class="ui header">Bandwidth Policy Details</h5>
+    <table class="ui very basic unstackable table">
+        <thead>
+        <tr>
+            <th>Profile Name</th>
+            <th>Tenant Name</th>
+            <th>Bandwidth</th>
+            <th>DSCP</th>
+        </tr>
+        </thead>
+
+        <tbody *ngIf="selectedNetprofile && selectedNetprofile.profileName">
+        <tr>
+            <td>{{selectedNetprofile.profileName}}</td>
+            <td>{{selectedNetprofile.tenantName}}</td>
+            <td>{{selectedNetprofile.bandwidth}}</td>
+            <td>{{selectedNetprofile.DSCP}}</td>
+        </tr>
+        </tbody>
+
+        <tbody *ngIf="!selectedNetprofile || !selectedNetprofile.profileName">
+        <tr class="noDataFound">
+            <td colspan="4">none selected</td>
+        </tr>
+        </tbody>
+
+    </table>
+
 </div>
-<h5 class="ui header">Bandwidth Details</h5>
-<table class="ui very basic unstackable table" style="margin-top: 20px">
-    <thead>
-    <tr>
-        <th>Profile Name</th>
-        <th>Tenant Name</th>
-        <th>Bandwidth</th>
-        <th>DSCP</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <tr>
-        <td>{{selectedNetprofile.profileName}}</td>
-        <td>{{selectedNetprofile.tenantName}}</td>
-        <td>{{selectedNetprofile.bandwidth}}</td>
-        <td>{{selectedNetprofile.DSCP}}</td>
-    </tr>
-    </tbody>
-</table>
-
-
