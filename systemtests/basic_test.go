@@ -8,6 +8,13 @@ import (
 	. "gopkg.in/check.v1"
 )
 
+const (
+	// XXX: Yuva's dev server
+	ldapServer        = "10.193.231.158"
+	ldapPassword      = "C1ntainer$"
+	ldapAdminPassword = "C1ntainer$!"
+)
+
 // TODO: the usernames and passwords here are currently hardcoded in lieu of
 //       having a package/datastore for doing local user management.
 //       See Test() in init_test.go for where that would be done.
@@ -15,6 +22,8 @@ import (
 // TestLogin tests that valid credentials successfully authenticate and that
 // invalid credentials result in failed authentication.
 func (s *systemtestSuite) TestLogin(c *C) {
+
+	// test local user login
 	runTest(func(p *proxy.Server, ms *MockServer) {
 		//
 		// valid credentials
@@ -31,6 +40,37 @@ func (s *systemtestSuite) TestLogin(c *C) {
 		c.Assert(err, IsNil)
 		c.Assert(resp.StatusCode, Equals, 401)
 		c.Assert(len(token), Equals, 0)
+	})
+
+	// test LDAP user login
+	runTest(func(p *proxy.Server, ms *MockServer) {
+		adToken := adminToken(c)
+
+		// add LDAP configuration
+		ldapConfig := `{"server":"` + ldapServer + `",` +
+			`"port":5678,` +
+			`"base_dn":"DC=ccn,DC=example,DC=com",` +
+			`"service_account_dn":"CN=Service Account,CN=Users,DC=ccn,DC=example,DC=com",` +
+			`"service_account_password":"` + ldapPassword + `",` +
+			`"StartTLS":false,` +
+			`"InsecureSkipVerify":true}`
+
+		s.addLdapConfiguration(c, adToken, ldapConfig)
+
+		// try logging using `service` account
+		loginAs(c, "saccount", ldapPassword)
+
+		// try logging using `temp` account; this fails as the user is only associated with primary group
+		// more details can be found here: auth/ldap/ldap.go
+		token, resp, err := login("temp", ldapPassword)
+		c.Assert(token, Equals, "")
+		c.Assert(resp.StatusCode, Equals, 401)
+		c.Assert(err, IsNil)
+
+		// tyy logging using `admin` account
+		loginAs(c, "Administrator", ldapAdminPassword)
+
+		s.deleteLdapConfiguration(c, adToken)
 	})
 }
 

@@ -26,7 +26,9 @@ func Authenticate(username, password string) (string, error) {
 		return generateToken(userPrincipals, username) // local authentication succeeded!
 	}
 
-	if err == ccnerrors.ErrUserNotFound {
+	// Same username can be there in both local setup and LDAP.
+	// So, we try LDAP if `access is denied` from local authentication; coz, the same user(name) could also be part of LDAP.
+	if err == ccnerrors.ErrUserNotFound || err == ccnerrors.ErrAccessDenied {
 		userPrincipals, err = ldap.Authenticate(username, password)
 		if err == nil {
 			return generateToken(userPrincipals, username) // ldap authentication succeeded!

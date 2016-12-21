@@ -7,10 +7,12 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"os/exec"
 	"testing"
 	"time"
 
 	"github.com/contiv/ccn_proxy/auth"
+	"github.com/contiv/ccn_proxy/common"
 	"github.com/contiv/ccn_proxy/common/test"
 	"github.com/contiv/ccn_proxy/common/types"
 	"github.com/contiv/ccn_proxy/db"
@@ -41,6 +43,10 @@ func Test(t *testing.T) {
 	if err := state.InitializeStateDriver(datastoreAddress); err != nil {
 		log.Fatalln(err)
 	}
+
+	// set `tls_key_file` in Globals
+	exec.Command("/bin/sh", "-c", "make generate-certificate")
+	common.Global().Set("tls_key_file", "../local_certs/local.key")
 
 	// cleanup users and principals
 	test.CleanupDatastore(datastore, []string{
