@@ -177,12 +177,6 @@ func (s *Server) Stop() {
 func addRoutes(s *Server, router *mux.Router) {
 
 	//
-	// UI: static files which are served from the root
-	//
-	root := "/"
-	router.PathPrefix(root).Handler(http.StripPrefix(root, http.FileServer(http.Dir(uiDirectory))))
-
-	//
 	// Authentication endpoint
 	//
 	router.Path(LoginPath).Methods("POST").HandlerFunc(loginHandler)
@@ -205,6 +199,12 @@ func addRoutes(s *Server, router *mux.Router) {
 	// Netmaster endpoints
 	//
 	addNetmasterRoutes(s, router)
+
+	//
+	// UI: static files which are served from the root
+	//
+	root := "/"
+	router.PathPrefix(root).Handler(http.StripPrefix(root, http.FileServer(http.Dir(uiDirectory))))
 }
 
 // addNetmasterRoutes adds all netmaster routes to mux.Router
