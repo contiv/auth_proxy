@@ -57,7 +57,7 @@ func UpdateLdapConfiguration(ldapConfiguration *types.LdapConfiguration) error {
 // GetLdapConfiguration retrieves LDAP configuration from the data store.
 // return values:
 //  *types.LdapConfiguration: reference to the LDAP configuration fetched from data store
-//  error: as returned by `GetStateDriver/getLdapConfiguration`
+//  error: as returned by `state.GetStateDriver/getLdapConfiguration`
 func GetLdapConfiguration() (*types.LdapConfiguration, error) {
 	stateDrv, err := state.GetStateDriver()
 	if err != nil {

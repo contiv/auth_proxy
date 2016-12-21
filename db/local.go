@@ -80,7 +80,7 @@ func GetLocalUser(username string) (*types.LocalUser, error) {
 //  username: string; of the user that requires update
 //  user: local user object to be updated in the data store
 // return values:
-//  error: as returned by GetStateDriver, any consecutive function call or relevant custom error
+//  error: as returned by state.state.GetStateDriver, any consecutive function call or relevant custom error
 func UpdateLocalUser(username string, user *types.LocalUser) error {
 	stateDrv, err := state.GetStateDriver()
 	if err != nil {

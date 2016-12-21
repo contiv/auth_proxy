@@ -153,7 +153,7 @@ func AddAuthorization(tenantName string, role types.RoleType, principalName stri
 // Return values:
 //    TODO: errors.NonExistentLocalUserError: if a local user doesn't exist
 //    TODO: errors.NonExistentLdapGroupError: if ldap group doesn't exist
-//    : error from state.InsertAuthorization if adding a tenant authorization
+//    : error from db.InsertAuthorization if adding a tenant authorization
 //      fails.
 func addTenantAuthorization(tenantName string, role types.RoleType, principalName string,
 	isLocal bool) (types.Authorization, error) {
@@ -182,7 +182,7 @@ func addTenantAuthorization(tenantName string, role types.RoleType, principalNam
 	}
 
 	// insert tenant authorization
-	if err := state.InsertAuthorization(&tenantAuthz); err != nil {
+	if err := db.InsertAuthorization(&tenantAuthz); err != nil {
 		log.Error("failed in adding tenant claim:", err)
 		return types.Authorization{}, err
 	}
@@ -207,14 +207,14 @@ func addTenantAuthorization(tenantName string, role types.RoleType, principalNam
 // Return values:
 //    TODO: errors.NonExistentLocalUserError: if a local user doesn't exist
 //    TODO: errors.NonExistentLdapGroupError: if ldap group doesn't exist
-//    : error from state.InsertAuthorization if adding/updating a role authorization
+//    : error from db.InsertAuthorization if adding/updating a role authorization
 //      fails.
-//    : error from state.ListAuthorizationsByClaimAndPrincipal if listing authorizations
+//    : error from db.ListAuthorizationsByClaimAndPrincipal if listing authorizations
 //      fails.
 func addUpdateRoleAuthorization(role types.RoleType, principalName string,
 	isLocal bool) (types.Authorization, error) {
 
-	authz, err := state.ListAuthorizationsByClaimAndPrincipal(types.RoleClaimKey, principalName)
+	authz, err := db.ListAuthorizationsByClaimAndPrincipal(types.RoleClaimKey, principalName)
 	if err != nil {
 		log.Error("failed in listing role claim for principal ",
 			principalName, ", error:", err)
@@ -240,7 +240,7 @@ func addUpdateRoleAuthorization(role types.RoleType, principalName string,
 		if role < grantedRole {
 			roleAuthz.ClaimValue = role.String()
 			// Inserting an existing authz updates it
-			if err := state.InsertAuthorization(&roleAuthz); err != nil {
+			if err := db.InsertAuthorization(&roleAuthz); err != nil {
 				log.Error("failed in updating role claim:", err)
 				return types.Authorization{}, err
 			}
@@ -273,7 +273,7 @@ func addUpdateRoleAuthorization(role types.RoleType, principalName string,
 //  error: nil if successful, else
 //    types.UnauthorizedError: if caller isn't authorized to make this API
 //    call.
-//    : error from state.DeleteAuthorization if deleting a authorization
+//    : error from db.DeleteAuthorization if deleting a authorization
 //      fails
 //
 func DeleteAuthorization(authUUID string) error {
@@ -281,13 +281,13 @@ func DeleteAuthorization(authUUID string) error {
 	defer common.Untrace(common.Trace())
 
 	// Return error if authorization doesn't exist
-	if _, err := state.GetAuthorization(authUUID); err != nil {
+	if _, err := db.GetAuthorization(authUUID); err != nil {
 		log.Warn("failed to get authorization, err: ", err)
 		return err
 	}
 
 	// delete authz from the KV store
-	if err := state.DeleteAuthorization(authUUID); err != nil {
+	if err := db.DeleteAuthorization(authUUID); err != nil {
 		log.Warn("failed to delete tenant authZ")
 		return err
 	}
@@ -305,14 +305,14 @@ func DeleteAuthorization(authUUID string) error {
 //
 // Return values:
 //  error: nil if successful, else
-//    : error from state.GetAuthorization if auth lookup fails
+//    : error from db.GetAuthorization if auth lookup fails
 func GetAuthorization(authzUUID string) (
 	types.Authorization, error) {
 
 	defer common.Untrace(common.Trace())
 
 	// Return error if authorization doesn't exist
-	authz, err := state.GetAuthorization(authzUUID)
+	authz, err := db.GetAuthorization(authzUUID)
 	if err != nil {
 		log.Warn("failed to get authorization; err:", err)
 		return types.Authorization{}, err
@@ -330,14 +330,14 @@ func GetAuthorization(authzUUID string) (
 //  error: nil if successful, else
 //    errors.ErrUnauthorized: if caller isn't authorized to make this API
 //    call.
-//    : error from state.ListAuthorizations if auth lookup fails
+//    : error from db.ListAuthorizations if auth lookup fails
 //
 func ListAuthorizations() ([]types.Authorization, error) {
 
 	defer common.Untrace(common.Trace())
 
 	// read all authorizations
-	auths, err := state.ListAuthorizations()
+	auths, err := db.ListAuthorizations()
 	if err != nil {
 		log.Error("failed to list all authorizations, err:", err)
 		return nil, err
@@ -388,7 +388,7 @@ func addRoleAuthorization(principalName string,
 	}
 
 	// insert authorization
-	if err := state.InsertAuthorization(&roleAuthz); err != nil {
+	if err := db.InsertAuthorization(&roleAuthz); err != nil {
 		log.Errorf("failed in adding role authorization %#v, error:%#v", roleAuthz, err)
 		return types.Authorization{}, err
 	}

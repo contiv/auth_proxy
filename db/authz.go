@@ -1,4 +1,4 @@
-package state
+package db
 
 import (
 	"encoding/json"
@@ -8,6 +8,7 @@ import (
 	"github.com/contiv/ccn_proxy/common"
 	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
 	"github.com/contiv/ccn_proxy/common/types"
+	"github.com/contiv/ccn_proxy/state"
 )
 
 //
@@ -28,7 +29,7 @@ func GetAuthorization(UUID string) (types.Authorization, error) {
 	defer common.Untrace(common.Trace())
 
 	a := types.Authorization{}
-	sd, err := GetStateDriver()
+	sd, err := state.GetStateDriver()
 	if err != nil {
 		return a, err
 	}
@@ -49,7 +50,7 @@ func DeleteAuthorization(ID string) error {
 
 	a := types.Authorization{}
 	a.UUID = ID
-	sd, err := GetStateDriver()
+	sd, err := state.GetStateDriver()
 	if err != nil {
 		return err
 	}
@@ -71,19 +72,23 @@ func ListAuthorizations() (
 	defer common.Untrace(common.Trace())
 
 	a := &types.Authorization{}
-	sd, err := GetStateDriver()
+	sd, err := state.GetStateDriver()
 	if err != nil {
 		return nil, err
 	}
 	(*a).StateDriver = sd
 
+	list := []types.Authorization{}
 	allAuthZList, err := a.StateDriver.ReadAllState(types.AuthZDir, a, json.Unmarshal)
 	if err != nil {
+		if err == ccnerrors.ErrKeyNotFound {
+			return list, nil
+		}
+
 		log.Error("failed to ReadAllState, err:", err)
 		return nil, ccnerrors.ErrReadingFromStore
 	}
 
-	list := []types.Authorization{}
 	for _, auth := range allAuthZList {
 		tmp, ok := auth.(*types.Authorization)
 		if ok {
@@ -112,19 +117,24 @@ func ListAuthorizationsByPrincipal(ID string) (
 	defer common.Untrace(common.Trace())
 
 	a := &types.Authorization{}
-	sd, err := GetStateDriver()
+	sd, err := state.GetStateDriver()
 	if err != nil {
 		return nil, err
 	}
 	(*a).StateDriver = sd
 
+	match := []types.Authorization{}
+
 	allAuthZList, err := a.StateDriver.ReadAllState(types.AuthZDir, a, json.Unmarshal)
 	if err != nil {
+		if err == ccnerrors.ErrKeyNotFound {
+			return match, nil
+		}
+
 		log.Error("failed to ReadAllState, err:", err)
 		return nil, ccnerrors.ErrReadingFromStore
 	}
 
-	match := []types.Authorization{}
 	for _, auth := range allAuthZList {
 		tmp, ok := auth.(*types.Authorization)
 		if ok {
@@ -153,7 +163,7 @@ func DeleteAuthorizationsByPrincipal(principalID string) error {
 	defer common.Untrace(common.Trace())
 
 	a := &types.Authorization{}
-	sd, err := GetStateDriver()
+	sd, err := state.GetStateDriver()
 	if err != nil {
 		return err
 	}
@@ -203,19 +213,24 @@ func ListAuthorizationsByClaim(claim string) (
 	defer common.Untrace(common.Trace())
 
 	a := &types.Authorization{}
-	sd, err := GetStateDriver()
+	sd, err := state.GetStateDriver()
 	if err != nil {
 		return nil, err
 	}
 	(*a).StateDriver = sd
 
+	match := []types.Authorization{}
+
 	allAuthZList, err := a.StateDriver.ReadAllState(types.AuthZDir, a, json.Unmarshal)
 	if err != nil {
+		if err == ccnerrors.ErrKeyNotFound {
+			return match, nil
+		}
+
 		log.Error("failed to ReadAllState, err:", err)
 		return nil, ccnerrors.ErrReadingFromStore
 	}
 
-	match := []types.Authorization{}
 	for _, auth := range allAuthZList {
 		tmp, ok := auth.(*types.Authorization)
 		if ok {
@@ -243,7 +258,7 @@ func DeleteAuthorizationsByClaim(claim string) error {
 	defer common.Untrace(common.Trace())
 
 	a := &types.Authorization{}
-	sd, err := GetStateDriver()
+	sd, err := state.GetStateDriver()
 	if err != nil {
 		return err
 	}
@@ -292,19 +307,24 @@ func ListAuthorizationsByClaimAndPrincipal(claim string, principal string) (
 	defer common.Untrace(common.Trace())
 
 	a := &types.Authorization{}
-	sd, err := GetStateDriver()
+	sd, err := state.GetStateDriver()
 	if err != nil {
 		return nil, err
 	}
 	(*a).StateDriver = sd
 
+	match := []types.Authorization{}
+
 	allAuthZList, err := a.StateDriver.ReadAllState(types.AuthZDir, a, json.Unmarshal)
 	if err != nil {
+		if err == ccnerrors.ErrKeyNotFound {
+			return match, nil
+		}
+
 		log.Error("failed to ReadAllState, err:", err)
 		return nil, ccnerrors.ErrReadingFromStore
 	}
 
-	match := []types.Authorization{}
 	for _, auth := range allAuthZList {
 		tmp, ok := auth.(*types.Authorization)
 		if ok {

@@ -71,6 +71,9 @@ func (s *dbSuite) SetUpSuite(c *C) {
 	// set `tls_key_file` in Globals
 	exec.Command("/bin/sh", "-c", "make generate-certificate")
 	common.Global().Set("tls_key_file", "../local_certs/local.key")
+
+	// set state driver for authZ objects
+	s.setAuthZStateDriver(c)
 }
 
 // TearDownSuite reverts the data store state + any further cleanup required.
