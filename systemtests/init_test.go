@@ -30,6 +30,8 @@ var (
 )
 
 func Test(t *testing.T) {
+	log.SetLevel(log.DebugLevel)
+
 	datastore := test.GetDatastore()
 	datastoreAddress := test.GetDatastoreAddress()
 

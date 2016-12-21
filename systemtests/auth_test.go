@@ -1,6 +1,8 @@
 package systemtests
 
 import (
+	"encoding/json"
+
 	"github.com/contiv/ccn_proxy/proxy"
 	. "gopkg.in/check.v1"
 )
@@ -52,9 +54,21 @@ func (s *systemtestSuite) TestTenantAuthorization(c *C) {
 */
 
 // addAuthorization helper function for the tests
-func (s *systemtestSuite) addAuthorization(c *C, data, token string) {
+func (s *systemtestSuite) addAuthorization(c *C, data, token string) string {
 	endpoint := "/api/v1/ccn_proxy/authorizations"
 
-	resp, _ := proxyPost(c, token, endpoint, []byte(data))
+	resp, body := proxyPost(c, token, endpoint, []byte(data))
 	c.Assert(resp.StatusCode, Equals, 201)
+
+	authz := proxy.GetAuthorizationReply{}
+	c.Assert(json.Unmarshal(body, &authz), IsNil)
+	return authz.AuthzUUID
+}
+
+// deleteAuthorization helper function for the tests
+func (s *systemtestSuite) deleteAuthorization(c *C, authzUUID, token string) {
+	endpoint := "/api/v1/ccn_proxy/authorizations/" + authzUUID
+
+	resp, _ := proxyDelete(c, token, endpoint)
+	c.Assert(resp.StatusCode, Equals, 204)
 }
