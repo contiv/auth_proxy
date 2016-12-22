@@ -1,5 +1,5 @@
-<div class="ui sixteen column grid pageHeader">
-    <div class="ui row">
+<div class="ui sixteen column grid">
+    <div class="ui row pageHeader">
         <div class="left aligned eight wide column">
             <div class="content pageTitle">ACI Application Profiles</div>
         </div>
@@ -56,7 +56,7 @@
                     </tr>
                 </tbody>
 
-                <tbody *ngIf="appProfiles && !filtereditems.count">
+                <tbody *ngIf="appProfiles && !filteredAppProfiles.length">
                     <tr class="noDataFound">
                         <td colspan="2">No records matched your filter criteria.</td>
                     </tr>

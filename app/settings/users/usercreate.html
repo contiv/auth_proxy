@@ -49,10 +49,12 @@
                         </div>
                     </div>
 
+                    <div class="description">Create user accounts here. You can assign users into tenancies, and define their role, under Settings > Authorizations. </div>
+
                     <div class="ui sixteen column grid">
                         <div class="ui row">
 
-                            <div class="ui four wide column">
+                            <div class="ui eight wide column">
                                 <div class="field">
                                     <label for="newUserName">Username</label>
                                     <input type="text" id="newUserName" name="newUserName"
@@ -60,7 +62,7 @@
                                            placeholder="Enter name" required #newUserName="ngModel">
                                 </div>
                             </div>
-                            <div class="ui four wide column">
+                            <div class="ui eight wide column">
                                 <div class="field">
                                     <label for="newUserPassword">Password</label>
                                     <input type="password" id="newUserPassword" name="newUserPassword"
@@ -68,7 +70,11 @@
                                            placeholder="Enter password" required #newUserPassword="ngModel">
                                 </div>
                             </div>
-                            <div class="ui four wide column">
+
+                        </div>
+                        <div class="ui row">
+
+                            <div class="ui eight wide column">
                                 <div class="field">
                                     <label for="newFirstName">First name</label>
                                     <input type="text" id="newFirstName" name="newFirstName"
@@ -76,7 +82,7 @@
                                            placeholder="Enter first name" #newFirstName="ngModel">
                                 </div>
                             </div>
-                            <div class="ui four wide column">
+                            <div class="ui eight wide column">
                                 <div class="field">
                                     <label for="newLastName">Last name</label>
                                     <input type="text" id="newLastName" name="newLastName"
@@ -84,13 +90,14 @@
                                            placeholder="Enter last name"  #newLastName="ngModel">
                                 </div>
                             </div>
+
                         </div>
                         <div class="ui row">
 
-                            <div class="ui four wide column">
+                            <div class="ui eight wide column">
                                 <div class="field">
                                     <label for="enabled23">&nbsp;<br>
-                                    <input type="checkbox" name="newUserDisabled" tabindex="0"
+                                    <input type="checkbox" name="newUserDisabled" tabindex="0" class="alignLabel"
                                                [(ngModel)]="newUser.disable">
                                         Disabled
                                     </label>

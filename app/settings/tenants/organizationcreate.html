@@ -21,6 +21,8 @@
     <div class="ui row">
         <div class="ui sixteen wide column">
 
+            <div class="description">Create a tenant by name. You can assign users into tenancies under Settings > Authorizations. </div>
+
             <form id="organizationCreationForm" name="organizationCreateCtrl.form" class="ui form" role="form"
                   (submit)="organizationCreateCtrl.createOrganization(organizationCreateFrom.valid)" novalidate #organizationCreateFrom="ngForm">
 
@@ -41,8 +43,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="description">Create a tenant by name. You can assign users to tenancies under Settings > User Management. </div>
 
                     <div class="ui four wide column field">
                         <label for="newOrganizationName">Tenant name</label>

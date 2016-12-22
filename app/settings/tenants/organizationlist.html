@@ -23,6 +23,8 @@
     <div class="ui row">
         <div class="ui sixteen wide column">
 
+            <div class="description"><i>Tenancies</i> are the basic organizational container for all other assets. Create tenanats then assign users to them, and create network and other objects per tenant. Users assigned to a tenant (or multiple tenants) will be allowed to view and use their authorized tenancy resources only.</div>
+
             <ctv-search *ngIf="organizationsListCtrl.organizations" (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [count]="tableRef.count"></ctv-search>
 
             <div class="ui basic segment ctvTable">

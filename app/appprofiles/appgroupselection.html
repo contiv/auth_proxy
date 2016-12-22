@@ -1,8 +1,11 @@
 <div [ngSwitch]="mode" class="field" style="margin-top: 20px;">
-    <label>Add application groups to associate with this profile</label>
+
+    <div *ngSwitchCase="'details'" class="description">Application groups associated with this profile.</div>
+    <div *ngSwitchCase="'edit'" class="description">Add application groups to associate with this profile.</div>
+
     <table *ngSwitchCase="'edit'" class="ui very basic collapsing unstackable table noRowBorders" style="margin-top:0; ">
         <tbody>
-        <tr style="background-color: transparent !important;">
+        <tr class="noHover">
             <td>
                 <div class="ui left icon input">
                     <input name="applicationGroupSearchText"
@@ -35,8 +38,6 @@
         </tbody>
     </table>
 
-    <label>Current profile application groups</label>
-
     <ctv-table #tableRef
                [defaultSortColumn]="'groupName'"
                [items]="selectedApplicationGroups"
@@ -54,10 +55,7 @@
                         [sortobject]="tableRef.sortObj"> Policies
                 </ctv-th>
             </th>
-            <th class="right floated three wide column">
-                <ctv-search hidden (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);"
-                            [placeholder]="'Search application groups...'"></ctv-search>
-            </th>
+            <th class="right floated three wide column">&nbsp;</th>
         </tr>
         </thead>
 
@@ -67,7 +65,7 @@
                 <a [routerLink]="['/m/applicationgroups/details', group.key]">{{group.groupName}}</a>
             </td>
             <td>{{group.policies.join(", ")}}</td>
-            <td>
+            <td style="text-align: right;">
                 <button *ngSwitchCase="'edit'"
                         type="button"
                         class="ui icon button iconBtn secondaryIconBtn"
@@ -88,7 +86,7 @@
 
         <tfoot>
         <tr class="pagination">
-            <td colspan="5">
+            <td colspan="3">
                 <ctv-tpagination [chunks]="tableRef.pageChunks"
                                  (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
                                  (prevChunk)="tableRef.showPrevChunk()"
