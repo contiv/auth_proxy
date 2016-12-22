@@ -185,7 +185,7 @@ func addTenantAuthorization(tenantName string, role types.RoleType, principalNam
 		return types.Authorization{}, err
 	}
 
-	log.Debug("successfully added tenant authorization %#v", tenantAuthz)
+	log.Infof("successfully added tenant authorization %#v", tenantAuthz)
 	return tenantAuthz, nil
 }
 

@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"testing"
 	"time"
 
@@ -30,7 +31,9 @@ var (
 )
 
 func Test(t *testing.T) {
-	log.SetLevel(log.DebugLevel)
+	if len(os.Getenv("DEBUG")) > 0 {
+		log.SetLevel(log.DebugLevel)
+	}
 
 	datastore := test.GetDatastore()
 	datastoreAddress := test.GetDatastoreAddress()

@@ -73,7 +73,7 @@ func (s *systemtestSuite) TestRBACFilters(c *C) {
 
 			// grant tenant `t1` access to `username`
 			authzRequest := `{"PrincipalName":"` + username + `","local":true,"role":"ops","tenantName":"t1"}`
-			authzUUID1 := s.addAuthorization(c, authzRequest, adToken)
+			authz1 := s.addAuthorization(c, authzRequest, adToken)
 
 			// test again using `username` token
 			userToken = loginAs(c, username, username)
@@ -84,7 +84,7 @@ func (s *systemtestSuite) TestRBACFilters(c *C) {
 
 			// grant tenant `t3` access to `username`
 			authzRequest = `{"PrincipalName":"` + username + `","local":true,"role":"ops","tenantName":"t3"}`
-			authzUUID2 := s.addAuthorization(c, authzRequest, adToken)
+			authz2 := s.addAuthorization(c, authzRequest, adToken)
 
 			// test again using `username` token; new tenant `t3` should also be listed
 			userToken = loginAs(c, username, username)
@@ -92,8 +92,8 @@ func (s *systemtestSuite) TestRBACFilters(c *C) {
 			c.Assert(resp.StatusCode, Equals, 200)
 			s.processListResponse(c, resource, string(body), []string{"t1", "t3"})
 
-			s.deleteAuthorization(c, authzUUID1, adToken)
-			s.deleteAuthorization(c, authzUUID2, adToken)
+			s.deleteAuthorization(c, authz1.AuthzUUID, adToken)
+			s.deleteAuthorization(c, authz2.AuthzUUID, adToken)
 
 			// test using `username` token; all authzs removed
 			userToken = loginAs(c, username, username)
@@ -148,7 +148,7 @@ func (s *systemtestSuite) TestRBACOnDELETERequest(c *C) {
 
 		// grant tenant access to `username`
 		authzRequest := `{"PrincipalName":"` + username + `","local":true,"role":"ops","tenantName":"` + tenantName + `"}`
-		authzUUID := s.addAuthorization(c, authzRequest, adToken)
+		authz := s.addAuthorization(c, authzRequest, adToken)
 
 		// tenant delete is a adminOnly API
 		// test using `username` token
@@ -156,7 +156,7 @@ func (s *systemtestSuite) TestRBACOnDELETERequest(c *C) {
 		resp, body = proxyDelete(c, userToken, endpoint)
 		s.assertInsufficientPrivileges(c, resp, body)
 
-		s.deleteAuthorization(c, authzUUID, adToken)
+		s.deleteAuthorization(c, authz.AuthzUUID, adToken)
 
 	})
 
@@ -178,7 +178,7 @@ func (s *systemtestSuite) TestRBACOnDELETERequest(c *C) {
 
 			// grant tenant access to `username`
 			authzRequest := `{"PrincipalName":"` + username + `","local":true,"role":"ops","tenantName":"` + tenantName + `"}`
-			authzUUID := s.addAuthorization(c, authzRequest, adToken)
+			authz := s.addAuthorization(c, authzRequest, adToken)
 
 			// user is authorized for this tenant so, he/she should be able to delete the resource
 			// normal users cannot delete `tenant`
@@ -186,7 +186,7 @@ func (s *systemtestSuite) TestRBACOnDELETERequest(c *C) {
 			resp, _ = proxyDelete(c, userToken, endpoint)
 			c.Assert(resp.StatusCode, Equals, 200)
 
-			s.deleteAuthorization(c, authzUUID, adToken)
+			s.deleteAuthorization(c, authz.AuthzUUID, adToken)
 
 		}
 	})
@@ -237,7 +237,7 @@ func (s *systemtestSuite) TestRBACOnGETRequest(c *C) {
 
 		// grant tenant access to `username`
 		authzRequest := `{"PrincipalName":"` + username + `","local":true,"role":"ops","tenantName":"` + tenantName + `"}`
-		authzUUID := s.addAuthorization(c, authzRequest, adToken)
+		authz := s.addAuthorization(c, authzRequest, adToken)
 
 		// user is authorized for this tenant so, he/she should be able to get the tenant details
 		userToken = loginAs(c, username, username)
@@ -251,7 +251,7 @@ func (s *systemtestSuite) TestRBACOnGETRequest(c *C) {
 		resp, body = proxyGet(c, userToken, endpoint)
 		s.assertInsufficientPrivileges(c, resp, body)
 
-		s.deleteAuthorization(c, authzUUID, adToken)
+		s.deleteAuthorization(c, authz.AuthzUUID, adToken)
 
 	})
 
@@ -273,14 +273,14 @@ func (s *systemtestSuite) TestRBACOnGETRequest(c *C) {
 
 			// grant tenant access to `username`
 			authzRequest := `{"PrincipalName":"` + username + `","local":true,"role":"ops","tenantName":"` + tenantName + `"}`
-			authzUUID := s.addAuthorization(c, authzRequest, adToken)
+			authz := s.addAuthorization(c, authzRequest, adToken)
 
 			// user is authorized for this tenant so, he/she should be able to get the tenant details
 			userToken = loginAs(c, username, username)
 			resp, _ = proxyGet(c, userToken, endpoint)
 			c.Assert(resp.StatusCode, Equals, 200)
 
-			s.deleteAuthorization(c, authzUUID, adToken)
+			s.deleteAuthorization(c, authz.AuthzUUID, adToken)
 		}
 
 	})
@@ -365,7 +365,7 @@ func (s *systemtestSuite) TestRBACOnPOSTRequest(c *C) {
 
 			// grant tenant access to `username`
 			authzRequest := `{"PrincipalName":"` + username + `","local":true,"role":"ops","tenantName":"` + tenantName + `"}`
-			authzUUID := s.addAuthorization(c, authzRequest, adToken)
+			authz := s.addAuthorization(c, authzRequest, adToken)
 
 			// POST the request again with the updated token
 			userToken = loginAs(c, username, username)
@@ -373,7 +373,8 @@ func (s *systemtestSuite) TestRBACOnPOSTRequest(c *C) {
 			c.Assert(resp.StatusCode, Equals, 200)
 			c.Assert(string(body), Equals, createReq)
 
-			s.deleteAuthorization(c, authzUUID, adToken)
+			// Remove authorization
+			s.deleteAuthorization(c, authz.AuthzUUID, adToken)
 		}
 
 	})
@@ -463,4 +464,44 @@ func (s *systemtestSuite) processListResponse(c *C, resource, body string, expec
 func (s *systemtestSuite) assertInsufficientPrivileges(c *C, resp *http.Response, body []byte) {
 	c.Assert(resp.StatusCode, Equals, 403)
 	c.Assert(string(body), DeepEquals, `{"error":"Insufficient privileges"}`)
+}
+
+// TestAdminRoleRequired tests that a user can only perform an admin level API
+// call when it has an admin authorization for it. The way this test is
+// different from other rbac tests is that it tests granting admin access to a
+// user.
+func (s *systemtestSuite) TestAdminRoleRequired(c *C) {
+	// This also sets up the adToken variable
+	s.addUser(c, username)
+
+	runTest(func(p *proxy.Server, ms *MockServer) {
+
+		// login as username, should succeed
+		testuserToken := loginAs(c, username, username)
+
+		// try calling an admin api (e.g., update user) using test user token
+		// This should fail with forbidden since user doesn't have admin access
+		data := `{"first_name":"Temp", "last_name": "User"}`
+		endpoint := "/api/v1/ccn_proxy/local_users/" + username
+		resp, _ := proxyPatch(c, testuserToken, endpoint, []byte(data))
+		c.Assert(resp.StatusCode, Equals, 403)
+
+		// grant admin access to username
+		data = `{"PrincipalName":"` + username + `","local":true,"role":"admin","tenantName":""}`
+		authz := s.addAuthorization(c, data, adToken)
+
+		// retry calling the admin api, it should succeed now
+		data = `{"first_name":"Temp", "last_name": "User"}`
+		respBody := `{"username":"` + username + `","first_name":"Temp","last_name":"User","disable":false}`
+		s.updateLocalUser(c, username, data, respBody, testuserToken)
+
+		// delete local user
+		endpoint = "/api/v1/ccn_proxy/local_users/" + username
+		resp, _ = proxyDelete(c, adToken, endpoint)
+		c.Assert(resp.StatusCode, Equals, 204)
+
+		// delete authorization
+		// FIXME: This should be automatic with user deletion above
+		s.deleteAuthorization(c, authz.AuthzUUID, adToken)
+	})
 }
