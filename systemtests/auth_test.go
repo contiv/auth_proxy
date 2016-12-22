@@ -3,58 +3,81 @@ package systemtests
 import (
 	"encoding/json"
 
+	"github.com/contiv/ccn_proxy/common/types"
 	"github.com/contiv/ccn_proxy/proxy"
 	. "gopkg.in/check.v1"
 )
 
-// TestAdminRoleAuthorization tests that a user can only
-// perform admin level API call when it has an admin
-// authorization for it.
-func (s *systemtestSuite) TestAdminRoleAuthorization(c *C) {
+// TestAdminAuthorizationResponse checks that add/get of admin response ignores
+// tenant name.
+func (s *systemtestSuite) TestAdminAuthorizationResponse(c *C) {
+	s.addUser(c, username)
+
 	runTest(func(p *proxy.Server, ms *MockServer) {
-		token := adminToken(c)
+		// grant admin access to username, tenant name is redundant and should be ignored
+		data := `{"PrincipalName":"` + username + `","local":true,"role":"` + types.Admin.String() + `","tenantName":"XXX"}`
+		authz := s.addAuthorization(c, data, adToken)
+		c.Assert(authz.TenantName, DeepEquals, "")
+		c.Assert(authz.PrincipalName, DeepEquals, username)
+		c.Assert(authz.Local, Equals, true)
+		c.Assert(authz.Role, DeepEquals, types.Admin.String())
 
-		username := newUsers[0]
+		authz2 := s.getAuthorization(c, authz.AuthzUUID, adToken)
+		c.Assert(authz.TenantName, DeepEquals, authz2.TenantName)
+		c.Assert(authz.PrincipalName, DeepEquals, authz2.PrincipalName)
+		c.Assert(authz.Local, Equals, authz2.Local)
+		c.Assert(authz.Role, DeepEquals, authz2.Role)
 
-		// add new local_user to the system
-		data := `{"username":"` + username + `","password":"` + username + `", "disable":false}`
-		respBody := `{"username":"` + username + `","first_name":"","last_name":"","disable":false}`
-		s.addLocalUser(c, data, respBody, token)
+		// We must delete the authorization explicitly right now, as
+		// deleting users doesn't automatically deletes it.
+		// TODO: Remove authorizations with delete user
+		s.deleteAuthorization(c, authz.AuthzUUID, adToken)
 
-		// login as username, should succeed
-		testuserToken := loginAs(c, username, username)
-
-		// try calling an admin api (e.g., update user) using test user token
-		// This should fail with forbidden since user doesn't have admin access
-		data = `{"first_name":"Temp", "last_name": "User"}`
-		endpoint := "/api/v1/ccn_proxy/local_users/" + username
-		resp, _ := proxyPatch(c, testuserToken, endpoint, []byte(data))
-		c.Assert(resp.StatusCode, Equals, 403)
-
-		// grant admin access to username
-		data = `{"PrincipalName":"` + username + `","local":true,"role":"admin","tenantName":""}`
-		s.addAuthorization(c, data, token)
-
-		// retry calling the admin api, it should succeed now
-		data = `{"first_name":"Temp", "last_name": "User"}`
-		respBody = `{"username":"` + username + `","first_name":"Temp","last_name":"User","disable":false}`
-		s.updateLocalUser(c, username, data, respBody, testuserToken)
-
-		// delete local user
-		endpoint = "/api/v1/ccn_proxy/local_users/" + username
-		resp, _ = proxyDelete(c, token, endpoint)
-		c.Assert(resp.StatusCode, Equals, 204)
+		endpoint := "/api/v1/ccn_proxy/authorizations/" + authz.AuthzUUID
+		resp, _ := proxyGet(c, adToken, endpoint)
+		c.Assert(resp.StatusCode, Equals, 404)
 	})
 }
 
-// TODO: Implement after API calls for tenant associated objects is routed properly
-/*
-func (s *systemtestSuite) TestTenantAuthorization(c *C) {
+// TestTenantAuthorizationResponse checks that add/get of tenant response
+// doesn't ignore tenant name.
+func (s *systemtestSuite) TestTenantAuthorizationResponse(c *C) {
+	s.addUser(c, username)
+
+	runTest(func(p *proxy.Server, ms *MockServer) {
+		// grant ops access to username, tenant name is required and should not be ignored
+		data := `{"PrincipalName":"` + username + `","local":true,"role":"` + types.Ops.String() + `","tenantName":""}`
+		endpoint := "/api/v1/ccn_proxy/authorizations"
+
+		resp, _ := proxyPost(c, adToken, endpoint, []byte(data))
+		c.Assert(resp.StatusCode, Equals, 400)
+
+		data = `{"PrincipalName":"` + username + `","local":true,"role":"` + types.Ops.String() + `","tenantName":"XXX"}`
+		authz := s.addAuthorization(c, data, adToken)
+		c.Assert(authz.TenantName, DeepEquals, "XXX")
+		c.Assert(authz.PrincipalName, DeepEquals, username)
+		c.Assert(authz.Local, Equals, true)
+		c.Assert(authz.Role, DeepEquals, types.Ops.String())
+
+		authz2 := s.getAuthorization(c, authz.AuthzUUID, adToken)
+		c.Assert(authz.TenantName, DeepEquals, authz2.TenantName)
+		c.Assert(authz.PrincipalName, DeepEquals, authz2.PrincipalName)
+		c.Assert(authz.Local, Equals, authz2.Local)
+		c.Assert(authz.Role, DeepEquals, authz2.Role)
+
+		// We must delete the authorization explicitly right now, as
+		// deleting users doesn't automatically deletes it.
+		// TODO: Remove authorizations with delete user
+		s.deleteAuthorization(c, authz.AuthzUUID, adToken)
+
+		endpoint = "/api/v1/ccn_proxy/authorizations/" + authz.AuthzUUID
+		resp, _ = proxyGet(c, adToken, endpoint)
+		c.Assert(resp.StatusCode, Equals, 404)
+	})
 }
-*/
 
 // addAuthorization helper function for the tests
-func (s *systemtestSuite) addAuthorization(c *C, data, token string) string {
+func (s *systemtestSuite) addAuthorization(c *C, data, token string) proxy.GetAuthorizationReply {
 	endpoint := "/api/v1/ccn_proxy/authorizations"
 
 	resp, body := proxyPost(c, token, endpoint, []byte(data))
@@ -62,7 +85,19 @@ func (s *systemtestSuite) addAuthorization(c *C, data, token string) string {
 
 	authz := proxy.GetAuthorizationReply{}
 	c.Assert(json.Unmarshal(body, &authz), IsNil)
-	return authz.AuthzUUID
+	return authz
+}
+
+// getAuthorization helper function for the tests
+func (s *systemtestSuite) getAuthorization(c *C, authzUUID, token string) proxy.GetAuthorizationReply {
+	endpoint := "/api/v1/ccn_proxy/authorizations/" + authzUUID
+
+	resp, body := proxyGet(c, token, endpoint)
+	c.Assert(resp.StatusCode, Equals, 200)
+
+	authz := proxy.GetAuthorizationReply{}
+	c.Assert(json.Unmarshal(body, &authz), IsNil)
+	return authz
 }
 
 // deleteAuthorization helper function for the tests

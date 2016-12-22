@@ -11,6 +11,16 @@ var (
 	newUsers     = []string{"xxx", "yyy", "zzz"}
 )
 
+// TestBuiltinLocalUsers tests that builtInUsers are pre-defined in the system
+func (s *systemtestSuite) TestBuiltinLocalUsers(c *C) {
+	runTest(func(p *proxy.Server, ms *MockServer) {
+		for _, username := range builtInUsers {
+			loginAs(c, username, username)
+		}
+
+	})
+}
+
 // TestLocalUserEndpoints tests ccn_proxy's local user endpoints
 func (s *systemtestSuite) TestLocalUserEndpoints(c *C) {
 

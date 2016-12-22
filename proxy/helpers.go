@@ -492,9 +492,8 @@ func writeJSONResponse(w http.ResponseWriter, data interface{}) {
 }
 
 //
-// convertAuthz converts the Authorization object into reply struct
-// for Add tenant authorization and Get tenant authorization API
-// calls
+// convertAuthz converts the Authorization object into reply struct for Add
+// authorization and Get authorization API calls
 //
 // Parameter:
 //   authz: Authorization object
@@ -507,9 +506,14 @@ func convertAuthz(authz types.Authorization) GetAuthorizationReply {
 	getAuthzReply := GetAuthorizationReply{
 		AuthzUUID:     authz.UUID,
 		PrincipalName: authz.PrincipalName,
-		TenantName:    strings.TrimPrefix(authz.ClaimKey, types.TenantClaimKey),
 		Local:         authz.Local,
 		Role:          authz.ClaimValue,
 	}
+
+	// Fill in tenant name only for tenant claim key
+	if strings.HasPrefix(authz.ClaimKey, types.TenantClaimKey) {
+		getAuthzReply.TenantName = strings.TrimPrefix(authz.ClaimKey, types.TenantClaimKey)
+	}
+
 	return getAuthzReply
 }

@@ -247,6 +247,7 @@ func addAuthorization(w http.ResponseWriter, req *http.Request) {
 		httpResponse = []byte("illegal role specified")
 
 		processStatusCodes(httpStatus, httpResponse, w)
+		return
 	}
 
 	// If role specific is ops, a tenant name must be specified
@@ -257,6 +258,7 @@ func addAuthorization(w http.ResponseWriter, req *http.Request) {
 		httpResponse = []byte("ops role requires a tenant to be specified")
 
 		processStatusCodes(httpStatus, httpResponse, w)
+		return
 	}
 
 	// invoke helper to add authz
