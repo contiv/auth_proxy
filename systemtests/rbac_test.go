@@ -495,13 +495,13 @@ func (s *systemtestSuite) TestAdminRoleRequired(c *C) {
 		respBody := `{"username":"` + username + `","first_name":"Temp","last_name":"User","disable":false}`
 		s.updateLocalUser(c, username, data, respBody, testuserToken)
 
-		// delete local user
-		endpoint = "/api/v1/ccn_proxy/local_users/" + username
-		resp, _ = proxyDelete(c, adToken, endpoint)
-		c.Assert(resp.StatusCode, Equals, 204)
-
 		// delete authorization
-		// FIXME: This should be automatic with user deletion above
 		s.deleteAuthorization(c, authz.AuthzUUID, adToken)
+
+		// calling admin api should fail again withouth requiring new token (since cached value
+		// of role authz in token isn't used)
+		endpoint = "/api/v1/ccn_proxy/local_users/" + username
+		resp, _ = proxyPatch(c, testuserToken, endpoint, []byte(data))
+		c.Assert(resp.StatusCode, Equals, 403)
 	})
 }
