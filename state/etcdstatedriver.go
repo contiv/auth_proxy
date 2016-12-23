@@ -276,6 +276,11 @@ func (d *EtcdStateDriver) Clear(key string) error {
 	defer cancel()
 
 	_, err := d.KeysAPI.Delete(ctx, key, nil)
+
+	if client.IsKeyNotFound(err) {
+		return nil
+	}
+
 	return err
 }
 

@@ -80,7 +80,7 @@ func GetLocalUser(username string) (*types.LocalUser, error) {
 //  username: string; of the user that requires update
 //  user: local user object to be updated in the data store
 // return values:
-//  error: as returned by GetStateDriver, any consecutive function call or relevant custom error
+//  error: as returned by state.state.GetStateDriver, any consecutive function call or relevant custom error
 func UpdateLocalUser(username string, user *types.LocalUser) error {
 	stateDrv, err := state.GetStateDriver()
 	if err != nil {
@@ -152,7 +152,13 @@ func DeleteLocalUser(username string) error {
 		return err
 	}
 
+	// delete the associated user authorization
+	if err := DeleteAuthorizationsByPrincipal(username); err != nil {
+		return err
+	}
+
 	if err := stateDrv.Clear(GetPath(RootLocalUsers, username)); err != nil {
+		// XXX: If this fails, data store will be in inconsistent state
 		return fmt.Errorf("Failed to clear %q from store: %#v", username, err)
 	}
 

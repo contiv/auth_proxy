@@ -225,7 +225,8 @@ func getLocalUserHelper(username string) (int, []byte) {
 	case ccnerrors.ErrKeyNotFound:
 		return http.StatusNotFound, nil
 	default:
-		return http.StatusInternalServerError, []byte(err.Error())
+		log.Debugf("Failed to fetch local user %q: %#v", username, err)
+		return http.StatusInternalServerError, []byte(fmt.Sprintf("Failed to fetch local user %q", username))
 	}
 
 }
@@ -255,7 +256,7 @@ func getLocalUsersHelper() (int, []byte) {
 
 	jData, err := json.Marshal(localUsers)
 	if err != nil {
-		log.Debug("Failed to marshal %#v: %#v", jData, err)
+		log.Debugf("Failed to marshal %#v: %#v", jData, err)
 		return http.StatusInternalServerError, []byte(fmt.Sprintf("Failed to fetch local users"))
 	}
 
@@ -318,7 +319,8 @@ func updateLocalUserInfo(username string, updateReq *types.LocalUser, actual *ty
 	case ccnerrors.ErrIllegalOperation:
 		return http.StatusBadRequest, []byte(fmt.Sprintf("Cannot update built-in user %q", username))
 	default:
-		return http.StatusInternalServerError, []byte(err.Error())
+		log.Debugf("Failed to update local user %q with %#v: %#v", username, updateReq, err)
+		return http.StatusInternalServerError, []byte(fmt.Sprintf("Failed to update local user %q", username))
 	}
 
 }
@@ -342,7 +344,8 @@ func updateLocalUserHelper(username string, userUpdateReq *types.LocalUser) (int
 	case ccnerrors.ErrKeyNotFound:
 		return http.StatusNotFound, nil
 	default:
-		return http.StatusInternalServerError, []byte(err.Error())
+		log.Debugf("Failed to update local user %q with %#v: %#v", username, userUpdateReq, err)
+		return http.StatusInternalServerError, []byte(fmt.Sprintf("Failed to update local user %q", username))
 	}
 
 }
@@ -367,7 +370,8 @@ func deleteLocalUserHelper(username string) (int, []byte) {
 	case ccnerrors.ErrIllegalOperation:
 		return http.StatusBadRequest, []byte(fmt.Sprintf("Cannot delete built-in user %q", username))
 	default:
-		return http.StatusInternalServerError, []byte(err.Error())
+		log.Debugf("Failed to delete local user %q: %#v", username, err)
+		return http.StatusInternalServerError, []byte(fmt.Sprintf("Failed to delete local user %q from the system", username))
 	}
 }
 

@@ -10,7 +10,7 @@ import (
 
 	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
 	"github.com/contiv/ccn_proxy/common/types"
-	state "github.com/contiv/ccn_proxy/state"
+	"github.com/contiv/ccn_proxy/db"
 )
 
 // This file contains all utility methods to create and handle JWT tokens
@@ -110,7 +110,7 @@ func (authZ *Token) AddPrincipalsClaim(principals []string) error {
 //  error: nil if successful, else relevant error if claim is malformed.
 func (authZ *Token) AddRoleClaim(principal string) error {
 
-	authz, err := state.ListAuthorizationsByClaimAndPrincipal(types.RoleClaimKey, principal)
+	authz, err := db.ListAuthorizationsByClaimAndPrincipal(types.RoleClaimKey, principal)
 	if err != nil {
 		return err
 	}
@@ -274,7 +274,7 @@ func (authZ *Token) IsSuperuser() bool {
 
 	for _, p := range principals {
 		// Get role claim for the principal
-		authz, err := state.ListAuthorizationsByClaimAndPrincipal(types.RoleClaimKey, p)
+		authz, err := db.ListAuthorizationsByClaimAndPrincipal(types.RoleClaimKey, p)
 		// If not found, ignore error and move on to next principal
 		if err != nil || len(authz) == 0 {
 			log.Debug("no admin claim found for principal ", p)

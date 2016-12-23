@@ -8,7 +8,7 @@ import (
 
 	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
 	"github.com/contiv/ccn_proxy/common/types"
-	"github.com/contiv/ccn_proxy/state"
+	"github.com/contiv/ccn_proxy/db"
 )
 
 // getPrincipals returns the stored principals info from the token.
@@ -68,7 +68,7 @@ func (authZ *Token) checkRolePolicy(desired types.RoleType) error {
 	for _, p := range principals {
 
 		// Get role claim for the principal
-		authz, err := state.ListAuthorizationsByClaimAndPrincipal(types.RoleClaimKey, p)
+		authz, err := db.ListAuthorizationsByClaimAndPrincipal(types.RoleClaimKey, p)
 		// If not found, ignore error and move on to next principal
 		if err != nil || len(authz) == 0 {
 			log.Debug("no role claim found for principal ", p)
@@ -139,7 +139,7 @@ func (authZ *Token) checkTenantPolicy(tenant types.Tenant, desiredAccess interfa
 
 	for _, p := range principals {
 		// Get tenant claim for the principal
-		authz, err := state.ListAuthorizationsByClaimAndPrincipal(claimStr, p)
+		authz, err := db.ListAuthorizationsByClaimAndPrincipal(claimStr, p)
 		// If not found, ignore error and move on to next principal
 		if err != nil || len(authz) == 0 {
 			log.Debug("no tenant claim found for principal ", p)
