@@ -152,7 +152,13 @@ func DeleteLocalUser(username string) error {
 		return err
 	}
 
+	// delete the associated user authorization
+	if err := DeleteAuthorizationsByPrincipal(username); err != nil {
+		return err
+	}
+
 	if err := stateDrv.Clear(GetPath(RootLocalUsers, username)); err != nil {
+		// XXX: If this fails, data store will be in inconsistent state
 		return fmt.Errorf("Failed to clear %q from store: %#v", username, err)
 	}
 

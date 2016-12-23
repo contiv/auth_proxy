@@ -154,6 +154,80 @@ func (s *dbSuite) TestDeleteLocalUser(c *C) {
 		err = DeleteLocalUser(user.Username)
 		c.Assert(err, Equals, ccnerrors.ErrKeyNotFound)
 	}
+
+	// delete users with authz
+	stateDrv, err := state.GetStateDriver()
+	c.Assert(err, IsNil)
+
+	s.TestAddLocalUser(c)
+	for _, user := range newUsers {
+		a := types.Authorization{
+			CommonState: types.CommonState{
+				ID:          "0000",
+				StateDriver: stateDrv,
+			},
+			UUID:          user.Username,
+			PrincipalName: user.Username,
+			ClaimKey:      "tenant: Tenant2",
+			ClaimValue:    "devops",
+		}
+
+		err = InsertAuthorization(&a)
+		c.Assert(err, IsNil)
+
+		authZ, err := GetAuthorization(a.UUID)
+		c.Assert(err, IsNil)
+		c.Assert(authZ, DeepEquals, a)
+
+		authZs, err := ListAuthorizationsByPrincipal(user.Username)
+		c.Assert(err, IsNil)
+		c.Assert(len(authZs), Equals, 1)
+
+		// this deletes the associated authZs
+		err = DeleteLocalUser(user.Username)
+		c.Assert(err, IsNil)
+
+		authZ, err = GetAuthorization(a.UUID)
+		c.Assert(err, Equals, ccnerrors.ErrKeyNotFound)
+		c.Assert(authZ, DeepEquals, types.Authorization{
+			CommonState: types.CommonState{
+				StateDriver: stateDrv,
+			}})
+
+		authZs, err = ListAuthorizationsByPrincipal(user.Username)
+		c.Assert(err, IsNil)
+		c.Assert(len(authZs), Equals, 0)
+	}
+
+	// test delete with built-in user
+	for _, username := range builtInUsers {
+		a := types.Authorization{
+			CommonState: types.CommonState{
+				ID:          "0000",
+				StateDriver: stateDrv,
+			},
+			UUID:          username,
+			PrincipalName: username,
+			ClaimKey:      "tenant: Tenant2",
+			ClaimValue:    "devops",
+		}
+
+		err = InsertAuthorization(&a)
+		c.Assert(err, IsNil)
+
+		authZ, err := GetAuthorization(a.UUID)
+		c.Assert(err, IsNil)
+		c.Assert(authZ, DeepEquals, a)
+
+		err = DeleteLocalUser(username)
+		c.Assert(err, Equals, ccnerrors.ErrIllegalOperation)
+
+		// ensure delete did not delete the associated authZ
+		authZ, err = GetAuthorization(a.UUID)
+		c.Assert(err, IsNil)
+		c.Assert(authZ, DeepEquals, a)
+	}
+
 }
 
 // TestUpdateLocalUser test `UpdateLocalUser(...)`

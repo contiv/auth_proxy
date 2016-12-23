@@ -170,7 +170,9 @@ func DeleteAuthorizationsByPrincipal(pName string) error {
 	(*a).StateDriver = sd
 
 	allAuthZList, err := a.StateDriver.ReadAllState(types.AuthZDir, a, json.Unmarshal)
-	if err != nil {
+	if err == ccnerrors.ErrKeyNotFound {
+		return nil
+	} else if err != nil {
 		log.Error("failed to ReadAllState, err:", err)
 		return ccnerrors.ErrReadingFromStore
 	}
