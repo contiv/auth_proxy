@@ -28,33 +28,31 @@
         </tr>
         </tbody>
     </table>
-
-    <h5 class="ui header">Bandwidth Policy Details</h5>
-    <table class="ui very basic unstackable table">
-        <thead>
-        <tr>
-            <th>Profile Name</th>
-            <th>Tenant Name</th>
-            <th>Bandwidth</th>
-            <th>DSCP</th>
-        </tr>
-        </thead>
-
-        <tbody *ngIf="selectedNetprofile && selectedNetprofile.profileName">
-        <tr>
-            <td>{{selectedNetprofile.profileName}}</td>
-            <td>{{selectedNetprofile.tenantName}}</td>
-            <td>{{selectedNetprofile.bandwidth}}</td>
-            <td>{{selectedNetprofile.DSCP}}</td>
-        </tr>
-        </tbody>
-
-        <tbody *ngIf="!selectedNetprofile || !selectedNetprofile.profileName">
-        <tr class="noDataFound">
-            <td colspan="4">none selected</td>
-        </tr>
-        </tbody>
-
-    </table>
-
 </div>
+<h5 class="ui header">Bandwidth Policy Details</h5>
+<table class="ui very basic unstackable table">
+    <thead>
+    <tr>
+        <th>Profile Name</th>
+        <th>Tenant Name</th>
+        <th>Bandwidth</th>
+        <th>DSCP</th>
+    </tr>
+    </thead>
+
+    <tbody *ngIf="selectedNetprofile && selectedNetprofile.profileName">
+    <tr>
+        <td>{{selectedNetprofile.profileName}}</td>
+        <td>{{selectedNetprofile.tenantName}}</td>
+        <td>{{selectedNetprofile.bandwidth}}</td>
+        <td>{{selectedNetprofile.DSCP}}</td>
+    </tr>
+    </tbody>
+
+    <tbody *ngIf="!selectedNetprofile || !selectedNetprofile.profileName">
+    <tr class="noDataFound">
+        <td colspan="4">none selected</td>
+    </tr>
+    </tbody>
+
+</table>

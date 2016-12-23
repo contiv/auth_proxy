@@ -81,8 +81,7 @@
                                             class="ui dropdown"
                                             #newApplicationGroupNetworkRef="ngModel"
                                             name="newApplicationGroupNetwork"
-                                            ngModel
-                                            (change)="updateNetwork($event.target.value)"
+                                            [(ngModel)]="applicationGroup.networkName"
                                             required>
                                         <option value="">-- Select a network --</option>
                                         <option *ngFor="let network of networks"
