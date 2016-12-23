@@ -11,7 +11,7 @@ import { OrganizationsModel } from "../components/models/organizationsmodel";
 
 @Component({
     selector: 'bandwidthpolicycreate',
-    templateUrl: 'network_policies/bandwidthpolicycreate.html'
+    templateUrl: './bandwidthpolicycreate.html'
 })
 export class BandwidthPolicyCreateComponent implements OnInit {
     newPolicy:any;

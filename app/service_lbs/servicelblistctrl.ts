@@ -11,7 +11,7 @@ import {Router, ActivatedRoute} from "@angular/router";
 
 @Component({
     selector: 'servicelbList',
-    templateUrl: 'service_lbs/servicelblist.html'
+    templateUrl: './servicelblist.html'
 })
 
 export class ServicelbListComponent implements OnInit, OnDestroy{

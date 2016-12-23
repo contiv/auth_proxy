@@ -7,7 +7,7 @@ import { AppProfilesModel } from "../components/models/appprofilesmodel";
 
 @Component({
     selector: 'appprofilelist',
-    templateUrl: 'appprofiles/appprofilelist.html'
+    templateUrl: './appprofilelist.html'
 })
 
 export class AppProfileListComponent implements OnInit, OnDestroy{

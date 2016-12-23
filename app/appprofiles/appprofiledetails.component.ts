@@ -5,7 +5,7 @@ import { CRUDHelperService } from "../components/utils/crudhelperservice";
 
 @Component({
     selector: 'appprofiledetails',
-    templateUrl: 'appprofiles/appprofiledetails.html'
+    templateUrl: './appprofiledetails.html'
 })
 export class AppProfileDetailsComponent {
     appProfile:any = {};

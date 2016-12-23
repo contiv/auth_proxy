@@ -16,7 +16,7 @@ import {PoliciesModel} from "../components/models/policiesmodel";
 
 @Component({
     selector: 'isolationpolicystats',
-    templateUrl: 'network_policies/isolationpolicystats.html'
+    templateUrl: './isolationpolicystats.html'
 })
 
 export class IsolationPolicyStatComponent implements OnInit, OnDestroy{

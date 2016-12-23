@@ -8,7 +8,7 @@ import any = jasmine.any;
 
 @Component({
     selector: 'networksettingcomp',
-    templateUrl: 'components/directives/settings/networksetting.html'
+    templateUrl: './networksetting.html'
 })
 
 export class NetworkSettingComponent {

@@ -8,7 +8,7 @@ import { CRUDHelperService } from "../components/utils/crudhelperservice";
 
 @Component({
     selector: 'applicationgroupdetails',
-    templateUrl: 'applicationgroups/applicationgroupdetails.html'
+    templateUrl: './applicationgroupdetails.html'
 })
 export class ApplicationGroupDetailsComponent implements OnInit{
     applicationGroup:any = {};

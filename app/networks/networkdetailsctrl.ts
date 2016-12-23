@@ -15,7 +15,7 @@ var _ = require('lodash');
 
 @Component({
     selector: 'networkdetails',
-    templateUrl: "networks/networkdetails.html"
+    templateUrl: "./networkdetails.html"
 })
 
 export class NetworkdetailsComponent implements OnInit, OnDestroy{

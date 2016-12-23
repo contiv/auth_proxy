@@ -8,7 +8,7 @@ import {User} from "./usercreate.component";
 
 @Component({
     selector: 'userlist',
-    templateUrl: 'settings/users/userlist.html'
+    templateUrl: './userlist.html'
 })
 
 export class UserListComponent implements OnInit, OnDestroy{

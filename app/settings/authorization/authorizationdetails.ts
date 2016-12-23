@@ -11,7 +11,7 @@ import {OrganizationsModel} from "../../components/models/organizationsmodel";
 import {Authorization} from "./authorizationcreate";
 @Component({
     selector: 'authorizationdetails',
-    templateUrl: 'settings/authorization/authorizationdetails.html'
+    templateUrl: './authorizationdetails.html'
 })
 
 export class AuthorizationDetailsComponent implements OnInit{

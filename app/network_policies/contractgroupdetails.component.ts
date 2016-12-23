@@ -9,7 +9,7 @@ import { PolicyTab } from "./networkpoliciestabsctrl";
 
 @Component({
     selector: 'contractgroupdetails',
-    templateUrl: 'network_policies/contractgroupdetails.html'
+    templateUrl: './contractgroupdetails.html'
 })
 export class ContractGroupDetailsComponent {
     contractGroup:any = {};

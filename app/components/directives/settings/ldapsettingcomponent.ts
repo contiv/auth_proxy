@@ -20,7 +20,7 @@ export interface LdapConfig{
 
 @Component({
     selector: 'ldapsettings',
-    templateUrl: 'components/directives/settings/ldapsetting.html'
+    templateUrl: './ldapsetting.html'
 })
 
 export class LdapSettingsComponent{

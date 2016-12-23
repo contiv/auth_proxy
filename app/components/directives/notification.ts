@@ -15,8 +15,8 @@ export enum NotificationType {
 
 @Component({
     selector: 'notification',
-    templateUrl: 'components/directives/notification.html',
-    styleUrls: ['components/directives/notification.css']
+    templateUrl: './notification.html',
+    styleUrls: ['./notification.css']
 })
 
 export class NotificationComponent implements DoCheck, OnInit{

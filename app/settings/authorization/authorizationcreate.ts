@@ -19,7 +19,7 @@ export interface Authorization{
 
 @Component({
     selector: 'authorizationcreate',
-    templateUrl: 'settings/authorization/authorizationcreate.html'
+    templateUrl: './authorizationcreate.html'
 })
 
 export class AuthorizationCreateComponent implements OnInit{

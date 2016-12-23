@@ -8,7 +8,7 @@ import { ApplicationGroupsModel } from "../components/models/applicationgroupsmo
 
 @Component({
     selector: 'ctv-appgroupselection',
-    templateUrl: 'appprofiles/appgroupselection.html'
+    templateUrl: './appgroupselection.html'
 })
 export class ApplicationGroupSelectionComponent implements OnChanges {
     @Input() mode:string;

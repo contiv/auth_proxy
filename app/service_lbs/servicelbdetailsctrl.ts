@@ -13,7 +13,7 @@ var _ = require('lodash');
 
 @Component({
     selector: 'servicelbDetails',
-    templateUrl: "service_lbs/servicelbdetails.html"
+    templateUrl: "./servicelbdetails.html"
 })
 
 export class ServicelbDetailsComponent implements OnInit{

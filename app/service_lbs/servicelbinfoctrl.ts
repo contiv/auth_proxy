@@ -11,7 +11,7 @@ var _ = require('lodash');
 
 @Component({
     selector: 'servicelb-info',
-    templateUrl: "service_lbs/servicelbinfo.html"
+    templateUrl: "./servicelbinfo.html"
 })
 
 export class  ServicelbInfoComponent implements OnInit{

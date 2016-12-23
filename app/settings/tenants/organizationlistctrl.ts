@@ -11,7 +11,7 @@ import {OrganizationsModel} from "../../components/models/organizationsmodel";
 
 @Component({
     selector: 'organizationlist',
-    templateUrl: 'settings/tenants/organizationlist.html'
+    templateUrl: './organizationlist.html'
 })
 
 export class OrganizationListComponent implements OnInit, OnDestroy{

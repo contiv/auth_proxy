@@ -7,7 +7,7 @@ import { OrganizationsModel } from "../components/models/organizationsmodel";
 
 @Component({
     selector: 'appprofilecreate',
-    templateUrl: 'appprofiles/appprofilecreate.html'
+    templateUrl: './appprofilecreate.html'
 })
 
 export class AppProfileCreateComponent implements OnInit {

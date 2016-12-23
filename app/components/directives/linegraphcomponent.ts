@@ -9,8 +9,8 @@ import {isUndefined} from "util";
 import {isNull} from "util";
 @Component({
     selector: 'linegraph',
-    templateUrl: 'components/directives/linegraph.html',
-    styleUrls: ['components/directives/linegraph.css']
+    templateUrl: './linegraph.html',
+    styleUrls: ['./linegraph.css']
 })
 
 export class LineGraphComponent implements OnInit, DoCheck, OnDestroy{

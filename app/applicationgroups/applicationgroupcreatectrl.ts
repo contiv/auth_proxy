@@ -10,7 +10,7 @@ import { OrganizationsModel } from "../components/models/organizationsmodel";
 
 @Component({
     selector: 'applicationgroupcreate',
-    templateUrl: 'applicationgroups/applicationgroupcreate.html'
+    templateUrl: './applicationgroupcreate.html'
 })
 export class ApplicationGroupCreateComponent {
     networks:any[] = [];

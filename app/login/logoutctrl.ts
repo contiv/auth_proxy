@@ -9,8 +9,8 @@ import { ContivGlobals } from "../components/models/contivglobals";
 declare var jQuery:any;
 @Component({
     selector: 'logout',
-    templateUrl: 'login/logout.html',
-    styleUrls: ['login/logout.css']
+    templateUrl: './logout.html',
+    styleUrls: ['./logout.css']
 })
 
 export class LogoutComponent implements OnInit, OnDestroy{

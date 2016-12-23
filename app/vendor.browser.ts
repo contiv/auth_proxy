@@ -12,11 +12,10 @@ import '@angular/platform-browser-dynamic';
 import '@angular/http';
 import '@angular/router';
 import '@angular/forms';
-import '@angular/upgrade';
+
 // RxJS 5
 import 'rxjs/Rx';
 // other libraries
-import 'angular-in-memory-web-api';
 import 'd3';
 import '../app/bower_components/semantic-ui/dist/semantic.js';
 import 'lodash';

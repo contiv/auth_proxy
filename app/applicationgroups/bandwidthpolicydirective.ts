@@ -8,7 +8,7 @@ import { isUndefined } from "util";
 
 @Component({
     selector: 'ctv-bandwidthpolicy',
-    templateUrl: 'applicationgroups/bandwidthpolicy.html'
+    templateUrl: './bandwidthpolicy.html'
 })
 export class BandwidthPolicySelectionComponent implements OnChanges {
     @Input('mode') mode:string;

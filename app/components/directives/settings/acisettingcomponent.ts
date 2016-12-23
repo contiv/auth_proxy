@@ -2,7 +2,7 @@ import { Component, Output, EventEmitter, Input } from "@angular/core";
 
 @Component({
     selector: 'acisettingcomp',
-    templateUrl: 'components/directives/settings/acisetting.html'
+    templateUrl: './acisetting.html'
 })
 export class AciSettingComponent {
 

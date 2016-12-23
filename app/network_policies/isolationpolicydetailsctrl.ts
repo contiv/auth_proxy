@@ -13,7 +13,7 @@ import { ContivGlobals } from "../components/models/contivglobals";
 
 @Component({
     selector: 'isolationpolicydetails',
-    templateUrl: 'network_policies/isolationpolicydetails.html'
+    templateUrl: './isolationpolicydetails.html'
 })
 export class IsolationPolicyDetailsComponent {
     policy:any = {};

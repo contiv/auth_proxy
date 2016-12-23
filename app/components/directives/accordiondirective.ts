@@ -13,7 +13,7 @@ interface Items {
 
 @Component({
     selector: 'ctv-accordion',
-    templateUrl: 'components/directives/accordion.html'
+    templateUrl: './accordion.html'
 })
 export class CtvAccordionComponent implements OnInit{
     @Input('items') items:Items[];

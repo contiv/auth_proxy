@@ -1,20 +1,24 @@
-webpackJsonp([2],{
-
-/***/ 0:
+webpackJsonp([2],[
+/* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	/**
 	 * Created by vjain3 on 10/6/16.
 	 */
-	var platform_browser_dynamic_1 = __webpack_require__(122);
+	var platform_browser_dynamic_1 = __webpack_require__(161);
 	var app_module_1 = __webpack_require__(395);
 	platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1.AppModule);
 	
 
 /***/ },
-
-/***/ 7:
+/* 1 */,
+/* 2 */,
+/* 3 */,
+/* 4 */,
+/* 5 */,
+/* 6 */,
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -31,7 +35,7 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 4/29/16.
 	 */
 	var core_1 = __webpack_require__(2);
-	var notification_1 = __webpack_require__(98);
+	var notification_1 = __webpack_require__(99);
 	var CRUDHelperService = (function () {
 	    function CRUDHelperService() {
 	        this.message = '';
@@ -71,8 +75,10 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 11:
+/* 8 */,
+/* 9 */,
+/* 10 */,
+/* 11 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -140,8 +146,14 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 19:
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global, process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -669,7 +681,7 @@ webpackJsonp([2],{
 	}
 	exports.isPrimitive = isPrimitive;
 
-	exports.isBuffer = __webpack_require__(947);
+	exports.isBuffer = __webpack_require__(1021);
 
 	function objectToString(o) {
 	  return Object.prototype.toString.call(o);
@@ -713,7 +725,7 @@ webpackJsonp([2],{
 	 *     prototype.
 	 * @param {function} superCtor Constructor function to inherit prototype from.
 	 */
-	exports.inherits = __webpack_require__(946);
+	exports.inherits = __webpack_require__(1020);
 
 	exports._extend = function(origin, add) {
 	  // Don't do anything if add isn't an object
@@ -731,11 +743,17 @@ webpackJsonp([2],{
 	  return Object.prototype.hasOwnProperty.call(obj, prop);
 	}
 
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(390)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(356)))
 
 /***/ },
-
-/***/ 27:
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -752,7 +770,7 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(2);
-	var http_1 = __webpack_require__(22);
+	var http_1 = __webpack_require__(23);
 	var authservice_1 = __webpack_require__(54);
 	var ApiService = (function () {
 	    function ApiService(http, authService) {
@@ -799,8 +817,13 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 34:
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -819,7 +842,7 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(2);
-	var http_1 = __webpack_require__(22);
+	var http_1 = __webpack_require__(23);
 	var collection_1 = __webpack_require__(38);
 	var contivglobals_1 = __webpack_require__(11);
 	var apiservice_1 = __webpack_require__(27);
@@ -839,8 +862,9 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 37:
+/* 35 */,
+/* 36 */,
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -868,8 +892,8 @@ webpackJsonp([2],{
 	var networksettingcomponent_1 = __webpack_require__(413);
 	var acisettingcomponent_1 = __webpack_require__(411);
 	var linegraphcomponent_1 = __webpack_require__(409);
-	var ng2_charts_1 = __webpack_require__(147);
-	var notification_1 = __webpack_require__(98);
+	var ng2_charts_1 = __webpack_require__(146);
+	var notification_1 = __webpack_require__(99);
 	var ldapsettingcomponent_1 = __webpack_require__(412);
 	var DirectivesModule = (function () {
 	    function DirectivesModule() {
@@ -920,8 +944,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 38:
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1097,8 +1120,15 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 47:
+/* 39 */,
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */,
+/* 44 */,
+/* 45 */,
+/* 46 */,
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1120,7 +1150,7 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 3/11/16.
 	 */
 	var core_1 = __webpack_require__(2);
-	var http_1 = __webpack_require__(22);
+	var http_1 = __webpack_require__(23);
 	var collection_1 = __webpack_require__(38);
 	var contivglobals_1 = __webpack_require__(11);
 	var apiservice_1 = __webpack_require__(27);
@@ -1181,8 +1211,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 48:
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1201,7 +1230,7 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(2);
-	var http_1 = __webpack_require__(22);
+	var http_1 = __webpack_require__(23);
 	var collection_1 = __webpack_require__(38);
 	var util_1 = __webpack_require__(19);
 	var contivglobals_1 = __webpack_require__(11);
@@ -1250,8 +1279,12 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 54:
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1269,10 +1302,10 @@ webpackJsonp([2],{
 	};
 	var core_1 = __webpack_require__(2);
 	var Observable_1 = __webpack_require__(1);
-	__webpack_require__(357);
-	__webpack_require__(358);
-	__webpack_require__(149);
-	var http_1 = __webpack_require__(22);
+	__webpack_require__(359);
+	__webpack_require__(361);
+	__webpack_require__(360);
+	var http_1 = __webpack_require__(23);
 	var authMatrix_1 = __webpack_require__(169);
 	var util_1 = __webpack_require__(19);
 	var contivglobals_1 = __webpack_require__(11);
@@ -1417,8 +1450,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 55:
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1495,7 +1527,7 @@ webpackJsonp([2],{
 	    NetworkPoliciesTabsComponent = __decorate([
 	        core_1.Component({
 	            selector: 'networkpoliciestabs',
-	            templateUrl: 'network_policies/networkpoliciestabs.html'
+	            template: __webpack_require__(725)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object])
 	    ], NetworkPoliciesTabsComponent);
@@ -1506,11 +1538,15 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 61:
+/* 56 */,
+/* 57 */,
+/* 58 */,
+/* 59 */,
+/* 60 */,
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var freeGlobal = __webpack_require__(351);
+	var freeGlobal = __webpack_require__(242);
 
 	/** Detect free variable `self`. */
 	var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
@@ -1522,8 +1558,9 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 64:
+/* 62 */,
+/* 63 */,
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1542,7 +1579,7 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(2);
-	var http_1 = __webpack_require__(22);
+	var http_1 = __webpack_require__(23);
 	var collection_1 = __webpack_require__(38);
 	var contivglobals_1 = __webpack_require__(11);
 	var apiservice_1 = __webpack_require__(27);
@@ -1588,8 +1625,14 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 72:
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */,
+/* 69 */,
+/* 70 */,
+/* 71 */,
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1611,7 +1654,7 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 11/21/16.
 	 */
 	var core_1 = __webpack_require__(2);
-	var http_1 = __webpack_require__(22);
+	var http_1 = __webpack_require__(23);
 	var collection_1 = __webpack_require__(38);
 	var contivglobals_1 = __webpack_require__(11);
 	var apiservice_1 = __webpack_require__(27);
@@ -1631,8 +1674,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 73:
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1654,7 +1696,7 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 5/11/16.
 	 */
 	var core_1 = __webpack_require__(2);
-	var http_1 = __webpack_require__(22);
+	var http_1 = __webpack_require__(23);
 	var collection_1 = __webpack_require__(38);
 	var contivglobals_1 = __webpack_require__(11);
 	var apiservice_1 = __webpack_require__(27);
@@ -1674,8 +1716,67 @@ webpackJsonp([2],{
 	
 
 /***/ },
+/* 74 */,
+/* 75 */,
+/* 76 */
+/***/ function(module, exports) {
 
-/***/ 77:
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	// css base code, injected by the css-loader
+	module.exports = function() {
+		var list = [];
+
+		// return the list of modules as css string
+		list.toString = function toString() {
+			var result = [];
+			for(var i = 0; i < this.length; i++) {
+				var item = this[i];
+				if(item[2]) {
+					result.push("@media " + item[2] + "{" + item[1] + "}");
+				} else {
+					result.push(item[1]);
+				}
+			}
+			return result.join("");
+		};
+
+		// import a list of modules into the list
+		list.i = function(modules, mediaQuery) {
+			if(typeof modules === "string")
+				modules = [[null, modules, ""]];
+			var alreadyImportedModules = {};
+			for(var i = 0; i < this.length; i++) {
+				var id = this[i][0];
+				if(typeof id === "number")
+					alreadyImportedModules[id] = true;
+			}
+			for(i = 0; i < modules.length; i++) {
+				var item = modules[i];
+				// skip already imported module
+				// this implementation is not 100% perfect for weird media query combinations
+				//  when a module is imported multiple times with different media queries.
+				//  I hope this will never occur (Hey this way we have smaller bundles)
+				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+					if(mediaQuery && !item[2]) {
+						item[2] = mediaQuery;
+					} else if(mediaQuery) {
+						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+					}
+					list.push(item);
+				}
+			}
+		};
+		return list;
+	};
+
+
+/***/ },
+/* 77 */,
+/* 78 */,
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1697,7 +1798,7 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 12/13/16.
 	 */
 	var core_1 = __webpack_require__(2);
-	var http_1 = __webpack_require__(22);
+	var http_1 = __webpack_require__(23);
 	var collection_1 = __webpack_require__(38);
 	var contivglobals_1 = __webpack_require__(11);
 	var apiservice_1 = __webpack_require__(27);
@@ -1725,8 +1826,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 78:
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1748,7 +1848,7 @@ webpackJsonp([2],{
 	 * Created by hardik gandhi on 6/15/16.
 	 */
 	var core_1 = __webpack_require__(2);
-	var http_1 = __webpack_require__(22);
+	var http_1 = __webpack_require__(23);
 	var collection_1 = __webpack_require__(38);
 	var contivglobals_1 = __webpack_require__(11);
 	var apiservice_1 = __webpack_require__(27);
@@ -1785,8 +1885,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 79:
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1808,7 +1907,7 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 11/7/16.
 	 */
 	var core_1 = __webpack_require__(2);
-	var http_1 = __webpack_require__(22);
+	var http_1 = __webpack_require__(23);
 	var collection_1 = __webpack_require__(38);
 	var contivglobals_1 = __webpack_require__(11);
 	var apiservice_1 = __webpack_require__(27);
@@ -1841,8 +1940,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 80:
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1943,8 +2041,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 81:
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2030,8 +2127,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 82:
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2048,7 +2144,7 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(2);
-	var networkservice_1 = __webpack_require__(124);
+	var networkservice_1 = __webpack_require__(123);
 	var FirstRunWizardService = (function () {
 	    function FirstRunWizardService(networkService) {
 	        this.networkService = networkService;
@@ -2094,12 +2190,18 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 90:
+/* 85 */,
+/* 86 */,
+/* 87 */,
+/* 88 */,
+/* 89 */,
+/* 90 */,
+/* 91 */,
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsNative = __webpack_require__(656),
-	    getValue = __webpack_require__(663);
+	var baseIsNative = __webpack_require__(659),
+	    getValue = __webpack_require__(666);
 
 	/**
 	 * Gets the native function at `key` of `object`.
@@ -2118,8 +2220,13 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 98:
+/* 93 */,
+/* 94 */,
+/* 95 */,
+/* 96 */,
+/* 97 */,
+/* 98 */,
+/* 99 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2233,8 +2340,8 @@ webpackJsonp([2],{
 	    NotificationComponent = __decorate([
 	        core_1.Component({
 	            selector: 'notification',
-	            templateUrl: 'components/directives/notification.html',
-	            styleUrls: ['components/directives/notification.css']
+	            template: __webpack_require__(698),
+	            styles: [__webpack_require__(1015)]
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _a) || Object])
 	    ], NotificationComponent);
@@ -2245,8 +2352,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 99:
+/* 100 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2268,7 +2374,7 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 11/11/16.
 	 */
 	var core_1 = __webpack_require__(2);
-	var http_1 = __webpack_require__(22);
+	var http_1 = __webpack_require__(23);
 	var collection_1 = __webpack_require__(38);
 	var contivglobals_1 = __webpack_require__(11);
 	var apiservice_1 = __webpack_require__(27);
@@ -2295,8 +2401,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 100:
+/* 101 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2319,7 +2424,7 @@ webpackJsonp([2],{
 	};
 	var core_1 = __webpack_require__(2);
 	var contivglobals_1 = __webpack_require__(11);
-	var http_1 = __webpack_require__(22);
+	var http_1 = __webpack_require__(23);
 	var apiservice_1 = __webpack_require__(27);
 	var collection_1 = __webpack_require__(38);
 	var AuthorizationModel = (function (_super) {
@@ -2369,13 +2474,22 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 111:
+/* 102 */,
+/* 103 */,
+/* 104 */,
+/* 105 */,
+/* 106 */,
+/* 107 */,
+/* 108 */,
+/* 109 */,
+/* 110 */,
+/* 111 */,
+/* 112 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Symbol = __webpack_require__(350),
-	    getRawTag = __webpack_require__(661),
-	    objectToString = __webpack_require__(667);
+	var Symbol = __webpack_require__(241),
+	    getRawTag = __webpack_require__(664),
+	    objectToString = __webpack_require__(670);
 
 	/** `Object#toString` result references. */
 	var nullTag = '[object Null]',
@@ -2405,8 +2519,16 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 123:
+/* 113 */,
+/* 114 */,
+/* 115 */,
+/* 116 */,
+/* 117 */,
+/* 118 */,
+/* 119 */,
+/* 120 */,
+/* 121 */,
+/* 122 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2428,7 +2550,7 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 3/8/16.
 	 */
 	var core_1 = __webpack_require__(2);
-	var http_1 = __webpack_require__(22);
+	var http_1 = __webpack_require__(23);
 	var collection_1 = __webpack_require__(38);
 	var _ = __webpack_require__(28);
 	var contivglobals_1 = __webpack_require__(11);
@@ -2489,8 +2611,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 124:
+/* 123 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2504,8 +2625,8 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(2);
-	var http_1 = __webpack_require__(22);
-	__webpack_require__(150);
+	var http_1 = __webpack_require__(23);
+	__webpack_require__(149);
 	var contivglobals_1 = __webpack_require__(11);
 	var apiservice_1 = __webpack_require__(27);
 	var NetworkService = (function () {
@@ -2588,8 +2709,28 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 146:
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */,
+/* 128 */,
+/* 129 */,
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */
 /***/ function(module, exports) {
 
 	/**
@@ -2624,8 +2765,23 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 162:
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */,
+/* 158 */,
+/* 159 */,
+/* 160 */,
+/* 161 */,
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2737,7 +2893,7 @@ webpackJsonp([2],{
 	    ApplicationGroupCreateComponent = __decorate([
 	        core_1.Component({
 	            selector: 'applicationgroupcreate',
-	            templateUrl: 'applicationgroups/applicationgroupcreate.html'
+	            template: __webpack_require__(681)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _c) || Object, (typeof (_d = typeof organizationsmodel_1.OrganizationsModel !== 'undefined' && organizationsmodel_1.OrganizationsModel) === 'function' && _d) || Object, (typeof (_e = typeof networksmodel_1.NetworksModel !== 'undefined' && networksmodel_1.NetworksModel) === 'function' && _e) || Object, (typeof (_f = typeof applicationgroupsmodel_1.ApplicationGroupsModel !== 'undefined' && applicationgroupsmodel_1.ApplicationGroupsModel) === 'function' && _f) || Object, (typeof (_g = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _g) || Object])
 	    ], ApplicationGroupCreateComponent);
@@ -2748,8 +2904,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 163:
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2853,7 +3008,7 @@ webpackJsonp([2],{
 	    ApplicationGroupDetailsComponent = __decorate([
 	        core_1.Component({
 	            selector: 'applicationgroupdetails',
-	            templateUrl: 'applicationgroups/applicationgroupdetails.html'
+	            template: __webpack_require__(682)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _c) || Object, (typeof (_d = typeof applicationgroupsmodel_1.ApplicationGroupsModel !== 'undefined' && applicationgroupsmodel_1.ApplicationGroupsModel) === 'function' && _d) || Object, (typeof (_e = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _e) || Object])
 	    ], ApplicationGroupDetailsComponent);
@@ -2864,8 +3019,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 164:
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2923,7 +3077,7 @@ webpackJsonp([2],{
 	    AppGrouplistComponent = __decorate([
 	        core_1.Component({
 	            selector: 'app-group',
-	            template: __webpack_require__(677)
+	            template: __webpack_require__(684)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof applicationgroupsmodel_1.ApplicationGroupsModel !== 'undefined' && applicationgroupsmodel_1.ApplicationGroupsModel) === 'function' && _c) || Object, (typeof (_d = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _d) || Object])
 	    ], AppGrouplistComponent);
@@ -2934,8 +3088,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 165:
+/* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2951,7 +3104,7 @@ webpackJsonp([2],{
 	var core_1 = __webpack_require__(2);
 	var router_1 = __webpack_require__(5);
 	var crudhelperservice_1 = __webpack_require__(7);
-	var appprofilesmodel_1 = __webpack_require__(99);
+	var appprofilesmodel_1 = __webpack_require__(100);
 	var organizationsmodel_1 = __webpack_require__(34);
 	var AppProfileCreateComponent = (function () {
 	    function AppProfileCreateComponent(activatedRoute, router, ngZone, organizationsModel, crudHelperService, appProfilesModel) {
@@ -3026,7 +3179,7 @@ webpackJsonp([2],{
 	    AppProfileCreateComponent = __decorate([
 	        core_1.Component({
 	            selector: 'appprofilecreate',
-	            templateUrl: 'appprofiles/appprofilecreate.html'
+	            template: __webpack_require__(690)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _c) || Object, (typeof (_d = typeof organizationsmodel_1.OrganizationsModel !== 'undefined' && organizationsmodel_1.OrganizationsModel) === 'function' && _d) || Object, (typeof (_e = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _e) || Object, (typeof (_f = typeof appprofilesmodel_1.AppProfilesModel !== 'undefined' && appprofilesmodel_1.AppProfilesModel) === 'function' && _f) || Object])
 	    ], AppProfileCreateComponent);
@@ -3037,8 +3190,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 166:
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3053,7 +3205,7 @@ webpackJsonp([2],{
 	};
 	var core_1 = __webpack_require__(2);
 	var router_1 = __webpack_require__(5);
-	var appprofilesmodel_1 = __webpack_require__(99);
+	var appprofilesmodel_1 = __webpack_require__(100);
 	var crudhelperservice_1 = __webpack_require__(7);
 	var AppProfileDetailsComponent = (function () {
 	    function AppProfileDetailsComponent(activatedRoute, router, ngZone, appProfilesModel, crudHelperService) {
@@ -3132,7 +3284,7 @@ webpackJsonp([2],{
 	    AppProfileDetailsComponent = __decorate([
 	        core_1.Component({
 	            selector: 'appprofiledetails',
-	            templateUrl: 'appprofiles/appprofiledetails.html'
+	            template: __webpack_require__(691)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _c) || Object, (typeof (_d = typeof appprofilesmodel_1.AppProfilesModel !== 'undefined' && appprofilesmodel_1.AppProfilesModel) === 'function' && _d) || Object, (typeof (_e = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _e) || Object])
 	    ], AppProfileDetailsComponent);
@@ -3143,8 +3295,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 167:
+/* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3161,7 +3312,7 @@ webpackJsonp([2],{
 	var router_1 = __webpack_require__(5);
 	var crudhelperservice_1 = __webpack_require__(7);
 	var rxjs_1 = __webpack_require__(17);
-	var appprofilesmodel_1 = __webpack_require__(99);
+	var appprofilesmodel_1 = __webpack_require__(100);
 	var AppProfileListComponent = (function () {
 	    function AppProfileListComponent(activatedRoute, router, appProfilesModel, crudHelperService, ngZone) {
 	        var _this = this;
@@ -3201,7 +3352,7 @@ webpackJsonp([2],{
 	    AppProfileListComponent = __decorate([
 	        core_1.Component({
 	            selector: 'appprofilelist',
-	            templateUrl: 'appprofiles/appprofilelist.html'
+	            template: __webpack_require__(692)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof appprofilesmodel_1.AppProfilesModel !== 'undefined' && appprofilesmodel_1.AppProfilesModel) === 'function' && _c) || Object, (typeof (_d = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _d) || Object, (typeof (_e = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _e) || Object])
 	    ], AppProfileListComponent);
@@ -3212,8 +3363,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 168:
+/* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3260,8 +3410,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 169:
+/* 169 */
 /***/ function(module, exports) {
 
 	/**
@@ -3315,8 +3464,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 170:
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3419,8 +3567,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 171:
+/* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3443,7 +3590,7 @@ webpackJsonp([2],{
 	var networksmodel_1 = __webpack_require__(48);
 	var servicelbsmodel_1 = __webpack_require__(73);
 	var util_1 = __webpack_require__(19);
-	var chartservice_1 = __webpack_require__(80);
+	var chartservice_1 = __webpack_require__(82);
 	var DashboardComponent = (function () {
 	    function DashboardComponent(networksModel, applicationGroupsModel, policiesModel, servicelbsModel, ngZone) {
 	        this.networksModel = networksModel;
@@ -3523,8 +3670,8 @@ webpackJsonp([2],{
 	    DashboardComponent = __decorate([
 	        core_1.Component({
 	            selector: 'dashboard',
-	            templateUrl: 'dashboard/dashboard.html',
-	            styleUrls: ['dashboard/dashboard.css']
+	            template: __webpack_require__(706),
+	            styles: [__webpack_require__(1016)]
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof networksmodel_1.NetworksModel !== 'undefined' && networksmodel_1.NetworksModel) === 'function' && _a) || Object, (typeof (_b = typeof applicationgroupsmodel_1.ApplicationGroupsModel !== 'undefined' && applicationgroupsmodel_1.ApplicationGroupsModel) === 'function' && _b) || Object, (typeof (_c = typeof policiesmodel_1.PoliciesModel !== 'undefined' && policiesmodel_1.PoliciesModel) === 'function' && _c) || Object, (typeof (_d = typeof servicelbsmodel_1.ServicelbsModel !== 'undefined' && servicelbsmodel_1.ServicelbsModel) === 'function' && _d) || Object, (typeof (_e = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _e) || Object])
 	    ], DashboardComponent);
@@ -3535,8 +3682,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 172:
+/* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -3555,7 +3701,7 @@ webpackJsonp([2],{
 	var core_1 = __webpack_require__(2);
 	var router_1 = __webpack_require__(5);
 	var authservice_1 = __webpack_require__(54);
-	var firstrunwizardservice_1 = __webpack_require__(82);
+	var firstrunwizardservice_1 = __webpack_require__(84);
 	var FirstrunWizardComponent = (function () {
 	    function FirstrunWizardComponent(wizardService, activatedRoute, router, authService) {
 	        this.wizardService = wizardService;
@@ -3586,8 +3732,8 @@ webpackJsonp([2],{
 	    FirstrunWizardComponent = __decorate([
 	        core_1.Component({
 	            selector: 'firstrunwizard',
-	            templateUrl: 'firstrunwizard/firstrunwizard.html',
-	            styleUrls: ['firstrunwizard/firstrunwizard.css']
+	            template: __webpack_require__(709),
+	            styles: [__webpack_require__(1017)]
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof firstrunwizardservice_1.FirstRunWizardService !== 'undefined' && firstrunwizardservice_1.FirstRunWizardService) === 'function' && _a) || Object, (typeof (_b = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _b) || Object, (typeof (_c = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _c) || Object, (typeof (_d = typeof authservice_1.AuthService !== 'undefined' && authservice_1.AuthService) === 'function' && _d) || Object])
 	    ], FirstrunWizardComponent);
@@ -3598,8 +3744,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 173:
+/* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3617,7 +3762,7 @@ webpackJsonp([2],{
 	var router_1 = __webpack_require__(5);
 	var authservice_1 = __webpack_require__(54);
 	var contivglobals_1 = __webpack_require__(11);
-	var chartservice_1 = __webpack_require__(80);
+	var chartservice_1 = __webpack_require__(82);
 	var LoginComponent = (function () {
 	    function LoginComponent(router, activatedRoute, crudHelperService, authService, chartService) {
 	        this.router = router;
@@ -3672,8 +3817,8 @@ webpackJsonp([2],{
 	    LoginComponent = __decorate([
 	        core_1.Component({
 	            selector: 'login',
-	            templateUrl: 'login/login.html',
-	            styles: [__webpack_require__(945)]
+	            template: __webpack_require__(711),
+	            styles: [__webpack_require__(1018)]
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, (typeof (_b = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _b) || Object, (typeof (_c = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _c) || Object, (typeof (_d = typeof authservice_1.AuthService !== 'undefined' && authservice_1.AuthService) === 'function' && _d) || Object, (typeof (_e = typeof chartservice_1.ChartService !== 'undefined' && chartservice_1.ChartService) === 'function' && _e) || Object])
 	    ], LoginComponent);
@@ -3684,8 +3829,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 174:
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -3722,8 +3866,8 @@ webpackJsonp([2],{
 	    LogoutComponent = __decorate([
 	        core_1.Component({
 	            selector: 'logout',
-	            templateUrl: 'login/logout.html',
-	            styleUrls: ['login/logout.css']
+	            template: __webpack_require__(712),
+	            styles: [__webpack_require__(1019)]
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, (typeof (_b = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _b) || Object])
 	    ], LogoutComponent);
@@ -3734,8 +3878,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 175:
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -3764,7 +3907,7 @@ webpackJsonp([2],{
 	    UnauthorizedComponent = __decorate([
 	        core_1.Component({
 	            selector: 'unauthorized',
-	            templateUrl: 'login/unauthorized.html'
+	            template: __webpack_require__(713)
 	        }), 
 	        __metadata('design:paramtypes', [])
 	    ], UnauthorizedComponent);
@@ -3774,8 +3917,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 176:
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3795,7 +3937,7 @@ webpackJsonp([2],{
 	var router_1 = __webpack_require__(5);
 	var authservice_1 = __webpack_require__(54);
 	var contivglobals_1 = __webpack_require__(11);
-	var chartservice_1 = __webpack_require__(80);
+	var chartservice_1 = __webpack_require__(82);
 	var MenuComponent = (function () {
 	    function MenuComponent(activatedRoute, router, authService, chartService) {
 	        this.activatedRoute = activatedRoute;
@@ -3819,7 +3961,7 @@ webpackJsonp([2],{
 	    MenuComponent = __decorate([
 	        core_1.Component({
 	            selector: 'menu',
-	            templateUrl: 'menu/menu.html'
+	            template: __webpack_require__(714)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof authservice_1.AuthService !== 'undefined' && authservice_1.AuthService) === 'function' && _c) || Object, (typeof (_d = typeof chartservice_1.ChartService !== 'undefined' && chartservice_1.ChartService) === 'function' && _d) || Object])
 	    ], MenuComponent);
@@ -3830,8 +3972,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 177:
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3850,7 +3991,7 @@ webpackJsonp([2],{
 	 */
 	var core_1 = __webpack_require__(2);
 	var router_1 = __webpack_require__(5);
-	var netprofilesmodel_1 = __webpack_require__(78);
+	var netprofilesmodel_1 = __webpack_require__(80);
 	var crudhelperservice_1 = __webpack_require__(7);
 	var networkpoliciestabsctrl_1 = __webpack_require__(55);
 	var organizationsmodel_1 = __webpack_require__(34);
@@ -3921,7 +4062,7 @@ webpackJsonp([2],{
 	    BandwidthPolicyCreateComponent = __decorate([
 	        core_1.Component({
 	            selector: 'bandwidthpolicycreate',
-	            templateUrl: 'network_policies/bandwidthpolicycreate.html'
+	            template: __webpack_require__(715)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _c) || Object, (typeof (_d = typeof organizationsmodel_1.OrganizationsModel !== 'undefined' && organizationsmodel_1.OrganizationsModel) === 'function' && _d) || Object, (typeof (_e = typeof netprofilesmodel_1.NetprofilesModel !== 'undefined' && netprofilesmodel_1.NetprofilesModel) === 'function' && _e) || Object, (typeof (_f = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _f) || Object])
 	    ], BandwidthPolicyCreateComponent);
@@ -3932,8 +4073,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 178:
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3951,7 +4091,7 @@ webpackJsonp([2],{
 	 */
 	var core_1 = __webpack_require__(2);
 	var router_1 = __webpack_require__(5);
-	var netprofilesmodel_1 = __webpack_require__(78);
+	var netprofilesmodel_1 = __webpack_require__(80);
 	var crudhelperservice_1 = __webpack_require__(7);
 	var networkpoliciestabsctrl_1 = __webpack_require__(55);
 	var BandwidthPolicyDetailsComponent = (function () {
@@ -4028,7 +4168,7 @@ webpackJsonp([2],{
 	    BandwidthPolicyDetailsComponent = __decorate([
 	        core_1.Component({
 	            selector: 'bandwidthpolicydetails',
-	            templateUrl: 'network_policies/bandwidthpolicydetails.html'
+	            template: __webpack_require__(716)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof netprofilesmodel_1.NetprofilesModel !== 'undefined' && netprofilesmodel_1.NetprofilesModel) === 'function' && _c) || Object, (typeof (_d = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _d) || Object])
 	    ], BandwidthPolicyDetailsComponent);
@@ -4039,8 +4179,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 179:
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4058,7 +4197,7 @@ webpackJsonp([2],{
 	 */
 	var core_1 = __webpack_require__(2);
 	var router_1 = __webpack_require__(5);
-	var contractgroupsmodel_1 = __webpack_require__(77);
+	var contractgroupsmodel_1 = __webpack_require__(79);
 	var crudhelperservice_1 = __webpack_require__(7);
 	var networkpoliciestabsctrl_1 = __webpack_require__(55);
 	var organizationsmodel_1 = __webpack_require__(34);
@@ -4131,7 +4270,7 @@ webpackJsonp([2],{
 	    ContractGroupCreateComponent = __decorate([
 	        core_1.Component({
 	            selector: 'contractgroupcreate',
-	            templateUrl: 'network_policies/contractgroupcreate.html'
+	            template: __webpack_require__(718)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _c) || Object, (typeof (_d = typeof organizationsmodel_1.OrganizationsModel !== 'undefined' && organizationsmodel_1.OrganizationsModel) === 'function' && _d) || Object, (typeof (_e = typeof contractgroupsmodel_1.ContractGroupsModel !== 'undefined' && contractgroupsmodel_1.ContractGroupsModel) === 'function' && _e) || Object, (typeof (_f = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _f) || Object])
 	    ], ContractGroupCreateComponent);
@@ -4142,8 +4281,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 180:
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4161,7 +4299,7 @@ webpackJsonp([2],{
 	 */
 	var core_1 = __webpack_require__(2);
 	var router_1 = __webpack_require__(5);
-	var contractgroupsmodel_1 = __webpack_require__(77);
+	var contractgroupsmodel_1 = __webpack_require__(79);
 	var crudhelperservice_1 = __webpack_require__(7);
 	var networkpoliciestabsctrl_1 = __webpack_require__(55);
 	var ContractGroupDetailsComponent = (function () {
@@ -4200,7 +4338,7 @@ webpackJsonp([2],{
 	    ContractGroupDetailsComponent = __decorate([
 	        core_1.Component({
 	            selector: 'contractgroupdetails',
-	            templateUrl: 'network_policies/contractgroupdetails.html'
+	            template: __webpack_require__(719)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof contractgroupsmodel_1.ContractGroupsModel !== 'undefined' && contractgroupsmodel_1.ContractGroupsModel) === 'function' && _c) || Object, (typeof (_d = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _d) || Object])
 	    ], ContractGroupDetailsComponent);
@@ -4211,8 +4349,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 181:
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4306,7 +4443,7 @@ webpackJsonp([2],{
 	    IsolationPolicyCreateComponent = __decorate([
 	        core_1.Component({
 	            selector: 'isolationpolicycreate',
-	            templateUrl: 'network_policies/isolationpolicycreate.html'
+	            template: __webpack_require__(721)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _c) || Object, (typeof (_d = typeof organizationsmodel_1.OrganizationsModel !== 'undefined' && organizationsmodel_1.OrganizationsModel) === 'function' && _d) || Object, (typeof (_e = typeof policiesmodel_1.PoliciesModel !== 'undefined' && policiesmodel_1.PoliciesModel) === 'function' && _e) || Object, (typeof (_f = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _f) || Object])
 	    ], IsolationPolicyCreateComponent);
@@ -4317,8 +4454,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 182:
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4337,7 +4473,7 @@ webpackJsonp([2],{
 	var core_1 = __webpack_require__(2);
 	var router_1 = __webpack_require__(5);
 	var policiesmodel_1 = __webpack_require__(64);
-	var rulesmodel_1 = __webpack_require__(123);
+	var rulesmodel_1 = __webpack_require__(122);
 	var networksmodel_1 = __webpack_require__(48);
 	var applicationgroupsmodel_1 = __webpack_require__(47);
 	var crudhelperservice_1 = __webpack_require__(7);
@@ -4702,7 +4838,7 @@ webpackJsonp([2],{
 	    IsolationPolicyDetailsComponent = __decorate([
 	        core_1.Component({
 	            selector: 'isolationpolicydetails',
-	            templateUrl: 'network_policies/isolationpolicydetails.html'
+	            template: __webpack_require__(722)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof policiesmodel_1.PoliciesModel !== 'undefined' && policiesmodel_1.PoliciesModel) === 'function' && _c) || Object, (typeof (_d = typeof rulesmodel_1.RulesModel !== 'undefined' && rulesmodel_1.RulesModel) === 'function' && _d) || Object, (typeof (_e = typeof networksmodel_1.NetworksModel !== 'undefined' && networksmodel_1.NetworksModel) === 'function' && _e) || Object, (typeof (_f = typeof applicationgroupsmodel_1.ApplicationGroupsModel !== 'undefined' && applicationgroupsmodel_1.ApplicationGroupsModel) === 'function' && _f) || Object, (typeof (_g = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _g) || Object])
 	    ], IsolationPolicyDetailsComponent);
@@ -4713,8 +4849,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 183:
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4735,7 +4870,7 @@ webpackJsonp([2],{
 	var crudhelperservice_1 = __webpack_require__(7);
 	var router_1 = __webpack_require__(5);
 	var contivglobals_1 = __webpack_require__(11);
-	var notification_1 = __webpack_require__(98);
+	var notification_1 = __webpack_require__(99);
 	var organizationsmodel_1 = __webpack_require__(34);
 	var NetworkCreateComponent = (function () {
 	    function NetworkCreateComponent(router, activatedRoute, ngZone, networksModel, organizationsModel, crudHelperService) {
@@ -4801,7 +4936,7 @@ webpackJsonp([2],{
 	    NetworkCreateComponent = __decorate([
 	        core_1.Component({
 	            selector: 'networkcreate',
-	            templateUrl: 'networks/networkcreate.html'
+	            template: __webpack_require__(726)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, (typeof (_b = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _b) || Object, (typeof (_c = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _c) || Object, (typeof (_d = typeof networksmodel_1.NetworksModel !== 'undefined' && networksmodel_1.NetworksModel) === 'function' && _d) || Object, (typeof (_e = typeof organizationsmodel_1.OrganizationsModel !== 'undefined' && organizationsmodel_1.OrganizationsModel) === 'function' && _e) || Object, (typeof (_f = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _f) || Object])
 	    ], NetworkCreateComponent);
@@ -4812,8 +4947,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 184:
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4836,7 +4970,7 @@ webpackJsonp([2],{
 	var networksmodel_1 = __webpack_require__(48);
 	var util_1 = __webpack_require__(19);
 	var router_1 = __webpack_require__(5);
-	var notification_1 = __webpack_require__(98);
+	var notification_1 = __webpack_require__(99);
 	var _ = __webpack_require__(28);
 	var NetworkdetailsComponent = (function () {
 	    function NetworkdetailsComponent(route, router, applicationGroupsModel, networksModel, crudHelperService) {
@@ -4917,7 +5051,7 @@ webpackJsonp([2],{
 	    NetworkdetailsComponent = __decorate([
 	        core_1.Component({
 	            selector: 'networkdetails',
-	            templateUrl: "networks/networkdetails.html"
+	            template: __webpack_require__(727)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof applicationgroupsmodel_1.ApplicationGroupsModel !== 'undefined' && applicationgroupsmodel_1.ApplicationGroupsModel) === 'function' && _c) || Object, (typeof (_d = typeof networksmodel_1.NetworksModel !== 'undefined' && networksmodel_1.NetworksModel) === 'function' && _d) || Object, (typeof (_e = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _e) || Object])
 	    ], NetworkdetailsComponent);
@@ -4928,8 +5062,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 185:
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4986,7 +5119,7 @@ webpackJsonp([2],{
 	    NetworkListComponent = __decorate([
 	        core_1.Component({
 	            selector: 'networkList',
-	            template: __webpack_require__(678)
+	            template: __webpack_require__(729)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, (typeof (_b = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _b) || Object, (typeof (_c = typeof networksmodel_1.NetworksModel !== 'undefined' && networksmodel_1.NetworksModel) === 'function' && _c) || Object, (typeof (_d = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _d) || Object])
 	    ], NetworkListComponent);
@@ -4997,8 +5130,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 186:
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5109,7 +5241,7 @@ webpackJsonp([2],{
 	    ServicelbCreateComponent = __decorate([
 	        core_1.Component({
 	            selector: 'servicelbCreate',
-	            templateUrl: 'service_lbs/servicelbcreate.html'
+	            template: __webpack_require__(731)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, (typeof (_b = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _b) || Object, (typeof (_c = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _c) || Object, (typeof (_d = typeof organizationsmodel_1.OrganizationsModel !== 'undefined' && organizationsmodel_1.OrganizationsModel) === 'function' && _d) || Object, (typeof (_e = typeof servicelbsmodel_1.ServicelbsModel !== 'undefined' && servicelbsmodel_1.ServicelbsModel) === 'function' && _e) || Object, (typeof (_f = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _f) || Object, (typeof (_g = typeof networksmodel_1.NetworksModel !== 'undefined' && networksmodel_1.NetworksModel) === 'function' && _g) || Object])
 	    ], ServicelbCreateComponent);
@@ -5120,8 +5252,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 187:
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5184,7 +5315,7 @@ webpackJsonp([2],{
 	    ServicelbDetailsComponent = __decorate([
 	        core_1.Component({
 	            selector: 'servicelbDetails',
-	            templateUrl: "service_lbs/servicelbdetails.html"
+	            template: __webpack_require__(732)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_c = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _c) || Object, (typeof (_d = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _d) || Object])
 	    ], ServicelbDetailsComponent);
@@ -5195,8 +5326,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 188:
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5336,7 +5466,7 @@ webpackJsonp([2],{
 	    ServicelbInfoComponent = __decorate([
 	        core_1.Component({
 	            selector: 'servicelb-info',
-	            templateUrl: "service_lbs/servicelbinfo.html"
+	            template: __webpack_require__(733)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_c = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _c) || Object, (typeof (_d = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _d) || Object, (typeof (_e = typeof servicelbsmodel_1.ServicelbsModel !== 'undefined' && servicelbsmodel_1.ServicelbsModel) === 'function' && _e) || Object, (typeof (_f = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _f) || Object, (typeof (_g = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _g) || Object])
 	    ], ServicelbInfoComponent);
@@ -5347,8 +5477,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 189:
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5411,7 +5540,7 @@ webpackJsonp([2],{
 	    ServicelbListComponent = __decorate([
 	        core_1.Component({
 	            selector: 'servicelbList',
-	            templateUrl: 'service_lbs/servicelblist.html'
+	            template: __webpack_require__(734)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, (typeof (_b = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _b) || Object, (typeof (_c = typeof servicelbsmodel_1.ServicelbsModel !== 'undefined' && servicelbsmodel_1.ServicelbsModel) === 'function' && _c) || Object, (typeof (_d = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _d) || Object, (typeof (_e = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _e) || Object])
 	    ], ServicelbListComponent);
@@ -5422,8 +5551,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 190:
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5439,7 +5567,7 @@ webpackJsonp([2],{
 	var core_1 = __webpack_require__(2);
 	var crudhelperservice_1 = __webpack_require__(7);
 	var rxjs_1 = __webpack_require__(17);
-	var inspectservice_1 = __webpack_require__(81);
+	var inspectservice_1 = __webpack_require__(83);
 	var util_1 = __webpack_require__(19);
 	var servicelbsmodel_1 = __webpack_require__(73);
 	var contivglobals_1 = __webpack_require__(11);
@@ -5511,7 +5639,7 @@ webpackJsonp([2],{
 	    ServicelbStatComponent = __decorate([
 	        core_1.Component({
 	            selector: 'servicelb-stat',
-	            templateUrl: 'service_lbs/servicelbstats.html'
+	            template: __webpack_require__(736)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof servicelbsmodel_1.ServicelbsModel !== 'undefined' && servicelbsmodel_1.ServicelbsModel) === 'function' && _a) || Object, (typeof (_b = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _b) || Object, (typeof (_c = typeof inspectservice_1.InspectService !== 'undefined' && inspectservice_1.InspectService) === 'function' && _c) || Object, (typeof (_d = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _d) || Object])
 	    ], ServicelbStatComponent);
@@ -5522,8 +5650,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 191:
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5542,9 +5669,9 @@ webpackJsonp([2],{
 	var core_1 = __webpack_require__(2);
 	var router_1 = __webpack_require__(5);
 	var crudhelperservice_1 = __webpack_require__(7);
-	var usersmodel_1 = __webpack_require__(79);
+	var usersmodel_1 = __webpack_require__(81);
 	var organizationsmodel_1 = __webpack_require__(34);
-	var authorizationmodel_1 = __webpack_require__(100);
+	var authorizationmodel_1 = __webpack_require__(101);
 	var AuthorizationCreateComponent = (function () {
 	    function AuthorizationCreateComponent(activatedRoute, router, crudHelperService, authorizationModel, organizationsModel, usersModel) {
 	        this.activatedRoute = activatedRoute;
@@ -5606,7 +5733,7 @@ webpackJsonp([2],{
 	    AuthorizationCreateComponent = __decorate([
 	        core_1.Component({
 	            selector: 'authorizationcreate',
-	            templateUrl: 'settings/authorization/authorizationcreate.html'
+	            template: __webpack_require__(737)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _c) || Object, (typeof (_d = typeof authorizationmodel_1.AuthorizationModel !== 'undefined' && authorizationmodel_1.AuthorizationModel) === 'function' && _d) || Object, (typeof (_e = typeof organizationsmodel_1.OrganizationsModel !== 'undefined' && organizationsmodel_1.OrganizationsModel) === 'function' && _e) || Object, (typeof (_f = typeof usersmodel_1.UsersModel !== 'undefined' && usersmodel_1.UsersModel) === 'function' && _f) || Object])
 	    ], AuthorizationCreateComponent);
@@ -5617,8 +5744,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 192:
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5635,7 +5761,7 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(2);
-	var authorizationmodel_1 = __webpack_require__(100);
+	var authorizationmodel_1 = __webpack_require__(101);
 	var crudhelperservice_1 = __webpack_require__(7);
 	var router_1 = __webpack_require__(5);
 	var organizationsmodel_1 = __webpack_require__(34);
@@ -5726,7 +5852,7 @@ webpackJsonp([2],{
 	    AuthorizationDetailsComponent = __decorate([
 	        core_1.Component({
 	            selector: 'authorizationdetails',
-	            templateUrl: 'settings/authorization/authorizationdetails.html'
+	            template: __webpack_require__(738)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof authorizationmodel_1.AuthorizationModel !== 'undefined' && authorizationmodel_1.AuthorizationModel) === 'function' && _a) || Object, (typeof (_b = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _b) || Object, (typeof (_c = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _c) || Object, (typeof (_d = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _d) || Object, (typeof (_e = typeof organizationsmodel_1.OrganizationsModel !== 'undefined' && organizationsmodel_1.OrganizationsModel) === 'function' && _e) || Object])
 	    ], AuthorizationDetailsComponent);
@@ -5737,8 +5863,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 193:
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5757,7 +5882,7 @@ webpackJsonp([2],{
 	var core_1 = __webpack_require__(2);
 	var rxjs_1 = __webpack_require__(17);
 	var crudhelperservice_1 = __webpack_require__(7);
-	var authorizationmodel_1 = __webpack_require__(100);
+	var authorizationmodel_1 = __webpack_require__(101);
 	var router_1 = __webpack_require__(5);
 	var AuthorizationListComponent = (function () {
 	    function AuthorizationListComponent(crudHelperService, authorizationModel, router, activatedRoute) {
@@ -5796,7 +5921,7 @@ webpackJsonp([2],{
 	    AuthorizationListComponent = __decorate([
 	        core_1.Component({
 	            selector: 'authorizationlist',
-	            templateUrl: 'settings/authorization/authorizationlist.html'
+	            template: __webpack_require__(739)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _a) || Object, (typeof (_b = typeof authorizationmodel_1.AuthorizationModel !== 'undefined' && authorizationmodel_1.AuthorizationModel) === 'function' && _b) || Object, (typeof (_c = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _c) || Object, (typeof (_d = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _d) || Object])
 	    ], AuthorizationListComponent);
@@ -5807,8 +5932,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 194:
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5841,8 +5965,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 195:
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5858,7 +5981,7 @@ webpackJsonp([2],{
 	var core_1 = __webpack_require__(2);
 	var rxjs_1 = __webpack_require__(17);
 	var crudhelperservice_1 = __webpack_require__(7);
-	var networkservice_1 = __webpack_require__(124);
+	var networkservice_1 = __webpack_require__(123);
 	var NetworkSettingsComponent = (function () {
 	    function NetworkSettingsComponent(crudHelperService, networkService) {
 	        var _this = this;
@@ -5935,7 +6058,7 @@ webpackJsonp([2],{
 	    NetworkSettingsComponent = __decorate([
 	        core_1.Component({
 	            selector: 'networksetting',
-	            templateUrl: 'settings/networksettings.html'
+	            template: __webpack_require__(740)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _a) || Object, (typeof (_b = typeof networkservice_1.NetworkService !== 'undefined' && networkservice_1.NetworkService) === 'function' && _b) || Object])
 	    ], NetworkSettingsComponent);
@@ -5946,8 +6069,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 196:
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6015,7 +6137,7 @@ webpackJsonp([2],{
 	    NodeCreateComponent = __decorate([
 	        core_1.Component({
 	            selector: 'nodecreate',
-	            templateUrl: 'settings/nodes/nodecreate.html'
+	            template: __webpack_require__(741)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _c) || Object, (typeof (_d = typeof bgpsmodel_1.BgpsModel !== 'undefined' && bgpsmodel_1.BgpsModel) === 'function' && _d) || Object, (typeof (_e = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _e) || Object])
 	    ], NodeCreateComponent);
@@ -6026,8 +6148,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 197:
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6118,7 +6239,7 @@ webpackJsonp([2],{
 	    NodeDetailsComponent = __decorate([
 	        core_1.Component({
 	            selector: 'nodedetails',
-	            templateUrl: 'settings/nodes/nodedetails.html'
+	            template: __webpack_require__(742)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _c) || Object, (typeof (_d = typeof bgpsmodel_1.BgpsModel !== 'undefined' && bgpsmodel_1.BgpsModel) === 'function' && _d) || Object, (typeof (_e = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _e) || Object])
 	    ], NodeDetailsComponent);
@@ -6129,8 +6250,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 198:
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6187,7 +6307,7 @@ webpackJsonp([2],{
 	    NodeListComponent = __decorate([
 	        core_1.Component({
 	            selector: 'nodelist',
-	            templateUrl: 'settings/nodes/nodelist.html'
+	            template: __webpack_require__(744)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof bgpsmodel_1.BgpsModel !== 'undefined' && bgpsmodel_1.BgpsModel) === 'function' && _c) || Object, (typeof (_d = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _d) || Object, (typeof (_e = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _e) || Object])
 	    ], NodeListComponent);
@@ -6198,8 +6318,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 199:
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6222,7 +6341,7 @@ webpackJsonp([2],{
 	    SettingsMenuComponent = __decorate([
 	        core_1.Component({
 	            selector: 'settingsmenu',
-	            templateUrl: 'settings/settingsmenu.html'
+	            template: __webpack_require__(746)
 	        }), 
 	        __metadata('design:paramtypes', [])
 	    ], SettingsMenuComponent);
@@ -6232,8 +6351,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 200:
+/* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6292,7 +6410,7 @@ webpackJsonp([2],{
 	    OrganizationCreateComponent = __decorate([
 	        core_1.Component({
 	            selector: 'organizationcreate',
-	            templateUrl: 'settings/tenants/organizationcreate.html'
+	            template: __webpack_require__(747)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _c) || Object, (typeof (_d = typeof organizationsmodel_1.OrganizationsModel !== 'undefined' && organizationsmodel_1.OrganizationsModel) === 'function' && _d) || Object, (typeof (_e = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _e) || Object])
 	    ], OrganizationCreateComponent);
@@ -6303,8 +6421,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 201:
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6369,7 +6486,7 @@ webpackJsonp([2],{
 	    OrganizationDetailsComponent = __decorate([
 	        core_1.Component({
 	            selector: 'organizationdetails',
-	            templateUrl: 'settings/tenants/organizationdetails.html'
+	            template: __webpack_require__(748)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _c) || Object, (typeof (_d = typeof organizationsmodel_1.OrganizationsModel !== 'undefined' && organizationsmodel_1.OrganizationsModel) === 'function' && _d) || Object, (typeof (_e = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _e) || Object])
 	    ], OrganizationDetailsComponent);
@@ -6380,8 +6497,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 202:
+/* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6443,7 +6559,7 @@ webpackJsonp([2],{
 	    OrganizationListComponent = __decorate([
 	        core_1.Component({
 	            selector: 'organizationlist',
-	            templateUrl: 'settings/tenants/organizationlist.html'
+	            template: __webpack_require__(749)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof organizationsmodel_1.OrganizationsModel !== 'undefined' && organizationsmodel_1.OrganizationsModel) === 'function' && _c) || Object, (typeof (_d = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _d) || Object, (typeof (_e = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _e) || Object])
 	    ], OrganizationListComponent);
@@ -6454,8 +6570,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 203:
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6471,7 +6586,7 @@ webpackJsonp([2],{
 	var core_1 = __webpack_require__(2);
 	var router_1 = __webpack_require__(5);
 	var crudhelperservice_1 = __webpack_require__(7);
-	var usersmodel_1 = __webpack_require__(79);
+	var usersmodel_1 = __webpack_require__(81);
 	var contivglobals_1 = __webpack_require__(11);
 	var UserCreateComponent = (function () {
 	    function UserCreateComponent(activatedRoute, router, crudHelperService, usersModel, ngZone) {
@@ -6523,7 +6638,7 @@ webpackJsonp([2],{
 	    UserCreateComponent = __decorate([
 	        core_1.Component({
 	            selector: 'usercreate',
-	            templateUrl: 'settings/users/usercreate.html'
+	            template: __webpack_require__(750)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _c) || Object, (typeof (_d = typeof usersmodel_1.UsersModel !== 'undefined' && usersmodel_1.UsersModel) === 'function' && _d) || Object, (typeof (_e = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _e) || Object])
 	    ], UserCreateComponent);
@@ -6534,8 +6649,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 204:
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6550,7 +6664,7 @@ webpackJsonp([2],{
 	};
 	var core_1 = __webpack_require__(2);
 	var router_1 = __webpack_require__(5);
-	var usersmodel_1 = __webpack_require__(79);
+	var usersmodel_1 = __webpack_require__(81);
 	var crudhelperservice_1 = __webpack_require__(7);
 	var contivglobals_1 = __webpack_require__(11);
 	var UserDetailsComponent = (function () {
@@ -6639,7 +6753,7 @@ webpackJsonp([2],{
 	    UserDetailsComponent = __decorate([
 	        core_1.Component({
 	            selector: 'userdetails',
-	            templateUrl: 'settings/users/userdetails.html'
+	            template: __webpack_require__(751)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _c) || Object, (typeof (_d = typeof usersmodel_1.UsersModel !== 'undefined' && usersmodel_1.UsersModel) === 'function' && _d) || Object, (typeof (_e = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _e) || Object])
 	    ], UserDetailsComponent);
@@ -6650,8 +6764,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 205:
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6668,7 +6781,7 @@ webpackJsonp([2],{
 	var router_1 = __webpack_require__(5);
 	var crudhelperservice_1 = __webpack_require__(7);
 	var rxjs_1 = __webpack_require__(17);
-	var usersmodel_1 = __webpack_require__(79);
+	var usersmodel_1 = __webpack_require__(81);
 	var UserListComponent = (function () {
 	    function UserListComponent(activatedRoute, router, usersModel, crudHelperService, ngZone) {
 	        var _this = this;
@@ -6710,7 +6823,7 @@ webpackJsonp([2],{
 	    UserListComponent = __decorate([
 	        core_1.Component({
 	            selector: 'userlist',
-	            templateUrl: 'settings/users/userlist.html'
+	            template: __webpack_require__(752)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof usersmodel_1.UsersModel !== 'undefined' && usersmodel_1.UsersModel) === 'function' && _c) || Object, (typeof (_d = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _d) || Object, (typeof (_e = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _e) || Object])
 	    ], UserListComponent);
@@ -6721,8 +6834,42 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 350:
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */,
+/* 230 */,
+/* 231 */,
+/* 232 */,
+/* 233 */,
+/* 234 */,
+/* 235 */,
+/* 236 */,
+/* 237 */,
+/* 238 */,
+/* 239 */,
+/* 240 */,
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var root = __webpack_require__(61);
@@ -6734,8 +6881,7 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 351:
+/* 242 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
@@ -6746,8 +6892,7 @@ webpackJsonp([2],{
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-
-/***/ 352:
+/* 243 */
 /***/ function(module, exports) {
 
 	/** Used for built-in method references. */
@@ -6771,8 +6916,7 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 353:
+/* 244 */
 /***/ function(module, exports) {
 
 	/** Used for built-in method references. */
@@ -6804,12 +6948,11 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 354:
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseGetTag = __webpack_require__(111),
-	    isObject = __webpack_require__(356);
+	var baseGetTag = __webpack_require__(112),
+	    isObject = __webpack_require__(247);
 
 	/** `Object#toString` result references. */
 	var asyncTag = '[object AsyncFunction]',
@@ -6848,8 +6991,7 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 355:
+/* 246 */
 /***/ function(module, exports) {
 
 	/** Used as references for various `Number` constants. */
@@ -6890,8 +7032,7 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 356:
+/* 247 */
 /***/ function(module, exports) {
 
 	/**
@@ -6928,8 +7069,153 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 394:
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */,
+/* 252 */,
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */,
+/* 258 */,
+/* 259 */,
+/* 260 */,
+/* 261 */,
+/* 262 */,
+/* 263 */,
+/* 264 */,
+/* 265 */,
+/* 266 */,
+/* 267 */,
+/* 268 */,
+/* 269 */,
+/* 270 */,
+/* 271 */,
+/* 272 */,
+/* 273 */,
+/* 274 */,
+/* 275 */,
+/* 276 */,
+/* 277 */,
+/* 278 */,
+/* 279 */,
+/* 280 */,
+/* 281 */,
+/* 282 */,
+/* 283 */,
+/* 284 */,
+/* 285 */,
+/* 286 */,
+/* 287 */,
+/* 288 */,
+/* 289 */,
+/* 290 */,
+/* 291 */,
+/* 292 */,
+/* 293 */,
+/* 294 */,
+/* 295 */,
+/* 296 */,
+/* 297 */,
+/* 298 */,
+/* 299 */,
+/* 300 */,
+/* 301 */,
+/* 302 */,
+/* 303 */,
+/* 304 */,
+/* 305 */,
+/* 306 */,
+/* 307 */,
+/* 308 */,
+/* 309 */,
+/* 310 */,
+/* 311 */,
+/* 312 */,
+/* 313 */,
+/* 314 */,
+/* 315 */,
+/* 316 */,
+/* 317 */,
+/* 318 */,
+/* 319 */,
+/* 320 */,
+/* 321 */,
+/* 322 */,
+/* 323 */,
+/* 324 */,
+/* 325 */,
+/* 326 */,
+/* 327 */,
+/* 328 */,
+/* 329 */,
+/* 330 */,
+/* 331 */,
+/* 332 */,
+/* 333 */,
+/* 334 */,
+/* 335 */,
+/* 336 */,
+/* 337 */,
+/* 338 */,
+/* 339 */,
+/* 340 */,
+/* 341 */,
+/* 342 */,
+/* 343 */,
+/* 344 */,
+/* 345 */,
+/* 346 */,
+/* 347 */,
+/* 348 */,
+/* 349 */,
+/* 350 */,
+/* 351 */,
+/* 352 */,
+/* 353 */,
+/* 354 */,
+/* 355 */,
+/* 356 */,
+/* 357 */,
+/* 358 */,
+/* 359 */,
+/* 360 */,
+/* 361 */,
+/* 362 */,
+/* 363 */,
+/* 364 */,
+/* 365 */,
+/* 366 */,
+/* 367 */,
+/* 368 */,
+/* 369 */,
+/* 370 */,
+/* 371 */,
+/* 372 */,
+/* 373 */,
+/* 374 */,
+/* 375 */,
+/* 376 */,
+/* 377 */,
+/* 378 */,
+/* 379 */,
+/* 380 */,
+/* 381 */,
+/* 382 */,
+/* 383 */,
+/* 384 */,
+/* 385 */,
+/* 386 */,
+/* 387 */,
+/* 388 */,
+/* 389 */,
+/* 390 */,
+/* 391 */,
+/* 392 */,
+/* 393 */,
+/* 394 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6962,8 +7248,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 395:
+/* 395 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6980,8 +7265,8 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 10/6/16.
 	 */
 	var core_1 = __webpack_require__(2);
-	var platform_browser_1 = __webpack_require__(97);
-	var http_1 = __webpack_require__(22);
+	var platform_browser_1 = __webpack_require__(78);
+	var http_1 = __webpack_require__(23);
 	var common_1 = __webpack_require__(20);
 	var dashboard_module_1 = __webpack_require__(417);
 	var networkpolicies_module_1 = __webpack_require__(428);
@@ -6990,20 +7275,20 @@ webpackJsonp([2],{
 	var servicelb_module_1 = __webpack_require__(432);
 	var appprofile_module_1 = __webpack_require__(404);
 	var users_module_1 = __webpack_require__(439);
-	var netprofilesmodel_1 = __webpack_require__(78);
+	var netprofilesmodel_1 = __webpack_require__(80);
 	var applicationgroupsmodel_1 = __webpack_require__(47);
 	var networksmodel_1 = __webpack_require__(48);
 	var organizationsmodel_1 = __webpack_require__(34);
 	var policiesmodel_1 = __webpack_require__(64);
-	var rulesmodel_1 = __webpack_require__(123);
+	var rulesmodel_1 = __webpack_require__(122);
 	var servicelbsmodel_1 = __webpack_require__(73);
-	var usersmodel_1 = __webpack_require__(79);
-	var appprofilesmodel_1 = __webpack_require__(99);
+	var usersmodel_1 = __webpack_require__(81);
+	var appprofilesmodel_1 = __webpack_require__(100);
 	var bgpsmodel_1 = __webpack_require__(72);
-	var contractgroupsmodel_1 = __webpack_require__(77);
+	var contractgroupsmodel_1 = __webpack_require__(79);
 	var crudhelperservice_1 = __webpack_require__(7);
-	var inspectservice_1 = __webpack_require__(81);
-	var networkservice_1 = __webpack_require__(124);
+	var inspectservice_1 = __webpack_require__(83);
+	var networkservice_1 = __webpack_require__(123);
 	var menu_module_1 = __webpack_require__(423);
 	var app_component_1 = __webpack_require__(394);
 	var login_module_1 = __webpack_require__(422);
@@ -7011,8 +7296,8 @@ webpackJsonp([2],{
 	var authguard_1 = __webpack_require__(170);
 	var apiservice_1 = __webpack_require__(27);
 	var firstrunwizard_module_1 = __webpack_require__(420);
-	var chartservice_1 = __webpack_require__(80);
-	var authorizationmodel_1 = __webpack_require__(100);
+	var chartservice_1 = __webpack_require__(82);
+	var authorizationmodel_1 = __webpack_require__(101);
 	var applicationgroups_module_1 = __webpack_require__(398);
 	var app_routes_1 = __webpack_require__(396);
 	var authorization_module_1 = __webpack_require__(434);
@@ -7076,8 +7361,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 396:
+/* 396 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7213,8 +7497,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 397:
+/* 397 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7254,7 +7537,7 @@ webpackJsonp([2],{
 	    ApplicationGroupInfoComponent = __decorate([
 	        core_1.Component({
 	            selector: 'applicationgroupinfo',
-	            templateUrl: 'applicationgroups/applicationgroupinfo.html'
+	            template: __webpack_require__(683)
 	        }), 
 	        __metadata('design:paramtypes', [])
 	    ], ApplicationGroupInfoComponent);
@@ -7264,8 +7547,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 398:
+/* 398 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7341,8 +7623,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 399:
+/* 399 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -7361,7 +7642,7 @@ webpackJsonp([2],{
 	var core_1 = __webpack_require__(2);
 	var applicationgroupsmodel_1 = __webpack_require__(47);
 	var crudhelperservice_1 = __webpack_require__(7);
-	var inspectservice_1 = __webpack_require__(81);
+	var inspectservice_1 = __webpack_require__(83);
 	var rxjs_1 = __webpack_require__(17);
 	var contivglobals_1 = __webpack_require__(11);
 	var util_1 = __webpack_require__(19);
@@ -7428,7 +7709,7 @@ webpackJsonp([2],{
 	    ApplicationGroupStatsComponent = __decorate([
 	        core_1.Component({
 	            selector: 'applicationgroupstats',
-	            templateUrl: 'applicationgroups/applicationgroupstats.html'
+	            template: __webpack_require__(685)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof applicationgroupsmodel_1.ApplicationGroupsModel !== 'undefined' && applicationgroupsmodel_1.ApplicationGroupsModel) === 'function' && _a) || Object, (typeof (_b = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _b) || Object, (typeof (_c = typeof inspectservice_1.InspectService !== 'undefined' && inspectservice_1.InspectService) === 'function' && _c) || Object, (typeof (_d = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _d) || Object])
 	    ], ApplicationGroupStatsComponent);
@@ -7439,8 +7720,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 400:
+/* 400 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7458,7 +7738,7 @@ webpackJsonp([2],{
 	 */
 	var core_1 = __webpack_require__(2);
 	var _ = __webpack_require__(28);
-	var netprofilesmodel_1 = __webpack_require__(78);
+	var netprofilesmodel_1 = __webpack_require__(80);
 	var util_1 = __webpack_require__(19);
 	var BandwidthPolicySelectionComponent = (function () {
 	    function BandwidthPolicySelectionComponent(netprofilesModel) {
@@ -7508,7 +7788,7 @@ webpackJsonp([2],{
 	    BandwidthPolicySelectionComponent = __decorate([
 	        core_1.Component({
 	            selector: 'ctv-bandwidthpolicy',
-	            templateUrl: 'applicationgroups/bandwidthpolicy.html'
+	            template: __webpack_require__(686)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof netprofilesmodel_1.NetprofilesModel !== 'undefined' && netprofilesmodel_1.NetprofilesModel) === 'function' && _a) || Object])
 	    ], BandwidthPolicySelectionComponent);
@@ -7519,8 +7799,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 401:
+/* 401 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7538,7 +7817,7 @@ webpackJsonp([2],{
 	 */
 	var core_1 = __webpack_require__(2);
 	var _ = __webpack_require__(28);
-	var contractgroupsmodel_1 = __webpack_require__(77);
+	var contractgroupsmodel_1 = __webpack_require__(79);
 	var ContractGroupSelectionComponent = (function () {
 	    function ContractGroupSelectionComponent(contractGroupsModel) {
 	        this.contractGroupsModel = contractGroupsModel;
@@ -7625,7 +7904,7 @@ webpackJsonp([2],{
 	    ContractGroupSelectionComponent = __decorate([
 	        core_1.Component({
 	            selector: 'ctv-contractgroup',
-	            templateUrl: 'applicationgroups/contractgroup.html'
+	            template: __webpack_require__(687)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof contractgroupsmodel_1.ContractGroupsModel !== 'undefined' && contractgroupsmodel_1.ContractGroupsModel) === 'function' && _a) || Object])
 	    ], ContractGroupSelectionComponent);
@@ -7636,8 +7915,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 402:
+/* 402 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7656,7 +7934,7 @@ webpackJsonp([2],{
 	var core_1 = __webpack_require__(2);
 	var _ = __webpack_require__(28);
 	var policiesmodel_1 = __webpack_require__(64);
-	var rulesmodel_1 = __webpack_require__(123);
+	var rulesmodel_1 = __webpack_require__(122);
 	var IsolationPolicySelectionComponent = (function () {
 	    function IsolationPolicySelectionComponent(policiesModel, rulesModel) {
 	        this.policiesModel = policiesModel;
@@ -7761,7 +8039,7 @@ webpackJsonp([2],{
 	    IsolationPolicySelectionComponent = __decorate([
 	        core_1.Component({
 	            selector: 'ctv-isolationpolicy',
-	            templateUrl: 'applicationgroups/isolationpolicy.html'
+	            template: __webpack_require__(688)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof policiesmodel_1.PoliciesModel !== 'undefined' && policiesmodel_1.PoliciesModel) === 'function' && _a) || Object, (typeof (_b = typeof rulesmodel_1.RulesModel !== 'undefined' && rulesmodel_1.RulesModel) === 'function' && _b) || Object])
 	    ], IsolationPolicySelectionComponent);
@@ -7772,8 +8050,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 403:
+/* 403 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7870,7 +8147,7 @@ webpackJsonp([2],{
 	    ApplicationGroupSelectionComponent = __decorate([
 	        core_1.Component({
 	            selector: 'ctv-appgroupselection',
-	            templateUrl: 'appprofiles/appgroupselection.html'
+	            template: __webpack_require__(689)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof applicationgroupsmodel_1.ApplicationGroupsModel !== 'undefined' && applicationgroupsmodel_1.ApplicationGroupsModel) === 'function' && _a) || Object])
 	    ], ApplicationGroupSelectionComponent);
@@ -7881,8 +8158,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 404:
+/* 404 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7943,8 +8219,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 405:
+/* 405 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7974,7 +8249,7 @@ webpackJsonp([2],{
 	    CtvAccordionComponent = __decorate([
 	        core_1.Component({
 	            selector: 'ctv-accordion',
-	            templateUrl: 'components/directives/accordion.html'
+	            template: __webpack_require__(693)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof core_1.ElementRef !== 'undefined' && core_1.ElementRef) === 'function' && _a) || Object])
 	    ], CtvAccordionComponent);
@@ -7985,8 +8260,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 406:
+/* 406 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8036,8 +8310,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 407:
+/* 407 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8070,7 +8343,7 @@ webpackJsonp([2],{
 	    CtvCollapsibleComponent = __decorate([
 	        core_1.Component({
 	            selector: 'ctv-collapsible',
-	            templateUrl: 'components/directives/collapsible.html'
+	            template: __webpack_require__(694)
 	        }), 
 	        __metadata('design:paramtypes', [])
 	    ], CtvCollapsibleComponent);
@@ -8080,8 +8353,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 408:
+/* 408 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8119,7 +8391,7 @@ webpackJsonp([2],{
 	    ErrorMessageComponent = __decorate([
 	        core_1.Component({
 	            selector: 'ctv-error',
-	            templateUrl: 'components/directives/errormessage.html'
+	            template: __webpack_require__(695)
 	        }), 
 	        __metadata('design:paramtypes', [])
 	    ], ErrorMessageComponent);
@@ -8129,8 +8401,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 409:
+/* 409 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8147,7 +8418,7 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(2);
-	var chartservice_1 = __webpack_require__(80);
+	var chartservice_1 = __webpack_require__(82);
 	var util_1 = __webpack_require__(19);
 	var util_2 = __webpack_require__(19);
 	var LineGraphComponent = (function () {
@@ -8307,8 +8578,8 @@ webpackJsonp([2],{
 	    LineGraphComponent = __decorate([
 	        core_1.Component({
 	            selector: 'linegraph',
-	            templateUrl: 'components/directives/linegraph.html',
-	            styleUrls: ['components/directives/linegraph.css']
+	            template: __webpack_require__(696),
+	            styles: [__webpack_require__(1014)]
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_b = typeof chartservice_1.ChartService !== 'undefined' && chartservice_1.ChartService) === 'function' && _b) || Object])
 	    ], LineGraphComponent);
@@ -8319,8 +8590,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 410:
+/* 410 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8395,7 +8665,7 @@ webpackJsonp([2],{
 	    CtvNamevalueComponent = __decorate([
 	        core_1.Component({
 	            selector: 'ctv-namevalue',
-	            templateUrl: 'components/directives/namevalue.html'
+	            template: __webpack_require__(697)
 	        }), 
 	        __metadata('design:paramtypes', [])
 	    ], CtvNamevalueComponent);
@@ -8406,8 +8676,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 411:
+/* 411 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8460,7 +8729,7 @@ webpackJsonp([2],{
 	    AciSettingComponent = __decorate([
 	        core_1.Component({
 	            selector: 'acisettingcomp',
-	            templateUrl: 'components/directives/settings/acisetting.html'
+	            template: __webpack_require__(701)
 	        }), 
 	        __metadata('design:paramtypes', [])
 	    ], AciSettingComponent);
@@ -8471,8 +8740,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 412:
+/* 412 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8492,7 +8760,7 @@ webpackJsonp([2],{
 	var apiservice_1 = __webpack_require__(27);
 	var contivglobals_1 = __webpack_require__(11);
 	var crudhelperservice_1 = __webpack_require__(7);
-	var isEmpty = __webpack_require__(673);
+	var isEmpty = __webpack_require__(676);
 	var LdapSettingsComponent = (function () {
 	    function LdapSettingsComponent(apiService, crudHelperService) {
 	        this.apiService = apiService;
@@ -8543,7 +8811,7 @@ webpackJsonp([2],{
 	    LdapSettingsComponent = __decorate([
 	        core_1.Component({
 	            selector: 'ldapsettings',
-	            templateUrl: 'components/directives/settings/ldapsetting.html'
+	            template: __webpack_require__(702)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof apiservice_1.ApiService !== 'undefined' && apiservice_1.ApiService) === 'function' && _a) || Object, (typeof (_b = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _b) || Object])
 	    ], LdapSettingsComponent);
@@ -8554,8 +8822,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 413:
+/* 413 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8611,7 +8878,7 @@ webpackJsonp([2],{
 	    NetworkSettingComponent = __decorate([
 	        core_1.Component({
 	            selector: 'networksettingcomp',
-	            templateUrl: 'components/directives/settings/networksetting.html'
+	            template: __webpack_require__(703)
 	        }), 
 	        __metadata('design:paramtypes', [])
 	    ], NetworkSettingComponent);
@@ -8622,8 +8889,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 414:
+/* 414 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8806,7 +9072,7 @@ webpackJsonp([2],{
 	    CtvTableComponent = __decorate([
 	        core_1.Component({
 	            selector: 'ctv-table',
-	            templateUrl: 'components/directives/table.html'
+	            template: __webpack_require__(704)
 	        }), 
 	        __metadata('design:paramtypes', [])
 	    ], CtvTableComponent);
@@ -8840,7 +9106,7 @@ webpackJsonp([2],{
 	    CtvThComponent = __decorate([
 	        core_1.Component({
 	            selector: "ctv-th",
-	            templateUrl: 'components/directives/tableheader.html'
+	            template: __webpack_require__(705)
 	        }), 
 	        __metadata('design:paramtypes', [])
 	    ], CtvThComponent);
@@ -8883,7 +9149,7 @@ webpackJsonp([2],{
 	    CtvTpaginationComponent = __decorate([
 	        core_1.Component({
 	            selector: "ctv-tpagination",
-	            templateUrl: 'components/directives/paginationmenu.html'
+	            template: __webpack_require__(699)
 	        }), 
 	        __metadata('design:paramtypes', [])
 	    ], CtvTpaginationComponent);
@@ -8916,7 +9182,7 @@ webpackJsonp([2],{
 	    CtvSearchComponent = __decorate([
 	        core_1.Component({
 	            selector: 'ctv-search',
-	            templateUrl: 'components/directives/searchinput.html'
+	            template: __webpack_require__(700)
 	        }), 
 	        __metadata('design:paramtypes', [])
 	    ], CtvSearchComponent);
@@ -8927,12 +9193,11 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 415:
+/* 415 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	__webpack_require__(150);
+	__webpack_require__(149);
 	var _ = __webpack_require__(28);
 	/**
 	 * BaseCollection class that does just fetch of the objects.
@@ -9033,8 +9298,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 416:
+/* 416 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9084,8 +9348,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 417:
+/* 417 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9106,7 +9369,7 @@ webpackJsonp([2],{
 	var common_1 = __webpack_require__(20);
 	var router_1 = __webpack_require__(5);
 	var dashboardctrl_1 = __webpack_require__(171);
-	var ng2_charts_1 = __webpack_require__(147);
+	var ng2_charts_1 = __webpack_require__(146);
 	var directives_module_1 = __webpack_require__(37);
 	var DashboardModule = (function () {
 	    function DashboardModule() {
@@ -9138,8 +9401,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 418:
+/* 418 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9156,7 +9418,7 @@ webpackJsonp([2],{
 	 * Created by cshampur on 10/30/16.
 	 */
 	var core_1 = __webpack_require__(2);
-	var firstrunwizardservice_1 = __webpack_require__(82);
+	var firstrunwizardservice_1 = __webpack_require__(84);
 	var FirstrunACISettingsComponent = (function () {
 	    function FirstrunACISettingsComponent(wizardService) {
 	        this.wizardService = wizardService;
@@ -9191,7 +9453,7 @@ webpackJsonp([2],{
 	    FirstrunACISettingsComponent = __decorate([
 	        core_1.Component({
 	            selector: 'firstrunacisettings',
-	            templateUrl: 'firstrunwizard/firstrunacisettings.html'
+	            template: __webpack_require__(707)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_c = typeof firstrunwizardservice_1.FirstRunWizardService !== 'undefined' && firstrunwizardservice_1.FirstRunWizardService) === 'function' && _c) || Object])
 	    ], FirstrunACISettingsComponent);
@@ -9202,8 +9464,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 419:
+/* 419 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9220,7 +9481,7 @@ webpackJsonp([2],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(2);
-	var firstrunwizardservice_1 = __webpack_require__(82);
+	var firstrunwizardservice_1 = __webpack_require__(84);
 	var FirstrunNetworkDefaultComponent = (function () {
 	    function FirstrunNetworkDefaultComponent(wizardService) {
 	        this.wizardService = wizardService;
@@ -9252,7 +9513,7 @@ webpackJsonp([2],{
 	    FirstrunNetworkDefaultComponent = __decorate([
 	        core_1.Component({
 	            selector: 'firstrunnetworkdefault',
-	            templateUrl: 'firstrunwizard/firstrunnetworkdefault.html'
+	            template: __webpack_require__(708)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_c = typeof firstrunwizardservice_1.FirstRunWizardService !== 'undefined' && firstrunwizardservice_1.FirstRunWizardService) === 'function' && _c) || Object])
 	    ], FirstrunNetworkDefaultComponent);
@@ -9263,8 +9524,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 420:
+/* 420 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9288,7 +9548,7 @@ webpackJsonp([2],{
 	var common_1 = __webpack_require__(20);
 	var directives_module_1 = __webpack_require__(37);
 	var router_1 = __webpack_require__(5);
-	var firstrunwizardservice_1 = __webpack_require__(82);
+	var firstrunwizardservice_1 = __webpack_require__(84);
 	var firstrunwizardctrl_1 = __webpack_require__(172);
 	var firstrunnetworkdefaults_1 = __webpack_require__(419);
 	var firstrunacisettings_1 = __webpack_require__(418);
@@ -9326,8 +9586,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 421:
+/* 421 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9345,7 +9604,7 @@ webpackJsonp([2],{
 	};
 	var core_1 = __webpack_require__(2);
 	var router_1 = __webpack_require__(5);
-	var firstrunwizardservice_1 = __webpack_require__(82);
+	var firstrunwizardservice_1 = __webpack_require__(84);
 	var FirstrunConfirmComponent = (function () {
 	    function FirstrunConfirmComponent(wizardservice, router, activatedRoute) {
 	        this.router = router;
@@ -9394,7 +9653,7 @@ webpackJsonp([2],{
 	    FirstrunConfirmComponent = __decorate([
 	        core_1.Component({
 	            selector: 'firstrunwizardconfirmpage',
-	            templateUrl: 'firstrunwizard/firstrunwizardconfirmpage.html'
+	            template: __webpack_require__(710)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_c = typeof firstrunwizardservice_1.FirstRunWizardService !== 'undefined' && firstrunwizardservice_1.FirstRunWizardService) === 'function' && _c) || Object, (typeof (_d = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _d) || Object, (typeof (_e = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _e) || Object])
 	    ], FirstrunConfirmComponent);
@@ -9405,8 +9664,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 422:
+/* 422 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9461,8 +9719,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 423:
+/* 423 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9514,8 +9771,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 424:
+/* 424 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9534,7 +9790,7 @@ webpackJsonp([2],{
 	var core_1 = __webpack_require__(2);
 	var crudhelperservice_1 = __webpack_require__(7);
 	var rxjs_1 = __webpack_require__(17);
-	var netprofilesmodel_1 = __webpack_require__(78);
+	var netprofilesmodel_1 = __webpack_require__(80);
 	var BandwidthListComponent = (function () {
 	    function BandwidthListComponent(netprofilesModel, crudHelperService, ngZone) {
 	        var _this = this;
@@ -9570,7 +9826,7 @@ webpackJsonp([2],{
 	    BandwidthListComponent = __decorate([
 	        core_1.Component({
 	            selector: 'bandwidthpolicylist',
-	            templateUrl: 'network_policies/bandwidthpolicylist.html'
+	            template: __webpack_require__(717)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof netprofilesmodel_1.NetprofilesModel !== 'undefined' && netprofilesmodel_1.NetprofilesModel) === 'function' && _a) || Object, (typeof (_b = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _b) || Object, (typeof (_c = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _c) || Object])
 	    ], BandwidthListComponent);
@@ -9581,8 +9837,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 425:
+/* 425 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9599,7 +9854,7 @@ webpackJsonp([2],{
 	 * Created by vjain3 on 12/13/16.
 	 */
 	var core_1 = __webpack_require__(2);
-	var contractgroupsmodel_1 = __webpack_require__(77);
+	var contractgroupsmodel_1 = __webpack_require__(79);
 	var crudhelperservice_1 = __webpack_require__(7);
 	var rxjs_1 = __webpack_require__(17);
 	var ContractGroupListComponent = (function () {
@@ -9636,7 +9891,7 @@ webpackJsonp([2],{
 	    ContractGroupListComponent = __decorate([
 	        core_1.Component({
 	            selector: 'contractgrouplist',
-	            templateUrl: 'network_policies/contractgrouplist.html'
+	            template: __webpack_require__(720)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof contractgroupsmodel_1.ContractGroupsModel !== 'undefined' && contractgroupsmodel_1.ContractGroupsModel) === 'function' && _a) || Object, (typeof (_b = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _b) || Object, (typeof (_c = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _c) || Object])
 	    ], ContractGroupListComponent);
@@ -9647,8 +9902,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 426:
+/* 426 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9703,7 +9957,7 @@ webpackJsonp([2],{
 	    IsolationListComponent = __decorate([
 	        core_1.Component({
 	            selector: 'isolationpolicylist',
-	            templateUrl: 'network_policies/isolationpolicylist.html'
+	            template: __webpack_require__(723)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof policiesmodel_1.PoliciesModel !== 'undefined' && policiesmodel_1.PoliciesModel) === 'function' && _a) || Object, (typeof (_b = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _b) || Object, (typeof (_c = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _c) || Object])
 	    ], IsolationListComponent);
@@ -9714,8 +9968,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 427:
+/* 427 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9734,7 +9987,7 @@ webpackJsonp([2],{
 	var core_1 = __webpack_require__(2);
 	var crudhelperservice_1 = __webpack_require__(7);
 	var rxjs_1 = __webpack_require__(17);
-	var inspectservice_1 = __webpack_require__(81);
+	var inspectservice_1 = __webpack_require__(83);
 	var contivglobals_1 = __webpack_require__(11);
 	var util_1 = __webpack_require__(19);
 	var policiesmodel_1 = __webpack_require__(64);
@@ -9801,7 +10054,7 @@ webpackJsonp([2],{
 	    IsolationPolicyStatComponent = __decorate([
 	        core_1.Component({
 	            selector: 'isolationpolicystats',
-	            templateUrl: 'network_policies/isolationpolicystats.html'
+	            template: __webpack_require__(724)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof policiesmodel_1.PoliciesModel !== 'undefined' && policiesmodel_1.PoliciesModel) === 'function' && _a) || Object, (typeof (_b = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _b) || Object, (typeof (_c = typeof inspectservice_1.InspectService !== 'undefined' && inspectservice_1.InspectService) === 'function' && _c) || Object, (typeof (_d = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _d) || Object])
 	    ], IsolationPolicyStatComponent);
@@ -9812,8 +10065,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 428:
+/* 428 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9896,8 +10148,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 429:
+/* 429 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9957,8 +10208,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 430:
+/* 430 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9989,7 +10239,7 @@ webpackJsonp([2],{
 	    NetworkInfoComponent = __decorate([
 	        core_1.Component({
 	            selector: 'network-info',
-	            templateUrl: 'networks/networkinfo.html'
+	            template: __webpack_require__(728)
 	        }), 
 	        __metadata('design:paramtypes', [])
 	    ], NetworkInfoComponent);
@@ -9999,8 +10249,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 431:
+/* 431 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10017,7 +10266,7 @@ webpackJsonp([2],{
 	var crudhelperservice_1 = __webpack_require__(7);
 	var rxjs_1 = __webpack_require__(17);
 	var networksmodel_1 = __webpack_require__(48);
-	var inspectservice_1 = __webpack_require__(81);
+	var inspectservice_1 = __webpack_require__(83);
 	var util_1 = __webpack_require__(19);
 	var contivglobals_1 = __webpack_require__(11);
 	var NetworkStatComponent = (function () {
@@ -10088,7 +10337,7 @@ webpackJsonp([2],{
 	    NetworkStatComponent = __decorate([
 	        core_1.Component({
 	            selector: 'network-stat',
-	            templateUrl: 'networks/networkstats.html'
+	            template: __webpack_require__(730)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof networksmodel_1.NetworksModel !== 'undefined' && networksmodel_1.NetworksModel) === 'function' && _a) || Object, (typeof (_b = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _b) || Object, (typeof (_c = typeof inspectservice_1.InspectService !== 'undefined' && inspectservice_1.InspectService) === 'function' && _c) || Object, (typeof (_d = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _d) || Object])
 	    ], NetworkStatComponent);
@@ -10099,8 +10348,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 432:
+/* 432 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10163,8 +10411,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 433:
+/* 433 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -10220,7 +10467,7 @@ webpackJsonp([2],{
 	    ServicelbPortsComponent = __decorate([
 	        core_1.Component({
 	            selector: 'ctv-servicelbports',
-	            templateUrl: 'service_lbs/servicelbports.html'
+	            template: __webpack_require__(735)
 	        }), 
 	        __metadata('design:paramtypes', [])
 	    ], ServicelbPortsComponent);
@@ -10231,8 +10478,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 434:
+/* 434 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10290,8 +10536,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 435:
+/* 435 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10380,7 +10625,7 @@ webpackJsonp([2],{
 	    NodeInfoComponent = __decorate([
 	        core_1.Component({
 	            selector: 'nodeinfo',
-	            templateUrl: 'settings/nodes/nodeinfo.html'
+	            template: __webpack_require__(743)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof router_1.ActivatedRoute !== 'undefined' && router_1.ActivatedRoute) === 'function' && _a) || Object, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object, (typeof (_c = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _c) || Object, (typeof (_d = typeof bgpsmodel_1.BgpsModel !== 'undefined' && bgpsmodel_1.BgpsModel) === 'function' && _d) || Object, (typeof (_e = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _e) || Object])
 	    ], NodeInfoComponent);
@@ -10391,8 +10636,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 436:
+/* 436 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10468,7 +10712,7 @@ webpackJsonp([2],{
 	    NodeStatsComponent = __decorate([
 	        core_1.Component({
 	            selector: 'nodestats',
-	            templateUrl: 'settings/nodes/nodestats.html'
+	            template: __webpack_require__(745)
 	        }), 
 	        __metadata('design:paramtypes', [(typeof (_a = typeof bgpsmodel_1.BgpsModel !== 'undefined' && bgpsmodel_1.BgpsModel) === 'function' && _a) || Object, (typeof (_b = typeof crudhelperservice_1.CRUDHelperService !== 'undefined' && crudhelperservice_1.CRUDHelperService) === 'function' && _b) || Object, (typeof (_c = typeof core_1.NgZone !== 'undefined' && core_1.NgZone) === 'function' && _c) || Object])
 	    ], NodeStatsComponent);
@@ -10479,8 +10723,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 437:
+/* 437 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10553,8 +10796,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 438:
+/* 438 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10612,8 +10854,7 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 439:
+/* 439 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10671,11 +10912,271 @@ webpackJsonp([2],{
 	
 
 /***/ },
-
-/***/ 646:
+/* 440 */,
+/* 441 */,
+/* 442 */,
+/* 443 */,
+/* 444 */,
+/* 445 */,
+/* 446 */,
+/* 447 */,
+/* 448 */,
+/* 449 */,
+/* 450 */,
+/* 451 */,
+/* 452 */,
+/* 453 */,
+/* 454 */,
+/* 455 */,
+/* 456 */,
+/* 457 */,
+/* 458 */,
+/* 459 */,
+/* 460 */,
+/* 461 */,
+/* 462 */,
+/* 463 */,
+/* 464 */,
+/* 465 */,
+/* 466 */,
+/* 467 */,
+/* 468 */,
+/* 469 */,
+/* 470 */,
+/* 471 */,
+/* 472 */,
+/* 473 */,
+/* 474 */,
+/* 475 */,
+/* 476 */,
+/* 477 */,
+/* 478 */,
+/* 479 */,
+/* 480 */,
+/* 481 */,
+/* 482 */,
+/* 483 */,
+/* 484 */,
+/* 485 */,
+/* 486 */,
+/* 487 */,
+/* 488 */,
+/* 489 */,
+/* 490 */,
+/* 491 */,
+/* 492 */,
+/* 493 */,
+/* 494 */,
+/* 495 */,
+/* 496 */,
+/* 497 */,
+/* 498 */,
+/* 499 */,
+/* 500 */,
+/* 501 */,
+/* 502 */,
+/* 503 */,
+/* 504 */,
+/* 505 */,
+/* 506 */,
+/* 507 */,
+/* 508 */,
+/* 509 */,
+/* 510 */,
+/* 511 */,
+/* 512 */,
+/* 513 */,
+/* 514 */,
+/* 515 */,
+/* 516 */,
+/* 517 */,
+/* 518 */,
+/* 519 */,
+/* 520 */,
+/* 521 */,
+/* 522 */,
+/* 523 */,
+/* 524 */,
+/* 525 */,
+/* 526 */,
+/* 527 */,
+/* 528 */,
+/* 529 */,
+/* 530 */,
+/* 531 */,
+/* 532 */,
+/* 533 */,
+/* 534 */,
+/* 535 */,
+/* 536 */,
+/* 537 */,
+/* 538 */,
+/* 539 */,
+/* 540 */,
+/* 541 */,
+/* 542 */,
+/* 543 */,
+/* 544 */,
+/* 545 */,
+/* 546 */,
+/* 547 */,
+/* 548 */,
+/* 549 */,
+/* 550 */,
+/* 551 */,
+/* 552 */,
+/* 553 */,
+/* 554 */,
+/* 555 */,
+/* 556 */,
+/* 557 */,
+/* 558 */,
+/* 559 */,
+/* 560 */,
+/* 561 */,
+/* 562 */,
+/* 563 */,
+/* 564 */,
+/* 565 */,
+/* 566 */,
+/* 567 */,
+/* 568 */,
+/* 569 */,
+/* 570 */,
+/* 571 */,
+/* 572 */,
+/* 573 */,
+/* 574 */,
+/* 575 */,
+/* 576 */,
+/* 577 */,
+/* 578 */,
+/* 579 */,
+/* 580 */,
+/* 581 */,
+/* 582 */,
+/* 583 */,
+/* 584 */,
+/* 585 */,
+/* 586 */,
+/* 587 */,
+/* 588 */,
+/* 589 */,
+/* 590 */,
+/* 591 */,
+/* 592 */,
+/* 593 */,
+/* 594 */,
+/* 595 */,
+/* 596 */,
+/* 597 */,
+/* 598 */,
+/* 599 */,
+/* 600 */,
+/* 601 */,
+/* 602 */,
+/* 603 */,
+/* 604 */,
+/* 605 */,
+/* 606 */,
+/* 607 */,
+/* 608 */,
+/* 609 */,
+/* 610 */,
+/* 611 */,
+/* 612 */,
+/* 613 */,
+/* 614 */,
+/* 615 */,
+/* 616 */,
+/* 617 */,
+/* 618 */,
+/* 619 */,
+/* 620 */,
+/* 621 */,
+/* 622 */,
+/* 623 */,
+/* 624 */,
+/* 625 */,
+/* 626 */,
+/* 627 */,
+/* 628 */,
+/* 629 */,
+/* 630 */,
+/* 631 */,
+/* 632 */,
+/* 633 */,
+/* 634 */,
+/* 635 */,
+/* 636 */,
+/* 637 */,
+/* 638 */,
+/* 639 */,
+/* 640 */,
+/* 641 */,
+/* 642 */,
+/* 643 */,
+/* 644 */,
+/* 645 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(647)();
+	exports = module.exports = __webpack_require__(76)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "#slider{\n    width:92%;\n}\n\nspan{\n    font-family: CiscoSansRegular;\n    font-weight: bold;\n    padding-left: 5px;\n    padding-right: 5px;\n    padding-bottom: 8px;\n    font-size: 15px;\n}", ""]);
+
+	// exports
+
+
+/***/ },
+/* 646 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(76)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "#notificationMessage{\n    z-index: 4000;\n    position: fixed;\n    display: block;\n    padding-top: 25px;\n    background: #5d5d5d;\n    padding-left: 0px;\n    padding-right: 40px;\n    opacity: 0.85;\n}\n\n#notificationMessage.ready, #notificationMessage.info{\n    padding-left: 30px;\n    padding-right: 50px;\n}\n\n#notificationMessage.minor{\n    padding-left: 0px;\n    padding-right: 40px;\n}\n\n#notificationText #header2, #notificationText p, #notificationText span{\n    color: white;\n    font-family: CiscoSansBold;\n    font-size:14px;\n}\n\n.close.icon{\n    color:white;\n    padding-right: 20px;\n}\n\np.ready, p.info{\n    width:400px\n}\n\np.minor{\n    width:650px;\n}\n\n#notifyIcon{\n    position: relative;\n    padding-top: 4px;\n    top:15%;\n    font-size: 3em;\n}\n\n.toast_confirm.icon{\n    color: #00c905;\n}\n\n.toast_warning.icon{\n    color: #F4B400;\n}\n\n.toast_info.icon{\n    color: #008FCE;\n}\n\n\n#backgroundIcon{\n    position: absolute;\n    border-radius: 50%;\n    width: 37px;\n    height: 37px;\n    z-index: -1;\n    display: block;\n    left: 3%;\n    top: -21%;\n    background-color: white;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 647 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(76)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "tbody tr{\n    cursor: pointer;\n}\n\ntbody tr.notSelected:hover{\n    background-color: aliceblue;\n}\n\n.selected:hover{\n    background-color: #4D7198;\n    color: white;\n}\n\n.selected{\n    background-color: #4D7198;\n    color: white;\n}\n\n.notSelected{\n    background: none;\n}\n\n.graphTable{\n    width:80%;\n}", ""]);
+
+	// exports
+
+
+/***/ },
+/* 648 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(76)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".ui.grid{\n    margin-bottom: 30px;\n}\n\n.steps-container{\n    width: 100%;\n}\n\n.progressbar{\n    counter-reset: step;\n}\n\n.progressbar li{\n    list-style-type: none;\n    float: left;\n    width:33.33%;\n    position: relative;\n    text-align: center;\n}\n\n.progressbar li:before{\n    content: counter(step);\n    counter-increment: step;\n    width: 30px;\n    height: 30px;\n    line-height: 30px;\n    border: 1px solid #DDDDDD;\n    display: block;\n    text-align: center;\n    margin: 0 auto 10px auto;\n    border-radius: 50%;\n    background-color: lightgrey;\n}\n\n.progressbar li:after {\n    content: '';\n    position: absolute;\n    width: 100%;\n    height: 1px;\n    background-color: #DDDDDD;\n    top: 15px;\n    left: -50%;\n    z-index: -1;\n}\n\n.progressbar li:first-child:after {\n    content: none;\n}\n\n.progressbar li.active {\n    color: white;\n}\n\n.progressbar li.active:before {\n    border-color: dodgerblue;\n    background-color: dodgerblue;\n\n}\n\n.progressbar li.completed + li:after {\n    background-color: dodgerblue;\n}\n\n.progressbar li span {\n    color: dimgrey;\n\n}\n\n.progressbar li.completed:before {\n    content: '\\2714';\n    color: dodgerblue;\n    background-color: white;\n    border-color: dodgerblue;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 649 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(76)();
 	// imports
 
 
@@ -10686,68 +11187,26 @@ webpackJsonp([2],{
 
 
 /***/ },
+/* 650 */
+/***/ function(module, exports, __webpack_require__) {
 
-/***/ 647:
-/***/ function(module, exports) {
+	exports = module.exports = __webpack_require__(76)();
+	// imports
 
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	// css base code, injected by the css-loader
-	module.exports = function() {
-		var list = [];
 
-		// return the list of modules as css string
-		list.toString = function toString() {
-			var result = [];
-			for(var i = 0; i < this.length; i++) {
-				var item = this[i];
-				if(item[2]) {
-					result.push("@media " + item[2] + "{" + item[1] + "}");
-				} else {
-					result.push(item[1]);
-				}
-			}
-			return result.join("");
-		};
+	// module
+	exports.push([module.id, ".logout {\n    width:50%;\n    margin-top: 100px;\n}\n\n", ""]);
 
-		// import a list of modules into the list
-		list.i = function(modules, mediaQuery) {
-			if(typeof modules === "string")
-				modules = [[null, modules, ""]];
-			var alreadyImportedModules = {};
-			for(var i = 0; i < this.length; i++) {
-				var id = this[i][0];
-				if(typeof id === "number")
-					alreadyImportedModules[id] = true;
-			}
-			for(i = 0; i < modules.length; i++) {
-				var item = modules[i];
-				// skip already imported module
-				// this implementation is not 100% perfect for weird media query combinations
-				//  when a module is imported multiple times with different media queries.
-				//  I hope this will never occur (Hey this way we have smaller bundles)
-				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-					if(mediaQuery && !item[2]) {
-						item[2] = mediaQuery;
-					} else if(mediaQuery) {
-						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-					}
-					list.push(item);
-				}
-			}
-		};
-		return list;
-	};
+	// exports
 
 
 /***/ },
-
-/***/ 650:
+/* 651 */,
+/* 652 */,
+/* 653 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getNative = __webpack_require__(90),
+	var getNative = __webpack_require__(92),
 	    root = __webpack_require__(61);
 
 	/* Built-in method references that are verified to be native. */
@@ -10757,11 +11216,10 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 651:
+/* 654 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getNative = __webpack_require__(90),
+	var getNative = __webpack_require__(92),
 	    root = __webpack_require__(61);
 
 	/* Built-in method references that are verified to be native. */
@@ -10771,11 +11229,10 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 652:
+/* 655 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getNative = __webpack_require__(90),
+	var getNative = __webpack_require__(92),
 	    root = __webpack_require__(61);
 
 	/* Built-in method references that are verified to be native. */
@@ -10785,11 +11242,10 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 653:
+/* 656 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getNative = __webpack_require__(90),
+	var getNative = __webpack_require__(92),
 	    root = __webpack_require__(61);
 
 	/* Built-in method references that are verified to be native. */
@@ -10799,11 +11255,10 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 654:
+/* 657 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getNative = __webpack_require__(90),
+	var getNative = __webpack_require__(92),
 	    root = __webpack_require__(61);
 
 	/* Built-in method references that are verified to be native. */
@@ -10813,12 +11268,11 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 655:
+/* 658 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseGetTag = __webpack_require__(111),
-	    isObjectLike = __webpack_require__(146);
+	var baseGetTag = __webpack_require__(112),
+	    isObjectLike = __webpack_require__(145);
 
 	/** `Object#toString` result references. */
 	var argsTag = '[object Arguments]';
@@ -10838,14 +11292,13 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 656:
+/* 659 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isFunction = __webpack_require__(354),
-	    isMasked = __webpack_require__(664),
-	    isObject = __webpack_require__(356),
-	    toSource = __webpack_require__(353);
+	var isFunction = __webpack_require__(245),
+	    isMasked = __webpack_require__(667),
+	    isObject = __webpack_require__(247),
+	    toSource = __webpack_require__(244);
 
 	/**
 	 * Used to match `RegExp`
@@ -10892,13 +11345,12 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 657:
+/* 660 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseGetTag = __webpack_require__(111),
-	    isLength = __webpack_require__(355),
-	    isObjectLike = __webpack_require__(146);
+	var baseGetTag = __webpack_require__(112),
+	    isLength = __webpack_require__(246),
+	    isObjectLike = __webpack_require__(145);
 
 	/** `Object#toString` result references. */
 	var argsTag = '[object Arguments]',
@@ -10959,12 +11411,11 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 658:
+/* 661 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isPrototype = __webpack_require__(352),
-	    nativeKeys = __webpack_require__(665);
+	var isPrototype = __webpack_require__(243),
+	    nativeKeys = __webpack_require__(668);
 
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -10996,8 +11447,7 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 659:
+/* 662 */
 /***/ function(module, exports) {
 
 	/**
@@ -11017,8 +11467,7 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 660:
+/* 663 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var root = __webpack_require__(61);
@@ -11030,11 +11479,10 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 661:
+/* 664 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Symbol = __webpack_require__(350);
+	var Symbol = __webpack_require__(241);
 
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -11083,17 +11531,16 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 662:
+/* 665 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var DataView = __webpack_require__(650),
-	    Map = __webpack_require__(651),
-	    Promise = __webpack_require__(652),
-	    Set = __webpack_require__(653),
-	    WeakMap = __webpack_require__(654),
-	    baseGetTag = __webpack_require__(111),
-	    toSource = __webpack_require__(353);
+	var DataView = __webpack_require__(653),
+	    Map = __webpack_require__(654),
+	    Promise = __webpack_require__(655),
+	    Set = __webpack_require__(656),
+	    WeakMap = __webpack_require__(657),
+	    baseGetTag = __webpack_require__(112),
+	    toSource = __webpack_require__(244);
 
 	/** `Object#toString` result references. */
 	var mapTag = '[object Map]',
@@ -11148,8 +11595,7 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 663:
+/* 666 */
 /***/ function(module, exports) {
 
 	/**
@@ -11168,11 +11614,10 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 664:
+/* 667 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var coreJsData = __webpack_require__(660);
+	var coreJsData = __webpack_require__(663);
 
 	/** Used to detect methods masquerading as native. */
 	var maskSrcKey = (function() {
@@ -11195,11 +11640,10 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 665:
+/* 668 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var overArg = __webpack_require__(668);
+	var overArg = __webpack_require__(671);
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
 	var nativeKeys = overArg(Object.keys, Object);
@@ -11208,11 +11652,10 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 666:
+/* 669 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(351);
+	/* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(242);
 
 	/** Detect free variable `exports`. */
 	var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
@@ -11235,11 +11678,10 @@ webpackJsonp([2],{
 
 	module.exports = nodeUtil;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(120)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(121)(module)))
 
 /***/ },
-
-/***/ 667:
+/* 670 */
 /***/ function(module, exports) {
 
 	/** Used for built-in method references. */
@@ -11267,8 +11709,7 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 668:
+/* 671 */
 /***/ function(module, exports) {
 
 	/**
@@ -11289,12 +11730,11 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 669:
+/* 672 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsArguments = __webpack_require__(655),
-	    isObjectLike = __webpack_require__(146);
+	var baseIsArguments = __webpack_require__(658),
+	    isObjectLike = __webpack_require__(145);
 
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -11332,8 +11772,7 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 670:
+/* 673 */
 /***/ function(module, exports) {
 
 	/**
@@ -11365,12 +11804,11 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 671:
+/* 674 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isFunction = __webpack_require__(354),
-	    isLength = __webpack_require__(355);
+	var isFunction = __webpack_require__(245),
+	    isLength = __webpack_require__(246);
 
 	/**
 	 * Checks if `value` is array-like. A value is considered array-like if it's
@@ -11405,12 +11843,11 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 672:
+/* 675 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(61),
-	    stubFalse = __webpack_require__(675);
+	    stubFalse = __webpack_require__(678);
 
 	/** Detect free variable `exports`. */
 	var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
@@ -11448,21 +11885,20 @@ webpackJsonp([2],{
 
 	module.exports = isBuffer;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(120)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(121)(module)))
 
 /***/ },
-
-/***/ 673:
+/* 676 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseKeys = __webpack_require__(658),
-	    getTag = __webpack_require__(662),
-	    isArguments = __webpack_require__(669),
-	    isArray = __webpack_require__(670),
-	    isArrayLike = __webpack_require__(671),
-	    isBuffer = __webpack_require__(672),
-	    isPrototype = __webpack_require__(352),
-	    isTypedArray = __webpack_require__(674);
+	var baseKeys = __webpack_require__(661),
+	    getTag = __webpack_require__(665),
+	    isArguments = __webpack_require__(672),
+	    isArray = __webpack_require__(673),
+	    isArrayLike = __webpack_require__(674),
+	    isBuffer = __webpack_require__(675),
+	    isPrototype = __webpack_require__(243),
+	    isTypedArray = __webpack_require__(677);
 
 	/** `Object#toString` result references. */
 	var mapTag = '[object Map]',
@@ -11535,13 +11971,12 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 674:
+/* 677 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsTypedArray = __webpack_require__(657),
-	    baseUnary = __webpack_require__(659),
-	    nodeUtil = __webpack_require__(666);
+	var baseIsTypedArray = __webpack_require__(660),
+	    baseUnary = __webpack_require__(662),
+	    nodeUtil = __webpack_require__(669);
 
 	/* Node.js helper references. */
 	var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
@@ -11569,8 +12004,7 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 675:
+/* 678 */
 /***/ function(module, exports) {
 
 	/**
@@ -11594,22 +12028,716 @@ webpackJsonp([2],{
 
 
 /***/ },
+/* 679 */,
+/* 680 */,
+/* 681 */
+/***/ function(module, exports) {
 
-/***/ 677:
+	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div class=\"content pageTitle\">Create Application Group</div>\n        </div>\n        <div class=\"right aligned eight wide column\">&nbsp;</div>\n    </div>\n\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">\n                    <a href=\"/#/m/applicationgroups/list\">\n                        Application Groups List\n                    </a>\n                </span>\n                <span class=\"crumb current\">Create</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n\n            <form class=\"ui form\" role=\"form\" #formRef=\"ngForm\"\n                  (ngSubmit)=\"createApplicationGroup(formRef.valid)\"\n                  novalidate>\n                <div class=\"ui active inverted dimmer\" *ngIf=\"showLoader\">\n                    <div class=\"ui loader\"></div>\n                </div>\n                <div class=\"ui basic segment\">\n\n                    <div class=\"field\">\n                        <div *ngIf=\"formRef.submitted\">\n                            <div *ngIf=\"!formRef.valid\" class=\"ui negative message\">\n                                <ul class=\"list\">\n                                    <li *ngIf=\"newApplicationGroupNameRef.errors?.required\">Please\n                                        enter application group name\n                                    </li>\n                                    <li *ngIf=\"newApplicationGroupTenantRef.errors?.required\">\n                                        Please select tenant\n                                    </li>\n                                    <li *ngIf=\"newApplicationGroupNetworkRef.errors?.required\">Please\n                                        select network\n                                    </li>\n                                </ul>\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"ui sixteen column grid\">\n                        <div class=\"ui row\">\n                            <div class=\"left aligned four wide column\">\n                                <div class=\"field\">\n                                    <label for=\"newApplicationGroupName\">Application group name</label>\n                                    <input #newApplicationGroupNameRef=\"ngModel\"\n                                           type=\"text\"\n                                           id=\"newApplicationGroupName\"\n                                           name=\"newApplicationGroupName\"\n                                           [(ngModel)]=\"applicationGroup.groupName\"\n                                           placeholder=\"Enter name\" required>\n                                </div>\n                            </div>\n                            <div class=\"left aligned four wide column\">\n                                <div class=\"field\">\n                                    <label for=\"newApplicationGroupTenant\">Tenant</label>\n                                    <select id=\"newApplicationGroupTenant\" class=\"ui dropdown\"\n                                            name=\"newApplicationGroupTenant\"\n                                            ngModel\n                                            (change)=\"updateTenant($event.target.value, isolationPolicyRef, bandwidthPolicyRef, contractGroupRef)\"\n                                            required #newApplicationGroupTenantRef=\"ngModel\">\n                                        <option value=\"\">-- Select a tenant --</option>\n                                        <option *ngFor=\"let tenant of tenants\" [value]=\"tenant.tenantName\">{{tenant.tenantName}}</option>\n                                    </select>\n                                </div>\n                            </div>\n                            <div class=\"left aligned four wide column\">\n                                <div class=\"field\" *ngIf=\"applicationGroup.tenantName\">\n                                    <label for=\"newApplicationGroupNetwork\">Network</label>\n                                    <select *ngIf=\"networks.length\" id=\"newApplicationGroupNetwork\"\n                                            class=\"ui dropdown\"\n                                            #newApplicationGroupNetworkRef=\"ngModel\"\n                                            name=\"newApplicationGroupNetwork\"\n                                            ngModel\n                                            (change)=\"updateNetwork($event.target.value)\"\n                                            required>\n                                        <option value=\"\">-- Select a network --</option>\n                                        <option *ngFor=\"let network of networks\"\n                                                [value]=\"network.networkName\">\n                                            {{network.networkName}}\n                                        </option>\n                                    </select>\n\n                                    <select *ngIf=\"!networks.length\"\n                                            class=\"ui dropdown\"\n                                            required>\n                                        <option value=\"\">-- The tenant has no networks --</option>\n                                    </select>\n                                </div>\n                            </div>\n                            <div class=\"left aligned four wide column\">\n                                &nbsp;\n                            </div>\n                        </div>\n\n                        <div class=\"ui row\">\n                            <div class=\"left aligned sixteen wide column\">\n                                <ctv-collapsible title=\"Isolation Policies To Apply\" class=\"policySelection\">\n                                    <ctv-isolationpolicy mode=\"edit\" [applicationgroup]=\"applicationGroup\" #isolationPolicyRef></ctv-isolationpolicy>\n                                </ctv-collapsible>\n                            </div>\n                        </div>\n\n                        <div class=\"ui row\">\n                            <div class=\"left aligned sixteen wide column\">\n\n                                <ctv-collapsible title=\"Bandwidth Policy To Apply\" class=\"policySelection\">\n                                    <ctv-bandwidthpolicy mode=\"edit\" [applicationgroup]=\"applicationGroup\" #bandwidthPolicyRef></ctv-bandwidthpolicy>\n                                </ctv-collapsible>\n\n                            </div>\n                        </div>\n\n                        <div class=\"ui row\">\n                            <div class=\"left aligned sixteen wide column\">\n\n                                <ctv-collapsible title=\"External Contract Groups (ACI)\" class=\"policySelection\">\n                                    <ctv-contractgroup mode=\"edit\" [applicationgroup]=\"applicationGroup\" #contractGroupRef></ctv-contractgroup>\n                                </ctv-collapsible>\n\n                            </div>\n                        </div>\n\n                        <div class=\"ui row\">\n                            <div class=\"right aligned sixteen wide column\">\n\n                                <div class=\"buttonRow\">\n                                    <button type=\"button\" class=\"ui large button cancelBtn\" (click)=\"cancelCreating()\">\n                                        Cancel\n                                    </button>\n                                    <button type=\"submit\" class=\"ui blue large button pimaryBtn\">\n                                        Create\n                                    </button>\n                                </div>\n\n                                <ctv-error *ngIf=\"showServerError\" header=\"Error creating application group\"\n                                           [error]=\"serverErrorMessage\">\n                                </ctv-error>\n\n                            </div>\n                        </div>\n\n                    </div>\n                </div>\n            </form>\n\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 682 */
+/***/ function(module, exports) {
+
+	module.exports = "\n<div class=\"ui sixteen column grid\">\n    <div class=\"ui row\">\n        <div class=\"left aligned eight wide column pageHeader\" [ngSwitch]=\"mode\">\n            <div *ngSwitchCase=\"'details'\" class=\"content pageTitle\">Details: {{applicationGroup.groupName}}</div>\n            <div *ngSwitchCase=\"'edit'\"class=\"content pageTitle\">Editing: {{applicationGroup.groupName}}</div>\n        </div>\n        <div class=\"right aligned eight wide column\">\n\n            <div [ngSwitch]=\"mode\" class=\"right aligned seven wide column\">\n                <div id=\"delete-group-modal\" class=\"ui small modal\">\n                    <div class=\"header\">Remove Application Group: {{applicationGroup.groupName}}\n                    </div>\n                    <div class=\"content\">\n                        <p>Are you sure you want to <strong>remove</strong> this application group?</p>\n                    </div>\n                    <div class=\"actions\">\n                        <div class=\"ui negative button\">No</div>\n                        <div class=\"ui positive button\" (click)=\"deleteApplicationGroup()\">\n                            Yes\n                        </div>\n                    </div>\n                </div>\n                <button *ngSwitchCase=\"'details'\" type=\"button\" class=\"ui large button cancelBtn\"\n                        (click)=\"cancelDetails()\">\n                    Close\n                </button>\n                <button *ngSwitchCase=\"'edit'\" type=\"button\" class=\"ui large button cancelBtn\"\n                        (click)=\"cancelEditing()\">\n                    Cancel\n                </button>\n                <button *ngSwitchCase=\"'details'\" class=\"ui blue large button secondaryBtn\"\n                        (click)=\"editApplicationGroup()\">\n                    <!-- <i class=\"edit icon\"></i> -->\n                    Edit\n                </button>\n                <button class=\"ui blue large button secondaryBtn\" onclick=\"$('#delete-group-modal').modal('show')\">\n                    <i class=\"trash icon\"></i>\n                    Remove\n                </button>\n            </div>\n\n        </div>\n    </div>\n\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">\n                    <a href=\"/#/m/applicationgroups/list\">\n                        Application Groups List\n                    </a>\n                </span>\n                <span class=\"crumb\">{{applicationGroup.groupName}}</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row tabs\">\n        <div class=\"aligned left ui sixteen wide column\">\n            <div class=\"ui tabular menu\" *ngIf=\"mode=='details'\">\n                <a class=\"item\" [ngClass]=\"{active: infoselected}\" (click)=\"infoselected=true\">\n                    Details\n                </a>\n                <a class=\"item\" [ngClass]=\"{active: !infoselected}\" (click)=\"infoselected=false\">\n                    Stats\n                </a>\n            </div>\n        </div>\n    </div>\n\n    <div *ngIf=\"infoselected || mode == 'edit'\">\n\n        <applicationgroupinfo [applicationGroup]=\"applicationGroup\"\n                              [mode]=\"mode\" [showLoader]=\"showLoader\"></applicationgroupinfo>\n\n        <div class=\"ui row\" [ngSwitch]=\"mode\" style=\"margin-top: 40px\">\n\n            <div class=\"right aligned sixteen wide column\">\n                <button *ngSwitchCase=\"'edit'\" type=\"button\" class=\"ui large button cancelBtn\"\n                        (click)=\"cancelEditing()\">\n                    Cancel\n                </button>\n                <button *ngSwitchCase=\"'edit'\" type=\"button\" class=\"ui blue large button primaryBtn\"\n                        (click)=\"saveApplicationGroup()\">\n                    Save\n                </button>\n            </div>\n\n            <ctv-error *ngIf=\"((showServerError) && (mode === 'edit'))\"\n                       header=\"Error saving application group\"\n                       [error]=\"serverErrorMessage\">\n            </ctv-error>\n            <ctv-error *ngIf=\"((showServerError) && (mode === 'details'))\"\n                       header=\"Error deleting application group\"\n                       [error]=\"serverErrorMessage\">\n            </ctv-error>\n        </div>\n    </div>\n\n    <applicationgroupstats [statkey]=\"statskey\"\n        *ngIf=\"!infoselected && mode != 'edit'\"></applicationgroupstats>\n\n</div>\n"
+
+/***/ },
+/* 683 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui row \">\n    <div class=\"ui sixteen wide column\">\n        <div class=\"ui basic segment\" [ngClass]=\"{loading: showLoader}\">\n            <table class=\"ui very basic selectable table\">\n                <tbody>\n                <tr>\n                    <td class=\"two wide column key\"><strong>Name</strong></td>\n                    <td class=\"value\">{{applicationGroup.groupName}}</td>\n                </tr>\n                <tr>\n                    <td class=\"three wide column key\">Tenant</td>\n                    <td class=\"value\">{{applicationGroup.tenantName}}</td>\n                </tr>\n                <tr>\n                    <td class=\"two wide column key\"><strong>Network</strong></td>\n                    <td class=\"value\">{{applicationGroup.networkName}}</td>\n                </tr>\n                </tbody>\n            </table>\n\n        </div>\n    </div>\n</div>\n\n<div class=\"ui row \">\n    <div class=\"ui sixteen wide column\">\n        <ctv-collapsible title=\"Isolation Policies Applied\" class=\"policySelection\">\n            <ctv-isolationpolicy [mode]=\"mode\" [applicationgroup]=\"applicationGroup\"></ctv-isolationpolicy>\n        </ctv-collapsible>\n    </div>\n</div>\n\n<div class=\"ui row \">\n    <div class=\"ui sixteen wide column\">\n        <ctv-collapsible title=\"Bandwidth Policies Applied\" class=\"policySelection\">\n            <ctv-bandwidthpolicy [mode]=\"mode\" [applicationgroup]=\"applicationGroup\"></ctv-bandwidthpolicy>\n        </ctv-collapsible>\n    </div>\n</div>\n\n<div class=\"ui row \">\n    <div class=\"ui sixteen wide column\">\n         <ctv-collapsible title=\"External Contract Groups (ACI)\">\n            <ctv-contractgroup [mode]=\"mode\" [applicationgroup]=\"applicationGroup\"></ctv-contractgroup>\n        </ctv-collapsible>\n    </div>\n</div>\n"
+
+/***/ },
+/* 684 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div class=\"content pageTitle\">Application Groups</div>\n        </div>\n        <div class=\"right aligned eight wide column\">\n            <button class=\"ui blue large button primaryBtn\" (click)=\"create()\">\n                <i class=\"add icon\"></i>\n                Create Application Group\n            </button>\n        </div>\n    </div>\n\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">Application Groups List</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row searchRow\">\n        <div class=\"ui sixteen wide column\">\n            <ctv-search *ngIf=\"applicationGroupListCtrl['groups']\" (searchTextChange)=\"tableRef.showChunk(tableRef.table.pageNo,$event);\" [count]=\"tableRef.count\"></ctv-search>\n        </div>\n    </div>\n\n    <div class=\"ui row ctvTable\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"ui active inverted dimmer\" *ngIf=\"applicationGroupListCtrl.showLoader\">\n                <div class=\"ui loader\"></div>\n            </div>\n            <ctv-table #tableRef [defaultSortColumn]=\"'groupName'\"\n                       [items]=\"applicationGroupListCtrl['groups']\"\n                       (filtereditems)=\"applicationGroupListCtrl['filteredgroups']=$event;\"\n                       [size]=\"12\">\n                <thead>\n                    <tr>\n                        <th><ctv-th [sortfield]=\"'groupName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Name</ctv-th></th>\n                        <th><ctv-th [sortfield]=\"'tenantName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Tenant</ctv-th></th>\n                        <th><ctv-th [sortfield]=\"'networkName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Network</ctv-th></th>\n                        <th><ctv-th [sortfield]=\"'policies'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Policies</ctv-th></th>\n                    </tr>\n                </thead>\n\n                <tbody *ngIf=\"applicationGroupListCtrl['groups']\">\n                    <tr *ngFor=\"let group of applicationGroupListCtrl['filteredgroups']\">\n                        <td><a [routerLink]=\"['../details', group.key]\">{{group.groupName}}</a></td>\n                    <td>{{group.tenantName}}</td>\n                    <td>{{group.networkName}}</td>\n                    <td>{{group.policies.join(\", \")}}</td>\n                    </tr>\n                </tbody>\n\n                <tbody *ngIf=\"!applicationGroupListCtrl['groups']\">\n                    <tr class=\"noDataFound\">\n                        <td colspan=\"4\">No application groups found. Would you like to <a href=\"javascript: void(0);\" (click)=\"create()\">define one?</a></td>\n                    </tr>\n                </tbody>\n\n                <tbody *ngIf=\"applicationGroupListCtrl['groups'] && !tableRef.count\">\n                    <tr class=\"noDataFound\">\n                        <td colspan=\"4\">No records matched your filter criteria.</td>\n                    </tr>\n                </tbody>\n\n                <tfoot>\n                    <tr class=\"pagination\">\n                        <td colspan=\"4\">\n                            <ctv-tpagination [chunks]=\"tableRef.pageChunks\"\n                                             (showPage)=\"tableRef.showChunk($event, tableRef.table.searchText)\"\n                                             (prevChunk)=\"tableRef.showPrevChunk()\"\n                                             (nextChunk)=\"tableRef.showNextChunk()\">\n                            </ctv-tpagination>\n                        </td>\n                    </tr>\n                </tfoot>\n            </ctv-table>\n\n        </div>\n    </div>\n</div>\n"
 
 /***/ },
+/* 685 */
+/***/ function(module, exports) {
 
-/***/ 678:
+	module.exports = "<div class=\"ui basic segment\" [ngClass]=\"{loading: showLoader}\">\n    <table class=\"ui very basic selectable table\">\n        <tbody>\n        <tr>\n            <td class=\"ctv-header three wide column key\">Name</td>\n            <td class=\"value\">{{config['groupName'] || 'not configured'}}</td>\n        </tr>\n        <tr>\n            <td class=\"ctv-header three wide column key\">Network Name</td>\n            <td class=\"value\">{{config['networkName'] || 'not configured'}}</td>\n        </tr>\n        <tr>\n            <td class=\"ctv-header three wide column key\">External Packet Tag</td>\n            <td class=\"value\">{{applicationInspectStats.externalPktTag || 'not configured'}}</td>\n        </tr>\n        <tr>\n            <td class=\"ctv-header three wide column key\">Number of Endpoints</td>\n            <td class=\"value\">{{applicationInspectStats.numEndpoints || 'not configured'}}</td>\n        </tr>\n        <tr>\n            <td class=\"ctv-header three wide column key\">Packet Tag</td>\n            <td class=\"value\">{{applicationInspectStats.pktTag || 'not configured'}}</td>\n        </tr>\n        </tbody>\n    </table>\n\n    <div class=\"ui section divider\"></div>\n    <ctv-collapsible title=\"End Points\">\n\n        <ctv-search *ngIf=\"endpoints.length\" (searchTextChange)=\"tableRef.showChunk(tableRef.table.pageNo,$event);\" [placeholder]=\"'filter string'\"></ctv-search>\n\n        <ctv-table #tableRef [defaultSortColumn]=\"'containerName'\"\n                   [items]=\"endpoints\"\n                   (filtereditems)=\"filteredendpoints=$event\"\n                   [size]=\"12\">\n            <thead>\n            <tr>\n                <div class=\"ui grid\" style=\"margin-top: 25px;margin-left: 25px;margin-bottom: 1px;\">\n                    <th class=\"five wide column\"><ctv-th [sortfield]=\"'containerName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\"> Container Name </ctv-th></th>\n                    <th class=\"four wide column\" style=\"padding-left: 18px !important;\"><ctv-th [sortfield]=\"'ipAddress'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\"> IP Address </ctv-th></th>\n                    <th class=\"three wide column\" style=\"padding-left: 44px !important;\"><ctv-th [sortfield]=\"'homingHost'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\"> Host </ctv-th></th>\n                </div>\n            </tr>\n            </thead>\n\n            <tbody *ngIf=\"endpoints.length\">\n            <tr *ngFor=\"let endpoint of filteredendpoints\">\n                <td colspan=\"3\">\n                    <ctv-accordion [items]=\"containerDetails[endpoint.containerID]\">\n                        <div class=\"ui grid\" style=\"margin-top: -33px; margin-left: 30px;\">\n                            <div class=\"five wide column\">{{endpoint.containerName.substr(1)}}</div>\n                            <div class=\"four wide column\">{{endpoint.ipAddress.join(' ')}}</div>\n                            <div class=\"four wide column\">{{endpoint.homingHost}}</div>\n                        </div>\n                    </ctv-accordion>\n                </td>\n                <td></td>\n            </tr>\n            </tbody>\n\n            <tbody *ngIf=\"!endpoints.length\">\n            <tr class=\"noDataFound\">\n                <td colspan=\"3\">No endpoints found</td>\n            </tr>\n            </tbody>\n\n            <tbody *ngIf=\"endpoints.length && !filtereditems.count\">\n                <tr class=\"noDataFound\">\n                    <td colspan=\"3\">No records matched your filter criteria.</td>\n                </tr>\n            </tbody>\n\n            <tfoot>\n            <tr class=\"pagination\">\n                <td colspan=\"3\">\n                    <ctv-tpagination [chunks]=\"tableRef.pageChunks\"\n                                     (showPage)=\"tableRef.showChunk($event, tableRef.table.searchText)\"\n                                     (prevChunk)=\"tableRef.showPrevChunk()\"\n                                     (nextChunk)=\"tableRef.showNextChunk()\">\n                    </ctv-tpagination>\n                </td>\n            </tr>\n            </tfoot>\n        </ctv-table>\n    </ctv-collapsible>\n</div>\n"
+
+/***/ },
+/* 686 */
+/***/ function(module, exports) {
+
+	module.exports = "<div *ngIf=\"mode=='edit'\" class=\"field policyOutput\">\n    <table class=\"ui very basic collapsing unstackable table noRowBorders\">\n        <tbody>\n        <tr class=\"noHover\">\n            <td>\n                <div class=\"ui left icon input\">\n                    <input name=\"netProfileSearchText\"\n                           type=\"text\"\n                           [(ngModel)]=\"netProfileSearchText\"\n                           placeholder=\"filter menu options\">\n                    <i class=\"search icon\"></i>\n                </div>\n            </td>\n            <td>\n                <select class=\"ui dropdown\"\n                        name=\"selectNetprofile\"\n                        [class.noDataFound]=\"!netProfiles.length\"\n                        [ngModel]=\"selectedNetprofile\"\n                        (ngModelChange)=\"updateApplicationgroup($event)\">\n                    <option *ngIf=\"netProfiles.length\" value=\"\">-- Select a bandwidth policy --</option>\n                    <option *ngIf=\"!netProfiles.length\" value=\"\">No policies defined</option>\n                    <option *ngFor=\"let policy of (netProfiles | filter:netProfileSearchText)\"\n                            [ngValue]=\"policy\">\n                        {{policy.profileName}}\n                    </option>\n                </select>\n            </td>\n        </tr>\n        </tbody>\n    </table>\n\n    <h5 class=\"ui header\">Bandwidth Policy Details</h5>\n    <table class=\"ui very basic unstackable table\">\n        <thead>\n        <tr>\n            <th>Profile Name</th>\n            <th>Tenant Name</th>\n            <th>Bandwidth</th>\n            <th>DSCP</th>\n        </tr>\n        </thead>\n\n        <tbody *ngIf=\"selectedNetprofile && selectedNetprofile.profileName\">\n        <tr>\n            <td>{{selectedNetprofile.profileName}}</td>\n            <td>{{selectedNetprofile.tenantName}}</td>\n            <td>{{selectedNetprofile.bandwidth}}</td>\n            <td>{{selectedNetprofile.DSCP}}</td>\n        </tr>\n        </tbody>\n\n        <tbody *ngIf=\"!selectedNetprofile || !selectedNetprofile.profileName\">\n        <tr class=\"noDataFound\">\n            <td colspan=\"4\">none selected</td>\n        </tr>\n        </tbody>\n\n    </table>\n\n</div>\n"
+
+/***/ },
+/* 687 */
+/***/ function(module, exports) {
+
+	module.exports = "<div [ngSwitch]=\"mode\" class=\"field\">\n    <table *ngSwitchCase=\"'edit'\" class=\"ui very basic collapsing unstackable table\">\n        <tbody>\n        <tr>\n            <td>\n                <div class=\"ui left icon input\">\n                    <input name=\"contractGroupSearchText\"\n                           type=\"text\"\n                           [(ngModel)]=\"contractGroupSearchText\"\n                           placeholder=\"Filter by external contract group name\">\n                    <i class=\"search icon\"></i>\n                </div>\n            </td>\n            <td>\n                <select #selectContractGroupRef\n                        name=\"selectContractGroups\"\n                        class=\"ui dropdown\"\n                        ngModel>\n                    <option value=\"\">-- Please select external contract group --</option>\n                    <option *ngFor=\"let contractGroup of (contractGroups | filter:contractGroupSearchText)\"\n                            [value]=\"contractGroup.contractsGroupName\">\n                        {{contractGroup.contractsGroupName}}\n                    </option>\n                </select>\n            </td>\n            <td>\n                <button type=\"button\" class=\"ui icon button\"\n                        (click)=\"addContractGroup(selectContractGroupRef.value)\">\n                    <i class=\"blue add icon\"></i>\n                </button>\n            </td>\n        </tr>\n        <tr *ngFor=\"let contractGroupName of applicationgroup.extContractsGrps\">\n            <td>{{contractGroupName}}</td>\n            <td></td>\n            <td>\n                <button type=\"button\" class=\"ui icon button\"\n                        (click)=\"removeContractGroup(contractGroupName)\">\n                    <i class=\"trash icon\"></i>\n                </button>\n            </td>\n        </tr>\n        </tbody>\n    </table>\n\n    <table *ngSwitchCase=\"'details'\" class=\"ui very basic unstackable table\">\n        <tbody>\n        <tr *ngFor=\"let contractGroupName of applicationgroup.extContractsGrps\">\n            <td>{{contractGroupName}}</td>\n        </tr>\n        </tbody>\n    </table>\n\n    <h5 class=\"ui header\">External contract groups</h5>\n    <table class=\"ui very basic unstackable table\" style=\"margin-top: 40px\">\n        <thead>\n        <tr>\n            <th>Name</th>\n            <th>Tenant</th>\n            <th>Type</th>\n            <th>Contracts</th>\n        </tr>\n        </thead>\n\n        <tbody>\n        <tr *ngFor=\"let contractGroup of selectedContractGroups\">\n            <td>{{contractGroup.contractsGroupName}}</td>\n            <td>{{contractGroup.tenantName}}</td>\n            <td>{{contractGroup.contractsType}}</td>\n            <td>{{contractGroup.contracts?.join(\", \")}}</td>\n        </tr>\n\n        </tbody>\n    </table>\n</div>"
+
+/***/ },
+/* 688 */
+/***/ function(module, exports) {
+
+	module.exports = "<div [ngSwitch]=\"mode\" class=\"field policyOutput\">\n    <table *ngSwitchCase=\"'edit'\" class=\"ui very basic collapsing unstackable table noRowBorders\">\n        <tbody>\n        <tr class=\"noHover\">\n            <td>\n                <div class=\"ui left icon input\">\n                    <input name=\"isolationPolicySearchText\"\n                           type=\"text\"\n                           [(ngModel)]=\"isolationPolicySearchText\"\n                           placeholder=\"filter menu options\">\n                    <i class=\"search icon\"></i>\n                </div>\n            </td>\n            <td>\n                <select #selectIsolationPolicyRef\n                        name=\"selectIsolationPolicies\"\n                        class=\"ui dropdown\"\n                        [class.noDataFound]=\"!isolationPolicies.length\"\n                        ngModel>\n                    <option *ngIf=\"isolationPolicies.length\" value=\"\">-- Select an isolation policy --</option>\n                    <option *ngIf=\"!isolationPolicies.length\" value=\"\">No policies defined</option>\n                    <option *ngFor=\"let policy of (isolationPolicies | filter:isolationPolicySearchText)\"\n                            [value]=\"policy.policyName\">\n                        {{policy.policyName}}\n                    </option>\n                </select>\n            </td>\n            <td>\n                <button type=\"button\" class=\"ui icon button iconBtn primaryIconBtn\"\n                        (click)=\"addIsolationPolicy(selectIsolationPolicyRef.value)\">\n                    <i class=\"add icon\"></i>\n                </button>\n            </td>\n        </tr>\n        <tr *ngFor=\"let policy of applicationgroup.policies\">\n            <td>Will apply: \"{{policy}}\"</td>\n            <td></td>\n            <td>\n                <button type=\"button\" class=\"ui icon button iconBtn secondaryIconBtn\"\n                        (click)=\"removeIsolationPolicy(policy)\">\n                    <i class=\"trash icon\"></i>\n                </button>\n            </td>\n        </tr>\n        <tr *ngIf=\"!applicationgroup.policies\" class=\"noDataFound\">\n            <td>select a policy or policies from the dropdown</td>\n        </tr>\n        </tbody>\n    </table>\n\n    <table *ngSwitchCase=\"'details'\" class=\"ui very basic unstackable table\">\n        <tbody *ngIf=\"applicationgroup.policies\">\n        <tr *ngFor=\"let policy of applicationgroup.policies\">\n            <td>Applying: \"{{policy}}\"</td>\n        </tr>\n        </tbody>\n\n        <tbody *ngIf=\"!applicationgroup.policies\">\n        <tr class=\"noDataFound\">\n            <td>No policies were selected</td>\n        </tr>\n        </tbody>\n    </table>\n\n    <h5 class=\"ui header\">All Applicable Incoming Rules</h5>\n    <table class=\"ui very basic unstackable table\">\n        <thead>\n        <tr>\n            <th>Policy Name</th>\n            <th>Priority</th>\n            <th>Action</th>\n            <th>From group</th>\n            <th>From network</th>\n            <th>From IP address</th>\n            <th>Protocol</th>\n            <th>Port</th>\n        </tr>\n        </thead>\n\n        <tbody *ngIf=\"incomingRules.length>0\">\n        <tr *ngFor=\"let rule of incomingRules\">\n            <td>{{rule.policyName}}</td>\n            <td>{{rule.priority}}</td>\n            <td>{{rule.action}}</td>\n            <td>{{rule.fromEndpointGroup}}</td>\n            <td>{{rule.fromNetwork}}</td>\n            <td>{{rule.fromIPAddress}}</td>\n            <td>{{rule.protocol}}</td>\n            <td>{{rule.port}}</td>\n        </tr>\n        </tbody>\n\n        <tbody *ngIf=\"incomingRules.length==0\">\n        <tr class=\"noDataFound\">\n            <td colspan=\"8\">None applied</td>\n        </tr>\n        </tbody>\n\n    </table>\n\n    <h5 class=\"ui header\" style=\"margin-top: 40px\">All Applicable Outgoing Rules</h5>\n    <table class=\"ui very basic unstackable table\" >\n        <thead>\n        <tr>\n            <th>Policy Name</th>\n            <th>Priority</th>\n            <th>Action</th>\n            <th>To group</th>\n            <th>To network</th>\n            <th>To IP address</th>\n            <th>Protocol</th>\n            <th>Port</th>\n        </tr>\n        </thead>\n\n        <tbody *ngIf=\"outgoingRules.length>0\">\n        <tr *ngFor=\"let rule of outgoingRules\">\n            <td>{{rule.policyName}}</td>\n            <td>{{rule.priority}}</td>\n            <td>{{rule.action}}</td>\n            <td>{{rule.toEndpointGroup}}</td>\n            <td>{{rule.toNetwork}}</td>\n            <td>{{rule.toIPAddress}}</td>\n            <td>{{rule.protocol}}</td>\n            <td>{{rule.port}}</td>\n        </tr>\n        </tbody>\n\n        <tbody *ngIf=\"outgoingRules.length==0\">\n        <tr class=\"noDataFound\">\n            <td colspan=\"8\">None applied</td>\n        </tr>\n        </tbody>\n\n    </table>\n</div>\n"
+
+/***/ },
+/* 689 */
+/***/ function(module, exports) {
+
+	module.exports = "<div [ngSwitch]=\"mode\" class=\"field\" style=\"margin-top: 20px;\">\n\n    <div *ngSwitchCase=\"'details'\" class=\"description\">Application groups associated with this profile.</div>\n    <div *ngSwitchCase=\"'edit'\" class=\"description\">Add application groups to associate with this profile.</div>\n\n    <table *ngSwitchCase=\"'edit'\" class=\"ui very basic collapsing unstackable table noRowBorders\" style=\"margin-top:0; \">\n        <tbody>\n        <tr class=\"noHover\">\n            <td>\n                <div class=\"ui left icon input\">\n                    <input name=\"applicationGroupSearchText\"\n                           type=\"text\"\n                           [(ngModel)]=\"applicationGroupSearchText\"\n                           placeholder=\"filter menu options\"\n                           size=\"30\">\n                    <i class=\"search icon\"></i>\n                </div>\n            </td>\n            <td>\n                <select #selectApplicationGroupRef\n                        name=\"selectApplicationGroups\"\n                        class=\"ui dropdown\"\n                        ngModel>\n                    <option value=\"\">-- Select an application group --</option>\n                    <option *ngFor=\"let group of (applicationGroups | filter:applicationGroupSearchText)\"\n                            [value]=\"group.groupName\">\n                        {{group.groupName}}\n                    </option>\n                </select>\n            </td>\n            <td>\n                <button type=\"button\" class=\"ui icon button iconBtn primaryIconBtn\"\n                        (click)=\"addApplicationGroup(selectApplicationGroupRef.value)\">\n                    <i class=\"add icon\"></i>\n                </button>\n            </td>\n        </tr>\n        </tbody>\n    </table>\n\n    <ctv-table #tableRef\n               [defaultSortColumn]=\"'groupName'\"\n               [items]=\"selectedApplicationGroups\"\n               (filtereditems)=\"filteredSelectedApplicationGroups=$event\"\n               [size]=\"5\">\n        <thead>\n        <tr>\n            <th>\n                <ctv-th [sortfield]=\"'groupName'\" (sortdata)=\"tableRef.applysort($event)\"\n                        [sortobject]=\"tableRef.sortObj\"> Application group name\n                </ctv-th>\n            </th>\n            <th>\n                <ctv-th [sortfield]=\"'policies'\" (sortdata)=\"tableRef.applysort($event)\"\n                        [sortobject]=\"tableRef.sortObj\"> Policies\n                </ctv-th>\n            </th>\n            <th class=\"right floated three wide column\">&nbsp;</th>\n        </tr>\n        </thead>\n\n        <tbody *ngIf=\"selectedApplicationGroups\">\n        <tr *ngFor=\"let group of filteredSelectedApplicationGroups\">\n            <td>\n                <a [routerLink]=\"['/m/applicationgroups/details', group.key]\">{{group.groupName}}</a>\n            </td>\n            <td>{{group.policies.join(\", \")}}</td>\n            <td style=\"text-align: right;\">\n                <button *ngSwitchCase=\"'edit'\"\n                        type=\"button\"\n                        class=\"ui icon button iconBtn secondaryIconBtn\"\n                        (click)=\"removeApplicationGroup(group.groupName)\">\n                    <i class=\"trash icon\"></i>\n                </button>\n            </td>\n        </tr>\n        </tbody>\n\n        <tbody *ngIf=\"selectedApplicationGroups.length==0\">\n        <tr class=\"noDataFound\">\n            <td colspan=\"3\">\n                No application groups have been added to this profile.\n            </td>\n        </tr>\n        </tbody>\n\n        <tfoot>\n        <tr class=\"pagination\">\n            <td colspan=\"3\">\n                <ctv-tpagination [chunks]=\"tableRef.pageChunks\"\n                                 (showPage)=\"tableRef.showChunk($event, tableRef.table.searchText)\"\n                                 (prevChunk)=\"tableRef.showPrevChunk()\"\n                                 (nextChunk)=\"tableRef.showNextChunk()\">\n                </ctv-tpagination>\n            </td>\n        </tr>\n        </tfoot>\n    </ctv-table>\n\n</div>\n"
+
+/***/ },
+/* 690 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div class=\"content pageTitle\">Create ACI Application Profile</div>\n        </div>\n        <div class=\"right aligned eight wide column\">&nbsp;</div>\n    </div>\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">\n                    <a href=\"/#/m/appprofiles\">\n                        ACI Application Profiles List\n                    </a>\n                </span>\n                <span class=\"crumb\">Create</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n            <form class=\"ui form\" role=\"form\"\n                  (submit)=\"createAppProfile(formRef.valid)\" novalidate #formRef=\"ngForm\">\n\n                <div class=\"ui active inverted dimmer\" *ngIf=\"showLoader\">\n                    <div class=\"ui loader\"></div>\n                </div>\n\n                <div class=\"ui basic segment\">\n\n                    <div class=\"field\">\n                        <div *ngIf=\"formRef.submitted\">\n                            <div [hidden]=\"formRef.valid\" class=\"ui negative message\">\n                                <ul class=\"list\">\n                                    <li *ngIf=\"newAppProfileName.errors?.required\">Please enter\n                                        application profile name\n                                    </li>\n                                    <li *ngIf=\"newAppProfileTenantRef.errors?.required\">\n                                        Please select tenant\n                                    </li>\n                                </ul>\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"ui grid\">\n                        <div class=\"left aligned eight wide column\">\n                            <div class=\"field\">\n                                <label for=\"newAppProfileName\">Application profile name</label>\n                                <input type=\"text\" id=\"newAppProfileName\" name=\"newAppProfileName\"\n                                       [(ngModel)]=\"newAppProfile.appProfileName\"\n                                       placeholder=\"Enter name\" required #newAppProfileName=\"ngModel\">\n                            </div>\n                        </div>\n                        <div class=\"left aligned eight wide column\">\n                            <div class=\"field\">\n                                <label for=\"newAppProfileTenant\">Tenant</label>\n                                <select id=\"newAppProfileTenant\" class=\"ui dropdown\"\n                                        name=\"newAppProfileTenant\"\n                                        ngModel\n                                        (change)=\"updateTenant($event.target.value, appGroupSelRef)\"\n                                        required #newAppProfileTenantRef=\"ngModel\">\n                                    <option value=\"\">-- Select a tenant --</option>\n                                    <option *ngFor=\"let tenant of tenants\" [value]=\"tenant.tenantName\">{{tenant.tenantName}}</option>\n                                </select>\n                            </div>\n                        </div>\n                    </div>\n\n                    <ctv-appgroupselection mode=\"edit\" [appProfile]=\"newAppProfile\"></ctv-appgroupselection>\n\n                    <div class=\"ui grid\">\n                        <div class=\"right aligned sixteen wide column buttonRow\">\n\n                            <button type=\"button\" class=\"ui large button cancelBtn\" (click)=\"cancelCreating()\">\n                                Cancel\n                            </button>\n                            <button type=\"submit\" class=\"ui blue large button primaryBtn\">\n                                Create Profile\n                            </button>\n\n                        </div>\n                    </div>\n\n                    <ctv-error *ngIf=\"showServerError\" header=\"Error creating application profile\" [error]=\"serverErrorMessage\">\n                    </ctv-error>\n                </div>\n            </form>\n        </div>\n    </div>\n\n</div>\n"
+
+/***/ },
+/* 691 */
+/***/ function(module, exports) {
+
+	module.exports = "<div [ngSwitch]=\"mode\" class=\"ui sixteen column grid\">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div *ngSwitchCase=\"'details'\" class=\"content pageTitle\">Details: {{appProfile.appProfileName}}</div>\n            <div *ngSwitchCase=\"'edit'\" class=\"content pageTitle\">Editing: {{appProfile.appProfileName}}</div>\n        </div>\n        <div class=\"right aligned eight wide column\">\n\n            <div id=\"delete-appProfile-modal\" class=\"ui small modal\">\n                <div class=\"header\">Remove Application Profile: {{appProfile.appProfileName}}\n                </div>\n                <div class=\"content\">\n                    <p>Are you sure you want to remove this application profile?</p>\n                </div>\n                <div class=\"actions\">\n                    <div class=\"ui negative button\">Cancel</div>\n                    <div class=\"ui positive button\" (click)=\"deleteAppProfile()\">\n                        Remove\n                    </div>\n                </div>\n            </div>\n\n            <button *ngSwitchCase=\"'details'\" class=\"ui large button cancelBtn\"\n                    (click)=\"returnToAppProfile()\">\n                Close\n            </button>\n            <button *ngSwitchCase=\"'edit'\" class=\"ui large button cancelBtn\"\n                    (click)=\"cancelEditing()\">\n                Cancel\n            </button>\n            <button *ngSwitchCase=\"'details'\" class=\"ui large button secondaryBtn\"\n                    (click)=\"editAppProfile()\">\n                Edit\n            </button>\n            <button class=\"ui large button secondaryBtn\" onclick=\"$('#delete-appProfile-modal').modal('show')\">\n                <i class=\"trash icon\"></i>\n                Remove\n            </button>\n\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">\n                    <a href=\"/#/m/appprofiles\">\n                        ACI Application Profiles List\n                    </a>\n                </span>\n                <span class=\"crumb\">{{appProfile.appProfileName}}</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\" style=\"margin-top: 30px\">\n        <div class=\"ui sixteen wide column\">\n\n            <div class=\"ui basic segment ctvTable\">\n                <div class=\"ui active inverted dimmer\" *ngIf=\"showLoader\">\n                    <div class=\"ui loader\"></div>\n                </div>\n\n                <table class=\"ui very basic selectable table\">\n                    <tbody>\n                    <tr>\n                        <td class=\"four wide column key\">Application Profile Name</td>\n                        <td class=\"value\">{{appProfile.appProfileName}}</td>\n                    </tr>\n                    <tr>\n                        <td class=\"four wide column key\">Tenant</td>\n                        <td class=\"value\">{{appProfile.tenantName}}</td>\n                    </tr>\n                    </tbody>\n                </table>\n\n                <h4 class=\"ui header\" style=\"margin-top: 40px\">Application Groups</h4>\n\n                <div [ngSwitch]=\"mode\">\n                    <form class=\"ui form\"\n                          role=\"form\"\n                          (submit)=\"saveAppProfile(formRef.valid)\" novalidate #formRef=\"ngForm\">\n\n                        <ctv-appgroupselection [mode]=\"mode\" [appProfile]=\"appProfile\"></ctv-appgroupselection>\n\n                        <div class=\"ui grid\" style=\"margin-top: 40px\">\n                            <div class=\"right aligned sixteen wide column\">\n                                <button *ngSwitchCase=\"'edit'\" type=\"button\" class=\"ui large button cancelBtn\"\n                                        (click)=\"cancelEditing()\">\n                                    Cancel\n                                </button>\n                                <button *ngSwitchCase=\"'edit'\" type=\"submit\" class=\"ui blue large button primaryBtn\">\n                                    Save\n                                </button>\n                            </div>\n                        </div>\n\n                    </form>\n                </div>\n\n            </div>\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 692 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div class=\"content pageTitle\">ACI Application Profiles</div>\n        </div>\n        <div class=\"right aligned eight wide column\">\n            <button class=\"ui blue large button primaryBtn\" (click)=\"create()\">\n                <i class=\"add icon\"></i>\n                Create ACI Application Profile\n            </button>\n        </div>\n    </div>\n\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">ACI Application Profiles List</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row searchRow\">\n        <div class=\"ui sixteen wide column\">\n            <ctv-search  *ngIf=\"appProfiles\" (searchTextChange)=\"tableRef.showChunk(tableRef.table.pageNo,$event);\" [count]=\"tableRef.count\"></ctv-search>\n        </div>\n    </div>\n\n    <div class=\"ui row ctvTable\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"ui active inverted dimmer\" *ngIf=\"showLoader\">\n                <div class=\"ui loader\"></div>\n            </div>\n            <ctv-table #tableRef [defaultSortColumn]=\"'appProfileName'\"\n                       [items]=\"appProfiles\"\n                       (filtereditems)=\"filteredAppProfiles=$event\"\n                       [size]=\"12\">\n                <thead>\n                    <tr>\n                        <th><ctv-th [sortfield]=\"'appProfileName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Name</ctv-th></th>\n                        <th><ctv-th [sortfield]=\"'tenantName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Tenant</ctv-th></th>\n                        <th><ctv-th [sortfield]=\"'endpointGroups'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Application groups</ctv-th></th>\n                    </tr>\n                </thead>\n\n                <tbody *ngIf=\"appProfiles\">\n                    <tr *ngFor=\"let appProfile of filteredAppProfiles\">\n                        <td><a [routerLink]=\"['../details', appProfile.key]\">{{appProfile.appProfileName}}</a></td>\n                        <td>{{appProfile.tenantName}}</td>\n                        <td>{{appProfile.endpointGroups?.join(\", \")}}</td>\n                    </tr>\n                </tbody>\n\n                <tbody *ngIf=\"!appProfiles\">\n                    <tr class=\"noDataFound\">\n                        <td colspan=\"2\">No application profiles found. Would you like to <a href=\"javascript: void(0);\" (click)=\"create()\">create one?</a></td>\n                    </tr>\n                </tbody>\n\n                <tbody *ngIf=\"appProfiles && !filteredAppProfiles.length\">\n                    <tr class=\"noDataFound\">\n                        <td colspan=\"2\">No records matched your filter criteria.</td>\n                    </tr>\n                </tbody>\n\n                <tfoot>\n                    <tr class=\"pagination\">\n                        <td colspan=\"2\">\n                            <ctv-tpagination [chunks]=\"tableRef.pageChunks\"\n                                             (showPage)=\"tableRef.showChunk($event, tableRef.table.searchText)\"\n                                             (prevChunk)=\"tableRef.showPrevChunk()\"\n                                             (nextChunk)=\"tableRef.showNextChunk()\">\n                            </ctv-tpagination>\n                        </td>\n                    </tr>\n                </tfoot>\n            </ctv-table>\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 693 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui accordion\">\n    <div class=\"title\">\n        <i class=\"dropdown icon\"></i>\n        <ng-content></ng-content>\n    </div>\n    <div class=\"content\">\n        <table class=\"ui very basic table\" style=\"margin-left:20px\">\n            <tbody style=\"border-style: hidden\">\n            <tr *ngFor=\"let item of items\">\n                <td class=\"ctv-header three column wide key\">{{item.name}}</td>\n                <td *ngIf=\"item.format=='label'\" class=\"twelve column wide value\">\n                    <div class = \"ui label tiny\" *ngFor=\"let selector of item.value\" style=\"margin-top: 2px;\">{{selector}}</div>\n                </td>\n                <td *ngIf=\"item.format!='label'\" class=\"twelve column wide value\">{{item.value}}</td>\n            </tr>\n            </tbody>\n        </table>\n    </div>\n</div>\n"
+
+/***/ },
+/* 694 */
+/***/ function(module, exports) {
+
+	module.exports = "<div (click)=\"collapsed = !collapsed\" class=\"ctv-collapsible-label\">\n    <h4 class=\"ui header\">\n        <i *ngIf=\"!collapsed\" class=\"grey minus circle outline icon\"></i>\n        <i *ngIf=\"collapsed\" class=\"grey plus circle outline icon\"></i>\n        {{title}}\n    </h4>\n</div>\n\n\n<div class=\"ctv-collapsible-content\" [hidden]=\"collapsed\">\n    <ng-content></ng-content>\n</div>"
+
+/***/ },
+/* 695 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui negative floating message\" style=\"margin-top: 20px\" *ngIf=\"showError\">\n    <i class=\"close icon\" (click)=\"close()\"></i>\n    <div class=\"header\">{{header}}</div>\n    <p>{{error}}</p>\n</div>"
+
+/***/ },
+/* 696 */
+/***/ function(module, exports) {
+
+	module.exports = "<div style=\"display: block;\">\n    <canvas id=\"canvas1\"\n            baseChart width=\"900\" height=\"300\"\n            [datasets]=\"lineChartData\"\n            [labels]=\"lineChartLabels\"\n            [options]=\"lineChartOptions\"\n            [colors]=\"lineChartColors\"\n            [legend]=\"lineChartLegend\"\n            [chartType]=\"lineChartType\">\n    </canvas>\n</div>\n<div class=\"ui grid\">\n    <div class=\"ui one column centered row\">\n        <div class=\"ui center aligned twelve wide column\">\n            <h5>Time Series</h5>\n        </div>\n    </div>\n    <div class=\"ui one column centered row\">\n        <div class=\"ui center aligned twelve wide column\">\n            <span>0</span>\n            <input type=\"range\" #slider [min]=\"'14'\" [max]=\"scaleEnd\" id=\"slider\"  [value]=\"end\" (change)=\"slide(slider.value)\">\n            <span>{{scaleEnd}}</span>\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 697 */
+/***/ function(module, exports) {
+
+	module.exports = "<table class=\"ui very basic unstackable table\" style=\"margin-top: 10px\">\n    <thead>\n    <th>{{nameheader}}</th>\n    <th>{{valueheader}}</th>\n    <th>&nbsp;</th>\n    </thead>\n\n    <tbody>\n    <tr class=\"noHover\">\n        <td class=\"ui four wide\">\n            <div class=\"input\">\n                <input *ngIf=\"type=='text'\" type=\"text\" [(ngModel)]=\"newItem.name\">\n                <select class=\"ui dropdown\" *ngIf=\"type=='select'\" [(ngModel)]=\"newItem.name\">\n                    <option *ngFor=\"let option of options\" [value]=\"option\">{{option}}</option>\n                </select>\n            </div>\n        </td>\n        <td class=\"ui four wide\">\n            <div class=\"input\">\n                <input type=\"text\" [(ngModel)]=\"newItem.value\">\n            </div>\n        </td>\n        <td>\n            <button type=\"button\" class=\"ui icon button iconBtn primaryIconBtn\" (click)=\"add()\">\n                <i class=\"add icon\"></i>\n            </button>\n        </td>\n    </tr>\n    </tbody>\n\n    <tbody *ngIf=\"items.length\">\n    <tr *ngFor=\"let item of items\">\n        <td class=\"key\">{{item.name}}</td>\n        <td class=\"value\">{{item.value}}</td>\n        <td>\n            <button type=\"button\" class=\"ui icon button iconBtn secondaryIconBtn\" (click)=\"remove(item);\">\n                <i class=\"trash icon\"></i>\n            </button>\n        </td>\n    </tr>\n    </tbody>\n\n    <tbody  *ngIf=\"!items.length\">\n    <tr class=\"noDataFound\"><td colspan=\"3\">No labels have been defined.</td></tr>\n    </tbody>\n\n</table>\n"
+
+/***/ },
+/* 698 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui small message notify\" id=\"notificationMessage\"\n     [ngClass]=\"{   ready: notificationType==NotificationType.confirm,\n                    minor: notificationType==NotificationType.alert,\n                    info: notificationType==NotificationType.info}\">\n    <i class=\"close icon\" (click)=\"close()\"></i>\n    <div class=\"ui grid\">\n        <div class=\"ui right aligned two wide column\">\n            <i id=\"notifyIcon\" class=\"icon inverted\" [ngClass]=\"{toast_confirm: notificationType==NotificationType.confirm,\n                                                        toast_warning: notificationType==NotificationType.alert,\n                                                        toast_info: notificationType==NotificationType.info}\">\n                <span id=\"backgroundIcon\"></span>\n            </i>\n        </div>\n        <div class=\"ui left aligned fourteen wide column\" id=\"notificationText\">\n            <div class=\"header\" id=\"header2\">\n                <span *ngIf=\"notificationType==NotificationType.confirm\">Confirmation: </span>\n                <span *ngIf=\"notificationType==NotificationType.info\">Information: </span>\n                <span *ngIf=\"notificationType==NotificationType.alert\">Alert: </span>\n                {{message}}\n            </div>\n            <p [ngClass]=\"{ ready: notificationType==NotificationType.confirm,\n                            minor: notificationType==NotificationType.alert,\n                            info: notificationType==NotificationType.info}\">{{item}}</p>\n            <span *ngIf=\"notificationType==NotificationType.info\">Will notify when operation is complete</span>\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 699 */
+/***/ function(module, exports) {
+
+	module.exports = "<div *ngIf=\"chunks.length > 1\">\n    <div class=\"ui right floated pagination borderless menu\" style=\"margin-top: 10px\">\n        <a class=\"icon item\" (click)=\"showPrevChunk()\">\n            <i class=\"chevron left icon\"></i>\n        </a>\n        <a *ngFor=\"let chunk of chunks\" class=\"item\"\n           [ngClass]=\"{'active': chunk.selected}\" (click)=\"showClickedPage(chunk.pageNo)\">{{chunk.pageNo + 1}}\n        </a>\n        <a class=\"icon item\" (click)=\"showNextChunk()\">\n            <i class=\"chevron right icon\"></i>\n        </a>\n    </div>\n</div>"
+
+/***/ },
+/* 700 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui left icon input searchField\">\n    <input type=\"text\" [ngModel]=\"searchText\" (ngModelChange)=\"showChunk($event)\"\n           size='{{size}}' [placeholder]=\" 'filter string' \" class=\"ctvSearch\">\n    <i class=\"search icon\"></i>\n</div>\n"
+
+/***/ },
+/* 701 */
+/***/ function(module, exports) {
+
+	module.exports = "<form class=\"ui form\" role=\"form\" #aciForm=\"ngForm\" name=\"aciForm\" (submit)=\"updateAciSetting(aciForm.valid)\" novalidate>\n    <div class=\"ui two column grid\">\n        <div class=\"ui row\">\n            <div class=\"field column\">\n                <label for=\"apicPhysicalDomain\">Physical domain</label>\n                <input type=\"text\" id=\"apicPhysicalDomain\" name=\"apicPhysicalDomain\"\n                       [(ngModel)]=\"setting.physicalDomain\"\n                       placeholder=\"Enter physical domain name\" required #apicPhysicalDomain=\"ngModel\">\n            </div>\n            <div class=\"field column\">\n                <label for=\"apicLeafNodes\">Node bindings</label>\n                <input type=\"text\" id=\"apicLeafNodes\" name=\"apicLeafNodes\"\n                       [(ngModel)]=\"setting.nodeBindings\"\n                       placeholder=\"Enter comma separated nodes of the form topology/pod-1/node-101\">\n            </div>\n        </div>\n        <div class=\"ui row\">\n            <div class=\"field column\">\n                <label for=\"apicPathBindings\">Path bindings</label>\n                <input type=\"text\" id=\"apicPathBindings\" name=\"apicPathBindings\"\n                       [(ngModel)]=\"setting.pathBindings\"\n                       placeholder=\"Enter comma separated paths of the form topology/pod-1/paths-101/pathep-[eth1/14]\">\n            </div>\n            <div class=\"field column\"></div>\n        </div>\n        <div class=\"ui row\">\n            <div class=\"field column\">\n                <label>&nbsp;<br>\n                    <input type=\"checkbox\" name=\"apicEnforcePolicies\" tabindex=\"0\"\n                           [checked]=\"setting.enforcePolicies == 'yes'\"\n                           (change)=\"$event.target.checked?setting.enforcePolicies='yes':setting.enforcePolicies='no'\"\n                           class=\"alignLabel\">\n                    Enforce security policies\n                </label>\n            </div>\n            <div class=\"field column\">\n                <label>&nbsp;<br>\n                    <input type=\"checkbox\" name=\"apicIncludeCommonTenant\" tabindex=\"0\"\n                           [checked]=\"setting.includeCommonTenant == 'yes'\"\n                           (change)=\"$event.target.checked?setting.includeCommonTenant='yes':setting.includeCommonTenant='no'\"\n                           class=\"alignLabel\">\n                    Lookup objects in common tenant\n                </label>\n            </div>\n        </div>\n\n    </div>\n    <div class=\"field\" style=\"margin-top:15px;\">\n        <div *ngIf=\"aciForm.submitted\">\n            <div [hidden]=\"aciForm.valid\" class=\"ui negative message\">\n                <ul class=\"list\">\n                    <!-- APIC settings validation -->\n                    <li *ngIf=\"apicPhysicalDomain.errors?.required\">Please enter physical domain\n                    </li>\n                </ul>\n            </div>\n        </div>\n    </div>\n    <div *ngIf=\"firstRunWiz\">\n        <div class=\"ui section divider\" style=\"margin-top: 60px\"></div>\n        <div class=\"ui grid\">\n            <div class=\"right floated right aligned sixteen wide column\">\n                <button type=\"button\" class=\"ui basic button\" (click)=\"cancel.emit()\">Cancel</button>\n                <button type=\"button\" class=\"ui basic blue button\" (click)=\"goback.emit()\"><i class=\"arrow left icon\"></i>Go back</button>\n                <button type=\"button\" class=\"ui blue basic button\" (click)=\"skip.emit()\">Skip this step</button>\n                <button type=\"submit\" class=\"ui blue button\">Continue<i class=\"arrow right icon\"></i></button>\n            </div>\n        </div>\n    </div>\n    <div *ngIf=\"!firstRunWiz\">\n        <div class=\"ui grid\">\n            <div class=\"right floated right aligned sixteen wide column\">\n                <div>\n                    <button type=\"submit\" class=\"ui blue large button primaryBtn\">\n                        Update ACI Settings\n                    </button>\n                </div>\n            </div>\n        </div>\n    </div>\n</form>\n"
+
+/***/ },
+/* 702 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div class=\"content pageTitle\">LDAP Settings</div>\n        </div>\n        <div class=\"right aligned eight wide column\">&nbsp;</div>\n    </div>\n\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">\n                        LDAP Settings\n                </span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\" [ngClass]=\"{loading: showLoader}\">\n\n            <form class=\"ui form\" role=\"form\" #formRef=\"ngForm\"\n                  (ngSubmit)=\"updateLdapConfig(formRef.valid)\" novalidate>\n\n                <div class=\"field\">\n                    <div *ngIf=\"formRef.submitted\">\n                        <div *ngIf=\"!formRef.valid\" class=\"ui negative message\">\n                            <ul class=\"list\">\n                                <li *ngIf=\"server.errors?.required\">\n                                    Please enter ldap server address\n                                </li>\n                                <li *ngIf=\"port.errors?.required\">\n                                    Please enter ldap server port number\n                                </li>\n                                <li *ngIf=\"base_dn.errors?.required\">\n                                    Please enter ldap base dn\n                                </li>\n                                <li *ngIf=\"service_account_dn.errors?.required\">\n                                    Please enter ladap service account dn\n                                </li>\n                                <li *ngIf=\"service_account_password.errors?.required\">\n                                    Please enter ldap service account password\n                                </li>\n                            </ul>\n                        </div>\n                    </div>\n                </div>\n\n                <div class=\"ui sixteen column grid\">\n                    <div class=\"ui row\">\n\n                        <div class=\"ui eight wide column\">\n                            <div class=\"fields\">\n                                <div class=\"field\">\n                                    <label for=\"server\">Server Address</label>\n                                    <input #server=\"ngModel\"\n                                           type=\"text\"\n                                           id=\"server\"\n                                           name=\"server\"\n                                           [(ngModel)]=\"ldapConfig.server\" placeholder=\"Server address\" required>\n                                </div>\n                                <div class=\"field\">\n                                    <label for=\"port\">Server Port</label>\n                                    <input #port=\"ngModel\"\n                                           type=\"number\"\n                                           id=\"port\"\n                                           name=\"port\"\n                                           [(ngModel)]=\"ldapConfig.port\" placeholder=\"Server port\" required>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"ui eight wide column\">\n                            <div class=\"field\">\n                                <label for=\"service_account_password\">Service Account Password</label>\n                                <input #service_account_password=\"ngModel\"\n                                       type=\"password\"\n                                       id=\"service_account_password\"\n                                       name=\"service_account_password\"\n                                       [(ngModel)]=\"ldapConfig.service_account_password\" placeholder=\"Enter password\" required>\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"ui row\">\n\n                        <div class=\"ui eight wide column\">\n                            <div class=\"field\">\n                                <label for=\"base_dn\">Base DN</label>\n                                <input #base_dn=\"ngModel\"\n                                       type=\"text\"\n                                       id=\"base_dn\"\n                                       name=\"base_dn\"\n                                       [(ngModel)]=\"ldapConfig.base_dn\" placeholder=\"Enter base DN\" required>\n                            </div>\n                        </div>\n                        <div class=\"ui eight wide column\">\n                            <div class=\"field\">\n                                <label for=\"service_account_dn\">Service Account DN</label>\n                                <input #service_account_dn=\"ngModel\"\n                                       type=\"text\"\n                                       id=\"service_account_dn\"\n                                       name=\"service_account_dn\"\n                                       [(ngModel)]=\"ldapConfig.service_account_dn\" placeholder=\"Enter service account DN\" required>\n                            </div>\n                        </div>\n\n                    </div>\n                    <div class=\"ui row\">\n\n                        <div class=\"ui eight wide column\">\n                            <div class=\"field\">\n                                <label>&nbsp;<br>\n                                    <input type=\"checkbox\" name=\"StartTLS\" tabindex=\"0\" class=\"alignLabel\"\n                                           [(ngModel)]=\"ldapConfig.StartTLS\">\n                                    Start TLS\n                                </label>\n                            </div>\n                        </div>\n                        <div class=\"ui eight wide column\">\n                            <div class=\"field\">\n                                <label>&nbsp;<br>\n                                    <input type=\"checkbox\" name=\"InsecureSkipVerify\" tabindex=\"0\" class=\"alignLabel\"\n                                           [(ngModel)]=\"ldapConfig.InsecureSkipVerify\">\n                                    Accept certs as-is, skipping validation\n                                </label>\n                            </div>\n                        </div>\n\n                    </div>\n                    <div class=\"ui row\">\n\n                        <div class=\"ui sixteen wide column\">\n                            <div class=\"ui grid\">\n                                <div class=\"right floated right aligned sixteen wide column\">\n                                    <div class=\"buttonRow\">\n                                        <button type=\"submit\" class=\"ui blue large button primaryBtn\">\n                                            Save\n                                        </button>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n\n                    </div>\n\n                </div>\n            </form>\n\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 703 */
+/***/ function(module, exports) {
+
+	module.exports = "<form class=\"ui form\" role=\"form\" #formRef=\"ngForm\"\n      (ngSubmit)=\"updateNetworkSettings(formRef.valid)\" novalidate>\n    <div class=\"field\">\n        <div *ngIf=\"formRef.submitted\">\n            <div *ngIf=\"!formRef.valid\" class=\"ui negative message\">\n                <ul class=\"list\">\n                    <li *ngIf=\"networkInfrastructureRef.errors?.required\">\n                        Please enter network infrastructure type\n                    </li>\n                    <li *ngIf=\"allowedVlanRangeRef.errors?.required\">\n                        Please enter allowed vlan range\n                    </li>\n                    <li *ngIf=\"allowedVxlanRangeRef.errors?.required\">\n                        Please enter allowed vxlan range\n                    </li>\n                    <li *ngIf=\"forwardingmodeRef.errors?.required\">\n                        Please enter forwarding mode\n                    </li>\n                    <li *ngIf=\"allowedVlanRangeRef.errors?.pattern\">\n                        Please enter vlan in range in the correct notation\n                    </li>\n                    <li *ngIf=\"allowedVxlanRangeRef.errors?.pattern\">\n                        Please enter vxlan in range in the correct notation\n                    </li>\n                </ul>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui two column grid\">\n        <div class=\"ui row\">\n            <div class=\"ui column field\">\n                <label for=\"networkInfrastructure\">Network infrastructure type</label>\n                <select #networkInfrastructureRef=\"ngModel\"\n                        id=\"networkInfrastructure\"\n                        name=\"networkInfrastructure\"\n                        class=\"ui dropdown\"\n                        [(ngModel)]=\"setting['networkInfraType']\" required>\n                    <option value=\"\">-- Please select network infrastructure type --</option>\n                    <option value=\"default\">default</option>\n                    <option value=\"aci\">aci</option>\n                </select>\n            </div>\n            <div class=\"ui column field\">\n                <label for=\"allowedVlanRange\">Allowed vlan range</label>\n                <input #allowedVlanRangeRef=\"ngModel\"\n                       type=\"text\"\n                       id=\"allowedVlanRange\"\n                       name=\"allowedVlanRange\"\n                       [(ngModel)]=\"setting['vlans']\" placeholder=\"1-4094\" required [pattern]=\"vlanPattern\">\n            </div>\n        </div>\n        <div class=\"ui row\">\n            <div class=\"ui column field\">\n                <label for=\"allowedVxlanRange\">Allowed vxlan range</label>\n                <input #allowedVxlanRangeRef=\"ngModel\"\n                       type=\"text\"\n                       id=\"allowedVxlanRange\"\n                       name=\"allowedVxlanRange\"\n                       [(ngModel)]=\"setting['vxlans']\" placeholder=\"1-10000\" required [pattern]=\"vxlanPattern\">\n            </div>\n            <div class=\"ui column field\">\n                <label for=\"forwardingmode\">Forwarding mode</label>\n                <select #forwardingmodeRef=\"ngModel\"\n                        id=\"forwardingmode\"\n                        name=\"forwardingmode\"\n                        class=\"ui dropdown\"\n                        [(ngModel)]=\"setting['fwdMode']\" required>\n                    <option value=\"\">-- Please select the network forwarding mode --</option>\n                    <option value=\"bridge\">bridge</option>\n                    <option value=\"routing\">routing</option>\n                </select>\n            </div>\n        </div>\n    </div>\n\n    <div *ngIf=\"firstRunWiz\">\n        <div class=\"ui section divider\" style=\"margin-top: 60px\"></div>\n        <div class=\"ui grid\">\n            <div class=\"right floated right aligned sixteen wide column\">\n                <button type=\"button\" class=\"ui basic button\" (click)=\"cancel.emit()\">Cancel</button>\n                <button type=\"button\" class=\"ui blue basic button\" (click)=\"skip.emit()\">Skip this step</button>\n                <button type=\"submit\" class=\"ui blue button\">Continue<i class=\"arrow right icon\"></i></button>\n            </div>\n        </div>\n    </div>\n\n    <div *ngIf=\"!firstRunWiz\">\n        <div class=\"ui grid\">\n            <div class=\"right floated right aligned sixteen wide column\">\n                <div style=\"margin-top: 20px\">\n                    <button type=\"submit\" class=\"ui blue large button primaryBtn\">\n                        Update Network Settings\n                    </button>\n                </div>\n            </div>\n        </div>\n    </div>\n</form>\n"
+
+/***/ },
+/* 704 */
+/***/ function(module, exports) {
+
+	module.exports = "<table  class=\"ui very basic unstackable table\" style=\"margin-top: 10px\">\n    <ng-content></ng-content>\n</table>"
+
+/***/ },
+/* 705 */
+/***/ function(module, exports) {
+
+	module.exports = "<div (click)=\"sortColumn()\">\n    <ng-content></ng-content>\n    <i  class=\"angle icon\"[ngClass]=\"sortobject.iconDirection\"\n        *ngIf=\"sortobject.field==sortfield && sortfield!=''\">\n    </i>\n</div>"
+
+/***/ },
+/* 706 */
+/***/ function(module, exports) {
+
+	module.exports = "<!--<div class=\"content\" style=\"font-size: 18px; margin-top: 30px\">Resources</div> -->\n<div class=\"ui grid\" style=\"margin-top: 15px\">\n    <div class=\"row\">\n        <div class=\"ui four wide column kpi\">\n            <a class=\"ui fluid card\" [routerLink]=\"['../servicelbs/list']\">\n                <div class=\"content\">\n                    <div class=\"kpiHeader\">Service Load Balancers</div>\n                    <div class=\"description\">\n                        <p class=\"center aligned kpiValue\">{{servicelbs}}</p>\n                    </div>\n\n                </div>\n            </a>\n        </div>\n        <div class=\"ui four wide column kpi\">\n            <a class=\"ui fluid card\" [routerLink]=\"['../applicationgroups/list']\">\n                <div class=\"content\">\n                    <div class=\"kpiHeader\">Application Groups</div>\n                    <div class=\"description\">\n                        <p class=\"center aligned kpiValue\">{{groups}}</p>\n                    </div>\n                </div>\n            </a>\n        </div>\n        <div class=\"ui four wide column kpi\">\n            <a class=\"ui fluid card\" [routerLink]=\"['../networkpolicies/list']\">\n                <div class=\"content\">\n                    <div class=\"kpiHeader\">Network Policies</div>\n                    <div class=\"description\">\n                        <p class=\"center aligned kpiValue\">{{networkpolicies}}</p>\n                    </div>\n                </div>\n            </a>\n        </div>\n        <div class=\"ui four wide column kpi\">\n            <a class=\"ui fluid card\" [routerLink]=\"['../networks/list']\">\n                <div class=\"content\">\n                    <div class=\"kpiHeader\">Networks</div>\n                    <div class=\"description\">\n                        <p class=\"center aligned kpiValue\">{{networks}}</p>\n                    </div>\n                </div>\n            </a>\n        </div>\n    </div>\n</div>\n\n\n<div class=\"ui grid\" style=\"margin-top: 15px\">\n    <div class=\"row\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"ui tabular menu\">\n                <a class=\"active item\" [ngClass]=\"{active: endpointType==EndpointType.Network}\" (click)=\"switch(EndpointType.Network)\">Networks</a>\n                <a class=\"item\" [ngClass]=\"{active: endpointType==EndpointType.ApplicationGroup}\" (click)=\"switch(EndpointType.ApplicationGroup)\">Application Groups</a>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui one column centered row\" style=\"margin-top: 20px;\">\n        <div class=\"ui fourteen wide column\">\n            <linegraph [key]=\"key\" [endpointType]=\"endpointType\"></linegraph>\n        </div>\n    </div>\n\n\n    <div class=\"ui one column centered row\" style=\"margin-top: 30px;\" *ngIf=\"endpointType===EndpointType.Network\">\n        <div class=\"ui fourteen wide column\">\n            <ctv-table #tableRef [defaultSortColumn]=\"'networkName'\" [items]=\"networkList\" (filtereditems)=\"filterednetworks=$event; setKey($event)\" [size]=\"4\">\n            <thead>\n            <tr>\n                <th><ctv-th [sortfield]=\"'networkName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Name</ctv-th></th>\n                <th><ctv-th [sortfield]=\"'encap'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Encapsulation</ctv-th></th>\n                <th><ctv-th [sortfield]=\"'subnet'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Subnet</ctv-th></th>\n            </tr>\n            </thead>\n            <tbody *ngIf=\"networkList\">\n            <tr class=\"selectable\" *ngFor=\"let network of filterednetworks\" [ngClass]=\"{selected: key==network.key, notSelected: key!=network.key}\" (click)=\"key=network.key\">\n                <td>{{network.networkName}}</td>\n                <td>{{network.encap}}</td>\n                <td>{{network.subnet}}</td>\n            </tr>\n            </tbody>\n            <tbody *ngIf=\"!networkList\">\n            <tr>\n                <td colspan=\"2\">No rows found.</td>\n            </tr>\n            </tbody>\n            <tfoot>\n            <tr>\n                <td colspan=\"4\">\n                    <ctv-tpagination [chunks]=\"tableRef.pageChunks\"\n                                     (showPage)=\"tableRef.showChunk($event, tableRef.table.searchText)\"\n                                     (prevChunk)=\"tableRef.showPrevChunk()\"\n                                     (nextChunk)=\"tableRef.showNextChunk()\">\n                    </ctv-tpagination>\n                </td>\n            </tr>\n            </tfoot>\n        </ctv-table>\n        </div>\n    </div>\n    <div class=\"ui one column centered row\" style=\"margin-top: 30px;\" *ngIf=\"endpointType===EndpointType.ApplicationGroup\">\n        <div class=\"ui fourteen wide column\">\n            <ctv-table #tableRef1 [defaultSortColumn]=\"'groupName'\" [items]=\"applicationGroupList\" (filtereditems)=\"filteredgroups=$event; setKey($event)\" [size]=\"4\">\n            <thead>\n            <tr>\n                <th><ctv-th [sortfield]=\"'groupName'\" (sortdata)=\"tableRef1.applysort($event)\" [sortobject]=\"tableRef1.sortObj\">Name</ctv-th></th>\n                <th><ctv-th [sortfield]=\"'networkName'\" (sortdata)=\"tableRef1.applysort($event)\" [sortobject]=\"tableRef1.sortObj\">Network</ctv-th></th>\n                <th><ctv-th [sortfield]=\"'policies'\" (sortdata)=\"tableRef1.applysort($event)\" [sortobject]=\"tableRef1.sortObj\">Policies</ctv-th></th>\n            </tr>\n            </thead>\n            <tbody *ngIf=\"applicationGroupList\">\n            <tr *ngFor=\"let group of filteredgroups\" [ngClass]=\"{selected: key==group.key, notSelected: key!=group.key}\" (click)=\"key=group.key\">\n                <td>{{group.groupName}}</td>\n                <td>{{group.networkName}}</td>\n                <td>{{group.policies.join(\", \")}}</td>\n            </tr>\n            </tbody>\n            <tbody *ngIf=\"!applicationGroupList\">\n            <tr>\n                <td colspan=\"2\">No rows found.</td>\n            </tr>\n            </tbody>\n            <tfoot>\n            <tr>\n                <td colspan=\"4\">\n                    <ctv-tpagination [chunks]=\"tableRef1.pageChunks\"\n                                     (showPage)=\"tableRef1.showChunk($event, tableRef1.table.searchText)\"\n                                     (prevChunk)=\"tableRef1.showPrevChunk()\"\n                                     (nextChunk)=\"tableRef1.showNextChunk()\">\n                    </ctv-tpagination>\n                </td>\n            </tr>\n            </tfoot>\n        </ctv-table>\n\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 707 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui grid\" style=\"margin-bottom: 30px\">\n    <div class=\"left floated sixteen wide column\">\n        <div class=\"content\" style=\"font-size: 24px\">\n            <span>Configure ACI Settings</span>\n        </div>\n    </div>\n</div>\n<acisettingcomp [firstRunWiz]=\"true\" (updateAciDef)=\"updateAciSettings($event)\" [setting]=\"setting\" (goback)=\"goBack()\" (skip)=\"skip()\" (cancel)=\"cancel()\"></acisettingcomp>"
+
+/***/ },
+/* 708 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui grid\" style=\"margin-bottom: 30px\">\n    <div class=\"left floated sixteen wide column\">\n        <div class=\"content\" style=\"font-size: 24px\">\n            <span>Select Network Defaults</span>\n        </div>\n    </div>\n</div>\n<networksettingcomp [firstRunWiz]=\"true\" (updateNetDef)=\"updateNetworkSettings($event)\" [setting]=\"setting\" (cancel)=\"cancel()\" (skip)=\"skip()\"></networksettingcomp>"
+
+/***/ },
+/* 709 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui container\" *ngIf=\"welcomeActive\">\n    <div class=\"ui grid\">\n        <div class=\"ui sixteen wide column\">\n            <h2>Welcome to Cisco Container Networking</h2>\n        </div>\n        <div class=\"ui sixteen wide column\">\n            <p>The Cisco Container Networking offers the quickest, easiest way to manage and scale your container infrastructure. A ready-to-go platform designed to be centrally managed by enterprise IT, with developer self-service, CCN provides a higher level of networking abstraction for microservices. CCN secures your application using a rich policy framework. It provides built-in service discovery and service routing for scale out services. </p>\n        </div>\n        <div class=\"ui sixteen wide column\">\n            <h4>Click below to step through the CCN global configuration. Doing so is optional and you can edit the same settings later via the <em>Global Settings</em> screen.</h4>\n        </div>\n        <div class=\"ui sixteen wide column\">\n\n            <button class=\"ui large blue button cancelBtn\" (click)=\"logout()\">Logout</button>\n\n            <button class=\"ui large blue button secondaryBtn\" (click)=\"skip()\">Skip Wizard</button>\n\n            <button class=\"ui large blue button primaryBtn\" (click)=\"runwizard()\">Run Wizard</button>\n\n        </div>\n    </div>\n</div>\n\n\n<div class=\"ui basic segment\" *ngIf=\"!welcomeActive\">\n    <div class=\"ui grid\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"steps-container\">\n                <ul class=\"progressbar\">\n                    <li class=\"active\" [ngClass]=\"{active: pageNo==1, completed: pageNo > 1}\"><span>Configure Network</span></li>\n                    <li [ngClass]=\"{active: pageNo==2, completed: pageNo > 2}\"><span>ACI Settings</span></li>\n                    <li [ngClass]=\"{active: pageNo==3, completed: pageNo > 3}\"><span>Confirm Details</span></li>\n                </ul>\n            </div>\n        </div>\n    </div>\n    <firstrunnetworkdefault *ngIf=\"pageNo==1\" (updatePage)=\"updatePage($event);\" (cancelPage)=\"welcomeActive=true\"></firstrunnetworkdefault>\n    <firstrunacisettings *ngIf=\"pageNo==2\" (updatePage)=\"updatePage($event); \" (cancelPage)=\"welcomeActive=true\"></firstrunacisettings>\n    <firstrunwizardconfirmpage *ngIf=\"pageNo==3\" (updatePage)=\"updatePage($event);\" (cancelPage)=\"welcomeActive=true\"></firstrunwizardconfirmpage>\n</div>\n\n"
+
+/***/ },
+/* 710 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui basic segment\" [ngClass]=\"{loading: showLoader}\">\n    <div class=\"ui grid\">\n        <div class=\"left floated sixteen wide column\">\n            <div class=\"content\" style=\"font-size: 24px\">\n                <span>Verify all the configuration</span>\n            </div>\n        </div>\n    </div>\n    <div class=\"ui section divider\" style=\"margin-top: 30px\"></div>\n    <h4 class=\"ui header\">Network Defaults</h4>\n    <table class=\"ui very basic selectable table\">\n        <tbody>\n            <tr>\n                <td class=\"ctv-header three wide column\">Network infrastructure type</td>\n                <td>{{wizardService.setting.networkInfraType}}</td>\n            </tr>\n            <tr>\n                <td class=\"ctv-header three wide column\">Allowed vlan range</td>\n                <td>{{wizardService.setting.vlans}}</td>\n            </tr>\n            <tr>\n                <td class=\"ctv-header three wide column\">Allowed vxlan range</td>\n                <td>{{wizardService.setting.vxlans}}</td>\n            </tr>\n            <tr>\n                <td class=\"ctv-header three wide column\">Forwarding mode</td>\n                <td>{{wizardService.setting.fwdMode}}</td>\n            </tr>\n        </tbody>\n    </table>\n\n    <div class=\"ui section divider\" style=\"margin-top: 30px\"></div>\n    <h4 class=\"ui header\">ACI Settings</h4>\n    <table class=\"ui very basic selectable table\">\n        <tbody>\n            <tr>\n                <td class=\"ctv-header three wide column\">Physical domain</td>\n                <td>{{wizardService.aciSetting.physicalDomain}}</td>\n            </tr>\n            <tr>\n                <td class=\"ctv-header three wide column\">Node bindings</td>\n                <td>{{wizardService.aciSetting.nodeBindings}}</td>\n            </tr>\n            <tr>\n                <td class=\"ctv-header three wide column\">Path bindings</td>\n                <td>{{wizardService.aciSetting.pathBindings}}</td>\n            </tr>\n            <tr>\n                <td class=\"ctv-header three wide column\">Enforce security policies</td>\n                <td>{{wizardService.aciSetting.enforcePolicies}}</td>\n            </tr>\n            <tr>\n                <td class=\"ctv-header three wide column\">Lookup objects in common tenant</td>\n                <td>{{wizardService.aciSetting.includeCommonTenant}}</td>\n            </tr>\n        </tbody>\n    </table>\n\n    <div class=\"ui section divider\" style=\"margin-top: 60px\"></div>\n    <div class=\"ui grid\">\n        <div class=\"right floated right aligned sixteen wide column\">\n            <button type=\"button\" class=\"ui basic button\" (click)=\"cancel()\">Cancel</button>\n            <button type=\"button\" class=\"ui basic blue button\" (click)=\"goBack()\"><i class=\"arrow left icon\"></i>Go back</button>\n            <button type=\"button\" class=\"ui blue basic button\" (click)=\"process()\">Skip this step</button>\n            <button type=\"button\" class=\"ui blue button\" (click)=\"process()\">Finish</button>\n        </div>\n    </div>\n</div>"
+
+/***/ },
+/* 711 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui middle aligned center aligned grid container\">\n    <div class=\"column copyright\">\n\n        <form id=\"loginForm\" name=\"loginForm\" class=\"ui form\" role=\"form\"\n              (submit)=\"login()\" novalidate #loginForm=\"ngForm\">\n            <div class=\"ui active inverted dimmer\" *ngIf=\"loginCtrl.showLoader\">\n                <div class=\"ui loader\"></div>\n            </div>\n\n            <div id=\"login-failed\" class=\"ui small modal\">\n                <div class=\"header\">Login Failed</div>\n                <div class=\"content\">\n                    <p>Username or Password is wrong</p>\n                </div>\n                <div class=\"actions\">\n                    <div class=\"ui positive button\" onclick=\"$('#login-failed').modal('hide')\">\n                        OK\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"login-seg\" style=\"margin-top: 180px; background-color: white; padding: 20px; \">\n                <h1 class=\"header\" style=\"margin-left:6px; margin-right:auto;\">\n                    <img class=\"ui image\" src=\"images/cisco_logo.svg\" height=\"30\" style=\"display:inline;\">\n                    <br>\n                    <span class=\"productname\">{{product_name}}</span>\n                </h1>\n\n\n                <div class=\"field\">\n                    <input type=\"text\" id=\"username\" name=\"username\" [(ngModel)]=\"loginCtrl.username\"\n                           placeholder=\"User Name\" required>\n                </div>\n                <div class=\"field\">\n                    <input type=\"password\" id=\"password\" name=\"password\" [(ngModel)]=\"loginCtrl.password\"\n                           placeholder=\"Password\" required>\n                </div>\n\n                <div align=\"center\">\n                    <button [disabled]=\"!loginForm.valid\" class=\"ui fluid blue button primaryBtn\">\n                        Log In\n                    </button>\n                </div>\n\n                <div class=\"center\">\n                    <div class=\"copyright\">\n                        Copyright (c) 2016 Cisco Systems, Inc. All rights reserved.\n                    </div>\n                </div>\n\n            </div>\n\n        </form>\n    </div>\n</div>"
+
+/***/ },
+/* 712 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui middle aligned center aligned grid container\">\n    <div class=\"column\" style=\"width: 450px;\">\n        <!-- <div class=\"ui stacked segment login-seg\" style=\"margin-top: 180px\"> -->\n        <div class=\"ui login-seg\" style=\"margin-top: 180px; background-color: white; padding: 20px; \">\n            <h1 class=\"header\" style=\"margin-left:6px; margin-right:auto; text-align:center;\">\n                <img class=\"ui image\" src=\"images/cisco_logo.svg\" height=\"30\" style=\"display:inline;\">\n                <br>\n                <span class=\"productname\">{{product_name}}</span>\n            </h1>\n\n            <div class=\"column\" style=\"text-align: center\">\n                <h3>You have been logged out.</h3>\n            </div>\n\n            <div class=\"column\" style=\"text-align: center; margin-top:50px;\" align=\"center\">\n                <button type=\"button\" class=\"ui fluid blue button primaryBtn\" (click)=\"login()\" style=\"display: inline;\">Login</button>\n            </div>\n           \n            <div class=\"center\">\n                <div class=\"column copyright\">\n                        Copyright (c) 2016 Cisco Systems, Inc. All rights reserved.\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 713 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui container logout\" style=\"margin-top: 100px; width: 60%\">\n    <div class=\"ui segment\">\n        <div class=\"ui one column centered grid\">\n            <div class=\"column\" style=\"text-align: center\">\n                <h2>401 - Unauthorized</h2>\n            </div>\n\n            <div class=\"column\" style=\"text-align: center\">\n                <h3>You are not authorized to view this page</h3>\n            </div>\n\n            <div class=\"column\" style=\"text-align: center\">\n                <h3>Please contact the administrator for further assistance</h3>\n            </div>\n\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 714 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"page header\">\n    <div class=\"ui top attached menu mainMenu\" align=\"right\">\n        <h1 class=\"header\" style=\"margin-top: 2px; float: left; white-space: nowrap; \">\n            <img class=\"ui image\" src=\"images/cisco_logo.svg\" height=\"30\" style=\"display: inline; margin-right: 20px;\"><span class=\"productname\">{{product_name}}</span>\n        </h1>\n        <div class=\"utilnav\">\n            <button type=\"button\" class=\"circular ui mini icon button\"\n                    (click)=\"help()\">\n                <i class=\"large help icon\"></i>\n            </button>\n            <button type=\"button\" class=\"circular ui mini icon button\"\n                    (click)=\"logout()\">\n                <i class=\"large logout icon\"></i>\n            </button>\n            <button type=\"button\" class=\"circular ui mini icon button\"\n                    (click)=\"account()\">\n                <i class=\"large user icon\"></i>\n            </button>\n            <div class=\"ui dropdown\">\n                <div class=\"text\">{{username}}</div>\n                <i class=\"large dropdown icon\"></i>\n                <div class=\"menu\">\n                </div>\n            </div>\n        </div>\n\n    </div>\n</div>\n\n<notification></notification>\n\n<div id=\"sidebar\" class=\"ui visible left vertical sidebar icon labeled menu mainNav\">\n    <span *ngIf=\"!firstRun\">\n\n        <a class=\"item\" [routerLink]=\"['dashboard']\" routerLinkActive=\"active\">\n            Dashboard\n        </a>\n\n        <a class=\"item\" [routerLink]=\"['networks']\" routerLinkActive=\"active\">\n            Networks\n        </a>\n\n        <a class=\"item\" [routerLink]=\"['servicelbs']\" routerLinkActive=\"active\">\n            Service Load Balancers\n        </a>\n\n        <a class=\"item\" [routerLink]=\"['applicationgroups']\" routerLinkActive=\"active\">\n            Application Groups\n        </a>\n\n        <a class=\"item\" [routerLink]=\"['appprofiles']\" routerLinkActive=\"active\">\n            ACI Application Profiles\n        </a>\n\n        <a class=\"item\" [routerLink]=\"['networkpolicies']\" routerLinkActive=\"active\">\n            Network Policies\n        </a>\n\n        <a class=\"item\" [routerLink]=\"['settings']\" routerLinkActive=\"active\" *auth=\"'admin'\">\n            Settings\n        </a>\n    </span>\n</div>\n\n<div id=\"pageContent\">\n    <router-outlet></router-outlet>\n</div>\n"
+
+/***/ },
+/* 715 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div class=\"content pageTitle\">Create Bandwidth Policy</div>\n        </div>\n        <div class=\"right aligned eight wide column\">&nbsp;</div>\n    </div>\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">\n                    <a href=\"/#/m/networkpolicies/list\">\n                        Network Policies List\n                    </a>\n                </span>\n                <span class=\"crumb\">\n                    <a href=\"/#/m/networkpolicies/list\">\n                        Bandwidth Policy\n                    </a>\n                </span>\n                <span class=\"crumb\">Create</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n\n            <form class=\"ui form\" role=\"form\" #formRef=\"ngForm\"\n                  (ngSubmit)=\"createPolicy(formRef.valid)\" novalidate>\n                <div class=\"ui active inverted dimmer\" *ngIf=\"showLoader\">\n                    <div class=\"ui loader\"></div>\n                </div>\n\n                <div class=\"ui basic segment\">\n                    <div class=\"field\">\n                        <div *ngIf=\"formRef.submitted\">\n                            <div *ngIf=\"!formRef.valid\" class=\"ui negative message\">\n                                <ul class=\"list\">\n                                    <li *ngIf=\"profileNameRef.errors?.required\">Please enter profile\n                                        name\n                                    </li>\n                                    <li *ngIf=\"policyTenantRef.errors?.required\">\n                                        Please select tenant\n                                    </li>\n                                    <li *ngIf=\"bandwidthNumberRef.errors?.required\">Please enter\n                                        bandwidth\n                                    </li>\n                                    <li *ngIf=\"bandwidthUnitRef.errors?.required\">Please select\n                                        bandwidth Unit\n                                    </li>\n                                    <li *ngIf=\"DSCPRef.errors?.required\">Please enter DSCP</li>\n                                </ul>\n                            </div>\n\n                        </div>\n                    </div>\n\n                    <div class=\"ui sixteen column grid\">\n                        <div class=\"ui row\">\n                            <div class=\"ui eight wide column\">\n                                <div class=\"field\">\n                                    <label for=\"newProfileName\">Policy name</label>\n                                    <input #profileNameRef=\"ngModel\" type=\"text\" id=\"newProfileName\" name=\"newProfileName\"\n                                           [(ngModel)]=\"newPolicy.profileName\" placeholder=\"Enter profile name\" required>\n                                </div>\n                            </div>\n                            <div class=\"ui eight wide column\">\n                                <div class=\"field\">\n                                    <label for=\"newPolicyTenant\">Tenant</label>\n                                    <select id=\"newPolicyTenant\" class=\"ui dropdown\"\n                                            name=\"newPolicyTenant\"\n                                            [(ngModel)]=\"newPolicy.tenantName\"\n                                            required #policyTenantRef=\"ngModel\">\n                                        <option value=\"\">-- Please select tenant --</option>\n                                        <option *ngFor=\"let tenant of tenants\" [ngValue]=\"tenant.tenantName\">{{tenant.tenantName}}</option>\n                                    </select>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"ui row\">\n                            <div class=\"ui eight wide column\">\n\n                                <div class=\"fields\">\n                                    <div class=\"field\">\n                                        <label for=\"newBandwidthNumber\">Bandwidth Value</label>\n                                        <input #bandwidthNumberRef=\"ngModel\" type=\"number\" id=\"newBandwidthNumber\" name=\"newBandwidthNumber\"\n                                               [(ngModel)]=\"newPolicy.bandwidthNumber\" placeholder=\"Enter bandwidth\" required>\n                                    </div>\n                                    <div class=\"field\">\n                                        <label for=\"newBandwidthUnit\">Bandwidth Unit</label>\n                                        <select #bandwidthUnitRef=\"ngModel\" name=\"newBandwidthUnit\" id=\"newBandwidthUnit\" class=\"ui dropdown\"\n                                                [(ngModel)]=\"newPolicy.bandwidthUnit\" required>\n                                            <option value=\"\"> -- Select unit -- </option>\n                                            <option value=\"kbps\">kbps</option>\n                                            <option value=\"mbps\">mbps</option>\n                                            <option value=\"gbps\">gbps</option>\n                                        </select>\n                                    </div>\n                                </div>\n                            </div>\n                            <div class=\"ui eight wide column\">\n                                <div class=\"field\">\n                                    <label for=\"newDSCP\">DSCP</label>\n                                    <input #DSCPRef=\"ngModel\" type=\"number\" id=\"newDSCP\" name=\"newDSCP\"\n                                           [(ngModel)]=\"newPolicy.DSCP\" placeholder=\"Enter DSCP\" required/>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"ui grid\">\n                        <div class=\"right aligned sixteen wide column\">\n                            <div class=\"buttonRow\">\n                                <button type=\"button\" class=\"ui basic large button cancelBtn\" (click)=\"cancelCreating()\">\n                                    Cancel\n                                </button>\n                                <button type=\"submit\" class=\"ui blue large button primaryBtn\">\n                                    Create\n                                </button>\n                            </div>\n                        </div>\n                    </div>\n\n                    <ctv-error *ngIf=\"showServerError\" header=\"Error creating policy\"\n                               [error]=\"serverErrorMessage\">\n                    </ctv-error>\n                </div>\n\n            </form>\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 716 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui sixteen column grid\">\n    <div [ngSwitch]=\"mode\" class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div *ngSwitchCase=\"'details'\" class=\"content pageTitle\">Details: {{policy.profileName}}</div>\n            <div *ngSwitchCase=\"'edit'\" class=\"content pageTitle\">Editing: {{policy.profileName}}</div>\n        </div>\n        <div class=\"right aligned eight wide column\">\n\n            <div class=\"right aligned five wide column\">\n                <div id=\"delete-policy-modal\" class=\"ui small modal\">\n                    <div class=\"header\">Remove Policy: {{policy.profileName}}</div>\n                    <div class=\"content\">\n                        <p>Are you sure you want to remove this policy?</p>\n                    </div>\n                    <div class=\"actions\">\n                        <div class=\"ui negative button\">No</div>\n                        <div class=\"ui positive blue button\" (click)=\"deletePolicy()\">\n                            Yes\n                        </div>\n                    </div>\n                </div>\n                <button *ngSwitchCase=\"'details'\" type=\"button\" class=\"ui large button cancelBtn\"\n                        (click)=\"cancelDetails()\">\n                    Close\n                </button>\n                 <button *ngSwitchCase=\"'edit'\" type=\"button\" class=\"ui large button cancelBtn\"\n                        (click)=\"cancelEditing()\">\n                    Cancel\n                </button>\n                <button *ngSwitchCase=\"'details'\" class=\"ui blue large button secondaryBtn\"\n                        (click)=\"editPolicy()\">\n                    Edit\n                </button>\n                <button class=\"ui blue large button secondaryBtn\" onclick=\"$('#delete-policy-modal').modal('show')\">\n                    <i class=\"trash icon\"></i>\n                    Remove\n                </button>\n            </div>\n\n        </div>\n    </div>\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">\n                    <a href=\"/#/m/networkpolicies/list\">\n                        Network Policies List\n                    </a>\n                </span>\n                <span class=\"crumb\">\n                    <a href=\"/#/m/networkpolicies/list\">\n                        Bandwidth Policy\n                    </a>\n                </span>\n                <span class=\"crumb\">{{policy.profileName}}</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n\n            <div [ngSwitch]=\"mode\" class=\"ui basic segment\">\n                <div class=\"ui active inverted dimmer\" *ngIf=\"showLoader\">\n                    <div class=\"ui loader\"></div>\n                </div>\n\n                <div *ngSwitchCase=\"'details'\">\n\n                    <table class=\"ui very basic selectable table\">\n                        <tbody>\n                        <tr>\n                            <td class=\"ctv-header three wide column key\">Profile Name</td>\n                            <td class=\"value\">{{policy.profileName}}</td>\n                        </tr>\n                        <tr>\n                            <td class=\"ctv-header three wide column key\">Tenant</td>\n                            <td class=\"value\">{{policy.tenantName}}</td>\n                        </tr>\n                        <tr>\n                            <td class=\"ctv-header three wide column key\">Bandwidth</td>\n                            <td class=\"value\">{{policy.bandwidth}}</td>\n                        </tr>\n                        <tr>\n                            <td class=\"ctv-header three wide column key\">DSCP</td>\n                            <td class=\"value\">{{policy.DSCP}}</td>\n                        </tr>\n                        </tbody>\n                    </table>\n                </div>\n\n                <div *ngSwitchCase=\"'edit'\">\n                    <form class=\"ui form\" role=\"form\" #formRef=\"ngForm\"\n                          (ngSubmit)=\"savePolicy(formRef.valid)\" novalidate>\n\n                        <div class=\"ui active inverted dimmer\" *ngIf=\"showLoader\">\n                            <div class=\"ui loader\"></div>\n                        </div>\n\n                        <div class=\"field\">\n                            <div *ngIf=\"formRef.submitted\">\n                                <div *ngIf=\"!formRef.valid\" class=\"ui negative message\">\n                                    <ul class=\"list\">\n                                        <li *ngIf=\"bandwidthNumberRef.errors?.required\">\n                                            Please enter bandwidth\n                                        </li>\n                                        <li *ngIf=\"bandwidthUnitRef.errors?.required\">\n                                            Please select bandwidth Unit\n                                        </li>\n                                        <li *ngIf=\"DSCPRef.errors?.required\">\n                                            Please enter DSCP\n                                        </li>\n                                    </ul>\n                                </div>\n                            </div>\n                        </div>\n\n                        <table class=\"ui very basic selectable table\">\n                            <tbody>\n                            <tr>\n                                <td class=\"ctv-header three wide column key\">Profile Name</td>\n                                <td class=\"value\">{{policy.profileName}}</td>\n                            </tr>\n                            </tbody>\n                        </table>\n\n                        <div class=\"ui sixteen column grid\" style=\"margin-top: 30px;\">\n                            <div class=\"ui row\">\n                                <div class=\"ui eight wide column\">\n\n                                    <div class=\"fields\">\n                                        <div class=\"field\">\n                                            <label for=\"bandwidthNumber\">Bandwidth Value</label>\n                                            <input #bandwidthNumberRef=\"ngModel\" type=\"number\" id=\"bandwidthNumber\" name=\"bandwidthNumber\"\n                                                   [(ngModel)]=\"policy.bandwidthNumber\" placeholder=\"Enter bandwidth value\" required>\n                                        </div>\n                                        <div class=\"field\">\n                                            <label for=\"bandwidthUnit\">Bandwidth Unit</label>\n                                            <select #bandwidthUnitRef=\"ngModel\" name=\"bandwidthUnit\" id=\"bandwidthUnit\" class=\"ui dropdown\"\n                                                    [(ngModel)]=\"policy.bandwidthUnit\" required>\n                                                <option value=\"\">-- Select bandwidth unit --</option>\n                                                <option value=\"kbps\">kbps</option>\n                                                <option value=\"mbps\">mbps</option>\n                                                <option value=\"gbps\">gbps</option>\n                                            </select>\n                                        </div>\n                                    </div>\n\n                                </div>\n                                <div class=\"ui eight wide column\">\n\n                                    <div class=\"field\">\n                                        <label for=\"DSCP\">DSCP</label>\n                                        <input #DSCPRef=\"ngModel\" type=\"number\" id=\"DSCP\" name=\"DSCP\"\n                                               [(ngModel)]=\"policy.DSCP\" placeholder=\"Enter DSCP\" required/>\n                                    </div>\n\n                                </div>\n                            </div>\n                        </div>\n\n                        <div class=\"ui grid\">\n                            <div class=\"right aligned sixteen wide column buttonRow\">\n                                <button type=\"button\" class=\"ui large button cancelBtn\"\n                                        (click)=\"cancelEditing()\">\n                                    Cancel\n                                </button>\n\n                                <button type=\"submit\" class=\"ui blue large button primaryBtn\">\n                                    Save\n                                </button>\n                            </div>\n                        </div>\n\n                    </form>\n                </div>\n            </div>\n\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 717 */
+/***/ function(module, exports) {
+
+	module.exports = "<ctv-search *ngIf=\"bandwidthPolicyListCtrl['policies']\" (searchTextChange)=\"tableRef.showChunk(tableRef.table.pageNo,$event);\" [count]=\"tableRef.count\"></ctv-search>\n\n<div class=\"ui basic segment ctvTable\" [ngClass]=\"{loading: showLoader}\">\n    <ctv-table #tableRef [defaultSortColumn]=\"'profileName'\"\n               [items]=\"bandwidthPolicyListCtrl['policies']\"\n               (filtereditems)=\"filteredPolicies=$event\"\n               [size]=\"12\">\n        <thead>\n        <tr>\n            <th>\n                <ctv-th [sortfield]=\"'profileName'\" (sortdata)=\"tableRef.applysort($event)\"\n                        [sortobject]=\"tableRef.sortObj\">Name\n                </ctv-th>\n            </th>\n            <th>\n                <ctv-th [sortfield]=\"'tenantName'\" (sortdata)=\"tableRef.applysort($event)\"\n                        [sortobject]=\"tableRef.sortObj\">Tenant\n                </ctv-th>\n            </th>\n        </tr>\n        </thead>\n\n        <tbody *ngIf=\"bandwidthPolicyListCtrl['policies']\">\n        <tr *ngFor=\"let policy of filteredPolicies\">\n            <td><a [routerLink]=\"['../bandwidth/details', policy.key]\">{{policy.profileName}}</a></td>\n            <td>{{policy.tenantName}}</td>\n        </tr>\n        </tbody>\n\n        <tbody *ngIf=\"!bandwidthPolicyListCtrl['policies']\">\n            <tr>\n                <td colspan=\"2\">No bandwidth policies found.</td>\n            </tr>\n        </tbody>\n\n        <tbody *ngIf=\"bandwidthPolicyListCtrl['policies'] && !tableRef.count\">\n            <tr>\n                <td colspan=\"2\">No records matched your filter criteria.</td>\n            </tr>\n        </tbody>\n\n        <tfoot>\n        <tr class=\"pagination\">\n            <td colspan=\"2\">\n                <ctv-tpagination [chunks]=\"tableRef.pageChunks\"\n                                 (showPage)=\"tableRef.showChunk($event, tableRef.table.searchText)\"\n                                 (prevChunk)=\"tableRef.showPrevChunk()\"\n                                 (nextChunk)=\"tableRef.showNextChunk()\">\n                </ctv-tpagination>\n            </td>\n        </tr>\n        </tfoot>\n    </ctv-table>\n</div>\n"
+
+/***/ },
+/* 718 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div class=\"content pageTitle\">Create External Contract Group</div>\n        </div>\n        <div class=\"right aligned eight wide column\">&nbsp;</div>\n    </div>\n\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">\n                    <a [routerLink]=\"['../list']\">\n                        Network Policies List\n                    </a>\n                </span>\n                <span class=\"crumb\">\n                    <a [routerLink]=\"['../list']\">\n                        External Contract Groups\n                    </a>\n                </span>\n                <span class=\"crumb\">Create</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n\n            <form class=\"ui form\" role=\"form\" #formRef=\"ngForm\"\n                  (ngSubmit)=\"createContractGroup(formRef.valid)\" novalidate>\n\n                <div class=\"ui active inverted dimmer\" *ngIf=\"showLoader\">\n                    <div class=\"ui loader\"></div>\n                </div>\n\n                <div class=\"ui basic segment\">\n\n                    <div class=\"field\">\n                        <div *ngIf=\"formRef.submitted\">\n                            <div *ngIf=\"!formRef.valid\" class=\"ui negative message\">\n                                <ul class=\"list\">\n                                    <li *ngIf=\"contractGroupNameRef.errors?.required\">\n                                        Please enter external contract group name\n                                    </li>\n                                    <li *ngIf=\"contractGroupTenantRef.errors?.required\">\n                                        Please select a tenant\n                                    </li>\n                                    <li *ngIf=\"contractGroupTypeRef.errors?.required\">\n                                        Please select external contract group type\n                                    </li>\n                                    <li *ngIf=\"contractGroupContractsRef.errors?.required\">\n                                        Please enter contracts\n                                    </li>\n                                </ul>\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"ui sixteen column grid\">\n                        <div class=\"ui row\">\n\n                            <div class=\"ui four wide column\">\n                                <div class=\"field\">\n                                    <label for=\"newContractGroupName\">External contract group name</label>\n                                    <input #contractGroupNameRef=\"ngModel\" type=\"text\" id=\"newContractGroupName\" name=\"newContractGroupName\"\n                                           [(ngModel)]=\"newContractGroup.contractsGroupName\" placeholder=\"Enter name\" required>\n                                </div>\n                            </div>\n                            <div class=\"ui four wide column\">\n                                <div class=\"field\">\n                                    <label for=\"newContractGroupTenant\">Tenant</label>\n                                    <select id=\"newContractGroupTenant\" class=\"ui dropdown\"\n                                            name=\"newContractGroupTenant\"\n                                            [(ngModel)]=\"newContractGroup.tenantName\"\n                                            required #contractGroupTenantRef=\"ngModel\">\n                                        <option value=\"\">-- Select a tenant --</option>\n                                        <option *ngFor=\"let tenant of tenants\" [ngValue]=\"tenant.tenantName\">{{tenant.tenantName}}</option>\n                                    </select>\n                                </div>\n                            </div>\n                            <div class=\"ui four wide column\">\n                                <div class=\"field\">\n                                    <label for=\"newContractGroupType\">External contract group type</label>\n                                    <select id=\"newContractGroupType\" class=\"ui dropdown\"\n                                            name=\"newContractGroupType\"\n                                            [(ngModel)]=\"newContractGroup.contractsType\"\n                                            required #contractGroupTypeRef>\n                                        <option value=\"\">-- Select group type --</option>\n                                        <option value=\"consumed\">consumed</option>\n                                        <option value=\"provided\">provided</option>\n                                    </select>\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"ui row\">\n                            <div class=\"ui sixteen wide column\">\n                                <div class=\"field\">\n                                    <label for=\"newContractGroupContracts\">Contracts</label>\n                                    <input #contractGroupContractsRef=\"ngModel\" type=\"text\" id=\"newContractGroupContracts\" name=\"newContractGroupContracts\"\n                                           [(ngModel)]=\"contractsString\" placeholder=\"Enter comma separated contract names\" required>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"ui grid\">\n                        <div class=\"right aligned sixteen wide column\">\n                            <div class=\"buttonRow\">\n\n                                <button type=\"button\" class=\"ui large button cancelBtn\" (click)=\"cancelCreating()\">\n                                    Cancel\n                                </button>\n                                <button type=\"submit\" class=\"ui blue large button primaryBtn\">\n                                    Create\n                                </button>\n                            </div>\n                        </div>\n                    </div>\n\n                </div>\n            </form>\n\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 719 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"ui eight wide column\">\n        <div class=\"content pageTitle\">\n            Details: {{contractGroup.contractsGroupName}}\n        </div>\n    </div>\n    <div class=\"right aligned eight wide column\">\n\n        <div id=\"delete-contractgroup-modal\" class=\"ui small modal\">\n            <div class=\"header\">Remove External Contract Group: {{contractGroup.contractsGroupName}}</div>\n            <div class=\"content\">\n                <p>Are you sure you want to remove this external contract group?</p>\n            </div>\n            <div class=\"actions\">\n                <div class=\"ui negative button\">No</div>\n                <div class=\"ui positive blue button\" (click)=\"deleteContractGroup()\">\n                    Yes\n                </div>\n            </div>\n        </div>\n\n        <button class=\"ui large button secondaryBtn\" (click)=\"returnToContractGroups()\">\n            Close\n        </button>\n\n        <button class=\"ui blue large button secondaryBtn\" onclick=\"$('#delete-contractgroup-modal').modal('show')\">\n            <i class=\"trash icon\"></i>\n            Remove\n        </button>\n    </div>\n</div>\n\n<div class=\"ui basic segment\">\n    <div class=\"ui active inverted dimmer\" *ngIf=\"showLoader\">\n        <div class=\"ui loader\"></div>\n    </div>\n\n        <table class=\"ui very basic selectable table\">\n            <tbody>\n            <tr>\n                <td class=\"ctv-header three wide column key\">External Contract Group Name</td>\n                <td class=\"value\">{{contractGroup.contractsGroupName}}</td>\n            </tr>\n            <tr>\n                <td class=\"ctv-header three wide column key\">Tenant</td>\n                <td class=\"value\">{{contractGroup.tenantName}}</td>\n            </tr>\n            <tr>\n                <td class=\"ctv-header three wide column key\">External Contract Group Type</td>\n                <td class=\"value\">{{contractGroup.contractsType}}</td>\n            </tr>\n            <tr>\n                <td class=\"ctv-header three wide column key\">Contracts</td>\n                <td class=\"value\">{{contractGroup.contracts?.join(\", \")}}</td>\n            </tr>\n            </tbody>\n        </table>\n\n</div>\n"
+
+/***/ },
+/* 720 */
+/***/ function(module, exports) {
+
+	module.exports = "<ctv-search *ngIf=\"contractGroups\" (searchTextChange)=\"tableRef.showChunk(tableRef.table.pageNo,$event);\" [count]=\"tableRef.count\"></ctv-search>\n\n<div class=\"ui basic segment ctvTable\" [ngClass]=\"{loading: showLoader}\">\n    <ctv-table #tableRef [defaultSortColumn]=\"'contractsGroupName'\"\n               [items]=\"contractGroups\"\n               (filtereditems)=\"filteredContractGroups=$event\"\n               [size]=\"12\">\n        <thead>\n        <tr>\n            <th>\n                <ctv-th [sortfield]=\"'contractsGroupName'\" (sortdata)=\"tableRef.applysort($event)\"\n                        [sortobject]=\"tableRef.sortObj\">Name\n                </ctv-th>\n            </th>\n            <th>\n                <ctv-th [sortfield]=\"'tenantName'\" (sortdata)=\"tableRef.applysort($event)\"\n                        [sortobject]=\"tableRef.sortObj\">Tenant\n                </ctv-th>\n            </th>\n            <th>\n                <ctv-th [sortfield]=\"'contractsType'\" (sortdata)=\"tableRef.applysort($event)\"\n                        [sortobject]=\"tableRef.sortObj\">Type\n                </ctv-th>\n            </th>\n            <th>\n                <ctv-th [sortfield]=\"'contracts'\" (sortdata)=\"tableRef.applysort($event)\"\n                        [sortobject]=\"tableRef.sortObj\">Contracts\n                </ctv-th>\n            </th>\n        </tr>\n        </thead>\n\n        <tbody *ngIf=\"contractGroups\">\n        <tr *ngFor=\"let contractGroup of filteredContractGroups\">\n            <td><a [routerLink]=\"['../contractgroup/details', contractGroup.key]\">{{contractGroup.contractsGroupName}}</a></td>\n            <td>{{contractGroup.tenantName}}</td>\n            <td>{{contractGroup.contractsType}}</td>\n            <td>{{contractGroup.contracts?.join(\", \")}}</td>\n        </tr>\n        </tbody>\n\n        <tbody *ngIf=\"!contractGroups\">\n        <tr class=\"noDataFound\">\n            <td colspan=\"4\">No external contract groups found.</td>\n        </tr>\n        </tbody>\n\n        <tbody *ngIf=\"contractGroups && !tableRef.count\">\n        <tr class=\"noDataFound\">\n            <td colspan=\"4\">No records matched your filter criteria.</td>\n        </tr>\n        </tbody>\n\n        <tfoot>\n        <tr class=\"pagination\">\n            <td colspan=\"4\">\n                <ctv-tpagination [chunks]=\"tableRef.pageChunks\"\n                                 (showPage)=\"tableRef.showChunk($event, tableRef.table.searchText)\"\n                                 (prevChunk)=\"tableRef.showPrevChunk()\"\n                                 (nextChunk)=\"tableRef.showNextChunk()\">\n                </ctv-tpagination>\n            </td>\n        </tr>\n        </tfoot>\n    </ctv-table>\n</div>\n"
+
+/***/ },
+/* 721 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div class=\"content pageTitle\">Create Isolation Policy</div>\n        </div>\n        <div class=\"right aligned eight wide column\">&nbsp;</div>\n    </div>\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">\n                    <a href=\"/#/m/networkpolicies/list\">\n                        Network Policies List\n                    </a>\n                </span>\n                <span class=\"crumb\">\n                    <a href=\"/#/m/networkpolicies/list\">\n                        Isolation Policies\n                    </a>\n                </span>\n                <span class=\"crumb current\">Create</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n\n            <form class=\"ui form\" role=\"form\" #formRef=\"ngForm\"\n                  (ngSubmit)=\"createPolicy(formRef.valid)\" novalidate>\n\n                <div class=\"ui active inverted dimmer\" *ngIf=\"showLoader\">\n                    <div class=\"ui loader\"></div>\n                </div>\n\n                <div class=\"ui basic segment\">\n\n                    <div class=\"field\">\n                        <div *ngIf=\"formRef.submitted\">\n                            <div *ngIf=\"!formRef.valid\" class=\"ui negative message\">\n                                <ul class=\"list\">\n                                    <li *ngIf=\"policyNameRef.errors?.required\">\n                                        Please enter policy name\n                                    </li>\n                                    <li *ngIf=\"policyTenantRef.errors?.required\">\n                                        Please select tenant\n                                    </li>\n                                </ul>\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"description\">\n                        <em>Name and create the policy now, after it is created you will edit it to define policy rules.</em>\n                    </div>\n\n                    <div class=\"ui sixteen column grid\">\n                        <div class=\"ui row\">\n                            <div class=\"ui eight wide column\">\n                                <div class=\"field\">\n                                    <label for=\"newPolicyName\">Policy name</label>\n                                    <input #policyNameRef=\"ngModel\" type=\"text\" id=\"newPolicyName\" name=\"newPolicyName\"\n                                           [(ngModel)]=\"newPolicy.policyName\" placeholder=\"Enter name\" required>\n                                </div>\n                            </div>\n                            <div class=\"ui eight wide column\">\n                                <div class=\"field\">\n                                    <label for=\"newPolicyTenant\">Tenant</label>\n                                    <select id=\"newPolicyTenant\" class=\"ui dropdown\"\n                                            name=\"newPolicyTenant\"\n                                            [(ngModel)]=\"newPolicy.tenantName\"\n                                            required #policyTenantRef=\"ngModel\">\n                                        <option value=\"\">-- Select a tenant --</option>\n                                        <option *ngFor=\"let tenant of tenants\" [ngValue]=\"tenant.tenantName\">{{tenant.tenantName}}</option>\n                                    </select>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"ui grid\">\n                        <div class=\"right aligned sixteen wide column\">\n                            <div class=\"buttonRow\">\n\n                                <button type=\"button\" class=\"ui large button cancelBtn\" (click)=\"cancelCreating()\">\n                                    Cancel\n                                </button>\n                                <button type=\"submit\" class=\"ui blue large button primaryBtn\">\n                                    Create\n                                </button>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n\n                <ctv-error *ngIf=\"showServerError\" header=\"Error creating policy\"\n                           [error]=\"serverErrorMessage\">\n                </ctv-error>\n\n            </form>\n\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 722 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui sixteen column grid\">\n    <div [ngSwitch]=\"mode\" class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div *ngSwitchCase=\"'details'\" class=\"content pageTitle\">Details: {{policy.policyName}}</div>\n            <div *ngSwitchCase=\"'edit'\" class=\"content pageTitle\">Editing: {{policy.policyName}}</div>\n        </div>\n        <div class=\"right aligned eight wide column\">\n\n            <div class=\"right aligned five wide column\">\n                <div id=\"delete-policy-modal\" class=\"ui small modal\">\n                    <div class=\"header\">Remove Policy: {{policy.policyName}}</div>\n                    <div class=\"content\">\n                        <p>Are you sure you want to remove this policy?</p>\n                    </div>\n                    <div class=\"actions\">\n                        <div class=\"ui negative button\">No</div>\n                        <div class=\"ui positive blue button\" (click)=\"deletePolicy()\">\n                            Yes\n                        </div>\n                    </div>\n                </div>\n                <button *ngSwitchCase=\"'details'\" type=\"button\" class=\"ui large button cancelBtn\"\n                        (click)=\"cancelDetails()\">\n                    Close\n                </button>\n                <button *ngSwitchCase=\"'edit'\" type=\"button\" class=\"ui large button cancelBtn\"\n                        (click)=\"cancelEditing()\">\n                    Cancel\n                </button>\n                <button *ngSwitchCase=\"'details'\" class=\"ui blue large button secondaryBtn\"\n                        (click)=\"editPolicy()\">\n                    Edit\n                </button>\n                <button class=\"ui blue large button secondaryBtn\" onclick=\"$('#delete-policy-modal').modal('show')\">\n                    <i class=\"trash icon\"></i>\n                    Remove\n                </button>\n            </div>\n        </div>\n    </div>\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">\n                    <a href=\"/#/m/networkpolicies/list\">\n                        Network Policies List\n                    </a>\n                </span>\n                <span class=\"crumb\">\n                    <a href=\"/#/m/networkpolicies/list\">\n                        Isolation Policies\n                    </a>\n                </span>\n                <span class=\"crumb\">{{policy.policyName}}</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n\n            <div class=\"ui basic segment\">\n                <div class=\"ui active inverted dimmer\" *ngIf=\"showLoader\">\n                    <div class=\"ui loader\"></div>\n                </div>\n\n                <table class=\"ui very basic selectable table\">\n                    <tbody>\n                    <tr>\n                        <td class=\"three wide column key\">Name</td>\n                        <td class=\"value\">{{policy.policyName}}</td>\n                    </tr>\n                    <tr>\n                        <td class=\"three wide column key\">Tenant</td>\n                        <td class=\"value\">{{policy.tenantName}}</td>\n                    </tr>\n                    </tbody>\n                </table>\n\n                <form class=\"ui form policyOutput\" role=\"form\">\n                    <h4 class=\"ui header\">Incoming rules</h4>\n\n                    <div class=\"field\">\n                        <div *ngIf=\"incorrectCIDR\" class=\"ui negative message\">\n                            <ul class=\"list\">\n                                <li>Please enter the IP address in CIDR notation</li>\n                            </ul>\n                        </div>\n                    </div>\n\n                    <table class=\"ui very basic unstackable table\">\n                        <thead>\n                        <tr>\n                            <th class=\"two wide\">Priority</th>\n                            <th class=\"two wide\">Action</th>\n                            <th class=\"three wide\">From group</th>\n                            <th class=\"two wide\">From network</th>\n                            <th class=\"two wide\">From IP address</th>\n                            <th class=\"two wide\">Protocol</th>\n                            <th class=\"two wide\">Port</th>\n                            <th class=\"one wide\">&nbsp;</th>\n                        </tr>\n                        </thead>\n\n                        <tbody *ngIf=\"mode=='edit'\">\n                            <tr class=\"noHover\">\n                                <td>\n                                    <div class=\"ui input\">\n                                        <input name=\"incomingRulePriority\" [(ngModel)]=\"newIncomingRule.priority\" type=\"number\">\n                                    </div>\n                                </td>\n                                <td>\n                                    <select class=\"ui dropdown\" name=\"incomingRuleAction\" [(ngModel)]=\"newIncomingRule.action\">\n                                        <option value=\"allow\">allow</option>\n                                        <option value=\"deny\">deny</option>\n                                    </select>\n                                </td>\n                                <td>\n                                    <select class=\"ui dropdown\"\n                                            #incomingSelectedApplicationGroup\n                                            name=\"incomingSelectedApplicationGroup\"\n                                            ngModel\n                                            (change)=\"onChangeIncomingApplicationGroupSelection(incomingSelectedApplicationGroup.value)\"\n                                            [disabled]=\"disableIncomingApplicationGroupSelection\">\n                                        <option selected value=\"\">none</option>\n                                        <option *ngFor=\"let group of applicationGroups\">{{group.groupName}}</option>\n                                    </select>\n                                </td>\n                                <td>\n                                    <select class=\"ui dropdown\"\n                                            #incomingSelectedNetwork\n                                            name=\"incomingSelectedNetwork\"\n                                            ngModel\n                                            (change)=\"onChangeIncomingNetworkSelection(incomingSelectedNetwork.value)\"\n                                            [disabled]=\"disableIncomingNetworkSelection\">\n                                        <option selected value=\"\">none</option>\n                                        <option *ngFor=\"let network of networks\">{{network.networkName}}</option>\n                                    </select>\n                                </td>\n                                <td>\n                                    <div class=\"ui input\">\n                                        <input name=\"incomingRuleFromIpAddress\"\n                                               [(ngModel)]=\"newIncomingRule.fromIpAddress\"\n                                               [disabled]=\"disableIncomingIPAddressSelection\"\n                                               (change)=\"onChangeIncomingIPAddress()\"\n                                               placeholder=\"0.0.0.0/0\">\n                                    </div>\n                                </td>\n                                <td>\n                                    <select class=\"ui dropdown\" name=\"incomingRuleProtocol\" [(ngModel)]=\"newIncomingRule.protocol\">\n                                        <option value=\"tcp\">tcp</option>\n                                        <option value=\"udp\">udp</option>\n                                        <option value=\"icmp\">icmp</option>\n                                    </select>\n                                </td>\n                                <td>\n                                    <div class=\"ui input\">\n                                        <input name=\"incomingRulePort\"\n                                               [(ngModel)]=\"newIncomingRule.port\"\n                                               type=\"number\"\n                                               placeholder=\"0-65535\">\n                                    </div>\n                                </td>\n                                <td>\n                                    <button class=\"ui icon button iconBtn primaryIconBtn\" (click)=\"addIncomingRule()\">\n                                        <i class=\"add icon\"></i>\n                                    </button>\n                                </td>\n                            </tr>\n                        </tbody>\n                        <tbody *ngIf=\"incomingRules.length\">\n                            <tr *ngFor=\"let rule of incomingRules\">\n                                <td>{{rule.priority}}</td>\n                                <td>{{rule.action}}</td>\n                                <td>{{rule.fromEndpointGroup}}</td>\n                                <td>{{rule.fromNetwork}}</td>\n                                <td>{{rule.fromIpAddress}}</td>\n                                <td>{{rule.protocol}}</td>\n                                <td>{{rule.port}}</td>\n                                <td *ngIf=\"mode == 'edit'\">\n                                    <button class=\"ui icon button iconBtn secondaryIconBtn\" (click)=\"deleteIncomingRule(rule.key)\">\n                                        <i class=\"trash icon\"></i>\n                                    </button>\n                                </td>\n                            </tr>\n                        </tbody>\n                        <tbody *ngIf=\"!incomingRules.length\">\n                            <tr class=\"noDataFound\">\n                                <td colspan=\"8\">None applied</td>\n                            </tr>\n                        </tbody>\n                    </table>\n\n                    <h4 class=\"ui header\" style=\"margin-top: 40px\">Outgoing rules</h4>\n                    <table class=\"ui very basic unstackable table\" style=\"margin-top: 40px\">\n                        <thead>\n                        <tr>\n                            <th class=\"two wide\">Priority</th>\n                            <th class=\"two wide\">Action</th>\n                            <th class=\"three wide\">To group</th>\n                            <th class=\"two wide\">To network</th>\n                            <th class=\"two wide\">To IP address</th>\n                            <th class=\"two wide\">Protocol</th>\n                            <th class=\"two wide\">Port</th>\n                            <th class=\"one wide\">&nbsp;</th>\n                        </tr>\n                        </thead>\n\n                        <tbody *ngIf=\"mode=='edit'\">\n                        <tr class=\"noHover\">\n\n                            <td>\n                                <div class=\"ui input\">\n                                    <input name=\"outgoingRulePriority\" [(ngModel)]=\"newOutgoingRule.priority\" type=\"number\">\n                                </div>\n                            </td>\n                            <td>\n                                <select class=\"ui dropdown\" name=\"outgoingRuleAction\" [(ngModel)]=\"newOutgoingRule.action\">\n                                    <option value=\"allow\">allow</option>\n                                    <option value=\"deny\">deny</option>\n                                </select>\n                            </td>\n                            <td>\n                                <select class=\"ui dropdown\"\n                                        #outgoingSelectedApplicationGroup\n                                        name=\"outgoingSelectedApplicationGroup\"\n                                        ngModel\n                                        (change)=\"onChangeOutgoingApplicationGroupSelection(outgoingSelectedApplicationGroup.value)\"\n                                        [disabled]=\"disableOutgoingApplicationGroupSelection\">\n                                    <option value=\"\">none</option>\n                                    <option *ngFor=\"let group of applicationGroups\">{{group.groupName}}</option>\n                                </select>\n                            </td>\n                            <td>\n                                <select class=\"ui dropdown\"\n                                        #outgoingSelectedNetwork\n                                        name=\"outgoingSelectedNetwork\"\n                                        ngModel\n                                        (change)=\"onChangeOutgoingNetworkSelection(outgoingSelectedNetwork.value)\"\n                                        [disabled]=\"disableOutgoingNetworkSelection\">\n                                    <option value=\"\">none</option>\n                                    <option *ngFor=\"let network of networks\">{{network.networkName}}</option>\n                                </select>\n                            </td>\n                            <td>\n                                <div class=\"ui input\">\n                                    <input name=\"outgoingRuleToIpAddress\"\n                                           [(ngModel)]=\"newOutgoingRule.toIpAddress\"\n                                           [disabled]=\"disableOutgoingIPAddressSelection\"\n                                           (change)=\"onChangeOutgoingIPAddress()\"\n                                           placeholder=\"0.0.0.0/0\">\n                                </div>\n                            </td>\n                            <td>\n                                <select class=\"ui dropdown\" name=\"outgoingRuleProtocol\" [(ngModel)]=\"newOutgoingRule.protocol\">\n                                    <option value=\"tcp\">tcp</option>\n                                    <option value=\"udp\">udp</option>\n                                    <option value=\"icmp\">icmp</option>\n                                </select>\n                            </td>\n                            <td>\n                                <div class=\"ui input\">\n                                    <input name=\"outgoingRulePort\"\n                                           [(ngModel)]=\"newOutgoingRule.port\"\n                                           type=\"number\"\n                                           placeholder=\"0-65535\">\n                                </div>\n                            </td>\n\n                            <td>\n                                <button class=\"ui icon button iconBtn primaryIconBtn\" (click)=\"addOutgoingRule()\">\n                                    <i class=\"add icon\"></i>\n                                </button>\n                            </td>\n\n                        </tr>\n                        <tbody *ngIf=\"outgoingRules.length\">\n                            <tr *ngFor=\"let rule of outgoingRules\">\n                                <td>{{rule.priority}}</td>\n                                <td>{{rule.action}}</td>\n                                <td>{{rule.toEndpointGroup}}</td>\n                                <td>{{rule.toNetwork}}</td>\n                                <td>{{rule.toIpAddress}}</td>\n                                <td>{{rule.protocol}}</td>\n                                <td>{{rule.port}}</td>\n                                <td *ngIf=\"mode == 'edit'\">\n                                    <button class=\"ui icon button iconBtn secondaryIconBtn\" (click)=\"deleteOutgoingRule(rule.key)\">\n                                        <i class=\"trash icon\"></i>\n                                    </button>\n                                </td>\n                            </tr>\n                        </tbody>\n                        <tbody *ngIf=\"!outgoingRules.length\">\n                            <tr class=\"noDataFound\">\n                                <td colspan=\"8\">None applied</td>\n                            </tr>\n                        </tbody>\n                    </table>\n                </form>\n                <div [ngSwitch]=\"mode\">\n                    <div class=\"ui grid\" style=\"margin-top: 40px\">\n                        <div class=\"right aligned sixteen wide column\">\n                            <button *ngSwitchCase=\"'edit'\" type=\"button\" class=\"ui blue large button primaryBtn\"\n                                    (click)=\"doneEditing()\">\n                                Save\n                            </button>\n                        </div>\n                    </div>\n                    <ctv-error *ngIf=\"((showServerError) && (mode === 'edit'))\"\n                               header=\"Error editing isolation policy\"\n                               [error]=\"serverErrorMessage\">\n                    </ctv-error>\n                    <ctv-error *ngIf=\"((showServerError) && (mode === 'details'))\"\n                               header=\"Error deleting isolation policy\"\n                               [error]=\"serverErrorMessage\">\n                    </ctv-error>\n                </div>\n            </div>\n\n        </div>\n    </div>\n</div>\n<isolationpolicystats [statKey]=\"statskey\" *ngIf=\"!infoselected\"></isolationpolicystats>\n"
+
+/***/ },
+/* 723 */
+/***/ function(module, exports) {
+
+	module.exports = "<ctv-search *ngIf=\"isolationPolicyListCtrl['policies']\" (searchTextChange)=\"tableRef.showChunk(tableRef.table.pageNo,$event);\" [count]=\"tableRef.count\"></ctv-search>\n\n<div class=\"ui basic segment ctvTable\" [ngClass]=\"{loading: showLoader}\">\n    <ctv-table #tableRef [defaultSortColumn]=\"'policyName'\"\n               [items]=\"isolationPolicyListCtrl['policies']\"\n               (filtereditems)=\"isolationPolicyListCtrl['filteredPolicies']=$event\"\n               [size]=\"12\">\n        <thead>\n        <tr>\n            <th>\n                <ctv-th [sortfield]=\"'policyName'\" (sortdata)=\"tableRef.applysort($event)\"\n                        [sortobject]=\"tableRef.sortObj\">Name\n                </ctv-th>\n            </th>\n            <th>\n                <ctv-th [sortfield]=\"'tenantName'\" (sortdata)=\"tableRef.applysort($event)\"\n                        [sortobject]=\"tableRef.sortObj\">Tenant\n                </ctv-th>\n            </th>\n        </tr>\n        </thead>\n\n        <tbody *ngIf=\"isolationPolicyListCtrl['policies']\">\n        <tr *ngFor=\"let policy of isolationPolicyListCtrl['filteredPolicies']\">\n            <td><a [routerLink]=\"['../isolation/details', policy.key]\">{{policy.policyName}}</a></td>\n            <td>{{policy.tenantName}}</td>\n        </tr>\n        </tbody>\n\n        <tbody *ngIf=\"!isolationPolicyListCtrl['policies']\">\n            <tr class=\"noDataFound\">\n                <td colspan=\"2\">No isolation policies found.</td>\n            </tr>\n        </tbody>\n\n        <tbody *ngIf=\"isolationPolicyListCtrl['policies'] && !tableRef.count\">\n            <tr class=\"noDataFound\">\n                <td colspan=\"2\">No records matched your filter criteria.</td>\n            </tr>\n        </tbody>\n\n        <tfoot>\n        <tr class=\"pagination\">\n            <td colspan=\"2\">\n                <ctv-tpagination [chunks]=\"tableRef.pageChunks\"\n                                 (showPage)=\"tableRef.showChunk($event, tableRef.table.searchText)\"\n                                 (prevChunk)=\"tableRef.showPrevChunk()\"\n                                 (nextChunk)=\"tableRef.showNextChunk()\">\n                </ctv-tpagination>\n            </td>\n        </tr>\n        </tfoot>\n    </ctv-table>\n</div>\n"
+
+/***/ },
+/* 724 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui basic segment\" [ngClass]=\"{loading: isolationPolicyStatsComp.showLoader}\">\n    <table class=\"ui very basic selectable table\">\n        <tbody>\n        <tr>\n            <td class=\"ctv-header three wide column\">Name</td>\n            <td>{{isolationPolicyStatsComp['config']['policyName']}}</td>\n        </tr>\n        <tr>\n            <td class=\"ctv-header three wide column\">Tenant Name</td>\n            <td>{{isolationPolicyStatsComp['config']['tenantName']}}</td>\n        </tr>\n        <tr>\n            <td class=\"ctv-header three wide column\">Number of Endpoints</td>\n            <td>{{isolationPolicyStatsComp.isolationPolicyInspectStats.numEndpoints}}</td>\n        </tr>\n        </tbody>\n    </table>\n\n    <div class=\"ui section divider\"></div>\n    <ctv-collapsible title=\"End Points\">\n        <ctv-table #tableRef [defaultSortColumn]=\"'containerName'\"\n                   [items]=\"isolationPolicyStatsComp['endpoints']\"\n                   (filtereditems)=\"isolationPolicyStatsComp['filteredendpoints']=$event;\"\n                   [size]=\"12\">\n            <thead>\n            <tr>\n                <div class=\"ui grid\" style=\"margin-top: 25px;margin-left: 25px;margin-bottom: 1px;\">\n                    <th class=\"five wide column\"><ctv-th [sortfield]=\"'containerName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\"> Container Name </ctv-th></th>\n                    <th class=\"four wide column\" style=\"padding-left: 18px !important;\"><ctv-th [sortfield]=\"'ipAddress'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\"> IP Address </ctv-th></th>\n                    <th class=\"three wide column\" style=\"padding-left: 44px !important;\"><ctv-th [sortfield]=\"'homingHost'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\"> Host </ctv-th></th>\n                    <th class=\"four wide column\">\n                        <ctv-search (searchTextChange)=\"tableRef.showChunk(tableRef.table.pageNo,$event);\" [placeholder]=\"'Search Containers...'\"></ctv-search>\n                    </th>\n                </div>\n            </tr>\n            </thead>\n\n            <tbody>\n            <tr *ngFor=\"let endpoint of isolationPolicyStatsComp['filteredendpoints']\">\n                <td>\n                    <ctv-accordion [items]=\"isolationPolicyStatsComp['containerDetails'][endpoint.containerID]\">\n                        <div class=\"ui grid\" style=\"margin-top: -33px; margin-left: 30px;\">\n                            <div class=\"five wide column\">{{endpoint.containerName.substr(1)}}</div>\n                            <div class=\"four wide column\">{{endpoint.ipAddress.join(' ')}}</div>\n                            <div class=\"four wide column\">{{endpoint.homingHost}}</div>\n                        </div>\n                    </ctv-accordion>\n                </td>\n                <td></td>\n            </tr>\n            </tbody>\n\n            <tfoot>\n            <tr>\n                <td colspan=\"5\">\n                    <ctv-tpagination [chunks]=\"tableRef.pageChunks\"\n                                     (showPage)=\"tableRef.showChunk($event, tableRef.table.searchText)\"\n                                     (prevChunk)=\"tableRef.showPrevChunk()\"\n                                     (nextChunk)=\"tableRef.showNextChunk()\">\n\n                    </ctv-tpagination>\n                </td>\n            </tr>\n            </tfoot>\n        </ctv-table>\n    </ctv-collapsible>\n</div>"
+
+/***/ },
+/* 725 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div class=\"content pageTitle\">Network Policies</div>\n        </div>\n        <div class=\"right aligned eight wide column\">\n          <button class=\"ui blue large button primaryBtn\" (click)=\"createNetworkPolicy()\">\n              <i class=\"add icon\"></i>\n              Create Policy\n          </button>\n        </div>\n    </div>\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div [ngSwitch]=\"policyMode\" class=\"breadcrumbs\">\n                <span class=\"crumb\">\n                  <a href=\"/#/m/networkpolicies/list\">\n                      Network Policies List\n                  </a></span>\n                <span *ngSwitchCase=\"'isolation'\" class=\"crumb\">Isolation Policies</span>\n                <span *ngSwitchCase=\"'bandwidth'\" class=\"crumb\">Bandwidth Policy</span>\n                <span *ngSwitchCase=\"'contractgroup'\" class=\"crumb\">External Contract Group</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n\n          <div class=\"ui tabular menu\">\n              <a class=\"item\"\n                 [ngClass]=\"{active: isolationPolicySelected}\"\n                 (click)=\"selectPolicyTab(policyTab.isolation)\">\n                  Isolation Policies\n              </a>\n              <a class=\"item\"\n                 [ngClass]=\"{active: bandwidthPolicySelected}\"\n                 (click)=\"selectPolicyTab(policyTab.bandwidth)\">\n                  Bandwidth Policies\n              </a>\n              <a class=\"item\"\n                 [ngClass]=\"{active: contractGroupSelected}\"\n                 (click)=\"selectPolicyTab(policyTab.contractGroup)\">\n                  External Contract Groups (ACI)\n              </a>\n          </div>\n\n          <isolationpolicylist *ngIf=\"isolationPolicySelected\"></isolationpolicylist>\n          <bandwidthpolicylist *ngIf=\"bandwidthPolicySelected\"></bandwidthpolicylist>\n          <contractgrouplist *ngIf=\"contractGroupSelected\"></contractgrouplist>\n\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 726 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div class=\"content pageTitle\">Create Network</div>\n        </div>\n\n        <div class=\"right aligned eight wide column\">&nbsp;</div>\n    </div>\n\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">\n                    <a href=\"/#/m/networks/list\">\n                        Networks List\n                    </a>\n                </span>\n                <span class=\"crumb\">Create</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n\n            <form id=\"networkCreationForm\" name=\"networkCreateForm\" class=\"ui form\" role=\"form\"\n                  (submit)=\"networkCreateCtrl.createNetwork(networkCreateForm.valid)\" novalidate #networkCreateForm=\"ngForm\">\n\n                <div class=\"ui active inverted dimmer\" *ngIf=\"networkCreateCtrl.showLoader\">\n                    <div class=\"ui loader\"></div>\n                </div>\n\n                <div class=\"ui sixteen column grid\" style=\"margin: 0;\">\n                    <div class=\"ui row\">\n\n                        <div class=\"ui eight wide column field\">\n                            <div *ngIf=\"networkCreateForm.submitted\">\n                                <div [hidden]=\"networkCreateForm.valid\" class=\"ui negative message\">\n                                    <ul class=\"list\">\n                                        <li *ngIf=\"newNetworkName.errors?.required\">Please enter network name\n                                        </li>\n                                        <li *ngIf=\"newNetworkTenant.errors?.required\">\n                                            Please select tenant\n                                        </li>\n                                        <li *ngIf=\"newNetworkSubnet.errors?.required\">Please enter subnet</li>\n                                        <li *ngIf=\"newNetworkSubnet.errors?.pattern\">Please enter subnet in CIDR\n                                            notation\n                                        </li>\n                                    </ul>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"ui row\">\n\n                        <div class=\"ui four wide column field\">\n                            <label for=\"newNetworkName\">Network name</label>\n                            <input type=\"text\" id=\"newNetworkName\" name=\"newNetworkName\"\n                                   [(ngModel)]=\"networkCreateCtrl.newNetwork.networkName\"\n                                   placeholder=\"Enter name\" required #newNetworkName=\"ngModel\">\n                        </div>\n                        <div class=\"ui four wide column field\">\n                            <div class=\"field\">\n                                <label for=\"newNetworkTenant\">Tenant</label>\n                                <select id=\"newNetworkTenant\" class=\"ui dropdown\"\n                                        name=\"newNetworkTenant\"\n                                        [(ngModel)]=\"networkCreateCtrl.newNetwork.tenantName\"\n                                        required #newNetworkTenant=\"ngModel\">\n                                    <option value=\"\">-- Please select tenant --</option>\n                                    <option *ngFor=\"let tenant of networkCreateCtrl.tenants\" [ngValue]=\"tenant.tenantName\">{{tenant.tenantName}}</option>\n                                </select>\n                            </div>\n                        </div>\n\n\n                    </div>\n\n                    <div class=\"ui row\" style=\"margin-top: 20px;\">\n                        <div class=\"ui four wide column field\">\n                            <label for=\"newNetworkEncapsulation\">Encapsulation</label>\n                            <select id=\"newNetworkEncapsulation\" class=\"ui dropdown\" [(ngModel)]=\"networkCreateCtrl.newNetwork.encap\" name=\"newNetworkEncap\">\n                                <option value=\"vxlan\">vxlan</option>\n                                <option value=\"vlan\">vlan</option>\n                            </select>\n                        </div>\n                        <div class=\"ui four wide column field\">\n                            <label for=\"newNetworkSubnet\">Subnet</label>\n                            <input type=\"text\" id=\"newNetworkSubnet\" name=\"newNetworkSubnet\"\n                                   [(ngModel)]=\"networkCreateCtrl.newNetwork.subnet\"\n                                   placeholder=\"CIDR notation, for example: 20.1.1.0/24\" required\n                                   [pattern]=\"networkCreateCtrl.cidrPattern\" #newNetworkSubnet=\"ngModel\">\n                        </div>\n                        <div class=\"ui four wide column field\">\n                            <label for=\"newNetworkGateway\">Gateway</label>\n                            <input type=\"text\" id=\"newNetworkGateway\" [(ngModel)]=\"networkCreateCtrl.newNetwork.gateway\"\n                                   placeholder=\"Enter gateway\" name=\"newNetworkGateway\">\n                        </div>\n                    </div>\n\n                    <div class=\"ui row\">\n                        <div class=\"right aligned sixteen wide column\">\n                            <div class=\"buttonRow\">\n                                <button type=\"button\" class=\"ui large button cancelBtn\" (click)=\"networkCreateCtrl.cancelCreating()\">\n                                    Cancel\n                                </button>\n                                <button type=\"submit\" class=\"ui blue large button primaryBtn\">\n                                    Create\n                                </button>\n                            </div>\n                        </div>\n                    </div>\n\n                    <ctv-error *ngIf=\"networkCreateCtrl.showServerError\" [header]=\"'Error creating network'\"\n                               [error]=\"networkCreateCtrl.serverErrorMessage\">\n                    </ctv-error>\n                </div>\n\n            </form>\n\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 727 */
+/***/ function(module, exports) {
+
+	module.exports = "\n<div class=\"ui sixteen column grid\">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div class=\"content pageTitle\">Details: {{networkDetailsCtrl.network.networkName}}</div>\n        </div>\n\n        <div class=\"right aligned eight wide column\">\n        <button class=\"ui blue large button cancelBtn\">\n                <i class=\"trash icon\"></i>\n                Close\n            </button>\n            <button class=\"ui blue large button secondaryBtn\" onclick=\"$('#delete-network-modal').modal('show')\">\n                <i class=\"trash icon\"></i>\n                Remove\n            </button>\n        </div>\n    </div>\n\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">\n                    <a href=\"/#/m/networks/list\">\n                        Networks List\n                    </a>\n                </span>\n                <span class=\"crumb\">{{networkDetailsCtrl.network.networkName}}</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n\n            <div class=\"right aligned three wide column\">\n                <div id=\"delete-network-modal\" class=\"ui small modal\">\n                    <div class=\"header\">Remove Network: {{networkDetailsCtrl.network.networkName}}</div>\n                    <div class=\"content\">\n                        <p>Are you sure you want to remove this network?</p>\n                    </div>\n                    <div class=\"actions\">\n                        <div class=\"ui negative button\">No</div>\n                        <div class=\"ui positive button\" (click)=\"deleteNetwork()\">\n                            Yes\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"ui tabular menu\">\n                <a class=\"item\" [ngClass]=\"{active: infoselected}\" (click)=\"infoselected=true\">\n                    General\n                </a>\n                <a class=\"item\" [ngClass]=\"{active: !infoselected}\" (click)=\"infoselected=false\">\n                    Stats\n                </a>\n            </div>\n\n            <network-info [networkDetailsCtrl]=\"networkDetailsCtrl\" *ngIf=\"infoselected\"></network-info>\n\n            <network-stat [statKey]=\"statskey\" *ngIf=\"!infoselected\"></network-stat>\n\n            <ctv-error *ngIf=\"networkDetailsCtrl.showServerError\" [header]=\"'Error deleting network'\"\n                       [error]=\"networkDetailsCtrl.serverErrorMessage\">\n            </ctv-error>\n\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 728 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui basic segment\">\n    <div class=\"ui active inverted dimmer\" *ngIf=\"networkDetailsCtrl.showLoader\">\n        <div class=\"ui loader\"></div>\n    </div>\n    <table class=\"ui very basic selectable table\">\n        <tbody>\n        <tr>\n            <td class=\"ctv-header three wide column key\">Name</td>\n            <td class=\"value\">{{networkDetailsCtrl.network.networkName}}</td>\n        </tr>\n        <tr>\n            <td class=\"ctv-header three wide column key\">Tenant</td>\n            <td class=\"value\">{{networkDetailsCtrl.network.tenantName}}</td>\n        </tr>\n        <tr>\n            <td class=\"ctv-header three wide column key\">Encapsulation</td>\n            <td class=\"value\">{{networkDetailsCtrl.network.encap}}</td>\n        </tr>\n        <tr>\n            <td class=\"ctv-header three wide column key\">Subnet</td>\n            <td class=\"value\">{{networkDetailsCtrl.network.subnet}}</td>\n        </tr>\n        <tr>\n            <td class=\"ctv-header three wide column key\">Gateway</td>\n            <td class=\"value\">{{networkDetailsCtrl.network.gateway}}</td>\n        </tr>\n        </tbody>\n    </table>\n\n    <h4 class=\"ui header\" style=\"margin-top: 30px\">Application Groups</h4>\n\n    <div style=\"margin-top: 20px\">\n\n        <ctv-search (searchTextChange)=\"tableRef.showChunk(tableRef.table.pageNo,$event);\" [placeholder]=\"'Search application groups...'\"></ctv-search>\n\n        <ctv-table #tableRef\n                   [defaultSortColumn]=\"'groupName'\"\n                   [items]=\"networkDetailsCtrl.applicationGroups\"\n                   (filtereditems)=\"networkDetailsCtrl.filteredApplicationGroups=$event\"\n                   [size]=\"5\">\n            <thead>\n            <tr>\n                <th><ctv-th [sortfield]=\"'groupName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\"> Group name</ctv-th></th>\n                <th><ctv-th [sortfield]=\"'policies'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\"> Policies</ctv-th></th>\n            </tr>\n            </thead>\n\n            <tbody *ngIf=\"networkDetailsCtrl.applicationGroups\">\n            <tr *ngFor=\"let group of networkDetailsCtrl.filteredApplicationGroups\">\n                <td class=\"three wide column\">\n                    <a [routerLink]=\"['/m/applicationgroups/details', group.key]\">{{group.groupName}}</a>\n                </td>\n                <td>{{group.policies.join(\", \")}}</td>\n            </tr>\n            </tbody>\n\n            <tbody *ngIf=\"!networkDetailsCtrl.applicationGroups || networkDetailsCtrl.applicationGroups.length==0\">\n                <tr class=\"noDataFound\"><td colspan=\"2\">No application groups defined.</td></tr>\n            </tbody>\n\n            <tbody *ngIf=\"networkDetailsCtrl.applicationGroups && networkDetailsCtrl.applicationGroups.length>0 && networkDetailsCtrl.filteredApplicationGroups.length==0\">\n                <tr class=\"noDataFound\"><td colspan=\"2\">No records matched your filter criteria.</td></tr>\n            </tbody>\n\n            <tfoot>\n            <tr class=\"pagination\">\n                <td colspan=\"2\">\n                    <ctv-tpagination [chunks]=\"tableRef.pageChunks\"\n                                     (showPage)=\"tableRef.showChunk($event, tableRef.table.searchText)\"\n                                     (prevChunk)=\"tableRef.showPrevChunk()\"\n                                     (nextChunk)=\"tableRef.showNextChunk()\">\n                    </ctv-tpagination>\n                </td>\n            </tr>\n            </tfoot>\n        </ctv-table>\n    </div>\n</div>\n"
+
+/***/ },
+/* 729 */
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div class=\"content pageTitle\">Networks</div>\n        </div>\n\n        <div class=\"right aligned eight wide column\">\n            <button class=\"ui blue large button primaryBtn\" (click)=\"create()\" *auth=\"'admin'\">\n                <i class=\"add icon\"></i>\n                Create Network\n            </button>\n        </div>\n    </div>\n\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">Networks List</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n\n            <ctv-search *ngIf=\"networkListComp['networks']\" (searchTextChange)=\"tableRef.showChunk(tableRef.table.pageNo,$event);\" [count]=\"tableRef.count\"></ctv-search>\n\n            <div class=\"ui basic segment ctvTable\">\n\n                <div class=\"ui active inverted dimmer\" *ngIf=\"networkListComp.showLoader\">\n                    <div class=\"ui loader\"></div>\n                </div>\n\n                <ctv-table #tableRef [defaultSortColumn]=\"'networkName'\"\n                           [items]=\"networkListComp['networks']\"\n                           (filtereditems)=\"networkListComp['filterednetworks']=$event;\"\n                           [size]=\"12\">\n                    <thead>\n                    <tr>\n                        <th><ctv-th [sortfield]=\"'networkName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Name</ctv-th></th>\n                        <th><ctv-th [sortfield]=\"'tenantName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Tenant</ctv-th></th>\n                        <th><ctv-th [sortfield]=\"'encap'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Encapsulation</ctv-th></th>\n                        <th><ctv-th [sortfield]=\"'subnet'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Subnet</ctv-th></th>\n                        <th><ctv-th [sortfield]=\"'gateway'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Gateway</ctv-th></th>\n                    </tr>\n                    </thead>\n\n                    <tbody *ngIf=\"networkListComp['networks']\">\n                    <tr *ngFor=\"let network of networkListComp['filterednetworks']\">\n                        <td><a [routerLink]=\"['../details',network.key]\">{{network.networkName}}</a></td>\n                        <td>{{network.tenantName}}</td>\n                        <td>{{network.encap}}</td>\n                        <td>{{network.subnet}}</td>\n                        <td>{{network.gateway}}</td>\n                    </tr>\n                    </tbody>\n\n                    <tbody *ngIf=\"!networkListComp['networks']\">\n                        <tr class=\"noDataFound\">\n                            <td colspan=\"5\">No networks found. Would you like to <a href=\"javascript: void(0);\" (click)=\"create()\">create one?</a></td>\n                        </tr>\n                    </tbody>\n\n                    <tbody *ngIf=\"networkListComp['networks'] && !tableRef.count\">\n                        <tr class=\"noDataFound\"><td colspan=\"5\">No records matched your filter criteria.</td></tr>\n                    </tbody>\n\n                    <tfoot>\n                    <tr class=\"pagination\">\n                        <td colspan=\"5\">\n                            <ctv-tpagination [chunks]=\"tableRef.pageChunks\"\n                                             (showPage)=\"tableRef.showChunk($event, tableRef.table.searchText)\"\n                                             (prevChunk)=\"tableRef.showPrevChunk()\"\n                                             (nextChunk)=\"tableRef.showNextChunk()\">\n                            </ctv-tpagination>\n                        </td>\n                    </tr>\n                    </tfoot>\n                </ctv-table>\n            </div>\n\n        </div>\n    </div>\n</div>\n"
 
 /***/ },
+/* 730 */
+/***/ function(module, exports) {
 
-/***/ 945:
+	module.exports = "<div class=\"ui basic segment\" [ngClass]=\"{loading: networkStatsCtrl.showLoader}\">\n<table class=\"ui very basic selectable table\">\n    <tbody>\n    <tr>\n        <td class=\"ctv-header three wide column key\">Name</td>\n        <td>{{networkStatsCtrl['config']['networkName']}}</td>\n    </tr>\n    <tr>\n        <td class=\"ctv-header three wide column key\">Allocated Addresses Count</td>\n        <td class=\"value\">{{networkStatsCtrl.networkInspectStats.allocatedAddressesCount}}</td>\n    </tr>\n    <tr>\n        <td class=\"ctv-header three wide column key\">Allocated IP-Addresses</td>\n        <td class=\"value\">{{networkStatsCtrl.networkInspectStats.allocatedIPAddresses}}</td>\n    </tr>\n    <tr>\n        <td class=\"ctv-header three wide column key\">DNS Server-IP</td>\n        <td class=\"value\">{{networkStatsCtrl.networkInspectStats.dnsServerIP}}</td>\n    </tr>\n    <tr>\n        <td class=\"ctv-header three wide column key\">External Packet Tag</td>\n        <td class=\"value\">{{networkStatsCtrl.networkInspectStats.externalPktTag}}</td>\n    </tr>\n    <tr>\n        <td class=\"ctv-header three wide column key\">Number of Endpoints</td>\n        <td class=\"value\">{{networkStatsCtrl.networkInspectStats.numEndpoints}}</td>\n    </tr>\n    <tr>\n        <td class=\"ctv-header three wide column key\">Packet Tag</td>\n        <td class=\"value\">{{networkStatsCtrl.networkInspectStats.pktTag}}</td>\n    </tr>\n    </tbody>\n</table>\n\n<ctv-collapsible title=\"End Points\">\n\n    <ctv-search (searchTextChange)=\"tableRef.showChunk(tableRef.table.pageNo,$event);\" [placeholder]=\"\"></ctv-search>\n\n    <ctv-table #tableRef [defaultSortColumn]=\"'containerName'\"\n               [items]=\"networkStatsCtrl['endpoints']\"\n               (filtereditems)=\"networkStatsCtrl['filteredendpoints']=$event;\"\n               [size]=\"12\">\n        <thead>\n            <tr>\n                <th class=\"five wide column\"><ctv-th [sortfield]=\"'containerName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\"> Container Name </ctv-th></th>\n                <th class=\"five wide column\" style=\"padding-left: 18px !important;\"><ctv-th [sortfield]=\"'ipAddress'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\"> IP Address </ctv-th></th>\n                <th class=\"five wide column\" style=\"padding-left: 44px !important;\"><ctv-th [sortfield]=\"'homingHost'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\"> Host </ctv-th></th>\n            </tr>\n        </thead>\n\n        <tbody>\n            <tr *ngFor=\"let endpoint of networkStatsCtrl['filteredendpoints']\">\n                <td colspan=\"3\" style=\"padding-left: 0 !important;\">\n                    <ctv-accordion [items]=\"networkStatsCtrl['containerDetails'][endpoint.containerID]\">\n                        <div class=\"ui grid\" style=\"margin-top: -33px; margin-left: 20px;\">\n                            <div class=\"five wide column\">{{endpoint.containerName.substr(1)}}</div>\n                            <div class=\"five wide column\">{{endpoint.ipAddress.join(' ')}}</div>\n                            <div class=\"five wide column\">{{endpoint.homingHost}}</div>\n                        </div>\n                    </ctv-accordion>\n                </td>\n            </tr>\n        </tbody>\n\n        <tfoot>\n            <tr class=\"pagination\">\n                <td colspan=\"3\">\n                    <ctv-tpagination [chunks]=\"tableRef.pageChunks\"\n                                     (showPage)=\"tableRef.showChunk($event, tableRef.table.searchText)\"\n                                     (prevChunk)=\"tableRef.showPrevChunk()\"\n                                     (nextChunk)=\"tableRef.showNextChunk()\">\n\n                    </ctv-tpagination>\n                </td>\n            </tr>\n        </tfoot>\n    </ctv-table>\n</ctv-collapsible>\n</div>\n"
+
+/***/ },
+/* 731 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div class=\"content pageTitle\">Create Service Load Balancer</div>\n        </div>\n        <div class=\"right aligned eight wide column\">\n            <button type=\"button\" class=\"ui basic button\" (click)=\"servicelbCreateCtrl.cancelCreating()\">\n            Cancel\n            </button>\n        </div>\n    </div>\n\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">\n                    <!-- <a href=\"/#/m/servicelbs/list\"> -->\n                    <a  [routerLink]=\"['../list']\">\n                        Service Load Balancer List\n                    </a>\n                </span>\n                <span class=\"crumb\">Create</span>\n\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n\n            <form class=\"ui form\" name=\"servicelbCreateForm\" role=\"form\" #servicelbCreateForm=\"ngForm\"\n                  (submit)=\"createServicelb(servicelbCreateForm.valid)\"\n                  novalidate>\n\n                <div class=\"ui basic segment\">\n\n                    <div class=\"ui active inverted dimmer\" *ngIf=\"servicelbCreateCtrl.showLoader\">\n                        <div class=\"ui loader\"></div>\n                    </div>\n\n                    <div class=\"field\">\n                        <div *ngIf=\"servicelbCreateForm.submitted\">\n                            <div [hidden]=\"servicelbCreateForm.valid\" class=\"ui negative message\">\n                                <ul class=\"list\">\n                                    <li *ngIf=\"servicelbName.errors?.required\">Please enter service load\n                                        balancer name\n                                    </li>\n                                    <li *ngIf=\"servicelbTenantRef.errors?.required\">Please select tenant\n                                    </li>\n                                    <li *ngIf=\"servicelbNetwork.errors?.required\">Please select network\n                                    </li>\n                                </ul>\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"ui sixteen column grid\" style=\"margin-bottom: 20px;\">\n                        <div class=\"ui row\">\n\n                            <div class=\"ui four wide column\">\n                                <div class=\"field\">\n                                    <label for=\"servicelbName\">Service load balancer name</label>\n                                    <input type=\"text\" id=\"servicelbName\" name=\"servicelbName\"\n                                           [(ngModel)]=\"servicelbCreateCtrl.servicelb.serviceName\" placeholder=\"Enter name\" required #servicelbName=\"ngModel\">\n                                </div>\n                            </div>\n\n                            <div class=\"ui four wide column\">\n                                <div class=\"field\">\n                                    <label for=\"servicelbTenant\">Tenant</label>\n                                    <select id=\"servicelbTenant\" class=\"ui dropdown\"\n                                            name=\"servicelbTenant\"\n                                            ngModel\n                                            (change)=\"updateTenant($event.target.value)\"\n                                            required #servicelbTenantRef=\"ngModel\">\n                                        <option value=\"\">-- Please select tenant --</option>\n                                        <option *ngFor=\"let tenant of tenants\" [value]=\"tenant.tenantName\">{{tenant.tenantName}}</option>\n                                    </select>\n                                </div>\n                            </div>\n\n                            <div class=\"ui four wide column\">\n                                <div *ngIf=\"servicelb.tenantName\" class=\"field\">\n                                    <label for=\"servicelbNetwork\">Network</label>\n                                    <select *ngIf=\"servicelbCreateCtrl.networks.length\" id=\"servicelbNetwork\" class=\"ui dropdown\"\n                                            name=\"servicelbNetwork\"\n                                            [(ngModel)]=\"servicelbCreateCtrl.servicelb.networkName\"\n                                            required #servicelbNetwork=\"ngModel\">\n                                        <option value=\"\">-- Select a network --</option>\n                                        <option *ngFor=\"let network of servicelbCreateCtrl.networks\" [ngValue]=\"network.networkName\">{{network.networkName}}</option>\n                                    </select>\n\n                                    <select *ngIf=\"!servicelbCreateCtrl.networks.length\"        class=\"ui dropdown\"\n                                            name=\"servicelbNetwork\"\n                                            required >\n                                        <option value=\"\">-- Tenant has no networks --</option>\n\n                                    </select>\n                                </div>\n                            </div>\n                            <div class=\"ui four wide column\">\n                                <div *ngIf=\"servicelb.tenantName\" class=\"field\">\n                                    <label for=\"servicelbIP\">Service IP address</label>\n                                    <input type=\"text\" id=\"servicelbIP\" name=\"servicelbIP\"\n                                           [(ngModel)]=\"servicelbCreateCtrl.servicelb.ipAddress\" placeholder=\"Enter IP address\" #servicelbIP=\"ngModel\">\n                                </div>\n                            </div>\n\n                        </div>\n                    </div>\n\n                    <ctv-collapsible [title]=\"'Label Selectors'\">\n                        <div class=\"field\">\n                            <div class=\"description\">\n                                Use this to add your selector name+value pairs.\n                            </div>\n                            <ctv-namevalue [items]=\"servicelbCreateCtrl.labelSelectors\" (itemsChange)=\"servicelbCreateCtrl.labelSelectors=$event\"></ctv-namevalue>\n                        </div>\n                    </ctv-collapsible>\n\n                    <ctv-collapsible [title]=\"'Ports'\">\n                        <div class=\"field\">\n                            <ctv-servicelbports [items]=\"servicelbCreateCtrl.servicelb.ports\" (itemsChange)=\"servicelbCreateCtrl.servicelb.ports=$event\"></ctv-servicelbports>\n                        </div>\n                    </ctv-collapsible>\n\n                    <div class=\"ui grid\">\n                        <div class=\"right aligned sixteen wide column buttonRow\">\n                            <button type=\"button\" class=\"ui large button cancelBtn\" (click)=\"servicelbCreateCtrl.cancelCreating()\">\n                                Cancel\n                            </button>\n                            <button type=\"submit\" class=\"ui blue large button primaryBtn\">\n                                Create\n                            </button>\n                        </div>\n                    </div>\n\n                    <ctv-error *ngIf=\"servicelbCreateCtrl.showServerError\" [header]=\"'Error creating service load balancer'\"\n                               [error]=\"servicelbCreateCtrl.serverErrorMessage\">\n                    </ctv-error>\n                </div>\n            </form>\n\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 732 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui sixteen column grid pageHeader\">\n    <div [ngSwitch]=\"servicelbDetailsCtrl.mode\" class=\"ui row\">\n        <div class=\"left aligned eight wide column\">\n            <div *ngSwitchCase=\"'details'\" class=\"content pageTitle\">Details: {{servicelbDetailsCtrl.serviceName}}</div>\n            <div *ngSwitchCase=\"'edit'\" class=\"content pageTitle\">Editing: {{servicelbDetailsCtrl.serviceName}}</div>\n        </div>\n        <div class=\"right aligned eight wide column\">\n\n            <div id=\"delete-service-modal\" class=\"ui small modal\">\n                <div class=\"header\">Remove Service: {{servicelbDetailsCtrl.serviceName}}</div>\n                <div class=\"content\">\n                    <p>Are you sure you want to remove this service?</p>\n                </div>\n                <div class=\"actions\">\n                    <div class=\"ui negative button\">No</div>\n                    <div class=\"ui positive button\" (click)=\"deleteServicelb()\">\n                        Yes\n                    </div>\n                </div>\n            </div>\n\n            <button *ngSwitchCase=\"'edit'\" type=\"button\" class=\"ui large button cancelBtn\"\n                    (click)=\"cancelEditing()\">\n                Cancel\n            </button>\n            <button *ngSwitchCase=\"'details'\" type=\"button\" class=\"ui large button cancelBtn\"\n                    (click)=\"cancelDetails()\">\n                Close\n            </button>\n            <button *ngSwitchCase=\"'details'\" class=\"ui blue large button secondaryBtn\"\n                    (click)=\"loadEdit()\">\n                Edit\n            </button>\n            <button class=\"ui blue large button secondaryBtn\" onclick=\"$('#delete-service-modal').modal('show')\">\n                <i class=\"trash icon\"></i>\n                Remove\n            </button>\n\n        </div>\n    </div>\n\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">\n                    <a href=\"/#/m/servicelbs/list\">\n                        Service Load Balancer List\n                    </a>\n                </span>\n                <span class=\"crumb\">\n                    {{servicelbDetailsCtrl.serviceName}}\n                </span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n\n            <div class=\"ui tabular menu\" *ngIf=\"servicelbDetailsCtrl.mode=='details'\">\n                <a class=\"item\" [ngClass]=\"{active: infoselected}\" (click)=\"infoselected=true\">\n                    Details\n                </a>\n                <a class=\"item\" [ngClass]=\"{active: !infoselected}\" (click)=\"infoselected=false\">\n                    Stats\n                </a>\n            </div>\n\n            <servicelb-info [(mode)]=\"mode\" *ngIf=\"infoselected || servicelbDetailsCtrl.mode == 'edit'\"\n                (serviceName)=\"serviceName=$event\"></servicelb-info>\n\n            <servicelb-stat [statkey]=\"servicelbDetailsCtrl.statskey\"\n                            *ngIf=\"!infoselected && servicelbDetailsCtrl.mode != 'edit'\"></servicelb-stat>\n\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 733 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui basic segment\" [ngClass]=\"{loading: servicelbInfoCtrl.showLoader}\">\n\n    <table class=\"ui very basic selectable table\">\n        <tbody>\n        <tr>\n            <td class=\"ctv-header three wide column key\">Name</td>\n            <td class=\"value\">{{servicelbInfoCtrl.servicelb.serviceName}}</td>\n        </tr>\n        <tr>\n            <td class=\"ctv-header three wide column key\">Tenant</td>\n            <td class=\"value\">{{servicelbInfoCtrl.servicelb.tenantName}}</td>\n        </tr>\n        <tr>\n            <td class=\"ctv-header three wide column key\">Network</td>\n            <td class=\"value\">{{servicelbInfoCtrl.servicelb.networkName}}</td>\n        </tr>\n        <tr>\n            <td class=\"ctv-header three wide column key\">IP address</td>\n            <td class=\"value\">{{servicelbInfoCtrl.servicelb.ipAddress}}</td>\n        </tr>\n        </tbody>\n    </table>\n\n    <div [ngSwitch]=\"servicelbInfoCtrl.mode\">\n\n        <div *ngSwitchCase=\"'details'\">\n\n            <div class=\"ctv-collapsible\">\n                <h4 class=\"ui header ctv-collapsible-label\">Label Selectors</h4>\n                <table class=\"ui very basic selectable table\">\n\n                    <thead>\n                        <tr>\n                            <th class=\"ctv-header\">Name</th>\n                            <th class=\"ctv-header\">Value</th>\n                        </tr>\n                    </thead>\n\n                    <tbody *ngIf=\"servicelbInfoCtrl.servicelb.selectors.length\">\n                        <tr *ngFor=\"let selector of servicelbInfoCtrl.servicelb.selectors\">\n                            <td class=\"ctv-header three wide column key\">{{selector.split('=')[0]}}</td>\n                            <td class=\"value\">{{selector.split('=')[1]}}</td>\n                        </tr>\n                    </tbody>\n\n                    <tbody *ngIf=\"!servicelbInfoCtrl.servicelb.selectors.length\">\n                        <tr class=\"noDataFound\">\n                            <td colspan=\"3\">No labels found.</td>\n                        </tr>\n                    </tbody>\n\n                </table>\n            </div>\n\n            <div class=\"ctv-collapsible\">\n                <h4 class=\"ui header ctv-collapsible-label\">Ports</h4>\n                <table class=\"ui very basic unstackable table\">\n\n                    <thead>\n                        <tr>\n                            <th class=\"ctv-header\">Service port</th>\n                            <th class=\"ctv-header\">Provider port</th>\n                            <th class=\"ctv-header\">Protocol</th>\n                        </tr>\n                    </thead>\n\n                    <tbody *ngIf=\"servicelbInfoCtrl.servicelb.ports.length\">\n                        <tr *ngFor=\"let port of servicelbInfoCtrl.servicelb.ports\">\n                            <td>{{port.split(':')[0]}}</td>\n                            <td>{{port.split(':')[1]}}</td>\n                            <td>{{port.split(':')[2]}}</td>\n                        </tr>\n                    </tbody>\n\n                    <tbody *ngIf=\"!servicelbInfoCtrl.servicelb.ports.length\">\n                        <tr class=\"noDataFound\">\n                            <td colspan=\"3\">No ports found.</td>\n                        </tr>\n                    </tbody>\n\n                </table>\n            </div>\n\n        </div>\n        <div *ngSwitchCase=\"'edit'\">\n\n            <div class=\"ui form field\">\n                <ctv-collapsible title=\"Label Selectors\">\n                    <ctv-namevalue [items]=\"servicelbInfoCtrl.labelSelectors\" (itemsChange)=\"servicelbInfoCtrl.labelSelectors=$event\"></ctv-namevalue>\n                </ctv-collapsible>\n            </div>\n\n            <div class=\"ui form field\">\n                <ctv-collapsible title=\"Ports\">\n                    <ctv-servicelbports [items]=\"servicelbInfoCtrl.servicelb.ports\" (itemsChange)=\"servicelbInfoCtrl.servicelb.ports=$event\"></ctv-servicelbports>\n                </ctv-collapsible>\n            </div>\n        </div>\n        <div class=\"ui grid\" style=\"margin-top: 40px\">\n            <div class=\"right aligned sixteen wide column\">\n                <button *ngSwitchCase=\"'edit'\" type=\"button\" class=\"ui large button cancelBtn\"\n                        (click)=\"servicelbInfoCtrl.cancelEditing()\">\n                    Cancel\n                </button>\n                <button *ngSwitchCase=\"'edit'\" type=\"button\" class=\"ui blue large button primaryBtn\"\n                        (click)=\"servicelbInfoCtrl.saveServicelb()\">\n                    Save\n                </button>\n            </div>\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 734 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div class=\"content pageTitle\">Service Load Balancers</div>\n        </div>\n        <div class=\"right aligned eight wide column\">\n          <button *auth=\"'admin'\" class=\"ui blue large button primaryBtn\" (click)=\"create()\">\n              <i class=\"add icon\"></i>\n              Create Service Load Balancer\n          </button>\n        </div>\n    </div>\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">Service Load Balancer List</span>\n                <span class=\"crumb\">Create</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n\n            <ctv-search *ngIf=\"servicelbListCtrl.servicelbs\" (searchTextChange)=\"tableRef.showChunk(tableRef.table.pageNo,$event);\" [count]=\"tableRef.count\"></ctv-search>\n\n            <div class=\"ui basic segment ctvTable\">\n                <div class=\"ui active inverted dimmer\" *ngIf=\"servicelbListCtrl.showLoader\">\n                    <div class=\"ui loader\"></div>\n                </div>\n                <ctv-table #tableRef [defaultSortColumn]=\"'serviceName'\"\n                           [items]=\"servicelbListCtrl.servicelbs\"\n                           (filtereditems)=\"servicelbListCtrl.filteredservicelbs=$event\"\n                           [size]=\"12\">\n                    <thead>\n                        <tr>\n                            <th><ctv-th [sortfield]=\"'serviceName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Name</ctv-th></th>\n                            <th><ctv-th [sortfield]=\"'tenantName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Tenant</ctv-th></th>\n                            <th><ctv-th [sortfield]=\"'networkName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Network</ctv-th></th>\n                            <th><ctv-th [sortfield]=\"'ipAddress'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">IP Address</ctv-th></th>\n                            <th><ctv-th [sortfield]=\"'selectors'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Label Selectors</ctv-th></th>\n                        </tr>\n                    </thead>\n\n                    <tbody *ngIf=\"servicelbListCtrl.servicelbs\">\n                        <tr *ngFor=\"let servicelb of servicelbListCtrl.filteredservicelbs\">\n                            <td><a [routerLink]=\"['../details', servicelb.key]\">{{servicelb.serviceName}}</a></td>\n                            <td>{{servicelb.tenantName}}</td>\n                            <td>{{servicelb.networkName}}</td>\n                            <td>{{servicelb.ipAddress}}</td>\n                            <td>\n                                <div class=\"ui label tiny\" *ngFor=\"let selector of servicelb.selectors\">{{selector}}</div>\n                            </td>\n                        </tr>\n                    </tbody>\n\n                    <tbody *ngIf=\"!servicelbListCtrl.servicelbs\">\n                        <tr class=\"noDataFound\">\n                            <td colspan=\"2\">No service load balancers found. Would you like to <a href=\"javascript: void(0);\" (click)=\"create()\">create one?</a></td>\n                        </tr>\n                    </tbody>\n\n                    <tbody *ngIf=\"servicelbListCtrl.servicelbs && !tableRef.count\">\n                        <tr class=\"noDataFound\">\n                            <td colspan=\"2\">No records matched your filter criteria.</td>\n                        </tr>\n                    </tbody>\n\n                    <tfoot>\n                        <tr class=\"pagination\">\n                            <td colspan=\"4\">\n                                <ctv-tpagination  [chunks]=\"tableRef.pageChunks\"\n                                                  (showPage)=\"tableRef.showChunk($event, tableRef.table.searchText)\"\n                                                  (prevChunk)=\"tableRef.showPrevChunk()\"\n                                                  (nextChunk)=\"tableRef.showNextChunk()\">\n                                </ctv-tpagination>\n                            </td>\n                        </tr>\n                    </tfoot>\n                </ctv-table>\n            </div>\n\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 735 */
+/***/ function(module, exports) {
+
+	module.exports = "<table class=\"ui very basic unstackable table\" style=\"margin-top: 10px\">\n    <thead>\n    <th>Service Port</th>\n    <th>Provider Port</th>\n    <th>Protocol</th>\n    <th>&nbsp;</th>\n    </thead>\n\n    <tbody>\n    <tr class=\"noHover\">\n        <td class=\"ui three wide column\">\n            <div class=\"ui input\">\n                <input type=\"number\" [(ngModel)]=\"newItem.servicePort\" placeholder=\"0-65535\">\n            </div>\n        </td>\n        <td class=\"ui three wide column\">\n            <div class=\"ui input\">\n                <input type=\"number\" [(ngModel)]=\"newItem.providerPort\" placeholder=\"0-65535\">\n            </div>\n        </td>\n        <td class=\"ui three wide column\">\n            <select class=\"ui dropdown\" [(ngModel)]=\"newItem.protocol\">\n                <option value=\"TCP\">TCP</option>\n                <option value=\"UDP\">UDP</option>\n            </select>\n        </td>\n        <td>\n            <button type=\"button\" class=\"ui icon button iconBtn primaryIconBtn\" (click)=\"add()\">\n                <i class=\"add icon\"></i>\n            </button>\n        </td>\n    </tr>\n    </tbody>\n\n    <tbody *ngIf=\"items.length\">\n    <tr *ngFor=\"let item of items\">\n        <td>{{item.split(':')[0]}}</td>\n        <td>{{item.split(':')[1]}}</td>\n        <td>{{item.split(':')[2]}}</td>\n        <td>\n            <button type=\"button\" class=\"ui icon button iconBtn secondaryIconBtn\"\n                    (click)=\"remove(item)\">\n                <i class=\"trash icon\"></i>\n            </button>\n        </td>\n    </tr>\n    </tbody>\n\n    <tbody *ngIf=\"!items.length\">\n    <tr class=\"noDataFound\"><td colspan=\"3\">No ports have been defined.</td></tr>\n    </tbody>\n\n</table>\n"
+
+/***/ },
+/* 736 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui basic segment\" [ngClass]=\"{loading: servicelbStatsCtrl.showLoader}\">\n\n<table class=\"ui very basic selectable table\">\n    <tbody>\n    <tr>\n        <td class=\"ctv-header three wide column key\">Name</td>\n        <td class=\"value\">{{servicelbStatsCtrl.config.serviceName}}</td>\n    </tr>\n    <tr>\n        <td class=\"ctv-header three wide column key\">Number of Providers</td>\n        <td class=\"value\">{{servicelbStatsCtrl.servicelbInspectStats.numProviders}}</td>\n    </tr>\n    <tr>\n        <td class=\"ctv-header three wide column key\">Service Vip</td>\n        <td class=\"value\">{{servicelbStatsCtrl.servicelbInspectStats.serviceVip}}</td>\n    </tr>\n    </tbody>\n</table>\n\n<ctv-collapsible title=\"Providers\">\n\n    <ctv-search *ngIf=\"!servicelbStatsCtrl.providers.length\" (searchTextChange)=\"tableRef.showChunk(tableRef.table.pageNo,$event);\" [count]=\"tableRef.count\"></ctv-search>\n\n    <div class=\"ui basic segment ctvTable\">\n\n        <ctv-table #tableRef [defaultSortColumn]=\"'containerName'\"\n                   [items]=\"servicelbStatsCtrl.providers\"\n                   (filtereditems)=\"servicelbStatsCtrl.filteredproviders=$event\"\n                   [size]=\"12\">\n            <thead>\n                <tr>\n                    <div class=\"ui grid\" style=\"margin-top: 25px; margin-left: 25px; margin-bottom: 1px;\">\n                        <th class=\"six wide column\"><ctv-th [sortfield]=\"'containerName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Container Name</ctv-th></th>\n                        <th class=\"six wide column\" style=\"padding-left: 18px !important;\"><ctv-th [sortfield]=\"'ipAddress'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">IP Address</ctv-th></th>\n                        <th class=\"four wide column\" style=\"padding-left: 44px !important;\"><ctv-th [sortfield]=\"'homingHost'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Host</ctv-th></th>\n                    </div>\n                </tr>\n            </thead>\n\n            <tbody *ngIf=\"servicelbStatsCtrl.providers.length\">\n                <tr *ngFor=\"let provider of servicelbStatsCtrl.filteredproviders\">\n                    <td colspan=\"3\">\n                        <ctv-accordion [items]=\"servicelbStatsCtrl.providerDetails[provider.containerID]\">\n                            <div class=\"ui grid\" style=\"margin-top: -33px; margin-left: 30px;\">\n                                <div class=\"six wide column\">{{provider.containerName.substr(1)}}</div>\n                                <div class=\"six wide column\">{{provider.ipAddress.join(' ')}}</div>\n                                <div class=\"four wide column\">{{provider.homingHost}}</div>\n                            </div>\n                        </ctv-accordion>\n                    </td>\n                </tr>\n            </tbody>\n\n            <tbody *ngIf=\"!servicelbStatsCtrl.providers.length\">\n                <tr class=\"noDataFound\"><td colspan=\"3\">No container endpoints found.</td></tr>\n            </tbody>\n\n            <tfoot>\n                <tr class=\"pagination\">\n                    <td colspan=\"3\">\n                        <ctv-tpagination [chunks]=\"tableRef.pageChunks\"\n                                         (showPage)=\"tableRef.showChunk($event, tableRef.table.searchText)\"\n                                         (prevChunk)=\"tableRef.showPrevChunk()\"\n                                         (nextChunk)=\"tableRef.showNextChunk()\">\n                        </ctv-tpagination>\n                    </td>\n                </tr>\n            </tfoot>\n        </ctv-table>\n\n    </div>\n\n</ctv-collapsible>\n</div>\n"
+
+/***/ },
+/* 737 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui sixteen column grid \">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left floated left aligned eight wide column\">\n            <div class=\"content pageTitle\">Create Authorization</div>\n        </div>\n        <div class=\"right aligned eight wide column\">&nbsp;</div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n               <span class=\"crumb\">\n                    <a [routerLink]=\"['../../list']\">\n                        Authorizations List\n                    </a>\n                </span>\n                <span class=\"crumb\">Create</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\" [ngClass]=\"{loading: showLoader}\">\n\n                <form class=\"ui form\" role=\"form\"\n                      (submit)=\"createAuthorization(formRef.valid)\" novalidate #formRef=\"ngForm\">\n\n                        <div class=\"field\">\n                            <div *ngIf=\"formRef.submitted\">\n                                <div [hidden]=\"formRef.valid\" class=\"ui negative message\">\n                                    <ul class=\"list\">\n                                        <li *ngIf=\"username.errors?.required\">Please select\n                                            user name\n                                        </li>\n                                        <li *ngIf=\"role.errors?.required\">Please select\n                                            user role\n                                        </li>\n                                        <li *ngIf=\"tenant.errors?.required\">Please select\n                                            tenant\n                                        </li>\n                                    </ul>\n                                </div>\n                            </div>\n                        </div>\n\n                        <div class=\"description\">Create user accounts here. You can assign users into tenancies, and define their role, under Settings > Authorizations. </div>\n\n                        <div class=\"ui sixteen column grid\">\n                            <div class=\"ui row\">\n\n                                <div class=\"ui eight wide column\">\n                                    <div class=\"field\">\n                                        <label for=\"username\">Username</label>\n                                        <select class=\"ui dropdown\" id=\"username\" name=\"username\" [(ngModel)]=\"authorization.PrincipalName\" required #username=\"ngModel\">\n                                            <option [value]=\"user.username\" *ngFor=\"let user of users\">{{user.username}}</option>\n                                        </select>\n                                    </div>\n                                </div>\n                                <div class=\"ui eight wide column\">\n                                    <div class=\"field\">\n                                        <label for=\"role\">Role</label>\n                                        <select class=\"ui dropdown\" id=\"role\" name=\"role\" [(ngModel)]=\"authorization.Role\" required #role=\"ngModel\">\n                                            <option value=\"admin\">Admin</option>\n                                            <option value=\"ops\">DevOps</option>\n                                        </select>\n                                    </div>\n                                </div>\n\n                            </div>\n                            <div class=\"ui row\">\n\n                                <div class=\"ui eight wide column\">\n                                    <div class=\"field\">\n                                        <label for=\"tenant\">Tenant</label>\n                                        <select class=\"ui dropdown\" id=\"tenant\" name=\"tenant\" [(ngModel)]=\"authorization.TenantName\" required #tenant=\"ngModel\">\n                                            <option [value]=\"tenant.tenantName\" *ngFor=\"let tenant of tenants\">{{tenant.tenantName}}</option>\n                                        </select>\n                                    </div>\n                                </div>\n                                <div class=\"ui eight wide column\">\n                                    <div class=\"field\">\n                                        <label>&nbsp;<br>\n                                            <input type=\"checkbox\" name=\"local\" tabindex=\"0\" class=\"alignLabel\"\n                                                   [(ngModel)]=\"authorization.Local\">\n                                            Local User\n                                        </label>\n                                    </div>\n                                </div>\n\n                            </div>\n                            <div class=\"ui row\">\n                                <div class=\"ui right aligned sixteen wide column\">\n                                    <div class=\"buttonRow\">\n                                        <button type=\"button\" class=\"ui large button cancelBtn\" (click)=\"cancelCreating()\">\n                                            Cancel\n                                        </button>\n                                        <button type=\"submit\" class=\"ui blue large button primaryBtn\">\n                                            Create\n                                        </button>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n\n                </form>\n\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 738 */
+/***/ function(module, exports) {
+
+	module.exports = "<div [ngSwitch]=\"mode\" class=\"ui sixteen column grid \">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div *ngSwitchCase=\"'details'\" class=\"content pageTitle\">Details: {{authorization.PrincipalName}}</div>\n            <div *ngSwitchCase=\"'edit'\" class=\"content pageTitle\">Editing: {{authorization.PrincipalName}}</div>\n        </div>\n        <div class=\"right aligned eight wide column\">\n\n            <div id=\"delete-auth-modal\" class=\"ui small modal\">\n                <div class=\"header\">Remove Authorization: {{authorization.PrincipalName}}\n                    for Tenant: {{authorization.TenantName}}\n                </div>\n                <div class=\"content\">\n                    <p>Are you sure you want to remove this authorization?</p>\n                </div>\n                <div class=\"actions\">\n                    <div class=\"ui negative button\">Cancel</div>\n                    <div class=\"ui positive button\" (click)=\"deleteAuthorization()\">\n                        Remove\n                    </div>\n                </div>\n            </div>\n\n            <button *ngSwitchCase=\"'details'\" class=\"ui large button cancelBtn\"\n                    (click)=\"returnToList()\">\n                Close\n            </button>\n            <button *ngSwitchCase=\"'edit-notsupported'\" class=\"ui large button cancelBtn\"\n                    (click)=\"cancelEditing()\">\n                Cancel\n            </button>\n            <button *ngSwitchCase=\"'details-edit-notsupported'\" class=\"ui large button secondaryBtn\"\n                    (click)=\"editAuthorization()\">\n                Edit\n            </button>\n            <button class=\"ui large button secondaryBtn\" onclick=\"$('#delete-auth-modal').modal('show')\">\n                <i class=\"trash icon\"></i>\n                Remove\n            </button>\n\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">\n                    <a [routerLink]=\"['../../list']\">\n                        Authorizations List\n                    </a>\n                </span>\n                <span class=\"crumb\">{{authorization.PrincipalName}}</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n\n            <div class=\"ui basic segment\" [ngClass]=\"{loading: showLoader}\">\n\n                <div class=\"ui row\">\n                    <div class=\"ui sixteen wide column\">\n\n                        <div class=\"description\">Authorization records cannot be edited. Remove this record and recreate it if what you see here is not what you want.</div>\n\n                        <table class=\"ui very basic selectable table\">\n                            <tbody>\n                                <tr>\n                                    <td class=\"ui four wide column key\">Username</td>\n                                    <td class=\"value\">{{authorization.PrincipalName}}</td>\n                                </tr>\n                                <tr>\n                                    <td class=\"ui four wide column key\">Local</td>\n                                    <td class=\"value\">{{(authorization.Local?'yes':'no')}}</td>\n                                </tr>\n                                <tr *ngSwitchCase=\"'details'\">\n                                    <td class=\"ui four wide column key\">Role</td>\n                                    <td class=\"value\">{{authorization.Role}}</td>\n                                </tr>\n                                <tr *ngSwitchCase=\"'details'\">\n                                    <td class=\"ui four wide column key\">Tenant Authorization</td>\n                                    <td class=\"value\">{{authorization.TenantName}}</td>\n                                </tr>\n                                <tr>\n                                    <td class=\"ui four wide column key\">Authorization UUID</td>\n                                    <td class=\"value\">{{authorization.AuthzUUID}}</td>\n                                </tr>\n                            </tbody>\n                        </table>\n\n                    </div>\n                </div>\n\n                <div class=\"ui row\" *ngSwitchCase=\"'edit-notsupported'\">\n                    <div class=\"ui sixteen wide column\">\n                        <form class=\"ui form\"\n                              role=\"form\"\n                              (submit)=\"saveAuthorization(formRef.valid)\" novalidate #formRef=\"ngForm\">\n\n                            <div class=\"field\">\n                                <label for=\"role\">Role</label>\n                                <select class=\"ui dropdown\" id=\"role\" name=\"role\" [(ngModel)]=\"authorization.Role\">\n                                    <option value=\"admin\">Admin</option>\n                                    <option value=\"ops\">DevOps</option>\n                                </select>\n                            </div>\n\n                            <div class=\"field\">\n                                <label for=\"role\">Tenant</label>\n                                <select class=\"ui dropdown\" id=\"tenantname\" name=\"tenantname\" [(ngModel)]=\"authorization.TenantName\">\n                                    <option *ngFor=\"let tenant of tenants\">{{tenant.tenantName}}</option>\n                                </select>\n                            </div>\n\n                            <div class=\"ui grid\">\n                                <div class=\"right aligned sixteen wide column buttonRow\">\n                                    <button type=\"button\" class=\"ui large button cancelBtn\"\n                                            (click)=\"cancelEditing()\">\n                                        Cancel\n                                    </button>\n                                    <button type=\"submit\" class=\"ui blue large button primaryBtn\">\n                                        Save\n                                    </button>\n                                </div>\n                            </div>\n\n                        </form>\n                    </div>\n                </div>\n\n            </div>\n\n        </div>\n    </div>\n</div>\n\n"
+
+/***/ },
+/* 739 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui sixteen column grid \">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left floated left aligned eight wide column\">\n            <div class=\"content pageTitle\">Authorizations</div>\n        </div>\n        <div class=\"right aligned eight wide column\">\n\n            <button class=\"ui blue large button primaryBtn\" (click)=\"create()\">\n                <i class=\"add icon\"></i>\n                Create Authorization\n            </button>\n\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">\n                    Authorizations List\n                </span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n\n            <div class=\"ui basic segment\" [ngClass]=\"{loading: showLoader}\">\n\n                <ctv-search *ngIf=\"authorizations.length > 0\" (searchTextChange)=\"tableRef.showChunk(tableRef.table.pageNo,$event);\" [count]=\"tableRef.count\"></ctv-search>\n\n                <ctv-table #tableRef [defaultSortColumn]=\"'PrincipalName'\"\n                           [items]=\"authorizations\"\n                           (filtereditems)=\"filteredauth=$event;\"\n                           [size]=\"12\">\n                    <thead>\n                    <tr>\n                        <th><ctv-th [sortfield]=\"'PrincipalName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Username</ctv-th></th>\n                        <th><ctv-th [sortfield]=\"'Role'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Role</ctv-th></th>\n                        <th><ctv-th [sortfield]=\"'TenantName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Tenant Name</ctv-th></th>\n                        <th><ctv-th [sortfield]=\"'Local'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Local</ctv-th></th>\n                    </tr>\n                    </thead>\n\n                    <tbody *ngIf=\"authorizations.length > 0\">\n                    <tr *ngFor=\"let auth of filteredauth\">\n                        <td><a [routerLink]=\"['../details',auth.AuthzUUID]\">{{auth.PrincipalName}}</a></td>\n                        <td>{{auth.Role}}</td>\n                        <td>{{auth.TenantName}}</td>\n                        <td>{{(auth.Local?'yes':'no')}}</td>\n                    </tr>\n                    </tbody>\n\n                    <tbody *ngIf=\"authorizations.length == 0\">\n                    <tr class=\"noDataFound\">\n                        <td colspan=\"4\">No authorizations found. Would you like to <a href=\"javascript: void(0);\" (click)=\"create()\">create one?</a></td>\n                    </tr>\n                    </tbody>\n\n                    <tbody *ngIf=\"(authorizations.length > 0) && !tableRef.count\">\n                    <tr class=\"noDataFound\">\n                        <td colspan=\"4\">No records matched your filter criteria.</td>\n                    </tr>\n                    </tbody>\n\n                    <tfoot>\n                    <tr class=\"pagination\">\n                        <td colspan=\"4\">\n                            <ctv-tpagination [chunks]=\"tableRef.pageChunks\"\n                                             (showPage)=\"tableRef.showChunk($event, tableRef.table.searchText)\"\n                                             (prevChunk)=\"tableRef.showPrevChunk()\"\n                                             (nextChunk)=\"tableRef.showNextChunk()\">\n                            </ctv-tpagination>\n                        </td>\n                    </tr>\n                    </tfoot>\n                </ctv-table>\n            </div>\n\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 740 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui basic segment\">\n    <div class=\"ui active inverted dimmer\" *ngIf=\"showLoader\">\n        <div class=\"ui loader\"></div>\n    </div>\n\n    <div><h4 class=\"ui header\">Global Operational State</h4></div>\n    <table class=\"ui very basic selectable table\">\n        <tbody>\n        <tr>\n            <td class=\"ctv-header three wide column key\">Number of Networks</td>\n            <td class=\"value\">{{globalInspectStats.numNetworks}}</td>\n        </tr>\n        <tr>\n            <td class=\"ctv-header three wide column key\">vlans in use</td>\n            <td class=\"value\">{{globalInspectStats.vlansInUse}}</td>\n        </tr>\n        <tr>\n            <td class=\"ctv-header three wide column key\">vxlans in use</td>\n            <td class=\"value\">{{globalInspectStats.vxlansInUse}}</td>\n        </tr>\n        <tr>\n            <td class=\"ctv-header three wide column key\">Free vxlans start</td>\n            <td class=\"value\">{{globalInspectStats.freeVXLANsStart}}</td>\n        </tr>\n        <tr>\n            <td class=\"ctv-header three wide column key\">Default Network</td>\n            <td class=\"value\">{{globalInspectStats.defaultNetwork}}</td>\n        </tr>\n        </tbody>\n    </table>\n\n    <ctv-collapsible [title]=\"'Network Defaults'\">\n        <networksettingcomp [firstRunWiz]=\"false\" (updateNetDef)=\"updateNetworkSettings($event)\" [setting]=\"setting\"></networksettingcomp>\n    </ctv-collapsible>\n\n    <ctv-collapsible [title]=\"'ACI Settings'\">\n        <acisettingcomp [firstRunWiz]=\"false\" (updateAciDef)=\"updateAciSetting($event)\" [setting]=\"aciSetting\"></acisettingcomp>\n    </ctv-collapsible>\n\n</div>\n\n<ctv-error *ngIf=\"showServerError\" header=\"Error updating settings\" [error]=\"serverErrorMessage\">\n</ctv-error>\n"
+
+/***/ },
+/* 741 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div class=\"content pageTitle\">Create Node</div>\n        </div>\n        <div class=\"right aligned eight wide column\">&nbsp;</div>\n    </div>\n\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">\n                    <a [routerLink]=\"['../list']\">\n                        Node List\n                    </a>\n                </span>\n                <span class=\"crumb\">Create</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n\n            <form class=\"ui form\" role=\"form\"\n                  (submit)=\"createNode(formRef.valid)\" novalidate #formRef=\"ngForm\">\n\n                <div class=\"ui active inverted dimmer\" *ngIf=\"showLoader\">\n                    <div class=\"ui loader\"></div>\n                </div>\n\n                <div class=\"ui basic segment\">\n\n                    <div class=\"field\">\n                        <div *ngIf=\"formRef.submitted\">\n                            <div [hidden]=\"formRef.valid\" class=\"ui negative message\">\n                                <ul class=\"list\">\n                                    <li *ngIf=\"newHostname.errors?.required\">\n                                        <i>Host name</i> is required.\n                                    </li>\n                                    <li *ngIf=\"newRouterIP.errors?.required\">\n                                        <i>Router IP</i> is required.\n                                    </li>\n                                    <li *ngIf=\"newAS.errors?.required\">\n                                        <i>Autonomous system</i> value is required.\n                                    </li>\n                                </ul>\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"ui sixteen column grid\">\n                    <div class=\"ui row\"  style=\"margin-bottom: 20px;\">\n                        <div class=\"ui four wide column\">\n                            <div class=\"field\">\n                                <label for=\"newHostname\">Host name</label>\n                                <input type=\"text\" id=\"newHostname\" name=\"newHostname\"\n                                       [(ngModel)]=\"newNode['hostname']\"\n                                       placeholder=\"Enter host name\" required #newHostname=\"ngModel\">\n                            </div>\n                        </div>\n                    </div>\n                    </div>\n\n                    <h4 class=\"ui header\">BGP Settings</h4>\n\n                    <div class=\"ui sixteen column grid\">\n                    <div class=\"ui row\">\n\n                        <div class=\"ui four wide column\">\n                            <div class=\"field\">\n                                <label for=\"newRouterIP\">Router IP</label>\n                                <input type=\"text\" id=\"newRouterIP\" name=\"newRouterIP\"\n                                       [(ngModel)]=\"newNode['routerip']\"\n                                       placeholder=\"Enter router IP\" required #newRouterIP=\"ngModel\">\n                            </div>\n                        </div>\n                        <div class=\"ui four wide column\">\n                            <div class=\"field\">\n                                <label for=\"newAS\">Autonomous system</label>\n                                <input type=\"text\" id=\"newAS\" name=\"newAS\"\n                                       [(ngModel)]=\"newNode['as']\"\n                                       placeholder=\"Enter autonomous system\"\n                                       required\n                                       #newAS=\"ngModel\">\n                            </div>\n                        </div>\n                        <div class=\"ui four wide column\">\n                            <div class=\"field\">\n                                <label for=\"newNeighborIP\">Neighbor IP</label>\n                                <input type=\"text\" id=\"newNeighborIP\" name=\"newNeighborIP\"\n                                       [(ngModel)]=\"newNode['neighbor']\"\n                                       placeholder=\"Enter neighbor IP\">\n                            </div>\n                        </div>\n                        <div class=\"ui four wide column\">\n                            <div class=\"field\">\n                                <label for=\"newNeighborAS\">Neighbor autonomous system</label>\n                                <input type=\"text\" id=\"newNeighborAS\" name=\"newNeighborAS\"\n                                       [(ngModel)]=\"newNode['neighbor-as']\"\n                                       placeholder=\"Enter neighbor autonomous system\">\n                            </div>\n                        </div>\n                    </div>\n                    </div>\n\n                    <div class=\"ui grid\">\n                        <div class=\"right aligned sixteen wide column\">\n                            <div class=\"buttonRow\">\n                                <button type=\"button\" class=\"ui large button cancelBtn\" (click)=\"cancelCreating()\">\n                                    Cancel\n                                </button>\n                                <button type=\"submit\" class=\"ui blue large button primaryBtn\">\n                                    Create\n                                </button>\n                            </div>\n                        </div>\n                    </div>\n\n                    <ctv-error *ngIf=\"showServerError\" header=\"Error creating node\" [error]=\"serverErrorMessage\">\n                    </ctv-error>\n                </div>\n            </form>\n\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 742 */
+/***/ function(module, exports) {
+
+	module.exports = "<div [ngSwitch]=\"mode\" class=\"ui sixteen column grid\">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div class=\"content pageTitle\">\n                <span *ngSwitchCase=\"'details'\">Details: {{node.hostname}}</span>\n                <span *ngSwitchCase=\"'edit'\">Editing: {{node.hostname}}</span>\n            </div>\n        </div>\n        <div class=\"right aligned eight wide column\">\n\n            <div id=\"delete-node-modal\" class=\"ui small modal\">\n                <div class=\"header\">Remove Node: {{node.hostname}}\n                </div>\n                <div class=\"content\">\n                    <p>Are you sure you want to remove this node?</p>\n                </div>\n                <div class=\"actions\">\n                    <div class=\"ui negative button\">Cancel</div>\n                    <div class=\"ui positive button\" (click)=\"deleteNode()\">\n                        Remove\n                    </div>\n                </div>\n            </div>\n\n            <button *ngSwitchCase=\"'details'\" class=\"ui large button cancelBtn\"\n                    (click)=\"cancelDetails()\">\n                Close\n            </button>\n            <button *ngSwitchCase=\"'edit'\" class=\"ui large button cancelBtn\"\n                    (click)=\"cancelEditing()\">\n                Cancel\n            </button>\n            <button *ngSwitchCase=\"'details'\" class=\"ui large button secondaryBtn\"\n                    (click)=\"editNode()\">\n                Edit\n            </button>\n            <button class=\"ui large button secondaryBtn\" onclick=\"$('#delete-node-modal').modal('show')\">\n                <i class=\"trash icon\"></i>\n                Remove\n            </button>\n\n        </div>\n    </div>\n\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">\n                    <a [routerLink]=\"['../../list']\">\n                        Node List\n                    </a>\n                </span>\n                <span class=\"crumb\">{{node.hostname}}</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n\n            <div class=\"ui tabular menu\" *ngIf=\"mode=='details'\">\n                <a class=\"item\" [ngClass]=\"{active: infoselected}\" (click)=\"infoselected=true\">\n                    Details\n                </a>\n                <a class=\"item\" [ngClass]=\"{active: !infoselected}\" (click)=\"infoselected=false\">\n                    Stats\n                </a>\n            </div>\n\n            <nodeinfo *ngIf=\"infoselected\" [mode]=\"mode\"></nodeinfo>\n\n            <nodestats *ngIf=\"!infoselected\" [statkey]=\"statskey\"></nodestats>\n\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 743 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui basic segment\">\n    <div class=\"ui active inverted dimmer\" *ngIf=\"showLoader\">\n        <div class=\"ui loader\"></div>\n    </div>\n\n    <table class=\"ui very basic selectable table\">\n        <tbody>\n        <tr>\n            <td class=\"three wide column key\">Host Name</td>\n            <td class=\"value\">{{node.hostname}}</td>\n        </tr>\n        </tbody>\n    </table>\n\n    <div [ngSwitch]=\"mode\">\n        <form class=\"ui form\"\n              role=\"form\"\n              (submit)=\"saveNode(formRef.valid)\" novalidate #formRef=\"ngForm\">\n\n            <ctv-collapsible title=\"Node BGP Settings\">\n\n                <div *ngSwitchCase=\"'edit'\">\n                    <div class=\"field\">\n                        <div *ngIf=\"formRef.submitted\">\n                            <div [hidden]=\"formRef.valid\" class=\"ui negative message\">\n                                <ul class=\"list\">\n                                    <li *ngIf=\"routerIP.errors?.required\">\n                                        Enter router IP\n                                    </li>\n                                    <li *ngIf=\"AS.errors?.required\">\n                                        Enter autonomous system\n                                    </li>\n                                </ul>\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"ui sixteen column grid\">\n                        <div class=\"ui row\">\n                            <div class=\"left aligned eight wide column\">\n                                <div class=\"field\">\n                                    <label for=\"routerIP\">Router IP</label>\n                                    <input type=\"text\" id=\"routerIP\" name=\"routerIP\"\n                                           [(ngModel)]=\"node['routerip']\"\n                                           placeholder=\"Enter router IP\" required #routerIP=\"ngModel\">\n                                </div>\n                            </div>\n                            <div class=\"left aligned eight wide column\">\n                                <div class=\"field\">\n                                    <label for=\"AS\">Autonomous System</label>\n                                    <input type=\"text\" id=\"AS\" name=\"AS\"\n                                           [(ngModel)]=\"node['as']\"\n                                           placeholder=\"Enter autonomous system\"\n                                           required #AS=\"ngModel\">\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"ui row\">\n                            <div class=\"left aligned eight wide column\">\n                                <div class=\"field\">\n                                    <label for=\"neighborIP\">Neighbor IP</label>\n                                    <input type=\"text\" id=\"neighborIP\" name=\"neighborIP\"\n                                           [(ngModel)]=\"node['neighbor']\"\n                                           placeholder=\"Enter neighbor IP\">\n                                </div>\n                            </div>\n                            <div class=\"left aligned eight wide column\">\n                                <div class=\"field\">\n                                    <label for=\"neighborAS\">Neighbor Autonomous System</label>\n                                    <input type=\"text\" id=\"neighborAS\" name=\"neighborAS\"\n                                           [(ngModel)]=\"node['neighbor-as']\"\n                                           placeholder=\"Enter neighbor autonomous system\">\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n\n                <div *ngSwitchCase=\"'details'\">\n                    <table class=\"ui very basic selectable table\">\n                        <tbody>\n                        <tr>\n                            <td class=\"ctv-header four wide column key\">Router IP</td>\n                            <td class=\"value\">{{node['routerip']}}</td>\n                        </tr>\n                        <tr>\n                            <td class=\"ctv-header four wide column key\">Autonomous System</td>\n                            <td class=\"value\">{{node['as']}}</td>\n                        </tr>\n                        <tr>\n                            <td class=\"ctv-header four wide column key\">Neighbor IP</td>\n                            <td class=\"value\">{{node['neighbor']}}</td>\n                        </tr>\n                        <tr>\n                            <td class=\"ctv-header four wide column key\">Neighbor Autonomous System</td>\n                            <td class=\"value\">{{node['neighbor-as']}}</td>\n                        </tr>\n                        </tbody>\n                    </table>\n                </div>\n\n            </ctv-collapsible>\n\n            <div *ngSwitchCase=\"'edit'\" class=\"ui grid\" style=\"margin-top: 40px\">\n                <div class=\"right aligned sixteen wide column\">\n                    <button type=\"button\" class=\"ui large button cancelBtn\"\n                            (click)=\"cancelEditing()\">\n                        Cancel\n                    </button>\n                    <button type=\"submit\" class=\"ui blue large button primaryBtn\">\n                        Save\n                    </button>\n                </div>\n            </div>\n\n            <ctv-error *ngIf=\"((showServerError) && (mode === 'edit'))\"\n                       header=\"Error saving node\"\n                       [error]=\"serverErrorMessage\">\n            </ctv-error>\n        </form>\n\n        <ctv-error *ngIf=\"((showServerError) && (mode === 'details'))\"\n                   header=\"Error deleting node\"\n                   [error]=\"serverErrorMessage\">\n        </ctv-error>\n    </div>\n\n</div>\n"
+
+/***/ },
+/* 744 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div class=\"content pageTitle\">Nodes</div>\n        </div>\n\n        <div class=\"right aligned eight wide column\">\n            <button class=\"ui blue large button primaryBtn\" (click)=\"create()\">\n                <i class=\"add icon\"></i>\n                Create Node\n            </button>\n        </div>\n    </div>\n\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">Node List</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n\n            <ctv-search *ngIf=\"nodes\" (searchTextChange)=\"tableRef.showChunk(tableRef.table.pageNo,$event);\" [count]=\"tableRef.count\"></ctv-search>\n\n            <div class=\"ui basic segment ctvTable\">\n                <div class=\"ui active inverted dimmer\" *ngIf=\"showLoader\">\n                    <div class=\"ui loader\"></div>\n                </div>\n                <ctv-table #tableRef [defaultSortColumn]=\"'hostname'\"\n                           [items]=\"nodes\"\n                           (filtereditems)=\"filterednodes=$event\"\n                           [size]=\"12\">\n                    <thead>\n                        <tr>\n                            <th><ctv-th [sortfield]=\"'hostname'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Name</ctv-th></th>\n                            <th><ctv-th [sortfield]=\"'routerip'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Router IP</ctv-th></th>\n                            <th><ctv-th [sortfield]=\"'as'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Autonomous system</ctv-th></th>\n                        </tr>\n                    </thead>\n\n                    <tbody *ngIf=\"nodes\">\n                        <tr *ngFor=\"let node of nodes\">\n                            <td><a [routerLink]=\"['../details', node.key]\">{{node.hostname}}</a></td>\n                            <td>{{node.routerip}}</td>\n                            <td>{{node.as}}</td>\n                        </tr>\n                    </tbody>\n\n                    <tbody *ngIf=\"!nodes\">\n                        <tr class=\"noDataFound\">\n                            <td colspan=\"3\">No nodes found. Would you like to <a href=\"javascript: void(0);\" (click)=\"create()\">create one?</a></td>\n                        </tr>\n                    </tbody>\n\n                    <tbody *ngIf=\"nodes && !tableRef.count\">\n                        <tr class=\"noDataFound\">\n                            <td colspan=\"3\">No records matched your filter criteria.</td>\n                        </tr>\n                    </tbody>\n\n                    <tfoot>\n                        <tr class=\"pagination\">\n                            <td colspan=\"4\">\n                                <ctv-tpagination [chunks]=\"tableRef.pageChunks\"\n                                                 (showPage)=\"tableRef.showChunk($event, tableRef.table.searchText)\"\n                                                 (prevChunk)=\"tableRef.showPrevChunk()\"\n                                                 (nextChunk)=\"tableRef.showNextChunk()\">\n                                </ctv-tpagination>\n                            </td>\n                        </tr>\n                    </tfoot>\n                </ctv-table>\n            </div>\n\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 745 */
+/***/ function(module, exports) {
+
+	module.exports = "\n    <div class=\"ui basic segment\" [ngClass]=\"{loading: showLoader}\">\n        <div>\n            <h4 class=\"ui header\">BGP Neighbors</h4>\n            <table class=\"ui very basic table\">\n                <thead>\n                <tr>\n                    <th>Neighbor IP</th>\n                    <th>Admin Status</th>\n                    <th>Neighbor Status</th>\n                    <th>Number of Routes</th>\n                </tr>\n                </thead>\n                <tbody *ngIf=\"inspect.Config['neighbor']\">\n                <tr>\n                    <!-- neighbor -->\n                    <td>{{inspect.Config['neighbor']}}</td>\n\n                    <!-- admin status -->\n                    <td *ngIf=\"inspect.Oper.adminStatus ===\n                            'ADMIN_STATE_UP'\"><i class=\"green up icon\"></i>Up\n                    </td>\n                    <td *ngIf=\"inspect.Oper.adminStatus ===\n                            'ADMIN_STATE_DOWN'\">Down\n                    </td>\n\n                    <!-- neighbor status -->\n                    <td *ngIf=\"inspect.Oper.neighborStatus === 'BGP_FSM_IDLE'\">\n                        <i class=\"red ban icon\"></i>Idle\n                    </td>\n                    <td *ngIf=\"inspect.Oper.neighborStatus === 'BGP_FSM_CONNECT'\">\n                        <i class=\"red ban icon\"></i>Connect\n                    </td>\n                    <td *ngIf=\"inspect.Oper.neighborStatus === 'BGP_FSM_ACTIVE'\">\n                        <i class=\"red ban icon\"></i>Active\n                    </td>\n                    <td *ngIf=\"inspect.Oper.neighborStatus === 'BGP_FSM_OPENSENT'\">\n                        <i class=\"red ban icon\"></i>Open sent\n                    </td>\n                    <td *ngIf=\"inspect.Oper.neighborStatus === 'BGP_FSM_OPENCONFIRM'\">\n                        <i class=\"red ban icon\"></i>Open confirm\n                    </td>\n                    <td *ngIf=\"inspect.Oper.neighborStatus ==='BGP_FSM_ESTABLISHED'\">\n                        <i class=\"green check icon\"></i>Established\n                    </td>\n\n                    <!-- number of routes -->\n                    <td>{{inspect.Oper.numRoutes}}</td>\n                </tr>\n                </tbody>\n\n                <tbody *ngIf=\"!inspect.Config['neighbor']\">\n                <tr class=\"noDataFound\"><td colspan=\"4\">No BGP neighbors found.</td></tr>\n                </tbody>\n\n            </table>\n\n            <div style=\"float:right\">\n                <ctv-search (searchTextChange)=\"tableRef.showChunk(tableRef.table.pageNo,$event);\"\n                                     placeholder=\"Search routes...\" size=\"30\"></ctv-search>\n            </div>\n\n            <h4 class=\"ui header\">BGP Routes</h4>\n\n            <ctv-table #tableRef [defaultSortColumn]=\"'route'\"\n                       [items]=\"routes\"\n                       (filtereditems)=\"filteredroutes=$event\">\n                <thead>\n                <tr>\n                    <th>\n                        <ctv-th [sortfield]=\"'routes'\" (sortdata)=\"tableRef.applysort($event)\"\n                                [sortobject]=\"tableRef.sortObj\">IP\n                        </ctv-th>\n                    </th>\n                    <th>\n                        <ctv-th>Next Hop</ctv-th>\n                    </th>\n                    <th>\n                        <ctv-th>Age</ctv-th>\n                    </th>\n                    <th>\n                        <ctv-th>Attributes</ctv-th>\n                    </th>\n                </tr>\n                </thead>\n\n                <tbody *ngIf=\"routes.length\">\n                    <tr *ngFor=\"let route of filteredroutes\">\n                        <td>{{route}}</td>\n                        <td></td>\n                        <td></td>\n                        <td></td>\n                    </tr>\n                </tbody>\n\n                <tbody *ngIf=\"!routes.length\">\n                    <tr class=\"noDataFound\">\n                        <td colspan=\"4\">No routes found.</td>\n                    </tr>\n                </tbody>\n\n                <tbody *ngIf=\"routes.length && !filteredroutes.length\">\n                    <tr class=\"noDataFound\">\n                        <td colspan=\"4\">No records matched your filter criteria.</td>\n                    </tr>\n                </tbody>\n\n                <tfoot>\n                <tr class=\"pagination\">\n                    <td colspan=\"4\">\n                        <ctv-tpagination colspan=\"5\" [chunks]=\"tableRef.pageChunks\"\n                                         (showPage)=\"tableRef.showChunk($event, tableRef.table.searchText)\"\n                                         (prevChunk)=\"tableRef.showPrevChunk()\"\n                                         (nextChunk)=\"tableRef.showNextChunk()\"></ctv-tpagination>\n                    </td>\n                </tr>\n                </tfoot>\n            </ctv-table>\n        </div>\n    </div>\n"
+
+/***/ },
+/* 746 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui sixteen column grid\">\r\n    <div class=\"ui row pageHeader\">\r\n        <div class=\"left aligned eight wide column\">\r\n            <div class=\"content pageTitle\">Global Settings</div>\r\n        </div>\r\n        <div class=\"right aligned eight wide column\">&nbsp;</div>\r\n    </div>\r\n    <div class=\"ui row breadcrumbRow\">\r\n        <div class=\"ui sixteen wide column\">\r\n            <div class=\"breadcrumbs\"></div>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"ui row\" style=\"margin-bottom: 30px;\">\r\n        <div class=\"ui sixteen wide column\">\r\n\r\n            <div class=\"ui tabular menu\">\r\n                <a class=\"item\" [routerLink]=\"['organizations']\" routerLinkActive=\"active\">\r\n                    Tenants\r\n                </a>\r\n                <a class=\"item\" [routerLink]=\"['users']\" routerLinkActive=\"active\">\r\n                    User Management\r\n                </a>\r\n                <a class=\"item\" [routerLink]=\"['authorization']\" routerLinkActive=\"active\">\r\n                    Authorizations\r\n                </a>\r\n                <a class=\"item\" [routerLink]=\"['nodes']\" routerLinkActive=\"active\">\r\n                    Nodes (BGP)\r\n                </a>\r\n                <a class=\"item\" [routerLink]=\"['networks']\" routerLinkActive=\"active\">\r\n                    Network Defaults\r\n                </a>\r\n                <a class=\"item\" [routerLink]=\"['ldap']\" routerLinkActive=\"active\">\r\n                    LDAP Settings\r\n                </a>\r\n            </div>\r\n\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"ui row\">\r\n        <div class=\"ui sixteen wide column tabContent\">\r\n\r\n            <router-outlet></router-outlet>\r\n\r\n        </div>\r\n    </div>\r\n</div>\r\n"
+
+/***/ },
+/* 747 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div class=\"content pageTitle\">Create Tenant</div>\n        </div>\n        <div class=\"right aligned eight wide column\">&nbsp;</div>\n    </div>\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">\n                    <a [routerLink]=\"['../list']\">\n                        Tenant List\n                    </a>\n                </span>\n                <span class=\"crumb\">Create</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n\n            <div class=\"description\">Create a tenant by name. You can assign users into tenancies under Settings > Authorizations. </div>\n\n            <form id=\"organizationCreationForm\" name=\"organizationCreateCtrl.form\" class=\"ui form\" role=\"form\"\n                  (submit)=\"organizationCreateCtrl.createOrganization(organizationCreateFrom.valid)\" novalidate #organizationCreateFrom=\"ngForm\">\n\n                <div class=\"ui active inverted dimmer\" *ngIf=\"organizationCreateCtrl.showLoader\">\n                    <div class=\"ui loader\"></div>\n                </div>\n\n                <div class=\"ui basic segment\">\n\n                    <div class=\"field\">\n                        <div *ngIf=\"organizationCreateFrom.submitted\">\n                            <div [hidden]=\"organizationCreateFrom.valid\" class=\"ui negative message\">\n                                <ul class=\"list\">\n                                    <li *ngIf=\"newOrganizationName.errors?.required\">\n                                        Please enter a tenant name\n                                    </li>\n                                </ul>\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"ui four wide column field\">\n                        <label for=\"newOrganizationName\">Tenant name</label>\n                        <input type=\"text\" id=\"newOrganizationName\" name=\"newOrganizationName\"\n                               [(ngModel)]=\"organizationCreateCtrl.newOrganization.tenantName\"\n                               placeholder=\"Enter name\" required #newOrganizationName=\"ngModel\">\n                    </div>\n\n                    <div class=\"ui grid\">\n                        <div class=\"right aligned sixteen wide column buttonRow\">\n                            <button type=\"button\" class=\"ui button large cancelBtn\" (click)=\"organizationCreateCtrl.cancelCreating()\">\n                                Cancel\n                            </button>\n                            <button type=\"submit\" class=\"ui blue large button primaryBtn\">\n                                Create\n                            </button>\n                        </div>\n                    </div>\n\n                </div>\n\n            </form>\n\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 748 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div class=\"content pageTitle\">Details: {{organizationDetailsCtrl.organization.tenantName}}</div>\n        </div>\n        <div class=\"right aligned eight wide column\">\n            <button class=\"ui button large cancelBtn\" (click)=\"close()\">\n                Close\n            </button>\n            <button class=\"ui large button secondaryBtn\" onclick=\"$('#delete-organization-modal').modal('show')\">\n                <i class=\"trash icon\"></i>\n                Remove\n            </button>\n        </div>\n    </div>\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">\n                    <a [routerLink]=\"['../../list']\">\n                        Tenant List\n                    </a>\n                </span>\n                <span class=\"crumb\">{{organizationDetailsCtrl.organization.tenantName}}</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n\n            <div class=\"right aligned three wide column\">\n                <div id=\"delete-organization-modal\" class=\"ui small modal\">\n                    <div class=\"header\">Remove Tenant: {{organizationDetailsCtrl.organization.tenantName}}</div>\n                    <div class=\"content\">\n                        <p>Are you sure you want to remove this tenant?</p>\n                    </div>\n                    <div class=\"actions\">\n                        <div class=\"ui negative button\">No</div>\n                        <div class=\"ui positive button\" (click)=\"organizationDetailsCtrl.deleteOrganization()\">\n                            Yes\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"ui basic segment\">\n                <div class=\"ui active inverted dimmer\" *ngIf=\"organizationDetailsCtrl.showLoader\">\n                    <div class=\"ui loader\"></div>\n                </div>\n\n                <div class=\"ctvTable\">\n                    <table class=\"ui very basic selectable table\">\n                        <tbody>\n                        <tr>\n                            <td class=\"ctv-header three wide column key\">Name</td>\n                            <td class=\"value\">{{organizationDetailsCtrl.organization.tenantName}}</td>\n                        </tr>\n                        </tbody>\n                    </table>\n                </div>\n\n                <ctv-error *ngIf=\"organizationDetailsCtrl.showServerError\" header=\"Error deleting organization\"\n                           [error]=\"organizationDetailsCtrl.serverErrorMessage\">\n                </ctv-error>\n            </div>\n\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 749 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div class=\"content pageTitle\">Tenants</div>\n        </div>\n        <div class=\"right aligned eight wide column\">\n            <button class=\"ui blue large button primaryBtn\" (click)=\"create()\" *auth=\"'admin'\">\n                <i class=\"add icon\"></i>\n                Create Tenant\n            </button>\n        </div>\n    </div>\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">\n                    Tenant List\n                </span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n\n            <div class=\"description\"><i>Tenancies</i> are the basic organizational container for all other assets. Create tenanats then assign users to them, and create network and other objects per tenant. Users assigned to a tenant (or multiple tenants) will be allowed to view and use their authorized tenancy resources only.</div>\n\n            <ctv-search *ngIf=\"organizationsListCtrl.organizations\" (searchTextChange)=\"tableRef.showChunk(tableRef.table.pageNo,$event);\" [count]=\"tableRef.count\"></ctv-search>\n\n            <div class=\"ui basic segment ctvTable\">\n                <div class=\"ui active inverted dimmer\" *ngIf=\"organizationsListCtrl.showLoader\">\n                    <div class=\"ui loader\"></div>\n                </div>\n                <ctv-table #tableRef [defaultSortColumn]=\"'tenantName'\"\n                           [items]=\"organizationsListCtrl.organizations\"\n                           (filtereditems)=\"organizationsListCtrl.filteredorganizations=$event\"\n                           [size]=\"12\">\n                    <thead>\n                        <tr>\n                            <th><ctv-th [sortfield]=\"'tenantName'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Name</ctv-th></th>\n                        </tr>\n                    </thead>\n\n                    <tbody *ngIf=\"organizationsListCtrl.organizations\">\n                        <tr *ngFor=\"let organization of organizationsListCtrl.filteredorganizations\">\n                            <td><a [routerLink]=\"['../details', organization.key]\">{{organization.tenantName}}</a></td>\n                        </tr>\n                    </tbody>\n\n                    <tbody *ngIf=\"!organizationsListCtrl.organizations\">\n                        <tr class=\"noDataFound\">\n                            <td>No tenants found. Would you like to <a href=\"javascript: void(0);\" (click)=\"create()\">create one?</a></td>\n                        </tr>\n                    </tbody>\n\n                    <tbody *ngIf=\"organizationsListCtrl.organizations && !tableRef.count\">\n                        <tr class=\"noDataFound\"><td>No records matched your filter criteria.</td></tr>\n                    </tbody>\n\n                    <tfoot>\n                        <tr class=\"pagination\">\n                            <td>\n                                <ctv-tpagination [chunks]=\"tableRef.pageChunks\"\n                                                 (showPage)=\"tableRef.showChunk($event, tableRef.table.searchText)\"\n                                                 (prevChunk)=\"tableRef.showPrevChunk()\"\n                                                 (nextChunk)=\"tableRef.showNextChunk()\">\n                                </ctv-tpagination>\n                            </td>\n                        </tr>\n                    </tfoot>\n                </ctv-table>\n            </div>\n\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 750 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div class=\"content pageTitle\">Create User</div>\n        </div>\n        <div class=\"right aligned eight wide column\">&nbsp;</div>\n    </div>\n\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">\n                    <a [routerLink]=\"['../list']\">\n                        User List\n                    </a>\n                </span>\n                <span class=\"crumb\">Create</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n\n            <form class=\"ui form\" role=\"form\"\n                  (submit)=\"createUser(formRef.valid)\" novalidate #formRef=\"ngForm\">\n\n                <div class=\"ui active inverted dimmer\" *ngIf=\"showLoader\">\n                    <div class=\"ui loader\"></div>\n                </div>\n\n                <div class=\"ui basic segment\">\n\n                    <div class=\"field\">\n                        <div *ngIf=\"formRef.submitted\">\n                            <div [hidden]=\"formRef.valid\" class=\"ui negative message\">\n                                <ul class=\"list\">\n                                    <li *ngIf=\"newUserOrganization.errors?.required\">\n                                        Please select tenant\n                                    </li>\n                                    <li *ngIf=\"newUserName.errors?.required\">\n                                        Please enter user name\n                                    </li>\n                                    <li *ngIf=\"newUserPassword.errors?.required\">\n                                        Please enter user password\n                                    </li>\n                                </ul>\n                            </div>\n                        </div>\n                    </div>\n\n                    <div class=\"description\">Create user accounts here. You can assign users into tenancies, and define their role, under Settings > Authorizations. </div>\n\n                    <div class=\"ui sixteen column grid\">\n                        <div class=\"ui row\">\n\n                            <div class=\"ui eight wide column\">\n                                <div class=\"field\">\n                                    <label for=\"newUserName\">Username</label>\n                                    <input type=\"text\" id=\"newUserName\" name=\"newUserName\"\n                                           [(ngModel)]=\"newUser.username\"\n                                           placeholder=\"Enter name\" required #newUserName=\"ngModel\">\n                                </div>\n                            </div>\n                            <div class=\"ui eight wide column\">\n                                <div class=\"field\">\n                                    <label for=\"newUserPassword\">Password</label>\n                                    <input type=\"password\" id=\"newUserPassword\" name=\"newUserPassword\"\n                                           [(ngModel)]=\"newUser.password\"\n                                           placeholder=\"Enter password\" required #newUserPassword=\"ngModel\">\n                                </div>\n                            </div>\n\n                        </div>\n                        <div class=\"ui row\">\n\n                            <div class=\"ui eight wide column\">\n                                <div class=\"field\">\n                                    <label for=\"newFirstName\">First name</label>\n                                    <input type=\"text\" id=\"newFirstName\" name=\"newFirstName\"\n                                           [(ngModel)]=\"newUser.first_name\"\n                                           placeholder=\"Enter first name\" #newFirstName=\"ngModel\">\n                                </div>\n                            </div>\n                            <div class=\"ui eight wide column\">\n                                <div class=\"field\">\n                                    <label for=\"newLastName\">Last name</label>\n                                    <input type=\"text\" id=\"newLastName\" name=\"newLastName\"\n                                           [(ngModel)]=\"newUser.last_name\"\n                                           placeholder=\"Enter last name\"  #newLastName=\"ngModel\">\n                                </div>\n                            </div>\n\n                        </div>\n                        <div class=\"ui row\">\n\n                            <div class=\"ui eight wide column\">\n                                <div class=\"field\">\n                                    <label for=\"enabled23\">&nbsp;<br>\n                                    <input type=\"checkbox\" name=\"newUserDisabled\" tabindex=\"0\" class=\"alignLabel\"\n                                               [(ngModel)]=\"newUser.disable\">\n                                        Disabled\n                                    </label>\n                                </div>\n                            </div>\n\n                        </div>\n\n                        <div class=\"ui row\">\n                            <div class=\"right aligned sixteen wide column buttonRow\">\n\n                                <button type=\"button\" class=\"ui large button cancelBtn\" (click)=\"cancelCreating()\">\n                                    Cancel\n                                </button>\n                                <button type=\"submit\" class=\"ui blue large button primaryBtn\">\n                                    Create\n                                </button>\n\n                            </div>\n                        </div>\n                    </div>\n\n                    <ctv-error *ngIf=\"showServerError\" header=\"Error creating user\" [error]=\"serverErrorMessage\">\n                    </ctv-error>\n\n                </div>\n            </form>\n\n         </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 751 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui sixteen column grid pageHeader\" [ngClass]=\"{loading: showLoader}\">\n    <div [ngSwitch]=\"userDetailsCtrl.mode\" class=\"ui row\">\n        <div class=\"left aligned eight wide column\">\n            <div *ngSwitchCase=\"'details'\" class=\"content pageTitle\">Details: {{userDetailsCtrl.user.userName}}</div>\n            <div *ngSwitchCase=\"'edit'\" class=\"content pageTitle\">Editing: {{userDetailsCtrl.user.userName}}</div>\n        </div>\n        <div class=\"right aligned eight wide column\">\n\n            <div id=\"delete-user-modal\" class=\"ui small modal\">\n                <div class=\"header\">Remove User: {{user.userName}}\n                </div>\n                <div class=\"content\">\n                    <p>Are you sure you want to remove this user?</p>\n                </div>\n                <div class=\"actions\">\n                    <div class=\"ui negative button\">No</div>\n                    <div class=\"ui positive button\" (click)=\"deleteUser()\">\n                        Yes\n                    </div>\n                </div>\n            </div>\n\n            <button *ngSwitchCase=\"'edit'\" class=\"ui large button cancelBtn\"\n                    (click)=\"cancelEditing()\">\n                Cancel\n            </button>\n            <button *ngSwitchCase=\"'details'\" class=\"ui large button cancelBtn\"\n                    (click)=\"cancelDetails()\">\n                Close\n            </button>\n            <button *ngSwitchCase=\"'details'\" class=\"ui large button secondaryBtn\"\n                    (click)=\"editUser()\">\n                Edit\n            </button>\n            <button class=\"ui blue large button secondaryBtn\" onclick=\"$('#delete-user-modal').modal('show')\">\n                <i class=\"trash icon\"></i>\n                Remove\n            </button>\n\n        </div>\n    </div>\n\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">\n                    <a [routerLink]=\"['../../list']\">\n                        User Management\n                    </a>\n                </span>\n                <span class=\"crumb\">\n                    {{user.userName}}\n                </span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\"  [ngSwitch]=\"userDetailsCtrl.mode\">\n        <div class=\"ui sixteen wide column\">\n\n            <div class=\"ui basic segment\">\n                <div class=\"ui active inverted dimmer\" *ngIf=\"showLoader\">\n                    <div class=\"ui loader\"></div>\n                </div>\n\n                <table *ngSwitchCase=\"'details'\" class=\"ui very basic selectable table\">\n                    <tbody>\n                        <tr>\n                            <td class=\"key\">Username</td>\n                            <td class=\"value\">{{user.username}}</td>\n                        </tr>\n                        <tr >\n                            <td class=\"key\">Firstname</td>\n                            <td class=\"value\">{{user.first_name}}</td>\n                        </tr>\n                        <tr>\n                            <td class=\"key\">Lastname</td>\n                            <td class=\"value\">{{user.last_name}}</td>\n                        </tr>\n                        <tr>\n                            <td class=\"key\">Disabled</td>\n                            <td class=\"value\">{{user.disable?'Yes':'No'}}</td>\n                        </tr>\n                    </tbody>\n                </table>\n\n                <div *ngSwitchCase=\"'edit'\">\n                    <form class=\"ui form\"\n                          role=\"form\"\n                          (submit)=\"saveUser(formRef.valid)\" novalidate #formRef=\"ngForm\">\n\n                        <div class=\"field\">\n                            <div *ngIf=\"formRef.submitted\">\n                                <div [hidden]=\"formRef.valid\" class=\"ui negative message\">\n                                    <ul class=\"list\">\n                                        <li *ngIf=\"userName.errors?.required\">Please enter\n                                            user name\n                                        </li>\n                                        <li *ngIf=\"userOrganization.errors?.required\">\n                                            Please select organization\n                                        </li>\n                                    </ul>\n                                </div>\n                            </div>\n                        </div>\n\n                        <div class=\"ui sizteen column grid\">\n                            <div class=\"ui row\">\n\n                                <div class=\"ui four wide column\">\n                                    <div class=\"field\">\n                                        <label for=\"userName\">Username</label>\n                                        <input type=\"text\" id=\"userName\" name=\"username\"\n                                               [(ngModel)]=\"user.username\"\n                                               placeholder=\"Enter name\" required #username=\"ngModel\">\n                                    </div>\n                                </div>\n                                <div class=\"ui four wide column\">\n                                    <div class=\"field\">\n                                        <label for=\"firstname\">First Name</label>\n                                        <input type=\"text\" id=\"firstname\" name=\"firstname\"\n                                               [(ngModel)]=\"user.first_name\"\n                                               placeholder=\"Enter First Name\" #firstname=\"ngModel\">\n                                    </div>\n                                </div>\n                                <div class=\"ui four wide column\">\n                                    <div class=\"field\">\n                                        <label for=\"lastname\">Last Name</label>\n                                        <input type=\"text\" id=\"lastname\" name=\"lastname\"\n                                               [(ngModel)]=\"user.last_name\"\n                                               placeholder=\"Enter Last Name\" #lastname=\"ngModel\">\n                                    </div>\n                                </div>\n                                <div class=\"ui four wide column\">\n                                    <div class=\"field\">\n                                        <label for=\"password\">Password</label>\n                                        <input type=\"password\" id=\"password\" name=\"password\"\n                                               [(ngModel)]=\"user.password\"\n                                               placeholder=\"Reset Password\" #password=\"ngModel\">\n                                    </div>\n                                </div>\n\n                            </div>\n                            <div class=\"ui row\">\n\n                                <div class=\"ui four wide column\">\n                                    <label>&nbsp;<br>\n                                        <input type=\"checkbox\" name=\"userdisabled\" tabindex=\"0\" class=\"alignLabel\"\n                                                   [(ngModel)]=\"user.disable\">\n                                            Disabled\n                                    </label>\n                                </div>\n\n                            </div>\n                            <div class=\"ui row\">\n\n                                <div class=\"right aligned fifteen wide column buttonRow\">\n                                    <button type=\"button\" class=\"ui large button cancelBtn\" (click)=\"cancelEditing()\">\n                                        Cancel\n                                    </button>\n                                    <button type=\"submit\" class=\"ui blue large button primaryBtn\">\n                                        Save\n                                    </button>\n                                </div>\n\n                            </div>\n\n                        </div>\n                    </form>\n                </div>\n\n            </div>\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 752 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"ui sixteen column grid\">\n    <div class=\"ui row pageHeader\">\n        <div class=\"left aligned eight wide column\">\n            <div class=\"content pageTitle\">User Management</div>\n        </div>\n        <div class=\"right aligned eight wide column\">\n            <button class=\"ui blue large button primaryBtn\" (click)=\"create()\">\n                <i class=\"add icon\"></i>\n                Create User\n            </button>\n        </div>\n    </div>\n\n    <div class=\"ui row breadcrumbRow\">\n        <div class=\"ui sixteen wide column\">\n            <div class=\"breadcrumbs\">\n                <span class=\"crumb\">User List</span>\n            </div>\n        </div>\n    </div>\n\n    <div class=\"ui row\">\n        <div class=\"ui sixteen wide column\">\n\n            <ctv-search *ngIf=\"users\" (searchTextChange)=\"tableRef.showChunk(tableRef.table.pageNo,$event);\" [count]=\"tableRef.count\"></ctv-search>\n\n            <div class=\"ui basic segment ctvTable\">\n                <div class=\"ui active inverted dimmer\" *ngIf=\"showLoader\">\n                    <div class=\"ui loader\"></div>\n                </div>\n\n                <ctv-table #tableRef [defaultSortColumn]=\"'username'\"\n                           [items]=\"users\"\n                           (filtereditems)=\"filteredusers=$event\"\n                           [size]=\"12\">\n                    <thead>\n                        <tr>\n                            <th><ctv-th [sortfield]=\"'username'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Username</ctv-th></th>\n                            <th><ctv-th [sortfield]=\"'first_name'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">First Name</ctv-th></th>\n                            <th><ctv-th [sortfield]=\"'last_name'\" (sortdata)=\"tableRef.applysort($event)\" [sortobject]=\"tableRef.sortObj\">Last Name</ctv-th></th>\n                        </tr>\n                    </thead>\n\n                    <tbody *ngIf=\"users\">\n                        <tr *ngFor=\"let user of filteredusers\">\n                            <td><a [routerLink]=\"['../details', user.username]\">{{user.username}}</a></td>\n                            <td>{{user.first_name}}</td>\n                            <td>{{user.last_name}}</td>\n                        </tr>\n                    </tbody>\n\n                    <tbody *ngIf=\"!users\">\n                        <tr class=\"noDataFound\">\n                            <td colspan=\"3\">No users found. Would you like to <a href=\"javascript: void(0);\" (click)=\"create()\">create one?</a></td>\n                        </tr>\n                    </tbody>\n\n                    <tbody *ngIf=\"users && !tableRef.count\">\n                        <tr class=\"noDataFound\">\n                            <td colspan=\"3\">No records matched your filter criteria.</td>\n                        </tr>\n                    </tbody>\n\n                    <tfoot>\n                        <tr class=\"pagination\">\n                            <td colspan=\"3\">\n                                <ctv-tpagination [chunks]=\"tableRef.pageChunks\"\n                                                 (showPage)=\"tableRef.showChunk($event, tableRef.table.searchText)\"\n                                                 (prevChunk)=\"tableRef.showPrevChunk()\"\n                                                 (nextChunk)=\"tableRef.showNextChunk()\">\n                                </ctv-tpagination>\n                            </td>\n                        </tr>\n                    </tfoot>\n                </ctv-table>\n            </div>\n\n        </div>\n    </div>\n</div>\n"
+
+/***/ },
+/* 753 */,
+/* 754 */,
+/* 755 */,
+/* 756 */,
+/* 757 */,
+/* 758 */,
+/* 759 */,
+/* 760 */,
+/* 761 */,
+/* 762 */,
+/* 763 */,
+/* 764 */,
+/* 765 */,
+/* 766 */,
+/* 767 */,
+/* 768 */,
+/* 769 */,
+/* 770 */,
+/* 771 */,
+/* 772 */,
+/* 773 */,
+/* 774 */,
+/* 775 */,
+/* 776 */,
+/* 777 */,
+/* 778 */,
+/* 779 */,
+/* 780 */,
+/* 781 */,
+/* 782 */,
+/* 783 */,
+/* 784 */,
+/* 785 */,
+/* 786 */,
+/* 787 */,
+/* 788 */,
+/* 789 */,
+/* 790 */,
+/* 791 */,
+/* 792 */,
+/* 793 */,
+/* 794 */,
+/* 795 */,
+/* 796 */,
+/* 797 */,
+/* 798 */,
+/* 799 */,
+/* 800 */,
+/* 801 */,
+/* 802 */,
+/* 803 */,
+/* 804 */,
+/* 805 */,
+/* 806 */,
+/* 807 */,
+/* 808 */,
+/* 809 */,
+/* 810 */,
+/* 811 */,
+/* 812 */,
+/* 813 */,
+/* 814 */,
+/* 815 */,
+/* 816 */,
+/* 817 */,
+/* 818 */,
+/* 819 */,
+/* 820 */,
+/* 821 */,
+/* 822 */,
+/* 823 */,
+/* 824 */,
+/* 825 */,
+/* 826 */,
+/* 827 */,
+/* 828 */,
+/* 829 */,
+/* 830 */,
+/* 831 */,
+/* 832 */,
+/* 833 */,
+/* 834 */,
+/* 835 */,
+/* 836 */,
+/* 837 */,
+/* 838 */,
+/* 839 */,
+/* 840 */,
+/* 841 */,
+/* 842 */,
+/* 843 */,
+/* 844 */,
+/* 845 */,
+/* 846 */,
+/* 847 */,
+/* 848 */,
+/* 849 */,
+/* 850 */,
+/* 851 */,
+/* 852 */,
+/* 853 */,
+/* 854 */,
+/* 855 */,
+/* 856 */,
+/* 857 */,
+/* 858 */,
+/* 859 */,
+/* 860 */,
+/* 861 */,
+/* 862 */,
+/* 863 */,
+/* 864 */,
+/* 865 */,
+/* 866 */,
+/* 867 */,
+/* 868 */,
+/* 869 */,
+/* 870 */,
+/* 871 */,
+/* 872 */,
+/* 873 */,
+/* 874 */,
+/* 875 */,
+/* 876 */,
+/* 877 */,
+/* 878 */,
+/* 879 */,
+/* 880 */,
+/* 881 */,
+/* 882 */,
+/* 883 */,
+/* 884 */,
+/* 885 */,
+/* 886 */,
+/* 887 */,
+/* 888 */,
+/* 889 */,
+/* 890 */,
+/* 891 */,
+/* 892 */,
+/* 893 */,
+/* 894 */,
+/* 895 */,
+/* 896 */,
+/* 897 */,
+/* 898 */,
+/* 899 */,
+/* 900 */,
+/* 901 */,
+/* 902 */,
+/* 903 */,
+/* 904 */,
+/* 905 */,
+/* 906 */,
+/* 907 */,
+/* 908 */,
+/* 909 */,
+/* 910 */,
+/* 911 */,
+/* 912 */,
+/* 913 */,
+/* 914 */,
+/* 915 */,
+/* 916 */,
+/* 917 */,
+/* 918 */,
+/* 919 */,
+/* 920 */,
+/* 921 */,
+/* 922 */,
+/* 923 */,
+/* 924 */,
+/* 925 */,
+/* 926 */,
+/* 927 */,
+/* 928 */,
+/* 929 */,
+/* 930 */,
+/* 931 */,
+/* 932 */,
+/* 933 */,
+/* 934 */,
+/* 935 */,
+/* 936 */,
+/* 937 */,
+/* 938 */,
+/* 939 */,
+/* 940 */,
+/* 941 */,
+/* 942 */,
+/* 943 */,
+/* 944 */,
+/* 945 */,
+/* 946 */,
+/* 947 */,
+/* 948 */,
+/* 949 */,
+/* 950 */,
+/* 951 */,
+/* 952 */,
+/* 953 */,
+/* 954 */,
+/* 955 */,
+/* 956 */,
+/* 957 */,
+/* 958 */,
+/* 959 */,
+/* 960 */,
+/* 961 */,
+/* 962 */,
+/* 963 */,
+/* 964 */,
+/* 965 */,
+/* 966 */,
+/* 967 */,
+/* 968 */,
+/* 969 */,
+/* 970 */,
+/* 971 */,
+/* 972 */,
+/* 973 */,
+/* 974 */,
+/* 975 */,
+/* 976 */,
+/* 977 */,
+/* 978 */,
+/* 979 */,
+/* 980 */,
+/* 981 */,
+/* 982 */,
+/* 983 */,
+/* 984 */,
+/* 985 */,
+/* 986 */,
+/* 987 */,
+/* 988 */,
+/* 989 */,
+/* 990 */,
+/* 991 */,
+/* 992 */,
+/* 993 */,
+/* 994 */,
+/* 995 */,
+/* 996 */,
+/* 997 */,
+/* 998 */,
+/* 999 */,
+/* 1000 */,
+/* 1001 */,
+/* 1002 */,
+/* 1003 */,
+/* 1004 */,
+/* 1005 */,
+/* 1006 */,
+/* 1007 */,
+/* 1008 */,
+/* 1009 */,
+/* 1010 */,
+/* 1011 */,
+/* 1012 */,
+/* 1013 */,
+/* 1014 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	        var result = __webpack_require__(645);
+
+	        if (typeof result === "string") {
+	            module.exports = result;
+	        } else {
+	            module.exports = result.toString();
+	        }
+	    
+
+/***/ },
+/* 1015 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -11623,8 +12751,63 @@ webpackJsonp([2],{
 	    
 
 /***/ },
+/* 1016 */
+/***/ function(module, exports, __webpack_require__) {
 
-/***/ 946:
+	
+	        var result = __webpack_require__(647);
+
+	        if (typeof result === "string") {
+	            module.exports = result;
+	        } else {
+	            module.exports = result.toString();
+	        }
+	    
+
+/***/ },
+/* 1017 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	        var result = __webpack_require__(648);
+
+	        if (typeof result === "string") {
+	            module.exports = result;
+	        } else {
+	            module.exports = result.toString();
+	        }
+	    
+
+/***/ },
+/* 1018 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	        var result = __webpack_require__(649);
+
+	        if (typeof result === "string") {
+	            module.exports = result;
+	        } else {
+	            module.exports = result.toString();
+	        }
+	    
+
+/***/ },
+/* 1019 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	        var result = __webpack_require__(650);
+
+	        if (typeof result === "string") {
+	            module.exports = result;
+	        } else {
+	            module.exports = result.toString();
+	        }
+	    
+
+/***/ },
+/* 1020 */
 /***/ function(module, exports) {
 
 	if (typeof Object.create === 'function') {
@@ -11653,8 +12836,7 @@ webpackJsonp([2],{
 
 
 /***/ },
-
-/***/ 947:
+/* 1021 */
 /***/ function(module, exports) {
 
 	module.exports = function isBuffer(arg) {
@@ -11665,6 +12847,5 @@ webpackJsonp([2],{
 	}
 
 /***/ }
-
-});
+]);
 //# sourceMappingURL=main.map

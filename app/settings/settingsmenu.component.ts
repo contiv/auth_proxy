@@ -5,6 +5,6 @@ import { Component } from "@angular/core";
 
 @Component({
     selector: 'settingsmenu',
-    templateUrl: 'settings/settingsmenu.html'
+    templateUrl: './settingsmenu.html'
 })
 export class SettingsMenuComponent {}

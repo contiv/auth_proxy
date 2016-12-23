@@ -8,7 +8,7 @@ declare var jQuery:any;
 
 @Component({
     selector: 'login',
-    templateUrl: 'login/login.html',
+    templateUrl: './login.html',
     styles: [require('./login.css')]
 })
 

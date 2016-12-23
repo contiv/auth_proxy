@@ -6,7 +6,7 @@ import { FirstRunWizardService } from "./firstrunwizardservice";
 
 @Component({
     selector: 'firstrunacisettings',
-    templateUrl: 'firstrunwizard/firstrunacisettings.html'
+    templateUrl: './firstrunacisettings.html'
 })
 export class FirstrunACISettingsComponent implements OnInit {
     private wizardService:FirstRunWizardService;

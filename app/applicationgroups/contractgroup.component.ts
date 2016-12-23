@@ -7,7 +7,7 @@ import { ContractGroupsModel } from "../components/models/contractgroupsmodel";
 
 @Component({
     selector: 'ctv-contractgroup',
-    templateUrl: 'applicationgroups/contractgroup.html'
+    templateUrl: './contractgroup.html'
 })
 export class ContractGroupSelectionComponent implements OnChanges {
     @Input() mode:string;

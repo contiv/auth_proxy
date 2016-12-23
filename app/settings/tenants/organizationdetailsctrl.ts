@@ -5,7 +5,7 @@ import { OrganizationsModel } from "../../components/models/organizationsmodel";
 
 @Component({
     selector: 'organizationdetails',
-    templateUrl: 'settings/tenants/organizationdetails.html'
+    templateUrl: './organizationdetails.html'
 })
 
 

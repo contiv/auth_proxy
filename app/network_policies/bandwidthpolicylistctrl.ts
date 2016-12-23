@@ -8,7 +8,7 @@ import {NetprofilesModel} from "../components/models/netprofilesmodel";
 
 @Component({
     selector: 'bandwidthpolicylist',
-    templateUrl: 'network_policies/bandwidthpolicylist.html'
+    templateUrl: './bandwidthpolicylist.html'
 })
 
 export class BandwidthListComponent implements OnInit, OnDestroy {

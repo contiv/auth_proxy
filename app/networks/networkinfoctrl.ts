@@ -5,7 +5,7 @@
 import {Component, Input} from "@angular/core";
 @Component({
     selector: 'network-info',
-    templateUrl: 'networks/networkinfo.html'
+    templateUrl: './networkinfo.html'
 })
 
 export class NetworkInfoComponent {

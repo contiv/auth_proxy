@@ -7,7 +7,7 @@ import { BgpsModel } from "../../components/models/bgpsmodel";
 
 @Component({
     selector: 'nodelist',
-    templateUrl: 'settings/nodes/nodelist.html'
+    templateUrl: './nodelist.html'
 })
 
 export class NodeListComponent implements OnInit, OnDestroy{

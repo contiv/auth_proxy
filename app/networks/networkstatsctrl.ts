@@ -8,7 +8,7 @@ import {ContivGlobals} from "../components/models/contivglobals";
 
 @Component({
     selector: 'network-stat',
-    templateUrl: 'networks/networkstats.html'
+    templateUrl: './networkstats.html'
 })
 export class NetworkStatComponent implements OnInit, OnDestroy{
 

@@ -10,7 +10,7 @@ declare var jQuery:any;
 
 @Component({
     selector: 'menu',
-    templateUrl: 'menu/menu.html'
+    templateUrl: './menu.html'
 })
 
 export class MenuComponent implements DoCheck{

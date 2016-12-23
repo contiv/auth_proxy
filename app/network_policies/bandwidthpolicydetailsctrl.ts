@@ -9,7 +9,7 @@ import { PolicyTab } from "./networkpoliciestabsctrl";
 
 @Component({
     selector: 'bandwidthpolicydetails',
-    templateUrl: 'network_policies/bandwidthpolicydetails.html'
+    templateUrl: './bandwidthpolicydetails.html'
 })
 export class BandwidthPolicyDetailsComponent {
     bandwidthProfiles:any[] = [];

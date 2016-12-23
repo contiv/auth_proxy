@@ -6,7 +6,7 @@ import {Component, Input} from "@angular/core";
 
 @Component({
     selector:'ctv-collapsible',
-    templateUrl: 'components/directives/collapsible.html'
+    templateUrl: './collapsible.html'
 })
 
 export class CtvCollapsibleComponent{

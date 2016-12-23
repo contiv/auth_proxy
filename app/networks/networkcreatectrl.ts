@@ -11,7 +11,7 @@ import { OrganizationsModel } from "../components/models/organizationsmodel";
 
 @Component({
     selector: 'networkcreate',
-    templateUrl: 'networks/networkcreate.html'
+    templateUrl: './networkcreate.html'
 })
 
 export class NetworkCreateComponent implements OnInit {

@@ -15,7 +15,7 @@ export interface User{
 
 @Component({
     selector: 'usercreate',
-    templateUrl: 'settings/users/usercreate.html'
+    templateUrl: './usercreate.html'
 })
 
 export class UserCreateComponent{

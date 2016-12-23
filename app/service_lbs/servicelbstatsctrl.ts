@@ -9,7 +9,7 @@ import {ContivGlobals} from "../components/models/contivglobals";
 
 @Component({
     selector: 'servicelb-stat',
-    templateUrl: 'service_lbs/servicelbstats.html'
+    templateUrl: './servicelbstats.html'
 })
 export class ServicelbStatComponent implements OnInit, OnDestroy{
 

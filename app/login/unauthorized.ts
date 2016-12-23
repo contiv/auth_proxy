@@ -7,7 +7,7 @@ import {Component, OnInit, OnDestroy} from "@angular/core";
 declare var jQuery:any;
 @Component({
     selector: 'unauthorized',
-    templateUrl: 'login/unauthorized.html'
+    templateUrl: './unauthorized.html'
 
 })
 

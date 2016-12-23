@@ -13,7 +13,7 @@ export interface Item{
 
 @Component({
     selector:'ctv-namevalue',
-    templateUrl:'components/directives/namevalue.html'
+    templateUrl:'./namevalue.html'
 })
 
 export class CtvNamevalueComponent{

@@ -7,7 +7,7 @@ import { BgpsModel } from "../../components/models/bgpsmodel";
 
 @Component({
     selector: 'nodecreate',
-    templateUrl: 'settings/nodes/nodecreate.html'
+    templateUrl: './nodecreate.html'
 })
 
 export class NodeCreateComponent {

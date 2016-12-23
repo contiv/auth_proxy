@@ -12,8 +12,8 @@ declare var jQuery:any;
 
 @Component({
     selector: 'firstrunwizard',
-    templateUrl: 'firstrunwizard/firstrunwizard.html',
-    styleUrls: ['firstrunwizard/firstrunwizard.css']
+    templateUrl: './firstrunwizard.html',
+    styleUrls: ['./firstrunwizard.css']
 })
 
 export class FirstrunWizardComponent implements OnInit{

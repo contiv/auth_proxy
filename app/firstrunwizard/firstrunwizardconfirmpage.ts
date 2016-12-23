@@ -10,7 +10,7 @@ declare var jQuery:any;
 
 @Component({
     selector: 'firstrunwizardconfirmpage',
-    templateUrl: 'firstrunwizard/firstrunwizardconfirmpage.html'
+    templateUrl: './firstrunwizardconfirmpage.html'
 })
 
 export class FirstrunConfirmComponent implements OnInit{

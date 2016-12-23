@@ -6,7 +6,7 @@ import {OrganizationsModel} from "../../components/models/organizationsmodel";
 
 @Component({
     selector: 'organizationcreate',
-    templateUrl: 'settings/tenants/organizationcreate.html'
+    templateUrl: './organizationcreate.html'
 })
 
 export class OrganizationCreateComponent{

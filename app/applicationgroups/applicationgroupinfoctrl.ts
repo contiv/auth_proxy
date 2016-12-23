@@ -6,7 +6,7 @@
 import {Component, Input, OnInit} from "@angular/core";
 @Component({
     selector: 'applicationgroupinfo',
-    templateUrl: 'applicationgroups/applicationgroupinfo.html'
+    templateUrl: './applicationgroupinfo.html'
 })
 
 export class ApplicationGroupInfoComponent{

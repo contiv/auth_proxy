@@ -8,7 +8,7 @@ import { RulesModel } from "../components/models/rulesmodel";
 
 @Component({
     selector: 'ctv-isolationpolicy',
-    templateUrl: 'applicationgroups/isolationpolicy.html'
+    templateUrl: './isolationpolicy.html'
 })
 export class IsolationPolicySelectionComponent implements OnChanges {
     @Input() mode:string;

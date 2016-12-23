@@ -13,8 +13,8 @@ import { EndpointType } from "../components/utils/chartservice";
 
 @Component({
     selector: 'dashboard',
-    templateUrl: 'dashboard/dashboard.html',
-    styleUrls: ['dashboard/dashboard.css']
+    templateUrl: './dashboard.html',
+    styleUrls: ['./dashboard.css']
 
 })
 export class DashboardComponent implements OnDestroy {

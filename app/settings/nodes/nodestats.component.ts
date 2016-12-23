@@ -9,7 +9,7 @@ import { CRUDHelperService } from "../../components/utils/crudhelperservice";
 
 @Component({
     selector: 'nodestats',
-    templateUrl: 'settings/nodes/nodestats.html'
+    templateUrl: './nodestats.html'
 })
 export class NodeStatsComponent implements OnInit, OnDestroy {
     @Input('statkey') statkey:string;

@@ -10,7 +10,7 @@ import { OrganizationsModel } from "../components/models/organizationsmodel";
 
 @Component({
     selector: 'isolationpolicycreate',
-    templateUrl: 'network_policies/isolationpolicycreate.html'
+    templateUrl: './isolationpolicycreate.html'
 })
 
 export class IsolationPolicyCreateComponent implements OnInit {

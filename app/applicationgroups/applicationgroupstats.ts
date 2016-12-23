@@ -11,7 +11,7 @@ import {ContivGlobals} from "../components/models/contivglobals";
 import {isUndefined} from "util";
 @Component({
     selector: 'applicationgroupstats',
-    templateUrl: 'applicationgroups/applicationgroupstats.html'
+    templateUrl: './applicationgroupstats.html'
 })
 
 export class ApplicationGroupStatsComponent implements OnInit, OnDestroy{

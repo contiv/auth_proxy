@@ -8,7 +8,7 @@ import { BgpsModel } from "../../components/models/bgpsmodel";
 
 @Component({
     selector: 'nodeinfo',
-    templateUrl: 'settings/nodes/nodeinfo.html'
+    templateUrl: './nodeinfo.html'
 })
 export class NodeInfoComponent implements OnInit {
     @Input('mode') mode: string;

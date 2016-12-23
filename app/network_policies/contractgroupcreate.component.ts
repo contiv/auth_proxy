@@ -10,7 +10,7 @@ import { OrganizationsModel } from "../components/models/organizationsmodel";
 
 @Component({
     selector: 'contractgroupcreate',
-    templateUrl: 'network_policies/contractgroupcreate.html'
+    templateUrl: './contractgroupcreate.html'
 })
 export class ContractGroupCreateComponent implements OnInit {
     newContractGroup:any;

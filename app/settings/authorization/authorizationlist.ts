@@ -12,7 +12,7 @@ import {Router, ActivatedRoute} from "@angular/router";
 import {Authorization} from "./authorizationcreate";
 @Component({
     selector: 'authorizationlist',
-    templateUrl: 'settings/authorization/authorizationlist.html'
+    templateUrl: './authorizationlist.html'
 })
 
 export class AuthorizationListComponent implements  OnInit{

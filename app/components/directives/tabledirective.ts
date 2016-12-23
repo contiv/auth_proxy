@@ -26,7 +26,7 @@ interface SortObj {
 
 @Component({
     selector: 'ctv-table',
-    templateUrl: 'components/directives/table.html'
+    templateUrl: './table.html'
 
 })
 
@@ -208,7 +208,7 @@ export class CtvTableComponent implements OnChanges, OnInit {
 
 @Component({
     selector: "ctv-th",
-    templateUrl: 'components/directives/tableheader.html'
+    templateUrl: './tableheader.html'
 })
 
 export class CtvThComponent implements OnInit{
@@ -231,7 +231,7 @@ export class CtvThComponent implements OnInit{
 
 @Component({
     selector: "ctv-tpagination",
-    templateUrl:'components/directives/paginationmenu.html'
+    templateUrl:'./paginationmenu.html'
 })
 
 export class CtvTpaginationComponent{
@@ -264,7 +264,7 @@ export class CtvTpaginationComponent{
 
 @Component({
     selector: 'ctv-search',
-    templateUrl: 'components/directives/searchinput.html'
+    templateUrl: './searchinput.html'
 })
 
 export class CtvSearchComponent{

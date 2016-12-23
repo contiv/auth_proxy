@@ -5,7 +5,7 @@ import { BgpsModel } from "../../components/models/bgpsmodel";
 
 @Component({
     selector: 'nodedetails',
-    templateUrl: 'settings/nodes/nodedetails.html'
+    templateUrl: './nodedetails.html'
 })
 export class NodeDetailsComponent implements OnInit {
     node:any = {};

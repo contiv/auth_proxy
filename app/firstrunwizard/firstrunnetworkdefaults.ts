@@ -7,7 +7,7 @@ import {Component, OnInit, EventEmitter, Output} from "@angular/core";
 import {FirstRunWizardService} from "./firstrunwizardservice";
 @Component({
     selector: 'firstrunnetworkdefault',
-    templateUrl: 'firstrunwizard/firstrunnetworkdefault.html'
+    templateUrl: './firstrunnetworkdefault.html'
 })
 
 export class FirstrunNetworkDefaultComponent implements OnInit{

@@ -12,7 +12,7 @@ export enum PolicyTab {
 
 @Component({
     selector: 'networkpoliciestabs',
-    templateUrl: 'network_policies/networkpoliciestabs.html'
+    templateUrl: './networkpoliciestabs.html'
 })
 export class NetworkPoliciesTabsComponent {
     isolationPolicySelected:boolean = true;

@@ -8,7 +8,7 @@ import { ContivGlobals } from "../../components/models/contivglobals";
 
 @Component({
     selector: 'userdetails',
-    templateUrl: 'settings/users/userdetails.html'
+    templateUrl: './userdetails.html'
 })
 export class UserDetailsComponent {
     user:User = {username: '', password: '', first_name: '', last_name: '', disable: false};

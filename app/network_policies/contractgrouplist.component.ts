@@ -8,7 +8,7 @@ import { Subscription, Observable } from "rxjs";
 
 @Component({
     selector: 'contractgrouplist',
-    templateUrl: 'network_policies/contractgrouplist.html'
+    templateUrl: './contractgrouplist.html'
 })
 export class ContractGroupListComponent implements OnInit, OnDestroy {
     private refresh:Subscription;

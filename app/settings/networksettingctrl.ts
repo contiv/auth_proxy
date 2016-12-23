@@ -6,7 +6,7 @@ import { ContivGlobals } from "../components/models/contivglobals";
 
 @Component({
     selector: 'networksetting',
-    templateUrl: 'settings/networksettings.html'
+    templateUrl: './networksettings.html'
 })
 export class NetworkSettingsComponent implements OnDestroy {
     private refresh: Subscription;

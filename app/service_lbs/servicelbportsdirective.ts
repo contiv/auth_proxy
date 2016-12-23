@@ -14,7 +14,7 @@ interface Item{
 
 @Component({
     selector:'ctv-servicelbports',
-    templateUrl:'service_lbs/servicelbports.html'
+    templateUrl:'./servicelbports.html'
 })
 
 export class ServicelbPortsComponent{

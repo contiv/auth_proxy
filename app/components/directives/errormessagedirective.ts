@@ -5,7 +5,7 @@ import { Component, Input, OnChanges } from "@angular/core";
 
 @Component({
     selector: 'ctv-error',
-    templateUrl: 'components/directives/errormessage.html'
+    templateUrl: './errormessage.html'
 })
 export class ErrorMessageComponent implements OnChanges {
 

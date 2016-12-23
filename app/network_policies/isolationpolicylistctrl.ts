@@ -7,7 +7,7 @@ import {CRUDHelperService} from "../components/utils/crudhelperservice";
 import {Subscription, Observable} from "rxjs";
 @Component({
     selector: 'isolationpolicylist',
-    templateUrl: 'network_policies/isolationpolicylist.html'
+    templateUrl: './isolationpolicylist.html'
 })
 
 export class IsolationListComponent implements OnInit, OnDestroy {
