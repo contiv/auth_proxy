@@ -2,108 +2,123 @@
     <div class="ui active inverted dimmer" *ngIf="showLoader">
         <div class="ui loader"></div>
     </div>
-    <div><h4 class="ui header">Basic Settings</h4></div>  <!-- Top Margin is less,When h4 is first child in div -->
+
     <table class="ui very basic selectable table">
         <tbody>
         <tr>
-            <td class="three wide column">Host Name</td>
-            <td>{{node.hostname}}</td>
+            <td class="three wide column key">Host Name</td>
+            <td class="value">{{node.hostname}}</td>
         </tr>
         </tbody>
     </table>
-
-    <div class="ui section divider" style="margin-top: 30px"></div>
-
 
     <div [ngSwitch]="mode">
         <form class="ui form"
               role="form"
               (submit)="saveNode(formRef.valid)" novalidate #formRef="ngForm">
 
-            <ctv-collapsible title="BGP">
+            <ctv-collapsible title="Node BGP Settings">
+
                 <div *ngSwitchCase="'edit'">
                     <div class="field">
                         <div *ngIf="formRef.submitted">
                             <div [hidden]="formRef.valid" class="ui negative message">
                                 <ul class="list">
                                     <li *ngIf="routerIP.errors?.required">
-                                        Please enter router IP
+                                        Enter router IP
                                     </li>
                                     <li *ngIf="AS.errors?.required">
-                                        Please enter autonomous system
+                                        Enter autonomous system
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="field">
-                        <label for="routerIP">Router IP</label>
-                        <input type="text" id="routerIP" name="routerIP"
-                               [(ngModel)]="node['routerip']"
-                               placeholder="Enter router IP" required #routerIP="ngModel">
-                    </div>
 
-                    <div class="field">
-                        <label for="AS">Autonomous system</label>
-                        <input type="text" id="AS" name="AS"
-                               [(ngModel)]="node['as']"
-                               placeholder="Enter autonomous system"
-                               required #AS="ngModel">
-                    </div>
-
-                    <div class="field">
-                        <label for="neighborIP">Neighbor IP</label>
-                        <input type="text" id="neighborIP" name="neighborIP"
-                               [(ngModel)]="node['neighbor']"
-                               placeholder="Enter neighbor IP">
-                    </div>
-
-                    <div class="field">
-                        <label for="neighborAS">Neighbor autonomous system</label>
-                        <input type="text" id="neighborAS" name="neighborAS"
-                               [(ngModel)]="node['neighbor-as']"
-                               placeholder="Enter neighbor autonomous system">
+                    <div class="ui sixteen column grid">
+                        <div class="ui row">
+                            <div class="left aligned eight wide column">
+                                <div class="field">
+                                    <label for="routerIP">Router IP</label>
+                                    <input type="text" id="routerIP" name="routerIP"
+                                           [(ngModel)]="node['routerip']"
+                                           placeholder="Enter router IP" required #routerIP="ngModel">
+                                </div>
+                            </div>
+                            <div class="left aligned eight wide column">
+                                <div class="field">
+                                    <label for="AS">Autonomous System</label>
+                                    <input type="text" id="AS" name="AS"
+                                           [(ngModel)]="node['as']"
+                                           placeholder="Enter autonomous system"
+                                           required #AS="ngModel">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="left aligned eight wide column">
+                                <div class="field">
+                                    <label for="neighborIP">Neighbor IP</label>
+                                    <input type="text" id="neighborIP" name="neighborIP"
+                                           [(ngModel)]="node['neighbor']"
+                                           placeholder="Enter neighbor IP">
+                                </div>
+                            </div>
+                            <div class="left aligned eight wide column">
+                                <div class="field">
+                                    <label for="neighborAS">Neighbor Autonomous System</label>
+                                    <input type="text" id="neighborAS" name="neighborAS"
+                                           [(ngModel)]="node['neighbor-as']"
+                                           placeholder="Enter neighbor autonomous system">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
                 <div *ngSwitchCase="'details'">
                     <table class="ui very basic selectable table">
                         <tbody>
                         <tr>
-                            <td class="ctv-header three wide column">Router IP</td>
-                            <td>{{node['routerip']}}</td>
+                            <td class="ctv-header four wide column key">Router IP</td>
+                            <td class="value">{{node['routerip']}}</td>
                         </tr>
                         <tr>
-                            <td class="ctv-header three wide column">Autonomous system</td>
-                            <td>{{node['as']}}</td>
+                            <td class="ctv-header four wide column key">Autonomous System</td>
+                            <td class="value">{{node['as']}}</td>
                         </tr>
                         <tr>
-                            <td class="ctv-header three wide column">Neighbor IP</td>
-                            <td>{{node['neighbor']}}</td>
+                            <td class="ctv-header four wide column key">Neighbor IP</td>
+                            <td class="value">{{node['neighbor']}}</td>
                         </tr>
                         <tr>
-                            <td class="ctv-header three wide column">Neighbor autonomous system</td>
-                            <td>{{node['neighbor-as']}}</td>
+                            <td class="ctv-header four wide column key">Neighbor Autonomous System</td>
+                            <td class="value">{{node['neighbor-as']}}</td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
+
             </ctv-collapsible>
 
             <div *ngSwitchCase="'edit'" class="ui grid" style="margin-top: 40px">
                 <div class="right aligned sixteen wide column">
-                    <button type="button" class="ui basic button"
-                            (click)="cancelEditing()">Cancel
+                    <button type="button" class="ui large button cancelBtn"
+                            (click)="cancelEditing()">
+                        Cancel
                     </button>
-                    <button type="submit" class="ui blue button">
+                    <button type="submit" class="ui blue large button primaryBtn">
                         Save
                     </button>
                 </div>
             </div>
+
             <ctv-error *ngIf="((showServerError) && (mode === 'edit'))"
                        header="Error saving node"
                        [error]="serverErrorMessage">
             </ctv-error>
         </form>
+
         <ctv-error *ngIf="((showServerError) && (mode === 'details'))"
                    header="Error deleting node"
                    [error]="serverErrorMessage">

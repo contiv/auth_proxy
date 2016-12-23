@@ -10,7 +10,7 @@ To run Ctv UI inside a docker container from Ctv source.
 -- Also, set an env var pointing to the local UI src code:
 	export UI_DIR='/Users/catw/Dev/gocode/src/github.com/contiv/contiv-ui/app'
 
--- Load the cnn_proxy as a container:
+-- Load the cnn_proxy as a container. Note where in this CLI there is a reference to the data store and netmaster:
 docker run -it \
 -v $PWD/local_certs:/local_certs:ro \
 -v $UI_DIR:/ui:ro \
@@ -21,3 +21,7 @@ docker run -it \
 
 -- From your browser:
 	https://localhost:10000/
+
+-- For the future you can also use the "make" system to launch this container. Edit "scripts/run.sh" under "Running on local machine" to use the same Docker command as you crafted above, then you can issue:
+	make
+	make run

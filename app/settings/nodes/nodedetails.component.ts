@@ -58,6 +58,18 @@ export class NodeDetailsComponent implements OnInit {
         this.router.navigate(['../../list'], {relativeTo: this.activatedRoute});
     }
 
+    returnToNodeDetails() {
+        this.router.navigate(['../../details', this.node.key], {relativeTo: this.activatedRoute});
+    }
+
+    cancelDetails() {
+        this.returnToNode();
+    }
+
+    cancelEditing() {
+        this.returnToNodeDetails();
+    }
+
     editNode() {
         this.router.navigate(['../../edit', this.node.key], {relativeTo: this.activatedRoute});
     }

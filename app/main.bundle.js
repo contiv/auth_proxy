@@ -78,7 +78,7 @@ webpackJsonp([2],{
 	"use strict";
 	/**
 	 * Created by vjain3 on 11/2/16.
-	 * 12/21/16: updating API paths for ccn_proxy [c@]
+	 * 12/21/16: updating API paths for ccn_proxy [catw]
 	 */
 	exports.ContivGlobals = {
 	    //REST endpoints for NETMASTER
@@ -6086,6 +6086,15 @@ webpackJsonp([2],{
 	    };
 	    NodeDetailsComponent.prototype.returnToNode = function () {
 	        this.router.navigate(['../../list'], { relativeTo: this.activatedRoute });
+	    };
+	    NodeDetailsComponent.prototype.returnToNodeDetails = function () {
+	        this.router.navigate(['../../details', this.node.key], { relativeTo: this.activatedRoute });
+	    };
+	    NodeDetailsComponent.prototype.cancelDetails = function () {
+	        this.returnToNode();
+	    };
+	    NodeDetailsComponent.prototype.cancelEditing = function () {
+	        this.returnToNodeDetails();
 	    };
 	    NodeDetailsComponent.prototype.editNode = function () {
 	        this.router.navigate(['../../edit', this.node.key], { relativeTo: this.activatedRoute });

@@ -1,59 +1,76 @@
-<div class="ui sixteen column grid">
-    <div class="nine wide column">
-        <div [ngSwitch]="mode" class="content">
-            <a [routerLink]="['../../list']">
-                <i class="large arrow left icon"></i>
-            </a>
-            <span style="font-size: 24px; margin-left: 6px">Nodes</span>
-            <span *ngSwitchCase="'details'" class="headingfontcolor" style="font-size: 24px"> (Details)</span>
-            <span *ngSwitchCase="'edit'" class="headingfontcolor" style="font-size: 24px"> (Edit)</span>
+<div [ngSwitch]="mode" class="ui sixteen column grid">
+    <div class="ui row pageHeader">
+        <div class="left aligned eight wide column">
+            <div class="content pageTitle">
+                <span *ngSwitchCase="'details'">Details: {{node.hostname}}</span>
+                <span *ngSwitchCase="'edit'">Editing: {{node.hostname}}</span>
+            </div>
         </div>
-    </div>
+        <div class="right aligned eight wide column">
 
-    <div [ngSwitch]="mode" class="right aligned seven wide column">
-        <div id="delete-node-modal" class="ui small modal">
-            <div class="header">Remove Node: {{node.hostname}}
-            </div>
-            <div class="content">
-                <p>Are you sure you want to remove this node?</p>
-            </div>
-            <div class="actions">
-                <div class="ui negative button">No</div>
-                <div class="ui positive button" (click)="deleteNode()">
-                    Yes
+            <div id="delete-node-modal" class="ui small modal">
+                <div class="header">Remove Node: {{node.hostname}}
+                </div>
+                <div class="content">
+                    <p>Are you sure you want to remove this node?</p>
+                </div>
+                <div class="actions">
+                    <div class="ui negative button">Cancel</div>
+                    <div class="ui positive button" (click)="deleteNode()">
+                        Remove
+                    </div>
                 </div>
             </div>
+
+            <button *ngSwitchCase="'details'" class="ui large button cancelBtn"
+                    (click)="cancelDetails()">
+                Close
+            </button>
+            <button *ngSwitchCase="'edit'" class="ui large button cancelBtn"
+                    (click)="cancelEditing()">
+                Cancel
+            </button>
+            <button *ngSwitchCase="'details'" class="ui large button secondaryBtn"
+                    (click)="editNode()">
+                Edit
+            </button>
+            <button class="ui large button secondaryBtn" onclick="$('#delete-node-modal').modal('show')">
+                <i class="trash icon"></i>
+                Remove
+            </button>
+
         </div>
-        <button *ngSwitchCase="'edit'" class="ui disabled button"
-                (click)="editNode()">
-            <i class="edit icon"></i>
-            Edit
-        </button>
-        <button *ngSwitchCase="'details'" class="ui basic button"
-                (click)="editNode()">
-            <i class="edit icon"></i>
-            Edit
-        </button>
-        <button class="ui basic button" onclick="$('#delete-node-modal').modal('show')">
-            <i class="trash icon"></i>
-            Remove
-        </button>
+    </div>
+
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div class="breadcrumbs">
+                <span class="crumb">
+                    <a [routerLink]="['../../list']">
+                        Node List
+                    </a>
+                </span>
+                <span class="crumb">{{node.hostname}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+
+            <div class="ui tabular menu" *ngIf="mode=='details'">
+                <a class="item" [ngClass]="{active: infoselected}" (click)="infoselected=true">
+                    Details
+                </a>
+                <a class="item" [ngClass]="{active: !infoselected}" (click)="infoselected=false">
+                    Stats
+                </a>
+            </div>
+
+            <nodeinfo *ngIf="infoselected" [mode]="mode"></nodeinfo>
+
+            <nodestats *ngIf="!infoselected" [statkey]="statskey"></nodestats>
+
+        </div>
     </div>
 </div>
-
-<div class="ui secondary pointing menu" *ngIf="mode=='details'">
-    <a class="blue item" [ngClass]="{active: infoselected}" (click)="infoselected=true">
-        <i class="details icon"></i>
-        DETAILS
-    </a>
-    <a class="blue item" [ngClass]="{active: !infoselected}" (click)="infoselected=false">
-        <i class="area chart icon"></i>
-        STATS
-    </a>
-</div>
-
-<nodeinfo *ngIf="infoselected" [mode]="mode"></nodeinfo>
-
-<nodestats *ngIf="!infoselected" [statkey]="statskey"></nodestats>
-
-

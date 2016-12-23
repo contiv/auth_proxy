@@ -1,6 +1,6 @@
 /**
  * Created by vjain3 on 11/2/16.
- * 12/21/16: updating API paths for ccn_proxy [c@]
+ * 12/21/16: updating API paths for ccn_proxy [catw]
  */
 export const ContivGlobals = {
     //REST endpoints for NETMASTER

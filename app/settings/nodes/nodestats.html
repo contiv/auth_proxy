@@ -1,7 +1,7 @@
-<ctv-collapsible title="BGP">
+
     <div class="ui basic segment" [ngClass]="{loading: showLoader}">
         <div>
-            <h4 class="ui header">Neighbors</h4>
+            <h4 class="ui header">BGP Neighbors</h4>
             <table class="ui very basic table">
                 <thead>
                 <tr>
@@ -11,7 +11,7 @@
                     <th>Number of Routes</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody *ngIf="inspect.Config['neighbor']">
                 <tr>
                     <!-- neighbor -->
                     <td>{{inspect.Config['neighbor']}}</td>
@@ -48,11 +48,20 @@
                     <td>{{inspect.Oper.numRoutes}}</td>
                 </tr>
                 </tbody>
+
+                <tbody *ngIf="!inspect.Config['neighbor']">
+                <tr class="noDataFound"><td colspan="4">No BGP neighbors found.</td></tr>
+                </tbody>
+
             </table>
 
-            <div class="ui section divider" style="margin-top: 40px; margin-bottom: 40px"></div>
+            <div style="float:right">
+                <ctv-search (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);"
+                                     placeholder="Search routes..." size="30"></ctv-search>
+            </div>
 
-            <h4 class="ui header">Routes</h4>
+            <h4 class="ui header">BGP Routes</h4>
+
             <ctv-table #tableRef [defaultSortColumn]="'route'"
                        [items]="routes"
                        (filtereditems)="filteredroutes=$event">
@@ -72,26 +81,33 @@
                     <th>
                         <ctv-th>Attributes</ctv-th>
                     </th>
-                    <th class="right floated three wide column">
-                        <ctv-search (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);"
-                                     placeholder="Search routes..." size="30"></ctv-search>
-                    </th>
                 </tr>
                 </thead>
 
-                <tbody>
+                <tbody *ngIf="routes.length">
                     <tr *ngFor="let route of filteredroutes">
                         <td>{{route}}</td>
-                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
                     </tr>
                 </tbody>
 
+                <tbody *ngIf="!routes.length">
+                    <tr class="noDataFound">
+                        <td colspan="4">No routes found.</td>
+                    </tr>
+                </tbody>
+
+                <tbody *ngIf="routes.length && !filteredroutes.length">
+                    <tr class="noDataFound">
+                        <td colspan="4">No records matched your filter criteria.</td>
+                    </tr>
+                </tbody>
+
                 <tfoot>
-                <tr>
-                    <td colspan="5">
+                <tr class="pagination">
+                    <td colspan="4">
                         <ctv-tpagination colspan="5" [chunks]="tableRef.pageChunks"
                                          (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
                                          (prevChunk)="tableRef.showPrevChunk()"
@@ -102,4 +118,3 @@
             </ctv-table>
         </div>
     </div>
-</ctv-collapsible>
