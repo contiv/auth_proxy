@@ -15,14 +15,12 @@ var (
 	// create two authorizations
 	a1 = types.Authorization{
 		UUID:          "1111",
-		PrincipalID:   "2222",
 		PrincipalName: "2222",
 		ClaimKey:      "tenant: Tenant1",
 		ClaimValue:    "devops",
 	}
 	a2 = types.Authorization{
 		UUID:          "3333",
-		PrincipalID:   "2222",
 		PrincipalName: "2222",
 		ClaimKey:      "tenant: Tenant2",
 		ClaimValue:    "devops",
@@ -79,7 +77,7 @@ func (s *dbSuite) TestListAuthorizationsByPrincipal(c *C) {
 	InsertAuthorization(&a2)
 
 	// list authz by principal
-	aList, err := ListAuthorizationsByPrincipal(a1.PrincipalID)
+	aList, err := ListAuthorizationsByPrincipal(a1.PrincipalName)
 	c.Assert(err, IsNil)
 
 	// check that two authz instances are retrieved
@@ -94,11 +92,11 @@ func (s *dbSuite) TestDeleteAuthorizationsByPrincipal(c *C) {
 	InsertAuthorization(&a1)
 
 	// delete authz
-	err := DeleteAuthorizationsByPrincipal(a1.PrincipalID)
+	err := DeleteAuthorizationsByPrincipal(a1.PrincipalName)
 	c.Assert(err, IsNil)
 
 	// list authz by principal
-	aList, err := ListAuthorizationsByPrincipal(a1.PrincipalID)
+	aList, err := ListAuthorizationsByPrincipal(a1.PrincipalName)
 	c.Assert(err, IsNil)
 
 	// expecting to not find deleted authz
@@ -155,13 +153,13 @@ func (s *dbSuite) TestListAuthorizationsByClaimAndPrincipal(c *C) {
 	InsertAuthorization(&a2)
 
 	// test listing by existing claim key and principal
-	aList, err := ListAuthorizationsByClaimAndPrincipal(a1.ClaimKey, a1.PrincipalID)
+	aList, err := ListAuthorizationsByClaimAndPrincipal(a1.ClaimKey, a1.PrincipalName)
 	c.Assert(err, IsNil)
 
 	c.Assert(len(aList), Equals, 1)
 
 	// test listing by non-existing claim key
-	aList, err = ListAuthorizationsByClaimAndPrincipal("tenant: TenantX", a1.PrincipalID)
+	aList, err = ListAuthorizationsByClaimAndPrincipal("tenant: TenantX", a1.PrincipalName)
 	c.Assert(err, IsNil)
 
 	c.Assert(len(aList), Equals, 0)

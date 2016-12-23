@@ -112,7 +112,7 @@ func ListAuthorizations() (
 //         nil if operation is successful
 //
 //func (a *Authorization) ListAuthorizationsByPrincipal(ID string) (
-func ListAuthorizationsByPrincipal(ID string) (
+func ListAuthorizationsByPrincipal(pName string) (
 	[]types.Authorization, error) {
 	defer common.Untrace(common.Trace())
 
@@ -138,7 +138,7 @@ func ListAuthorizationsByPrincipal(ID string) (
 	for _, auth := range allAuthZList {
 		tmp, ok := auth.(*types.Authorization)
 		if ok {
-			if tmp.PrincipalID == ID {
+			if tmp.PrincipalName == pName {
 				match = append(match, *tmp)
 
 			}
@@ -159,7 +159,7 @@ func ListAuthorizationsByPrincipal(ID string) (
 //  error: Any errors encountered when reading or deleting
 //         from the KV store
 //
-func DeleteAuthorizationsByPrincipal(principalID string) error {
+func DeleteAuthorizationsByPrincipal(pName string) error {
 	defer common.Untrace(common.Trace())
 
 	a := &types.Authorization{}
@@ -178,7 +178,7 @@ func DeleteAuthorizationsByPrincipal(principalID string) error {
 	for _, auth := range allAuthZList {
 		tmp, ok := auth.(*types.Authorization)
 		if ok {
-			if tmp.PrincipalID == principalID {
+			if tmp.PrincipalName == pName {
 
 				// record UUID so that its key path
 				// can be determined

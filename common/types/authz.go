@@ -48,7 +48,7 @@ const (
 //  CommonState: Embedded common state struct (which will be part of all structs that implement
 //               types.State)
 //  UUID: unique ID for an authorization.
-//  PrincipalID: UUID of the subject.
+//  PrincipalName: Unique name of the subject; it could be a username or LDAP group name.
 //  Local:    Bool indicating whether the principal is a local user. False indicates
 //            that the principal is an LDAP group
 //  ClaimKey: string encoding of the claim's key associated with the authorization
@@ -59,7 +59,6 @@ type Authorization struct {
 	CommonState
 	UUID          string `json:"uuid"`
 	PrincipalName string `json:"principalName"`
-	PrincipalID   string `json:"principalID"`
 	Local         bool   `json:"local"`
 	ClaimKey      string `json:"claimKey"`
 	ClaimValue    string `json:"claimValue"`
@@ -78,8 +77,7 @@ type Authorization struct {
 //  /ccnproxy/authorizations/{11111111: {
 // 	                                   CommonState
 //                                         UUID: "11111111"
-//                                         Principal:
-//                                         PrincipalID: "12345678"
+//                                         PrincipalName: "test"
 //                                         ClaimKey: "tenant:t1"
 //                                         ClaimValue: "devops"
 //                                      }
@@ -88,8 +86,7 @@ type Authorization struct {
 //  /ccnproxy/authorizations/{22222222: {
 // 	                                   CommonState
 //                                         UUID: "22222222"
-//                                         Principal:
-//                                         PrincipalID: "12345678"
+//                                         PrincipalName: "OU=ccn,DC=ccn,DC=example,DC=com"
 //                                         ClaimKey: "tenant:t2"
 //                                         ClaimValue: "devops"
 //                                      }
