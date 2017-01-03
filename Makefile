@@ -9,6 +9,52 @@ all: build
 build: checks
 	@bash ./scripts/build.sh
 
+# release creates a release package for contiv.
+# It uses a pre-built image specified by BUILD_VERSION.
+release: 
+	rm -rf release/
+	@bash ./scripts/release.sh
+
+# Brings up a demo cluster to install Contiv on - by default this is a docker, centos cluster.
+# It can be configured to start a RHEL cluster by setting CONTIV_NODE_OS=rhel7.
+# It can be started with k8s kubeadm install by running with VAGRANT_USE_KUBEADM=1.
+cluster: cluster-destroy
+	cd cluster && vagrant up
+
+cluster-destroy:
+	cd cluster && vagrant destroy -f
+
+# Create a release and test the release installation on a vagrant cluster
+# TODO: The vagrant part of this can be optimized by taking snapshots instead
+# of creating a new set of VMs for each case
+release-test-kubeadm: release 
+	# Test kubeadm (centos by default)
+	VAGRANT_USE_KUBEADM=1 make cluster
+	VAGRANT_USE_KUBEADM=1 make install-test-kubeadm
+
+release-test-swarm: release 
+	# Test swarm (centos by default)
+	UCN_PORT=10001 UCN_CONFIG='cluster_defs_ansible.json' UCN_MASTER='192.168.2.12' make cluster
+	UCN_PORT=10001 UCN_CONFIG='cluster_defs_ansible.json' UCN_MASTER='192.168.2.12' make install-test-swarm
+
+release-test-kubelegacy: release 
+	# Test k8s ansible (centos by default)
+	make cluster
+	make install-test-kube-legacy 
+
+# Test the installation on the provided cluster. This is for bare-metal and other
+# setups where the cluster is created using non-vagrant mechanisms. 
+# Clusters need to have k8s installed for kubernetes kubeadm based mechanism and
+# docker installed on the master node for all others.
+install-test-kubeadm:
+	@bash ./installtests/kubeadm_test.sh
+
+install-test-kube-legacy:
+	@bash ./installtests/kube_legacy_test.sh
+
+install-test-swarm:
+	@bash ./installtests/swarm_test.sh
+
 # checks runs a script which runs gofmt, go vet, and other code quality tools.
 checks:
 	@bash ./scripts/checks.sh
@@ -52,4 +98,4 @@ unit-tests:
 # test runs ALL the test suites.
 test: systemtests unit-tests
 
-.PHONY: all build checks ci generate-certificate godep run systemtests test unit-tests
+.PHONY: all build checks ci generate-certificate godep run systemtests test unit-tests release cluster cluster-destroy release-test-swarm release-test-kubeadm release-test-kubelegacy

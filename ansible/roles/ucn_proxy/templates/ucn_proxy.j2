@@ -1,0 +1,44 @@
+#!/bin/bash
+
+usage="$0 start"
+if [ $# -ne 1 ]; then
+    echo USAGE: $usage
+    exit 1
+fi
+
+case $1 in
+init)
+    set -e
+
+    /usr/bin/docker run --rm \
+      {{ ucn_image }} \
+      --data-store-address={{ ucn_datastore }} \
+      --initial-setup
+    ;;
+
+start)
+    set -e
+
+    /usr/bin/docker run --rm \
+      -p 10000:{{ ucn_port }} \
+      --name=ucn-proxy \
+      -v /var/contiv:/var/contiv \
+      {{ ucn_image }} \
+      --tls-key-file={{ ucn_key }} \
+      --tls-certificate={{ ucn_cert }} \
+      --data-store-address={{ ucn_datastore }} \
+      --netmaster-address={{ service_vip }}:9999 \
+      --listen-address=:10000
+    ;;
+
+stop)
+    # don't stop on error
+    /usr/bin/docker stop ucn-proxy
+    /usr/bin/docker rm -f -v  ucn-proxy
+    ;;
+
+*)
+    echo USAGE: $usage
+    exit 1
+    ;;
+esac

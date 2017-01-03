@@ -1,0 +1,14 @@
+---
+# tasks file for ucn_proxy
+
+- name: copy shell script for starting ucn-proxy
+  template: src=ucn_proxy.j2 dest=/usr/bin/ucn_proxy.sh mode=u=rwx,g=rx,o=rx
+
+- name: copy systemd units for ucn-proxy
+  copy: src=ucn-proxy.service dest=/etc/systemd/system/ucn-proxy.service
+
+- name: initialize ucn-proxy
+  shell: /usr/bin/ucn_proxy.sh init
+
+- name: start ucn-proxy container
+  service: name=ucn-proxy state=started

@@ -1,0 +1,5 @@
+# netplugin-node hosts set up netmast/netplugin in a cluster
+- hosts: netplugin-node
+  become: true
+  roles:
+    - { role: ucn_proxy }
