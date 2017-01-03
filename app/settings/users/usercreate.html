@@ -35,9 +35,6 @@
                         <div *ngIf="formRef.submitted">
                             <div [hidden]="formRef.valid" class="ui negative message">
                                 <ul class="list">
-                                    <li *ngIf="newUserOrganization.errors?.required">
-                                        Please select tenant
-                                    </li>
                                     <li *ngIf="newUserName.errors?.required">
                                         Please enter user name
                                     </li>
@@ -96,8 +93,8 @@
 
                             <div class="ui eight wide column">
                                 <div class="field">
-                                    <label for="enabled23">&nbsp;<br>
-                                    <input type="checkbox" name="newUserDisabled" tabindex="0" class="alignLabel"
+                                    <label for="newUserDisabled">&nbsp;<br>
+                                    <input type="checkbox" id="newUserDisabled" name="newUserDisabled" tabindex="0" class="alignLabel"
                                                [(ngModel)]="newUser.disable">
                                         Disabled
                                     </label>

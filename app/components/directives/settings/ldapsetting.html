@@ -1,3 +1,4 @@
+<div class="ui basic segment" [ngClass]="{loading: showLoader}">
 <div class="ui sixteen column grid">
     <div class="ui row pageHeader">
         <div class="left aligned eight wide column">
@@ -17,7 +18,7 @@
     </div>
 
     <div class="ui row">
-        <div class="ui sixteen wide column" [ngClass]="{loading: showLoader}">
+        <div class="ui sixteen wide column">
 
             <form class="ui form" role="form" #formRef="ngForm"
                   (ngSubmit)="updateLdapConfig(formRef.valid)" novalidate>
@@ -147,4 +148,5 @@
 
         </div>
     </div>
+</div>
 </div>

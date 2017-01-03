@@ -1,4 +1,4 @@
-<div class="ui sixteen column grid pageHeader" [ngClass]="{loading: showLoader}">
+<div class="ui sixteen column grid pageHeader">
     <div [ngSwitch]="userDetailsCtrl.mode" class="ui row">
         <div class="left aligned eight wide column">
             <div *ngSwitchCase="'details'" class="content pageTitle">Details: {{userDetailsCtrl.user.userName}}</div>
@@ -63,21 +63,21 @@
                     <div class="ui loader"></div>
                 </div>
 
-                <table *ngSwitchCase="'details'" class="ui very basic selectable table">
+                <table class="ui very basic selectable table">
                     <tbody>
                         <tr>
                             <td class="key">Username</td>
                             <td class="value">{{user.username}}</td>
                         </tr>
-                        <tr >
+                        <tr *ngSwitchCase="'details'">
                             <td class="key">Firstname</td>
                             <td class="value">{{user.first_name}}</td>
                         </tr>
-                        <tr>
+                        <tr *ngSwitchCase="'details'">
                             <td class="key">Lastname</td>
                             <td class="value">{{user.last_name}}</td>
                         </tr>
-                        <tr>
+                        <tr *ngSwitchCase="'details'">
                             <td class="key">Disabled</td>
                             <td class="value">{{user.disable?'Yes':'No'}}</td>
                         </tr>
@@ -89,32 +89,8 @@
                           role="form"
                           (submit)="saveUser(formRef.valid)" novalidate #formRef="ngForm">
 
-                        <div class="field">
-                            <div *ngIf="formRef.submitted">
-                                <div [hidden]="formRef.valid" class="ui negative message">
-                                    <ul class="list">
-                                        <li *ngIf="userName.errors?.required">Please enter
-                                            user name
-                                        </li>
-                                        <li *ngIf="userOrganization.errors?.required">
-                                            Please select organization
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="ui sizteen column grid">
+                        <div class="ui sixteen column grid">
                             <div class="ui row">
-
-                                <div class="ui four wide column">
-                                    <div class="field">
-                                        <label for="userName">Username</label>
-                                        <input type="text" id="userName" name="username"
-                                               [(ngModel)]="user.username"
-                                               placeholder="Enter name" required #username="ngModel">
-                                    </div>
-                                </div>
                                 <div class="ui four wide column">
                                     <div class="field">
                                         <label for="firstname">First Name</label>

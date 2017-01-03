@@ -49,6 +49,7 @@ export class LoginComponent implements OnInit{
             .subscribe((result) => {
                 if(result){
                     this.crudHelperService.stopLoader(this);
+                    this.chartService.startpolling();
                     if(this.authService.firstRun){
                         this.router.navigate(['/m/firstrun']);
                     }
@@ -61,7 +62,6 @@ export class LoginComponent implements OnInit{
                         else{
                             this.router.navigate(['/m/dashboard']);
                         }
-                        this.chartService.startpolling();
                     }
                 }
                 else{
