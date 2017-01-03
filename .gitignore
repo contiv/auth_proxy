@@ -10,3 +10,6 @@ state/default.etcd/
 
 # build dependencies (e.g., UI, etc.)
 build/dependencies
+
+# logs
+*.log
