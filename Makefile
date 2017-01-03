@@ -13,8 +13,10 @@ build: checks
 checks:
 	@bash ./scripts/checks.sh
 
-# ci does everything necessary for a Github PR-triggered CI run
-ci: checks test
+# ci does everything necessary for a Github PR-triggered CI run.
+# currently, this means building a container image and running
+# all of the available tests. (systemtests require a container)
+ci: build test
 
 # generate-certificate generates a local key and cert for running the proxy.
 # if an existing certificate and key exist, it will do nothing.
@@ -35,8 +37,7 @@ run: build generate-certificate
 
 # systemtests runs the system tests suite.
 systemtests:
-	go get gopkg.in/check.v1
-	go test -v -timeout 5m ./systemtests -check.v
+	@bash ./scripts/systemtests.sh
 
 # unittests runs all the unit tests
 unit-tests:

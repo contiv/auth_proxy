@@ -4,7 +4,6 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/contiv/ccn_proxy/proxy"
 	. "gopkg.in/check.v1"
 )
 
@@ -22,9 +21,7 @@ const (
 // TestLogin tests that valid credentials successfully authenticate and that
 // invalid credentials result in failed authentication.
 func (s *systemtestSuite) TestLogin(c *C) {
-
-	// test local user login
-	runTest(func(p *proxy.Server, ms *MockServer) {
+	runTest(func(ms *MockServer) {
 		//
 		// valid credentials
 		//
@@ -43,7 +40,7 @@ func (s *systemtestSuite) TestLogin(c *C) {
 	})
 
 	// test LDAP user login
-	runTest(func(p *proxy.Server, ms *MockServer) {
+	runTest(func(ms *MockServer) {
 		adToken := adminToken(c)
 
 		// add LDAP configuration
@@ -77,7 +74,7 @@ func (s *systemtestSuite) TestLogin(c *C) {
 // TestRequestProxying tests that authenticated requests are proxied to the mock
 // server and the response is returned properly.
 func (s *systemtestSuite) TestRequestProxying(c *C) {
-	runTest(func(p *proxy.Server, ms *MockServer) {
+	runTest(func(ms *MockServer) {
 
 		data := `{"foo":"bar"}`
 		endpoint := "/api/v1/networks/"
@@ -110,7 +107,7 @@ func (s *systemtestSuite) TestRequestProxying(c *C) {
 // TestPOSTBody tests that the body of a POST request is received by the mock
 // server exactly as we sent it to the proxy.
 func (s *systemtestSuite) TestPOSTBody(c *C) {
-	runTest(func(p *proxy.Server, ms *MockServer) {
+	runTest(func(ms *MockServer) {
 
 		data := `{"foo":"bar"}`
 		endpoint := "/api/v1/networks/foo/"

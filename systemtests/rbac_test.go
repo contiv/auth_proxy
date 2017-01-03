@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/contiv/ccn_proxy/proxy"
 	. "gopkg.in/check.v1"
 )
 
@@ -48,7 +47,7 @@ func (s *systemtestSuite) TestRBACFilters(c *C) {
 	s.addUser(c, username)
 
 	// test all list endpoints
-	runTest(func(p *proxy.Server, ms *MockServer) {
+	runTest(func(ms *MockServer) {
 
 		copy := []string{"tenants"}
 		for resource := range epSuffixes {
@@ -105,7 +104,7 @@ func (s *systemtestSuite) TestRBACFilters(c *C) {
 	})
 
 	// test adminOnly list endpoints
-	runTest(func(p *proxy.Server, ms *MockServer) {
+	runTest(func(ms *MockServer) {
 
 		for resource := range adminEpSuffixes {
 			endpoint := "/api/v1/" + resource + "/"
@@ -131,7 +130,7 @@ func (s *systemtestSuite) TestRBACOnDELETERequest(c *C) {
 	s.addUser(c, username)
 
 	// test `tenant` delete
-	runTest(func(p *proxy.Server, ms *MockServer) {
+	runTest(func(ms *MockServer) {
 
 		endpoint := "/api/v1/tenants/" + tenantName + "/"
 		respData := `{"foo":"bar"}`
@@ -161,7 +160,7 @@ func (s *systemtestSuite) TestRBACOnDELETERequest(c *C) {
 	})
 
 	// test all other endpoints
-	runTest(func(p *proxy.Server, ms *MockServer) {
+	runTest(func(ms *MockServer) {
 
 		for resource, rName := range epSuffixes {
 			endpoint := "/api/v1/" + resource + "/" + rName + "/"
@@ -192,7 +191,7 @@ func (s *systemtestSuite) TestRBACOnDELETERequest(c *C) {
 	})
 
 	// test adminOnly list endpoints
-	runTest(func(p *proxy.Server, ms *MockServer) {
+	runTest(func(ms *MockServer) {
 
 		for resource, rName := range adminEpSuffixes {
 			endpoint := "/api/v1/" + resource + "/" + rName + "/"
@@ -219,7 +218,7 @@ func (s *systemtestSuite) TestRBACOnGETRequest(c *C) {
 	s.addUser(c, username)
 
 	// test `tenant` get
-	runTest(func(p *proxy.Server, ms *MockServer) {
+	runTest(func(ms *MockServer) {
 
 		endpoint := "/api/v1/tenants/" + tenantName + "/"
 		respData := `{"foo":"bar"}`
@@ -256,7 +255,7 @@ func (s *systemtestSuite) TestRBACOnGETRequest(c *C) {
 	})
 
 	// test all other netmaster endpoints
-	runTest(func(p *proxy.Server, ms *MockServer) {
+	runTest(func(ms *MockServer) {
 
 		for resource, rName := range epSuffixes {
 			endpoint := "/api/v1/" + resource + "/" + rName + "/"
@@ -286,7 +285,7 @@ func (s *systemtestSuite) TestRBACOnGETRequest(c *C) {
 	})
 
 	// test adminOnly list endpoints
-	runTest(func(p *proxy.Server, ms *MockServer) {
+	runTest(func(ms *MockServer) {
 
 		for resource, rName := range adminEpSuffixes {
 			endpoint := "/api/v1/" + resource + "/" + rName + "/"
@@ -312,7 +311,7 @@ func (s *systemtestSuite) TestRBACOnPOSTRequest(c *C) {
 	s.addUser(c, username)
 
 	// test `tenant` creation
-	runTest(func(p *proxy.Server, ms *MockServer) {
+	runTest(func(ms *MockServer) {
 
 		endpoint := "/api/v1/tenants/" + tenantName + "/"
 		tenantCreateReq := `{"tenantName": "` + tenantName + `"}`
@@ -339,7 +338,7 @@ func (s *systemtestSuite) TestRBACOnPOSTRequest(c *C) {
 	})
 
 	// test all other netmaster endpoints
-	runTest(func(p *proxy.Server, ms *MockServer) {
+	runTest(func(ms *MockServer) {
 		for resource, rName := range epSuffixes {
 			endpoint := "/api/v1/" + resource + "/" + rName + "/"
 			createReq := `{"tenantName": "` + tenantName + `"}`
@@ -380,7 +379,7 @@ func (s *systemtestSuite) TestRBACOnPOSTRequest(c *C) {
 	})
 
 	// test adminOnly list endpoints
-	runTest(func(p *proxy.Server, ms *MockServer) {
+	runTest(func(ms *MockServer) {
 
 		for resource, rName := range adminEpSuffixes {
 			endpoint := "/api/v1/" + resource + "/" + rName + "/"
@@ -405,7 +404,7 @@ func (s *systemtestSuite) TestRBACOnPOSTRequest(c *C) {
 // addUser helper function that adds a new local user to the system
 func (s *systemtestSuite) addUser(c *C, username string) {
 	// add new local user
-	runTest(func(p *proxy.Server, ms *MockServer) {
+	runTest(func(ms *MockServer) {
 		adToken = adminToken(c)
 
 		endpoint := "/api/v1/ccn_proxy/local_users/" + username
@@ -474,7 +473,7 @@ func (s *systemtestSuite) TestAdminRoleRequired(c *C) {
 	// This also sets up the adToken variable
 	s.addUser(c, username)
 
-	runTest(func(p *proxy.Server, ms *MockServer) {
+	runTest(func(ms *MockServer) {
 
 		// login as username, should succeed
 		testuserToken := loginAs(c, username, username)

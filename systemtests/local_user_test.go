@@ -2,7 +2,6 @@ package systemtests
 
 import (
 	"github.com/contiv/ccn_proxy/common/types"
-	"github.com/contiv/ccn_proxy/proxy"
 	. "gopkg.in/check.v1"
 )
 
@@ -13,7 +12,7 @@ var (
 
 // TestBuiltinLocalUsers tests that builtInUsers are pre-defined in the system
 func (s *systemtestSuite) TestBuiltinLocalUsers(c *C) {
-	runTest(func(p *proxy.Server, ms *MockServer) {
+	runTest(func(ms *MockServer) {
 		for _, username := range builtInUsers {
 			loginAs(c, username, username)
 		}
@@ -24,7 +23,7 @@ func (s *systemtestSuite) TestBuiltinLocalUsers(c *C) {
 // TestLocalUserEndpoints tests ccn_proxy's local user endpoints
 func (s *systemtestSuite) TestLocalUserEndpoints(c *C) {
 
-	runTest(func(p *proxy.Server, ms *MockServer) {
+	runTest(func(ms *MockServer) {
 		token := adminToken(c)
 
 		for _, username := range newUsers {
@@ -71,7 +70,7 @@ func (s *systemtestSuite) TestLocalUserUpdateEndpoint(c *C) {
 // userUpdateEndpoint tests update on local user
 func (s *systemtestSuite) userUpdate(c *C) {
 
-	runTest(func(p *proxy.Server, ms *MockServer) {
+	runTest(func(ms *MockServer) {
 		token := adminToken(c)
 
 		for _, username := range newUsers {
@@ -110,7 +109,7 @@ func (s *systemtestSuite) userUpdate(c *C) {
 // builtInUserUpdate tests built-in user update functionality
 func (s *systemtestSuite) builtInUserUpdate(c *C) {
 
-	runTest(func(p *proxy.Server, ms *MockServer) {
+	runTest(func(ms *MockServer) {
 		token := adminToken(c)
 
 		for _, username := range builtInUsers {
@@ -147,7 +146,7 @@ func (s *systemtestSuite) builtInUserUpdate(c *C) {
 // TestLocalUserDeleteEndpoint tests ccn_proxy's local user delete endpoint
 func (s *systemtestSuite) TestLocalUserDeleteEndpoint(c *C) {
 
-	runTest(func(p *proxy.Server, ms *MockServer) {
+	runTest(func(ms *MockServer) {
 		token := adminToken(c)
 
 		// add and delete new users

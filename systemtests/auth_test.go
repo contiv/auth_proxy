@@ -13,7 +13,7 @@ import (
 func (s *systemtestSuite) TestAdminAuthorizationResponse(c *C) {
 	s.addUser(c, username)
 
-	runTest(func(p *proxy.Server, ms *MockServer) {
+	runTest(func(ms *MockServer) {
 		// grant admin access to username, tenant name is redundant and should be ignored
 		data := `{"PrincipalName":"` + username + `","local":true,"role":"` + types.Admin.String() + `","tenantName":"XXX"}`
 		authz := s.addAuthorization(c, data, adToken)
@@ -44,7 +44,7 @@ func (s *systemtestSuite) TestAdminAuthorizationResponse(c *C) {
 func (s *systemtestSuite) TestTenantAuthorizationResponse(c *C) {
 	s.addUser(c, username)
 
-	runTest(func(p *proxy.Server, ms *MockServer) {
+	runTest(func(ms *MockServer) {
 		// grant ops access to username, tenant name is required and should not be ignored
 		data := `{"PrincipalName":"` + username + `","local":true,"role":"` + types.Ops.String() + `","tenantName":""}`
 		endpoint := "/api/v1/ccn_proxy/authorizations"
