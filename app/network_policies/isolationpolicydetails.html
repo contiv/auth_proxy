@@ -25,7 +25,7 @@
                 </button>
                 <button *ngSwitchCase="'edit'" type="button" class="ui large button cancelBtn"
                         (click)="cancelEditing()">
-                    Cancel
+                    Close
                 </button>
                 <button *ngSwitchCase="'details'" class="ui blue large button secondaryBtn"
                         (click)="editPolicy()">
@@ -298,14 +298,7 @@
                     </table>
                 </form>
                 <div [ngSwitch]="mode">
-                    <div class="ui grid" style="margin-top: 40px">
-                        <div class="right aligned sixteen wide column">
-                            <button *ngSwitchCase="'edit'" type="button" class="ui blue large button primaryBtn"
-                                    (click)="doneEditing()">
-                                Save
-                            </button>
-                        </div>
-                    </div>
+
                     <ctv-error *ngIf="((showServerError) && (mode === 'edit'))"
                                header="Error editing isolation policy"
                                [error]="serverErrorMessage">
