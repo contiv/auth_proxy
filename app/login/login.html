@@ -7,18 +7,6 @@
                 <div class="ui loader"></div>
             </div>
 
-            <div id="login-failed" class="ui small modal">
-                <div class="header">Login Failed</div>
-                <div class="content">
-                    <p>Username or Password is wrong</p>
-                </div>
-                <div class="actions">
-                    <div class="ui positive button" onclick="$('#login-failed').modal('hide')">
-                        OK
-                    </div>
-                </div>
-            </div>
-
             <div class="login-seg" style="margin-top: 180px; background-color: white; padding: 20px; ">
                 <h1 class="header" style="margin-left:6px; margin-right:auto;">
                     <img class="ui image" src="images/cisco_logo.svg" height="30" style="display:inline;">
@@ -27,17 +15,25 @@
                 </h1>
 
 
-                <div class="field">
+                <div class="field" [ngClass]="{'error': showServerError}">
                     <input type="text" id="username" name="username" [(ngModel)]="loginCtrl.username"
                            placeholder="User Name" required>
                 </div>
-                <div class="field">
+                <div class="field" [ngClass]="{'error': showServerError}">
                     <input type="password" id="password" name="password" [(ngModel)]="loginCtrl.password"
                            placeholder="Password" required>
                 </div>
+                <div class="field">
+                    <div align="center">
+                        <span *ngIf="showServerError" style="color: red">Incorrect user name or password. Please try again.</span>
+                    </div>
+                </div>
 
                 <div align="center">
-                    <button [disabled]="!loginForm.valid" class="ui fluid blue button primaryBtn">
+                    <button *ngIf="loginForm.valid" class="ui fluid blue button primaryBtn" style="width: 100%">
+                        Log In
+                    </button>
+                    <button *ngIf="!loginForm.valid" class="ui disabled button" style="width: 100%">
                         Log In
                     </button>
                 </div>

@@ -1,7 +1,12 @@
 /*******************************
     User Variable Overrides
 *******************************/
-@borderRadius: 20px;
+/* Button */
+@backgroundColor: #E0E0E0;
+
+/* Text */
+@borderRadius: 2px;
+@textColor: #BABABA;
 
 @negativeColor: #FFFFFF;
 @positiveColor: @blue;

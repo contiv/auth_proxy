@@ -115,7 +115,7 @@ menu { margin: 0; padding: 0; z-index: 2000; }
     padding: 0 24px;
     height: 30px;
     background-color: #049fd9;
-    border-radius: 3px;
+    border-radius: 2px;
     width: auto;
     white-space: nowrap;
 }

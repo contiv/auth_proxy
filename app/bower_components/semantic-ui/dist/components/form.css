@@ -98,7 +98,7 @@
 .ui.form input[type="time"],
 .ui.form input[type="text"],
 .ui.form input[type="url"] {
-  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: CiscoSansRegular, 'Helvetica Neue', Arial, Helvetica, sans-serif;
   margin: 0em;
   outline: none;
   -webkit-appearance: none;
@@ -257,8 +257,8 @@
 .ui.form .field .prompt.label {
   white-space: normal;
   background: #FFFFFF !important;
-  border: 1px solid #E0B4B4 !important;
-  color: #9F3A38 !important;
+  border: 1px solid #F96452 !important;
+  color: #5C5D61 !important;
 }
 .ui.form .inline.fields .field .prompt,
 .ui.form .inline.field .prompt {
@@ -328,22 +328,22 @@
 
 /* Error Placeholder */
 .ui.form .error ::-webkit-input-placeholder {
-  color: #e7bdbc;
+  color: #c3c4c6;
 }
 .ui.form .error ::-ms-input-placeholder {
-  color: #e7bdbc;
+  color: #c3c4c6;
 }
 .ui.form .error ::-moz-placeholder {
-  color: #e7bdbc;
+  color: #c3c4c6;
 }
 .ui.form .error :focus::-webkit-input-placeholder {
-  color: #da9796;
+  color: #a9aaad;
 }
 .ui.form .error :focus::-ms-input-placeholder {
-  color: #da9796;
+  color: #a9aaad;
 }
 .ui.form .error :focus::-moz-placeholder {
-  color: #da9796;
+  color: #a9aaad;
 }
 
 /*--------------------
@@ -429,11 +429,11 @@
 .ui.form .field.error label,
 .ui.form .fields.error .field .input,
 .ui.form .field.error .input {
-  color: #9F3A38;
+  color: #5C5D61;
 }
 .ui.form .fields.error .field .corner.label,
 .ui.form .field.error .corner.label {
-  border-color: #9F3A38;
+  border-color: #5C5D61;
   color: #FFFFFF;
 }
 .ui.form .fields.error .field textarea,
@@ -462,9 +462,9 @@
 .ui.form .field.error input[type="time"],
 .ui.form .field.error input[type="text"],
 .ui.form .field.error input[type="url"] {
-  background: #FFF6F6;
-  border-color: #E0B4B4;
-  color: #9F3A38;
+  background: #FEDCD7;
+  border-color: #F96452;
+  color: #5C5D61;
   border-radius: '';
   box-shadow: none;
 }
@@ -481,9 +481,9 @@
 .ui.form .field.error input[type="time"]:focus,
 .ui.form .field.error input[type="text"]:focus,
 .ui.form .field.error input[type="url"]:focus {
-  background: #FFF6F6;
-  border-color: #E0B4B4;
-  color: #9F3A38;
+  background: #FEDCD7;
+  border-color: #F96452;
+  color: #5C5D61;
   -webkit-appearance: none;
   box-shadow: none;
 }
@@ -502,20 +502,20 @@
 .ui.form .field.error .ui.dropdown,
 .ui.form .field.error .ui.dropdown .text,
 .ui.form .field.error .ui.dropdown .item {
-  background: #FFF6F6;
-  color: #9F3A38;
+  background: #FEDCD7;
+  color: #5C5D61;
 }
 .ui.form .fields.error .field .ui.dropdown,
 .ui.form .field.error .ui.dropdown {
-  border-color: #E0B4B4 !important;
+  border-color: #F96452 !important;
 }
 .ui.form .fields.error .field .ui.dropdown:hover,
 .ui.form .field.error .ui.dropdown:hover {
-  border-color: #E0B4B4 !important;
+  border-color: #F96452 !important;
 }
 .ui.form .fields.error .field .ui.dropdown:hover .menu,
 .ui.form .field.error .ui.dropdown:hover .menu {
-  border-color: #E0B4B4;
+  border-color: #F96452;
 }
 .ui.form .fields.error .field .ui.multiple.selection.dropdown > .label,
 .ui.form .field.error .ui.multiple.selection.dropdown > .label {
@@ -549,20 +549,20 @@
 .ui.form .field.error .checkbox:not(.toggle):not(.slider) label,
 .ui.form .fields.error .field .checkbox:not(.toggle):not(.slider) .box,
 .ui.form .field.error .checkbox:not(.toggle):not(.slider) .box {
-  color: #9F3A38;
+  color: #5C5D61;
 }
 .ui.form .fields.error .field .checkbox:not(.toggle):not(.slider) label:before,
 .ui.form .field.error .checkbox:not(.toggle):not(.slider) label:before,
 .ui.form .fields.error .field .checkbox:not(.toggle):not(.slider) .box:before,
 .ui.form .field.error .checkbox:not(.toggle):not(.slider) .box:before {
-  background: #FFF6F6;
-  border-color: #E0B4B4;
+  background: #FEDCD7;
+  border-color: #F96452;
 }
 .ui.form .fields.error .field .checkbox label:after,
 .ui.form .field.error .checkbox label:after,
 .ui.form .fields.error .field .checkbox .box:after,
 .ui.form .field.error .checkbox .box:after {
-  color: #9F3A38;
+  color: #5C5D61;
 }
 
 /*--------------------
@@ -1052,12 +1052,6 @@
 .ui.huge.form {
   font-size: 1.42857143rem;
 }
-
-
-/*******************************
-         Theme Overrides
-*******************************/
-
 
 
 /*******************************

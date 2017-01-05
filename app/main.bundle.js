@@ -3771,6 +3771,7 @@ webpackJsonp([2],[
 	        this.chartService = chartService;
 	        this.product_name = contivglobals_1.ContivGlobals.PRODUCT_NAME;
 	        this.showLoader = true;
+	        this.showServerError = false;
 	        this.crudHelperService = crudHelperService;
 	        this.username = '';
 	        this.password = '';
@@ -3789,6 +3790,7 @@ webpackJsonp([2],[
 	        this.authService.login({ username: this.username, password: this.password })
 	            .subscribe(function (result) {
 	            if (result) {
+	                _this.showServerError = false;
 	                _this.crudHelperService.stopLoader(_this);
 	                _this.chartService.startpolling();
 	                if (_this.authService.firstRun) {
@@ -3807,11 +3809,12 @@ webpackJsonp([2],[
 	            }
 	            else {
 	                _this.crudHelperService.stopLoader(_this);
+	                _this.showServerError = true;
 	                jQuery('#login-failed').modal('show');
 	            }
 	        }, function (error) {
 	            _this.crudHelperService.stopLoader(_this);
-	            jQuery('#login-failed').modal('show');
+	            _this.showServerError = true;
 	        });
 	    };
 	    LoginComponent = __decorate([
@@ -12213,13 +12216,13 @@ webpackJsonp([2],[
 /* 711 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"ui middle aligned center aligned grid container\">\n    <div class=\"column copyright\">\n\n        <form id=\"loginForm\" name=\"loginForm\" class=\"ui form\" role=\"form\"\n              (submit)=\"login()\" novalidate #loginForm=\"ngForm\">\n            <div class=\"ui active inverted dimmer\" *ngIf=\"loginCtrl.showLoader\">\n                <div class=\"ui loader\"></div>\n            </div>\n\n            <div id=\"login-failed\" class=\"ui small modal\">\n                <div class=\"header\">Login Failed</div>\n                <div class=\"content\">\n                    <p>Username or Password is wrong</p>\n                </div>\n                <div class=\"actions\">\n                    <div class=\"ui positive button\" onclick=\"$('#login-failed').modal('hide')\">\n                        OK\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"login-seg\" style=\"margin-top: 180px; background-color: white; padding: 20px; \">\n                <h1 class=\"header\" style=\"margin-left:6px; margin-right:auto;\">\n                    <img class=\"ui image\" src=\"images/cisco_logo.svg\" height=\"30\" style=\"display:inline;\">\n                    <br>\n                    <span class=\"productname\">{{product_name}}</span>\n                </h1>\n\n\n                <div class=\"field\">\n                    <input type=\"text\" id=\"username\" name=\"username\" [(ngModel)]=\"loginCtrl.username\"\n                           placeholder=\"User Name\" required>\n                </div>\n                <div class=\"field\">\n                    <input type=\"password\" id=\"password\" name=\"password\" [(ngModel)]=\"loginCtrl.password\"\n                           placeholder=\"Password\" required>\n                </div>\n\n                <div align=\"center\">\n                    <button [disabled]=\"!loginForm.valid\" class=\"ui fluid blue button primaryBtn\">\n                        Log In\n                    </button>\n                </div>\n\n                <div class=\"center\">\n                    <div class=\"copyright\">\n                        Copyright (c) 2016 Cisco Systems, Inc. All rights reserved.\n                    </div>\n                </div>\n\n            </div>\n\n        </form>\n    </div>\n</div>"
+	module.exports = "<div class=\"ui middle aligned center aligned grid container\">\n    <div class=\"column copyright\">\n\n        <form id=\"loginForm\" name=\"loginForm\" class=\"ui form\" role=\"form\"\n              (submit)=\"login()\" novalidate #loginForm=\"ngForm\">\n            <div class=\"ui active inverted dimmer\" *ngIf=\"loginCtrl.showLoader\">\n                <div class=\"ui loader\"></div>\n            </div>\n\n            <div class=\"login-seg\" style=\"margin-top: 180px; background-color: white; padding: 20px; \">\n                <h1 class=\"header\" style=\"margin-left:6px; margin-right:auto;\">\n                    <img class=\"ui image\" src=\"images/cisco_logo.svg\" height=\"30\" style=\"display:inline;\">\n                    <br>\n                    <span class=\"productname\">{{product_name}}</span>\n                </h1>\n\n\n                <div class=\"field\" [ngClass]=\"{'error': showServerError}\">\n                    <input type=\"text\" id=\"username\" name=\"username\" [(ngModel)]=\"loginCtrl.username\"\n                           placeholder=\"User Name\" required>\n                </div>\n                <div class=\"field\" [ngClass]=\"{'error': showServerError}\">\n                    <input type=\"password\" id=\"password\" name=\"password\" [(ngModel)]=\"loginCtrl.password\"\n                           placeholder=\"Password\" required>\n                </div>\n                <div class=\"field\">\n                    <div align=\"center\">\n                        <span *ngIf=\"showServerError\" style=\"color: red\">Incorrect user name or password. Please try again.</span>\n                    </div>\n                </div>\n\n                <div align=\"center\">\n                    <button *ngIf=\"loginForm.valid\" class=\"ui fluid blue button primaryBtn\" style=\"width: 100%\">\n                        Log In\n                    </button>\n                    <button *ngIf=\"!loginForm.valid\" class=\"ui disabled button\" style=\"width: 100%\">\n                        Log In\n                    </button>\n                </div>\n\n                <div class=\"center\">\n                    <div class=\"copyright\">\n                        Copyright (c) 2016 Cisco Systems, Inc. All rights reserved.\n                    </div>\n                </div>\n\n            </div>\n\n        </form>\n    </div>\n</div>"
 
 /***/ },
 /* 712 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"ui middle aligned center aligned grid container\">\n    <div class=\"column\" style=\"width: 450px;\">\n        <!-- <div class=\"ui stacked segment login-seg\" style=\"margin-top: 180px\"> -->\n        <div class=\"ui login-seg\" style=\"margin-top: 180px; background-color: white; padding: 20px; \">\n            <h1 class=\"header\" style=\"margin-left:6px; margin-right:auto; text-align:center;\">\n                <img class=\"ui image\" src=\"images/cisco_logo.svg\" height=\"30\" style=\"display:inline;\">\n                <br>\n                <span class=\"productname\">{{product_name}}</span>\n            </h1>\n\n            <div class=\"column\" style=\"text-align: center\">\n                <h3>You have been logged out.</h3>\n            </div>\n\n            <div class=\"column\" style=\"text-align: center; margin-top:50px;\" align=\"center\">\n                <button type=\"button\" class=\"ui fluid blue button primaryBtn\" (click)=\"login()\" style=\"display: inline;\">Login</button>\n            </div>\n           \n            <div class=\"center\">\n                <div class=\"column copyright\">\n                        Copyright (c) 2016 Cisco Systems, Inc. All rights reserved.\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n"
+	module.exports = "<div class=\"ui middle aligned center aligned grid container\">\n    <div class=\"column\" style=\"width: 450px;\">\n        <div class=\"ui login-seg\" style=\"margin-top: 180px; background-color: white; padding: 20px; \">\n            <h1 class=\"header\" style=\"margin-left:6px; margin-right:auto; text-align:center;\">\n                <img class=\"ui image\" src=\"images/cisco_logo.svg\" height=\"30\" style=\"display:inline;\">\n                <br>\n                <span class=\"productname\">{{product_name}}</span>\n            </h1>\n\n            <div class=\"column\" style=\"text-align: center\">\n                <h3>You have been logged out.</h3>\n            </div>\n\n            <div class=\"column\" style=\"text-align: center; margin-top:50px;\" align=\"center\">\n                <button type=\"button\" class=\"ui fluid blue button primaryBtn\" (click)=\"login()\" style=\"display: inline; width: 75%\">Login</button>\n            </div>\n           \n            <div class=\"center\">\n                <div class=\"column copyright\">\n                        Copyright (c) 2016 Cisco Systems, Inc. All rights reserved.\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n"
 
 /***/ },
 /* 713 */

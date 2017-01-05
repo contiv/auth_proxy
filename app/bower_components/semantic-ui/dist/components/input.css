@@ -40,7 +40,7 @@
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   text-align: left;
   line-height: 1.2142em;
-  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: CiscoSansRegular, 'Helvetica Neue', Arial, Helvetica, sans-serif;
   padding: 0.67861429em 1em;
   background: #FFFFFF;
   border: 1px solid rgba(34, 36, 38, 0.15);
@@ -160,8 +160,8 @@
 ---------------------*/
 
 .ui.input.error input {
-  background-color: #FFF6F6;
-  border-color: #E0B4B4;
+  background-color: #FEDCD7;
+  border-color: #F96452;
   color: #9F3A38;
   box-shadow: none;
 }
@@ -503,12 +503,6 @@
 .ui.massive.input {
   font-size: 1.71428571em;
 }
-
-
-/*******************************
-         Theme Overrides
-*******************************/
-
 
 
 /*******************************

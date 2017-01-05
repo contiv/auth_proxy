@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit{
                 private authService: AuthService,
                 private chartService: ChartService){
         this.showLoader = true;
+        this.showServerError = false;
         this.crudHelperService = crudHelperService;
         this.username = '';
         this.password = '';
@@ -48,6 +49,7 @@ export class LoginComponent implements OnInit{
         this.authService.login({username: this.username, password: this.password})
             .subscribe((result) => {
                 if(result){
+                    this.showServerError = false;
                     this.crudHelperService.stopLoader(this);
                     this.chartService.startpolling();
                     if(this.authService.firstRun){
@@ -66,11 +68,12 @@ export class LoginComponent implements OnInit{
                 }
                 else{
                     this.crudHelperService.stopLoader(this);
+                    this.showServerError = true;
                     jQuery('#login-failed').modal('show');
                 }
             }, (error) => {
                 this.crudHelperService.stopLoader(this);
-                jQuery('#login-failed').modal('show');
+                this.showServerError = true;
             });
     }
 }

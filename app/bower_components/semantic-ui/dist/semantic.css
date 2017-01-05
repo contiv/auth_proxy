@@ -528,7 +528,7 @@ body {
   overflow-x: hidden;
   min-width: 320px;
   background: #FFFFFF;
-  font-family: 'cisco-ucp', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: CiscoSansRegular, 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-size: 14px;
   line-height: 1.4285em;
   color: rgba(0, 0, 0, 0.87);
@@ -544,7 +544,7 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: 'cisco-ucp', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: CiscoSansRegular, 'Helvetica Neue', Arial, Helvetica, sans-serif;
   line-height: 1.2857em;
   margin: calc(2rem -  0.14285em ) 0em 1rem;
   font-weight: bold;
@@ -685,9 +685,9 @@ input::selection {
   outline: none;
   border: none;
   vertical-align: baseline;
-  background: #E0E1E2 none;
-  color: rgba(0, 0, 0, 0.6);
-  font-family: 'cisco-ucp', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  background: #E0E0E0 none;
+  color: #BABABA;
+  font-family: CiscoSansRegular, 'Helvetica Neue', Arial, Helvetica, sans-serif;
   margin: 0em 0.25em 0em 0em;
   padding: 0.78571429em 1.5em 0.78571429em;
   text-transform: none;
@@ -697,7 +697,7 @@ input::selection {
   font-style: normal;
   text-align: center;
   text-decoration: none;
-  border-radius: 20px;
+  border-radius: 2px;
   box-shadow: 0px 0px 0px 1px transparent inset, 0px 0em 0px 0px rgba(34, 36, 38, 0.15) inset;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -1460,9 +1460,9 @@ input::selection {
 .ui.basic.buttons .button,
 .ui.basic.button {
   background: transparent none !important;
-  color: rgba(0, 0, 0, 0.6) !important;
+  color: #BABABA !important;
   font-weight: normal;
-  border-radius: 20px;
+  border-radius: 2px;
   text-transform: none;
   text-shadow: none !important;
   box-shadow: 0px 0px 0px 1px rgba(34, 36, 38, 0.15) inset;
@@ -1471,7 +1471,7 @@ input::selection {
 .ui.basic.buttons {
   box-shadow: none;
   border: 1px solid rgba(34, 36, 38, 0.15);
-  border-radius: 20px;
+  border-radius: 2px;
 }
 
 .ui.basic.buttons .button {
@@ -1659,23 +1659,23 @@ input::selection {
 }
 
 .ui.labeled.icon.buttons .button:first-child > .icon {
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
 }
 
 .ui.labeled.icon.buttons .button:last-child > .icon {
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
 }
 
 .ui.vertical.labeled.icon.buttons .button:first-child > .icon {
   border-radius: 0em;
-  border-top-left-radius: 20px;
+  border-top-left-radius: 2px;
 }
 
 .ui.vertical.labeled.icon.buttons .button:last-child > .icon {
   border-radius: 0em;
-  border-bottom-left-radius: 20px;
+  border-bottom-left-radius: 2px;
 }
 
 /* Fluid Labeled */
@@ -1782,11 +1782,11 @@ input::selection {
 /* Top / Bottom */
 
 .ui.attached.top.button {
-  border-radius: 20px 20px 0em 0em;
+  border-radius: 2px 2px 0em 0em;
 }
 
 .ui.attached.bottom.button {
-  border-radius: 0em 0em 20px 20px;
+  border-radius: 0em 0em 2px 2px;
 }
 
 /* Left / Right */
@@ -1796,14 +1796,14 @@ input::selection {
   border-left: none;
   text-align: right;
   padding-right: 0.75em;
-  border-radius: 20px 0em 0em 20px;
+  border-radius: 2px 0em 0em 2px;
 }
 
 .ui.right.attached.button {
   display: inline-block;
   text-align: left;
   padding-left: 0.75em;
-  border-radius: 0em 20px 20px 0em;
+  border-radius: 0em 2px 2px 0em;
 }
 
 /* Plural */
@@ -1837,28 +1837,28 @@ input::selection {
 
 .ui[class*="top attached"].buttons {
   margin-bottom: -1px;
-  border-radius: 20px 20px 0em 0em;
+  border-radius: 2px 2px 0em 0em;
 }
 
 .ui[class*="top attached"].buttons .button:first-child {
-  border-radius: 20px 0em 0em 0em;
+  border-radius: 2px 0em 0em 0em;
 }
 
 .ui[class*="top attached"].buttons .button:last-child {
-  border-radius: 0em 20px 0em 0em;
+  border-radius: 0em 2px 0em 0em;
 }
 
 .ui[class*="bottom attached"].buttons {
   margin-top: -1px;
-  border-radius: 0em 0em 20px 20px;
+  border-radius: 0em 0em 2px 2px;
 }
 
 .ui[class*="bottom attached"].buttons .button:first-child {
-  border-radius: 0em 0em 0em 20px;
+  border-radius: 0em 0em 0em 2px;
 }
 
 .ui[class*="bottom attached"].buttons .button:last-child {
-  border-radius: 0em 0em 20px 0em;
+  border-radius: 0em 0em 2px 0em;
 }
 
 /* Left / Right */
@@ -1870,17 +1870,17 @@ input::selection {
   display: inline-flex;
   margin-right: 0em;
   margin-left: -1px;
-  border-radius: 0em 20px 20px 0em;
+  border-radius: 0em 2px 2px 0em;
 }
 
 .ui[class*="left attached"].buttons .button:first-child {
   margin-left: -1px;
-  border-radius: 0em 20px 0em 0em;
+  border-radius: 0em 2px 0em 0em;
 }
 
 .ui[class*="left attached"].buttons .button:last-child {
   margin-left: -1px;
-  border-radius: 0em 0em 20px 0em;
+  border-radius: 0em 0em 2px 0em;
 }
 
 .ui[class*="right attached"].buttons {
@@ -1890,17 +1890,17 @@ input::selection {
   display: inline-flex;
   margin-left: 0em;
   margin-right: -1px;
-  border-radius: 20px 0em 0em 20px;
+  border-radius: 2px 0em 0em 2px;
 }
 
 .ui[class*="right attached"].buttons .button:first-child {
   margin-left: -1px;
-  border-radius: 20px 0em 0em 0em;
+  border-radius: 2px 0em 0em 0em;
 }
 
 .ui[class*="right attached"].buttons .button:last-child {
   margin-left: -1px;
-  border-radius: 0em 0em 0em 20px;
+  border-radius: 0em 0em 0em 2px;
 }
 
 /*-------------------
@@ -2326,7 +2326,7 @@ input::selection {
 .ui.inverted.grey.buttons .button:active,
 .ui.inverted.grey.button:active {
   box-shadow: none !important;
-  color: rgba(0, 0, 0, 0.6);
+  color: #BABABA;
 }
 
 .ui.inverted.grey.buttons .button:hover,
@@ -3784,7 +3784,7 @@ input::selection {
 .ui.inverted.teal.buttons .button:active,
 .ui.inverted.teal.button:active {
   box-shadow: none !important;
-  color: rgba(0, 0, 0, 0.6);
+  color: #BABABA;
 }
 
 .ui.inverted.teal.buttons .button:hover,
@@ -3946,7 +3946,7 @@ input::selection {
 .ui.inverted.olive.buttons .button:active,
 .ui.inverted.olive.button:active {
   box-shadow: none !important;
-  color: rgba(0, 0, 0, 0.6);
+  color: #BABABA;
 }
 
 .ui.inverted.olive.buttons .button:hover,
@@ -4108,7 +4108,7 @@ input::selection {
 .ui.inverted.yellow.buttons .button:active,
 .ui.inverted.yellow.button:active {
   box-shadow: none !important;
-  color: rgba(0, 0, 0, 0.6);
+  color: #BABABA;
 }
 
 .ui.inverted.yellow.buttons .button:hover,
@@ -4400,13 +4400,13 @@ input::selection {
 .ui.buttons .button:first-child {
   border-left: none;
   margin-left: 0em;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
 }
 
 .ui.buttons .button:last-child {
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
 }
 
 /* Vertical  Style */
@@ -4437,7 +4437,7 @@ input::selection {
 .ui.vertical.buttons .small.button:first-child,
 .ui.vertical.buttons .massive.button:first-child,
 .ui.vertical.buttons .huge.button:first-child {
-  border-radius: 20px 20px 0px 0px;
+  border-radius: 2px 2px 0px 0px;
 }
 
 .ui.vertical.buttons .button:last-child,
@@ -4448,7 +4448,7 @@ input::selection {
 .ui.vertical.buttons .huge.button:last-child,
 .ui.vertical.buttons .gigantic.button:last-child {
   margin-bottom: 0px;
-  border-radius: 0px 0px 20px 20px;
+  border-radius: 0px 0px 2px 2px;
 }
 
 /*******************************
@@ -8330,7 +8330,7 @@ img.ui.bordered.image {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   text-align: left;
   line-height: 1.2142em;
-  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: CiscoSansRegular, 'Helvetica Neue', Arial, Helvetica, sans-serif;
   padding: 0.67861429em 1em;
   background: #FFFFFF;
   border: 1px solid rgba(34, 36, 38, 0.15);
@@ -8455,8 +8455,8 @@ img.ui.bordered.image {
 ---------------------*/
 
 .ui.input.error input {
-  background-color: #FFF6F6;
-  border-color: #E0B4B4;
+  background-color: #FEDCD7;
+  border-color: #F96452;
   color: #9F3A38;
   box-shadow: none;
 }
@@ -8851,10 +8851,6 @@ img.ui.bordered.image {
 .ui.massive.input {
   font-size: 1.71428571em;
 }
-
-/*******************************
-         Theme Overrides
-*******************************/
 
 /*******************************
          Site Overrides
@@ -13837,7 +13833,7 @@ ol.ui.horizontal.list li:before,
 .ui.form input[type="time"],
 .ui.form input[type="text"],
 .ui.form input[type="url"] {
-  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: CiscoSansRegular, 'Helvetica Neue', Arial, Helvetica, sans-serif;
   margin: 0em;
   outline: none;
   -webkit-appearance: none;
@@ -14006,8 +14002,8 @@ ol.ui.horizontal.list li:before,
 .ui.form .field .prompt.label {
   white-space: normal;
   background: #FFFFFF !important;
-  border: 1px solid #E0B4B4 !important;
-  color: #9F3A38 !important;
+  border: 1px solid #F96452 !important;
+  color: #5C5D61 !important;
 }
 
 .ui.form .inline.fields .field .prompt,
@@ -14085,27 +14081,27 @@ ol.ui.horizontal.list li:before,
 /* Error Placeholder */
 
 .ui.form .error ::-webkit-input-placeholder {
-  color: #e7bdbc;
+  color: #c3c4c6;
 }
 
 .ui.form .error ::-ms-input-placeholder {
-  color: #e7bdbc;
+  color: #c3c4c6;
 }
 
 .ui.form .error ::-moz-placeholder {
-  color: #e7bdbc;
+  color: #c3c4c6;
 }
 
 .ui.form .error :focus::-webkit-input-placeholder {
-  color: #da9796;
+  color: #a9aaad;
 }
 
 .ui.form .error :focus::-ms-input-placeholder {
-  color: #da9796;
+  color: #a9aaad;
 }
 
 .ui.form .error :focus::-moz-placeholder {
-  color: #da9796;
+  color: #a9aaad;
 }
 
 /*--------------------
@@ -14196,12 +14192,12 @@ ol.ui.horizontal.list li:before,
 .ui.form .field.error label,
 .ui.form .fields.error .field .input,
 .ui.form .field.error .input {
-  color: #9F3A38;
+  color: #5C5D61;
 }
 
 .ui.form .fields.error .field .corner.label,
 .ui.form .field.error .corner.label {
-  border-color: #9F3A38;
+  border-color: #5C5D61;
   color: #FFFFFF;
 }
 
@@ -14231,9 +14227,9 @@ ol.ui.horizontal.list li:before,
 .ui.form .field.error input[type="time"],
 .ui.form .field.error input[type="text"],
 .ui.form .field.error input[type="url"] {
-  background: #FFF6F6;
-  border-color: #E0B4B4;
-  color: #9F3A38;
+  background: #FEDCD7;
+  border-color: #F96452;
+  color: #5C5D61;
   border-radius: '';
   box-shadow: none;
 }
@@ -14251,9 +14247,9 @@ ol.ui.horizontal.list li:before,
 .ui.form .field.error input[type="time"]:focus,
 .ui.form .field.error input[type="text"]:focus,
 .ui.form .field.error input[type="url"]:focus {
-  background: #FFF6F6;
-  border-color: #E0B4B4;
-  color: #9F3A38;
+  background: #FEDCD7;
+  border-color: #F96452;
+  color: #5C5D61;
   -webkit-appearance: none;
   box-shadow: none;
 }
@@ -14273,23 +14269,23 @@ ol.ui.horizontal.list li:before,
 .ui.form .field.error .ui.dropdown,
 .ui.form .field.error .ui.dropdown .text,
 .ui.form .field.error .ui.dropdown .item {
-  background: #FFF6F6;
-  color: #9F3A38;
+  background: #FEDCD7;
+  color: #5C5D61;
 }
 
 .ui.form .fields.error .field .ui.dropdown,
 .ui.form .field.error .ui.dropdown {
-  border-color: #E0B4B4 !important;
+  border-color: #F96452 !important;
 }
 
 .ui.form .fields.error .field .ui.dropdown:hover,
 .ui.form .field.error .ui.dropdown:hover {
-  border-color: #E0B4B4 !important;
+  border-color: #F96452 !important;
 }
 
 .ui.form .fields.error .field .ui.dropdown:hover .menu,
 .ui.form .field.error .ui.dropdown:hover .menu {
-  border-color: #E0B4B4;
+  border-color: #F96452;
 }
 
 .ui.form .fields.error .field .ui.multiple.selection.dropdown > .label,
@@ -14327,22 +14323,22 @@ ol.ui.horizontal.list li:before,
 .ui.form .field.error .checkbox:not(.toggle):not(.slider) label,
 .ui.form .fields.error .field .checkbox:not(.toggle):not(.slider) .box,
 .ui.form .field.error .checkbox:not(.toggle):not(.slider) .box {
-  color: #9F3A38;
+  color: #5C5D61;
 }
 
 .ui.form .fields.error .field .checkbox:not(.toggle):not(.slider) label:before,
 .ui.form .field.error .checkbox:not(.toggle):not(.slider) label:before,
 .ui.form .fields.error .field .checkbox:not(.toggle):not(.slider) .box:before,
 .ui.form .field.error .checkbox:not(.toggle):not(.slider) .box:before {
-  background: #FFF6F6;
-  border-color: #E0B4B4;
+  background: #FEDCD7;
+  border-color: #F96452;
 }
 
 .ui.form .fields.error .field .checkbox label:after,
 .ui.form .field.error .checkbox label:after,
 .ui.form .fields.error .field .checkbox .box:after,
 .ui.form .field.error .checkbox .box:after {
-  color: #9F3A38;
+  color: #5C5D61;
 }
 
 /*--------------------
@@ -14888,10 +14884,6 @@ ol.ui.horizontal.list li:before,
 .ui.huge.form {
   font-size: 1.42857143rem;
 }
-
-/*******************************
-         Theme Overrides
-*******************************/
 
 /*******************************
          Site Overrides
@@ -17217,7 +17209,7 @@ ol.ui.horizontal.list li:before,
   display: -ms-flexbox;
   display: flex;
   margin: 1rem 0em;
-  font-family: 'cisco-ucp', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: CiscoSansRegular, 'Helvetica Neue', Arial, Helvetica, sans-serif;
   background: #FFFFFF;
   font-weight: normal;
   border: 1px solid rgba(34, 36, 38, 0.15);

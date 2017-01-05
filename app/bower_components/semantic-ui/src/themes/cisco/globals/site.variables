@@ -9,8 +9,8 @@
 @fontName          : 'cisco-ucp';
 @fontSmoothing     : antialiased;
 
-@headerFont        : @fontName, 'Helvetica Neue', Arial, Helvetica, sans-serif;
-@pageFont          : @fontName, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+@headerFont        : CiscoSansRegular, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+@pageFont          : CiscoSansRegular, 'Helvetica Neue', Arial, Helvetica, sans-serif;
 
 @googleFontName    : 'Lato';
 @importGoogleFonts : false;
@@ -20,11 +20,19 @@
 @googleProtocol    : 'https://';
 @googleFontRequest : '@{googleFontName}:@{googleFontSizes}&subset=@{googleSubset}';
 
-
-@blue           : #049fd9;
+/*---  Colors  ---*/
+@blue              : #049fd9;
 
 @secondaryColor      :#FFFFFF;
 
 
 @primaryColorHover   : #036e97;
 @secondaryColorHover : #cfcfcf;
+
+/*-------------------
+    Emotive Colors
+--------------------*/
+
+/* Negative */
+@negativeBackgroundColor : #FEDCD7;
+@negativeBorderColor     : #F96452;
