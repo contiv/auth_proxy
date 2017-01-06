@@ -59,13 +59,13 @@ func processFlags() {
 	flag.StringVar(
 		&listenAddress,
 		"listen-address",
-		":9999",
+		":10000",
 		"address to listen to HTTP requests on",
 	)
 	flag.StringVar(
 		&netmasterAddress,
 		"netmaster-address",
-		"localhost:9998",
+		"localhost:9999",
 		"address of the upstream netmaster",
 	)
 	flag.StringVar(
