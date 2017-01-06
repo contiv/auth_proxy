@@ -1,19 +1,19 @@
 <div class="ui row ">
     <div class="ui sixteen wide column">
         <div class="ui basic segment" [ngClass]="{loading: showLoader}">
-            <table class="ui very basic selectable table">
+            <table>
                 <tbody>
                 <tr>
-                    <td class="two wide column key"><strong>Name</strong></td>
-                    <td class="value">{{applicationGroup.groupName}}</td>
+                    <td class="ctv-header"><strong>Name</strong></td>
+                    <td class="ctv-value">{{applicationGroup.groupName}}</td>
                 </tr>
                 <tr>
-                    <td class="three wide column key">Tenant</td>
-                    <td class="value">{{applicationGroup.tenantName}}</td>
+                    <td class="ctv-header">Tenant</td>
+                    <td class="ctv-value">{{applicationGroup.tenantName}}</td>
                 </tr>
                 <tr>
-                    <td class="two wide column key"><strong>Network</strong></td>
-                    <td class="value">{{applicationGroup.networkName}}</td>
+                    <td class="ctv-header"><strong>Network</strong></td>
+                    <td class="ctv-value">{{applicationGroup.networkName}}</td>
                 </tr>
                 </tbody>
             </table>

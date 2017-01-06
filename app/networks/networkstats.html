@@ -1,33 +1,33 @@
 <div class="ui basic segment" [ngClass]="{loading: networkStatsCtrl.showLoader}">
-<table class="ui very basic selectable table">
+<table>
     <tbody>
     <tr>
-        <td class="ctv-header three wide column key">Name</td>
-        <td>{{networkStatsCtrl['config']['networkName']}}</td>
+        <td class="ctv-header">Name</td>
+        <td class="ctv-value">{{networkStatsCtrl['config']['networkName']}}</td>
     </tr>
     <tr>
-        <td class="ctv-header three wide column key">Allocated Addresses Count</td>
-        <td class="value">{{networkStatsCtrl.networkInspectStats.allocatedAddressesCount}}</td>
+        <td class="ctv-header">Allocated Addresses Count</td>
+        <td class="ctv-value">{{networkStatsCtrl.networkInspectStats.allocatedAddressesCount}}</td>
     </tr>
     <tr>
-        <td class="ctv-header three wide column key">Allocated IP-Addresses</td>
-        <td class="value">{{networkStatsCtrl.networkInspectStats.allocatedIPAddresses}}</td>
+        <td class="ctv-header">Allocated IP-Addresses</td>
+        <td class="ctv-value">{{networkStatsCtrl.networkInspectStats.allocatedIPAddresses}}</td>
     </tr>
     <tr>
-        <td class="ctv-header three wide column key">DNS Server-IP</td>
-        <td class="value">{{networkStatsCtrl.networkInspectStats.dnsServerIP}}</td>
+        <td class="ctv-header">DNS Server-IP</td>
+        <td class="ctv-value">{{networkStatsCtrl.networkInspectStats.dnsServerIP}}</td>
     </tr>
     <tr>
-        <td class="ctv-header three wide column key">External Packet Tag</td>
-        <td class="value">{{networkStatsCtrl.networkInspectStats.externalPktTag}}</td>
+        <td class="ctv-header">External Packet Tag</td>
+        <td class="ctv-value">{{networkStatsCtrl.networkInspectStats.externalPktTag}}</td>
     </tr>
     <tr>
-        <td class="ctv-header three wide column key">Number of Endpoints</td>
-        <td class="value">{{networkStatsCtrl.networkInspectStats.numEndpoints}}</td>
+        <td class="ctv-header">Number of Endpoints</td>
+        <td class="ctv-value">{{networkStatsCtrl.networkInspectStats.numEndpoints}}</td>
     </tr>
     <tr>
-        <td class="ctv-header three wide column key">Packet Tag</td>
-        <td class="value">{{networkStatsCtrl.networkInspectStats.pktTag}}</td>
+        <td class="ctv-header">Packet Tag</td>
+        <td class="ctv-value">{{networkStatsCtrl.networkInspectStats.pktTag}}</td>
     </tr>
     </tbody>
 </table>

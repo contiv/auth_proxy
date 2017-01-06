@@ -64,27 +64,27 @@
 
                         <div class="description">Authorization records cannot be edited. Remove this record and recreate it if what you see here is not what you want.</div>
 
-                        <table class="ui very basic selectable table">
+                        <table>
                             <tbody>
                                 <tr>
-                                    <td class="ui four wide column key">Username</td>
-                                    <td class="value">{{authorization.PrincipalName}}</td>
+                                    <td class="ctv-header">Username</td>
+                                    <td class="ctv-value">{{authorization.PrincipalName}}</td>
                                 </tr>
                                 <tr>
-                                    <td class="ui four wide column key">Local</td>
-                                    <td class="value">{{(authorization.Local?'yes':'no')}}</td>
+                                    <td class="ctv-header">Local</td>
+                                    <td class="ctv-value">{{(authorization.Local?'yes':'no')}}</td>
                                 </tr>
                                 <tr *ngSwitchCase="'details'">
-                                    <td class="ui four wide column key">Role</td>
-                                    <td class="value">{{authorization.Role}}</td>
+                                    <td class="ctv-header">Role</td>
+                                    <td class="ctv-value">{{authorization.Role}}</td>
                                 </tr>
                                 <tr *ngSwitchCase="'details'">
-                                    <td class="ui four wide column key">Tenant Authorization</td>
-                                    <td class="value">{{authorization.TenantName}}</td>
+                                    <td class="ctv-header">Tenant Authorization</td>
+                                    <td class="ctv-value">{{authorization.TenantName}}</td>
                                 </tr>
                                 <tr>
-                                    <td class="ui four wide column key">Authorization UUID</td>
-                                    <td class="value">{{authorization.AuthzUUID}}</td>
+                                    <td class="ctv-header">Authorization UUID</td>
+                                    <td class="ctv-value">{{authorization.AuthzUUID}}</td>
                                 </tr>
                             </tbody>
                         </table>

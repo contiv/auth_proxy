@@ -2,26 +2,26 @@
     <div class="ui active inverted dimmer" *ngIf="networkDetailsCtrl.showLoader">
         <div class="ui loader"></div>
     </div>
-    <table class="ui very basic selectable table">
+    <table>
         <tbody>
         <tr>
-            <td class="ctv-header three wide column key">Name</td>
-            <td class="value">{{networkDetailsCtrl.network.networkName}}</td>
+            <td class="ctv-header">Name</td>
+            <td class="ctv-value">{{networkDetailsCtrl.network.networkName}}</td>
         </tr>
         <tr>
-            <td class="ctv-header three wide column key">Tenant</td>
-            <td class="value">{{networkDetailsCtrl.network.tenantName}}</td>
+            <td class="ctv-header">Tenant</td>
+            <td class="ctv-value">{{networkDetailsCtrl.network.tenantName}}</td>
         </tr>
         <tr>
-            <td class="ctv-header three wide column key">Encapsulation</td>
-            <td class="value">{{networkDetailsCtrl.network.encap}}</td>
+            <td class="ctv-header">Encapsulation</td>
+            <td class="ctv-value">{{networkDetailsCtrl.network.encap}}</td>
         </tr>
         <tr>
-            <td class="ctv-header three wide column key">Subnet</td>
-            <td class="value">{{networkDetailsCtrl.network.subnet}}</td>
+            <td class="ctv-header">Subnet</td>
+            <td class="ctv-value">{{networkDetailsCtrl.network.subnet}}</td>
         </tr>
         <tr>
-            <td class="ctv-header three wide column key">Gateway</td>
+            <td class="ctv-header">Gateway</td>
             <td class="value">{{networkDetailsCtrl.network.gateway}}</td>
         </tr>
         </tbody>

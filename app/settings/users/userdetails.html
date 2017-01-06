@@ -63,23 +63,23 @@
                     <div class="ui loader"></div>
                 </div>
 
-                <table class="ui very basic selectable table">
+                <table>
                     <tbody>
                         <tr>
-                            <td class="key">Username</td>
-                            <td class="value">{{user.username}}</td>
+                            <td class="ctv-header">Username</td>
+                            <td class="ctv-value">{{user.username}}</td>
                         </tr>
                         <tr *ngSwitchCase="'details'">
-                            <td class="key">Firstname</td>
-                            <td class="value">{{user.first_name}}</td>
+                            <td class="ctv-header">Firstname</td>
+                            <td class="ctv-value">{{user.first_name}}</td>
                         </tr>
                         <tr *ngSwitchCase="'details'">
-                            <td class="key">Lastname</td>
-                            <td class="value">{{user.last_name}}</td>
+                            <td class="ctv-header">Lastname</td>
+                            <td class="ctv-value">{{user.last_name}}</td>
                         </tr>
                         <tr *ngSwitchCase="'details'">
-                            <td class="key">Disabled</td>
-                            <td class="value">{{user.disable?'Yes':'No'}}</td>
+                            <td class="ctv-header">Disabled</td>
+                            <td class="ctv-value">{{user.disable?'Yes':'No'}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -130,7 +130,7 @@
                             </div>
                             <div class="ui row">
 
-                                <div class="right aligned fifteen wide column buttonRow">
+                                <div class="right aligned sixteen wide column buttonRow">
                                     <button type="button" class="ui large button cancelBtn" (click)="cancelEditing()">
                                         Cancel
                                     </button>

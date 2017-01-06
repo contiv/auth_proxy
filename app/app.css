@@ -1,10 +1,18 @@
 /* app css stylesheet */
 td.ctv-header {
-    color: grey;
+    font-family: CiscoSansRegular;
+    color: #5d5d5d;
+    white-space: nowrap;
+    text-transform: capitalize;
+    text-align: right;
+    padding-right: 20px;
+    line-height: 26px
 }
-
-tr:nth-child(even) {
-    background: #f1fafe
+td.ctv-value {
+    font-family: CiscoSansExtraLight;
+    color: #5d5d5d;
+    text-align: left;
+    line-height: 26px
 }
 
 td.ctv-wordwrap {

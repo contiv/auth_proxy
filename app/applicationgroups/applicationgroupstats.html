@@ -1,25 +1,25 @@
 <div class="ui basic segment" [ngClass]="{loading: showLoader}">
-    <table class="ui very basic selectable table">
+    <table>
         <tbody>
         <tr>
-            <td class="ctv-header three wide column key">Name</td>
-            <td class="value">{{config['groupName'] || 'not configured'}}</td>
+            <td class="ctv-header">Name</td>
+            <td class="ctv-value">{{config['groupName'] || 'not configured'}}</td>
         </tr>
         <tr>
-            <td class="ctv-header three wide column key">Network Name</td>
-            <td class="value">{{config['networkName'] || 'not configured'}}</td>
+            <td class="ctv-header">Network Name</td>
+            <td class="ctv-value">{{config['networkName'] || 'not configured'}}</td>
         </tr>
         <tr>
-            <td class="ctv-header three wide column key">External Packet Tag</td>
-            <td class="value">{{applicationInspectStats.externalPktTag || 'not configured'}}</td>
+            <td class="ctv-header">External Packet Tag</td>
+            <td class="ctv-value">{{applicationInspectStats.externalPktTag || 'not configured'}}</td>
         </tr>
         <tr>
-            <td class="ctv-header three wide column key">Number of Endpoints</td>
-            <td class="value">{{applicationInspectStats.numEndpoints || 'not configured'}}</td>
+            <td class="ctv-header">Number of Endpoints</td>
+            <td class="ctv-value">{{applicationInspectStats.numEndpoints || 'not configured'}}</td>
         </tr>
         <tr>
-            <td class="ctv-header three wide column key">Packet Tag</td>
-            <td class="value">{{applicationInspectStats.pktTag || 'not configured'}}</td>
+            <td class="ctv-header">Packet Tag</td>
+            <td class="ctv-value">{{applicationInspectStats.pktTag || 'not configured'}}</td>
         </tr>
         </tbody>
     </table>
