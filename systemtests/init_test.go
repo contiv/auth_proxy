@@ -7,15 +7,12 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	"os/exec"
 	"testing"
 	"time"
 
 	"github.com/contiv/ccn_proxy/auth"
-	"github.com/contiv/ccn_proxy/common"
 	"github.com/contiv/ccn_proxy/common/test"
 	"github.com/contiv/ccn_proxy/common/types"
-	"github.com/contiv/ccn_proxy/db"
 	"github.com/contiv/ccn_proxy/proxy"
 	"github.com/contiv/ccn_proxy/state"
 
@@ -30,35 +27,38 @@ var (
 
 	opsUsername = types.Ops.String()
 	opsPassword = types.Ops.String()
+
+	proxyHost = ""
 )
 
+// Test is the entrypoint for the systemtests suite.
+// depending on the value of the USE_DATASTORE envvar, the tests will either run
+// against etcd or consul.  the datastore is assumed to be fresh and with no
+// existing state.
 func Test(t *testing.T) {
 	if len(os.Getenv("DEBUG")) > 0 {
 		log.SetLevel(log.DebugLevel)
 	}
 
-	datastore := test.GetDatastore()
+	// PROXY_ADDRESS is set in ./scripts/systemtests_in_container.sh
+	proxyHost = os.Getenv("PROXY_ADDRESS")
+	if 0 == len(proxyHost) {
+		panic("you must supply a PROXY_ADDRESS (e.g., 1.2.3.4:12345)")
+	}
+
 	datastoreAddress := test.GetDatastoreAddress()
 
+	log.Info("Initializing datastore")
 	if err := state.InitializeStateDriver(datastoreAddress); err != nil {
 		log.Fatalln(err)
 	}
 
-	// set `tls_key_file` in Globals
-	exec.Command("/bin/sh", "-c", "make generate-certificate")
-	common.Global().Set("tls_key_file", "../local_certs/local.key")
-
-	// cleanup users and principals
-	test.CleanupDatastore(datastore, []string{
-		db.GetPath(db.RootLocalUsers),
-		db.GetPath(db.RootLdapConfiguration),
-		db.GetPath("authorizations"),
-	})
-
+	log.Info("Adding default users")
 	if err := auth.AddDefaultUsers(); err != nil {
 		log.Fatalln(err)
 	}
 
+	// execute the systemtests
 	TestingT(t)
 }
 
@@ -66,49 +66,25 @@ type systemtestSuite struct{}
 
 var _ = Suite(&systemtestSuite{})
 
-// ===== TEST PROXY SERVER ======================================================
-
-const proxyHost = "localhost:50000"
-const netmasterHost = "localhost:60000"
-
-// NewTestProxy returns a running proxy server
-func NewTestProxy() *proxy.Server {
-	p := proxy.NewServer(&proxy.Config{
-		Name:    "CCN Proxy",
-		Version: "systemtests",
-
-		// NOTE: instead of hardcoding the two ports here, we could just
-		//       randomly bind to ports until we find two available ones.
-		//       we can cross that bridge if it's worth it.
-		NetmasterAddress: netmasterHost,
-		ListenAddress:    proxyHost,
-
-		// cert and key path are relative to /systemtests and since
-		// `generate-certificates` is a make dependency, we can assume they exist
-		TLSCertificate: "../local_certs/cert.pem",
-		TLSKeyFile:     "../local_certs/local.key",
-	})
-	p.DisableKeepalives()
-	go p.Serve()
-
-	return p
-}
-
 // ===== MISC FUNCTIONS =========================================================
 
-// runTest is a convenience function which encapsulates the logic of creating an
-// instance of proxy.Server and setting its upstream to an instance of MockServer.
-// running each test inside of a runTest() call guarantees that no routes or
-// shenanigans from any previous tests are present.
-func runTest(f func(*proxy.Server, *MockServer)) {
-	p := NewTestProxy()
+// runTest is a convenience function which calls the passed in function and
+// gives it a programmable MockServer as an argument.
+// the ccn_proxy:devbuild container which is started before any tests run is
+// configured to use the MockServer as its "netmaster".
+// see basic_test.go for some examples of how to use it.
+func runTest(f func(*MockServer)) {
 	ms := NewMockServer()
 
-	// TODO: there is a race condition here regarding the goroutines where
-	//       http.Serve() is eventually called on the http.Server objects
-	//       created by NewTestProxy() and NewMockServer() above. Serve()
-	//       does not provide any notification mechanism for when it's ready
-	//       and it blocks when called, so there will be a very short window
+	// there is, however, no race condition on shutdown.  this blocks until the
+	// listener is destroyed.
+	defer ms.Stop()
+
+	// TODO: there is a race condition here regarding the goroutine where
+	//       http.Serve() is eventually called on the http.Server object
+	//       created by NewMockServer(). Serve() does not provide any
+	//       notification mechanism for when its listener is ready and it
+	//       blocks when called, so there will be a very short window
 	//       between us starting the proxy and mock servers and them actually
 	//       being available to handle requests.
 	//
@@ -118,12 +94,9 @@ func runTest(f func(*proxy.Server, *MockServer)) {
 	//       We could send HTTP requests in a loop until one succeeds on
 	//       each server or something, but this is an acceptable stopgap
 	//       for now.
-	time.Sleep(25 * time.Millisecond)
+	time.Sleep(100 * time.Millisecond)
 
-	f(p, ms)
-
-	ms.Stop()
-	p.Stop()
+	f(ms)
 }
 
 // login returns the user's token or returns an error if authentication fails.

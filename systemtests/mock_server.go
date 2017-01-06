@@ -53,7 +53,7 @@ func (ms *MockServer) AddHandler(path string, f func(http.ResponseWriter, *http.
 func (ms *MockServer) Serve() {
 	var err error
 
-	ms.listener, err = net.Listen("tcp", netmasterHost)
+	ms.listener, err = net.Listen("tcp", "0.0.0.0:9999")
 	if err != nil {
 		log.Fatal("net.Listen: ", err)
 		return

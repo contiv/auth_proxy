@@ -41,6 +41,9 @@ fi
 
 cd $START_DIR
 
+# ensure base has been built
+docker build -t "ccn_proxy_build_base" -f ./build/Dockerfile.base .
+
 # create a local build image
 docker build -t $BUILD_IMAGE_NAME -f ./build/Dockerfile.build .
 
