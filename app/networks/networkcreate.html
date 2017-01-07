@@ -33,7 +33,7 @@
                 <div class="ui sixteen column grid" style="margin: 0;">
                     <div class="ui row">
 
-                        <div class="ui eight wide column field">
+                        <div class="ui six wide column field">
                             <div *ngIf="networkCreateForm.submitted">
                                 <div [hidden]="networkCreateForm.valid" class="ui negative message">
                                     <ul class="list">
@@ -53,14 +53,15 @@
                     </div>
 
                     <div class="ui row">
-
-                        <div class="ui four wide column field">
+                        <div class="ui six wide column field">
                             <label for="newNetworkName">Network name</label>
                             <input type="text" id="newNetworkName" name="newNetworkName"
                                    [(ngModel)]="networkCreateCtrl.newNetwork.networkName"
                                    placeholder="Enter name" required #newNetworkName="ngModel">
                         </div>
-                        <div class="ui four wide column field">
+                    </div>
+                    <div class="ui row" style="margin-top: 15px;">
+                        <div class="ui six wide column field">
                             <div class="field">
                                 <label for="newNetworkTenant">Tenant</label>
                                 <select id="newNetworkTenant" class="ui dropdown"
@@ -72,26 +73,27 @@
                                 </select>
                             </div>
                         </div>
-
-
                     </div>
-
-                    <div class="ui row" style="margin-top: 20px;">
-                        <div class="ui four wide column field">
+                    <div class="ui row" style="margin-top: 15px;">
+                        <div class="ui six wide column field">
                             <label for="newNetworkEncapsulation">Encapsulation</label>
                             <select id="newNetworkEncapsulation" class="ui dropdown" [(ngModel)]="networkCreateCtrl.newNetwork.encap" name="newNetworkEncap">
                                 <option value="vxlan">vxlan</option>
                                 <option value="vlan">vlan</option>
                             </select>
                         </div>
-                        <div class="ui four wide column field">
+                    </div>
+                    <div class="ui row" style="margin-top: 15px;">
+                        <div class="ui six wide column field">
                             <label for="newNetworkSubnet">Subnet</label>
                             <input type="text" id="newNetworkSubnet" name="newNetworkSubnet"
                                    [(ngModel)]="networkCreateCtrl.newNetwork.subnet"
                                    placeholder="CIDR notation, for example: 20.1.1.0/24" required
                                    [pattern]="networkCreateCtrl.cidrPattern" #newNetworkSubnet="ngModel">
                         </div>
-                        <div class="ui four wide column field">
+                    </div>
+                    <div class="ui row" style="margin-top: 15px;">
+                        <div class="ui six wide column field">
                             <label for="newNetworkGateway">Gateway</label>
                             <input type="text" id="newNetworkGateway" [(ngModel)]="networkCreateCtrl.newNetwork.gateway"
                                    placeholder="Enter gateway" name="newNetworkGateway">
@@ -99,7 +101,7 @@
                     </div>
 
                     <div class="ui row">
-                        <div class="right aligned sixteen wide column">
+                        <div class="right aligned six wide column">
                             <div class="buttonRow">
                                 <button type="button" class="ui large button cancelBtn" (click)="networkCreateCtrl.cancelCreating()">
                                     Cancel

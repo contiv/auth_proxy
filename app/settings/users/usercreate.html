@@ -31,7 +31,7 @@
 
                 <div class="ui basic segment">
 
-                    <div class="field">
+                    <div class="six wide field">
                         <div *ngIf="formRef.submitted">
                             <div [hidden]="formRef.valid" class="ui negative message">
                                 <ul class="list">
@@ -50,8 +50,7 @@
 
                     <div class="ui sixteen column grid">
                         <div class="ui row">
-
-                            <div class="ui eight wide column">
+                            <div class="ui six wide column">
                                 <div class="field">
                                     <label for="newUserName">Username</label>
                                     <input type="text" id="newUserName" name="newUserName"
@@ -59,7 +58,9 @@
                                            placeholder="Enter name" required #newUserName="ngModel">
                                 </div>
                             </div>
-                            <div class="ui eight wide column">
+                        </div>
+                        <div class="ui row">
+                            <div class="ui six wide column">
                                 <div class="field">
                                     <label for="newUserPassword">Password</label>
                                     <input type="password" id="newUserPassword" name="newUserPassword"
@@ -71,7 +72,7 @@
                         </div>
                         <div class="ui row">
 
-                            <div class="ui eight wide column">
+                            <div class="ui six wide column">
                                 <div class="field">
                                     <label for="newFirstName">First name</label>
                                     <input type="text" id="newFirstName" name="newFirstName"
@@ -79,7 +80,9 @@
                                            placeholder="Enter first name" #newFirstName="ngModel">
                                 </div>
                             </div>
-                            <div class="ui eight wide column">
+                        </div>
+                        <div class="ui row">
+                            <div class="ui six wide column">
                                 <div class="field">
                                     <label for="newLastName">Last name</label>
                                     <input type="text" id="newLastName" name="newLastName"
@@ -91,7 +94,7 @@
                         </div>
                         <div class="ui row">
 
-                            <div class="ui eight wide column">
+                            <div class="ui six wide column">
                                 <div class="field">
                                     <label for="newUserDisabled">&nbsp;<br>
                                     <input type="checkbox" id="newUserDisabled" name="newUserDisabled" tabindex="0" class="alignLabel"
@@ -104,7 +107,7 @@
                         </div>
 
                         <div class="ui row">
-                            <div class="right aligned sixteen wide column buttonRow">
+                            <div class="right aligned six wide column buttonRow">
 
                                 <button type="button" class="ui large button cancelBtn" (click)="cancelCreating()">
                                     Cancel

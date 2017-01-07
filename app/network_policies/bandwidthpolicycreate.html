@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="ui basic segment">
-                    <div class="field">
+                    <div class="six wide field">
                         <div *ngIf="formRef.submitted">
                             <div *ngIf="!formRef.valid" class="ui negative message">
                                 <ul class="list">
@@ -58,14 +58,16 @@
 
                     <div class="ui sixteen column grid">
                         <div class="ui row">
-                            <div class="ui eight wide column">
+                            <div class="ui six wide column">
                                 <div class="field">
                                     <label for="newProfileName">Policy name</label>
                                     <input #profileNameRef="ngModel" type="text" id="newProfileName" name="newProfileName"
                                            [(ngModel)]="newPolicy.profileName" placeholder="Enter profile name" required>
                                 </div>
                             </div>
-                            <div class="ui eight wide column">
+                        </div>
+                        <div class="ui row">
+                            <div class="ui six wide column">
                                 <div class="field">
                                     <label for="newPolicyTenant">Tenant</label>
                                     <select id="newPolicyTenant" class="ui dropdown"
@@ -79,15 +81,15 @@
                             </div>
                         </div>
                         <div class="ui row">
-                            <div class="ui eight wide column">
+                            <div class="ui six wide column">
 
                                 <div class="fields">
-                                    <div class="field">
+                                    <div class="eight wide field">
                                         <label for="newBandwidthNumber">Bandwidth Value</label>
                                         <input #bandwidthNumberRef="ngModel" type="number" id="newBandwidthNumber" name="newBandwidthNumber"
                                                [(ngModel)]="newPolicy.bandwidthNumber" placeholder="Enter bandwidth" required>
                                     </div>
-                                    <div class="field">
+                                    <div class="eight wide field">
                                         <label for="newBandwidthUnit">Bandwidth Unit</label>
                                         <select #bandwidthUnitRef="ngModel" name="newBandwidthUnit" id="newBandwidthUnit" class="ui dropdown"
                                                 [(ngModel)]="newPolicy.bandwidthUnit" required>
@@ -99,7 +101,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="ui eight wide column">
+                        </div>
+                        <div class="ui row">
+                            <div class="ui six wide column">
                                 <div class="field">
                                     <label for="newDSCP">DSCP</label>
                                     <input #DSCPRef="ngModel" type="number" id="newDSCP" name="newDSCP"
@@ -110,7 +114,7 @@
                     </div>
 
                     <div class="ui grid">
-                        <div class="right aligned sixteen wide column">
+                        <div class="right aligned six wide column">
                             <div class="buttonRow">
                                 <button type="button" class="ui basic large button cancelBtn" (click)="cancelCreating()">
                                     Cancel

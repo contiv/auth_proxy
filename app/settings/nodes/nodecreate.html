@@ -30,92 +30,97 @@
                 </div>
 
                 <div class="ui basic segment">
-
-                    <div class="field">
-                        <div *ngIf="formRef.submitted">
-                            <div [hidden]="formRef.valid" class="ui negative message">
-                                <ul class="list">
-                                    <li *ngIf="newHostname.errors?.required">
-                                        <i>Host name</i> is required.
-                                    </li>
-                                    <li *ngIf="newRouterIP.errors?.required">
-                                        <i>Router IP</i> is required.
-                                    </li>
-                                    <li *ngIf="newAS.errors?.required">
-                                        <i>Autonomous system</i> value is required.
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="ui sixteen column grid">
-                    <div class="ui row"  style="margin-bottom: 20px;">
-                        <div class="ui four wide column">
-                            <div class="field">
-                                <label for="newHostname">Host name</label>
-                                <input type="text" id="newHostname" name="newHostname"
-                                       [(ngModel)]="newNode['hostname']"
-                                       placeholder="Enter host name" required #newHostname="ngModel">
+                        <div class="six wide column field">
+                            <div *ngIf="formRef.submitted">
+                                <div [hidden]="formRef.valid" class="ui negative message">
+                                    <ul class="list">
+                                        <li *ngIf="newHostname.errors?.required">
+                                            <i>Host name</i> is required.
+                                        </li>
+                                        <li *ngIf="newRouterIP.errors?.required">
+                                            <i>Router IP</i> is required.
+                                        </li>
+                                        <li *ngIf="newAS.errors?.required">
+                                            <i>Autonomous system</i> value is required.
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
+
+                        <div class="ui row" style="margin-bottom: 20px;">
+                            <div class="ui six wide column">
+                                <div class="field">
+                                    <label for="newHostname">Host name</label>
+                                    <input type="text" id="newHostname" name="newHostname"
+                                           [(ngModel)]="newNode['hostname']"
+                                           placeholder="Enter host name" required #newHostname="ngModel">
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <h4 class="ui header">BGP Settings</h4>
 
                     <div class="ui sixteen column grid">
-                    <div class="ui row">
+                        <div class="ui row">
 
-                        <div class="ui four wide column">
-                            <div class="field">
-                                <label for="newRouterIP">Router IP</label>
-                                <input type="text" id="newRouterIP" name="newRouterIP"
-                                       [(ngModel)]="newNode['routerip']"
-                                       placeholder="Enter router IP" required #newRouterIP="ngModel">
+                            <div class="ui six wide column">
+                                <div class="field">
+                                    <label for="newRouterIP">Router IP</label>
+                                    <input type="text" id="newRouterIP" name="newRouterIP"
+                                           [(ngModel)]="newNode['routerip']"
+                                           placeholder="Enter router IP" required #newRouterIP="ngModel">
+                                </div>
                             </div>
                         </div>
-                        <div class="ui four wide column">
-                            <div class="field">
-                                <label for="newAS">Autonomous system</label>
-                                <input type="text" id="newAS" name="newAS"
-                                       [(ngModel)]="newNode['as']"
-                                       placeholder="Enter autonomous system"
-                                       required
-                                       #newAS="ngModel">
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field">
+                                    <label for="newAS">Autonomous system</label>
+                                    <input type="text" id="newAS" name="newAS"
+                                           [(ngModel)]="newNode['as']"
+                                           placeholder="Enter autonomous system"
+                                           required
+                                           #newAS="ngModel">
+                                </div>
                             </div>
                         </div>
-                        <div class="ui four wide column">
-                            <div class="field">
-                                <label for="newNeighborIP">Neighbor IP</label>
-                                <input type="text" id="newNeighborIP" name="newNeighborIP"
-                                       [(ngModel)]="newNode['neighbor']"
-                                       placeholder="Enter neighbor IP">
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field">
+                                    <label for="newNeighborIP">Neighbor IP</label>
+                                    <input type="text" id="newNeighborIP" name="newNeighborIP"
+                                           [(ngModel)]="newNode['neighbor']"
+                                           placeholder="Enter neighbor IP">
+                                </div>
                             </div>
                         </div>
-                        <div class="ui four wide column">
-                            <div class="field">
-                                <label for="newNeighborAS">Neighbor autonomous system</label>
-                                <input type="text" id="newNeighborAS" name="newNeighborAS"
-                                       [(ngModel)]="newNode['neighbor-as']"
-                                       placeholder="Enter neighbor autonomous system">
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field">
+                                    <label for="newNeighborAS">Neighbor autonomous system</label>
+                                    <input type="text" id="newNeighborAS" name="newNeighborAS"
+                                           [(ngModel)]="newNode['neighbor-as']"
+                                           placeholder="Enter neighbor autonomous system">
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <div class="ui row">
+                            <div class="right aligned six wide column">
+                                <div class="buttonRow">
+                                    <button type="button" class="ui large button cancelBtn" (click)="cancelCreating()">
+                                        Cancel
+                                    </button>
+                                    <button type="submit" class="ui blue large button primaryBtn">
+                                        Create
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="ui grid">
-                        <div class="right aligned sixteen wide column">
-                            <div class="buttonRow">
-                                <button type="button" class="ui large button cancelBtn" (click)="cancelCreating()">
-                                    Cancel
-                                </button>
-                                <button type="submit" class="ui blue large button primaryBtn">
-                                    Create
-                                </button>
-                            </div>
-                        </div>
-                    </div>
 
                     <ctv-error *ngIf="showServerError" header="Error creating node" [error]="serverErrorMessage">
                     </ctv-error>

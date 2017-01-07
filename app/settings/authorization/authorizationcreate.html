@@ -26,7 +26,7 @@
                     <form class="ui form" role="form"
                           (submit)="createAuthorization(formRef.valid)" novalidate #formRef="ngForm">
 
-                            <div class="field">
+                            <div class="six wide field">
                                 <div *ngIf="formRef.submitted">
                                     <div [hidden]="formRef.valid" class="ui negative message">
                                         <ul class="list">
@@ -49,7 +49,7 @@
                             <div class="ui sixteen column grid">
                                 <div class="ui row">
 
-                                    <div class="ui eight wide column">
+                                    <div class="ui six wide column">
                                         <div class="field">
                                             <label for="username">Username</label>
                                             <select class="ui dropdown" id="username" name="username" [(ngModel)]="authorization.PrincipalName" required #username="ngModel">
@@ -57,7 +57,9 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="ui eight wide column">
+                                </div>
+                                <div class="ui row">
+                                    <div class="ui six wide column">
                                         <div class="field">
                                             <label for="role">Role</label>
                                             <select class="ui dropdown" id="role" name="role" [(ngModel)]="authorization.Role" required #role="ngModel">
@@ -70,7 +72,7 @@
                                 </div>
                                 <div class="ui row">
 
-                                    <div class="ui eight wide column">
+                                    <div class="ui six wide column">
                                         <div class="field">
                                             <label for="tenant">Tenant</label>
                                             <select class="ui dropdown" id="tenant" name="tenant" [(ngModel)]="authorization.TenantName" required #tenant="ngModel">
@@ -78,7 +80,9 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="ui eight wide column">
+                                </div>
+                                <div class="ui row">
+                                    <div class="ui six wide column">
                                         <div class="field">
                                             <label>&nbsp;<br>
                                                 <input type="checkbox" name="local" tabindex="0" class="alignLabel"
@@ -90,7 +94,7 @@
 
                                 </div>
                                 <div class="ui row">
-                                    <div class="ui right aligned sixteen wide column">
+                                    <div class="ui right aligned six wide column">
                                         <div class="buttonRow">
                                             <button type="button" class="ui large button cancelBtn" (click)="cancelCreating()">
                                                 Cancel

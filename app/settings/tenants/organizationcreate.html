@@ -32,7 +32,7 @@
 
                 <div class="ui basic segment">
 
-                    <div class="field">
+                    <div class="six wide field">
                         <div *ngIf="organizationCreateFrom.submitted">
                             <div [hidden]="organizationCreateFrom.valid" class="ui negative message">
                                 <ul class="list">
@@ -44,7 +44,7 @@
                         </div>
                     </div>
 
-                    <div class="ui four wide column field">
+                    <div class="ui six wide column field">
                         <label for="newOrganizationName">Tenant name</label>
                         <input type="text" id="newOrganizationName" name="newOrganizationName"
                                [(ngModel)]="organizationCreateCtrl.newOrganization.tenantName"
@@ -52,7 +52,7 @@
                     </div>
 
                     <div class="ui grid">
-                        <div class="right aligned sixteen wide column buttonRow">
+                        <div class="right aligned six wide column buttonRow">
                             <button type="button" class="ui button large cancelBtn" (click)="organizationCreateCtrl.cancelCreating()">
                                 Cancel
                             </button>

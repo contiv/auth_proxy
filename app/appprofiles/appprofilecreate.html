@@ -28,47 +28,54 @@
                 </div>
 
                 <div class="ui basic segment">
-
-                    <div class="field">
-                        <div *ngIf="formRef.submitted">
-                            <div [hidden]="formRef.valid" class="ui negative message">
-                                <ul class="list">
-                                    <li *ngIf="newAppProfileName.errors?.required">Please enter
-                                        application profile name
-                                    </li>
-                                    <li *ngIf="newAppProfileTenantRef.errors?.required">
-                                        Please select tenant
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="ui grid">
-                        <div class="left aligned eight wide column">
-                            <div class="field">
-                                <label for="newAppProfileName">Application profile name</label>
-                                <input type="text" id="newAppProfileName" name="newAppProfileName"
-                                       [(ngModel)]="newAppProfile.appProfileName"
-                                       placeholder="Enter name" required #newAppProfileName="ngModel">
+                        <div class="ui row">
+                            <div class="ui six wide column field">
+                                <div *ngIf="formRef.submitted">
+                                    <div [hidden]="formRef.valid" class="ui negative message">
+                                        <ul class="list">
+                                            <li *ngIf="newAppProfileName.errors?.required">Please enter
+                                                application profile name
+                                            </li>
+                                            <li *ngIf="newAppProfileTenantRef.errors?.required">
+                                                Please select tenant
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="left aligned eight wide column">
-                            <div class="field">
-                                <label for="newAppProfileTenant">Tenant</label>
-                                <select id="newAppProfileTenant" class="ui dropdown"
-                                        name="newAppProfileTenant"
-                                        ngModel
-                                        (change)="updateTenant($event.target.value, appGroupSelRef)"
-                                        required #newAppProfileTenantRef="ngModel">
-                                    <option value="">-- Select a tenant --</option>
-                                    <option *ngFor="let tenant of tenants" [value]="tenant.tenantName">{{tenant.tenantName}}</option>
-                                </select>
+                        <div class="ui row">
+                            <div class="left aligned six wide column">
+                                <div class="field">
+                                    <label for="newAppProfileName">Application profile name</label>
+                                    <input type="text" id="newAppProfileName" name="newAppProfileName"
+                                           [(ngModel)]="newAppProfile.appProfileName"
+                                           placeholder="Enter name" required #newAppProfileName="ngModel">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="left aligned six wide column">
+                                <div class="field">
+                                    <label for="newAppProfileTenant">Tenant</label>
+                                    <select id="newAppProfileTenant" class="ui dropdown"
+                                            name="newAppProfileTenant"
+                                            ngModel
+                                            (change)="updateTenant($event.target.value, appGroupSelRef)"
+                                            required #newAppProfileTenantRef="ngModel">
+                                        <option value="">-- Select a tenant --</option>
+                                        <option *ngFor="let tenant of tenants" [value]="tenant.tenantName">
+                                            {{tenant.tenantName}}
+                                        </option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <ctv-appgroupselection mode="edit" [appProfile]="newAppProfile" #appGroupSelRef></ctv-appgroupselection>
+                    <ctv-appgroupselection mode="edit" [appProfile]="newAppProfile"
+                                           #appGroupSelRef></ctv-appgroupselection>
 
                     <div class="ui grid">
                         <div class="right aligned sixteen wide column buttonRow">
@@ -83,7 +90,8 @@
                         </div>
                     </div>
 
-                    <ctv-error *ngIf="showServerError" header="Error creating application profile" [error]="serverErrorMessage">
+                    <ctv-error *ngIf="showServerError" header="Error creating application profile"
+                               [error]="serverErrorMessage">
                     </ctv-error>
                 </div>
             </form>

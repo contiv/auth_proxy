@@ -30,7 +30,7 @@
                 </div>
                 <div class="ui basic segment">
 
-                    <div class="field">
+                    <div class="ui six wide column field">
                         <div *ngIf="formRef.submitted">
                             <div *ngIf="!formRef.valid" class="ui negative message">
                                 <ul class="list">
@@ -40,7 +40,8 @@
                                     <li *ngIf="newApplicationGroupTenantRef.errors?.required">
                                         Please select tenant
                                     </li>
-                                    <li *ngIf="newApplicationGroupNetworkRef.errors?.required">Please
+                                    <li *ngIf="newApplicationGroupNetworkRef.errors?.required"
+                                        [hidden]="!applicationGroup.tenantName.length">Please
                                         select network
                                     </li>
                                 </ul>
@@ -50,7 +51,7 @@
 
                     <div class="ui sixteen column grid">
                         <div class="ui row">
-                            <div class="left aligned four wide column">
+                            <div class="left aligned six wide column">
                                 <div class="field">
                                     <label for="newApplicationGroupName">Application group name</label>
                                     <input #newApplicationGroupNameRef="ngModel"
@@ -61,7 +62,9 @@
                                            placeholder="Enter name" required>
                                 </div>
                             </div>
-                            <div class="left aligned four wide column">
+                        </div>
+                        <div class="ui row">
+                            <div class="left aligned six wide column">
                                 <div class="field">
                                     <label for="newApplicationGroupTenant">Tenant</label>
                                     <select id="newApplicationGroupTenant" class="ui dropdown"
@@ -74,35 +77,28 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="left aligned four wide column">
-                                <div class="field" *ngIf="applicationGroup.tenantName">
+                        </div>
+                        <div class="ui row">
+                            <div class="left aligned six wide column">
+                                <div class="field" [hidden]="!applicationGroup.tenantName.length">
                                     <label for="newApplicationGroupNetwork">Network</label>
-                                    <select *ngIf="networks.length" id="newApplicationGroupNetwork"
+                                    <select id="newApplicationGroupNetwork"
                                             class="ui dropdown"
                                             #newApplicationGroupNetworkRef="ngModel"
                                             name="newApplicationGroupNetwork"
                                             [(ngModel)]="applicationGroup.networkName"
                                             required>
-                                        <option value="">-- Select a network --</option>
+                                        <option *ngIf="networks.length" value="">-- Select a network --</option>
+                                        <option *ngIf="!networks.length" value="">-- The tenant has no networks --</option>
                                         <option *ngFor="let network of networks"
-                                                [value]="network.networkName">
+                                                [ngValue]="network.networkName">
                                             {{network.networkName}}
                                         </option>
                                     </select>
-
-                                    <select *ngIf="!networks.length"
-                                            class="ui dropdown"
-                                            required>
-                                        <option value="">-- The tenant has no networks --</option>
-                                    </select>
                                 </div>
                             </div>
-                            <div class="left aligned four wide column">
-                                &nbsp;
-                            </div>
                         </div>
-
-                        <div class="ui row">
+                        <div class="ui row" >
                             <div class="left aligned sixteen wide column">
                                 <ctv-collapsible title="Isolation Policies To Apply" class="policySelection">
                                     <ctv-isolationpolicy mode="edit" [applicationgroup]="applicationGroup" #isolationPolicyRef></ctv-isolationpolicy>

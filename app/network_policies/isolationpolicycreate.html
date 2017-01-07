@@ -35,7 +35,7 @@
 
                 <div class="ui basic segment">
 
-                    <div class="field">
+                    <div class="ui six column wide field">
                         <div *ngIf="formRef.submitted">
                             <div *ngIf="!formRef.valid" class="ui negative message">
                                 <ul class="list">
@@ -56,14 +56,16 @@
 
                     <div class="ui sixteen column grid">
                         <div class="ui row">
-                            <div class="ui eight wide column">
+                            <div class="ui six wide column">
                                 <div class="field">
                                     <label for="newPolicyName">Policy name</label>
                                     <input #policyNameRef="ngModel" type="text" id="newPolicyName" name="newPolicyName"
                                            [(ngModel)]="newPolicy.policyName" placeholder="Enter name" required>
                                 </div>
                             </div>
-                            <div class="ui eight wide column">
+                        </div>
+                        <div class="ui row">
+                            <div class="ui six wide column">
                                 <div class="field">
                                     <label for="newPolicyTenant">Tenant</label>
                                     <select id="newPolicyTenant" class="ui dropdown"
@@ -79,7 +81,7 @@
                     </div>
 
                     <div class="ui grid">
-                        <div class="right aligned sixteen wide column">
+                        <div class="right aligned six wide column">
                             <div class="buttonRow">
 
                                 <button type="button" class="ui large button cancelBtn" (click)="cancelCreating()">

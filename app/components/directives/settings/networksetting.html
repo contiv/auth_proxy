@@ -1,35 +1,37 @@
 <form class="ui form" role="form" #formRef="ngForm"
       (ngSubmit)="updateNetworkSettings(formRef.valid)" novalidate>
-    <div class="field">
-        <div *ngIf="formRef.submitted">
-            <div *ngIf="!formRef.valid" class="ui negative message">
-                <ul class="list">
-                    <li *ngIf="networkInfrastructureRef.errors?.required">
-                        Please enter network infrastructure type
-                    </li>
-                    <li *ngIf="allowedVlanRangeRef.errors?.required">
-                        Please enter allowed vlan range
-                    </li>
-                    <li *ngIf="allowedVxlanRangeRef.errors?.required">
-                        Please enter allowed vxlan range
-                    </li>
-                    <li *ngIf="forwardingmodeRef.errors?.required">
-                        Please enter forwarding mode
-                    </li>
-                    <li *ngIf="allowedVlanRangeRef.errors?.pattern">
-                        Please enter vlan in range in the correct notation
-                    </li>
-                    <li *ngIf="allowedVxlanRangeRef.errors?.pattern">
-                        Please enter vxlan in range in the correct notation
-                    </li>
-                </ul>
+
+    <div class="ui grid">
+        <div class="ui row">
+            <div class="ui six wide column field">
+                <div *ngIf="formRef.submitted">
+                    <div *ngIf="!formRef.valid" class="ui negative message">
+                        <ul class="list">
+                            <li *ngIf="networkInfrastructureRef.errors?.required">
+                                Please enter network infrastructure type
+                            </li>
+                            <li *ngIf="allowedVlanRangeRef.errors?.required">
+                                Please enter allowed vlan range
+                            </li>
+                            <li *ngIf="allowedVxlanRangeRef.errors?.required">
+                                Please enter allowed vxlan range
+                            </li>
+                            <li *ngIf="forwardingmodeRef.errors?.required">
+                                Please enter forwarding mode
+                            </li>
+                            <li *ngIf="allowedVlanRangeRef.errors?.pattern">
+                                Please enter vlan in range in the correct notation
+                            </li>
+                            <li *ngIf="allowedVxlanRangeRef.errors?.pattern">
+                                Please enter vxlan in range in the correct notation
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="ui two column grid">
         <div class="ui row">
-            <div class="ui column field">
+            <div class="ui six wide column field">
                 <label for="networkInfrastructure">Network infrastructure type</label>
                 <select #networkInfrastructureRef="ngModel"
                         id="networkInfrastructure"
@@ -41,7 +43,9 @@
                     <option value="aci">aci</option>
                 </select>
             </div>
-            <div class="ui column field">
+        </div>
+        <div class="ui row">
+            <div class="ui six wide column field">
                 <label for="allowedVlanRange">Allowed vlan range</label>
                 <input #allowedVlanRangeRef="ngModel"
                        type="text"
@@ -51,7 +55,7 @@
             </div>
         </div>
         <div class="ui row">
-            <div class="ui column field">
+            <div class="ui six wide column field">
                 <label for="allowedVxlanRange">Allowed vxlan range</label>
                 <input #allowedVxlanRangeRef="ngModel"
                        type="text"
@@ -59,7 +63,9 @@
                        name="allowedVxlanRange"
                        [(ngModel)]="setting['vxlans']" placeholder="1-10000" required [pattern]="vxlanPattern">
             </div>
-            <div class="ui column field">
+        </div>
+        <div class="ui row">
+            <div class="ui six wide column field">
                 <label for="forwardingmode">Forwarding mode</label>
                 <select #forwardingmodeRef="ngModel"
                         id="forwardingmode"
@@ -70,6 +76,15 @@
                     <option value="bridge">bridge</option>
                     <option value="routing">routing</option>
                 </select>
+            </div>
+        </div>
+        <div *ngIf="!firstRunWiz" class="ui row">
+            <div class="right aligned six wide column">
+                <div style="margin-top: 20px">
+                    <button type="submit" class="ui blue large button primaryBtn">
+                        Update Network Settings
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -85,15 +100,4 @@
         </div>
     </div>
 
-    <div *ngIf="!firstRunWiz">
-        <div class="ui grid">
-            <div class="right floated right aligned sixteen wide column">
-                <div style="margin-top: 20px">
-                    <button type="submit" class="ui blue large button primaryBtn">
-                        Update Network Settings
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
 </form>
