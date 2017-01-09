@@ -20,7 +20,7 @@ export class NetworkPoliciesTabsComponent {
     contractGroupSelected:boolean = false;
 
     policyTab = PolicyTab;
-    policyMode:string = 'isolation'
+    policyMode:string = 'isolation';
 
 
     constructor(private activatedRoute: ActivatedRoute,
@@ -46,25 +46,25 @@ export class NetworkPoliciesTabsComponent {
                 this.isolationPolicySelected = true;
                 this.bandwidthPolicySelected = false;
                 this.contractGroupSelected = false;
-                this.policyMode = 'isolation'
+                this.policyMode = 'isolation';
                 break;
             case PolicyTab.bandwidth:
                 this.isolationPolicySelected = false;
                 this.bandwidthPolicySelected = true;
                 this.contractGroupSelected = false;
-                this.policyMode = 'bandwidth'
+                this.policyMode = 'bandwidth';
                 break;
             case PolicyTab.contractGroup:
                 this.isolationPolicySelected = false;
                 this.bandwidthPolicySelected = false;
                 this.contractGroupSelected = true;
-                this.policyMode = 'contractgroup'
+                this.policyMode = 'contractgroup';
                 break;
             default:
                 this.isolationPolicySelected = true;
                 this.bandwidthPolicySelected = false;
                 this.contractGroupSelected = false;
-                this.policyMode = 'isolation'
+                this.policyMode = 'isolation';
                 break;
         }
     }

@@ -326,3 +326,20 @@ div.ui.tabular.menu { margin-top: 20px; }
 .ui.tabular.menu a.item.active{
     color:black;
 }
+
+.breadcrumbs {
+    font-family: CiscoSansExtraLight;
+    font-size: 12px;
+    font-weight: 300;
+    color: #036E97;
+    cursor: pointer;
+}
+.breadcrumbs .crumb { user-select: none; }
+.breadcrumbs .crumb:after { padding-left: .5em; padding-right: .5em; content: '/'; }
+
+.breadcrumbs .crumb:last-child {
+    color: #B6B6B6;
+    cursor: auto;
+}
+.breadcrumbs .crumb:last-child:after { content: ''; }
+.breadcrumbs .crumb:first-child:after { padding-left: .5em; padding-right: .5em; content: '/'; } /* override for 1st breadcrumb */

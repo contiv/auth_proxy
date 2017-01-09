@@ -11,7 +11,7 @@
             <div class="breadcrumbs">
                 <span class="crumb">
                     <a  [routerLink]="['../list']">
-                        Service Load Balancer List
+                        Service Load Balancers
                     </a>
                 </span>
                 <span class="crumb">Create</span>
@@ -102,7 +102,7 @@
                         </div>
                     </div>
 
-                    <ctv-collapsible [title]="'Label Selectors'">
+                    <ctv-collapsible [title]="'Label Selectors'" [collapsed]="false">
                         <div class="field">
                             <div class="description">
                                 Use this to add your selector name+value pairs.
@@ -111,7 +111,7 @@
                         </div>
                     </ctv-collapsible>
 
-                    <ctv-collapsible [title]="'Ports'">
+                    <ctv-collapsible [title]="'Ports'" [collapsed]="false">
                         <div class="field">
                             <ctv-servicelbports [items]="servicelbCreateCtrl.servicelb.ports" (itemsChange)="servicelbCreateCtrl.servicelb.ports=$event"></ctv-servicelbports>
                         </div>

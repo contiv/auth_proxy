@@ -1,8 +1,8 @@
 <div [ngSwitch]="mode" class="ui sixteen column grid">
     <div class="ui row pageHeader">
         <div class="left aligned eight wide column">
-            <div *ngSwitchCase="'details'" class="content pageTitle">Details: {{appProfile.appProfileName}}</div>
-            <div *ngSwitchCase="'edit'" class="content pageTitle">Editing: {{appProfile.appProfileName}}</div>
+            <div *ngSwitchCase="'details'" class="content pageTitle">{{appProfile.appProfileName}}</div>
+            <div *ngSwitchCase="'edit'" class="content pageTitle">{{appProfile.appProfileName}}</div>
         </div>
         <div class="right aligned eight wide column">
 
@@ -45,7 +45,7 @@
             <div class="breadcrumbs">
                 <span class="crumb">
                     <a href="/#/m/appprofiles">
-                        ACI Application Profiles List
+                        ACI Application Profiles
                     </a>
                 </span>
                 <span class="crumb">{{appProfile.appProfileName}}</span>

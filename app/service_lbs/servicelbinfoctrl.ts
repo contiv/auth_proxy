@@ -21,7 +21,7 @@ export class  ServicelbInfoComponent implements OnInit{
     private servicelbsModel: ServicelbsModel;
     private crudHelperService: CRUDHelperService;
     public servicelbInfoCtrl: any;
-    public infoselected: boolean
+    public infoselected: boolean;
     public statskey: string;
     public servicelb: any;
     public labelSelectors: any;

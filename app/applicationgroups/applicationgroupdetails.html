@@ -1,8 +1,8 @@
 <div class="ui sixteen column grid">
     <div class="ui row">
         <div class="left aligned eight wide column pageHeader" [ngSwitch]="mode">
-            <div *ngSwitchCase="'details'" class="content pageTitle">Details: {{applicationGroup.groupName}}</div>
-            <div *ngSwitchCase="'edit'" class="content pageTitle">Editing: {{applicationGroup.groupName}}</div>
+            <div *ngSwitchCase="'details'" class="content pageTitle">{{applicationGroup.groupName}}</div>
+            <div *ngSwitchCase="'edit'" class="content pageTitle">{{applicationGroup.groupName}}</div>
         </div>
 
         <div [ngSwitch]="mode" class="right aligned eight wide column">
@@ -44,7 +44,7 @@
             <div class="breadcrumbs">
                 <span class="crumb">
                     <a href="/#/m/applicationgroups/list">
-                        Application Groups List
+                        Application Groups
                     </a>
                 </span>
                 <span class="crumb">{{applicationGroup.groupName}}</span>

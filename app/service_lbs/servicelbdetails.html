@@ -1,8 +1,8 @@
 <div class="ui sixteen column grid pageHeader">
     <div [ngSwitch]="servicelbDetailsCtrl.mode" class="ui row">
         <div class="left aligned eight wide column">
-            <div *ngSwitchCase="'details'" class="content pageTitle">Details: {{servicelbDetailsCtrl.serviceName}}</div>
-            <div *ngSwitchCase="'edit'" class="content pageTitle">Editing: {{servicelbDetailsCtrl.serviceName}}</div>
+            <div *ngSwitchCase="'details'" class="content pageTitle">{{servicelbDetailsCtrl.serviceName}}</div>
+            <div *ngSwitchCase="'edit'" class="content pageTitle">{{servicelbDetailsCtrl.serviceName}}</div>
         </div>
         <div class="right aligned eight wide column">
 
@@ -44,7 +44,7 @@
             <div class="breadcrumbs">
                 <span class="crumb">
                     <a href="/#/m/servicelbs/list">
-                        Service Load Balancer List
+                        Service Load Balancers
                     </a>
                 </span>
                 <span class="crumb">

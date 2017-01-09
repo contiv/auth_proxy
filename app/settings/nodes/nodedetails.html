@@ -2,8 +2,8 @@
     <div class="ui row pageHeader">
         <div class="left aligned eight wide column">
             <div class="content pageTitle">
-                <span *ngSwitchCase="'details'">Details: {{node.hostname}}</span>
-                <span *ngSwitchCase="'edit'">Editing: {{node.hostname}}</span>
+                <span *ngSwitchCase="'details'">{{node.hostname}}</span>
+                <span *ngSwitchCase="'edit'">{{node.hostname}}</span>
             </div>
         </div>
         <div class="right aligned eight wide column">
@@ -47,7 +47,7 @@
             <div class="breadcrumbs">
                 <span class="crumb">
                     <a [routerLink]="['../../list']">
-                        Node List
+                        Nodes
                     </a>
                 </span>
                 <span class="crumb">{{node.hostname}}</span>

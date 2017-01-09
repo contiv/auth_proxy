@@ -1,8 +1,8 @@
 <div [ngSwitch]="mode" class="ui sixteen column grid ">
     <div class="ui row pageHeader">
         <div class="left aligned eight wide column">
-            <div *ngSwitchCase="'details'" class="content pageTitle">Details: {{authorization.PrincipalName}}</div>
-            <div *ngSwitchCase="'edit'" class="content pageTitle">Editing: {{authorization.PrincipalName}}</div>
+            <div *ngSwitchCase="'details'" class="content pageTitle">{{authorization.PrincipalName}}</div>
+            <div *ngSwitchCase="'edit'" class="content pageTitle">{{authorization.PrincipalName}}</div>
         </div>
         <div class="right aligned eight wide column">
 
@@ -46,7 +46,7 @@
             <div class="breadcrumbs">
                 <span class="crumb">
                     <a [routerLink]="['../../list']">
-                        Authorizations List
+                        Authorizations
                     </a>
                 </span>
                 <span class="crumb">{{authorization.PrincipalName}}</span>

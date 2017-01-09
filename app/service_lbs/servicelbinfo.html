@@ -85,13 +85,13 @@
         <div *ngSwitchCase="'edit'">
 
             <div class="ui form field">
-                <ctv-collapsible title="Label Selectors">
+                <ctv-collapsible title="Label Selectors" [collapsed]="false">
                     <ctv-namevalue [items]="servicelbInfoCtrl.labelSelectors" (itemsChange)="servicelbInfoCtrl.labelSelectors=$event"></ctv-namevalue>
                 </ctv-collapsible>
             </div>
 
             <div class="ui form field">
-                <ctv-collapsible title="Ports">
+                <ctv-collapsible title="Ports" [collapsed]="false">
                     <ctv-servicelbports [items]="servicelbInfoCtrl.servicelb.ports" (itemsChange)="servicelbInfoCtrl.servicelb.ports=$event"></ctv-servicelbports>
                 </ctv-collapsible>
             </div>

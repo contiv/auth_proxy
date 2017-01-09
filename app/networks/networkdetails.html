@@ -1,11 +1,11 @@
 <div class="ui sixteen column grid">
     <div class="ui row pageHeader">
         <div class="left aligned eight wide column">
-            <div class="content pageTitle">Details: {{networkDetailsCtrl.network.networkName}}</div>
+            <div class="content pageTitle">{{networkDetailsCtrl.network.networkName}}</div>
         </div>
 
         <div class="right aligned eight wide column">
-            <button class="ui blue large button cancelBtn">
+            <button class="ui blue large button cancelBtn" (click)="returnToNetworks()">
                 Close
             </button>
             <button class="ui blue large button secondaryBtn" onclick="$('#delete-network-modal').modal('show')">
@@ -20,7 +20,7 @@
             <div class="breadcrumbs">
                 <span class="crumb">
                     <a href="/#/m/networks/list">
-                        Networks List
+                        Networks
                     </a>
                 </span>
                 <span class="crumb">{{networkDetailsCtrl.network.networkName}}</span>

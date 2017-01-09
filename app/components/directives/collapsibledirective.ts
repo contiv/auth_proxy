@@ -14,7 +14,7 @@ export class CtvCollapsibleComponent{
     @Input('collapsed') collapsed: boolean;
 
     constructor() {
-        this.title=''
+        this.title='';
         this.collapsed=true;
     }
 }

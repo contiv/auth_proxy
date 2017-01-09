@@ -1,8 +1,8 @@
 <div class="ui sixteen column grid">
     <div [ngSwitch]="mode" class="ui row pageHeader">
         <div class="left aligned eight wide column">
-            <div *ngSwitchCase="'details'" class="content pageTitle">Details: {{policy.profileName}}</div>
-            <div *ngSwitchCase="'edit'" class="content pageTitle">Editing: {{policy.profileName}}</div>
+            <div *ngSwitchCase="'details'" class="content pageTitle">{{policy.profileName}}</div>
+            <div *ngSwitchCase="'edit'" class="content pageTitle">{{policy.profileName}}</div>
         </div>
         <div class="right aligned eight wide column">
 
@@ -44,12 +44,12 @@
             <div class="breadcrumbs">
                 <span class="crumb">
                     <a href="/#/m/networkpolicies/list">
-                        Network Policies List
+                        Network Policies
                     </a>
                 </span>
                 <span class="crumb">
-                    <a href="/#/m/networkpolicies/list">
-                        Bandwidth Policy
+                    <a (click)="returnToPolicies()">
+                        Bandwidth Policies
                     </a>
                 </span>
                 <span class="crumb">{{policy.profileName}}</span>

@@ -1,8 +1,8 @@
 <div class="ui sixteen column grid pageHeader">
     <div [ngSwitch]="userDetailsCtrl.mode" class="ui row">
         <div class="left aligned eight wide column">
-            <div *ngSwitchCase="'details'" class="content pageTitle">Details: {{userDetailsCtrl.user.userName}}</div>
-            <div *ngSwitchCase="'edit'" class="content pageTitle">Editing: {{userDetailsCtrl.user.userName}}</div>
+            <div *ngSwitchCase="'details'" class="content pageTitle">{{userDetailsCtrl.user.userName}}</div>
+            <div *ngSwitchCase="'edit'" class="content pageTitle">{{userDetailsCtrl.user.userName}}</div>
         </div>
         <div class="right aligned eight wide column">
 
