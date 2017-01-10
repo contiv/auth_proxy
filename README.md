@@ -23,12 +23,19 @@ You can also specify a version, e.g., `BUILD_VERSION=0.1 make`.  This will
 generate a `ccn_proxy:0.1` image using current code you have checked out and
 whatever commit is tagged as `0.1` in the `contiv-ui` repo.
 
+Future versions of `ccn_proxy` will look for a matching version of `netmaster` at
+startup, e.g., version `0.1` will only talk to a `netmaster` which identifies
+itself as version `0.1`.  All the components of CCN will have release versions
+which move in lockstep.
+
 ## Running Tests
 
-Just run `make test`.  The proxy functionality is part of the `proxy` package
-and there is also a `MockServer` available in the `systemtests` directory
-which can pretend to be `netmaster` for the purposes of testing.  This allows
-us to mock the parts of `netmaster` we need (mainly that a given endpoint
+Just run `make test` to run the systemtests and unit tests.  The tests are fully
+containerized and will spawn anything they require as part of the test run
+(note that this does NOT currently include an AD server and we are still using a
+hardcoded one).  There is also a `MockServer` available in the `systemtests`
+directory which can pretend to be `netmaster` for the purposes of testing.  This
+allows us to mock the parts of `netmaster` we need (mainly that a given endpoint
 returns some expected JSON response) without the burden of actually compiling
 and running a full `netmaster` binary and all of its dependencies plus creating
 the necessary networks, tenants, etc. to get realistic responses from it.
@@ -36,9 +43,6 @@ the necessary networks, tenants, etc. to get realistic responses from it.
 CCN's future end-to-end testing will cover a real `ccn_proxy` binary talking to
 a real `netmaster` binary so there's no point duplicating that here in our own
 testing.
-
-The tests are currently in the process of being containerized and will be
-responsible for starting up and tearing down their own datastores and so on.
 
 ## Local Development
 

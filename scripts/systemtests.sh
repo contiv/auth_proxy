@@ -31,7 +31,6 @@ NETWORK_NAME="ccn_proxy_systemtests"
 PROXY_IMAGE="ccn_proxy:devbuild"
 
 echo "Building systemtests image..."
-# we can't assume the build base image exists, but this will almost always be a noop
 docker build -t "ccn_proxy_build_base" -f ./build/Dockerfile.base .
 docker build -t $IMAGE_NAME -f ./build/Dockerfile.systemtests .
 

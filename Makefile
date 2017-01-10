@@ -41,13 +41,7 @@ systemtests:
 
 # unittests runs all the unit tests
 unit-tests:
-	# run `state` package tests
-	USE_DATASTORE=etcd    go test -run TestAuthZ*   -v -timeout 1m ./state -check.v
-	USE_DATASTORE=etcd    go test -run TestEtcd*    -v -timeout 1m ./state -check.v
-	USE_DATASTORE=consul  go test -run TestConsul*  -v -timeout 1m ./state -check.v
-	# run `db` package tests
-	USE_DATASTORE=consul go test -v -timeout 1m ./db  -check.v
-	USE_DATASTORE=etcd   go test -v -timeout 1m ./db -check.v
+	@bash ./scripts/unittests.sh
 
 # test runs ALL the test suites.
 test: systemtests unit-tests

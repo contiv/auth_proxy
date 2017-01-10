@@ -59,9 +59,6 @@ func (s *dbSuite) TestAddLdapConfiguration(c *C) {
 
 // TestDeleteLdapConfiguration tests `DeleteLdapConfiguration`
 func (s *dbSuite) TestDeleteLdapConfiguration(c *C) {
-	err := DeleteLdapConfiguration()
-	c.Assert(err, Equals, ccnerrors.ErrKeyNotFound)
-
 	for _, configuration := range newLdapConfiguration {
 		err := AddLdapConfiguration(&configuration)
 		c.Assert(err, IsNil)
@@ -115,10 +112,6 @@ func (s *dbSuite) TestUpdateLdapConfiguration(c *C) {
 
 // TestGetLdapConfiguration test `GetLdapConfiguration`
 func (s *dbSuite) TestGetLdapConfiguration(c *C) {
-	configuration, err := GetLdapConfiguration()
-	c.Assert(err, Equals, ccnerrors.ErrKeyNotFound)
-	c.Assert(configuration, IsNil)
-
 	for _, configuration := range newLdapConfiguration {
 		oldPwd := configuration.ServiceAccountPassword
 		err := AddLdapConfiguration(&configuration)

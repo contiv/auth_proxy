@@ -3,6 +3,7 @@ package state
 import (
 	"bytes"
 	"encoding/json"
+	"os"
 	"testing"
 	"time"
 
@@ -22,8 +23,7 @@ func Test(t *testing.T) {
 
 // Setup configuration needed to access local etcd
 func setupEtcdDriver(t *testing.T) *EtcdStateDriver {
-
-	config := types.KVStoreConfig{StoreURL: "etcd://127.0.0.1:2379"}
+	config := types.KVStoreConfig{StoreURL: os.Getenv("DATASTORE_ADDRESS")}
 
 	driver := &EtcdStateDriver{}
 

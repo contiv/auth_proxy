@@ -6,81 +6,32 @@ import (
 	"strings"
 
 	log "github.com/Sirupsen/logrus"
-
-	"github.com/contiv/ccn_proxy/common"
-	"github.com/contiv/ccn_proxy/state"
 )
 
-// GetDatastore returns the value of `os.Getenv("USE_DATASTORE")` or `etcd` by default
-func GetDatastore() string {
-	datastore := strings.TrimSpace(os.Getenv("USE_DATASTORE"))
-	if !common.IsEmpty(datastore) {
-		return datastore
-	}
-
-	return state.EtcdName
-}
-
-// GetDatastoreAddress returns the data store address; mainly used for testing.
-// return values:
-//  string: value of `os.Getenv("USE_DATASTORE_ADDRESS")` or default data store address of `etcd/consul`(from GetDatastore())
-//  if datastore is running in different IP/port, it needs to be explicly set in `USE_DATASTORE_ADDRESS` otherwise the tests will FAIL
-func GetDatastoreAddress() string {
-	datastoreAddr := strings.TrimSpace(os.Getenv("USE_DATASTORE_ADDRESS"))
-	if !common.IsEmpty(datastoreAddr) {
-		return datastoreAddr
-	}
-
-	switch GetDatastore() {
-	case state.EtcdName:
-		return "etcd://127.0.0.1:2379"
-	case state.ConsulName:
-		return "consul://127.0.0.1:8500"
-	default:
-		return ""
-	}
-}
-
-// CleanupDatastore deletes all the given path and its contents from the data store.
-// This will ensure clean slate for the tests.
+// EmptyDatastore clears the contents of the specified datastore.
+// This will ensure a clean slate for each test that runs.
+// In some cases, the delete command will return a non-zero exit code (e.g., if
+// the datastore is already empty), so we'll use "|| true" to ignore failures.
 // params:
-//  dsName: name of the datastore; etcd/consul
-//  path: list of path to be deleted recursively
-func CleanupDatastore(dsName string, paths []string) {
-	log.Info("Cleaning data store...")
+//  addr: address of the datastore, e.g., "etcd://w.x.y.z:2379"
+func EmptyDatastore(addr string) {
+	switch {
+	case strings.HasPrefix(addr, "etcd://"):
+		cmd := "docker exec " + os.Getenv("ETCD_CONTAINER_NAME") + " /etcdctl rm --recursive /ccn_proxy || true"
+		log.Debugln("Emptying datastore:", cmd)
 
-	switch dsName {
-	case state.EtcdName:
-		for _, path := range paths {
-			// if the datastore is running locally
-			_, err := exec.Command("/bin/sh", "-c", "etcdctl rm --recursive "+path).Output()
-			if err != nil {
-				// check the container is running; if so, clear etcd
-				containerID, _ := exec.Command("/bin/sh", "-c", "echo * | docker ps | grep etcd |  cut -d ' ' -f1").Output()
-				contID := string(containerID)
-
-				if !common.IsEmpty(contID) {
-					cmd := "docker exec " + strings.TrimSpace(contID) + " /etcdctl rm --recursive " + path
-					exec.Command("/bin/sh", "-c", cmd).Run()
-				}
-			}
+		if err := exec.Command("/bin/sh", "-c", cmd).Run(); err != nil {
+			log.Fatalln("Failed to clear etcd: ", err)
 		}
-	case state.ConsulName:
-		for _, path := range paths {
-			// if the datastore is running locally
-			_, err := exec.Command("/bin/sh", "-c", "consul kv delete  -recurse "+path).Output()
-			if err != nil {
-				// check the container is running; if so, clear consul
-				containerID, _ := exec.Command("/bin/sh", "-c", "echo * | docker ps | grep consul |  cut -d ' ' -f1").Output()
-				contID := string(containerID)
+	case strings.HasPrefix(addr, "consul://"):
+		// NOTE: consul keys do not start with a /
+		cmd := "docker exec " + os.Getenv("CONSUL_CONTAINER_NAME") + " consul kv delete -recurse ccn_proxy || true"
+		log.Debugln("Emptying datastore:", cmd)
 
-				if !common.IsEmpty(contID) {
-					cmd := "docker exec " + strings.TrimSpace(contID) + " consul kv delete -recurse " + path
-					exec.Command("/bin/sh", "-c", cmd).Run()
-				}
-			}
+		if err := exec.Command("/bin/sh", "-c", cmd).Run(); err != nil {
+			log.Fatalln("Failed to clear consul: ", err)
 		}
 	default:
-		log.Fatalln("Invalid data store")
+		log.Fatalln("Unknown data store for address:", addr)
 	}
 }
