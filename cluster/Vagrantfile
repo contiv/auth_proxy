@@ -100,7 +100,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           c.vm.provision :shell, path: 'bootstrap_centos.sh'
           if role == 'master'
             # Install kubernetes on master
-            c.vm.provision :shell, path: 'k8smaster_centos.sh', args: [token, member_info['contiv_control_ip'], 'v1.4.1']
+            ks8_ver = ENV['CONTIV_K8s_VERSION'] || 'v1.4.1'
+            c.vm.provision :shell, path: 'k8smaster_centos.sh', args: [token, member_info['contiv_control_ip'], ks8_ver]
           else
             # Install kubernetes on nodes
             c.vm.provision :shell, path: 'k8sworker_centos.sh', args: [token, master_ip]
