@@ -158,15 +158,6 @@ menu { margin: 0; padding: 0; z-index: 2000; }
 .ui.very.basic.table th i.icon,
 .ui.very.basic.table td i.icon { font-size: 10px; color: #5d5d5d; }
 
-.kpi a.ui.fluid.card { background-color: #efefef; border: 1px solid #e8e8e8; box-shadow: none; }
-.kpi a.ui.fluid.card:hover { transform: none; box-shadow: 0 0 12px rgba(32,32,32,0.2); }
-
-.kpi a.ui.fluid.card:hover .kpiHeader,
-.kpi a.ui.fluid.card:hover .kpiValue { color: #036e97;  }
-
-.kpiHeader { font-family: CiscoSansRegular; font-size: .9rem; color: #999; text-align: center; white-space: nowrap}
-.kpiValue { font-family: CiscoSansThin; font-size: 3rem; color: #555;}
-
 .ui.form { font-size: 12px !important; }
 
 .ui.input input,

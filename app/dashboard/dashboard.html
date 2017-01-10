@@ -1,12 +1,11 @@
-<!--<div class="content" style="font-size: 18px; margin-top: 30px">Resources</div> -->
 <div class="ui grid" style="margin-top: 15px">
     <div class="row">
         <div class="ui four wide column kpi">
             <a class="ui fluid card" [routerLink]="['../servicelbs/list']">
                 <div class="content">
                     <div class="kpiHeader">Service Load Balancers</div>
-                    <div class="description">
-                        <p class="center aligned kpiValue">{{servicelbs}}</p>
+                    <div class="kpiValue">
+                        <p class="center aligned">{{servicelbs}}</p>
                     </div>
 
                 </div>
@@ -16,8 +15,8 @@
             <a class="ui fluid card" [routerLink]="['../applicationgroups/list']">
                 <div class="content">
                     <div class="kpiHeader">Application Groups</div>
-                    <div class="description">
-                        <p class="center aligned kpiValue">{{groups}}</p>
+                    <div class="kpiValue">
+                        <p class="center aligned">{{groups}}</p>
                     </div>
                 </div>
             </a>
@@ -26,8 +25,8 @@
             <a class="ui fluid card" [routerLink]="['../networkpolicies/list']">
                 <div class="content">
                     <div class="kpiHeader">Network Policies</div>
-                    <div class="description">
-                        <p class="center aligned kpiValue">{{networkpolicies}}</p>
+                    <div class="kpiValue">
+                        <p class="center aligned">{{networkpolicies}}</p>
                     </div>
                 </div>
             </a>
@@ -36,8 +35,8 @@
             <a class="ui fluid card" [routerLink]="['../networks/list']">
                 <div class="content">
                     <div class="kpiHeader">Networks</div>
-                    <div class="description">
-                        <p class="center aligned kpiValue">{{networks}}</p>
+                    <div class="kpiValue">
+                        <p class="center aligned">{{networks}}</p>
                     </div>
                 </div>
             </a>
