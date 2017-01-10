@@ -1,8 +1,10 @@
 package db
 
 import (
+	"os"
 	"os/exec"
 	"sort"
+	"strings"
 	"testing"
 
 	log "github.com/Sirupsen/logrus"
@@ -41,27 +43,21 @@ var (
 		},
 	}
 
-	invalidUsers   = []string{"xxx", "yyy", "zzz"}
-	builtInUsers   = []string{types.Admin.String(), types.Ops.String()}
-	datastore      = ""
-	datastorePaths = []string{
-		GetPath(RootLocalUsers),
-		GetPath(RootLdapConfiguration),
-	}
+	invalidUsers     = []string{"xxx", "yyy", "zzz"}
+	builtInUsers     = []string{types.Admin.String(), types.Ops.String()}
+	datastoreAddress = ""
 )
 
+// This runs before each test and guarantees the datastore is emptied out.
 func (s *dbSuite) SetUpTest(c *C) {
-	test.CleanupDatastore(datastore, datastorePaths)
+	test.EmptyDatastore(datastoreAddress)
 }
 
 // SetUpSuite sets up the environment for tests.
 func (s *dbSuite) SetUpSuite(c *C) {
-	datastore = test.GetDatastore()
-	datastoreAddress := test.GetDatastoreAddress()
-
-	log.Info("As part of the data store cleanup, the following paths will be deleted.")
-	for _, path := range datastorePaths {
-		log.Infof("%q", path)
+	datastoreAddress = strings.TrimSpace(os.Getenv("DATASTORE_ADDRESS"))
+	if common.IsEmpty(datastoreAddress) {
+		log.Fatalln("you must provide a DATASTORE_ADDRESS")
 	}
 
 	if err := state.InitializeStateDriver(datastoreAddress); err != nil {
@@ -74,11 +70,6 @@ func (s *dbSuite) SetUpSuite(c *C) {
 
 	// set state driver for authZ objects
 	s.setAuthZStateDriver(c)
-}
-
-// TearDownSuite reverts the data store state + any further cleanup required.
-func (s *dbSuite) TearDownSuite(c *C) {
-	test.CleanupDatastore(datastore, datastorePaths)
 }
 
 func TestMgmtSuite(t *testing.T) {

@@ -1,13 +1,14 @@
 package state
 
 import (
+	"os"
 	"testing"
 
 	"github.com/contiv/ccn_proxy/common/types"
 )
 
 func setupConsulDriver(t *testing.T) *ConsulStateDriver {
-	config := types.KVStoreConfig{StoreURL: "consul://127.0.0.1:8500"}
+	config := types.KVStoreConfig{StoreURL: os.Getenv("DATASTORE_ADDRESS")}
 
 	driver := &ConsulStateDriver{}
 

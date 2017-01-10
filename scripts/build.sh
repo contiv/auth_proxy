@@ -11,7 +11,6 @@ VERSION=${BUILD_VERSION-$DEV_IMAGE_NAME}
 # bake in the  UI assets
 #
 START_DIR=$(pwd)
-echo "START_DIR: ${START_DIR}"
 UI_DIR="$PWD/build/dependencies/contiv-ui"
 
 mkdir -p $UI_DIR

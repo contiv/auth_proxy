@@ -1,6 +1,7 @@
 package state
 
 import (
+	"os"
 	"testing"
 
 	"github.com/contiv/ccn_proxy/common/types"
@@ -18,7 +19,7 @@ var (
 func TestAuthZInit(t *testing.T) {
 	// create config for KV store
 	config = types.KVStoreConfig{
-		StoreURL: "etcd://127.0.0.1:2379",
+		StoreURL: os.Getenv("DATASTORE_ADDRESS"),
 	}
 
 	// create a state driver

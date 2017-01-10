@@ -32,7 +32,7 @@ var (
 )
 
 // Test is the entrypoint for the systemtests suite.
-// depending on the value of the USE_DATASTORE envvar, the tests will either run
+// depending on the value of the DATASTORE_ADDRESS envvar, the tests will either run
 // against etcd or consul.  the datastore is assumed to be fresh and with no
 // existing state.
 func Test(t *testing.T) {
