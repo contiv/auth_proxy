@@ -1,8 +1,11 @@
 package systemtests
 
 import (
+	"encoding/json"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/contiv/ccn_proxy/proxy"
 
 	. "gopkg.in/check.v1"
 )
@@ -12,6 +15,9 @@ const (
 	ldapServer        = "10.193.231.158"
 	ldapPassword      = "C1ntainer$"
 	ldapAdminPassword = "C1ntainer$!"
+
+	// use this when testing unauthenticated endpoints instead of ""
+	noToken = ""
 )
 
 // TODO: the usernames and passwords here are currently hardcoded in lieu of
@@ -68,6 +74,18 @@ func (s *systemtestSuite) TestLogin(c *C) {
 		loginAs(c, "Administrator", ldapAdminPassword)
 
 		s.deleteLdapConfiguration(c, adToken)
+	})
+}
+
+// TestVersion tests that /version endpoint responds with something sane.
+func (s *systemtestSuite) TestVersion(c *C) {
+	runTest(func(ms *MockServer) {
+		resp, data := proxyGet(c, noToken, "/version")
+		c.Assert(resp.StatusCode, Equals, 200)
+
+		vr := &proxy.VersionResponse{}
+		err := json.Unmarshal(data, vr)
+		c.Assert(err, IsNil)
 	})
 }
 

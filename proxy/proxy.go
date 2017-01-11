@@ -17,6 +17,9 @@ const (
 	// LoginPath is the authentication endpoint on the proxy
 	LoginPath = "/api/v1/ccn_proxy/login"
 
+	// VersionPath is the version endpoint on the proxy
+	VersionPath = "/version"
+
 	// uiDirectory is the location in the container where the baked-in UI lives
 	// and where an external UI directory can be bindmounted over using -v
 	uiDirectory = "/ui"
@@ -175,6 +178,11 @@ func (s *Server) Stop() {
 }
 
 func addRoutes(s *Server, router *mux.Router) {
+
+	//
+	// Version endpoint
+	//
+	router.Path(VersionPath).Methods("GET").HandlerFunc(versionHandler(s.config.Version))
 
 	//
 	// Authentication endpoint

@@ -69,6 +69,28 @@ func loginHandler(w http.ResponseWriter, req *http.Request) {
 	writeJSONResponse(w, LoginResponse{Token: tokenStr})
 }
 
+// VersionResponse represents a response from the /version endpoint
+type VersionResponse struct {
+	Version string `json:"version"`
+}
+
+// versionHandler handles /version requests and returns the proxy version
+func versionHandler(version string) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, req *http.Request) {
+		common.SetJSONContentType(w)
+
+		vr := &VersionResponse{Version: version}
+
+		data, err := json.Marshal(vr)
+		if err != nil {
+			serverError(w, errors.New("failed to marshal version response: "+err.Error()))
+			return
+		}
+
+		w.Write(data)
+	}
+}
+
 // adminOnly takes a HTTP handler and ensures that the client's token has admin
 // privileges before allowing the handler to run its code.
 // if the client is not an admin, the request attempt is logged and a 403 is returned.
