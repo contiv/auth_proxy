@@ -2,15 +2,22 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"os"
 	"time"
 
+	"github.com/blang/semver"
 	"github.com/contiv/ccn_proxy/auth"
 	"github.com/contiv/ccn_proxy/common"
 	"github.com/contiv/ccn_proxy/proxy"
 	"github.com/contiv/ccn_proxy/state"
 
 	log "github.com/Sirupsen/logrus"
+)
+
+const (
+	// DefaultVersion is the version string used when a BUILD_VERSION is not passed to the build.
+	DefaultVersion = "devbuild"
 )
 
 var (
@@ -28,7 +35,7 @@ var (
 
 	// ProgramVersion is used in logging output and the X-Forwarded-By header.
 	// it is overridden at compile time via -ldflags
-	ProgramVersion = "unknown"
+	ProgramVersion = DefaultVersion
 )
 
 func performInitialSetup() {
@@ -95,9 +102,88 @@ func processFlags() {
 	flag.Parse()
 }
 
+// We perform two checks here:
+//   1. that the version of the netmaster we're pointed at is a compatible version,
+//      i.e., its major version is the same and the minor version of netmaster is
+//      greater than or equal to the minor version of ccn_proxy.
+//   2. by nature of 1., that the netmaster is actually reachable at all
+//
+// If this is a devbuild (i.e., build version = default version), we will still
+// ensure that netmaster is reachable but we won't check its version.
+func netmasterStartupCheck() error {
+
+	// this envvar is used by systemtests to get around the fact that ccn_proxy
+	// expects netmaster to have already been started, but the actual systemtests
+	// code (which runs the MockServer) is started *after* the proxy containers are
+	// started so that it can receive the IPs/ports of the proxy containers.
+	//
+	// we won't be advertising this envvar in our docs or anywhere else.
+	if len(os.Getenv("NO_NETMASTER_STARTUP_CHECK")) == 0 {
+		return nil
+	}
+
+	log.Info("Testing connectivity to netmaster at " + netmasterAddress)
+
+	version, err := common.GetNetmasterVersion(netmasterAddress)
+	if err != nil {
+		return err
+	}
+
+	log.Infof("Found netmaster version '%s'", netmasterVersion)
+
+	// if this is a dev build, just exit
+	if DefaultVersion == ProgramVersion {
+		log.Infof("%s version is default (%s), skipping netmaster version compatibility check",
+			ProgramName,
+			DefaultVersion,
+		)
+		return
+	}
+
+	// compare the semvers of the proxy and netmaster
+	// (only major and minor, we will allow patch level differences)
+	proxyVer, err := semver.Make(ProgramVersion)
+	if err != nil {
+		return fmt.Errorf(
+			"failed to create semver from proxy version '%s': %s",
+			ProgramVersion,
+			err.Error(),
+		)
+	}
+
+	netmasterVer, err := semver.Make(version)
+	if err != nil {
+		return fmt.Errorf(
+			"failed to create semver from netmaster version '%s': %s",
+			version,
+			err.Error(),
+		)
+	}
+
+	compatible := netmasterVer.Major == proxyVer.Major && netmasterVer.Minor >= proxyVer.Minor
+
+	if !compatible {
+		return fmt.Errorf(
+			"%s and netmaster versions are incompatible (%s: %q, netmaster: %q)",
+			ProgramName,
+			ProgramName,
+			ProgramVersion,
+			netmasterVersion,
+		)
+	}
+
+	return nil
+}
+
 func main() {
 
 	log.Println(ProgramName, ProgramVersion, "starting up...")
+
+	if DefaultVersion == ProgramVersion {
+		log.Println("====================================================")
+		log.Println("             DEV BUILD - DO NOT RELEASE             ")
+		log.Println("====================================================")
+	}
 
 	processFlags()
 
@@ -114,6 +200,11 @@ func main() {
 	// if --initial-setup is specified, just perform setup and exit immediately
 	if initialSetup {
 		performInitialSetup()
+		return
+	}
+
+	if err := netmasterStartupCheck(); err != nil {
+		log.Fatalln(err)
 		return
 	}
 

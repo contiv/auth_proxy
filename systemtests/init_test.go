@@ -7,11 +7,11 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"strings"
 	"testing"
 	"time"
 
 	"github.com/contiv/ccn_proxy/auth"
-	"github.com/contiv/ccn_proxy/common/test"
 	"github.com/contiv/ccn_proxy/common/types"
 	"github.com/contiv/ccn_proxy/proxy"
 	"github.com/contiv/ccn_proxy/state"
@@ -41,12 +41,13 @@ func Test(t *testing.T) {
 	}
 
 	// PROXY_ADDRESS is set in ./scripts/systemtests_in_container.sh
-	proxyHost = os.Getenv("PROXY_ADDRESS")
+	proxyHost = strings.TrimSpace(os.Getenv("PROXY_ADDRESS"))
 	if 0 == len(proxyHost) {
 		panic("you must supply a PROXY_ADDRESS (e.g., 1.2.3.4:12345)")
 	}
 
-	datastoreAddress := test.GetDatastoreAddress()
+	// DATASTORE_ADDRESS is set in ./scripts/systemtests_in_container.sh
+	datastoreAddress := strings.TrimSpace(os.Getenv("DATASTORE_ADDRESS"))
 
 	log.Info("Initializing datastore")
 	if err := state.InitializeStateDriver(datastoreAddress); err != nil {

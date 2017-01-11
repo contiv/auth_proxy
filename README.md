@@ -23,10 +23,12 @@ You can also specify a version, e.g., `BUILD_VERSION=0.1 make`.  This will
 generate a `ccn_proxy:0.1` image using current code you have checked out and
 whatever commit is tagged as `0.1` in the `contiv-ui` repo.
 
-Future versions of `ccn_proxy` will look for a matching version of `netmaster` at
-startup, e.g., version `0.1` will only talk to a `netmaster` which identifies
-itself as version `0.1`.  All the components of CCN will have release versions
-which move in lockstep.
+`ccn_proxy` will check the  version of the `netmaster` it's pointed to at startup.
+We require that the major versions are the same and that the minor version of
+`netmaster` is >= the minor version of `ccn_proxy`.
+
+For example, version `1.2.3` of `ccn_proxy`  will only talk to a `netmaster` build
+version of `1.x.y` where `x` is >= 2 and `y` can be anything.
 
 ## Running Tests
 

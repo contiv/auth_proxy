@@ -1,7 +1,9 @@
 package common
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"runtime"
 	"strings"
@@ -111,4 +113,45 @@ func SetJSONContentType(w http.ResponseWriter) {
 	// the charset here is to work around a bug where Chrome does not parse JSON data properly:
 	// https://bugs.chromium.org/p/chromium/issues/detail?id=438464
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+}
+
+// GetNetmasterVersion reaches out to the specified netmaster and retrieves
+// the "Version" key from its /version endpoint.
+func GetNetmasterVersion(address string) (string, error) {
+	url := "http://" + address + "/version"
+
+	resp, err := http.Get(url)
+	if err != nil {
+		return "", fmt.Errorf("failed to connect to netmaster: %s", err.Error())
+	}
+
+	defer resp.Body.Close()
+
+	data, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return "", fmt.Errorf("failed to read response from netmaster: %s", err.Error())
+	}
+
+	// NOTE: why are we defining a custom struct here instead of using the
+	//       one from netmaster which is actually used to generate this
+	//       endpoint's response, you ask?
+	//
+	//       it turns out the package which holds/generates the version info
+	//       in netmaster actually can't be compiled in stock form:
+	//       https://github.com/contiv/netplugin/blob/08c489615e6c898edd1a5a7ef2f2507b4d021fc0/version/version.go
+	//
+	//       a script is used to complete the package before it's used:
+	//       https://github.com/contiv/netplugin/blob/08c489615e6c898edd1a5a7ef2f2507b4d021fc0/version/generate_version#L41-L55
+	type netmasterVersionResponse struct {
+		Version string `json:"Version"`
+	}
+
+	nvr := &netmasterVersionResponse{}
+
+	if err := json.Unmarshal(data, nvr); err != nil {
+		log.Debug("Unexpected response from netmaster:", string(data))
+		return "", fmt.Errorf("failed to unmarshal response: %s", err.Error())
+	}
+
+	return nvr.Version, nil
 }

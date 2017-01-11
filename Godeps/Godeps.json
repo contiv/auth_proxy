@@ -1,7 +1,7 @@
 {
 	"ImportPath": "github.com/contiv/ccn_proxy",
 	"GoVersion": "go1.7",
-	"GodepVersion": "v74",
+	"GodepVersion": "v75",
 	"Packages": [
 		"./..."
 	],
@@ -10,6 +10,11 @@
 			"ImportPath": "github.com/Sirupsen/logrus",
 			"Comment": "v0.10.0-38-g3ec0642",
 			"Rev": "3ec0642a7fb6488f65b06f9040adc67e3990296a"
+		},
+		{
+			"ImportPath": "github.com/blang/semver",
+			"Comment": "v3.3.0-2-g3a37c30",
+			"Rev": "3a37c301dda64cbe17f16f661b4c976803c0e2d2"
 		},
 		{
 			"ImportPath": "github.com/contiv/contivmodel/client",
