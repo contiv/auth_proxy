@@ -1,7 +1,7 @@
 {
 	"ImportPath": "github.com/contiv/ccn_proxy",
 	"GoVersion": "go1.7",
-	"GodepVersion": "v74",
+	"GodepVersion": "v75",
 	"Packages": [
 		"./..."
 	],
