@@ -65,6 +65,9 @@ echo "consul running @ $CONSUL_CONTAINER_IP:8500"
 # ----- EXECUTION ---------------------------------------------------------------
 
 echo "Running unit tests"
+
+set +e
+
 docker run --rm \
         --network $NETWORK_NAME \
         --name $IMAGE_NAME \
@@ -73,7 +76,10 @@ docker run --rm \
         -e CONSUL_CONTAINER_NAME="$CONSUL_CONTAINER_NAME" \
         -e ETCD_CONTAINER_IP="$ETCD_CONTAINER_IP" \
         -e ETCD_CONTAINER_NAME="$ETCD_CONTAINER_NAME" \
-        $IMAGE_NAME || true
+        $IMAGE_NAME
+test_exit_code=$?
+
+set -e
 
 # ----- CLEANUP -----------------------------------------------------------------
 
@@ -85,3 +91,8 @@ docker rm -f -v $CONSUL_CONTAINER_NAME
 
 echo "Destroying docker network $NETWORK_NAME"
 docker network rm $NETWORK_NAME
+
+if [[ "$test_exit_code" != "0" ]]; then
+    echo "Tests failed with exit code: $test_exit_code"
+    exit 1
+fi

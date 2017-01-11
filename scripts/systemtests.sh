@@ -137,9 +137,15 @@ echo "consul proxy container running @ $CONSUL_PROXY_CONTAINER_IP:10001"
 # ----- TEST EXECUTION ----------------------------------------------------------
 
 echo "Executing systemtests..."
+
+set +e
+
 # you can't pass in envvars to docker exec and we didn't know the IPs of the proxy
 # containers when we started this container, so pass them in as arguments here.
-docker exec $SYSTEMTESTS_CONTAINER_ID bash ./scripts/systemtests_in_container.sh $ETCD_PROXY_ADDRESS $CONSUL_PROXY_ADDRESS || true
+docker exec $SYSTEMTESTS_CONTAINER_ID bash ./scripts/systemtests_in_container.sh $ETCD_PROXY_ADDRESS $CONSUL_PROXY_ADDRESS
+test_exit_code=$?
+
+set -e
 
 # ---- CLEANUP ------------------------------------------------------------------
 
@@ -160,3 +166,8 @@ docker rm -f -v $CONSUL_CONTAINER_NAME
 
 echo "Destroying docker network $NETWORK_NAME"
 docker network rm $NETWORK_NAME
+
+if [[ "$test_exit_code" != "0" ]]; then
+    echo "Tests failed with exit code: $test_exit_code"
+    exit 1
+fi
