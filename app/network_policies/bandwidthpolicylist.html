@@ -20,21 +20,21 @@
         </tr>
         </thead>
 
-        <tbody *ngIf="bandwidthPolicyListCtrl['policies']">
+        <tbody *ngIf="bandwidthPolicyListCtrl['policies'] && bandwidthPolicyListCtrl['policies'].length">
         <tr *ngFor="let policy of filteredPolicies">
             <td><a [routerLink]="['../bandwidth/details', policy.key]">{{policy.profileName}}</a></td>
             <td>{{policy.tenantName}}</td>
         </tr>
         </tbody>
 
-        <tbody *ngIf="!bandwidthPolicyListCtrl['policies']">
-            <tr>
+        <tbody *ngIf="bandwidthPolicyListCtrl['policies'] && !bandwidthPolicyListCtrl['policies'].length">
+            <tr class="noDataFound">
                 <td colspan="2">No bandwidth policies found.</td>
             </tr>
         </tbody>
 
-        <tbody *ngIf="bandwidthPolicyListCtrl['policies'] && !tableRef.count">
-            <tr>
+        <tbody *ngIf="bandwidthPolicyListCtrl['policies'] && bandwidthPolicyListCtrl['policies'].length && !tableRef.count">
+            <tr class="noDataFound">
                 <td colspan="2">No records matched your filter criteria.</td>
             </tr>
         </tbody>

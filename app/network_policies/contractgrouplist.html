@@ -30,7 +30,7 @@
         </tr>
         </thead>
 
-        <tbody *ngIf="contractGroups">
+        <tbody *ngIf="contractGroups && contractGroups.length">
         <tr *ngFor="let contractGroup of filteredContractGroups">
             <td><a [routerLink]="['../contractgroup/details', contractGroup.key]">{{contractGroup.contractsGroupName}}</a></td>
             <td>{{contractGroup.tenantName}}</td>
@@ -39,13 +39,13 @@
         </tr>
         </tbody>
 
-        <tbody *ngIf="!contractGroups">
+        <tbody *ngIf="contractGroups && !contractGroups.length">
         <tr class="noDataFound">
             <td colspan="4">No external contract groups found.</td>
         </tr>
         </tbody>
 
-        <tbody *ngIf="contractGroups && !tableRef.count">
+        <tbody *ngIf="contractGroups && contractGroups.length && !tableRef.count">
         <tr class="noDataFound">
             <td colspan="4">No records matched your filter criteria.</td>
         </tr>

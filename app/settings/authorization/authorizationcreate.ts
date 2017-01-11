@@ -23,9 +23,10 @@ export interface Authorization{
 })
 
 export class AuthorizationCreateComponent implements OnInit{
-    authorization: Authorization = {PrincipalName: '', Local: false , Role: '', TenantName: ''};
+    authorization: Authorization = { PrincipalName: '', Local: false , Role: '', TenantName: '' };
     tenants: any = [];
     users: any = [];
+    usertype: string = ''
     showLoader: boolean = false;
 
     constructor(private activatedRoute: ActivatedRoute,
@@ -34,6 +35,8 @@ export class AuthorizationCreateComponent implements OnInit{
                 private authorizationModel: AuthorizationModel,
                 private organizationsModel: OrganizationsModel,
                 private usersModel: UsersModel){
+        this.usertype = 'local'
+
     }
 
     ngOnInit(){
@@ -71,6 +74,14 @@ export class AuthorizationCreateComponent implements OnInit{
 
     cancelCreating(){
         this.returnToAuthList();
+    }
+
+    changeAuthType() {
+        if (this.usertype==='local') {
+            this.authorization.Local = true
+        } else {
+            this.authorization.Local = false
+        }
     }
 
     createAuthorization(formvalid: boolean){

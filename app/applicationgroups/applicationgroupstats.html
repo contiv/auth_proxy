@@ -43,7 +43,7 @@
             </tr>
             </thead>
 
-            <tbody *ngIf="endpoints.length">
+            <tbody *ngIf="endpoints && endpoints.length">
             <tr *ngFor="let endpoint of filteredendpoints">
                 <td colspan="3">
                     <ctv-accordion [items]="containerDetails[endpoint.containerID]">
@@ -58,13 +58,13 @@
             </tr>
             </tbody>
 
-            <tbody *ngIf="!endpoints.length">
-            <tr class="noDataFound">
-                <td colspan="3">No endpoints found</td>
-            </tr>
+            <tbody *ngIf="endpoints && !endpoints.length">
+                <tr class="noDataFound">
+                    <td colspan="3">No endpoints found</td>
+                </tr>
             </tbody>
 
-            <tbody *ngIf="endpoints.length && !filtereditems.count">
+            <tbody *ngIf="endpoints && endpoints.length && !tableRef.count">
                 <tr class="noDataFound">
                     <td colspan="3">No records matched your filter criteria.</td>
                 </tr>

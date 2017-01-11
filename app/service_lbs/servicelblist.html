@@ -41,7 +41,7 @@
                         </tr>
                     </thead>
 
-                    <tbody *ngIf="servicelbListCtrl.servicelbs">
+                    <tbody *ngIf="servicelbListCtrl.servicelbs && servicelbListCtrl.servicelbs.length">
                         <tr *ngFor="let servicelb of servicelbListCtrl.filteredservicelbs">
                             <td><a [routerLink]="['../details', servicelb.key]">{{servicelb.serviceName}}</a></td>
                             <td>{{servicelb.tenantName}}</td>
@@ -53,13 +53,13 @@
                         </tr>
                     </tbody>
 
-                    <tbody *ngIf="!servicelbListCtrl.servicelbs">
+                    <tbody *ngIf="servicelbListCtrl.servicelbs && !servicelbListCtrl.servicelbs.length">
                         <tr class="noDataFound">
                             <td colspan="2">No service load balancers found. Would you like to <a href="javascript: void(0);" (click)="create()">create one?</a></td>
                         </tr>
                     </tbody>
 
-                    <tbody *ngIf="servicelbListCtrl.servicelbs && !tableRef.count">
+                    <tbody *ngIf="servicelbListCtrl.servicelbs && servicelbListCtrl.servicelbs.length && !tableRef.count">
                         <tr class="noDataFound">
                             <td colspan="2">No records matched your filter criteria.</td>
                         </tr>

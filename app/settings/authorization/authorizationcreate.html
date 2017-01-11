@@ -23,91 +23,105 @@
         <div class="ui row">
             <div class="ui sixteen wide column">
 
-                    <form class="ui form" role="form"
-                          (submit)="createAuthorization(formRef.valid)" novalidate #formRef="ngForm">
+                <form class="ui form" role="form"
+                    (submit)="createAuthorization(formRef.valid)" novalidate #formRef="ngForm">
 
-                            <div class="six wide field">
-                                <div *ngIf="formRef.submitted">
-                                    <div [hidden]="formRef.valid" class="ui negative message">
-                                        <ul class="list">
-                                            <li *ngIf="username.errors?.required">Please select
-                                                user name
-                                            </li>
-                                            <li *ngIf="role.errors?.required">Please select
-                                                user role
-                                            </li>
-                                            <li *ngIf="tenant.errors?.required">Please select
-                                                tenant
-                                            </li>
-                                        </ul>
-                                    </div>
+                    <div class="six wide field">
+                        <div *ngIf="formRef.submitted">
+                            <div [hidden]="formRef.valid" class="ui negative message">
+                                <ul class="list">
+                                    <li *ngIf="username.errors?.required">Please select
+                                        user name
+                                    </li>
+                                    <li *ngIf="role.errors?.required">Please select
+                                        user role
+                                    </li>
+                                    <li *ngIf="tenant.errors?.required">Please select
+                                        tenant
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="description">Create user authorizations here. You can assign users into one or more tenancies and define their roles. Both local and LDAP users are supported; for local users you can pick the user name from a menu, for LDAP users you will need to enter an LDAP group string.</div>
+
+                    <div class="ui fifteen column grid part1">
+                        <div class="ui row">
+                            <div class="ui six wide column isLocalUser">
+                                <div class="field">
+                                    <label for="usertype">This is authorizing a</label>
+                                    <select class="ui dropdown" id="usertype" name="usertype" [(ngModel)]='usertype' (change)="changeAuthType()" >
+                                        <option value="local">Local User</option>
+                                        <option value="ldap">LDAP Group</option>
+                                    </select>
                                 </div>
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="description">Create user accounts here. You can assign users into tenancies, and define their role, under Settings > Authorizations. </div>
+                    <div class="ui sixteen column grid part2">
 
-                            <div class="ui sixteen column grid">
-                                <div class="ui row">
-
-                                    <div class="ui six wide column">
-                                        <div class="field">
-                                            <label for="username">Username</label>
-                                            <select class="ui dropdown" id="username" name="username" [(ngModel)]="authorization.PrincipalName" required #username="ngModel">
-                                                <option [value]="user.username" *ngFor="let user of users">{{user.username}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ui row">
-                                    <div class="ui six wide column">
-                                        <div class="field">
-                                            <label for="role">Role</label>
-                                            <select class="ui dropdown" id="role" name="role" [(ngModel)]="authorization.Role" required #role="ngModel">
-                                                <option value="admin">Admin</option>
-                                                <option value="ops">DevOps</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="ui row">
-
-                                    <div class="ui six wide column">
-                                        <div class="field">
-                                            <label for="tenant">Tenant</label>
-                                            <select class="ui dropdown" id="tenant" name="tenant" [(ngModel)]="authorization.TenantName" required #tenant="ngModel">
-                                                <option [value]="tenant.tenantName" *ngFor="let tenant of tenants">{{tenant.tenantName}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ui row">
-                                    <div class="ui six wide column">
-                                        <div class="field">
-                                            <label>&nbsp;<br>
-                                                <input type="checkbox" name="local" tabindex="0" class="alignLabel"
-                                                       [(ngModel)]="authorization.Local">
-                                                Local User
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="ui row">
-                                    <div class="ui right aligned six wide column">
-                                        <div class="buttonRow">
-                                            <button type="button" class="ui large button cancelBtn" (click)="cancelCreating()">
-                                                Cancel
-                                            </button>
-                                            <button type="submit" class="ui blue large button primaryBtn">
-                                                Create
-                                            </button>
-                                        </div>
-                                    </div>
+                        <!-- both these form elements point to the same model attribute 'authorization.PrincipalName',
+                            but one (local user) is a SELECT and the other (LDAP) a text input -->
+                        <div *ngIf="usertype=='local'" class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field">
+                                    <label for="username">Username</label>
+                                    <select class="ui dropdown" id="username" name="username"
+                                        [(ngModel)]="authorization.PrincipalName"
+                                        required #username="ngModel">
+                                        <option [value]="user.username" *ngFor="let user of users">{{user.username}}</option>
+                                    </select>
                                 </div>
                             </div>
+                        </div>
+                        <div *ngIf="usertype=='ldap'" class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field">
+                                    <label for="ldapgroup">LDAP Group</label>
+                                    <input type="text" id="ldapgroup" name="ldapgroup"
+                                       [(ngModel)]="authorization.PrincipalName"
+                                       placeholder="ex: cn=name,ou=group" required #ldapgroup="ngModel">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field">
+                                    <label for="tenant">Tenant</label>
+                                    <select class="ui dropdown" id="tenant" name="tenant" [(ngModel)]="authorization.TenantName" required #tenant="ngModel">
+                                        <option [value]="tenant.tenantName" *ngFor="let tenant of tenants">{{tenant.tenantName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field">
+                                    <label for="role">Role</label>
+                                    <select class="ui dropdown" id="role" name="role" [(ngModel)]="authorization.Role" required #role="ngModel">
+                                        <option value="admin">Admin</option>
+                                        <option value="ops">DevOps</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="ui right aligned sixteen wide column">
+                                <div class="buttonRow">
+                                    <button type="button" class="ui large button cancelBtn" (click)="cancelCreating()">
+                                        Cancel
+                                    </button>
+                                    <button type="submit" class="ui blue large button primaryBtn">
+                                        Create
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                    </form>
+                </form>
 
             </div>
         </div>

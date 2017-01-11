@@ -43,7 +43,7 @@
                     </tr>
                 </thead>
 
-                <tbody *ngIf="applicationGroupListCtrl['groups']">
+                <tbody *ngIf="applicationGroupListCtrl['groups'] && applicationGroupListCtrl['groups'].length">
                     <tr *ngFor="let group of applicationGroupListCtrl['filteredgroups']">
                         <td><a [routerLink]="['../details', group.key]">{{group.groupName}}</a></td>
                     <td>{{group.tenantName}}</td>
@@ -52,13 +52,13 @@
                     </tr>
                 </tbody>
 
-                <tbody *ngIf="!applicationGroupListCtrl['groups']">
+                <tbody *ngIf="applicationGroupListCtrl['groups'] && !applicationGroupListCtrl['groups'].length">
                     <tr class="noDataFound">
                         <td colspan="4">No application groups found. Would you like to <a href="javascript: void(0);" (click)="create()">define one?</a></td>
                     </tr>
                 </tbody>
 
-                <tbody *ngIf="applicationGroupListCtrl['groups'] && !tableRef.count">
+                <tbody *ngIf="applicationGroupListCtrl['groups'] && applicationGroupListCtrl['groups'].length && !tableRef.count">
                     <tr class="noDataFound">
                         <td colspan="4">No records matched your filter criteria.</td>
                     </tr>

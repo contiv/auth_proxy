@@ -40,7 +40,7 @@
                                     <li *ngIf="servicelbName.errors?.required">Please enter service load
                                         balancer name
                                     </li>
-                                    <li *ngIf="servicelbTenantRef.errors?.required">Please select tenant
+                                    <li *ngIf="servicelbTenant.errors?.required">Please select tenant
                                     </li>
                                     <li *ngIf="servicelbNetwork.errors?.required"
                                         [hidden]="!servicelb.tenantName.length">Please select network
@@ -68,7 +68,7 @@
                                             name="servicelbTenant"
                                             ngModel
                                             (change)="updateTenant($event.target.value)"
-                                            required #servicelbTenantRef="ngModel">
+                                            required #servicelbTenant="ngModel">
                                         <option value="">-- Please select tenant --</option>
                                         <option *ngFor="let tenant of tenants" [value]="tenant.tenantName">{{tenant.tenantName}}</option>
                                     </select>

@@ -42,7 +42,7 @@
                     </tr>
                 </thead>
 
-                <tbody *ngIf="appProfiles">
+                <tbody *ngIf="appProfiles && appProfiles.length">
                     <tr *ngFor="let appProfile of filteredAppProfiles">
                         <td><a [routerLink]="['../details', appProfile.key]">{{appProfile.appProfileName}}</a></td>
                         <td>{{appProfile.tenantName}}</td>
@@ -50,13 +50,13 @@
                     </tr>
                 </tbody>
 
-                <tbody *ngIf="!appProfiles">
+                <tbody *ngIf="appProfiles && !appProfiles.length">
                     <tr class="noDataFound">
                         <td colspan="2">No application profiles found. Would you like to <a href="javascript: void(0);" (click)="create()">create one?</a></td>
                     </tr>
                 </tbody>
 
-                <tbody *ngIf="appProfiles && !filteredAppProfiles.length">
+                <tbody *ngIf="appProfiles && appProfiles.length && !tableRef.count">
                     <tr class="noDataFound">
                         <td colspan="2">No records matched your filter criteria.</td>
                     </tr>

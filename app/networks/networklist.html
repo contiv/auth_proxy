@@ -45,7 +45,7 @@
                     </tr>
                     </thead>
 
-                    <tbody *ngIf="networkListComp['networks']">
+                    <tbody *ngIf="networkListComp['networks'] && networkListComp['networks'].length">
                     <tr *ngFor="let network of networkListComp['filterednetworks']">
                         <td><a [routerLink]="['../details',network.key]">{{network.networkName}}</a></td>
                         <td>{{network.tenantName}}</td>
@@ -55,13 +55,13 @@
                     </tr>
                     </tbody>
 
-                    <tbody *ngIf="!networkListComp['networks']">
+                    <tbody *ngIf="networkListComp['networks'] && !networkListComp['networks'].length">
                         <tr class="noDataFound">
                             <td colspan="5">No networks found. Would you like to <a href="javascript: void(0);" (click)="create()">create one?</a></td>
                         </tr>
                     </tbody>
 
-                    <tbody *ngIf="networkListComp['networks'] && !tableRef.count">
+                    <tbody *ngIf="networkListComp['networks'] && networkListComp['networks'].length && !tableRef.count">
                         <tr class="noDataFound"><td colspan="5">No records matched your filter criteria.</td></tr>
                     </tbody>
 
