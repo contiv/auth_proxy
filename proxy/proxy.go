@@ -146,7 +146,7 @@ func (s *Server) Serve() {
 		return
 	}
 
-	log.Println("Proxying requests to", s.config.NetmasterAddress)
+	log.Println("Proxying requests to netmaster at", s.config.NetmasterAddress)
 	log.Println("Listening for secure HTTPS requests on", s.config.ListenAddress)
 
 	s.wg.Add(1)

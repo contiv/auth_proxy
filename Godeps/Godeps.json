@@ -12,6 +12,11 @@
 			"Rev": "3ec0642a7fb6488f65b06f9040adc67e3990296a"
 		},
 		{
+			"ImportPath": "github.com/blang/semver",
+			"Comment": "v3.3.0-2-g3a37c30",
+			"Rev": "3a37c301dda64cbe17f16f661b4c976803c0e2d2"
+		},
+		{
 			"ImportPath": "github.com/contiv/contivmodel/client",
 			"Rev": "aa838be994e2dc4d1710c427e6a1cdad38edde36"
 		},

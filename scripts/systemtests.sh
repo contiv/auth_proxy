@@ -102,6 +102,7 @@ ETCD_PROXY_CONTAINER_ID=$(
     docker run -d \
 	   -p 10000:10000 \
 	   -v $(pwd)/local_certs:/local_certs:ro \
+	   -e NO_NETMASTER_STARTUP_CHECK=true \
 	   --network $NETWORK_NAME \
 	   $PROXY_IMAGE \
 	   --data-store-address="etcd://$ETCD_CONTAINER_IP:2379" \
@@ -121,6 +122,7 @@ CONSUL_PROXY_CONTAINER_ID=$(
 	   -p 10001:10001 \
 	   -v $(pwd)/local_certs:/local_certs:ro \
 	   --network $NETWORK_NAME \
+	   -e NO_NETMASTER_STARTUP_CHECK=true \
 	   $PROXY_IMAGE \
 	   --data-store-address="consul://$CONSUL_CONTAINER_IP:8500" \
 	   --tls-certificate=/local_certs/cert.pem \
