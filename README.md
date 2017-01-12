@@ -51,12 +51,6 @@ testing.
 You will need a local cert and key to start `ccn_proxy`.  You can run
 `make generate-certificate` to generate them if you don't already have them.
 
-You can also just run `make run` which will build a build image, use
-the build image to build the minimalist `ccn_proxy` image, generate a self-signed
-certificate + key if you don't already have them, and start the `ccn_proxy` with
-the self-signed certificate and key bind-mounted into the correct location
-automatically.
-
 To simplify the networking around all the cross-container
 communication, we are discouraging the use of `docker-machine`.  Please run
 Docker natively on your Linux system or use Docker for Mac.

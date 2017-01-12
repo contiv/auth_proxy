@@ -124,7 +124,7 @@ func netmasterStartupCheck() error {
 
 	log.Info("Testing connectivity to netmaster at " + netmasterAddress)
 
-	version, err := common.GetNetmasterVersion(netmasterAddress)
+	netmasterVersion, err := common.GetNetmasterVersion(netmasterAddress)
 	if err != nil {
 		return err
 	}
@@ -137,7 +137,7 @@ func netmasterStartupCheck() error {
 			ProgramName,
 			DefaultVersion,
 		)
-		return
+		return nil
 	}
 
 	// compare the semvers of the proxy and netmaster
@@ -151,11 +151,11 @@ func netmasterStartupCheck() error {
 		)
 	}
 
-	netmasterVer, err := semver.Make(version)
+	netmasterVer, err := semver.Make(netmasterVersion)
 	if err != nil {
 		return fmt.Errorf(
 			"failed to create semver from netmaster version '%s': %s",
-			version,
+			netmasterVersion,
 			err.Error(),
 		)
 	}
