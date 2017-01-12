@@ -1,4 +1,4 @@
-<div class="ui small message notify" id="notificationMessage"
+<div class="ui small message notify notification"
      [ngClass]="{   ready: notificationType==NotificationType.confirm,
                     minor: notificationType==NotificationType.alert,
                     info: notificationType==NotificationType.info}">
@@ -11,17 +11,20 @@
                 <span id="backgroundIcon"></span>
             </i>
         </div>
-        <div class="ui left aligned fourteen wide column" id="notificationText">
-            <div class="header" id="header2">
-                <span *ngIf="notificationType==NotificationType.confirm">Confirmation: </span>
-                <span *ngIf="notificationType==NotificationType.info">Information: </span>
-                <span *ngIf="notificationType==NotificationType.alert">Alert: </span>
-                {{message}}
-            </div>
-            <p [ngClass]="{ ready: notificationType==NotificationType.confirm,
+        <div class="ui left aligned fourteen wide column">
+            <div class="notificationMessage">
+                <span class="notificationHeader"
+                      *ngIf="notificationType==NotificationType.confirm">Confirmation: </span>
+                <span class="notificationHeader" *ngIf="notificationType==NotificationType.info">Information: </span>
+                <span class="notificationHeader" *ngIf="notificationType==NotificationType.alert">Alert: </span>
+                <span class="notificationText">
+                    {{message}}
+                </span>
+                <p [ngClass]="{ ready: notificationType==NotificationType.confirm,
                             minor: notificationType==NotificationType.alert,
-                            info: notificationType==NotificationType.info}">{{item}}</p>
-            <span *ngIf="notificationType==NotificationType.info">Will notify when operation is complete</span>
+                            info: notificationType==NotificationType.info}" class="notificationText">{{item}}</p>
+                <span class="notificationText" *ngIf="notificationType==NotificationType.info">Will notify when operation is complete</span>
+            </div>
         </div>
     </div>
 </div>

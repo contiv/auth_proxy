@@ -1,41 +1,43 @@
-#notificationMessage{
+.ui.small.message.notify.notification {
     z-index: 4000;
     position: fixed;
     display: block;
     padding-top: 25px;
     background: #5d5d5d;
-    padding-left: 0px;
-    padding-right: 40px;
-    opacity: 0.85;
+    padding-left: 15px;
+    padding-right: 15px;
+    opacity: 1;
+    border-radius: 10px;
+    -moz-border-radius : 10px;
+    -webkit-border-radius : 10px;
+    box-shadow: 0px 0px 20px #e0e0e0;
 }
 
-#notificationMessage.ready, #notificationMessage.info{
+.ui.small.message.notify.notification .ready, .ui.small.message.notify.notification .notificationMessage .info {
     padding-left: 30px;
     padding-right: 50px;
 }
 
-#notificationMessage.minor{
+.ui.small.message.notify.notification .minor {
     padding-left: 0px;
     padding-right: 40px;
 }
 
-#notificationText #header2, #notificationText p, #notificationText span{
+.ui.small.message.notify.notification .notificationMessage {
     color: white;
-    font-family: CiscoSansBold;
-    font-size:14px;
+    font-size: 13px;
+}
+.ui.small.message.notify.notification .notificationMessage .notificationHeader {
+    font-family: CiscoSansRegular;
+}
+.ui.small.message.notify.notification .notificationMessage .notificationText {
+    font-family: CiscoSansExtraLight;
+    line-height: 18px;
 }
 
 .close.icon{
     color:white;
     padding-right: 20px;
-}
-
-p.ready, p.info{
-    width:400px
-}
-
-p.minor{
-    width:650px;
 }
 
 #notifyIcon{

@@ -23,7 +23,7 @@ export class NotificationComponent implements DoCheck, OnInit{
     public NotificationType = NotificationType;
     public message: string = '';
     public item: string = '';
-    private notifyId: number = 0
+    private notifyId: number = 0;
     public notificationType: NotificationType;
     private notifyCounter: number = 0;
     constructor(private crudHelperService: CRUDHelperService){
@@ -40,7 +40,7 @@ export class NotificationComponent implements DoCheck, OnInit{
                 {   right:30+'px',
                     top: ((80/100)*window.innerHeight) + 'px'
                 });
-        }
+        };
         this.notifyId = 0;
     }
 
@@ -53,7 +53,7 @@ export class NotificationComponent implements DoCheck, OnInit{
                 if(start)
                     self.displayMessage();
             }
-        }
+        };
         jQuery('.notify').transition(animation);
     }
 
