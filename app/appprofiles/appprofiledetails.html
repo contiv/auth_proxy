@@ -20,19 +20,19 @@
                 </div>
             </div>
 
-            <button *ngSwitchCase="'details'" class="ui large button cancelBtn"
+            <button *ngSwitchCase="'details'" class="ui basic button"
                     (click)="returnToAppProfile()">
                 Close
             </button>
-            <button *ngSwitchCase="'edit'" class="ui large button cancelBtn"
+            <button *ngSwitchCase="'edit'" class="ui basic button"
                     (click)="cancelEditing()">
                 Cancel
             </button>
-            <button *ngSwitchCase="'details'" class="ui large button secondaryBtn"
+            <button *ngSwitchCase="'details'" class="ui secondary button"
                     (click)="editAppProfile()">
                 Edit
             </button>
-            <button class="ui large button secondaryBtn" onclick="$('#delete-appProfile-modal').modal('show')">
+            <button class="ui secondary button" onclick="$('#delete-appProfile-modal').modal('show')">
                 <i class="trash icon"></i>
                 Remove
             </button>
@@ -85,11 +85,11 @@
 
                         <div class="ui grid" style="margin-top: 40px">
                             <div class="right aligned sixteen wide column">
-                                <button *ngSwitchCase="'edit'" type="button" class="ui large button cancelBtn"
+                                <button *ngSwitchCase="'edit'" type="button" class="ui basic button"
                                         (click)="cancelEditing()">
                                     Cancel
                                 </button>
-                                <button *ngSwitchCase="'edit'" type="submit" class="ui blue large button primaryBtn">
+                                <button *ngSwitchCase="'edit'" type="submit" class="ui primary button">
                                     Save
                                 </button>
                             </div>

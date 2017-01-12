@@ -21,19 +21,19 @@
                 </div>
             </div>
 
-            <button *ngSwitchCase="'details'" class="ui large button cancelBtn"
+            <button *ngSwitchCase="'details'" class="ui basic button"
                     (click)="returnToList()">
                 Close
             </button>
-            <button *ngSwitchCase="'edit-notsupported'" class="ui large button cancelBtn"
+            <button *ngSwitchCase="'edit-notsupported'" class="ui basic button"
                     (click)="cancelEditing()">
                 Cancel
             </button>
-            <button *ngSwitchCase="'details-edit-notsupported'" class="ui large button secondaryBtn"
+            <button *ngSwitchCase="'details-edit-notsupported'" class="ui secondary button"
                     (click)="editAuthorization()">
                 Edit
             </button>
-            <button class="ui large button secondaryBtn" onclick="$('#delete-auth-modal').modal('show')">
+            <button class="ui secondary button" onclick="$('#delete-auth-modal').modal('show')">
                 <i class="trash icon"></i>
                 Remove
             </button>
@@ -115,11 +115,11 @@
 
                             <div class="ui grid">
                                 <div class="right aligned sixteen wide column buttonRow">
-                                    <button type="button" class="ui large button cancelBtn"
+                                    <button type="button" class="ui basic button"
                                             (click)="cancelEditing()">
                                         Cancel
                                     </button>
-                                    <button type="submit" class="ui blue large button primaryBtn">
+                                    <button type="submit" class="ui primary button">
                                         Save
                                     </button>
                                 </div>

@@ -72,7 +72,7 @@
         <div *ngIf="!firstRunWiz" class="ui row">
             <div class="right aligned six wide column">
                 <div style="margin-top: 20px">
-                    <button type="submit" class="ui blue large button primaryBtn">
+                    <button type="submit" class="ui primary button">
                         Update Network Settings
                     </button>
                 </div>
@@ -85,8 +85,8 @@
         <div class="ui grid">
             <div class="right floated right aligned sixteen wide column">
                 <button type="button" class="ui basic button" (click)="cancel.emit()">Cancel</button>
-                <button type="button" class="ui blue basic button" (click)="skip.emit()">Skip this step</button>
-                <button type="submit" class="ui blue button">Continue<i class="arrow right icon"></i></button>
+                <button type="button" class="ui secondary button" (click)="skip.emit()">Skip this step</button>
+                <button type="submit" class="ui primary button">Continue<i class="arrow right icon"></i></button>
             </div>
         </div>
     </div>

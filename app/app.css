@@ -52,7 +52,7 @@ table thead th[sortfield] span{
     src: url("assets/fonts/CiscoSansTTExtraLight.woff") format('woff');
 }
 
-/*body { overflow: hidden; } */
+
 html body { font-size: 12px; }
 body.loginbackground { background: url(images/loginbackground.jpeg) no-repeat center center; background-size: cover; }
 body.logoutbackground { background: url(images/logoutbackground.jpeg) no-repeat center center; background-size: cover; }
@@ -115,19 +115,6 @@ menu { margin: 0; padding: 0; z-index: 2000; }
     overflow: visible;
 }
 
-.ui.fluid.button,
-.ui.large.button {
-    font-family: CiscoSansRegular;
-    font-size: 13px;
-    font-weight: 400;
-    padding: 0 24px;
-    height: 30px;
-    background-color: #049fd9;
-    border-radius: 2px;
-    width: auto;
-    white-space: nowrap;
-}
-
 .ui.button.iconBtn {
     font-family: CiscoSansRegular;
     font-size: 9px;
@@ -144,16 +131,13 @@ menu { margin: 0; padding: 0; z-index: 2000; }
 .ui.very.basic.table td .primaryIconBtn i.icon { color: white; } /* for injected content */
 .ui.very.basic.table td .secondaryIconBtn i.icon { color: #049fd9; } /* for injected content */
 
-.ui.button.primaryBtn,
 .ui.button.primaryIconBtn { background-color: #049fd9; }
 
-.ui.button.secondaryBtn,
 .ui.button.secondaryIconBtn {
     border: 1px solid #049fd9;
     background-color: white;
     color: #036e97 !important;
 }
-.ui.button.cancelBtn { border: 1px solid #999; background-color: white; color: #333; }
 
 .ui.very.basic.table th i.icon,
 .ui.very.basic.table td i.icon { font-size: 10px; color: #5d5d5d; }

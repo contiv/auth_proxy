@@ -19,19 +19,19 @@
                     </div>
                 </div>
             </div>
-            <button *ngSwitchCase="'details'" type="button" class="ui large button cancelBtn"
+            <button *ngSwitchCase="'details'" type="button" class="ui basic button"
                     (click)="cancelDetails()">
                 Close
             </button>
-            <button *ngSwitchCase="'edit'" type="button" class="ui large button cancelBtn"
+            <button *ngSwitchCase="'edit'" type="button" class="ui basic button"
                     (click)="cancelEditing()">
                 Cancel
             </button>
-            <button *ngSwitchCase="'details'" class="ui blue large button secondaryBtn"
+            <button *ngSwitchCase="'details'" class="ui secondary button"
                     (click)="editApplicationGroup()">
                 Edit
             </button>
-            <button class="ui blue large button secondaryBtn" onclick="$('#delete-group-modal').modal('show')">
+            <button class="ui secondary button" onclick="$('#delete-group-modal').modal('show')">
                 <i class="trash icon"></i>
                 Remove
             </button>
@@ -70,11 +70,11 @@
                 <div class="ui row" [ngSwitch]="mode" style="margin-top: 40px">
 
                     <div class="right aligned sixteen wide column">
-                        <button *ngSwitchCase="'edit'" type="button" class="ui large button cancelBtn"
+                        <button *ngSwitchCase="'edit'" type="button" class="ui basic button"
                                 (click)="cancelEditing()">
                             Cancel
                         </button>
-                        <button *ngSwitchCase="'edit'" type="button" class="ui blue large button primaryBtn"
+                        <button *ngSwitchCase="'edit'" type="button" class="ui primary button"
                                 (click)="saveApplicationGroup()">
                             Save
                         </button>

@@ -692,7 +692,7 @@ input::selection {
   padding: 0.78571429em 1.5em 0.78571429em;
   text-transform: none;
   text-shadow: none;
-  font-weight: bold;
+  font-weight: 400;
   line-height: 1em;
   font-style: normal;
   text-align: center;
@@ -749,9 +749,9 @@ input::selection {
 
 .ui.button:active,
 .ui.active.button:active {
-  background-color: #BABBBC;
+  background-color: #626469;
   background-image: '';
-  color: rgba(0, 0, 0, 0.9);
+  color: #ffffff;
   box-shadow: 0px 0px 0px 1px transparent inset, none;
 }
 
@@ -1460,7 +1460,7 @@ input::selection {
 .ui.basic.buttons .button,
 .ui.basic.button {
   background: transparent none !important;
-  color: #BABABA !important;
+  color: #5d5d5d !important;
   font-weight: normal;
   border-radius: 2px;
   text-transform: none;
@@ -1487,15 +1487,15 @@ input::selection {
 
 .ui.basic.buttons .button:focus,
 .ui.basic.button:focus {
-  background: #cfcfcf !important;
-  color: #48494d !important;
+  background: transparent none !important;
+  color: #5d5d5d !important;
   box-shadow: 0px 0px 0px 1px rgba(34, 36, 38, 0.35) inset, 0px 0px 0px 0px rgba(34, 36, 38, 0.15) inset;
 }
 
 .ui.basic.buttons .button:active,
 .ui.basic.button:active {
-  background: #F8F8F8 !important;
-  color: rgba(0, 0, 0, 0.9) !important;
+  background: #626469 !important;
+  color: #ffffff !important;
   box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.15) inset, 0px 1px 4px 0px rgba(34, 36, 38, 0.15) inset;
 }
 
@@ -4194,14 +4194,14 @@ input::selection {
 
 .ui.primary.buttons .button:focus,
 .ui.primary.button:focus {
-  background-color: #0083b4;
+  background-color: #049fd9;
   color: #FFFFFF;
   text-shadow: none;
 }
 
 .ui.primary.buttons .button:active,
 .ui.primary.button:active {
-  background-color: #037aa7;
+  background-color: #626469;
   color: #FFFFFF;
   text-shadow: none;
 }
@@ -4219,8 +4219,8 @@ input::selection {
 
 .ui.secondary.buttons .button,
 .ui.secondary.button {
-  background-color: #FFFFFF;
-  color: #FFFFFF;
+  background-color: #ffffff;
+  color: #036e97;
   text-shadow: none;
   background-image: none;
 }
@@ -4231,29 +4231,29 @@ input::selection {
 
 .ui.secondary.buttons .button:hover,
 .ui.secondary.button:hover {
-  background-color: #cfcfcf;
-  color: #FFFFFF;
+  background-color: #036e97;
+  color: #036e97;
   text-shadow: none;
 }
 
 .ui.secondary.buttons .button:focus,
 .ui.secondary.button:focus {
   background-color: #ffffff;
-  color: #FFFFFF;
+  color: #036e97;
   text-shadow: none;
 }
 
 .ui.secondary.buttons .button:active,
 .ui.secondary.button:active {
-  background-color: #ffffff;
-  color: #FFFFFF;
+  background-color: #626469;
+  color: #036e97;
   text-shadow: none;
 }
 
 .ui.secondary.buttons .active.button,
 .ui.secondary.active.button {
   background-color: #ffffff;
-  color: #FFFFFF;
+  color: #036e97;
   text-shadow: none;
 }
 
@@ -4463,8 +4463,48 @@ input::selection {
   background-image: none;
 }
 
+.ui.primary.button {
+  font-size: 13px;
+  padding: 0 24px;
+  height: 30px;
+  /*width: auto;*/
+  white-space: nowrap;
+}
+
+.ui.button:focus {
+  outline: #036e97 solid 1px;
+}
+
+.ui.basic.button {
+  font-size: 13px;
+  padding: 0 24px;
+  height: 30px;
+  width: auto;
+  white-space: nowrap;
+  border: 1px solid #c6c6c6;
+}
+
 .ui.basic.button:hover {
-  box-shadow: 0 0 0 1px #cfcfcf;
+  border: none;
+  outline: none;
+}
+
+.ui.secondary.button {
+  font-size: 13px;
+  padding: 0 24px;
+  height: 30px;
+  width: auto;
+  white-space: nowrap;
+  border: 1px solid #049fd9;
+}
+
+.ui.secondary.button:hover {
+  color: #ffffff;
+}
+
+.ui.button:active {
+  border: none;
+  outline: none;
 }
 
 /*******************************

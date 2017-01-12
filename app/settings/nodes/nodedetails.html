@@ -22,19 +22,19 @@
                 </div>
             </div>
 
-            <button *ngSwitchCase="'details'" class="ui large button cancelBtn"
+            <button *ngSwitchCase="'details'" class="ui basic button"
                     (click)="cancelDetails()">
                 Close
             </button>
-            <button *ngSwitchCase="'edit'" class="ui large button cancelBtn"
+            <button *ngSwitchCase="'edit'" class="ui basic button"
                     (click)="cancelEditing()">
                 Cancel
             </button>
-            <button *ngSwitchCase="'details'" class="ui large button secondaryBtn"
+            <button *ngSwitchCase="'details'" class="ui secondary button"
                     (click)="editNode()">
                 Edit
             </button>
-            <button class="ui large button secondaryBtn" onclick="$('#delete-node-modal').modal('show')">
+            <button class="ui secondary button" onclick="$('#delete-node-modal').modal('show')">
                 <i class="trash icon"></i>
                 Remove
             </button>
