@@ -61,7 +61,7 @@ checks:
 
 # ci does everything necessary for a Github PR-triggered CI run.
 # currently, this means building a container image and running
-# all of the available tests. (systemtests require a container)
+# all of the available tests.
 ci: build test
 
 # generate-certificate generates a local key and cert for running the proxy.
