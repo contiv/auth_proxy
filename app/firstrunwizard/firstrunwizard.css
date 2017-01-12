@@ -3,7 +3,8 @@
 }
 
 .steps-container{
-    width: 100%;
+    width: 138%;
+    margin-left: -21%;
 }
 
 .progressbar{
@@ -31,6 +32,7 @@
     border-radius: 50%;
     background-color: lightgrey;
 }
+
 
 .progressbar li:after {
     content: '';
@@ -62,13 +64,23 @@
 }
 
 .progressbar li span {
-    color: dimgrey;
-
+    font-family: CiscoSansLight;
+    font-size: 13px;
+    color: #A5A5A5;
 }
 
 .progressbar li.completed:before {
-    content: '\2714';
+    content: "\e92d";
     color: dodgerblue;
     background-color: white;
     border-color: dodgerblue;
+    font-family: Icons;
 }
+
+:host /deep/ .content span{
+    font-family: CiscoSansThin;
+    font-size: 26px;
+    color: #48494d;
+}
+
+

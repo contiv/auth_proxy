@@ -3,11 +3,14 @@
     <div class="ui grid">
         <div class="ui row">
             <div class="ui six wide column">
-                <div class="field">
+                <div class="field" [ngClass]="{error: apicPhysicalDomain.errors?.required && aciForm.submitted}">
                     <label for="apicPhysicalDomain">Physical domain</label>
                     <input type="text" id="apicPhysicalDomain" name="apicPhysicalDomain"
                            [(ngModel)]="setting.physicalDomain"
                            placeholder="Enter physical domain name" required #apicPhysicalDomain="ngModel">
+                    <span class="inlineError" *ngIf="apicPhysicalDomain.errors?.required && aciForm.submitted">
+                        Please enter physical domain
+                    </span>
                 </div>
             </div>
         </div>
@@ -34,7 +37,7 @@
         <div class="ui row">
             <div class="ui six wide column">
                 <div class="field">
-                    <label>&nbsp;<br>
+                    <label>
                         <input type="checkbox" name="apicEnforcePolicies" tabindex="0"
                                [checked]="setting.enforcePolicies == 'yes'"
                                (change)="$event.target.checked?setting.enforcePolicies='yes':setting.enforcePolicies='no'"
@@ -47,28 +50,13 @@
         <div class="ui row">
             <div class="ui six wide column">
                 <div class="field">
-                    <label>&nbsp;<br>
+                    <label>
                         <input type="checkbox" name="apicIncludeCommonTenant" tabindex="0"
                                [checked]="setting.includeCommonTenant == 'yes'"
                                (change)="$event.target.checked?setting.includeCommonTenant='yes':setting.includeCommonTenant='no'"
                                class="alignLabel">
                         Lookup objects in common tenant
                     </label>
-                </div>
-            </div>
-        </div>
-        <div class="ui row">
-            <div class="ui six wide column">
-                <div class="field" style="margin-top:15px;">
-                    <div *ngIf="aciForm.submitted">
-                        <div [hidden]="aciForm.valid" class="ui negative message">
-                            <ul class="list">
-                                <!-- APIC settings validation -->
-                                <li *ngIf="apicPhysicalDomain.errors?.required">Please enter physical domain
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

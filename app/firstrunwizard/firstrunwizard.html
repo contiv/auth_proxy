@@ -1,4 +1,4 @@
-<div class="ui container" *ngIf="welcomeActive">
+<div *ngIf="welcomeActive">
     <div class="ui grid">
         <div class="ui sixteen wide column">
             <h2>Welcome to Cisco Container Networking</h2>
@@ -22,7 +22,7 @@
 </div>
 
 
-<div class="ui basic segment" *ngIf="!welcomeActive">
+<div *ngIf="!welcomeActive">
     <div class="ui grid">
         <div class="ui sixteen wide column">
             <div class="steps-container">

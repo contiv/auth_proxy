@@ -3,35 +3,7 @@
 
     <div class="ui grid">
         <div class="ui row">
-            <div class="ui six wide column field">
-                <div *ngIf="formRef.submitted">
-                    <div *ngIf="!formRef.valid" class="ui negative message">
-                        <ul class="list">
-                            <li *ngIf="networkInfrastructureRef.errors?.required">
-                                Please enter network infrastructure type
-                            </li>
-                            <li *ngIf="allowedVlanRangeRef.errors?.required">
-                                Please enter allowed vlan range
-                            </li>
-                            <li *ngIf="allowedVxlanRangeRef.errors?.required">
-                                Please enter allowed vxlan range
-                            </li>
-                            <li *ngIf="forwardingmodeRef.errors?.required">
-                                Please enter forwarding mode
-                            </li>
-                            <li *ngIf="allowedVlanRangeRef.errors?.pattern">
-                                Please enter vlan in range in the correct notation
-                            </li>
-                            <li *ngIf="allowedVxlanRangeRef.errors?.pattern">
-                                Please enter vxlan in range in the correct notation
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="ui row">
-            <div class="ui six wide column field">
+            <div class="ui six wide column field" [ngClass]="{error: networkInfrastructureRef.errors?.required && formRef.submitted}">
                 <label for="networkInfrastructure">Network infrastructure type</label>
                 <select #networkInfrastructureRef="ngModel"
                         id="networkInfrastructure"
@@ -42,30 +14,46 @@
                     <option value="default">default</option>
                     <option value="aci">aci</option>
                 </select>
+                <span class="inlineError" *ngIf="networkInfrastructureRef.errors?.required && formRef.submitted">
+                    Please enter network infrastructure type
+                </span>
             </div>
+
         </div>
         <div class="ui row">
-            <div class="ui six wide column field">
+            <div class="ui six wide column field" [ngClass]="{error: (allowedVlanRangeRef.errors?.required || allowedVlanRangeRef.errors?.pattern) && formRef.submitted}">
                 <label for="allowedVlanRange">Allowed vlan range</label>
                 <input #allowedVlanRangeRef="ngModel"
                        type="text"
                        id="allowedVlanRange"
                        name="allowedVlanRange"
                        [(ngModel)]="setting['vlans']" placeholder="1-4094" required [pattern]="vlanPattern">
+                <span class="inlineError" *ngIf="allowedVlanRangeRef.errors?.required && formRef.submitted">
+                    Please enter allowed vlan range
+                </span>
+                <span class="inlineError" *ngIf="allowedVlanRangeRef.errors?.pattern && formRef.submitted">
+                    Please enter vlan in range in the correct notation
+                </span>
             </div>
         </div>
         <div class="ui row">
-            <div class="ui six wide column field">
+            <div class="ui six wide column field" [ngClass]="{error: (allowedVxlanRangeRef.errors?.required || allowedVxlanRangeRef.errors?.pattern) && formRef.submitted}">
                 <label for="allowedVxlanRange">Allowed vxlan range</label>
                 <input #allowedVxlanRangeRef="ngModel"
                        type="text"
                        id="allowedVxlanRange"
                        name="allowedVxlanRange"
                        [(ngModel)]="setting['vxlans']" placeholder="1-10000" required [pattern]="vxlanPattern">
+                <span class="inlineError" *ngIf="allowedVxlanRangeRef.errors?.required && formRef.submitted">
+                    Please enter allowed vxlan range
+                </span>
+                <span class="inlineError" *ngIf="allowedVxlanRangeRef.errors?.pattern && formRef.submitted">
+                    Please enter vxlan in range in the correct notation
+                </span>
             </div>
         </div>
         <div class="ui row">
-            <div class="ui six wide column field">
+            <div class="ui six wide column field" [ngClass]="{error: forwardingmodeRef.errors?.required && formRef.submitted}">
                 <label for="forwardingmode">Forwarding mode</label>
                 <select #forwardingmodeRef="ngModel"
                         id="forwardingmode"
@@ -76,6 +64,9 @@
                     <option value="bridge">bridge</option>
                     <option value="routing">routing</option>
                 </select>
+                <span class="inlineError" *ngIf="forwardingmodeRef.errors?.required && formRef.submitted">
+                    Please enter forwarding mode
+                </span>
             </div>
         </div>
         <div *ngIf="!firstRunWiz" class="ui row">
