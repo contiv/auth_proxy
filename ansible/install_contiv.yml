@@ -1,6 +1,11 @@
-# netplugin-node hosts set up netmast/netplugin in a cluster
-- hosts: netplugin-node
+# netplugin-master hosts set up netmaster and rest as netplugin
+- hosts: netplugin-master
   become: true
   environment: '{{ env }}'
   roles:
-    - { role: contiv_network, run_as: master, scheduler_provider: native-swarm  }
+    - { role: contiv_network, scheduler_provider: native-swarm, run_as: master }
+- hosts: netplugin-worker
+  become: true
+  environment: '{{ env }}'
+  roles:
+    - { role: contiv_network, scheduler_provider: native-swarm, run_as: worker }

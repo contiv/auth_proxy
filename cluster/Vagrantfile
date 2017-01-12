@@ -100,29 +100,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           c.vm.provision :shell, path: 'bootstrap_centos.sh'
           if role == 'master'
             # Install kubernetes on master
-            ks8_ver = ENV['CONTIV_K8s_VERSION'] || 'v1.4.1'
+            ks8_ver = ENV['CONTIV_K8s_VERSION'] || 'v1.4.7'
             c.vm.provision :shell, path: 'k8smaster_centos.sh', args: [token, member_info['contiv_control_ip'], ks8_ver]
           else
             # Install kubernetes on nodes
             c.vm.provision :shell, path: 'k8sworker_centos.sh', args: [token, master_ip]
           end # if
         else
-          # Installing swarm or k8s on all the nodes using the ansible installer
-          # This is an unsupported flag to the installer, but needed for testing CI/CD.
-          # We need to get docker installed first, so we can launch the ansible installer
-          if  role == 'master'
-            c.vm.provision 'shell', inline: <<-EOS
-                curl https://get.docker.com | sed 's/docker-engine/docker-engine-1.11.1/' | bash
-                systemctl stop docker
-                rm -f /usr/lib/systemd/system/docker.service
-                rm -f /etc/systemd/system/docker-tcp.socket
-                cp -f /shared/docker.service /usr/lib/systemd/system/docker.service
-                cp -f /shared/docker-tcp.socket /etc/systemd/system/docker-tcp.socket
-                systemctl daemon-reload
-                systemctl start docker-tcp.socket
-                systemctl start docker
-                EOS
-          end # if
           c.vm.provision :shell, inline: 'yum install policycoreutils-python -y'
         end
       end # c

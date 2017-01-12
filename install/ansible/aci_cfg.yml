@@ -4,6 +4,7 @@
 
 CONNECTION_INFO:
       contiv-aci-server4:
+        role: master
         control: enp3s0f1
         data: enp130s0f1
       contiv-aci-server5:

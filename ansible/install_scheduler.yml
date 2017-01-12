@@ -1,6 +1,12 @@
-# netplugin-node hosts set up netmast/netplugin in a cluster
-- hosts: netplugin-node
+# Install scheduler stack with manager nodes on master nodes and the others as workers
+- hosts: netplugin-master
   become: true
   environment: '{{ env }}'
   roles:
-    - { role: scheduler_stack, run_as: master, docker_api_port: 2385 }
+    - { role: scheduler_stack, docker_api_port: 2385, run_as: master }
+
+- hosts: netplugin-worker
+  become: true
+  environment: '{{ env }}'
+  roles:
+    - { role: scheduler_stack, docker_api_port: 2385, run_as: worker }
