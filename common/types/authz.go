@@ -22,6 +22,9 @@ const (
 	AuthZDir = CCNProxyDir + "/" + "authorizations"
 )
 
+// DatastoreDirectories is a list of all the directories in the datastore that
+// our code assumes exist.  These will be automatically created whenever a
+// state driver is initialized.
 var DatastoreDirectories = []string{
 	AuthZDir,
 	CCNProxyDir + "/local_users",
