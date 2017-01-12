@@ -2,6 +2,7 @@ package state
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 	"time"
 
@@ -50,11 +51,57 @@ func (d *ConsulStateDriver) Init(config *types.KVStoreConfig) error {
 		return err
 	}
 
+	for _, dir := range types.DatastoreDirectories {
+		// consul directories are created by appending a slash
+		d.Mkdir(dir + "/")
+	}
+
 	return nil
 }
 
 // Deinit is currently a no-op.
 func (d *ConsulStateDriver) Deinit() {
+}
+
+// Mkdir creates a directory.  If it already exists, this is a no-op.
+//
+// Parameters:
+//   key: target directory path (must have trailing slash and not begin with a slash)
+//
+// Return values:
+//   error: Error encountered when creating the directory
+//   nil:   successfully created directory
+//
+func (d *ConsulStateDriver) Mkdir(key string) error {
+	key = processKey(key)
+
+	// sanity test
+	if !strings.HasSuffix(key, "/") {
+		return fmt.Errorf(
+			"consul directory keys must end with a trailing slash (got '%s')",
+			key,
+		)
+	}
+
+	for i := 0; ; i++ {
+		_, err := d.Client.KV().Put(&api.KVPair{Key: key, Value: nil}, nil)
+		if err == nil {
+			return nil
+		}
+
+		if api.IsServerError(err) || strings.Contains(err.Error(), "EOF") ||
+			strings.Contains(err.Error(), "connection refused") {
+
+			if i < maxConsulRetries {
+				// Retry after a delay
+				time.Sleep(time.Second)
+				continue
+			}
+		}
+
+		return err
+	}
+
 }
 
 //
