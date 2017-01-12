@@ -2,6 +2,7 @@ package state
 
 import (
 	"errors"
+	"fmt"
 	"reflect"
 	"strings"
 	"time"
@@ -67,11 +68,56 @@ func (d *EtcdStateDriver) Init(config *types.KVStoreConfig) error {
 	// create keys api
 	d.KeysAPI = client.NewKeysAPI(d.Client)
 
+	for _, dir := range types.DatastoreDirectories {
+		// etcd paths begin with a slash
+		d.Mkdir("/" + dir)
+	}
+
 	return nil
 }
 
 // Deinit is currently a no-op
 func (d *EtcdStateDriver) Deinit() {}
+
+// Mkdir creates a directory.  If it already exists, this is a no-op.
+//
+// Parameters:
+//   key: target directory path (must begin with a slash)
+//
+// Return values:
+//   error: Error encountered when creating the directory
+//   nil:   successfully created directory
+//
+func (d *EtcdStateDriver) Mkdir(key string) error {
+	ctx, cancel := context.WithTimeout(context.Background(), ctxTimeout)
+	defer cancel()
+
+	// sanity test
+	if !strings.HasPrefix(key, "/") {
+		return fmt.Errorf(
+			"etcd keys must begin with a slash (got '%s')",
+			key,
+		)
+	}
+
+	for i := 0; ; i++ {
+		_, err := d.KeysAPI.Set(ctx, key, "", &client.SetOptions{Dir: true})
+		if err == nil {
+			return nil
+		}
+
+		// Retry few times if cluster is unavailable
+		if err.Error() == client.ErrClusterUnavailable.Error() {
+			if i < maxEtcdRetries {
+				// Retry after a delay
+				time.Sleep(time.Second)
+				continue
+			}
+		}
+
+		return err
+	}
+}
 
 //
 // Write state (consisting of a key-value pair) to the etcd

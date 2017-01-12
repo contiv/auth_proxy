@@ -25,6 +25,8 @@ type StateDriver interface {
 	Init(config *KVStoreConfig) error
 	Deinit()
 
+	Mkdir(string) error
+
 	// XXX: the following raw versions of Read, Write, ReadAll and WatchAll
 	// could be removed, since it is not used directly for now
 	Read(key string) ([]byte, error)

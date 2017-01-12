@@ -22,6 +22,12 @@ const (
 	AuthZDir = CCNProxyDir + "/" + "authorizations"
 )
 
+var DatastoreDirectories = []string{
+	AuthZDir,
+	CCNProxyDir + "/local_users",
+	CCNProxyDir + "/principals",
+}
+
 //
 // Authorization represents the dynamic policy that defines mapping of
 // principals and their access claims to entities with certain capabilities.

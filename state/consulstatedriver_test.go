@@ -31,6 +31,12 @@ func TestConsulStateDriverInitInvalidConfig(t *testing.T) {
 	commonTestStateDriverInitInvalidConfig(t, driver)
 }
 
+// Test to check directory creation in KV store
+func TestConsulStateDriverMkdir(t *testing.T) {
+	driver := setupConsulDriver(t)
+	commonTestStateDriverMkdir(t, driver, "test_mkdir/")
+}
+
 // Test to check writes to KV store
 func TestConsulStateDriverWrite(t *testing.T) {
 	driver := setupConsulDriver(t)

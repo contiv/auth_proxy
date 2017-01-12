@@ -54,6 +54,27 @@ func commonTestStateDriverInitInvalidConfig(t *testing.T, d types.StateDriver) {
 	}
 }
 
+// Test helper function to check directory creation in KV store
+// NOTE: dir is passed as an argument because etcd requires a slash at
+//       the beginning while consul requires a trailing slash and both
+//       test suites call this function.
+func commonTestStateDriverMkdir(t *testing.T, d types.StateDriver, dir string) {
+	_, err := d.ReadAll(dir)
+	if err == nil {
+		t.Fatalf("expected ReadAll to %s to fail", dir)
+	}
+
+	err = d.Mkdir(dir)
+	if err != nil {
+		t.Fatalf("failed to create %s: %s", dir, err)
+	}
+
+	_, err = d.ReadAll(dir)
+	if err != nil {
+		t.Fatalf("failed to read dir at %s: %s", dir, err)
+	}
+}
+
 // Test helper function to check writes to KV store
 func commonTestStateDriverWrite(t *testing.T, d types.StateDriver) {
 	testBytes := []byte{0xb, 0xa, 0xd, 0xb, 0xa, 0xb, 0xe}
@@ -403,6 +424,12 @@ func TestEtcdStateDriverInit(t *testing.T) {
 func TestEtcdStateDriverInitInvalidConfig(t *testing.T) {
 	driver := &EtcdStateDriver{}
 	commonTestStateDriverInitInvalidConfig(t, driver)
+}
+
+// Test to check directory creation in KV store
+func TestEtcdStateDriverMkdir(t *testing.T) {
+	driver := setupEtcdDriver(t)
+	commonTestStateDriverMkdir(t, driver, "/test_mkdir")
 }
 
 // Test to check writes to KV store
