@@ -30,42 +30,32 @@
                 </div>
 
                 <div class="ui basic segment">
-
-                    <div class="six wide field">
-                        <div *ngIf="formRef.submitted">
-                            <div [hidden]="formRef.valid" class="ui negative message">
-                                <ul class="list">
-                                    <li *ngIf="newUserName.errors?.required">
-                                        Please enter user name
-                                    </li>
-                                    <li *ngIf="newUserPassword.errors?.required">
-                                        Please enter user password
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="description">Create user accounts here. You can assign users into tenancies, and define their role, under Settings > Authorizations. </div>
 
                     <div class="ui sixteen column grid">
                         <div class="ui row">
                             <div class="ui six wide column">
-                                <div class="field">
+                                <div class="field" [ngClass]="{error: newUserName.errors?.required && formRef.submitted}">
                                     <label for="newUserName">Username</label>
                                     <input type="text" id="newUserName" name="newUserName"
                                            [(ngModel)]="newUser.username"
                                            placeholder="Enter name" required #newUserName="ngModel">
+                                    <span class="inlineError" *ngIf="newUserName.errors?.required && formRef.submitted">
+                                        Please enter user name
+                                    </span>
                                 </div>
                             </div>
                         </div>
                         <div class="ui row">
                             <div class="ui six wide column">
-                                <div class="field">
+                                <div class="field" [ngClass]="{error: newUserPassword.errors?.required && formRef.submitted}">
                                     <label for="newUserPassword">Password</label>
                                     <input type="password" id="newUserPassword" name="newUserPassword"
                                            [(ngModel)]="newUser.password"
                                            placeholder="Enter password" required #newUserPassword="ngModel">
+                                    <span class="inlineError" *ngIf="newUserPassword.errors?.required && formRef.submitted">
+                                        Please enter user password
+                                    </span>
                                 </div>
                             </div>
 

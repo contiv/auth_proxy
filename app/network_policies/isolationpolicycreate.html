@@ -34,22 +34,6 @@
                 </div>
 
                 <div class="ui basic segment">
-
-                    <div class="ui six column wide field">
-                        <div *ngIf="formRef.submitted">
-                            <div *ngIf="!formRef.valid" class="ui negative message">
-                                <ul class="list">
-                                    <li *ngIf="policyNameRef.errors?.required">
-                                        Please enter policy name
-                                    </li>
-                                    <li *ngIf="policyTenantRef.errors?.required">
-                                        Please select tenant
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="description">
                         <em>Name and create the policy now, after it is created you will edit it to define policy rules.</em>
                     </div>
@@ -57,16 +41,19 @@
                     <div class="ui sixteen column grid">
                         <div class="ui row">
                             <div class="ui six wide column">
-                                <div class="field">
+                                <div class="field" [ngClass]="{error: policyNameRef.errors?.required && formRef.submitted}">
                                     <label for="newPolicyName">Policy name</label>
                                     <input #policyNameRef="ngModel" type="text" id="newPolicyName" name="newPolicyName"
                                            [(ngModel)]="newPolicy.policyName" placeholder="Enter name" required>
+                                    <span class="inlineError" *ngIf="policyNameRef.errors?.required && formRef.submitted">
+                                        Please enter policy name
+                                    </span>
                                 </div>
                             </div>
                         </div>
                         <div class="ui row">
                             <div class="ui six wide column">
-                                <div class="field">
+                                <div class="field" [ngClass]="{error: policyTenantRef.errors?.required && formRef.submitted}">
                                     <label for="newPolicyTenant">Tenant</label>
                                     <select id="newPolicyTenant" class="ui dropdown"
                                             name="newPolicyTenant"
@@ -75,6 +62,9 @@
                                         <option value="">-- Select a tenant --</option>
                                         <option *ngFor="let tenant of tenants" [ngValue]="tenant.tenantName">{{tenant.tenantName}}</option>
                                     </select>
+                                    <span class="inlineError" *ngIf="policyTenantRef.errors?.required && formRef.submitted">
+                                        Please select tenant
+                                    </span>
                                 </div>
                             </div>
                         </div>

@@ -30,34 +30,21 @@
                 <div class="ui basic segment">
                     <div class="ui grid">
                         <div class="ui row">
-                            <div class="ui six wide column field">
-                                <div *ngIf="formRef.submitted">
-                                    <div [hidden]="formRef.valid" class="ui negative message">
-                                        <ul class="list">
-                                            <li *ngIf="newAppProfileName.errors?.required">Please enter
-                                                application profile name
-                                            </li>
-                                            <li *ngIf="newAppProfileTenantRef.errors?.required">
-                                                Please select tenant
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="ui row">
                             <div class="left aligned six wide column">
-                                <div class="field">
+                                <div class="field" [ngClass]="{error: newAppProfileName.errors?.required && formRef.submitted}">
                                     <label for="newAppProfileName">Application profile name</label>
                                     <input type="text" id="newAppProfileName" name="newAppProfileName"
                                            [(ngModel)]="newAppProfile.appProfileName"
                                            placeholder="Enter name" required #newAppProfileName="ngModel">
+                                    <span class="inlineError" *ngIf="newAppProfileName.errors?.required && formRef.submitted">
+                                        Please enter application profile name
+                                    </span>
                                 </div>
                             </div>
                         </div>
                         <div class="ui row">
                             <div class="left aligned six wide column">
-                                <div class="field">
+                                <div class="field" [ngClass]="{error: newAppProfileTenantRef.errors?.required && formRef.submitted}">
                                     <label for="newAppProfileTenant">Tenant</label>
                                     <select id="newAppProfileTenant" class="ui dropdown"
                                             name="newAppProfileTenant"
@@ -69,6 +56,9 @@
                                             {{tenant.tenantName}}
                                         </option>
                                     </select>
+                                    <span class="inlineError" *ngIf="newAppProfileTenantRef.errors?.required && formRef.submitted">
+                                        Please select tenant
+                                    </span>
                                 </div>
                             </div>
                         </div>

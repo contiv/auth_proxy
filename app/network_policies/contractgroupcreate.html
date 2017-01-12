@@ -35,42 +35,23 @@
                 </div>
 
                 <div class="ui basic segment">
-
-                    <div class="six wide field">
-                        <div *ngIf="formRef.submitted">
-                            <div *ngIf="!formRef.valid" class="ui negative message">
-                                <ul class="list">
-                                    <li *ngIf="contractGroupNameRef.errors?.required">
-                                        Please enter external contract group name
-                                    </li>
-                                    <li *ngIf="contractGroupTenantRef.errors?.required">
-                                        Please select a tenant
-                                    </li>
-                                    <li *ngIf="contractGroupTypeRef.errors?.required">
-                                        Please select external contract group type
-                                    </li>
-                                    <li *ngIf="contractGroupContractsRef.errors?.required">
-                                        Please enter contracts
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="ui sixteen column grid">
                         <div class="ui row">
 
                             <div class="ui six wide column">
-                                <div class="field">
+                                <div class="field" [ngClass]="{error: contractGroupNameRef.errors?.required && formRef.submitted}">
                                     <label for="newContractGroupName">External contract group name</label>
                                     <input #contractGroupNameRef="ngModel" type="text" id="newContractGroupName" name="newContractGroupName"
                                            [(ngModel)]="newContractGroup.contractsGroupName" placeholder="Enter name" required>
+                                    <span class="inlineError" *ngIf="contractGroupNameRef.errors?.required && formRef.submitted">
+                                        Please enter external contract group name
+                                    </span>
                                 </div>
                             </div>
                             </div>
                         <div class="ui row">
                             <div class="ui six wide column">
-                                <div class="field">
+                                <div class="field" [ngClass]="{error: contractGroupTenantRef.errors?.required && formRef.submitted}">
                                     <label for="newContractGroupTenant">Tenant</label>
                                     <select id="newContractGroupTenant" class="ui dropdown"
                                             name="newContractGroupTenant"
@@ -79,30 +60,39 @@
                                         <option value="">-- Select a tenant --</option>
                                         <option *ngFor="let tenant of tenants" [ngValue]="tenant.tenantName">{{tenant.tenantName}}</option>
                                     </select>
+                                    <span class="inlineError" *ngIf="contractGroupTenantRef.errors?.required && formRef.submitted">
+                                        Please select a tenant
+                                    </span>
                                 </div>
                             </div>
                             </div>
                         <div class="ui row">
                             <div class="ui six wide column">
-                                <div class="field">
+                                <div class="field" [ngClass]="{error: contractGroupTypeRef.errors?.required && formRef.submitted}">
                                     <label for="newContractGroupType">External contract group type</label>
                                     <select id="newContractGroupType" class="ui dropdown"
                                             name="newContractGroupType"
                                             [(ngModel)]="newContractGroup.contractsType"
-                                            required #contractGroupTypeRef>
+                                            required #contractGroupTypeRef="ngModel">
                                         <option value="">-- Select group type --</option>
                                         <option value="consumed">consumed</option>
                                         <option value="provided">provided</option>
                                     </select>
+                                    <span class="inlineError" *ngIf="contractGroupTypeRef.errors?.required && formRef.submitted">
+                                        Please select external contract group type
+                                    </span>
                                 </div>
                             </div>
                         </div>
                         <div class="ui row">
                             <div class="ui six wide column">
-                                <div class="field">
+                                <div class="field" [ngClass]="{error: contractGroupContractsRef.errors?.required && formRef.submitted}">
                                     <label for="newContractGroupContracts">Contracts</label>
                                     <input #contractGroupContractsRef="ngModel" type="text" id="newContractGroupContracts" name="newContractGroupContracts"
                                            [(ngModel)]="contractsString" placeholder="Enter comma separated contract names" required>
+                                    <span class="inlineError" *ngIf="contractGroupContractsRef.errors?.required && formRef.submitted">
+                                        Please enter contracts
+                                    </span>
                                 </div>
                             </div>
                         </div>

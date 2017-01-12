@@ -22,62 +22,43 @@
 
                 <form class="ui form" role="form" #formRef="ngForm"
                       (ngSubmit)="updateLdapConfig(formRef.valid)" novalidate>
-
-                    <div class="six wide field">
-                        <div *ngIf="formRef.submitted">
-                            <div *ngIf="!formRef.valid" class="ui negative message">
-                                <ul class="list">
-                                    <li *ngIf="server.errors?.required">
-                                        Please enter ldap server address
-                                    </li>
-                                    <li *ngIf="port.errors?.required">
-                                        Please enter ldap server port number
-                                    </li>
-                                    <li *ngIf="base_dn.errors?.required">
-                                        Please enter ldap base dn
-                                    </li>
-                                    <li *ngIf="service_account_dn.errors?.required">
-                                        Please enter ladap service account dn
-                                    </li>
-                                    <li *ngIf="service_account_password.errors?.required">
-                                        Please enter ldap service account password
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="ui sixteen column grid">
                         <div class="ui row">
 
                             <div class="ui six wide column">
 
-                                <div class="field">
+                                <div class="field" [ngClass]="{error: server.errors?.required && formRef.submitted}">
                                     <label for="server">Server Address</label>
                                     <input #server="ngModel"
                                            type="text"
                                            id="server"
                                            name="server"
                                            [(ngModel)]="ldapConfig.server" placeholder="Server address" required>
+                                    <span class="inlineError" *ngIf="server.errors?.required && formRef.submitted">
+                                        Please enter ldap server address
+                                    </span>
                                 </div>
                             </div>
                         </div>
                         <div class="ui row">
                             <div class="ui six wide column">
-                                <div class="field">
+                                <div class="field" [ngClass]="{error: port.errors?.required && formRef.submitted}">
                                     <label for="port">Server Port</label>
                                     <input #port="ngModel"
                                            type="number"
                                            id="port"
                                            name="port"
                                            [(ngModel)]="ldapConfig.port" placeholder="Server port" required>
+                                    <span class="inlineError" *ngIf="port.errors?.required && formRef.submitted">
+                                        Please enter ldap server port number
+                                    </span>
                                 </div>
                             </div>
                         </div>
 
                         <div class="ui row">
                             <div class="ui six wide column">
-                                <div class="field">
+                                <div class="field" [ngClass]="{error: service_account_password.errors?.required && formRef.submitted}">
                                     <label for="service_account_password">Service Account Password</label>
                                     <input #service_account_password="ngModel"
                                            type="password"
@@ -85,25 +66,30 @@
                                            name="service_account_password"
                                            [(ngModel)]="ldapConfig.service_account_password"
                                            placeholder="Enter password" required>
+                                    <span class="inlineError" *ngIf="service_account_password.errors?.required && formRef.submitted">
+                                        Please enter ldap service account password
+                                    </span>
                                 </div>
                             </div>
                         </div>
                         <div class="ui row">
-
                             <div class="ui six wide column">
-                                <div class="field">
+                                <div class="field" [ngClass]="{error: base_dn.errors?.required && formRef.submitted}">
                                     <label for="base_dn">Base DN</label>
                                     <input #base_dn="ngModel"
                                            type="text"
                                            id="base_dn"
                                            name="base_dn"
                                            [(ngModel)]="ldapConfig.base_dn" placeholder="Enter base DN" required>
+                                    <span class="inlineError" *ngIf="base_dn.errors?.required && formRef.submitted">
+                                        Please enter ldap base dn
+                                    </span>
                                 </div>
                             </div>
                         </div>
                         <div class="ui row">
                             <div class="ui six wide column">
-                                <div class="field">
+                                <div class="field" [ngClass]="{error: service_account_dn.errors?.required && formRef.submitted}">
                                     <label for="service_account_dn">Service Account DN</label>
                                     <input #service_account_dn="ngModel"
                                            type="text"
@@ -111,9 +97,11 @@
                                            name="service_account_dn"
                                            [(ngModel)]="ldapConfig.service_account_dn"
                                            placeholder="Enter service account DN" required>
+                                    <span class="inlineError" *ngIf="service_account_dn.errors?.required && formRef.submitted">
+                                        Please enter ladap service account dn
+                                    </span>
                                 </div>
                             </div>
-
                         </div>
                         <div class="ui row">
 

@@ -32,37 +32,22 @@
                     <div class="ui active inverted dimmer" *ngIf="servicelbCreateCtrl.showLoader">
                         <div class="ui loader"></div>
                     </div>
-
-                    <div class="six wide field">
-                        <div *ngIf="servicelbCreateForm.submitted">
-                            <div [hidden]="servicelbCreateForm.valid" class="ui negative message">
-                                <ul class="list">
-                                    <li *ngIf="servicelbName.errors?.required">Please enter service load
-                                        balancer name
-                                    </li>
-                                    <li *ngIf="servicelbTenant.errors?.required">Please select tenant
-                                    </li>
-                                    <li *ngIf="servicelbNetwork.errors?.required"
-                                        [hidden]="!servicelb.tenantName.length">Please select network
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="ui sixteen column grid" style="margin-bottom: 20px;">
                         <div class="ui row">
                             <div class="ui six wide column">
-                                <div class="field">
+                                <div class="field" [ngClass]="{error: servicelbName.errors?.required && servicelbCreateForm.submitted}">
                                     <label for="servicelbName">Service load balancer name</label>
                                     <input type="text" id="servicelbName" name="servicelbName"
                                            [(ngModel)]="servicelbCreateCtrl.servicelb.serviceName" placeholder="Enter name" required #servicelbName="ngModel">
+                                    <span class="inlineError" *ngIf="servicelbName.errors?.required && servicelbCreateForm.submitted">
+                                        Please enter service load balancer name
+                                    </span>
                                 </div>
                             </div>
                         </div>
                         <div class="ui row">
                             <div class="ui six wide column">
-                                <div class="field">
+                                <div class="field" [ngClass]="{error: servicelbTenant.errors?.required && servicelbCreateForm.submitted}">
                                     <label for="servicelbTenant">Tenant</label>
                                     <select id="servicelbTenant" class="ui dropdown"
                                             name="servicelbTenant"
@@ -72,12 +57,15 @@
                                         <option value="">-- Please select tenant --</option>
                                         <option *ngFor="let tenant of tenants" [value]="tenant.tenantName">{{tenant.tenantName}}</option>
                                     </select>
+                                    <span class="inlineError" *ngIf="servicelbTenant.errors?.required && servicelbCreateForm.submitted">
+                                        Please select tenant
+                                    </span>
                                 </div>
                             </div>
                         </div>
                         <div class="ui row">
                             <div class="ui six wide column">
-                                <div [hidden]="!servicelb.tenantName.length" class="field">
+                                <div [hidden]="!servicelb.tenantName.length" class="field" [ngClass]="{error: servicelbNetwork.errors?.required && servicelbCreateForm.submitted}">
                                     <label for="servicelbNetwork">Network</label>
                                     <select id="servicelbNetwork" class="ui dropdown"
                                             name="servicelbNetwork"
@@ -87,6 +75,9 @@
                                         <option *ngIf="!networks.length" value="">-- Tenant has no networks --</option>
                                         <option *ngFor="let network of networks" [ngValue]="network.networkName">{{network.networkName}}</option>
                                     </select>
+                                    <span class="inlineError" *ngIf="servicelbNetwork.errors?.required && servicelbCreateForm.submitted">
+                                        Please select network
+                                    </span>
                                 </div>
                             </div>
                         </div>

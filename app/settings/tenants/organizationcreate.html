@@ -31,24 +31,14 @@
                 </div>
 
                 <div class="ui basic segment">
-
-                    <div class="six wide field">
-                        <div *ngIf="organizationCreateFrom.submitted">
-                            <div [hidden]="organizationCreateFrom.valid" class="ui negative message">
-                                <ul class="list">
-                                    <li *ngIf="newOrganizationName.errors?.required">
-                                        Please enter a tenant name
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="ui six wide column field">
+                    <div class="ui six wide column field" [ngClass]="{error: newOrganizationName.errors?.required && organizationCreateFrom.submitted}">
                         <label for="newOrganizationName">Tenant name</label>
                         <input type="text" id="newOrganizationName" name="newOrganizationName"
                                [(ngModel)]="organizationCreateCtrl.newOrganization.tenantName"
                                placeholder="Enter name" required #newOrganizationName="ngModel">
+                        <span class="inlineError" *ngIf="newOrganizationName.errors?.required && organizationCreateFrom.submitted">
+                            Please enter a tenant name
+                        </span>
                     </div>
 
                     <div class="ui grid">

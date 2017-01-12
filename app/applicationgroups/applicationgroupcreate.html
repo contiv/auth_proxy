@@ -29,30 +29,10 @@
                     <div class="ui loader"></div>
                 </div>
                 <div class="ui basic segment">
-
-                    <div class="ui six wide column field">
-                        <div *ngIf="formRef.submitted">
-                            <div *ngIf="!formRef.valid" class="ui negative message">
-                                <ul class="list">
-                                    <li *ngIf="newApplicationGroupNameRef.errors?.required">Please
-                                        enter application group name
-                                    </li>
-                                    <li *ngIf="newApplicationGroupTenantRef.errors?.required">
-                                        Please select tenant
-                                    </li>
-                                    <li *ngIf="newApplicationGroupNetworkRef.errors?.required"
-                                        [hidden]="!applicationGroup.tenantName.length">Please
-                                        select network
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="ui sixteen column grid">
                         <div class="ui row">
                             <div class="left aligned six wide column">
-                                <div class="field">
+                                <div class="field" [ngClass]="{error: newApplicationGroupNameRef.errors?.required && formRef.submitted}">
                                     <label for="newApplicationGroupName">Application group name</label>
                                     <input #newApplicationGroupNameRef="ngModel"
                                            type="text"
@@ -60,12 +40,15 @@
                                            name="newApplicationGroupName"
                                            [(ngModel)]="applicationGroup.groupName"
                                            placeholder="Enter name" required>
+                                    <span class="inlineError" *ngIf="newApplicationGroupNameRef.errors?.required && formRef.submitted">
+                                        Please enter application group name
+                                    </span>
                                 </div>
                             </div>
                         </div>
                         <div class="ui row">
                             <div class="left aligned six wide column">
-                                <div class="field">
+                                <div class="field" [ngClass]="{error: newApplicationGroupTenantRef.errors?.required && formRef.submitted}">
                                     <label for="newApplicationGroupTenant">Tenant</label>
                                     <select id="newApplicationGroupTenant" class="ui dropdown"
                                             name="newApplicationGroupTenant"
@@ -75,12 +58,15 @@
                                         <option value="">-- Select a tenant --</option>
                                         <option *ngFor="let tenant of tenants" [value]="tenant.tenantName">{{tenant.tenantName}}</option>
                                     </select>
+                                    <span class="inlineError" *ngIf="newApplicationGroupTenantRef.errors?.required && formRef.submitted">
+                                        Please select tenant
+                                    </span>
                                 </div>
                             </div>
                         </div>
                         <div class="ui row">
                             <div class="left aligned six wide column">
-                                <div class="field" [hidden]="!applicationGroup.tenantName.length">
+                                <div class="field" [hidden]="!applicationGroup.tenantName.length" [ngClass]="{error: newApplicationGroupNetworkRef.errors?.required && formRef.submitted}">
                                     <label for="newApplicationGroupNetwork">Network</label>
                                     <select id="newApplicationGroupNetwork"
                                             class="ui dropdown"
@@ -95,6 +81,9 @@
                                             {{network.networkName}}
                                         </option>
                                     </select>
+                                    <span class="inlineError" *ngIf="newApplicationGroupNetworkRef.errors?.required && formRef.submitted">
+                                        Please select network
+                                    </span>
                                 </div>
                             </div>
                         </div>
