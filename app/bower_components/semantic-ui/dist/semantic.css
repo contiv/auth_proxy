@@ -4467,7 +4467,6 @@ input::selection {
   font-size: 13px;
   padding: 0 24px;
   height: 30px;
-  /*width: auto;*/
   white-space: nowrap;
 }
 
@@ -31078,7 +31077,7 @@ html.ios body {
   }
 
   100% {
-    opacity: 0.85;
+    opacity: 1;
     -webkit-transform: translateY(0%);
     transform: translateY(0%);
   }
@@ -31092,7 +31091,7 @@ html.ios body {
   }
 
   100% {
-    opacity: 0.85;
+    opacity: 1;
     -webkit-transform: translateY(0%);
     transform: translateY(0%);
   }
@@ -31206,7 +31205,7 @@ html.ios body {
 
 @-webkit-keyframes fadeOutUp {
   0% {
-    opacity: 0.85;
+    opacity: 1;
     -webkit-transform: translateY(0%);
     transform: translateY(0%);
   }
@@ -31220,7 +31219,7 @@ html.ios body {
 
 @keyframes fadeOutUp {
   0% {
-    opacity: 0.85;
+    opacity: 1;
     -webkit-transform: translateY(0%);
     transform: translateY(0%);
   }

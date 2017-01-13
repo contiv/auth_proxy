@@ -120,17 +120,7 @@
                     </div>
                 </div>
             </div>
-
-            <ctv-error *ngIf="((showServerError) && (mode === 'edit'))"
-                       header="Error saving node"
-                       [error]="serverErrorMessage">
-            </ctv-error>
         </form>
-
-        <ctv-error *ngIf="((showServerError) && (mode === 'details'))"
-                   header="Error deleting node"
-                   [error]="serverErrorMessage">
-        </ctv-error>
     </div>
 
 </div>

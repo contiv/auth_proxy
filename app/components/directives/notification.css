@@ -1,38 +1,37 @@
-.ui.small.message.notify.notification {
+.ui.small.message.notify{
     z-index: 4000;
     position: fixed;
     display: block;
     padding-top: 25px;
     background: #5d5d5d;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 0px;
+    padding-right: 40px;
     opacity: 1;
     border-radius: 10px;
     -moz-border-radius : 10px;
     -webkit-border-radius : 10px;
     box-shadow: 0px 0px 20px #e0e0e0;
+    width:360px;
+
 }
 
-.ui.small.message.notify.notification .ready, .ui.small.message.notify.notification .notificationMessage .info {
-    padding-left: 30px;
-    padding-right: 50px;
+.ui.container{
+    padding-left: 20px;
+    padding-right: 10px;
+    padding-bottom: 10px;
 }
 
-.ui.small.message.notify.notification .minor {
-    padding-left: 0px;
-    padding-right: 40px;
-}
-
-.ui.small.message.notify.notification .notificationMessage {
-    color: white;
+.notificationHeader{
     font-size: 13px;
-}
-.ui.small.message.notify.notification .notificationMessage .notificationHeader {
     font-family: CiscoSansRegular;
+    color: white;
 }
-.ui.small.message.notify.notification .notificationMessage .notificationText {
+
+.notificationText{
     font-family: CiscoSansExtraLight;
     line-height: 18px;
+    font-size: 13px;
+    color: white;
 }
 
 .close.icon{
@@ -40,11 +39,11 @@
     padding-right: 20px;
 }
 
-#notifyIcon{
+.notifyIcon{
     position: relative;
     padding-top: 4px;
     top:15%;
-    font-size: 3em;
+    font-size: 2.3em;
 }
 
 .toast_confirm.icon{
@@ -59,15 +58,14 @@
     color: #008FCE;
 }
 
-
-#backgroundIcon{
+.backgroundIcon{
     position: absolute;
     border-radius: 50%;
-    width: 37px;
-    height: 37px;
+    width: 30.0px;
+    height: 30.0px;
     z-index: -1;
     display: block;
-    left: 3%;
-    top: -21%;
+    left: 1.5%;
+    top: -15%;
     background-color: white;
 }

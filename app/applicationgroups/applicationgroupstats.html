@@ -25,6 +25,7 @@
     </table>
 
     <div class="ui section divider"></div>
+
     <ctv-collapsible title="End Points">
 
         <ctv-search *ngIf="endpoints.length" (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [placeholder]="'filter string'"></ctv-search>
@@ -34,28 +35,26 @@
                    (filtereditems)="filteredendpoints=$event"
                    [size]="12">
             <thead>
-            <tr>
-                <div class="ui grid" style="margin-top: 25px;margin-left: 25px;margin-bottom: 1px;">
+                <tr>
                     <th class="five wide column"><ctv-th [sortfield]="'containerName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj"> Container Name </ctv-th></th>
-                    <th class="four wide column" style="padding-left: 18px !important;"><ctv-th [sortfield]="'ipAddress'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj"> IP Address </ctv-th></th>
-                    <th class="three wide column" style="padding-left: 44px !important;"><ctv-th [sortfield]="'homingHost'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj"> Host </ctv-th></th>
-                </div>
-            </tr>
+                    <th class="five wide column" style="padding-left: 24px !important;"><ctv-th [sortfield]="'ipAddress'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj"> IP Address </ctv-th></th>
+                    <th class="six wide column" style="padding-left: 50px !important;"><ctv-th [sortfield]="'homingHost'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj"> Host </ctv-th></th>
+                </tr>
             </thead>
 
             <tbody *ngIf="endpoints && endpoints.length">
-            <tr *ngFor="let endpoint of filteredendpoints">
-                <td colspan="3">
-                    <ctv-accordion [items]="containerDetails[endpoint.containerID]">
-                        <div class="ui grid" style="margin-top: -33px; margin-left: 30px;">
-                            <div class="five wide column">{{endpoint.containerName.substr(1)}}</div>
-                            <div class="four wide column">{{endpoint.ipAddress.join(' ')}}</div>
-                            <div class="four wide column">{{endpoint.homingHost}}</div>
-                        </div>
-                    </ctv-accordion>
-                </td>
-                <td></td>
-            </tr>
+                <tr *ngFor="let endpoint of filteredendpoints">
+                    <td colspan="3" style="padding-left: 0 !important;">
+                        <ctv-accordion [items]="containerDetails[endpoint.containerID]">
+                            <div class="ui grid" style="margin-top: -33px; margin-left: 20px;">
+                                <div class="five wide column">{{endpoint.containerName.substr(1)}}</div>
+                                <div class="five wide column">{{endpoint.ipAddress.join(' ')}}</div>
+                                <div class="five wide column">{{endpoint.homingHost}}</div>
+                            </div>
+                        </ctv-accordion>
+                    </td>
+                    <td></td>
+                </tr>
             </tbody>
 
             <tbody *ngIf="endpoints && !endpoints.length">

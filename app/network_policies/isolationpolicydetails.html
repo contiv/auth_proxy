@@ -58,8 +58,22 @@
 
     <div class="ui row">
         <div class="ui sixteen wide column">
+            <div class="ui tabular menu" *ngIf="mode == 'details'">
+                <a class="item" [ngClass]="{active: infoselected}" (click)="infoselected=true">
+                    Details
+                </a>
+                <a class="item" [ngClass]="{active: !infoselected}" (click)="infoselected=false">
+                    Stats
+                </a>
+            </div>
+        </div>
+    </div>
 
-            <div class="ui basic segment">
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+
+            <div class="ui basic segment" *ngIf="infoselected">
                 <div class="ui active inverted dimmer" *ngIf="showLoader">
                     <div class="ui loader"></div>
                 </div>
@@ -297,20 +311,9 @@
                         </tbody>
                     </table>
                 </form>
-                <div [ngSwitch]="mode">
-
-                    <ctv-error *ngIf="((showServerError) && (mode === 'edit'))"
-                               header="Error editing isolation policy"
-                               [error]="serverErrorMessage">
-                    </ctv-error>
-                    <ctv-error *ngIf="((showServerError) && (mode === 'details'))"
-                               header="Error deleting isolation policy"
-                               [error]="serverErrorMessage">
-                    </ctv-error>
-                </div>
             </div>
-
+            <isolationpolicystats [statKey]="statskey" *ngIf="!infoselected"></isolationpolicystats>
         </div>
     </div>
+
 </div>
-<isolationpolicystats [statKey]="statskey" *ngIf="!infoselected"></isolationpolicystats>

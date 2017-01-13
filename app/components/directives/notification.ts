@@ -111,7 +111,6 @@ export class NotificationComponent implements DoCheck, OnInit{
         }
     }
 
-
     close() {
         this.runAnimation(false);
         this.notifyId = 0;
