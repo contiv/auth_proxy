@@ -83,7 +83,6 @@ echo "consul running @ $CONSUL_CONTAINER_IP:8500"
 #       be listening.
 #
 echo "Starting systemtests container..."
-PROXY_CONTAINER_NAME="proxy_ccn_proxy_systemtests"
 # run with a tty so that bash (entrypoint) doesn't immediately exit
 SYSTEMTESTS_CONTAINER_ID=$(
     docker run -d -t \

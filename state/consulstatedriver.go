@@ -201,6 +201,7 @@ func (d *ConsulStateDriver) Read(key string) ([]byte, error) {
 //
 func (d *ConsulStateDriver) ReadAll(baseKey string) ([][]byte, error) {
 	baseKey = processKey(baseKey)
+
 	kvs, _, err := d.Client.KV().List(baseKey, nil)
 	if err != nil {
 		return nil, err
@@ -213,6 +214,13 @@ func (d *ConsulStateDriver) ReadAll(baseKey string) ([][]byte, error) {
 
 	values := [][]byte{}
 	for _, kv := range kvs {
+		// if you KV().List() a directory called "foo", one of the results
+		// will be a key called "foo/" with a 0 byte value.  we need to
+		// skip these since empty strings aren't valid JSON records.
+		if len(kv.Value) == 0 {
+			continue
+		}
+
 		values = append(values, kv.Value)
 	}
 
@@ -267,7 +275,7 @@ func (d *ConsulStateDriver) channelConsulEvents(baseKey string, kvCache map[stri
 			// Generate Delete events for missing keys
 			for key, kv := range kvCache {
 				if _, ok := kvsRcvd[key]; !ok {
-					log.Infof("Received delete for key: %q, Pair: %+v", kv.Key, kv)
+					log.Debugf("Received delete for key: %q, Pair: %+v", kv.Key, kv)
 					chValueChanges <- [2][]byte{nil, kv.Value}
 					// remove this key from the map of seen keys
 					delete(kvCache, key)

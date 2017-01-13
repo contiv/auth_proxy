@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -euo pipefail
+set -uo pipefail
 
 ETCD_ADDRESS="etcd://$ETCD_CONTAINER_IP:2379"
 CONSUL_ADDRESS="consul://$CONSUL_CONTAINER_IP:8500"

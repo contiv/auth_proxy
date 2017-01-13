@@ -175,13 +175,13 @@ func insecureClient() *http.Client {
 func proxyGet(c *C, token, path string) (*http.Response, []byte) {
 	url := "https://" + proxyHost + path
 
-	log.Info("GET to ", url)
+	log.Debug("GET to ", url)
 
 	req, err := http.NewRequest("GET", url, nil)
 	c.Assert(err, IsNil)
 
 	if len(token) > 0 {
-		log.Println("Setting X-Auth-token to:", token)
+		log.Debug("Setting X-Auth-token to:", token)
 		req.Header.Set("X-Auth-Token", token)
 	}
 
@@ -201,13 +201,13 @@ func proxyGet(c *C, token, path string) (*http.Response, []byte) {
 func proxyDelete(c *C, token, path string) (*http.Response, []byte) {
 	url := "https://" + proxyHost + path
 
-	log.Info("GET to ", url)
+	log.Debug("GET to ", url)
 
 	req, err := http.NewRequest("DELETE", url, nil)
 	c.Assert(err, IsNil)
 
 	if len(token) > 0 {
-		log.Println("Setting X-Auth-token to:", token)
+		log.Debug("Setting X-Auth-token to:", token)
 		req.Header.Set("X-Auth-Token", token)
 	}
 
@@ -245,7 +245,7 @@ func proxyPost(c *C, token, path string, body []byte) (*http.Response, []byte) {
 func insecureJSONBody(token, path, requestType string, body []byte) (*http.Response, []byte, error) {
 	url := "https://" + proxyHost + path
 
-	log.Info(requestType, " to ", url)
+	log.Debug(requestType, " to ", url)
 
 	req, err := http.NewRequest(requestType, url, bytes.NewBuffer(body))
 	if err != nil {
@@ -256,7 +256,7 @@ func insecureJSONBody(token, path, requestType string, body []byte) (*http.Respo
 	req.Header.Set("Content-Type", "application/json")
 
 	if len(token) > 0 {
-		log.Println("Setting X-Auth-token")
+		log.Debug("Setting X-Auth-token to:", token)
 		req.Header.Set("X-Auth-Token", token)
 	}
 
