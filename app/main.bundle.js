@@ -2509,7 +2509,8 @@ webpackJsonp([2],[
 	  if (value == null) {
 	    return value === undefined ? undefinedTag : nullTag;
 	  }
-	  return (symToStringTag && symToStringTag in Object(value))
+	  value = Object(value);
+	  return (symToStringTag && symToStringTag in value)
 	    ? getRawTag(value)
 	    : objectToString(value);
 	}
@@ -7953,7 +7954,6 @@ webpackJsonp([2],[
 	        this.rulesModel = rulesModel;
 	        this.incomingRules = [];
 	        this.outgoingRules = [];
-	        this.selectedPolicies = []; // To Store policies selected by user to display
 	        this.isolationPolicies = []; // To Get all isolation policies of tenant
 	        this.isolationPolicySearchText = '';
 	    }
@@ -8004,9 +8004,11 @@ webpackJsonp([2],[
 	    IsolationPolicySelectionComponent.prototype.addIsolationPolicy = function (policyName) {
 	        var component = this;
 	        var currentPolicyName = policyName;
-	        if (currentPolicyName !== undefined && _.includes(component.selectedPolicies, currentPolicyName) == false) {
+	        if (currentPolicyName !== undefined && _.includes(component.applicationgroup.policies, currentPolicyName) == false) {
 	            //To display selected policies
-	            component.selectedPolicies.push(currentPolicyName);
+	            //To be added to application group and saved to the server
+	            component.applicationgroup.policies
+	                .push(currentPolicyName);
 	            //To display rules of selected policies
 	            component.rulesModel.getIncomingRules(currentPolicyName, component.applicationgroup.tenantName)
 	                .then(function (rules) {
@@ -8016,9 +8018,6 @@ webpackJsonp([2],[
 	                .then(function (rules) {
 	                Array.prototype.push.apply(component.outgoingRules, rules);
 	            });
-	            //To be added to application group and saved to the server
-	            component.applicationgroup.policies
-	                .push(currentPolicyName);
 	        }
 	    };
 	    ;
@@ -8026,9 +8025,6 @@ webpackJsonp([2],[
 	     * Remove policy from application group
 	     */
 	    IsolationPolicySelectionComponent.prototype.removeIsolationPolicy = function (policyName) {
-	        _.remove(this.selectedPolicies, function (policy) {
-	            return policy === policyName;
-	        });
 	        _.remove(this.applicationgroup.policies, function (policy) {
 	            return policy === policyName;
 	        });

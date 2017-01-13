@@ -16,7 +16,6 @@ export class IsolationPolicySelectionComponent implements OnChanges {
 
     incomingRules:any[] = [];
     outgoingRules:any[] = [];
-    selectedPolicies:any[] = [];           // To Store policies selected by user to display
     isolationPolicies:any[] = [];          // To Get all isolation policies of tenant
     isolationPolicySearchText:string = '';
 
@@ -77,9 +76,11 @@ export class IsolationPolicySelectionComponent implements OnChanges {
         var component = this;
         var currentPolicyName = policyName;
 
-        if (currentPolicyName !== undefined && _.includes(component.selectedPolicies, currentPolicyName) == false) {
+        if (currentPolicyName !== undefined && _.includes(component.applicationgroup.policies, currentPolicyName) == false) {
             //To display selected policies
-            component.selectedPolicies.push(currentPolicyName);
+            //To be added to application group and saved to the server
+            component.applicationgroup.policies
+                .push(currentPolicyName);
 
             //To display rules of selected policies
             component.rulesModel.getIncomingRules(currentPolicyName, component.applicationgroup.tenantName)
@@ -91,9 +92,6 @@ export class IsolationPolicySelectionComponent implements OnChanges {
                     Array.prototype.push.apply(component.outgoingRules, rules);
                 });
 
-            //To be added to application group and saved to the server
-            component.applicationgroup.policies
-                .push(currentPolicyName);
         }
     };
 
@@ -101,9 +99,6 @@ export class IsolationPolicySelectionComponent implements OnChanges {
      * Remove policy from application group
      */
     removeIsolationPolicy(policyName) {
-        _.remove(this.selectedPolicies, function (policy) {
-            return policy === policyName;
-        });
         _.remove(this.applicationgroup.policies, function (policy) {
             return policy === policyName;
         });
