@@ -118,7 +118,8 @@ func netmasterStartupCheck() error {
 	// started so that it can receive the IPs/ports of the proxy containers.
 	//
 	// we won't be advertising this envvar in our docs or anywhere else.
-	if len(os.Getenv("NO_NETMASTER_STARTUP_CHECK")) == 0 {
+	if len(os.Getenv("NO_NETMASTER_STARTUP_CHECK")) != 0 {
+		log.Println("Skipping netmaster startup check")
 		return nil
 	}
 
