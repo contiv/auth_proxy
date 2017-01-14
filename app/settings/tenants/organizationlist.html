@@ -1,9 +1,12 @@
 <div class="ui sixteen column grid">
     <div class="ui row pageHeader">
-        <div class="left aligned eight wide column">
-            <div class="content pageTitle">Tenants</div>
+        <div class="left aligned nine wide column">
+            <div class="content pageTitle" style="display: inline-block">
+                Tenants
+            </div>
+            <tooltip [data]="'Tenants are the highest level of organization in UCN. Create tenants and then assign the appropriate users and create networks. Users are authorized to view and use only the resources within their tenant, but can be assigned to multiple tenants.'"></tooltip>
         </div>
-        <div class="right aligned eight wide column">
+        <div class="right aligned seven wide column">
             <button class="ui primary button" (click)="create()" *auth="'admin'">
                 <i class="add icon"></i>
                 Create Tenant
@@ -22,8 +25,6 @@
 
     <div class="ui row">
         <div class="ui sixteen wide column">
-
-            <div class="description"><i>Tenancies</i> are the basic organizational container for all other assets. Create tenanats then assign users to them, and create network and other objects per tenant. Users assigned to a tenant (or multiple tenants) will be allowed to view and use their authorized tenancy resources only.</div>
 
             <ctv-search *ngIf="organizationsListCtrl.organizations" (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [count]="tableRef.count"></ctv-search>
 

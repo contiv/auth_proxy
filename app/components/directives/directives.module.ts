@@ -16,6 +16,7 @@ import { LineGraphComponent } from "./linegraphcomponent";
 import { ChartsModule } from "ng2-charts";
 import { NotificationComponent } from "./notification";
 import { LdapSettingsComponent } from "./settings/ldapsettingcomponent";
+import { TooltipComponent } from "./tooltip";
 @NgModule({
     imports: [
         CommonModule, FormsModule, ChartsModule
@@ -34,7 +35,8 @@ import { LdapSettingsComponent } from "./settings/ldapsettingcomponent";
         AciSettingComponent,
         LineGraphComponent,
         NotificationComponent,
-        LdapSettingsComponent
+        LdapSettingsComponent,
+        TooltipComponent
     ],
     exports: [
         ErrorMessageComponent,
@@ -50,7 +52,8 @@ import { LdapSettingsComponent } from "./settings/ldapsettingcomponent";
         AciSettingComponent,
         LineGraphComponent,
         NotificationComponent,
-        LdapSettingsComponent
+        LdapSettingsComponent,
+        TooltipComponent
     ]
 })
 export class DirectivesModule {}

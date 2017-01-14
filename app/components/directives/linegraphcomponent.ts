@@ -28,7 +28,7 @@ export class LineGraphComponent implements OnInit, DoCheck, OnDestroy{
     public lineChartOptions:any = {};
     public lineChartColors:Array<any> = [
         { // dark grey
-            backgroundColor: 'rgba(255,255,255,0',
+            backgroundColor: 'rgba(0,117,180,0.1)',
             borderColor: 'rgba(4,159,217,1)',
             pointBackgroundColor: 'rgba(0,117,180,1)',
             pointBorderColor: 'rgba(0,117,180,1)',

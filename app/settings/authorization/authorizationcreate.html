@@ -1,10 +1,10 @@
 <div class="ui basic segment" [ngClass]="{loading: showLoader}">
     <div class="ui sixteen column grid ">
         <div class="ui row pageHeader">
-            <div class="left floated left aligned eight wide column">
-                <div class="content pageTitle">Create Authorization</div>
+            <div class="left aligned sixteen wide column">
+                <div class="content pageTitle" style="display: inline-block">Create Authorization</div>
+                <tooltip [data]="'Authorize user roles for each tenant. Select the tenant and user and determine if the user needs administrator privileges on the tenant.'"></tooltip>
             </div>
-            <div class="right aligned eight wide column">&nbsp;</div>
         </div>
 
         <div class="ui row">
@@ -25,8 +25,6 @@
 
                 <form class="ui form" role="form"
                       (submit)="createAuthorization(formRef.valid)" novalidate #formRef="ngForm">
-
-                    <div class="description">Create user authorizations here. You can assign users into one or more tenancies and define their roles. Both local and LDAP users are supported; for local users you can pick the user name from a menu, for LDAP users you will need to enter an LDAP group string.</div>
 
                     <div class="ui fifteen column grid">
                         <div class="ui row">
