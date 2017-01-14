@@ -3,7 +3,7 @@
 . ./install/ansible/install_defaults.sh
 
 # Ansible options. By default, this specifies a private key to be used and the vagrant user
-def_ans_opts="--private-key $ans_key -u vagrant"
+def_ans_opts="--private-key $def_ans_key -u vagrant"
 
 # Check for docker version and status
 check_for_prereqs() {
@@ -95,12 +95,14 @@ if [[ "$netmaster" = ""  ]]; then
   usage
 fi
 
-if [[ -f $ans_key ]]; then
-  cp $ans_key $host_ans_key
-fi
 if [[ "$ans_opts" = "" ]]; then
 	echo "Attempting to install with default Ansible SSH options $def_ans_opts"
   ans_opts=$def_ans_opts
+fi
+
+if [[ -f $ans_key ]]; then
+  cp $ans_key $host_ans_key
+  ans_opts=$ans_opts + " --private-key $def_ans_key "
 fi
 
 if [[ ! -f $host_tls_cert || ! -f $host_tls_key ]]; then
@@ -116,5 +118,5 @@ fi
 cp ucn-proxy-image.tar $src_conf_path
 
 echo "Starting the ansible container"
-docker run -v $src_conf_path:$container_conf_path contiv/install:devbuild sh -c "./install/ansible/install.sh -n $netmaster -a \"$ans_opts\" $install_scheduler"
+docker run --rm -v $src_conf_path:$container_conf_path contiv/install:devbuild sh -c "./install/ansible/install.sh -n $netmaster -a \"$ans_opts\" $install_scheduler"
 rm -rf $src_conf_path

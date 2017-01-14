@@ -6,7 +6,7 @@ contiv_config=$container_conf_path/cfg.yml
 installer_config=$container_conf_path/ucn.conf
 tls_cert=$container_conf_path/cert.pem
 tls_key=$container_conf_path/key.pem
-ans_key=$container_conf_path/insecure_private_key
+def_ans_key=$container_conf_path/insecure_private_key
 
 # These paths are on the host
 host_contiv_config=$src_conf_path/cfg.yml

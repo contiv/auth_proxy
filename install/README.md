@@ -14,8 +14,8 @@
 * Download the install bundle `<TODO add a location here>`
 * Extract the install bundle and cd to the extracted folder.
 * To load the installer container image run `docker load -i ucn-install-image.tar`
-* Run `./install/ansible/install_swarm.sh -f install/ansible/cfg.yml -n 192.168.2.12 -e cluster/export/insecure_private_key` to install UCN without the scheduler stack.
-* Run `./install/ansible/install_swarm.sh -f install/ansible/cfg.yml -n 192.168.2.12 -e cluster/export/insecure_private_key -i` to install UCN with the scheduler stack.
+* Run `./install/ansible/install_swarm.sh -f install/ansible/cfg.yml -n $ucn_master -e cluster/export/insecure_private_key` to install UCN without the scheduler stack.
+* Run `./install/ansible/install_swarm.sh -f install/ansible/cfg.yml -n $ucn_master -e cluster/export/insecure_private_key -i` to install UCN with the scheduler stack.
 * To see additional install options run `./install/ansible/install_swarm.sh`.
 
 ## Kubernetes 1.4 installation
