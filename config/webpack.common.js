@@ -1,5 +1,5 @@
 /**
- * Created by vjain3 on 10/6/16.
+ * Created by vjain3 on 1/13/17.
  */
 var webpack = require('webpack');
 var path = require('path');
@@ -37,9 +37,7 @@ var webpackConfig = {
 
 // Our Webpack Defaults
 var defaultConfig = {
-    devtool: 'cheap-module-source-map',
     cache: true,
-    debug: true,
     output: {
         filename: '[name].bundle.js',
         sourceMapFilename: '[name].map',
@@ -49,11 +47,6 @@ var defaultConfig = {
     resolve: {
         root: [ path.join(__dirname, 'src') ],
         extensions: ['', '.ts', '.js']
-    },
-
-    devServer: {
-        historyApiFallback: true,
-        watchOptions: { aggregateTimeout: 300, poll: 1000 }
     },
 
     node: {
@@ -67,4 +60,5 @@ var defaultConfig = {
 };
 
 var webpackMerge = require('webpack-merge');
+
 module.exports = webpackMerge(defaultConfig, webpackConfig);
