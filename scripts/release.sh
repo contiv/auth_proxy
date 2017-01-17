@@ -66,6 +66,11 @@ cp -rf scripts/generate-certificate.sh $output_dir
 
 # This is maybe optional - but assume we need it for
 curl -sSL https://cisco.box.com/shared/static/zzmpe1zesdpf270k9pml40rlm4o8fs56.rpm -o $output_dir/openvswitch-2.3.1.rpm
+curl -sSL https://github.com/contiv/netplugin/releases/download/$contiv_version/netplugin-$contiv_version.tar.bz2 -o $output_dir/netplugin-$contiv_version.tar.bz2
+pushd $output_dir
+tar xvfj netplugin-$contiv_version.tar.bz2 netctl
+rm -f netplugin-$contiv_version.tar.bz2
+popd
 
 # Replace versions
 ansible_yaml_dir=$output_dir/install/ansible/
@@ -88,6 +93,9 @@ sed -i.bak "s/__CONTIV_VERSION__/$contiv_version/g" $ansible_env
 sed -i.bak "s/__ACI_GW_IMAGE__/$aci_gw_image/g" $ansible_env
 sed -i.bak "s/__API_PROXY_VERSION__/$ucn_proxy_version/g" $ansible_env
 sed -i.bak "s/__ETCD_VERSION__/$etcd_version/g" $ansible_env
+
+chmod +x $k8s_yaml_dir/install.sh
+chmod +x $output_dir/install/install.sh
 
 # Cleanup the backup files
 rm -f $k8s_yaml_dir/*.bak

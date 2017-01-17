@@ -102,7 +102,7 @@ fi
 
 if [[ -f $ans_key ]]; then
   cp $ans_key $host_ans_key
-  ans_opts=$ans_opts + " --private-key $def_ans_key "
+  ans_opts="$ans_opts --private-key $def_ans_key "
 fi
 
 if [[ ! -f $host_tls_cert || ! -f $host_tls_key ]]; then

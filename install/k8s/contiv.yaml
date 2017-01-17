@@ -155,6 +155,9 @@ spec:
             - mountPath: /etc/openvswitch
               name: etc-openvswitch
               readOnly: false
+            - mountPath: /lib/modules
+              name: lib-modules
+              readOnly: false
             - mountPath: /var/run
               name: var-run
               readOnly: false
@@ -172,6 +175,9 @@ spec:
         - name: etc-openvswitch
           hostPath:
             path: /etc/openvswitch
+        - name: lib-modules
+          hostPath:
+            path: /lib/modules
         - name: var-run
           hostPath:
             path: /var/run

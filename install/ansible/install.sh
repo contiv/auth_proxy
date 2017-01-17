@@ -24,7 +24,7 @@ install_scheduler=False
 netmaster=""
 
 
-function usage {
+usage () {
   echo "Usage:"
   echo "./install.sh -n <netmaster IP> -a <ansible options> -i <install scheduler stack>"
 
@@ -33,7 +33,7 @@ function usage {
 }
 
 # Return printing the error
-function error_ret {
+error_ret() {
   echo ""
   echo $1
   exit 1
