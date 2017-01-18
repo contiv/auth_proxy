@@ -109,6 +109,8 @@ func checkAccessClaim(granted types.RoleType, desired interface{}) error {
 // Return values:
 //  types.Authorization: new authorization that was added
 //  error: nil if successful, else
+//    ccnerrors.ErrIllegalOperation if trying to add authorization to built-in
+//      local admin user.
 //
 func AddAuthorization(tenantName string, role types.RoleType, principalName string,
 	isLocal bool) (types.Authorization, error) {
@@ -116,6 +118,10 @@ func AddAuthorization(tenantName string, role types.RoleType, principalName stri
 	defer common.Untrace(common.Trace())
 	var authz types.Authorization
 	var err error
+
+	if isLocal && types.Admin.String() == principalName {
+		return authz, ccnerrors.ErrIllegalOperation
+	}
 
 	// Adding authorization is generally a two part operation
 	// - Adding tenant claim
@@ -271,9 +277,10 @@ func addUpdateRoleAuthorization(role types.RoleType, principalName string,
 //
 // Return values:
 //  error: nil if successful, else
-//    types.UnauthorizedError: if caller isn't authorized to make this API
-//    call.
-//    : error from db.DeleteAuthorization if deleting a authorization
+//    types.UnauthorizedError: if caller isn't authorized to make this API call.
+//    ccnerrors.ErrIllegalOperation: if attempting to delete authorization for
+//      built-in admin user.
+//    : error from db.DeleteAuthorization if deleting an authorization
 //      fails
 //
 func DeleteAuthorization(authUUID string) error {
@@ -281,9 +288,16 @@ func DeleteAuthorization(authUUID string) error {
 	defer common.Untrace(common.Trace())
 
 	// Return error if authorization doesn't exist
-	if _, err := db.GetAuthorization(authUUID); err != nil {
+	authorization, err := db.GetAuthorization(authUUID)
+	if err != nil {
 		log.Warn("failed to get authorization, err: ", err)
 		return err
+	}
+
+	// don't allow deletion of claims on the built-in "admin" account
+	if authorization.BelongsToBuiltInAdmin() {
+		log.Warn("can't delete authorizations on built-in admin user")
+		return ccnerrors.ErrIllegalOperation
 	}
 
 	// delete authz from the KV store

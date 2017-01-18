@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 
 	"github.com/contiv/ccn_proxy/common/types"
+	"github.com/contiv/ccn_proxy/db"
 	"github.com/contiv/ccn_proxy/proxy"
 	. "gopkg.in/check.v1"
 )
@@ -74,6 +75,35 @@ func (s *systemtestSuite) TestTenantAuthorizationResponse(c *C) {
 		resp, _ = proxyGet(c, adToken, endpoint)
 		c.Assert(resp.StatusCode, Equals, 404)
 	})
+}
+
+// TestBuiltInAdminAuthorizationImmortality checks that the built-in local admin
+// user's sole authorization can't be deleted and that additional authorizations
+// can't be added.
+func (s *systemtestSuite) TestBuiltInAdminAuthorizationImmortality(c *C) {
+	auths, err := db.ListAuthorizationsByPrincipal(types.Admin.String())
+	c.Assert(err, IsNil)
+	c.Assert(len(auths), Equals, 1)
+
+	adminAuthUUID := auths[0].UUID
+
+	baseURL := "/api/v1/ccn_proxy/authorizations"
+
+	//
+	// try to delete the sole authorization
+	//
+	resp, _ := proxyDelete(c, adToken, baseURL+"/"+adminAuthUUID)
+	c.Assert(resp.StatusCode, Equals, 400)
+
+	//
+	// try to add an additional authorization
+	//
+	data := `{"PrincipalName":"` + types.Admin.String() +
+		`","local":true,"role":"` + types.Admin.String() +
+		`","tenantName":""}`
+
+	resp, _ = proxyPost(c, adToken, baseURL, []byte(data))
+	c.Assert(resp.StatusCode, Equals, 400)
 }
 
 // addAuthorization helper function for the tests

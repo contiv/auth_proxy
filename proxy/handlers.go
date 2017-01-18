@@ -226,6 +226,7 @@ func getLocalUser(w http.ResponseWriter, req *http.Request) {
 // addAuthorization adds an authorization
 // Returns these HTTP status codes:
 //    201 (authz added)
+//    400 (attempted to add authorization to built-in local admin user)
 //    500 (internal server error)
 //
 func addAuthorization(w http.ResponseWriter, req *http.Request) {
@@ -310,6 +311,9 @@ func addAuthorization(w http.ResponseWriter, req *http.Request) {
 		}
 		httpStatus = http.StatusCreated
 		httpResponse = jsonAuthz
+	case ccnerrors.ErrIllegalOperation:
+		httpStatus = http.StatusBadRequest
+		httpResponse = []byte(err.Error())
 	default:
 
 		httpStatus = http.StatusInternalServerError
@@ -341,6 +345,9 @@ func deleteAuthorization(w http.ResponseWriter, req *http.Request) {
 	case ccnerrors.ErrKeyNotFound:
 		httpStatus = http.StatusNotFound
 		httpResponse = nil
+	case ccnerrors.ErrIllegalOperation:
+		httpStatus = http.StatusBadRequest
+		httpResponse = []byte(err.Error())
 	default:
 		httpStatus = http.StatusInternalServerError
 		httpResponse = []byte(err.Error())

@@ -109,6 +109,14 @@ type Authorization struct {
 //
 
 //
+// BelongsToBuiltInAdmin determines if the authz belongs to the built-in local
+// admin user.
+//
+func (a *Authorization) BelongsToBuiltInAdmin() bool {
+	return a.Local && Admin.String() == a.PrincipalName
+}
+
+//
 // Write adds an authz instance to the authz dir in the KV store
 //
 // Parameters:
