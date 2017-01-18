@@ -23,5 +23,6 @@ RUN chmod +x genInventoryFile.py
 ADD install install
 
 RUN chmod +x install/ansible/install.sh
+RUN chmod +x install/ansible/uninstall.sh
 ADD scripts/generate-certificate.sh .
 RUN chmod +x generate-certificate.sh

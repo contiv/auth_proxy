@@ -15,7 +15,7 @@ contiv_config=""
 
 # Specify TLS certs to be used for API server
 tls_certs=""
-
+fwd_mode="bridge"
 # ACI parameters
 apic_url=""
 apic_username=""
@@ -39,7 +39,7 @@ error_ret() {
   exit 1
 }
 
-while getopts ":s:n:v:c:t:k:a:u:p:l:d:e:m:y:z:" opt; do
+while getopts ":s:n:v:c:t:k:a:u:p:l:d:e:m:y:z:w:" opt; do
     case $opt in
        s)
           cluster_store=$OPTARG
@@ -85,6 +85,9 @@ while getopts ":s:n:v:c:t:k:a:u:p:l:d:e:m:y:z:" opt; do
           ;;
        z)
           apic_cert_dn=$OPTARG
+          ;;
+       w)
+          fwd_mode=$OPTARG
           ;;
        :)
           echo "An argument required for $OPTARG was not passed"
@@ -168,6 +171,7 @@ cp $tls_key /var/contiv/ucn_key.pem
 echo "Setting installation parameters"
 sed -i.bak "s/__NETMASTER_IP__/$netmaster/g" $contiv_yaml
 sed -i.bak "s/__VLAN_IF__/$vlan_if/g" $contiv_yaml
+sed -i.bak "s/__CONTIV_FWD_MODE__/$fwd_mode/g" $contiv_yaml
 
 if [ "$apic_url" != "" ]; then
   sed -i.bak "s#__APIC_URL__#$apic_url#g" $contiv_yaml

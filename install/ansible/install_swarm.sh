@@ -31,7 +31,7 @@ check_for_prereqs() {
   fi
 }
 
-function usage {
+usage() {
   echo "Usage:"
   echo "./install_swarm.sh -f <host configuration file> -n <netmaster IP> -a <ansible options> -e <ansible key> -i <install scheduler stack> -z <installer config file>"
 

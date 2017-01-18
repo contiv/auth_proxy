@@ -94,8 +94,11 @@ sed -i.bak "s/__ACI_GW_IMAGE__/$aci_gw_image/g" $ansible_env
 sed -i.bak "s/__API_PROXY_VERSION__/$ucn_proxy_version/g" $ansible_env
 sed -i.bak "s/__ETCD_VERSION__/$etcd_version/g" $ansible_env
 
-chmod +x $k8s_yaml_dir/install.sh
 chmod +x $output_dir/install/install.sh
+chmod +x $k8s_yaml_dir/install.sh
+chmod +x $k8s_yaml_dir/uninstall.sh
+chmod +x $ansible_yaml_dir/install_swarm.sh
+chmod +x $ansible_yaml_dir/uninstall_swarm.sh
 
 # Cleanup the backup files
 rm -f $k8s_yaml_dir/*.bak
