@@ -1,0 +1,22 @@
+---
+# This playbook performs service cleanup for etcd.
+#
+# Note: cleanup is not expected to fail, so we set ignore_errors to yes here
+
+- hosts: all
+  become: true
+  tasks:
+    - include_vars: roles/{{ item }}/defaults/main.yml
+      with_items:
+        - "contiv_network"
+        - "contiv_storage"
+        - "swarm"
+        - "kubernetes"
+        - "ucp"
+        - "docker"
+        - "etcd"
+    - include: roles/{{ item }}/tasks/cleanup.yml
+      with_items:
+        - etcd
+      static: no
+      ignore_errors: yes
