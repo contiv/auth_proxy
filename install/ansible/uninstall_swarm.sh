@@ -35,7 +35,8 @@ while getopts ":f:z:n:a:e:i" opt; do
     i) 
       echo "Uninstalling docker will fail if the uninstallation is being run from a node in the cluster."
       echo "Press Ctrl+C to cancel the uininstall and start it from a host outside the cluster."
-      sleep 5
+      echo "Uninstalling Contiv, Docker and Swarm in 20 seconds"
+      sleep 20
       uninstall_scheduler="-i"
       ;;
     :)
