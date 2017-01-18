@@ -1,66 +1,51 @@
+# This provides paths shared between install.sh and install_swarm.sh
+. ./install/ansible/install_defaults.sh
+
+# Ignore ansible ssh host key checking by default
+export ANSIBLE_HOST_KEY_CHECKING=False
+
 # Scheduler provider can be in kubernetes or swarm mode
 scheduler_provider=${CONTIV_SCHEDULER_PROVIDER:-"native-swarm"}
-export ANSIBLE_HOST_KEY_CHECKING=False
-# Docker swarm specific API server parameters(s)
-swarm_end_point=""
-swarm_tls_ca=""
-swarm_tls_cert=""
-swarm_tls_key=""
 
+# Specify the etcd or cluster store here
 # If an etcd or consul cluster store is not provided, we will start an etcd instance
 cluster_store=""
 
-# Contiv configuration can be specified through a config file and/or parameters
-contiv_config=""
-netmaster=""
-network_mode="Standalone"
+# Network mode can be "standalone" or "aci"
+contiv_network_mode="standalone"
+
+# Forwarding mode can be "bridge" or routing
 fwd_mode="bridge"
-ans_opts="--private-key /contiv/config/insecure_private_key -u vagrant"
+
+# Should the scheduler stack (docker swarm or k8s be installed)
 install_scheduler=False
 
-function usage {
+# This is the netmaster IP that needs to be provided for the installation to proceed
+netmaster=""
+
+
+usage () {
   echo "Usage:"
-  echo "./install.sh -s <scheduler provider> -c <cluster store> -f <contiv config file> -n <netmaster IP> -m <network mode> -w <fwd mode> -a <ansible options> -t <tls cert> -k <tls key> -i <install the scheduler stack>"
+  echo "./install.sh -n <netmaster IP> -a <ansible options> -i <install scheduler stack>"
+
+  echo ""
   exit 1
 }
 
-function error_ret {
+# Return printing the error
+error_ret() {
   echo ""
   echo $1
   exit 1
 }
 
-while getopts ":s:c:f:n:m:w:a:t:k:ei" opt; do
+while getopts ":n:a:i" opt; do
     case $opt in
-       s)
-          scheduler_provider=$OPTARG
-          ;;
-       c)
-          cluster_store=$OPTARG
-          ;;
-       f)
-          contiv_config=$OPTARG
-          ;;
        n)
           netmaster=$OPTARG
           ;;
-       m)
-          network_mode=$OPTARG
-          ;;
-       w)
-          fwd_mode=$OPTARG
-          ;;
-       w)
+       a)
           ans_opts=$OPTARG
-          ;;
-       e)
-          env_opts=""
-          ;;
-       t)
-          tls_cert=$OPTARG
-          ;;
-       k)
-          tls_key=$OPTARG
           ;;
        i)
           install_scheduler=True
@@ -79,52 +64,52 @@ if [ "$netmaster" = "" ]; then
   usage
 fi
 
-if [ "$contiv_config" = "" ]; then
-  usage
-fi
-
 echo "Generating Ansible configuration"
 inventory=".gen"
 mkdir -p $inventory
 host_inventory="$inventory/contiv_hosts"
 node_info="$inventory/contiv_nodes"
 
-./genInventoryFile.py $contiv_config $host_inventory $node_info $network_mode $fwd_mode
+./genInventoryFile.py $contiv_config $host_inventory $node_info $contiv_network_mode $fwd_mode
 
-echo "Installing Cisco Universal Container Networking using"
+# Load any additional extra parameters. This needs to be done after the default setting
+# to allow user to override the values
+. $installer_config
+
+cluster="etcd://$netmaster:2379"
+if [ "$cluster_store" != "" ];then
+  cluster=$cluster_store
+fi
+
 ansible_path=./ansible
 env_file=install/ansible/env.json
-
 sed -i.bak "s/__NETMASTER_IP__/$netmaster/g" $env_file
+sed -i.bak "s#__CLUSTER_STORE__#$cluster#g" $env_file
 
+# Copy certs
+cp /var/contiv/cert.pem /ansible/roles/ucn_proxy/files/
+cp /var/contiv/key.pem /ansible/roles/ucn_proxy/files/
+
+# Copy UCN proxy image
+cp /var/contiv/ucn-proxy-image.tar /ansible/roles/ucn_proxy/files/
+
+echo "Installing Cisco Universal Container Networking"
+# TODO: rather than running them separately - merge the playbooks, that makes error tracking simpler
 # Always install the base, install the scheduler stack/etcd if required
+echo "Installing base packages"
 ansible-playbook $ans_opts -i $host_inventory -e "`cat $env_file`" $ansible_path/install_base.yml
 if [ $install_scheduler = True ];then
+  echo "Installing the scheduler stack"
   ansible-playbook $ans_opts -i $host_inventory -e "`cat $env_file`" $ansible_path/install_docker.yml
   ansible-playbook $ans_opts -i $host_inventory -e "`cat $env_file`" $ansible_path/install_etcd.yml
   ansible-playbook $ans_opts -i $host_inventory -e "`cat $env_file`" $ansible_path/install_scheduler.yml
 else
   if [ "$cluster_store" = "" ];then
+    echo "Installing etcd"
     ansible-playbook $ans_opts -i $host_inventory -e "`cat $env_file`" $ansible_path/install_etcd.yml
   fi
 fi
+echo "Installing contiv & UCN"
 # Install contiv & API Proxy
 ansible-playbook $ans_opts -i $host_inventory -e "`cat $env_file`" $ansible_path/install_contiv.yml
-
-
-cert_path=/var/contiv/certs
-mkdir -p $cert_path
-if [ "$tls_cert" = "" ]; then
-  tls_cert=$cert_path/ucn_cert.pem
-  tls_key=$cert_path/ucn_key.pem
-  echo "Generating local certs for UCN Proxy"
-  openssl genrsa -out $tls_key 2048 >/dev/null 2>&1
-  openssl req -new -x509 -sha256 -days 3650 \
-        -key $tls_key \
-        -out $tls_cert \
-        -subj "/C=US/ST=CA/L=San Jose/O=CPSG/OU=IT Department/CN=ccn-local.cisco.com"
-else
-  cp $tls_cert $cert_path/ucn_cert.pem
-  cp $tls_key $cert_path/ucn_key.pem
-fi
-ansible-playbook $ans_opts -i $host_inventory -e "`cat $env_file`" $ansible_path/install_ucn.yml --extra-vars "cluster_store=etcd://$netmaster:2379"
+ansible-playbook $ans_opts -i $host_inventory -e "`cat $env_file`" $ansible_path/install_ucn.yml

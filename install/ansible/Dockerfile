@@ -16,10 +16,12 @@ RUN git clone https://github.com/jojimt/contrib -b contiv
 # Add the new ansible role and playbooks for UCN UI/Proxy
 ADD ansible ansible
 
-# Add the install scripts
-RUN wget -c https://raw.githubusercontent.com/contiv/demo/master/net/extras/genInventoryFile.py
+RUN wget -c https://raw.githubusercontent.com/neelimamukiri/demo/master/net/extras/genInventoryFile.py
 RUN chmod +x genInventoryFile.py
+
+# Add the install scripts
 ADD install install
+
 RUN chmod +x install/ansible/install.sh
 ADD scripts/generate-certificate.sh .
 RUN chmod +x generate-certificate.sh
