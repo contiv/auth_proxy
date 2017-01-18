@@ -193,7 +193,7 @@ func addTenantAuthorization(tenantName string, role types.RoleType, principalNam
 		return types.Authorization{}, err
 	}
 
-	log.Infof("successfully added tenant authorization %#v", tenantAuthz)
+	log.Debugf("successfully added tenant authorization %#v", tenantAuthz)
 	return tenantAuthz, nil
 }
 
@@ -242,7 +242,7 @@ func addUpdateRoleAuthorization(role types.RoleType, principalName string,
 			return types.Authorization{}, err
 		}
 
-		// Need to update iff role < grantedRole
+		// Need to update if role < grantedRole
 		if role < grantedRole {
 			roleAuthz.ClaimValue = role.String()
 			// Inserting an existing authz updates it
@@ -306,7 +306,7 @@ func DeleteAuthorization(authUUID string) error {
 		return err
 	}
 
-	log.Info("successfully deleted authorization ", authUUID)
+	log.Debug("successfully deleted authorization ", authUUID)
 	return nil
 }
 
@@ -407,7 +407,7 @@ func addRoleAuthorization(principalName string,
 		return types.Authorization{}, err
 	}
 
-	log.Infof("successfully added role authorization %#v", roleAuthz)
+	log.Debugf("successfully added role authorization %#v", roleAuthz)
 	return roleAuthz, nil
 }
 
