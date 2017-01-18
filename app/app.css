@@ -1,6 +1,5 @@
 /* app css stylesheet */
 td.ctv-header {
-    font-family: CiscoSansRegular;
     color: #5d5d5d;
     white-space: nowrap;
     text-transform: capitalize;
@@ -9,7 +8,7 @@ td.ctv-header {
     line-height: 26px
 }
 td.ctv-value {
-    font-family: CiscoSansExtraLight;
+    font-weight: 300;
     color: #5d5d5d;
     text-align: left;
     line-height: 26px
@@ -27,40 +26,14 @@ table thead th[sortfield] span{
     color: #b6b6b8
 }
 
-@font-face {
-    font-family: "CiscoSansRegular";
-    src: url("assets/fonts/CiscoSansTTRegular.woff") format('woff');
-}
-@font-face {
-    font-family: "CiscoSansBold";
-    src: url("assets/fonts/CiscoSansTTBold.woff") format('woff');
-}
-@font-face {
-    font-family: "CiscoSansHeavy";
-    src: url("assets/fonts/CiscoSansTTHeavy.woff") format('woff');
-}
-@font-face {
-    font-family: "CiscoSansThin";
-    src: url("assets/fonts/CiscoSansTTThin.woff") format('woff');
-}
-@font-face {
-    font-family: "CiscoSansLight";
-    src: url("assets/fonts/CiscoSansTTLight.woff") format('woff');
-}
-@font-face {
-    font-family: "CiscoSansExtraLight";
-    src: url("assets/fonts/CiscoSansTTExtraLight.woff") format('woff');
-}
-
-
 html body { font-size: 12px; }
 body.loginbackground { background: url(images/loginbackground.jpeg) no-repeat center center; background-size: cover; }
 body.logoutbackground { background: url(images/logoutbackground.jpeg) no-repeat center center; background-size: cover; }
 
 menu { margin: 0; padding: 0; z-index: 2000; }
 
-.productname { font-family: CiscoSansThin; font-size: 1.4rem; color: #aaa; }
-.copyright { font-family: CiscoSansThin; font-size: .7rem; color: #aaa; padding-top: 20px; }
+.productname { font-weight: 300; font-size: 1.4rem; color: #aaa; }
+.copyright { font-weight: 300; font-size: .7rem; color: #aaa; padding-top: 20px; }
 
 .ui.attached.mainMenu { height: 50px; box-shadow: 0 0 12px rgba(0,0,0,0.3) ; border: 0 !important; padding: 0 20px; position: fixed;
     z-index: 3000;
@@ -78,7 +51,6 @@ menu { margin: 0; padding: 0; z-index: 2000; }
     padding-left: 20px;
     padding-top: 12px;
     text-align: left;
-    font-family: CiscoSansRegular;
     font-size: 12px;
     font-weight: bold;
     color: #555;
@@ -116,7 +88,6 @@ menu { margin: 0; padding: 0; z-index: 2000; }
 }
 
 .ui.button.iconBtn {
-    font-family: CiscoSansRegular;
     font-size: 9px;
     color: white;
     text-align: center;
@@ -150,7 +121,6 @@ menu { margin: 0; padding: 0; z-index: 2000; }
 .ui.form .field>label,
 select.ui.dropdown,
 .ui.form select {
-    font-family: CiscoSansRegular;
     font-size: 12px !important;
     background-color: transparent;
 }
@@ -164,12 +134,10 @@ ctv-search { display: inline-block; width: 100%; text-align: center; padding-top
 .ui.input input.ctvSearch { padding-top: 3px; padding-bottom: 3px; width: 150px; height: 24px;}
 
 .searchField { display: inline-block; }
-.searchResults { font-family: CiscoSansExtraLight; color: #999; font-style: italic; font-size: 10px; padding-left: 10px; }
 
 .ui.basic.ctvTable { margin-top: 0; padding: 0; }
 
 .pageTitle {
-    font-family: CiscoSansRegular;
     font-size: 24px;
     height: 30px;
     padding-top: 8px;
@@ -177,10 +145,6 @@ ctv-search { display: inline-block; width: 100%; text-align: center; padding-top
     overflow: hidden;
     text-overflow: ellipsis;
 
-}
-
-.tabContent .pageTitle {
-    font-family: CiscoSansLight;
 }
 
 .ui.table { border-radius: 0 !important; }
@@ -206,14 +170,13 @@ ctv-search { display: inline-block; width: 100%; text-align: center; padding-top
     border: 0;
     color: #5d5d5d;
     padding: 5px 5px 2px 5px !important;
-    font-family: CiscoSansExtraLight;
+    font-weight: 300;
     font-size: 12px;
     height: 34px;
     border-bottom: 1px solid #eee;
 }
 .ui.very.basic.table td:first-child {
     padding-left: 15px !important;
-    font-family: CiscoSansLight;
 }
 .ui.very.basic.table.noRowBorders td { border: 0; }
 .ui.very.basic.table .pagination td { border: 0; }
@@ -233,7 +196,7 @@ thead tr { height: 30px; }
 .ui.very.basic.table tr.selected { background-color: #b7d7e3 !important; }
 
 div.ui.label.tiny {
-    font-family: CiscoSansExtraLight;
+    font-weight: 300;
     font-size: 10px;
     color: #333439;
     height: 18px;
@@ -280,7 +243,6 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 div.ui.tabular.menu { margin-top: 20px; }
 
 .ui.tabular.menu .item {
-    font-family: CiscoSansRegular;
     font-size: 12px;
     font-weight: 400;
     /*height: 2em !important;*/
@@ -303,7 +265,6 @@ div.ui.tabular.menu { margin-top: 20px; }
 }
 
 .breadcrumbs {
-    font-family: CiscoSansExtraLight;
     font-size: 12px;
     font-weight: 300;
     color: #036E97;

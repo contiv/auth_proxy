@@ -64,7 +64,6 @@
 }
 
 .progressbar li span {
-    font-family: CiscoSansLight;
     font-size: 13px;
     color: #A5A5A5;
 }
@@ -78,7 +77,6 @@
 }
 
 :host /deep/ .content span{
-    font-family: CiscoSansThin;
     font-size: 26px;
     color: #48494d;
 }

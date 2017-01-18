@@ -29,7 +29,6 @@ i.toast_info{
     z-index: 5000;
     color: white;
     font-size: 12px;
-    font-family: CiscoSansLight;
     padding: 20px 20px 20px 20px;
     border-radius: 8px;
     visibility: hidden;

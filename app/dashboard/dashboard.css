@@ -28,14 +28,13 @@ tbody tr.notSelected:hover{
 .kpi a.ui.fluid.card:hover { transform: none; box-shadow: 0 0 12px rgba(32,32,32,0.2); }
 
 .kpiHeader {
-    font-family: CiscoSansRegular;
     font-size: 0.9rem;
     color: #036e97;
     text-align: center;
     white-space: nowrap
 }
 .kpiValue {
-    font-family: CiscoSansThin;
+    font-weight: 300;
     font-size: 40px;
     color: #036e97;
     margin: 20px

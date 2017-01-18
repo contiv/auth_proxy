@@ -23,12 +23,11 @@
 
 .notificationHeader{
     font-size: 13px;
-    font-family: CiscoSansRegular;
     color: white;
 }
 
 .notificationText{
-    font-family: CiscoSansExtraLight;
+    font-weight: 300;
     line-height: 18px;
     font-size: 13px;
     color: white;

@@ -17,7 +17,7 @@
 @font-face {
   font-family: 'Icons';
   src: '';
-  src: url("../themes/cisco/assets/fonts/cisco-ucp.eot?#iefix") format('embedded-opentype'), url("../themes/cisco/assets/fonts/cisco-ucp.woff2") format('woff2'), url("../themes/cisco/assets/fonts/cisco-ucp.woff") format('woff'), url("../themes/cisco/assets/fonts/cisco-ucp.ttf") format('truetype'), url("../themes/cisco/assets/fonts/cisco-ucp.svg#icons") format('svg');
+  src: url("../themes/contiv/assets/fonts/contiv.eot?#iefix") format('embedded-opentype'), url("../themes/contiv/assets/fonts/contiv.woff2") format('woff2'), url("../themes/contiv/assets/fonts/contiv.woff") format('woff'), url("../themes/contiv/assets/fonts/contiv.ttf") format('truetype'), url("../themes/contiv/assets/fonts/contiv.svg#icons") format('svg');
   font-style: normal;
   font-weight: normal;
   font-variant: normal;

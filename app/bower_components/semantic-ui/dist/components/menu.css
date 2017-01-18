@@ -25,7 +25,7 @@
   display: -ms-flexbox;
   display: flex;
   margin: 1rem 0em;
-  font-family: CiscoSansRegular, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   background: #FFFFFF;
   font-weight: normal;
   border: 1px solid rgba(34, 36, 38, 0.15);
@@ -1971,7 +1971,7 @@ Floated Menu / Item
 
 
 /*******************************
-         Cisco Menu Overrides
+         Contiv Menu Overrides
 *******************************/
 
 
