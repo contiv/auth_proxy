@@ -115,8 +115,11 @@ if [[ ! -f $host_tls_cert || ! -f $host_tls_key ]]; then
 fi 
 
 # Copy the proxy container image to the host share path
-cp ucn-proxy-image.tar $src_conf_path
+# This is only required for dev builds.
+if [ -f ucn-proxy-image.tar ]; then
+  cp ucn-proxy-image.tar $src_conf_path
+fi
 
 echo "Starting the ansible container"
-docker run --rm -v $src_conf_path:$container_conf_path contiv/install:devbuild sh -c "./install/ansible/install.sh -n $netmaster -a \"$ans_opts\" $install_scheduler"
+docker run --rm -v $src_conf_path:$container_conf_path contiv/install:__API_PROXY_VERSION__ sh -c "./install/ansible/install.sh -n $netmaster -a \"$ans_opts\" $install_scheduler"
 rm -rf $src_conf_path

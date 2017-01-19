@@ -28,7 +28,7 @@ set -euo pipefail
 
 IMAGE_NAME="ccn_proxy_systemtests"
 NETWORK_NAME="ccn_proxy_systemtests"
-PROXY_IMAGE="ccn_proxy:devbuild"
+PROXY_IMAGE="contiv/auth_proxy:devbuild"
 
 echo "Building systemtests image..."
 docker build -t "ccn_proxy_build_base" -f ./build/Dockerfile.base .

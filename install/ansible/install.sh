@@ -90,8 +90,10 @@ sed -i.bak "s#__CLUSTER_STORE__#$cluster#g" $env_file
 cp /var/contiv/cert.pem /ansible/roles/ucn_proxy/files/
 cp /var/contiv/key.pem /ansible/roles/ucn_proxy/files/
 
-# Copy UCN proxy image
-cp /var/contiv/ucn-proxy-image.tar /ansible/roles/ucn_proxy/files/
+# Copy UCN proxy image, if it exists - for dev builds
+if [ -f /var/contiv/ucn-proxy-image.tar ]; then
+  cp /var/contiv/ucn-proxy-image.tar /ansible/roles/ucn_proxy/files/
+fi
 
 echo "Installing Cisco Universal Container Networking"
 # TODO: rather than running them separately - merge the playbooks, that makes error tracking simpler

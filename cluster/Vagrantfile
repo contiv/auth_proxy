@@ -5,18 +5,22 @@ require 'json'
 require 'fileutils'
 
 token = 'd900e1.8a392798f13b33a4'
-master_ip = '192.168.2.10'
 
 # method to create an etc_hosts file based on the cluster info
 def create_etc_hosts(cluster)
+  master_ip = '192.168.2.10'
   hosts = "127.0.0.1   localhost\n"
   cluster.each do |role, member_list|
     hosts = member_list.inject(hosts) { |acc, elem| acc << "#{elem['contiv_control_ip']}   #{elem['name']}\n" }
-    hosts << "#{member_list[0]['contiv_control_ip']}   netmaster\n" if role == 'master' && !member_list.empty?
+    if role == 'master' && !member_list.empty?
+      hosts << "#{member_list[0]['contiv_control_ip']}   netmaster\n"
+      master_ip = member_list[0]['contiv_control_ip']
+    end
   end
 
   etc_file = (ENV['VAGRANT_CWD'] || '.') + '/export/.etc_hosts'
   File.write(etc_file, hosts)
+  master_ip
 end
 
 provision_node = <<SCRIPT
@@ -32,10 +36,7 @@ SCRIPT
 # read the cluster configuration and create /etc/hosts file
 config_file = ENV['UCN_CONFIG'] || 'cluster_defs.json'
 cluster = JSON.parse(File.read((ENV['VAGRANT_CWD'] || '.') + '/' + config_file))
-cluster.each do |role, member_list|
-  master_ip = member_list[0]['contiv_control_ip'] if role == 'master' && !member_list.empty?
-end
-create_etc_hosts(cluster)
+master_ip = create_etc_hosts(cluster)
 
 VAGRANTFILE_API_VERSION = '2'.freeze
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
@@ -72,12 +73,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         c.vm.network :private_network, ip: member_info['contiv_control_ip']
         c.vm.network :private_network, ip: member_info['contiv_network_ip'], virtualbox__intnet: 'true', auto_config: false
         c.vm.provider 'virtualbox' do |v|
-          if vm_name == 'ucn-master'
-            c.vm.network 'forwarded_port', guest: 10_000, host: ENV['UCN_PORT'] || 10_000
-            v.memory = 2048
-          else
-            v.memory = 1024
-              end
+          v.memory = vm_name == 'ucn-master' ? 2048 : 1024
           # make all nics 'virtio' to take benefit of builtin vlan tag
           # support, which otherwise needs to be enabled in Intel drivers,
           # which are used by default by virtualbox

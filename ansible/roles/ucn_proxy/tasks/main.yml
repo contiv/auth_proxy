@@ -4,11 +4,17 @@
 - name: create cert folder for proxy
   file: path=/var/contiv/certs state=directory
 
+- name: check if proxy image is distributed locally
+  stat: path=ucn-proxy-image.tar
+  register: dev_ucn_proxy
+
 - name: copy container image for UCN proxy
   copy: src=ucn-proxy-image.tar dest=/var/contiv
+  when: dev_ucn_proxy.stat.exists == True
 
 - name: load UCN proxy image
   shell: docker load -i /var/contiv/ucn-proxy-image.tar
+  when: dev_ucn_proxy.stat.exists == True
 
 - name: copy shell script for starting ucn-proxy
   template: src=ucn_proxy.j2 dest=/usr/bin/ucn_proxy.sh mode=u=rwx,g=rx,o=rx

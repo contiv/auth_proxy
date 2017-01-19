@@ -75,7 +75,9 @@ if [[ -f $ans_key ]]; then
 fi
 
 # Copy the proxy container image to the host share path
-cp ucn-proxy-image.tar $src_conf_path
+if [ -f ucn-proxy-image.tar ]; then
+  cp ucn-proxy-image.tar $src_conf_path
+fi
 
 echo "Starting the ansible container"
 docker run --rm -v $src_conf_path:$container_conf_path contiv/install:devbuild sh -c "./install/ansible/uninstall.sh -n $netmaster -a \"$ans_opts\" $uninstall_scheduler"

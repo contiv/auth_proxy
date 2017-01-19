@@ -87,7 +87,9 @@ sed -i.bak "s/__NETMASTER_IP__/$netmaster/g" $env_file
 sed -i.bak "s#__CLUSTER_STORE__#$cluster#g" $env_file
 
 # Copy UCN proxy image
-cp /var/contiv/ucn-proxy-image.tar /ansible/roles/ucn_proxy/files/
+if [ -f /var/contiv/ucn-proxy-image.tar ]; then
+  cp /var/contiv/ucn-proxy-image.tar /ansible/roles/ucn_proxy/files/
+fi
 
 echo "Uninstalling Cisco Universal Container Networking"
 
