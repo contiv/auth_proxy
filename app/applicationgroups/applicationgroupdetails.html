@@ -66,20 +66,6 @@
 
                 <applicationgroupinfo [applicationGroup]="applicationGroup"
                                       [mode]="mode" [showLoader]="showLoader"></applicationgroupinfo>
-
-                <div class="ui row" [ngSwitch]="mode" style="margin-top: 40px">
-
-                    <div class="right aligned sixteen wide column">
-                        <button *ngSwitchCase="'edit'" type="button" class="ui basic button"
-                                (click)="cancelEditing()">
-                            Cancel
-                        </button>
-                        <button *ngSwitchCase="'edit'" type="button" class="ui primary button"
-                                (click)="saveApplicationGroup()">
-                            Save
-                        </button>
-                    </div>
-                </div>
             </div>
 
             <applicationgroupstats [statkey]="statskey"

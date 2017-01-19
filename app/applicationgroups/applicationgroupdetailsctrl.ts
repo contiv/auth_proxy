@@ -75,10 +75,6 @@ export class ApplicationGroupDetailsComponent implements OnInit{
         this.router.navigate(['../../edit', this.applicationGroup.key], { relativeTo: this.activatedRoute });
     }
 
-    cancelEditing() {
-        this.returnToApplicationGroupDetails();
-    }
-
     cancelDetails() {
         this.returnToApplicationGroup();
     }
@@ -97,19 +93,5 @@ export class ApplicationGroupDetailsComponent implements OnInit{
             });
     }
 
-    saveApplicationGroup() {
-        var applicationGroupDetailsCtrl = this;
-        applicationGroupDetailsCtrl.crudHelperService.startLoader(applicationGroupDetailsCtrl);
 
-        applicationGroupDetailsCtrl.applicationGroupsModel.save(applicationGroupDetailsCtrl.applicationGroup).then(
-            function successCallback(result) {
-                applicationGroupDetailsCtrl.crudHelperService.stopLoader(applicationGroupDetailsCtrl);
-                applicationGroupDetailsCtrl.crudHelperService.showNotification("Application group: Updated", result.key.toString());
-                applicationGroupDetailsCtrl.returnToApplicationGroupDetails();
-            }, function errorCallback(result) {
-                applicationGroupDetailsCtrl.crudHelperService.stopLoader(applicationGroupDetailsCtrl);
-                applicationGroupDetailsCtrl.crudHelperService.showServerError("Application group: Update failed", result);
-
-            });
-    }
 }
