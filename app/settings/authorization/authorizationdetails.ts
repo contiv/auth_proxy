@@ -19,6 +19,7 @@ export class AuthorizationDetailsComponent implements OnInit{
     mode: string = 'details';
     showLoader: boolean = false;
     tenants: any = [];
+    isRootAdmin: boolean = false;
     constructor(private authorizationModel: AuthorizationModel,
                 private crudHelperService: CRUDHelperService,
                 private router: Router,
@@ -49,6 +50,7 @@ export class AuthorizationDetailsComponent implements OnInit{
         this.authorizationModel.getModelByKey(this.activatedRoute.snapshot.params['key'], false, 'AuthzUUID')
             .then((result) => {
                 authdetailsComp.authorization = result;
+                authdetailsComp.isRootAdmin = (result.PrincipalName === 'admin' && result.Role === 'admin');
                 authdetailsComp.getOrganization();
             }, (error) => {
                 authdetailsComp.crudHelperService.stopLoader(authdetailsComp);

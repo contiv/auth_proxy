@@ -14,9 +14,9 @@ declare var jQuery:any;
 })
 
 export class MenuComponent implements DoCheck{
-    public username: string
-    public product_name:string = ContivGlobals.PRODUCT_NAME
-    public firstRun: boolean
+    public username: string;
+    public product_name:string = ContivGlobals.PRODUCT_NAME;
+    public firstRun: boolean;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private router: Router,

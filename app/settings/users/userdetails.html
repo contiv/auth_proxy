@@ -1,8 +1,8 @@
 <div class="ui sixteen column grid pageHeader">
-    <div [ngSwitch]="userDetailsCtrl.mode" class="ui row">
+    <div [ngSwitch]="mode" class="ui row">
         <div class="left aligned eight wide column">
-            <div *ngSwitchCase="'details'" class="content pageTitle">{{userDetailsCtrl.user.userName}}</div>
-            <div *ngSwitchCase="'edit'" class="content pageTitle">{{userDetailsCtrl.user.userName}}</div>
+            <div *ngSwitchCase="'details'" class="content pageTitle">{{user.username}}</div>
+            <div *ngSwitchCase="'edit'" class="content pageTitle">{{user.username}}</div>
         </div>
         <div class="right aligned eight wide column">
 
@@ -32,7 +32,10 @@
                     (click)="editUser()">
                 Edit
             </button>
-            <button class="ui secondary button" onclick="$('#delete-user-modal').modal('show')">
+            <button class="ui button"
+                    [ngClass]="{disabled: isRootAdmin || isLoggedInUser, secondary: !isRootAdmin && !isLoggedInUser}"
+                    style="height: 30px; font-size: 13px; padding: 0 24px;"
+                    onclick="$('#delete-user-modal').modal('show')">
                 <i class="trash icon"></i>
                 Remove
             </button>
@@ -49,20 +52,20 @@
                     </a>
                 </span>
                 <span class="crumb">
-                    {{user.userName}}
+                    {{user.username}}
                 </span>
             </div>
         </div>
     </div>
 
-    <div class="ui row"  [ngSwitch]="userDetailsCtrl.mode">
+    <div class="ui row"  [ngSwitch]="mode">
         <div class="ui sixteen wide column">
 
             <div class="ui basic segment">
                 <div class="ui active inverted dimmer" *ngIf="showLoader">
                     <div class="ui loader"></div>
                 </div>
-
+                <div *ngIf="isRootAdmin" class="description">Built-in admin user record cannot be deleted.</div>
                 <table>
                     <tbody>
                         <tr>
@@ -124,11 +127,13 @@
                             <div class="ui row">
 
                                 <div class="ui six wide column">
+                                    <div class="field" [ngClass]="{disabled: isLoggedInUser}">
                                     <label>&nbsp;<br>
                                         <input type="checkbox" name="userdisabled" tabindex="0" class="alignLabel"
                                                    [(ngModel)]="user.disable">
                                             Disabled
                                     </label>
+                                    </div>
                                 </div>
 
                             </div>

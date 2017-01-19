@@ -25,15 +25,10 @@
                     (click)="returnToList()">
                 Close
             </button>
-            <button *ngSwitchCase="'edit-notsupported'" class="ui basic button"
-                    (click)="cancelEditing()">
-                Cancel
-            </button>
-            <button *ngSwitchCase="'details-edit-notsupported'" class="ui secondary button"
-                    (click)="editAuthorization()">
-                Edit
-            </button>
-            <button class="ui secondary button" onclick="$('#delete-auth-modal').modal('show')">
+            <button class="ui button"
+                    [ngClass]="{disabled: isRootAdmin, secondary: !isRootAdmin}"
+                    style="height: 30px; font-size: 13px; padding: 0 24px;"
+                    onclick="$('#delete-auth-modal').modal('show')">
                 <i class="trash icon"></i>
                 Remove
             </button>
@@ -62,7 +57,8 @@
                 <div class="ui row">
                     <div class="ui sixteen wide column">
 
-                        <div class="description">Authorization records cannot be edited. Remove this record and recreate it if what you see here is not what you want.</div>
+                        <div *ngIf="!isRootAdmin" class="description">Authorization records cannot be edited. Remove this record and recreate it if what you see here is not what you want.</div>
+                        <div *ngIf="isRootAdmin" class="description">Authorization records cannot be edited or deleted for built-in admin user.</div>
 
                         <table>
                             <tbody>
@@ -89,43 +85,6 @@
                             </tbody>
                         </table>
 
-                    </div>
-                </div>
-
-                <div class="ui row" *ngSwitchCase="'edit-notsupported'">
-                    <div class="ui sixteen wide column">
-                        <form class="ui form"
-                              role="form"
-                              (submit)="saveAuthorization(formRef.valid)" novalidate #formRef="ngForm">
-
-                            <div class="field">
-                                <label for="role">Role</label>
-                                <select class="ui dropdown" id="role" name="role" [(ngModel)]="authorization.Role">
-                                    <option value="admin">Admin</option>
-                                    <option value="ops">DevOps</option>
-                                </select>
-                            </div>
-
-                            <div class="field">
-                                <label for="role">Tenant</label>
-                                <select class="ui dropdown" id="tenantname" name="tenantname" [(ngModel)]="authorization.TenantName">
-                                    <option *ngFor="let tenant of tenants">{{tenant.tenantName}}</option>
-                                </select>
-                            </div>
-
-                            <div class="ui grid">
-                                <div class="right aligned sixteen wide column buttonRow">
-                                    <button type="button" class="ui basic button"
-                                            (click)="cancelEditing()">
-                                        Cancel
-                                    </button>
-                                    <button type="submit" class="ui primary button">
-                                        Save
-                                    </button>
-                                </div>
-                            </div>
-
-                        </form>
                     </div>
                 </div>
 
