@@ -35,7 +35,12 @@ $ npm install
 ```
 * Build app with:
 ```
-$ gulp dev-build
+For Dev
+$ npm run build:dev
+```
+```
+For Production
+$ npm run build
 ```
 
 ####Install nginx
@@ -82,9 +87,45 @@ $ npm install
 ```
 * Build app with:
 ```
-$ gulp dev-build
+For Dev
+$ npm run build:dev
 ```
-####Install nginx
+```
+For Production
+$ npm run build
+```
+
+####Run CCN Proxy
+Contiv UI needs CCN Proxy for user authentication and authorization. CCN Proxy also acts as a web server for contiv UI.
+To run contiv UI inside a docker container from contiv source.
+
+* Install Docker for Mac
+* Checkout 'contiv/ccn_proxy'
+  * Inside the 'ccn_proxy' checkout:
+```
+	git pull <-- if you need to refresh the checkout
+	make
+	make generate-certificate <-- if this is a new checkout
+```
+* Also, set an env var pointing to the local UI src code:
+```
+	export UI_DIR='/Users/john/Dev/gocode/src/github.com/contiv/contiv-ui/app'
+```
+
+* Load the cnn_proxy as a container. Note where in this CLI there is a reference to the data store and netmaster:
+```
+docker run -it \
+-v $PWD/local_certs:/local_certs:ro \
+-v $UI_DIR:/ui:ro \
+-p 10000:10000 ccn_proxy:devbuild --listen-address=0.0.0.0:10000  \
+--netmaster-address=<netmaster>:9999 \
+--data-store-address=etcd://<etcd-server>:2379 \
+--tls-certificate=/local_certs/cert.pem --tls-key-file=/local_certs/local.key
+```
+* From your browser:
+	https://localhost:10000/
+
+####Install nginx (This is no longer needed if you use CCN Proxy)
 * install brew and nginx:
 ```
 $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" 
@@ -102,7 +143,7 @@ $ brew install nginx
 $ nginx
 ```
 Server is now running on localhost:8080 
-If you make changes in your app folder, rerun the gulp command and hard refresh page to view changes in the browser
+If you make changes in your app folder, rerun the npm run build:dev command and hard refresh page to view changes in the browser
 
 * If you modify nginx.conf, restart server with:
 ```
@@ -117,8 +158,8 @@ $ nginx -s stop
 ----------------------------------------
 
 * Uncompress the folder containing the files related to the icons.
-* Copy and replace the following files cisco-ucp.eot, cisco-ucp.svg, cisco-ucp.tff, cisco-ucp.woff, cisco-ucp.woff2 from /font/ of the uncompressed folder into contiv-ui/app/bower_components/semantic-ui/src/themes/cisco/assets/fonts/.
-* Add the new icon to icon.overrides file present in contiv-ui/app/bower_components/semantic-ui/src/themes/cisco/elements/
+* Copy and replace the following files contiv.eot, contiv.svg, contiv.tff, contiv.woff, contiv.woff2 from /font/ of the uncompressed folder into contiv-ui/app/bower_components/semantic-ui/src/themes/contiv/assets/fonts/.
+* Add the new icon to icon.overrides file present in contiv-ui/app/bower_components/semantic-ui/src/themes/contiv/elements/
 * eg for adding a snapshot icon - 
 
 ```
@@ -142,7 +183,7 @@ $ gulp build
 ```
 
 
-###Testing
+###Testing (Tests not migrated to angular 2. They will not work currently.)
 ==========
 To run all tests:
 ```

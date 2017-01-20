@@ -1,34 +1,48 @@
-# Setup contiv-ui with contiv cluster on linux server
-#### Step 1: Clone contiv-ui
+# Setup contiv-ui with contiv netmaster
 
+#### Step 1: Clone the netplugin repository and bring up the VMs
 
+```
+$ git clone https://github.com/contiv/netplugin.git
+$ export GOPATH="<Your gopath>"
+$ cd netplugin
+```
+Modify Vagrantfile to forward etcd port:
+```
+node.vm.network "forwarded_port", guest: 2379, host:2379
+```
+```
+$ make demo
+```
+
+#### Step 2: Clone contiv-ui
 ```
 $ git clone https://github.com/contiv/contiv-ui.git
 ```
 
-#### Step 2: Clone the cluster repository and bring up the VMs
+#### Step 3: Deploy Contiv UI as a CCN Proxy container.
 
+* Checkout 'contiv/ccn_proxy'
+  * Inside the 'ccn_proxy' checkout:
 ```
-$ git clone https://github.com/contiv/cluster.git
-$ export GOPATH="<Your gopath>"
-$ cd cluster
+	git pull <-- if you need to refresh the checkout
+	make
+	make generate-certificate <-- if this is a new checkout
 ```
-
-Modify Vagrantfile to forward netmaster and cluster ports:
-
+* Also, set an env var pointing to the local UI src code:
 ```
-node.vm.network "forwarded_port", guest: 9007, host:9007
-node.vm.network "forwarded_port", guest: 9999, host:9999
-```
-
-```
-$ make demo-cluster
+	export UI_DIR='/Users/john/Dev/gocode/src/github.com/contiv/contiv-ui/app'
 ```
 
-#### Step 3: Deploy Contiv UI as a nginx container on linux server
+* Load the cnn_proxy as a container. Note where in this CLI there is a reference to the data store and netmaster:
 ```
-$ cd $GOPATH/contiv-ui
-$ docker build -t contiv-ui-nginx .
-$ docker run --net=host --name contiv-ui -d contiv-ui-nginx
+docker run -it \
+-v $PWD/local_certs:/local_certs:ro \
+-v $UI_DIR:/ui:ro \
+-p 10000:10000 ccn_proxy:devbuild --listen-address=0.0.0.0:10000  \
+--netmaster-address=<netmaster>:9999 \
+--data-store-address=etcd://<netmaster>:2379 \
+--tls-certificate=/local_certs/cert.pem --tls-key-file=/local_certs/local.key
 ```
-#### Step 4: Access UI using http://\<hostname\>/
+
+#### Step 4: Access UI using http://localhost:10000/
