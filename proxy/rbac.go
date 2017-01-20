@@ -24,45 +24,45 @@ type rbacFilter func(*auth.Token, []byte) []byte
 // rbacData struct that holds the filter and contivmodel object reference for
 // each of the netmaster resource.
 type rbacData struct {
-	filter  rbacFilter
-	objType interface{}
+	filter rbacFilter
+	newObj func() interface{}
 }
 
 var (
 	// rbacDetails map containing the details of all netmaster resources
 	rbacDetails = map[string]rbacData{
 		"appProfiles": {
-			filter:  auth.FilterAppProfiles,
-			objType: &client.AppProfile{},
+			filter: auth.FilterAppProfiles,
+			newObj: func() interface{} { return &client.AppProfile{} },
 		},
 		"endpointGroups": {
-			filter:  auth.FilterEndpointGroups,
-			objType: &client.EndpointGroup{},
+			filter: auth.FilterEndpointGroups,
+			newObj: func() interface{} { return &client.EndpointGroup{} },
 		},
 		"extContractsGroups": {
-			filter:  auth.FilterExtContractsGroups,
-			objType: &client.ExtContractsGroup{},
+			filter: auth.FilterExtContractsGroups,
+			newObj: func() interface{} { return &client.ExtContractsGroup{} },
 		},
 		"netprofiles": {
-			filter:  auth.FilterNetProfiles,
-			objType: &client.Netprofile{},
+			filter: auth.FilterNetProfiles,
+			newObj: func() interface{} { return &client.Netprofile{} },
 		},
 		"networks": {
-			filter:  auth.FilterNetworks,
-			objType: &client.Network{},
+			filter: auth.FilterNetworks,
+			newObj: func() interface{} { return &client.Network{} },
 		},
 		// NOTE: "policys" is misspelled in netmaster's routes
 		"policys": {
-			filter:  auth.FilterPolicies,
-			objType: &client.Policy{},
+			filter: auth.FilterPolicies,
+			newObj: func() interface{} { return &client.Policy{} },
 		},
 		"rules": {
-			filter:  auth.FilterRules,
-			objType: &client.Rule{},
+			filter: auth.FilterRules,
+			newObj: func() interface{} { return &client.Rule{} },
 		},
 		"serviceLBs": {
-			filter:  auth.FilterServiceLBs,
-			objType: &client.ServiceLB{},
+			filter: auth.FilterServiceLBs,
+			newObj: func() interface{} { return &client.ServiceLB{} },
 		},
 	}
 )
@@ -96,10 +96,9 @@ func enforceRBAC(s *Server) func(http.ResponseWriter, *http.Request) {
 			return
 		}
 
-		// else
 		resource := vars["resource"]
 		switch resource {
-		// admin only netmaster resources
+		// admin-only netmaster resources
 		case "aciGws", "Bgps", "globals":
 			authError(w, http.StatusForbidden, "Insufficient privileges")
 		case "tenants":
@@ -140,7 +139,7 @@ func rbacUsingTenant(s *Server, req *http.Request, w http.ResponseWriter, token 
 			return
 		}
 
-		if authorized(s, req, w, token, resource, rName, rbacDetails[resource].objType) {
+		if authorized(s, req, w, token, resource, rName, rbacDetails[resource].newObj()) {
 			proxyRequest(s, req, w, token, auth.NullFilter)
 		}
 	case "endpoints":

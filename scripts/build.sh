@@ -47,7 +47,7 @@ newest_commit=$(git rev-parse HEAD)
 last_commit_file="../.last_npm_installed_ui_commit"
 
 if [ ! -f "$last_commit_file" ] || [ $(cat $last_commit_file) != "$newest_commit" ]; then
-    echo "Running `npm install` for commit ${newest_commit}..."
+    echo "Running 'npm install' for commit ${newest_commit}..."
 
     # when `npm install` runs inside the container for the first time, it will
     # create a directory called node_modules.  subsequent runs can create subdirs
