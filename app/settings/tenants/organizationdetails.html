@@ -31,14 +31,14 @@
 
             <div class="right aligned three wide column">
                 <div id="delete-organization-modal" class="ui small modal">
-                    <div class="header">Remove Tenant: {{organizationDetailsCtrl.organization.tenantName}}</div>
+                    <div class="header">Delete</div>
                     <div class="content">
-                        <p>Are you sure you want to remove this tenant?</p>
+                        <p>Are you sure you want to delete the tenant <q>{{organizationDetailsCtrl.organization.tenantName}}</q>?</p>
                     </div>
                     <div class="actions">
-                        <div class="ui negative button">No</div>
-                        <div class="ui positive button" (click)="organizationDetailsCtrl.deleteOrganization()">
-                            Yes
+                        <div class="ui basic deny button modalBtn">Cancel</div>
+                        <div class="ui primary approve button modalBtn" (click)="organizationDetailsCtrl.deleteOrganization()">
+                            Delete
                         </div>
                     </div>
                 </div>

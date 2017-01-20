@@ -11,7 +11,7 @@ import {isUndefined} from "util";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NotificationType} from "../components/directives/notification";
 var _ = require('lodash');
-
+declare var jQuery:any;
 
 @Component({
     selector: 'networkdetails',
@@ -101,9 +101,7 @@ export class NetworkdetailsComponent implements OnInit, OnDestroy{
                 networkDetailsCtrl.crudHelperService.showNotification("Network: Delete task submitted", networkDetailsCtrl.network.key, NotificationType.info);
                 networkDetailsCtrl.crudHelperService.stopLoader(networkDetailsCtrl);
             }
-            networkDetailsCtrl.returnToNetworks();
-        },2000)
-
+        },2000);
     }
 
     returnToNetworks(){

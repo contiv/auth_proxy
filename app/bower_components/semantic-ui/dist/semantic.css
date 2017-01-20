@@ -27292,12 +27292,12 @@ select.ui.dropdown {
   margin: 0em;
   padding: 1.25rem 1.5rem;
   box-shadow: none;
-  color: rgba(0, 0, 0, 0.85);
-  border-bottom: 1px solid rgba(34, 36, 38, 0.15);
+  color: #5c5d61;
+  border-bottom: none;
 }
 
 .ui.modal > .header:not(.ui) {
-  font-size: 1.42857143rem;
+  font-size: 20px;
   line-height: 1.2857em;
   font-weight: bold;
 }
@@ -27309,7 +27309,7 @@ select.ui.dropdown {
 .ui.modal > .content {
   display: block;
   width: 100%;
-  font-size: 1em;
+  font-size: 14px;
   line-height: 1.4;
   padding: 1.5rem;
   background: #FFFFFF;
@@ -27399,9 +27399,9 @@ select.ui.dropdown {
 ---------------*/
 
 .ui.modal > .actions {
-  background: #F9FAFB;
+  background: #ffffff;
   padding: 1rem 1rem;
-  border-top: 1px solid rgba(34, 36, 38, 0.15);
+  border-top: none;
   text-align: right;
 }
 
@@ -27760,9 +27760,9 @@ select.ui.dropdown {
   }
 }
 
-/*******************************
-         Theme Overrides
-*******************************/
+.ui.modal > .content {
+  color: #5c5d61;
+}
 
 /*******************************
          Site Overrides

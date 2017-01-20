@@ -1,0 +1,15 @@
+/*******************************
+             Modal
+*******************************/
+
+/* Header */
+@headerColor: #5c5d61;
+@headerFontSize: 20px;
+@headerBorder: none;
+
+/* Content */
+@contentFontSize: 14px;
+
+/* Modal Actions */
+@actionBorder: none;
+@actionBackground: #ffffff;

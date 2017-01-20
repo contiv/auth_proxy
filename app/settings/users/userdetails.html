@@ -7,15 +7,14 @@
         <div class="right aligned eight wide column">
 
             <div id="delete-user-modal" class="ui small modal">
-                <div class="header">Remove User: {{user.userName}}
-                </div>
+                <div class="header">Delete</div>
                 <div class="content">
-                    <p>Are you sure you want to remove this user?</p>
+                    <p>Are you sure you want to delete the user <q>{{user.username}}</q>?</p>
                 </div>
                 <div class="actions">
-                    <div class="ui negative button">No</div>
-                    <div class="ui positive button" (click)="deleteUser()">
-                        Yes
+                    <div class="ui basic deny button modalBtn">Cancel</div>
+                    <div class="ui primary approve button modalBtn" (click)="deleteUser()">
+                        Delete
                     </div>
                 </div>
             </div>

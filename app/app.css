@@ -98,7 +98,9 @@ menu { margin: 0; padding: 0; z-index: 2000; }
     background-color: #049fd9;
     white-space: nowrap;
 }
-
+.ui.button.modalBtn {
+    line-height: 2em;
+}
 .ui.very.basic.table td .primaryIconBtn i.icon { color: white; } /* for injected content */
 .ui.very.basic.table td .secondaryIconBtn i.icon { color: #049fd9; } /* for injected content */
 

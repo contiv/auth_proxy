@@ -8,14 +8,14 @@
 
             <div class="right aligned five wide column">
                 <div id="delete-policy-modal" class="ui small modal">
-                    <div class="header">Remove Policy: {{policy.profileName}}</div>
+                    <div class="header">Delete</div>
                     <div class="content">
-                        <p>Are you sure you want to remove this policy?</p>
+                        <p>Are you sure you want to delete the policy <q>{{policy.profileName}}</q>?</p>
                     </div>
                     <div class="actions">
-                        <div class="ui negative button">No</div>
-                        <div class="ui positive blue button" (click)="deletePolicy()">
-                            Yes
+                        <div class="ui basic deny button modalBtn">Cancel</div>
+                        <div class="ui primary approve button modalBtn" (click)="deletePolicy()">
+                            Delete
                         </div>
                     </div>
                 </div>

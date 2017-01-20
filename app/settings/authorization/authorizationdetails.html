@@ -7,16 +7,18 @@
         <div class="right aligned eight wide column">
 
             <div id="delete-auth-modal" class="ui small modal">
-                <div class="header">Remove Authorization: {{authorization.PrincipalName}}
-                    for Tenant: {{authorization.TenantName}}
+                <div class="header">Delete
                 </div>
                 <div class="content">
-                    <p>Are you sure you want to remove this authorization?</p>
+                    <p *ngIf="authorization.Role!=='admin'">Are you sure you want to delete the authorization for <q>{{authorization.PrincipalName}}</q>
+                        for Tenant <q>{{authorization.TenantName}}</q>?</p>
+                    <p *ngIf="authorization.Role==='admin'">Are you sure you want to delete the authorization for <q>{{authorization.PrincipalName}}</q>
+                        who has an admin role?</p>
                 </div>
                 <div class="actions">
-                    <div class="ui negative button">Cancel</div>
-                    <div class="ui positive button" (click)="deleteAuthorization()">
-                        Remove
+                    <div class="ui basic deny button modalBtn">Cancel</div>
+                    <div class="ui primary approve button modalBtn" (click)="deleteAuthorization()">
+                        Delete
                     </div>
                 </div>
             </div>

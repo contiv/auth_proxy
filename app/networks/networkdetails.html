@@ -33,14 +33,14 @@
 
             <div class="right aligned three wide column">
                 <div id="delete-network-modal" class="ui small modal">
-                    <div class="header">Remove Network: {{networkDetailsCtrl.network.networkName}}</div>
+                    <div class="header">Delete</div>
                     <div class="content">
-                        <p>Are you sure you want to remove this network?</p>
+                        <p>Are you sure you want to delete the network <q>{{networkDetailsCtrl.network.networkName}}</q>?</p>
                     </div>
                     <div class="actions">
-                        <div class="ui negative button">No</div>
-                        <div class="ui positive button" (click)="deleteNetwork()">
-                            Yes
+                        <div class="ui basic deny button modalBtn">Cancel</div>
+                        <div class="ui primary approve button modalBtn" (click)="deleteNetwork()">
+                            Delete
                         </div>
                     </div>
                 </div>

@@ -9,15 +9,14 @@
         <div class="right aligned eight wide column">
 
             <div id="delete-node-modal" class="ui small modal">
-                <div class="header">Remove Node: {{node.hostname}}
-                </div>
+                <div class="header">Delete</div>
                 <div class="content">
-                    <p>Are you sure you want to remove this node?</p>
+                    <p>Are you sure you want to delete the node <q>{{node.hostname}}</q>?</p>
                 </div>
                 <div class="actions">
-                    <div class="ui negative button">Cancel</div>
-                    <div class="ui positive button" (click)="deleteNode()">
-                        Remove
+                    <div class="ui basic deny button modalBtn">Cancel</div>
+                    <div class="ui primary approve button modalBtn" (click)="deleteNode()">
+                        Delete
                     </div>
                 </div>
             </div>
