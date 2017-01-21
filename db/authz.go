@@ -111,7 +111,6 @@ func ListAuthorizations() (
 //  error: Error when reading from KV store
 //         nil if operation is successful
 //
-//func (a *Authorization) ListAuthorizationsByPrincipal(ID string) (
 func ListAuthorizationsByPrincipal(pName string) (
 	[]types.Authorization, error) {
 	defer common.Untrace(common.Trace())
