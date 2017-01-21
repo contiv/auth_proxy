@@ -69,6 +69,89 @@ func loginHandler(w http.ResponseWriter, req *http.Request) {
 	writeJSONResponse(w, LoginResponse{Token: tokenStr})
 }
 
+const (
+	// StatusHealthy is used to indicate a healthy response
+	StatusHealthy = "healthy"
+
+	// StatusUnhealthy is used to indicate an unhealthy response
+	StatusUnhealthy = "unhealthy"
+)
+
+// NetmasterHealthCheckResponse represents our netmaster's health and version info.
+type NetmasterHealthCheckResponse struct {
+	Status string `json:"status"`
+
+	// if netmaster is up and working, there's no "reason" for it to be unhealthy
+	Reason string `json:"reason,omitempty"`
+
+	// if we can't reach netmaster, we won't have a version
+	Version string `json:"version,omitempty"`
+}
+
+// MarkHealthy marks netmaster as being healthy and running the specified version
+func (nhcr *NetmasterHealthCheckResponse) MarkHealthy(version string) {
+	nhcr.Status = StatusHealthy
+	nhcr.Version = version
+}
+
+// MarkUnhealthy marks netmaster as being unhealthy
+func (nhcr *NetmasterHealthCheckResponse) MarkUnhealthy(reason string) {
+	nhcr.Status = StatusUnhealthy
+	nhcr.Reason = reason
+}
+
+// HealthCheckResponse represents a response from the /health endpoint.
+// It contains our health status + the health status of our netmaster
+type HealthCheckResponse struct {
+	NetmasterHealth *NetmasterHealthCheckResponse `json:"netmaster"`
+	Status          string                        `json:"status"`
+	Version         string                        `json:"version"`
+}
+
+// MarkUnhealthy marks the proxy as being unhealthy
+func (hcr *HealthCheckResponse) MarkUnhealthy() {
+	hcr.Status = StatusUnhealthy
+}
+
+// healthCheckHandler handles /health requests
+func healthCheckHandler(config *Config) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, req *http.Request) {
+		common.SetJSONContentType(w)
+
+		hcr := &HealthCheckResponse{
+			Status:  StatusHealthy, // default to being healthy
+			Version: config.Version,
+		}
+
+		nhcr := &NetmasterHealthCheckResponse{}
+
+		//
+		// check our netmaster's /version endpoint
+		//
+		if version, err := common.GetNetmasterVersion(config.NetmasterAddress); err != nil {
+			nhcr.MarkUnhealthy(err.Error())
+
+			// if netmaster is unhealthy, so are we
+			hcr.MarkUnhealthy()
+		} else {
+			nhcr.MarkHealthy(version)
+		}
+
+		hcr.NetmasterHealth = nhcr
+
+		//
+		// prepare the response
+		//
+		data, err := json.Marshal(hcr)
+		if err != nil {
+			serverError(w, errors.New("failed to marshal health check response: "+err.Error()))
+			return
+		}
+
+		w.Write(data)
+	}
+}
+
 // VersionResponse represents a response from the /version endpoint
 type VersionResponse struct {
 	Version string `json:"version"`

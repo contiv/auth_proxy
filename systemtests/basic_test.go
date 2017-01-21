@@ -84,12 +84,51 @@ func (s *systemtestSuite) TestLogin(c *C) {
 // TestVersion tests that /version endpoint responds with something sane.
 func (s *systemtestSuite) TestVersion(c *C) {
 	runTest(func(ms *MockServer) {
-		resp, data := proxyGet(c, noToken, "/version")
+		resp, data := proxyGet(c, noToken, proxy.VersionPath)
 		c.Assert(resp.StatusCode, Equals, 200)
 
 		vr := &proxy.VersionResponse{}
 		err := json.Unmarshal(data, vr)
 		c.Assert(err, IsNil)
+	})
+}
+
+// TestHealthCheck tests that /health endpoint responds properly.
+func (s *systemtestSuite) TestHealthCheck(c *C) {
+	runTest(func(ms *MockServer) {
+
+		testFunc := func() *proxy.HealthCheckResponse {
+			resp, data := proxyGet(c, noToken, proxy.HealthCheckPath)
+			c.Assert(resp.StatusCode, Equals, 200)
+
+			hcr := &proxy.HealthCheckResponse{}
+			err := json.Unmarshal(data, hcr)
+			c.Assert(err, IsNil)
+
+			return hcr
+		}
+
+		//
+		// first check: with no configured /version endpoint on the mockserver,
+		//              the netmaster should be marked unhealthy.
+		//
+		hcr := testFunc()
+
+		c.Assert(hcr.Status, Equals, proxy.StatusUnhealthy)
+		c.Assert(hcr.NetmasterHealth.Status, Equals, proxy.StatusUnhealthy)
+
+		//
+		// second check: we add a /version to mockserver and should get back
+		//               a healthy response.
+		//
+		versionResponse := `{"GitCommit":"x","Version":"y","BuildTime":"z"}`
+		ms.AddHardcodedResponse("/version", []byte(versionResponse))
+
+		hcr = testFunc()
+
+		c.Assert(hcr.Status, Equals, proxy.StatusHealthy)
+		c.Assert(hcr.NetmasterHealth.Status, Equals, proxy.StatusHealthy)
+		c.Assert(hcr.NetmasterHealth.Version, Equals, "y")
 	})
 }
 

@@ -17,6 +17,9 @@ const (
 	// LoginPath is the authentication endpoint on the proxy
 	LoginPath = "/api/v1/ccn_proxy/login"
 
+	// HealthCheckPath is the health check endpoint on the proxy
+	HealthCheckPath = "/health"
+
 	// VersionPath is the version endpoint on the proxy
 	VersionPath = "/version"
 
@@ -183,6 +186,11 @@ func addRoutes(s *Server, router *mux.Router) {
 	// Version endpoint
 	//
 	router.Path(VersionPath).Methods("GET").HandlerFunc(versionHandler(s.config.Version))
+
+	//
+	// Health check endpoint
+	//
+	router.Path(HealthCheckPath).Methods("GET").HandlerFunc(healthCheckHandler(s.config))
 
 	//
 	// Authentication endpoint
