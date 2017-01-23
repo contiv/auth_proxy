@@ -144,7 +144,10 @@ func (s *Server) Serve() {
 		return
 	}
 
-	tlsConfig := &tls.Config{Certificates: []tls.Certificate{cert}}
+	tlsConfig := &tls.Config{
+		Certificates: []tls.Certificate{cert},
+		MinVersion:   tls.VersionTLS11,
+	}
 
 	s.listener, err = tls.Listen("tcp", s.config.ListenAddress, tlsConfig)
 	if err != nil {
