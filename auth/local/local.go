@@ -2,9 +2,9 @@ package local
 
 import (
 	log "github.com/Sirupsen/logrus"
-	"github.com/contiv/ccn_proxy/common"
-	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
-	"github.com/contiv/ccn_proxy/db"
+	"github.com/contiv/auth_proxy/common"
+	auth_errors "github.com/contiv/auth_proxy/common/errors"
+	"github.com/contiv/auth_proxy/db"
 )
 
 // Authenticate authenticates the user against local DB with the given username and password
@@ -17,8 +17,8 @@ import (
 func Authenticate(username, password string) ([]string, error) {
 	user, err := db.GetLocalUser(username)
 	if err != nil {
-		if err == ccnerrors.ErrKeyNotFound {
-			return nil, ccnerrors.ErrUserNotFound
+		if err == auth_errors.ErrKeyNotFound {
+			return nil, auth_errors.ErrUserNotFound
 		}
 
 		return nil, err
@@ -26,12 +26,12 @@ func Authenticate(username, password string) ([]string, error) {
 
 	if user.Disable {
 		log.Debugf("Local user %q is disabled", username)
-		return nil, ccnerrors.ErrAccessDenied
+		return nil, auth_errors.ErrAccessDenied
 	}
 
 	if !common.ValidatePassword(password, user.PasswordHash) {
 		log.Debugf("Incorrect password for user %q", username)
-		return nil, ccnerrors.ErrAccessDenied
+		return nil, auth_errors.ErrAccessDenied
 	}
 
 	// user.Username is the PrincipalName for localuser

@@ -1,5 +1,5 @@
-FROM ccn_proxy_build_base
+FROM auth_proxy_build_base
 
-COPY ./ /go/src/github.com/contiv/ccn_proxy
+COPY ./ /go/src/github.com/contiv/auth_proxy
 
 ENTRYPOINT ["/bin/bash", "./scripts/build-in-container.sh"]

@@ -9,8 +9,8 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/hashicorp/consul/api"
 
-	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
-	"github.com/contiv/ccn_proxy/common/types"
+	auth_errors "github.com/contiv/auth_proxy/common/errors"
+	"github.com/contiv/auth_proxy/common/types"
 )
 
 // Max times to retry in case of failure
@@ -18,7 +18,7 @@ const maxConsulRetries = 10
 
 // ConsulStateDriver implements the StateDriver interface for a
 // consul-based distributed key-value store used to store any
-// state information needed by ccn proxy
+// state information needed by auth_proxy
 type ConsulStateDriver struct {
 
 	// client used to access consul
@@ -182,7 +182,7 @@ func (d *ConsulStateDriver) Read(key string) ([]byte, error) {
 	// Consul returns success and a nil kv when a key is not found,
 	// translate it to 'Key not found' error
 	if kv == nil {
-		return []byte{}, ccnerrors.ErrKeyNotFound
+		return []byte{}, auth_errors.ErrKeyNotFound
 	}
 
 	return kv.Value, err
@@ -209,7 +209,7 @@ func (d *ConsulStateDriver) ReadAll(baseKey string) ([][]byte, error) {
 	// Consul returns success and a nil kv when a key is not found,
 	// translate it to 'Key not found' error
 	if kvs == nil {
-		return nil, ccnerrors.ErrKeyNotFound
+		return nil, auth_errors.ErrKeyNotFound
 	}
 
 	values := [][]byte{}

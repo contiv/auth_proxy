@@ -11,8 +11,8 @@ import (
 	"github.com/coreos/etcd/client"
 	"golang.org/x/net/context"
 
-	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
-	"github.com/contiv/ccn_proxy/common/types"
+	auth_errors "github.com/contiv/auth_proxy/common/errors"
+	"github.com/contiv/auth_proxy/common/types"
 )
 
 const (
@@ -26,7 +26,7 @@ const (
 
 // EtcdStateDriver implements the StateDriver interface for an etcd-based
 // distributed key-value store that is used to store any state information
-// needed by CCN proxy
+// needed by auth proxy
 type EtcdStateDriver struct {
 
 	// Client to access etcd
@@ -180,7 +180,7 @@ func (d *EtcdStateDriver) Read(key string) ([]byte, error) {
 			// on successful read
 			return []byte(resp.Node.Value), nil
 		} else if client.IsKeyNotFound(err) {
-			return nil, ccnerrors.ErrKeyNotFound
+			return nil, auth_errors.ErrKeyNotFound
 		} else if err.Error() == client.ErrClusterUnavailable.Error() {
 			// retry after a delay
 			time.Sleep(time.Second)
@@ -223,7 +223,7 @@ func (d *EtcdStateDriver) ReadAll(baseKey string) ([][]byte, error) {
 
 			return values, nil
 		} else if client.IsKeyNotFound(err) {
-			return nil, ccnerrors.ErrKeyNotFound
+			return nil, auth_errors.ErrKeyNotFound
 		} else if err.Error() == client.ErrClusterUnavailable.Error() {
 			// retry after a delay
 			time.Sleep(time.Second)
@@ -408,7 +408,7 @@ func readAllStateCommon(d types.StateDriver, baseKey string, sType types.State,
 	for i := 0; i < values.Len(); i++ {
 		// sanity checks
 		if !values.Index(i).Elem().FieldByName("CommonState").IsValid() {
-			return nil, ccnerrors.ErrCommonStateFieldsMissing
+			return nil, auth_errors.ErrCommonStateFieldsMissing
 		}
 
 		//the following works as every types.State is expected to embed core.CommonState struct
@@ -479,7 +479,7 @@ func channelStateEvents(d types.StateDriver, sType types.State,
 				return
 			}
 			if !value.Elem().Elem().FieldByName("CommonState").IsValid() {
-				chErr <- ccnerrors.ErrCommonStateFieldsMissing
+				chErr <- auth_errors.ErrCommonStateFieldsMissing
 				return
 			}
 

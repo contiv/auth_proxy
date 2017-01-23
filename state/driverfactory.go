@@ -6,9 +6,9 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/contiv/ccn_proxy/common"
-	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
-	"github.com/contiv/ccn_proxy/common/types"
+	"github.com/contiv/auth_proxy/common"
+	auth_errors "github.com/contiv/auth_proxy/common/errors"
+	"github.com/contiv/auth_proxy/common/types"
 )
 
 // struct that holds the driver type
@@ -85,10 +85,10 @@ func NewStateDriver(name string, config *types.KVStoreConfig) (types.StateDriver
 // GetStateDriver returns the singleton instance of state-driver
 // return values:
 //  types.StateDriver: if its already instantiated
-//  error: ccnerrors.ErrStateDriverNotCreated
+//  error: auth_errors.ErrStateDriverNotCreated
 func GetStateDriver() (types.StateDriver, error) {
 	if stateDriver == nil {
-		return nil, ccnerrors.ErrStateDriverNotCreated
+		return nil, auth_errors.ErrStateDriverNotCreated
 	}
 
 	return stateDriver, nil

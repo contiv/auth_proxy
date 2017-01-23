@@ -8,11 +8,11 @@ import (
 	"testing"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/contiv/ccn_proxy/common"
-	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
-	"github.com/contiv/ccn_proxy/common/test"
-	"github.com/contiv/ccn_proxy/common/types"
-	"github.com/contiv/ccn_proxy/state"
+	"github.com/contiv/auth_proxy/common"
+	auth_errors "github.com/contiv/auth_proxy/common/errors"
+	"github.com/contiv/auth_proxy/common/test"
+	"github.com/contiv/auth_proxy/common/types"
+	"github.com/contiv/auth_proxy/state"
 
 	. "gopkg.in/check.v1"
 )
@@ -105,7 +105,7 @@ func (s *dbSuite) TestGetLocalUser(c *C) {
 	// invalid users
 	for _, username := range invalidUsers {
 		user, err := GetLocalUser(username)
-		c.Assert(err, Equals, ccnerrors.ErrKeyNotFound)
+		c.Assert(err, Equals, auth_errors.ErrKeyNotFound)
 		c.Assert(user, IsNil)
 	}
 
@@ -120,7 +120,7 @@ func (s *dbSuite) TestAddLocalUser(c *C) {
 
 		// add existing usernames and check for error
 		err = AddLocalUser(&user)
-		c.Assert(err, Equals, ccnerrors.ErrKeyExists)
+		c.Assert(err, Equals, auth_errors.ErrKeyExists)
 	}
 
 }
@@ -133,7 +133,7 @@ func (s *dbSuite) TestDeleteLocalUser(c *C) {
 	// delete built-in users
 	for _, username := range builtInUsers {
 		err := DeleteLocalUser(username)
-		c.Assert(err, Equals, ccnerrors.ErrIllegalOperation)
+		c.Assert(err, Equals, auth_errors.ErrIllegalOperation)
 	}
 
 	// delete the added new users
@@ -143,7 +143,7 @@ func (s *dbSuite) TestDeleteLocalUser(c *C) {
 
 		// delete the same user again
 		err = DeleteLocalUser(user.Username)
-		c.Assert(err, Equals, ccnerrors.ErrKeyNotFound)
+		c.Assert(err, Equals, auth_errors.ErrKeyNotFound)
 	}
 
 	// delete users with authz
@@ -179,7 +179,7 @@ func (s *dbSuite) TestDeleteLocalUser(c *C) {
 		c.Assert(err, IsNil)
 
 		authZ, err = GetAuthorization(a.UUID)
-		c.Assert(err, Equals, ccnerrors.ErrKeyNotFound)
+		c.Assert(err, Equals, auth_errors.ErrKeyNotFound)
 		c.Assert(authZ, DeepEquals, types.Authorization{
 			CommonState: types.CommonState{
 				StateDriver: stateDrv,
@@ -211,7 +211,7 @@ func (s *dbSuite) TestDeleteLocalUser(c *C) {
 		c.Assert(authZ, DeepEquals, a)
 
 		err = DeleteLocalUser(username)
-		c.Assert(err, Equals, ccnerrors.ErrIllegalOperation)
+		c.Assert(err, Equals, auth_errors.ErrIllegalOperation)
 
 		// ensure delete did not delete the associated authZ
 		authZ, err = GetAuthorization(a.UUID)

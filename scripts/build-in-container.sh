@@ -10,9 +10,9 @@ export CGO_ENABLED=0
 # available when we issue the `docker build` and COPY it into the final image.
 go build \
    -ldflags "-X main.ProgramVersion=$VERSION" \
-   -o ./build/output/ccn_proxy \
-   github.com/contiv/ccn_proxy
+   -o ./build/output/auth_proxy \
+   github.com/contiv/auth_proxy
 
-strip ./build/output/ccn_proxy
+strip ./build/output/auth_proxy
 
 docker build -t $IMAGE_NAME:$VERSION -f ./build/Dockerfile.release .

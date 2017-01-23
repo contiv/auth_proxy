@@ -11,8 +11,8 @@ RUN tar -C /usr/local -xzf go1.7.4.linux-amd64.tar.gz && rm go1.7.4.linux-amd64.
 ENV PATH="/usr/local/go/bin:$PATH"
 ENV GOPATH="/go"
 
-RUN mkdir -p /go/src/github.com/contiv/ccn_proxy
+RUN mkdir -p /go/src/github.com/contiv/auth_proxy
 
-WORKDIR /go/src/github.com/contiv/ccn_proxy
+WORKDIR /go/src/github.com/contiv/auth_proxy
 
 ENTRYPOINT ["/bin/bash"]

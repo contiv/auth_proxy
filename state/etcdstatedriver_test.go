@@ -8,8 +8,8 @@ import (
 	"time"
 
 	log "github.com/Sirupsen/logrus"
-	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
-	"github.com/contiv/ccn_proxy/common/types"
+	auth_errors "github.com/contiv/auth_proxy/common/errors"
+	"github.com/contiv/auth_proxy/common/types"
 	. "gopkg.in/check.v1"
 )
 
@@ -108,7 +108,7 @@ func commonTestStateDriverRead(t *testing.T, d types.StateDriver) {
 
 	// test `ErrKeyNotFound`
 	key = "/xxx/yyy"
-	if _, err := d.Read(key); err != ccnerrors.ErrKeyNotFound {
+	if _, err := d.Read(key); err != auth_errors.ErrKeyNotFound {
 		t.Fatalf("expected `ErrKeyNotFound`, found: %s", err)
 	}
 
@@ -173,7 +173,7 @@ func commonTestStateDriverClearState(t *testing.T, d types.StateDriver) {
 func commonTestStateDriverReadState(t *testing.T, d types.StateDriver) {
 	state := &testState{IgnoredField: d, IntField: 1234,
 		StrField: "testString"}
-	key := "ccnproxy/dir1/testKeyRead"
+	key := "authproxy/dir1/testKeyRead"
 
 	err := d.WriteState(key, state, json.Marshal)
 	if err != nil {
@@ -478,7 +478,7 @@ func commonTestStateDriverReadAll(t *testing.T, d types.StateDriver) {
 	// test `ErrKeyNotFound`
 	key := "/xxx/yyy"
 
-	if _, err := d.ReadAll(key); err != ccnerrors.ErrKeyNotFound {
+	if _, err := d.ReadAll(key); err != auth_errors.ErrKeyNotFound {
 		t.Fatalf("expected `ErrKeyNotFound`, found: %s", err)
 	}
 }

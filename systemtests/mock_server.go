@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"sync"
 
-	"github.com/contiv/ccn_proxy/common"
+	"github.com/contiv/auth_proxy/common"
 
 	log "github.com/Sirupsen/logrus"
 )

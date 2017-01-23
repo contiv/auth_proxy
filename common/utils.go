@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	log "github.com/Sirupsen/logrus"
-	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
+	auth_errors "github.com/contiv/auth_proxy/common/errors"
 )
 
 // GlobalMap is a map to hold variables(key:value pair) that can be accessed anywhere in ccc_proxy
@@ -60,7 +60,7 @@ func (g GlobalMap) Get(key string) (string, error) {
 	val, found := g[key]
 	if !found {
 		log.Debugf("Failed to fetch key %q from global map", key)
-		return "", ccnerrors.ErrKeyNotFound
+		return "", auth_errors.ErrKeyNotFound
 	}
 
 	return val, nil

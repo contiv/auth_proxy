@@ -17,7 +17,7 @@ import (
 func EmptyDatastore(addr string) {
 	switch {
 	case strings.HasPrefix(addr, "etcd://"):
-		cmd := "docker exec " + os.Getenv("ETCD_CONTAINER_NAME") + " /etcdctl rm --recursive /ccn_proxy || true"
+		cmd := "docker exec " + os.Getenv("ETCD_CONTAINER_NAME") + " /etcdctl rm --recursive /auth_proxy || true"
 		log.Debugln("Emptying datastore:", cmd)
 
 		if err := exec.Command("/bin/sh", "-c", cmd).Run(); err != nil {
@@ -25,7 +25,7 @@ func EmptyDatastore(addr string) {
 		}
 	case strings.HasPrefix(addr, "consul://"):
 		// NOTE: consul keys do not start with a /
-		cmd := "docker exec " + os.Getenv("CONSUL_CONTAINER_NAME") + " consul kv delete -recurse ccn_proxy || true"
+		cmd := "docker exec " + os.Getenv("CONSUL_CONTAINER_NAME") + " consul kv delete -recurse auth_proxy || true"
 		log.Debugln("Emptying datastore:", cmd)
 
 		if err := exec.Command("/bin/sh", "-c", cmd).Run(); err != nil {

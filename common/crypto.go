@@ -13,7 +13,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 
 	log "github.com/Sirupsen/logrus"
-	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
+	auth_errors "github.com/contiv/auth_proxy/common/errors"
 )
 
 const (
@@ -125,7 +125,7 @@ func Decrypt(data string) (string, error) {
 func getPrivateKey() (*rsa.PrivateKey, error) {
 	keyFile, err := Global().Get("tls_key_file")
 	if err != nil {
-		if err == ccnerrors.ErrKeyNotFound {
+		if err == auth_errors.ErrKeyNotFound {
 			return nil, fmt.Errorf("No TLS key file found")
 		}
 

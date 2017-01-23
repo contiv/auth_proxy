@@ -9,7 +9,7 @@ docker load -i ucn-install-image.tar
 
 # Wait for UCN to start up
 sleep 60
-response=`curl -k -H "Content-Type: application/json" -X POST -d '{"username": "admin", "password": "admin"}' https://$ucn_master:10000/api/v1/ccn_proxy/login`
+response=`curl -k -H "Content-Type: application/json" -X POST -d '{"username": "admin", "password": "admin"}' https://$ucn_master:10000/api/v1/auth_proxy/login`
 echo $response
 if  [[ $response == *"token"* ]]; then
   echo "Install SUCCESS"

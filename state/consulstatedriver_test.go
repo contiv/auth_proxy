@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/contiv/ccn_proxy/common/types"
+	"github.com/contiv/auth_proxy/common/types"
 )
 
 func setupConsulDriver(t *testing.T) *ConsulStateDriver {

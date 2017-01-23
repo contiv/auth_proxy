@@ -6,9 +6,9 @@ import (
 	log "github.com/Sirupsen/logrus"
 	jwt "github.com/dgrijalva/jwt-go"
 
-	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
-	"github.com/contiv/ccn_proxy/common/types"
-	"github.com/contiv/ccn_proxy/db"
+	auth_errors "github.com/contiv/auth_proxy/common/errors"
+	"github.com/contiv/auth_proxy/common/types"
+	"github.com/contiv/auth_proxy/db"
 )
 
 // getPrincipals returns the stored principals info from the token.
@@ -22,14 +22,14 @@ func (authZ *Token) getPrincipals() ([]string, error) {
 	if !found {
 		msg := "Illegal token, no principals claim present"
 		log.Warn(msg)
-		return nil, ccnerrors.NewError(ccnerrors.Internal, msg)
+		return nil, auth_errors.NewError(auth_errors.Internal, msg)
 	}
 
 	principalsStr, ok := v.(string)
 	if !ok {
 		msg := "Illegal token, no principals present"
 		log.Warn(msg)
-		return nil, ccnerrors.NewError(ccnerrors.Internal, msg)
+		return nil, auth_errors.NewError(auth_errors.Internal, msg)
 	}
 
 	// Deserialize principals as a slice
@@ -95,7 +95,7 @@ func (authZ *Token) checkRolePolicy(desired types.RoleType) error {
 	}
 
 	log.Debug("access denied for claim role:", desired.String())
-	return ccnerrors.ErrUnauthorized
+	return auth_errors.ErrUnauthorized
 }
 
 //
@@ -119,7 +119,7 @@ func (authZ *Token) checkTenantPolicy(tenant types.Tenant, desiredAccess interfa
 	if err != nil {
 		msg := "malformed claim statement, error:" + err.Error()
 		log.Error(msg)
-		return ccnerrors.NewError(ccnerrors.Internal, msg)
+		return auth_errors.NewError(auth_errors.Internal, msg)
 	}
 
 	// Gather tenant authorizations for principals claim present in token
@@ -181,5 +181,5 @@ func (authZ *Token) checkTenantPolicy(tenant types.Tenant, desiredAccess interfa
 
 	// If no principal found that can satisfy the claim, return error
 	log.Debug("access denied for claim:", claimStr)
-	return ccnerrors.ErrUnauthorized
+	return auth_errors.ErrUnauthorized
 }

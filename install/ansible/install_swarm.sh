@@ -111,7 +111,7 @@ if [[ ! -f $host_tls_cert || ! -f $host_tls_key ]]; then
   openssl req -new -x509 -sha256 -days 3650 \
       -key $host_tls_key \
       -out $host_tls_cert \
-      -subj "/C=US/ST=CA/L=San Jose/O=CPSG/OU=IT Department/CN=ccn-local.cisco.com"
+      -subj "/C=US/ST=CA/L=San Jose/O=CPSG/OU=IT Department/CN=auth-local.cisco.com"
 fi 
 
 # Copy the proxy container image to the host share path

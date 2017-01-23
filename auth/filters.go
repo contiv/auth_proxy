@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/contiv/ccn_proxy/common/types"
+	"github.com/contiv/auth_proxy/common/types"
 	"github.com/contiv/contivmodel/client"
 )
 

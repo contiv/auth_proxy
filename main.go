@@ -7,10 +7,10 @@ import (
 	"time"
 
 	"github.com/blang/semver"
-	"github.com/contiv/ccn_proxy/auth"
-	"github.com/contiv/ccn_proxy/common"
-	"github.com/contiv/ccn_proxy/proxy"
-	"github.com/contiv/ccn_proxy/state"
+	"github.com/contiv/auth_proxy/auth"
+	"github.com/contiv/auth_proxy/common"
+	"github.com/contiv/auth_proxy/proxy"
+	"github.com/contiv/auth_proxy/state"
 
 	log "github.com/Sirupsen/logrus"
 )
@@ -31,7 +31,7 @@ var (
 	tlsCertificate   string // path to TLS certificate
 
 	// ProgramName is used in logging output and the X-Forwarded-By header.
-	ProgramName = "CCN Proxy"
+	ProgramName = "Auth Proxy"
 
 	// ProgramVersion is used in logging output and the X-Forwarded-By header.
 	// it is overridden at compile time via -ldflags
@@ -105,14 +105,14 @@ func processFlags() {
 // We perform two checks here:
 //   1. that the version of the netmaster we're pointed at is a compatible version,
 //      i.e., its major version is the same and the minor version of netmaster is
-//      greater than or equal to the minor version of ccn_proxy.
+//      greater than or equal to the minor version of auth_proxy.
 //   2. by nature of 1., that the netmaster is actually reachable at all
 //
 // If this is a devbuild (i.e., build version = default version), we will still
 // ensure that netmaster is reachable but we won't check its version.
 func netmasterStartupCheck() error {
 
-	// this envvar is used by systemtests to get around the fact that ccn_proxy
+	// this envvar is used by systemtests to get around the fact that auth_proxy
 	// expects netmaster to have already been started, but the actual systemtests
 	// code (which runs the MockServer) is started *after* the proxy containers are
 	// started so that it can receive the IPs/ports of the proxy containers.

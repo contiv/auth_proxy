@@ -19,11 +19,11 @@
 
 set -euo pipefail
 
-IMAGE_NAME="ccn_proxy_unittests"
+IMAGE_NAME="auth_proxy_unittests"
 NETWORK_NAME="$IMAGE_NAME"
 
 echo "Building unittests image..."
-docker build -t "ccn_proxy_build_base" -f ./build/Dockerfile.base .
+docker build -t "auth_proxy_build_base" -f ./build/Dockerfile.base .
 docker build -t $IMAGE_NAME -f ./build/Dockerfile.unittests .
 
 function ip_for_container {
@@ -37,7 +37,7 @@ docker network rm $NETWORK_NAME 2>/dev/null || true
 docker network create $NETWORK_NAME
 
 echo "Starting etcd container..."
-ETCD_CONTAINER_NAME="etcd_ccn_proxy_unittests"
+ETCD_CONTAINER_NAME="etcd_auth_proxy_unittests"
 ETCD_CONTAINER_ID=$(
     docker run -d \
        -p 2379:2379 \
@@ -51,7 +51,7 @@ ETCD_CONTAINER_IP=$(ip_for_container $ETCD_CONTAINER_ID)
 echo "etcd running @ $ETCD_CONTAINER_IP:2379"
 
 echo "Starting consul container..."
-CONSUL_CONTAINER_NAME="consul_ccn_proxy_unittests"
+CONSUL_CONTAINER_NAME="consul_auth_proxy_unittests"
 CONSUL_CONTAINER_ID=$(
     docker run -d \
 	   -p 8500:8500 \

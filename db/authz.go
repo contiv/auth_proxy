@@ -5,10 +5,10 @@ import (
 
 	log "github.com/Sirupsen/logrus"
 
-	"github.com/contiv/ccn_proxy/common"
-	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
-	"github.com/contiv/ccn_proxy/common/types"
-	"github.com/contiv/ccn_proxy/state"
+	"github.com/contiv/auth_proxy/common"
+	auth_errors "github.com/contiv/auth_proxy/common/errors"
+	"github.com/contiv/auth_proxy/common/types"
+	"github.com/contiv/auth_proxy/state"
 )
 
 //
@@ -81,12 +81,12 @@ func ListAuthorizations() (
 	list := []types.Authorization{}
 	allAuthZList, err := a.StateDriver.ReadAllState(types.AuthZDir, a, json.Unmarshal)
 	if err != nil {
-		if err == ccnerrors.ErrKeyNotFound {
+		if err == auth_errors.ErrKeyNotFound {
 			return list, nil
 		}
 
 		log.Error("failed to ReadAllState, err:", err)
-		return nil, ccnerrors.ErrReadingFromStore
+		return nil, auth_errors.ErrReadingFromStore
 	}
 
 	for _, auth := range allAuthZList {
@@ -126,12 +126,12 @@ func ListAuthorizationsByPrincipal(pName string) (
 
 	allAuthZList, err := a.StateDriver.ReadAllState(types.AuthZDir, a, json.Unmarshal)
 	if err != nil {
-		if err == ccnerrors.ErrKeyNotFound {
+		if err == auth_errors.ErrKeyNotFound {
 			return match, nil
 		}
 
 		log.Error("failed to ReadAllState, err:", err)
-		return nil, ccnerrors.ErrReadingFromStore
+		return nil, auth_errors.ErrReadingFromStore
 	}
 
 	for _, auth := range allAuthZList {
@@ -169,11 +169,11 @@ func DeleteAuthorizationsByPrincipal(pName string) error {
 	(*a).StateDriver = sd
 
 	allAuthZList, err := a.StateDriver.ReadAllState(types.AuthZDir, a, json.Unmarshal)
-	if err == ccnerrors.ErrKeyNotFound {
+	if err == auth_errors.ErrKeyNotFound {
 		return nil
 	} else if err != nil {
 		log.Error("failed to ReadAllState, err:", err)
-		return ccnerrors.ErrReadingFromStore
+		return auth_errors.ErrReadingFromStore
 	}
 
 	for _, auth := range allAuthZList {
@@ -224,12 +224,12 @@ func ListAuthorizationsByClaim(claim string) (
 
 	allAuthZList, err := a.StateDriver.ReadAllState(types.AuthZDir, a, json.Unmarshal)
 	if err != nil {
-		if err == ccnerrors.ErrKeyNotFound {
+		if err == auth_errors.ErrKeyNotFound {
 			return match, nil
 		}
 
 		log.Error("failed to ReadAllState, err:", err)
-		return nil, ccnerrors.ErrReadingFromStore
+		return nil, auth_errors.ErrReadingFromStore
 	}
 
 	for _, auth := range allAuthZList {
@@ -268,7 +268,7 @@ func DeleteAuthorizationsByClaim(claim string) error {
 	allAuthZList, err := a.StateDriver.ReadAllState(types.AuthZDir, a, json.Unmarshal)
 	if err != nil {
 		log.Error("failed to ReadAllState, err:", err)
-		return ccnerrors.ErrReadingFromStore
+		return auth_errors.ErrReadingFromStore
 	}
 
 	for _, auth := range allAuthZList {
@@ -318,12 +318,12 @@ func ListAuthorizationsByClaimAndPrincipal(claim string, principal string) (
 
 	allAuthZList, err := a.StateDriver.ReadAllState(types.AuthZDir, a, json.Unmarshal)
 	if err != nil {
-		if err == ccnerrors.ErrKeyNotFound {
+		if err == auth_errors.ErrKeyNotFound {
 			return match, nil
 		}
 
 		log.Error("failed to ReadAllState, err:", err)
-		return nil, ccnerrors.ErrReadingFromStore
+		return nil, auth_errors.ErrReadingFromStore
 	}
 
 	for _, auth := range allAuthZList {

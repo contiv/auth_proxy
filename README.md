@@ -1,11 +1,11 @@
-# CCN Proxy
+# Auth Proxy
 
-`ccn_proxy`  provides authentication via Active Directory and authorization via
+`auth_proxy`  provides authentication via Active Directory and authorization via
 RBAC before forwarding requests to an upstream `netmaster`. It is TLS-only,
 and it will only talk to a non-TLS `netmaster`.  Future versions will allow
 or potentially require TLS-only communication with `netmaster`.
 
-`ccn_proxy` also hosts the UI (see the [contiv-ui repo](https://github.com/contiv/contiv-ui)).
+`auth_proxy` also hosts the UI (see the [contiv-ui repo](https://github.com/contiv/contiv-ui)).
 The UI is baked into the container and lives at the `/ui` directory. It is served
 from the root of the proxy, e.g., if you run with `--listen-address=localhost:10000`,
 you can see the UI at https://localhost:10000
@@ -16,18 +16,18 @@ directory: `-v /your/contiv-ui/repo/app:/ui:ro`
 
 ## Building
 
-Running `make` will generate a `ccn_proxy:devbuild` image using the current code
+Running `make` will generate a `auth_proxy:devbuild` image using the current code
 you have checked out and `HEAD` from the `master` branch in the `contiv-ui` repo.
 
 You can also specify a version, e.g., `BUILD_VERSION=0.1 make`.  This will
-generate a `ccn_proxy:0.1` image using current code you have checked out and
+generate a `auth_proxy:0.1` image using current code you have checked out and
 whatever commit is tagged as `0.1` in the `contiv-ui` repo.
 
-`ccn_proxy` will check the  version of the `netmaster` it's pointed to at startup.
+`auth_proxy` will check the version of the `netmaster` it's pointed to at startup.
 We require that the major versions are the same and that the minor version of
-`netmaster` is >= the minor version of `ccn_proxy`.
+`netmaster` is >= the minor version of `auth_proxy`.
 
-For example, version `1.2.3` of `ccn_proxy`  will only talk to a `netmaster` build
+For example, version `1.2.3` of `auth_proxy`  will only talk to a `netmaster` build
 version of `1.x.y` where `x` is >= 2 and `y` can be anything.
 
 ## Running Tests
@@ -42,13 +42,13 @@ returns some expected JSON response) without the burden of actually compiling
 and running a full `netmaster` binary and all of its dependencies plus creating
 the necessary networks, tenants, etc. to get realistic responses from it.
 
-CCN's future end-to-end testing will cover a real `ccn_proxy` binary talking to
+Future end-to-end testing will cover a real `auth_proxy` binary talking to
 a real `netmaster` binary so there's no point duplicating that here in our own
 testing.
 
 ## Local Development
 
-You will need a local cert and key to start `ccn_proxy`.  You can run
+You will need a local cert and key to start `auth_proxy`.  You can run
 `make generate-certificate` to generate them if you don't already have them.
 
 To simplify the networking around all the cross-container
@@ -59,14 +59,14 @@ Docker natively on your Linux system or use Docker for Mac.
 
 Before anything else, a prospective user must authenticate and get a token.
 Authentication requires passing a username and password to the
-`/api/v1/ccn_proxy/login` endpoint:
+`/api/v1/auth_proxy/login` endpoint:
 
 ```
-login request ---> ccn_proxy ---> authentication
+login request ---> auth_proxy ---> authentication
                                                 \
                                                  local user *or* LDAP / Active Directory
                                                 /
-<---- token sent to client <---- ccn_proxy ----
+<---- token sent to client <---- auth_proxy ----
 ```
 
 Subsequent requests must pass this token along in a `X-Auth-Token` request
@@ -82,11 +82,11 @@ authentication and authorization are both successful.
 1. If the user is not an admin **and** the endpoint returns data for multiple tenants, the response from `netmaster` will be filtered to only return what the current user is allowed to see
 
 ```
-request w. token ---> ccn_proxy ---> authorization ----> request forwarded to netmaster
+request w. token ---> auth_proxy ---> authorization ----> request forwarded to netmaster
                                                                                         \
                                                                                          netmaster
                                                                                         /
-<----- results filtered based on token and returned to client <----- ccn_proxy --------
+<----- results filtered based on token and returned to client <----- auth_proxy --------
 ```
 
 ### Tips
