@@ -12,7 +12,7 @@ def create_etc_hosts(cluster)
   hosts = "127.0.0.1   localhost\n"
   cluster.each do |role, member_list|
     hosts = member_list.inject(hosts) { |acc, elem| acc << "#{elem['contiv_control_ip']}   #{elem['name']}\n" }
-    if role == 'master' && member_list.any?
+    if role == 'master' && member_list[0]
       hosts << "#{member_list[0]['contiv_control_ip']}   netmaster\n"
       master_ip = member_list[0]['contiv_control_ip']
     end

@@ -171,7 +171,6 @@ cp $tls_key /var/contiv/ucn_key.pem
 echo "Setting installation parameters"
 sed -i.bak "s/__NETMASTER_IP__/$netmaster/g" $contiv_yaml
 sed -i.bak "s/__VLAN_IF__/$vlan_if/g" $contiv_yaml
-sed -i.bak "s/__CONTIV_FWD_MODE__/$fwd_mode/g" $contiv_yaml
 
 if [ "$apic_url" != "" ]; then
   sed -i.bak "s#__APIC_URL__#$apic_url#g" $contiv_yaml
@@ -191,3 +190,9 @@ fi
 echo "Applying contiv installation"
 echo "$netmaster netmaster" >> /etc/hosts
 kubectl apply -f $contiv_yaml
+
+if [ "$fwd_mode" = "routing" ]; then
+  chmod +x ./netctl
+  sleep 60
+  ./netctl --netmaster http://$netmaster:9999 global set --fwd-mode routing
+fi
