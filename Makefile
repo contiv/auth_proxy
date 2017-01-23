@@ -34,8 +34,8 @@ release-test-kubeadm: release
 
 release-test-swarm: release 
 	# Test swarm (centos by default)
-	UCN_PORT=10001 UCN_CONFIG='cluster_defs_ansible.json' UCN_MASTER='192.168.2.12' make cluster
-	UCN_PORT=10001 UCN_CONFIG='cluster_defs_ansible.json' UCN_MASTER='192.168.2.12' make install-test-swarm
+	UCN_CONFIG='cluster_defs_ansible.json' make cluster
+	UCN_CONFIG='cluster_defs_ansible.json' make install-test-swarm
 
 release-test-kubelegacy: release 
 	# Test k8s ansible (centos by default)

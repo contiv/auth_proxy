@@ -3,7 +3,7 @@
 set -euo pipefail
 
 DEV_IMAGE_NAME="devbuild"
-IMAGE_NAME="ccn_proxy"
+IMAGE_NAME="contiv/auth_proxy"
 BUILD_IMAGE_NAME="${IMAGE_NAME}_build"
 VERSION=${BUILD_VERSION-$DEV_IMAGE_NAME}
 

@@ -86,9 +86,6 @@ env_file=install/ansible/env.json
 sed -i.bak "s/__NETMASTER_IP__/$netmaster/g" $env_file
 sed -i.bak "s#__CLUSTER_STORE__#$cluster#g" $env_file
 
-# Copy UCN proxy image
-cp /var/contiv/ucn-proxy-image.tar /ansible/roles/ucn_proxy/files/
-
 echo "Uninstalling Cisco Universal Container Networking"
 
 # Uninstall contiv & API Proxy

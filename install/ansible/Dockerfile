@@ -11,7 +11,6 @@ RUN pip install ansible==2.2.0.0
 # TODO: Replace this with a specific contiv/ansible release version
 # Get the ansible scripts required for both netplugin docker & for k8s contrib
 RUN git clone http://github.com/contiv/ansible
-RUN git clone https://github.com/jojimt/contrib -b contiv
 
 # Add the new ansible role and playbooks for UCN UI/Proxy
 ADD ansible ansible

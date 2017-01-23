@@ -1,5 +1,5 @@
 ucn_master=192.168.2.12
-install_version=${UCN_RELEASE:-"ucn-devbuild"}
+install_version="ucn-${BUILD_VERSION:-devbuild}"
 
 # Extract and launch the installer
 cd release && tar -xvzf $install_version.tgz
