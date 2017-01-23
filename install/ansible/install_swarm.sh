@@ -106,7 +106,7 @@ if [[ -f $ans_key ]]; then
 fi
 
 if [[ ! -f $host_tls_cert || ! -f $host_tls_key ]]; then
-  echo "Generating local certs for UCN Proxy"
+  echo "Generating local certs for Contiv Proxy"
   openssl genrsa -out $host_tls_key 2048 >/dev/null 2>&1
   openssl req -new -x509 -sha256 -days 3650 \
       -key $host_tls_key \
@@ -116,8 +116,8 @@ fi
 
 # Copy the proxy container image to the host share path
 # This is only required for dev builds.
-if [ -f ucn-proxy-image.tar ]; then
-  cp ucn-proxy-image.tar $src_conf_path
+if [ -f auth-proxy-image.tar ]; then
+  cp auth-proxy-image.tar $src_conf_path
 fi
 
 echo "Starting the ansible container"

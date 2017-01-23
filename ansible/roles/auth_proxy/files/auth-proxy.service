@@ -1,10 +1,10 @@
 [Unit]
-Description=UCN Proxy and UI
+Description=Contiv Proxy and UI
 After=auditd.service systemd-user-sessions.service time-sync.target docker.service
 
 [Service]
-ExecStart=/usr/bin/ucn_proxy.sh start
-ExecStop=/usr/bin/ucn_proxy.sh stop
+ExecStart=/usr/bin/auth_proxy.sh start
+ExecStop=/usr/bin/auth_proxy.sh stop
 KillMode=control-group
 Restart=on-failure
 RestartSec=10

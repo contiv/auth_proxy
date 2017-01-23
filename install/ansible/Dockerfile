@@ -12,7 +12,7 @@ RUN pip install ansible==2.2.0.0
 # Get the ansible scripts required for both netplugin docker & for k8s contrib
 RUN git clone http://github.com/contiv/ansible
 
-# Add the new ansible role and playbooks for UCN UI/Proxy
+# Add the new ansible role and playbooks for Contiv UI/Proxy
 ADD ansible ansible
 
 RUN wget -c https://raw.githubusercontent.com/neelimamukiri/demo/master/net/extras/genInventoryFile.py

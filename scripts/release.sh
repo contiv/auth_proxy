@@ -6,7 +6,7 @@ DEV_IMAGE_NAME="devbuild"
 IMAGE_NAME="contiv/auth_proxy"
 VERSION=${BUILD_VERSION-$DEV_IMAGE_NAME}
 
-ucn_proxy_version=$VERSION
+auth_proxy_version=$VERSION
 aci_gw_image="contiv\/aci-gw"
 contiv_version=${CONTIV_VERSION:-v0.1-11-30-2016.20-08-20.UTC}
 etcd_version=${CONTIV_ETCD_VERSION:-2.3.7}
@@ -36,7 +36,7 @@ while getopts ":a:p:" opt; do
           etcd_version=$OPTARG
           ;;
        p)
-          ucn_proxy_version=$OPTARG
+          auth_proxy_version=$OPTARG
           ;;
        :)
           echo "An argument required for $OPTARG was not passed"
@@ -49,9 +49,9 @@ while getopts ":a:p:" opt; do
 done
 
 release_dir="release"
-output_dir="$release_dir/ucn-$ucn_proxy_version/"
-output_file="$release_dir/ucn-$ucn_proxy_version.tgz"
-tmp_output_file="ucn-$ucn_proxy_version.tgz"
+output_dir="$release_dir/contiv-$auth_proxy_version/"
+output_file="$release_dir/contiv-$auth_proxy_version.tgz"
+tmp_output_file="contiv-$auth_proxy_version.tgz"
 
 # Clean older dist folders and release binaries
 rm -rf $output_dir
@@ -79,26 +79,26 @@ ansible_env=$ansible_yaml_dir/env.json
 k8s_yaml_dir=$output_dir/install/k8s/
 contiv_yaml=$k8s_yaml_dir/contiv.yaml
 aci_gw_yaml=$k8s_yaml_dir/aci_gw.yaml
-ucn_proxy_yaml=$k8s_yaml_dir/ucn_proxy.yaml
+auth_proxy_yaml=$k8s_yaml_dir/auth_proxy.yaml
 etcd_yaml=$k8s_yaml_dir/etcd.yaml
-ansible_proxy_spec=$output_dir/ansible/roles/ucn_proxy/defaults/main.yml
+ansible_proxy_spec=$output_dir/ansible/roles/auth_proxy/defaults/main.yml
 
 sed -i.bak "s/__CONTIV_VERSION__/$contiv_version/g" $contiv_yaml
-sed -i.bak "s/__API_PROXY_VERSION__/$ucn_proxy_version/g" $ucn_proxy_yaml
+sed -i.bak "s/__API_PROXY_VERSION__/$auth_proxy_version/g" $auth_proxy_yaml
 sed -i.bak "s/__ACI_GW_IMAGE__/$aci_gw_image/g" $aci_gw_yaml
 sed -i.bak "s/__ETCD_VERSION__/$etcd_version/g" $etcd_yaml
 
 sed -i.bak "s/__DOCKER_VERSION__/$docker_version/g" $ansible_env
 sed -i.bak "s/__CONTIV_VERSION__/$contiv_version/g" $ansible_env
 sed -i.bak "s/__ACI_GW_IMAGE__/$aci_gw_image/g" $ansible_env
-sed -i.bak "s/__API_PROXY_VERSION__/$ucn_proxy_version/g" $ansible_env
+sed -i.bak "s/__API_PROXY_VERSION__/$auth_proxy_version/g" $ansible_env
 sed -i.bak "s/__ETCD_VERSION__/$etcd_version/g" $ansible_env
 
 chmod +x $output_dir/install/install.sh
 chmod +x $k8s_yaml_dir/install.sh
 chmod +x $k8s_yaml_dir/uninstall.sh
 chmod +x $ansible_yaml_dir/install_swarm.sh
-sed -i.bak "s/__API_PROXY_VERSION__/$ucn_proxy_version/g" $ansible_yaml_dir/install_swarm.sh
+sed -i.bak "s/__API_PROXY_VERSION__/$auth_proxy_version/g" $ansible_yaml_dir/install_swarm.sh
 chmod +x $ansible_yaml_dir/uninstall_swarm.sh
 
 # Cleanup the backup files
@@ -109,18 +109,18 @@ rm -f $ansible_yaml_dir/*.bak
 ansible_spec=$output_dir/install/ansible/Dockerfile
 cp -rf ansible $output_dir/
 cp -rf scripts $output_dir/
-echo sed -i.bak "s/__API_PROXY_VERSION__/$ucn_proxy_version/g" $ansible_proxy_spec
-sed -i.bak "s/__API_PROXY_VERSION__/$ucn_proxy_version/g" $ansible_proxy_spec
-docker build -t contiv/install:$ucn_proxy_version -f $ansible_spec $output_dir
+echo sed -i.bak "s/__API_PROXY_VERSION__/$auth_proxy_version/g" $ansible_proxy_spec
+sed -i.bak "s/__API_PROXY_VERSION__/$auth_proxy_version/g" $ansible_proxy_spec
+docker build -t contiv/install:$auth_proxy_version -f $ansible_spec $output_dir
 rm -rf $output_dir/ansible
 rm -rf $output_dir/scripts
 if [ "$DEV_IMAGE_NAME" = "$VERSION" ]; then
   # This is a dev build, so save the images locally.
-  docker save contiv/install:$ucn_proxy_version -o $output_dir/ucn-install-image.tar
-  docker save $IMAGE_NAME:$VERSION -o $output_dir/ucn-proxy-image.tar
+  docker save contiv/install:$auth_proxy_version -o $output_dir/contiv-install-image.tar
+  docker save $IMAGE_NAME:$VERSION -o $output_dir/auth-proxy-image.tar
 else
   echo "**************************************************************************************************"
-  echo " Please ensure $IMAGE_NAME:$VERSION and contiv/install:$ucn_proxy_version are pushed to docker hub"
+  echo " Please ensure $IMAGE_NAME:$VERSION and contiv/install:$auth_proxy_version are pushed to docker hub"
   echo "**************************************************************************************************"
 fi
 
@@ -131,4 +131,4 @@ tar -cvzf $tmp_output_file -C $release_dir .
 mv $tmp_output_file $output_file
 rm -rf $output_dir
 
-echo "Success: UCN $ucn_proxy_version is available at $output_file"
+echo "Success: Contiv Installer version $auth_proxy_version is available at $output_file"

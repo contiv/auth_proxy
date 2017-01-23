@@ -1,0 +1,35 @@
+---
+# tasks file for auth_proxy
+
+- name: create cert folder for proxy
+  file: path=/var/contiv/certs state=directory
+
+- name: copy container image for auth proxy
+  copy: src=auth-proxy-image.tar dest=/var/contiv
+  ignore_errors: yes
+
+- name: check if proxy image is distributed locally
+  stat: path=/var/contiv/auth-proxy-image.tar
+  register: dev_auth_proxy
+
+- name: load auth proxy image
+  shell: docker load -i /var/contiv/auth-proxy-image.tar
+  when: dev_auth_proxy.stat.exists == True
+
+- name: copy shell script for starting auth-proxy
+  template: src=auth_proxy.j2 dest=/usr/bin/auth_proxy.sh mode=u=rwx,g=rx,o=rx
+
+- name: copy cert for starting auth-proxy
+  copy: src=cert.pem dest=/var/contiv/certs/auth_proxy_cert.pem mode=u=rw,g=r,o=r
+
+- name: copy key for starting auth-proxy
+  copy: src=key.pem dest=/var/contiv/certs/auth_proxy_key.pem mode=u=rw,g=r,o=r
+
+- name: copy systemd units for auth-proxy
+  copy: src=auth-proxy.service dest=/etc/systemd/system/auth-proxy.service
+
+- name: initialize auth-proxy
+  shell: /usr/bin/auth_proxy.sh init
+
+- name: start auth-proxy container
+  service: name=auth-proxy state=started

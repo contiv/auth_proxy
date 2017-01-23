@@ -34,7 +34,7 @@ SCRIPT
 
 # begin execution here
 # read the cluster configuration and create /etc/hosts file
-config_file = ENV['UCN_CONFIG'] || 'cluster_defs.json'
+config_file = ENV['CLUSTER_CONFIG'] || 'cluster_defs.json'
 cluster = JSON.parse(File.read((ENV['VAGRANT_CWD'] || '.') + '/' + config_file))
 master_ip = create_etc_hosts(cluster)
 
@@ -73,7 +73,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         c.vm.network :private_network, ip: member_info['contiv_control_ip']
         c.vm.network :private_network, ip: member_info['contiv_network_ip'], virtualbox__intnet: 'true', auto_config: false
         c.vm.provider 'virtualbox' do |v|
-          v.memory = vm_name == 'ucn-master' ? 2048 : 1024
+          v.memory = vm_name == 'contiv-master' ? 2048 : 1024
           # make all nics 'virtio' to take benefit of builtin vlan tag
           # support, which otherwise needs to be enabled in Intel drivers,
           # which are used by default by virtualbox

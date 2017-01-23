@@ -86,10 +86,10 @@ env_file=install/ansible/env.json
 sed -i.bak "s/__NETMASTER_IP__/$netmaster/g" $env_file
 sed -i.bak "s#__CLUSTER_STORE__#$cluster#g" $env_file
 
-echo "Uninstalling Cisco Universal Container Networking"
+echo "Uninstalling Contiv"
 
 # Uninstall contiv & API Proxy
-ansible-playbook $ans_opts -i $host_inventory -e "`cat $env_file`" $ansible_path/uninstall_ucn.yml
+ansible-playbook $ans_opts -i $host_inventory -e "`cat $env_file`" $ansible_path/uninstall_auth_proxy.yml
 ansible-playbook $ans_opts -i $host_inventory -e "`cat $env_file`" $ansible_path/uninstall_contiv.yml
 
 if [ $uninstall_scheduler = True ];then
