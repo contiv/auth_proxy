@@ -2,7 +2,7 @@ package types
 
 import (
 	log "github.com/Sirupsen/logrus"
-	"github.com/contiv/ccn_proxy/common/errors"
+	"github.com/contiv/auth_proxy/common/errors"
 )
 
 const (
@@ -26,7 +26,7 @@ const (
 	Invalid                 // Invalid role, this needs to be the last role
 )
 
-// Tenant is a type to represent the name of the tenant in CCN
+// Tenant is a type to represent the name of the tenant
 type Tenant string
 
 // String returns the string representation of `RoleType`
@@ -82,8 +82,8 @@ type LocalUser struct {
 //  Server: FQDN or IP address of LDAP/AD server
 //  Port: listening port of LDAP/AD server
 //  BaseDN: Distinguished name for base entity.
-//          E.g., ou=eng,dc=ccn,dc=com. All search queries will be scope to this BaseDN.
-//  ServiceAccountDN: DN of the service account. ccn_proxy will use this
+//          E.g., ou=eng,dc=auth,dc=com. All search queries will be scope to this BaseDN.
+//  ServiceAccountDN: DN of the service account. auth_proxy will use this
 //                    account to communicate with LDAP/AD. Hence this account
 //                    must have appropriate privileges, specifically for lookup.
 //  ServiceAccountPassword: of the service account
@@ -99,11 +99,10 @@ type LdapConfiguration struct {
 
 //
 // KVStoreConfig encapsulates config data that determines KV store
-// details specific to a running instance of CCN_proxy
+// details specific to a running instance of auth_proxy
 //
 // Fields:
-//   StoreURL: URL of the distributed key-value store
-//             that will be shared by CCN proxy and CCN
+//   StoreURL: URL of the key-value store
 //
 type KVStoreConfig struct {
 	StoreURL string `json:"kvstore-url"`

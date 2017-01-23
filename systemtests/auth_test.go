@@ -3,9 +3,9 @@ package systemtests
 import (
 	"encoding/json"
 
-	"github.com/contiv/ccn_proxy/common/types"
-	"github.com/contiv/ccn_proxy/db"
-	"github.com/contiv/ccn_proxy/proxy"
+	"github.com/contiv/auth_proxy/common/types"
+	"github.com/contiv/auth_proxy/db"
+	"github.com/contiv/auth_proxy/proxy"
 	. "gopkg.in/check.v1"
 )
 
@@ -34,7 +34,7 @@ func (s *systemtestSuite) TestAdminAuthorizationResponse(c *C) {
 		// TODO: Remove authorizations with delete user
 		s.deleteAuthorization(c, authz.AuthzUUID, adToken)
 
-		endpoint := "/api/v1/ccn_proxy/authorizations/" + authz.AuthzUUID
+		endpoint := "/api/v1/auth_proxy/authorizations/" + authz.AuthzUUID
 		resp, _ := proxyGet(c, adToken, endpoint)
 		c.Assert(resp.StatusCode, Equals, 404)
 	})
@@ -48,7 +48,7 @@ func (s *systemtestSuite) TestTenantAuthorizationResponse(c *C) {
 	runTest(func(ms *MockServer) {
 		// grant ops access to username, tenant name is required and should not be ignored
 		data := `{"PrincipalName":"` + username + `","local":true,"role":"` + types.Ops.String() + `","tenantName":""}`
-		endpoint := "/api/v1/ccn_proxy/authorizations"
+		endpoint := "/api/v1/auth_proxy/authorizations"
 
 		resp, _ := proxyPost(c, adToken, endpoint, []byte(data))
 		c.Assert(resp.StatusCode, Equals, 400)
@@ -71,7 +71,7 @@ func (s *systemtestSuite) TestTenantAuthorizationResponse(c *C) {
 		// TODO: Remove authorizations with delete user
 		s.deleteAuthorization(c, authz.AuthzUUID, adToken)
 
-		endpoint = "/api/v1/ccn_proxy/authorizations/" + authz.AuthzUUID
+		endpoint = "/api/v1/auth_proxy/authorizations/" + authz.AuthzUUID
 		resp, _ = proxyGet(c, adToken, endpoint)
 		c.Assert(resp.StatusCode, Equals, 404)
 	})
@@ -87,7 +87,7 @@ func (s *systemtestSuite) TestBuiltInAdminAuthorizationImmortality(c *C) {
 
 	adminAuthUUID := auths[0].UUID
 
-	baseURL := "/api/v1/ccn_proxy/authorizations"
+	baseURL := "/api/v1/auth_proxy/authorizations"
 
 	//
 	// try to delete the sole authorization
@@ -108,7 +108,7 @@ func (s *systemtestSuite) TestBuiltInAdminAuthorizationImmortality(c *C) {
 
 // addAuthorization helper function for the tests
 func (s *systemtestSuite) addAuthorization(c *C, data, token string) proxy.GetAuthorizationReply {
-	endpoint := "/api/v1/ccn_proxy/authorizations"
+	endpoint := "/api/v1/auth_proxy/authorizations"
 
 	resp, body := proxyPost(c, token, endpoint, []byte(data))
 	c.Assert(resp.StatusCode, Equals, 201)
@@ -120,7 +120,7 @@ func (s *systemtestSuite) addAuthorization(c *C, data, token string) proxy.GetAu
 
 // getAuthorization helper function for the tests
 func (s *systemtestSuite) getAuthorization(c *C, authzUUID, token string) proxy.GetAuthorizationReply {
-	endpoint := "/api/v1/ccn_proxy/authorizations/" + authzUUID
+	endpoint := "/api/v1/auth_proxy/authorizations/" + authzUUID
 
 	resp, body := proxyGet(c, token, endpoint)
 	c.Assert(resp.StatusCode, Equals, 200)
@@ -132,7 +132,7 @@ func (s *systemtestSuite) getAuthorization(c *C, authzUUID, token string) proxy.
 
 // deleteAuthorization helper function for the tests
 func (s *systemtestSuite) deleteAuthorization(c *C, authzUUID, token string) {
-	endpoint := "/api/v1/ccn_proxy/authorizations/" + authzUUID
+	endpoint := "/api/v1/auth_proxy/authorizations/" + authzUUID
 
 	resp, _ := proxyDelete(c, token, endpoint)
 	c.Assert(resp.StatusCode, Equals, 204)

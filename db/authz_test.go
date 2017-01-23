@@ -1,8 +1,8 @@
 package db
 
 import (
-	"github.com/contiv/ccn_proxy/common/types"
-	"github.com/contiv/ccn_proxy/state"
+	"github.com/contiv/auth_proxy/common/types"
+	"github.com/contiv/auth_proxy/state"
 	. "gopkg.in/check.v1"
 )
 

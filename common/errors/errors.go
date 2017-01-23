@@ -104,10 +104,10 @@ var ErrUnmarshalingBody = NewError(UnmarshalingBody, "failed to unmarshall reque
 // ErrUpdateAuthorization indicates an error when updating an authorization
 var ErrUpdateAuthorization = NewError(UpdateAuthorization, "failed to update authorization")
 
-// ErrPartialFailureToAddAuthz indicates an error when a new authorizatin is being added to CCN
+// ErrPartialFailureToAddAuthz indicates an error when a new authorization is being added
 var ErrPartialFailureToAddAuthz = NewError(PartialFailureToAddAuthz, "failed to add authorization")
 
-// ErrPartialFailureToUpdateAuthz indicates an error when an authorization is being update
+// ErrPartialFailureToUpdateAuthz indicates an error when an authorization is being updated
 var ErrPartialFailureToUpdateAuthz = NewError(PartialFailureToUpdateAuthz, "failed to update authorization")
 
 // ErrUserNotFound used when the user is found
@@ -132,41 +132,41 @@ var ErrLDAPMultipleEntries = NewError(LDAPMultipleEntries, "Expected single entr
 var ErrLocalAuthenticationFailed = NewError(LocalAuthenticationFailed, "Local authentication failed")
 
 //
-// CCNError describes an error response message used by CCN APIs
+// AuthError describes an error response message
 //
 // Field:
 //  code: error code
 //  message: Textual description of the error
 //
-type CCNError struct {
+type AuthError struct {
 	Code    int
 	Message string
 }
 
 //
-// Error returns a textual representation of a CCNError
+// Error returns a textual representation of a AuthError
 //
 // Parameters:
-//  (Receiver): CCNError to which this function applies
+//  (Receiver): AuthError to which this function applies
 //
 // Return values:
-//  string: string representation of this CCNError
+//  string: string representation of this AuthError
 //
-func (ccne *CCNError) Error() string {
-	return strconv.Itoa(ccne.Code) + ":" + ccne.Message
+func (ae *AuthError) Error() string {
+	return strconv.Itoa(ae.Code) + ":" + ae.Message
 }
 
 //
-// NewError creates a new CCNError with the supplied parameters
+// NewError creates a new AuthError with the supplied parameters
 //
 // Parameters:
-//  code: error code of this CCNError
-//  message: string representation of this CCNError
+//  code: error code of this AuthError
+//  message: string representation of this AuthError
 //
 // Return values:
-//  CCNError: a new CCNError object providing the desired error
+//  AuthError: a new AuthError object providing the desired error
 //      message and error code
 //
 func NewError(code int, message string) error {
-	return &CCNError{code, message}
+	return &AuthError{code, message}
 }

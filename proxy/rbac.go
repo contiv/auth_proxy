@@ -7,9 +7,9 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/contiv/ccn_proxy/auth"
-	"github.com/contiv/ccn_proxy/common"
-	"github.com/contiv/ccn_proxy/common/types"
+	"github.com/contiv/auth_proxy/auth"
+	"github.com/contiv/auth_proxy/common"
+	"github.com/contiv/auth_proxy/common/types"
 	"github.com/contiv/contivmodel/client"
 	"github.com/gorilla/mux"
 

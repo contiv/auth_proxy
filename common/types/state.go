@@ -17,7 +17,7 @@ type WatchableState interface {
 }
 
 // StateDriver provides the mechanism for reading/writing state for authN,
-// authZ for RBAC of CCN. The state is assumed to be stored as key-value pairs
+// authZ for RBAC. The state is assumed to be stored as key-value pairs
 // with keys of type 'string' and value to be an opaque binary string,
 // encoded/decoded by the logic specific to the high-level(consumer) interface.
 type StateDriver interface {

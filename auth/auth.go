@@ -1,13 +1,13 @@
 package auth
 
 import (
-	"github.com/contiv/ccn_proxy/auth/ldap"
-	"github.com/contiv/ccn_proxy/auth/local"
-	"github.com/contiv/ccn_proxy/common"
-	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
-	"github.com/contiv/ccn_proxy/common/types"
-	"github.com/contiv/ccn_proxy/db"
-	"github.com/contiv/ccn_proxy/state"
+	"github.com/contiv/auth_proxy/auth/ldap"
+	"github.com/contiv/auth_proxy/auth/local"
+	"github.com/contiv/auth_proxy/common"
+	auth_errors "github.com/contiv/auth_proxy/common/errors"
+	"github.com/contiv/auth_proxy/common/types"
+	"github.com/contiv/auth_proxy/db"
+	"github.com/contiv/auth_proxy/state"
 
 	log "github.com/Sirupsen/logrus"
 	uuid "github.com/satori/go.uuid"
@@ -28,7 +28,7 @@ func Authenticate(username, password string) (string, error) {
 
 	// Same username can be there in both local setup and LDAP.
 	// So, we try LDAP if `access is denied` from local authentication; coz, the same user(name) could also be part of LDAP.
-	if err == ccnerrors.ErrUserNotFound || err == ccnerrors.ErrAccessDenied {
+	if err == auth_errors.ErrUserNotFound || err == auth_errors.ErrAccessDenied {
 		userPrincipals, err = ldap.Authenticate(username, password)
 		if err == nil {
 			return generateToken(userPrincipals, username) // ldap authentication succeeded!
@@ -67,8 +67,8 @@ func generateToken(principals []string, username string) (string, error) {
 //
 // Return values:
 //  error: nil if 'granted' role has 'desired' access, otherwise:
-//   ccnerrors.ErrUnauthorized: if 'granted' role doesn't have the 'desired' level of access
-//   ccnerrors.ErrUnsupportedType: if 'desired' is not a role type
+//   auth_errors.ErrUnauthorized: if 'granted' role doesn't have the 'desired' level of access
+//   auth_errors.ErrUnsupportedType: if 'desired' is not a role type
 //
 func checkAccessClaim(granted types.RoleType, desired interface{}) error {
 
@@ -86,10 +86,10 @@ func checkAccessClaim(granted types.RoleType, desired interface{}) error {
 	// TODO: Add a case to explicitly check capability
 	default:
 		log.Errorf("unsupported type for authorization check, got: %#v, expecting: types.RoleType", desired)
-		return ccnerrors.ErrUnsupportedType
+		return auth_errors.ErrUnsupportedType
 	}
 
-	return ccnerrors.ErrUnauthorized
+	return auth_errors.ErrUnauthorized
 }
 
 //
@@ -109,7 +109,7 @@ func checkAccessClaim(granted types.RoleType, desired interface{}) error {
 // Return values:
 //  types.Authorization: new authorization that was added
 //  error: nil if successful, else
-//    ccnerrors.ErrIllegalOperation if trying to add authorization to built-in
+//    auth_errors.ErrIllegalOperation if trying to add authorization to built-in
 //      local admin user.
 //
 func AddAuthorization(tenantName string, role types.RoleType, principalName string,
@@ -120,7 +120,7 @@ func AddAuthorization(tenantName string, role types.RoleType, principalName stri
 	var err error
 
 	if isLocal && types.Admin.String() == principalName {
-		return authz, ccnerrors.ErrIllegalOperation
+		return authz, auth_errors.ErrIllegalOperation
 	}
 
 	// Adding authorization is generally a two part operation
@@ -263,7 +263,7 @@ func addUpdateRoleAuthorization(role types.RoleType, principalName string,
 	default:
 		// There should only be one role authz claim, so return error
 		log.Error("multiple role authorizations found, expected 1, found ", l)
-		return types.Authorization{}, ccnerrors.ErrInternal
+		return types.Authorization{}, auth_errors.ErrInternal
 
 	}
 }
@@ -278,7 +278,7 @@ func addUpdateRoleAuthorization(role types.RoleType, principalName string,
 // Return values:
 //  error: nil if successful, else
 //    types.UnauthorizedError: if caller isn't authorized to make this API call.
-//    ccnerrors.ErrIllegalOperation: if attempting to delete authorization for
+//    auth_errors.ErrIllegalOperation: if attempting to delete authorization for
 //      built-in admin user.
 //    : error from db.DeleteAuthorization if deleting an authorization
 //      fails
@@ -297,7 +297,7 @@ func DeleteAuthorization(authUUID string) error {
 	// don't allow deletion of claims on the built-in "admin" account
 	if authorization.BelongsToBuiltInAdmin() {
 		log.Warn("can't delete authorizations on built-in admin user")
-		return ccnerrors.ErrIllegalOperation
+		return auth_errors.ErrIllegalOperation
 	}
 
 	// delete authz from the KV store
@@ -426,7 +426,7 @@ func AddDefaultUsers() error {
 		}
 
 		err := db.AddLocalUser(&localUser)
-		if err == nil || err == ccnerrors.ErrKeyExists {
+		if err == nil || err == auth_errors.ErrKeyExists {
 			continue
 		}
 

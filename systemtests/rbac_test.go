@@ -407,7 +407,7 @@ func (s *systemtestSuite) addUser(c *C, username string) {
 	runTest(func(ms *MockServer) {
 		adToken = adminToken(c)
 
-		endpoint := "/api/v1/ccn_proxy/local_users/" + username
+		endpoint := "/api/v1/auth_proxy/local_users/" + username
 		resp, _ := proxyGet(c, adToken, endpoint)
 		if resp.StatusCode == 200 {
 			resp, body := proxyDelete(c, adToken, endpoint)
@@ -481,7 +481,7 @@ func (s *systemtestSuite) TestAdminRoleRequired(c *C) {
 		// try calling an admin api (e.g., update user) using test user token
 		// This should fail with forbidden since user doesn't have admin access
 		data := `{"first_name":"Temp", "last_name": "User"}`
-		endpoint := "/api/v1/ccn_proxy/local_users/" + username
+		endpoint := "/api/v1/auth_proxy/local_users/" + username
 		resp, _ := proxyPatch(c, testuserToken, endpoint, []byte(data))
 		c.Assert(resp.StatusCode, Equals, 403)
 
@@ -499,7 +499,7 @@ func (s *systemtestSuite) TestAdminRoleRequired(c *C) {
 
 		// calling admin api should fail again withouth requiring new token (since cached value
 		// of role authz in token isn't used)
-		endpoint = "/api/v1/ccn_proxy/local_users/" + username
+		endpoint = "/api/v1/auth_proxy/local_users/" + username
 		resp, _ = proxyPatch(c, testuserToken, endpoint, []byte(data))
 		c.Assert(resp.StatusCode, Equals, 403)
 	})

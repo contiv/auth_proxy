@@ -8,11 +8,11 @@ import (
 
 	log "github.com/Sirupsen/logrus"
 
-	"github.com/contiv/ccn_proxy/auth"
-	"github.com/contiv/ccn_proxy/common"
-	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
-	"github.com/contiv/ccn_proxy/common/types"
-	"github.com/contiv/ccn_proxy/db"
+	"github.com/contiv/auth_proxy/auth"
+	"github.com/contiv/auth_proxy/common"
+	auth_errors "github.com/contiv/auth_proxy/common/errors"
+	"github.com/contiv/auth_proxy/common/types"
+	"github.com/contiv/auth_proxy/db"
 )
 
 // This file contains all the HTTP handler helper functions.
@@ -82,7 +82,7 @@ func updateLdapConfigurationInfo(ldapConfiguration *types.LdapConfiguration, act
 		}
 
 		return http.StatusOK, jData
-	case ccnerrors.ErrKeyNotFound:
+	case auth_errors.ErrKeyNotFound:
 		return http.StatusNotFound, nil
 	default:
 		log.Debugf("Failed to delete LDAP configuration: %#v", err)
@@ -104,7 +104,7 @@ func updateLdapConfigurationHelper(ldapConfiguration *types.LdapConfiguration) (
 	switch err {
 	case nil:
 		return updateLdapConfigurationInfo(ldapConfiguration, actual)
-	case ccnerrors.ErrKeyNotFound:
+	case auth_errors.ErrKeyNotFound:
 		return http.StatusNotFound, nil
 	default:
 		log.Debugf("Failed to retrieve LDAP configuration: %#v", err)
@@ -124,7 +124,7 @@ func deleteLdapConfigurationHelper() (int, []byte) {
 	switch err {
 	case nil:
 		return http.StatusNoContent, nil
-	case ccnerrors.ErrKeyNotFound:
+	case auth_errors.ErrKeyNotFound:
 		return http.StatusNotFound, nil
 	default:
 		log.Debugf("Failed to delete LDAP configuration: %#v", err)
@@ -151,7 +151,7 @@ func getLdapConfigurationHelper() (int, []byte) {
 		}
 
 		return http.StatusOK, jData
-	case ccnerrors.ErrKeyNotFound:
+	case auth_errors.ErrKeyNotFound:
 		return http.StatusNotFound, nil
 	default:
 		log.Debugf("Failed to retrieve LDAP configuration: %#v", err)
@@ -192,7 +192,7 @@ func addLdapConfigurationHelper(ldapConfiguration *types.LdapConfiguration) (int
 		}
 
 		return http.StatusCreated, jData
-	case ccnerrors.ErrKeyExists:
+	case auth_errors.ErrKeyExists:
 		return http.StatusBadRequest, []byte("LDAP setttings exists already. Request `update` if some config needs change")
 	default:
 		log.Debugf("Failed to add LDAP configuration: %#v", err)
@@ -222,7 +222,7 @@ func getLocalUserHelper(username string) (int, []byte) {
 		}
 
 		return http.StatusOK, jData
-	case ccnerrors.ErrKeyNotFound:
+	case auth_errors.ErrKeyNotFound:
 		return http.StatusNotFound, nil
 	default:
 		log.Debugf("Failed to fetch local user %q: %#v", username, err)
@@ -314,9 +314,9 @@ func updateLocalUserInfo(username string, updateReq *types.LocalUser, actual *ty
 		}
 
 		return http.StatusOK, jData
-	case ccnerrors.ErrKeyNotFound: // from DeleteLocalUser()
+	case auth_errors.ErrKeyNotFound: // from DeleteLocalUser()
 		return http.StatusNotFound, nil
-	case ccnerrors.ErrIllegalOperation:
+	case auth_errors.ErrIllegalOperation:
 		return http.StatusBadRequest, []byte(fmt.Sprintf("Cannot update built-in user %q", username))
 	default:
 		log.Debugf("Failed to update local user %q with %#v: %#v", username, updateReq, err)
@@ -341,7 +341,7 @@ func updateLocalUserHelper(username string, userUpdateReq *types.LocalUser) (int
 	switch err {
 	case nil:
 		return updateLocalUserInfo(username, userUpdateReq, localUser)
-	case ccnerrors.ErrKeyNotFound:
+	case auth_errors.ErrKeyNotFound:
 		return http.StatusNotFound, nil
 	default:
 		log.Debugf("Failed to update local user %q with %#v: %#v", username, userUpdateReq, err)
@@ -365,9 +365,9 @@ func deleteLocalUserHelper(username string) (int, []byte) {
 	switch err {
 	case nil:
 		return http.StatusNoContent, nil
-	case ccnerrors.ErrKeyNotFound:
+	case auth_errors.ErrKeyNotFound:
 		return http.StatusNotFound, nil
-	case ccnerrors.ErrIllegalOperation:
+	case auth_errors.ErrIllegalOperation:
 		return http.StatusBadRequest, []byte(fmt.Sprintf("Cannot delete built-in user %q", username))
 	default:
 		log.Debugf("Failed to delete local user %q: %#v", username, err)
@@ -399,7 +399,7 @@ func addLocalUserHelper(userCreateReq *types.LocalUser) (int, []byte) {
 		}
 
 		return http.StatusCreated, jData
-	case ccnerrors.ErrKeyExists:
+	case auth_errors.ErrKeyExists:
 		return http.StatusBadRequest, []byte(fmt.Sprintf("User %q exists already", userCreateReq.Username))
 	default:
 		log.Debugf("Failed to add local user %#v: %#v", userCreateReq, err)
@@ -470,7 +470,7 @@ func processStatusCodes(statusCode int, resp []byte, w http.ResponseWriter) {
 //
 // Return values:
 //   string: token as a string
-//   err:    ccnerrors.ErrParsingToken
+//   err:    auth_errors.ErrParsingToken
 //           nil if token is retrieved successfully
 //
 func getTokenFromHeader(req *http.Request) (string, error) {
@@ -479,7 +479,7 @@ func getTokenFromHeader(req *http.Request) (string, error) {
 	var err error
 	tokenStr := req.Header.Get("X-Auth-Token")
 	if common.IsEmpty(tokenStr) {
-		err = ccnerrors.ErrParsingToken
+		err = auth_errors.ErrParsingToken
 	}
 	return tokenStr, err
 }

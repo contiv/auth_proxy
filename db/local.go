@@ -5,10 +5,10 @@ import (
 	"fmt"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/contiv/ccn_proxy/common"
-	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
-	"github.com/contiv/ccn_proxy/common/types"
-	"github.com/contiv/ccn_proxy/state"
+	"github.com/contiv/auth_proxy/common"
+	auth_errors "github.com/contiv/auth_proxy/common/errors"
+	"github.com/contiv/auth_proxy/common/types"
+	"github.com/contiv/auth_proxy/state"
 )
 
 // This file contains all local user management APIs.
@@ -27,7 +27,7 @@ func GetLocalUsers() ([]*types.LocalUser, error) {
 	users := []*types.LocalUser{}
 	rawData, err := stateDrv.ReadAll(GetPath(RootLocalUsers))
 	if err != nil {
-		if err == ccnerrors.ErrKeyNotFound {
+		if err == auth_errors.ErrKeyNotFound {
 			return users, nil
 		}
 
@@ -46,7 +46,7 @@ func GetLocalUsers() ([]*types.LocalUser, error) {
 	return users, nil
 }
 
-// GetLocalUser looks up a user entry in `/ccn_proxy/local_users` path.
+// GetLocalUser looks up a user entry in `/auth_proxy/local_users` path.
 // params:
 //  username:string; name of the user to be fetched
 // return values:
@@ -60,7 +60,7 @@ func GetLocalUser(username string) (*types.LocalUser, error) {
 
 	rawData, err := stateDrv.Read(GetPath(RootLocalUsers, username))
 	if err != nil {
-		if err == ccnerrors.ErrKeyNotFound {
+		if err == auth_errors.ErrKeyNotFound {
 			return nil, err
 		}
 
@@ -75,7 +75,7 @@ func GetLocalUser(username string) (*types.LocalUser, error) {
 	return &localUser, nil
 }
 
-// UpdateLocalUser updates an existing entry in /ccn_proxy/local_users/<username>.
+// UpdateLocalUser updates an existing entry in /auth_proxy/local_users/<username>.
 // params:
 //  username: string; of the user that requires update
 //  user: local user object to be updated in the data store
@@ -119,7 +119,7 @@ func UpdateLocalUser(username string, user *types.LocalUser) error {
 		user.PasswordHash = []byte{}
 
 		return nil
-	case ccnerrors.ErrKeyNotFound:
+	case auth_errors.ErrKeyNotFound:
 		return err
 	default:
 		log.Debugf("Failed to update user %q: %#v", username, err)
@@ -128,16 +128,16 @@ func UpdateLocalUser(username string, user *types.LocalUser) error {
 
 }
 
-// DeleteLocalUser removes a local user from `/ccn_proxy/local_users`
+// DeleteLocalUser removes a local user from `/auth_proxy/local_users`
 // Built-in admin and ops local users cannot be deleted.
 // params:
 //  username: string; user to be removed from the system
 // return values:
-//  error: ccnerrors.ErrIllegalOperation or any relevant error from the consecutive func calls
+//  error: auth_errors.ErrIllegalOperation or any relevant error from the consecutive func calls
 func DeleteLocalUser(username string) error {
 	if username == types.Admin.String() || username == types.Ops.String() {
 		// built-in users cannot be deleted
-		return ccnerrors.ErrIllegalOperation
+		return auth_errors.ErrIllegalOperation
 	}
 
 	stateDrv, err := state.GetStateDriver()
@@ -165,11 +165,11 @@ func DeleteLocalUser(username string) error {
 	return nil
 }
 
-// AddLocalUser adds a new user entry to /ccn_proxy/local_users/.
+// AddLocalUser adds a new user entry to /auth_proxy/local_users/.
 // params:
 //  user: *types.LocalUser object that should be added to the data store
 // return Values:
-//  error: ccnerrors.ErrKeyExists if the user already exists or any relevant error from state driver
+//  error: auth_errors.ErrKeyExists if the user already exists or any relevant error from state driver
 func AddLocalUser(user *types.LocalUser) error {
 	stateDrv, err := state.GetStateDriver()
 	if err != nil {
@@ -182,8 +182,8 @@ func AddLocalUser(user *types.LocalUser) error {
 
 	switch err {
 	case nil:
-		return ccnerrors.ErrKeyExists
-	case ccnerrors.ErrKeyNotFound:
+		return auth_errors.ErrKeyExists
+	case auth_errors.ErrKeyNotFound:
 		user.PasswordHash, err = common.GenPasswordHash(user.Password)
 
 		if err != nil {

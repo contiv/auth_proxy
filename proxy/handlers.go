@@ -6,10 +6,10 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/contiv/ccn_proxy/auth"
-	"github.com/contiv/ccn_proxy/common"
-	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
-	"github.com/contiv/ccn_proxy/common/types"
+	"github.com/contiv/auth_proxy/auth"
+	"github.com/contiv/auth_proxy/common"
+	auth_errors "github.com/contiv/auth_proxy/common/errors"
+	"github.com/contiv/auth_proxy/common/types"
 	"github.com/gorilla/mux"
 
 	log "github.com/Sirupsen/logrus"
@@ -186,7 +186,7 @@ func adminOnly(handler func(http.ResponseWriter, *http.Request)) func(http.Respo
 		if err != nil {
 			// token cannot be retrieved from header
 			httpStatus := http.StatusInternalServerError
-			httpResponse := []byte(ccnerrors.ErrUnauthorized.Error())
+			httpResponse := []byte(auth_errors.ErrUnauthorized.Error())
 			processStatusCodes(httpStatus, httpResponse, w)
 			return
 		}
@@ -195,7 +195,7 @@ func adminOnly(handler func(http.ResponseWriter, *http.Request)) func(http.Respo
 		token, err := auth.ParseToken(tokenStr)
 		if err != nil {
 			httpStatus := http.StatusInternalServerError
-			httpResponse := []byte(ccnerrors.ErrParsingToken.Error())
+			httpResponse := []byte(auth_errors.ErrParsingToken.Error())
 			processStatusCodes(httpStatus, httpResponse, w)
 			return
 		}
@@ -322,7 +322,7 @@ func addAuthorization(w http.ResponseWriter, req *http.Request) {
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		log.Warn("failed to parse request body for adding authorization, err:", err)
-		serverError(w, ccnerrors.ErrParsingRequest)
+		serverError(w, auth_errors.ErrParsingRequest)
 		return
 	}
 
@@ -330,7 +330,7 @@ func addAuthorization(w http.ResponseWriter, req *http.Request) {
 	addAuthzReq := &AddAuthorizationRequest{}
 	if err := json.Unmarshal(body, addAuthzReq); err != nil {
 		log.Warn("failed to unmarshal authorization, err:", err)
-		serverError(w, ccnerrors.ErrUnmarshalingBody)
+		serverError(w, auth_errors.ErrUnmarshalingBody)
 		return
 	}
 
@@ -381,7 +381,7 @@ func addAuthorization(w http.ResponseWriter, req *http.Request) {
 
 			log.Error("failed to marshal authorization, err:", err)
 			httpStatus = http.StatusInternalServerError
-			httpResponse = []byte(ccnerrors.ErrPartialFailureToAddAuthz.Error())
+			httpResponse = []byte(auth_errors.ErrPartialFailureToAddAuthz.Error())
 
 			// clean up created authorization
 			err = auth.DeleteAuthorization(authz.UUID)
@@ -394,13 +394,13 @@ func addAuthorization(w http.ResponseWriter, req *http.Request) {
 		}
 		httpStatus = http.StatusCreated
 		httpResponse = jsonAuthz
-	case ccnerrors.ErrIllegalOperation:
+	case auth_errors.ErrIllegalOperation:
 		httpStatus = http.StatusBadRequest
 		httpResponse = []byte(err.Error())
 	default:
 
 		httpStatus = http.StatusInternalServerError
-		httpResponse = []byte(ccnerrors.ErrUnauthorized.Error())
+		httpResponse = []byte(auth_errors.ErrUnauthorized.Error())
 	}
 
 	// process status codes
@@ -425,10 +425,10 @@ func deleteAuthorization(w http.ResponseWriter, req *http.Request) {
 	case nil:
 		httpStatus = http.StatusNoContent
 		httpResponse = nil
-	case ccnerrors.ErrKeyNotFound:
+	case auth_errors.ErrKeyNotFound:
 		httpStatus = http.StatusNotFound
 		httpResponse = nil
-	case ccnerrors.ErrIllegalOperation:
+	case auth_errors.ErrIllegalOperation:
 		httpStatus = http.StatusBadRequest
 		httpResponse = []byte(err.Error())
 	default:
@@ -469,7 +469,7 @@ func getAuthorization(w http.ResponseWriter, req *http.Request) {
 			break
 		}
 		httpResponse = jsonAuthzReply
-	case ccnerrors.ErrKeyNotFound:
+	case auth_errors.ErrKeyNotFound:
 		httpStatus = http.StatusNotFound
 		httpResponse = nil
 	default:

@@ -1,4 +1,4 @@
-FROM ccn_proxy_build_base
+FROM auth_proxy_build_base
 
 RUN go get github.com/gordonklaus/ineffassign
 RUN go get github.com/golang/lint/golint

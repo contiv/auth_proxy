@@ -15,7 +15,7 @@ import (
 
 const (
 	// LoginPath is the authentication endpoint on the proxy
-	LoginPath = "/api/v1/ccn_proxy/login"
+	LoginPath = "/api/v1/auth_proxy/login"
 
 	// HealthCheckPath is the health check endpoint on the proxy
 	HealthCheckPath = "/health"
@@ -74,8 +74,8 @@ func (s *Server) ProxyRequest(w http.ResponseWriter, req *http.Request) (*http.R
 	copy := new(http.Request)
 	*copy = *req
 
-	// NOTE: for the initial release, we are only supporting TLS at the ccn_proxy.
-	//       ccn_proxy will be the only ingress point into the cluster, so we can
+	// NOTE: for the initial release, we are only supporting TLS at the auth_proxy.
+	//       auth_proxy will be the only ingress point into the cluster, so we can
 	//       assume any other communication within the cluster is secure.
 	copy.URL = &url.URL{
 		Scheme: "http",
@@ -233,26 +233,26 @@ func addNetmasterRoutes(s *Server, router *mux.Router) {
 // addUserMgmtRoutes adds user management routes to the mux.Router.
 // All user management routes are admin-only.
 func addUserMgmtRoutes(router *mux.Router) {
-	router.Path("/api/v1/ccn_proxy/local_users").Methods("POST").HandlerFunc(adminOnly(addLocalUser))
-	router.Path("/api/v1/ccn_proxy/local_users/{username}").Methods("DELETE").HandlerFunc(adminOnly(deleteLocalUser))
-	router.Path("/api/v1/ccn_proxy/local_users/{username}").Methods("PATCH").HandlerFunc(adminOnly(updateLocalUser))
-	router.Path("/api/v1/ccn_proxy/local_users/{username}").Methods("GET").HandlerFunc(adminOnly(getLocalUser))
-	router.Path("/api/v1/ccn_proxy/local_users").Methods("GET").HandlerFunc(adminOnly(getLocalUsers))
+	router.Path("/api/v1/auth_proxy/local_users").Methods("POST").HandlerFunc(adminOnly(addLocalUser))
+	router.Path("/api/v1/auth_proxy/local_users/{username}").Methods("DELETE").HandlerFunc(adminOnly(deleteLocalUser))
+	router.Path("/api/v1/auth_proxy/local_users/{username}").Methods("PATCH").HandlerFunc(adminOnly(updateLocalUser))
+	router.Path("/api/v1/auth_proxy/local_users/{username}").Methods("GET").HandlerFunc(adminOnly(getLocalUser))
+	router.Path("/api/v1/auth_proxy/local_users").Methods("GET").HandlerFunc(adminOnly(getLocalUsers))
 }
 
 // addAuthorizationRoutes adds authorization routes to the mux.Router
 // All authorization management routes are admin-only.
 func addAuthorizationRoutes(router *mux.Router) {
-	router.Path("/api/v1/ccn_proxy/authorizations").Methods("POST").HandlerFunc(adminOnly(addAuthorization))
-	router.Path("/api/v1/ccn_proxy/authorizations/{authzUUID}").Methods("DELETE").HandlerFunc(adminOnly(deleteAuthorization))
-	router.Path("/api/v1/ccn_proxy/authorizations/{authzUUID}").Methods("GET").HandlerFunc(adminOnly(getAuthorization))
-	router.Path("/api/v1/ccn_proxy/authorizations").Methods("GET").HandlerFunc(adminOnly(listAuthorizations))
+	router.Path("/api/v1/auth_proxy/authorizations").Methods("POST").HandlerFunc(adminOnly(addAuthorization))
+	router.Path("/api/v1/auth_proxy/authorizations/{authzUUID}").Methods("DELETE").HandlerFunc(adminOnly(deleteAuthorization))
+	router.Path("/api/v1/auth_proxy/authorizations/{authzUUID}").Methods("GET").HandlerFunc(adminOnly(getAuthorization))
+	router.Path("/api/v1/auth_proxy/authorizations").Methods("GET").HandlerFunc(adminOnly(listAuthorizations))
 }
 
 // addLdapConfigurationMgmtRoutes adds LDAP configuration management routes to mux.Router.
 func addLdapConfigurationMgmtRoutes(router *mux.Router) {
-	router.Path("/api/v1/ccn_proxy/ldap_configuration").Methods("POST").HandlerFunc(adminOnly(addLdapConfiguration))
-	router.Path("/api/v1/ccn_proxy/ldap_configuration").Methods("GET").HandlerFunc(adminOnly(getLdapConfiguration))
-	router.Path("/api/v1/ccn_proxy/ldap_configuration").Methods("DELETE").HandlerFunc(adminOnly(deleteLdapConfiguration))
-	router.Path("/api/v1/ccn_proxy/ldap_configuration").Methods("PATCH").HandlerFunc(adminOnly(updateLdapConfiguration))
+	router.Path("/api/v1/auth_proxy/ldap_configuration").Methods("POST").HandlerFunc(adminOnly(addLdapConfiguration))
+	router.Path("/api/v1/auth_proxy/ldap_configuration").Methods("GET").HandlerFunc(adminOnly(getLdapConfiguration))
+	router.Path("/api/v1/auth_proxy/ldap_configuration").Methods("DELETE").HandlerFunc(adminOnly(deleteLdapConfiguration))
+	router.Path("/api/v1/auth_proxy/ldap_configuration").Methods("PATCH").HandlerFunc(adminOnly(updateLdapConfiguration))
 }

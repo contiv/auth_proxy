@@ -8,9 +8,9 @@ import (
 	log "github.com/Sirupsen/logrus"
 	jwt "github.com/dgrijalva/jwt-go"
 
-	ccnerrors "github.com/contiv/ccn_proxy/common/errors"
-	"github.com/contiv/ccn_proxy/common/types"
-	"github.com/contiv/ccn_proxy/db"
+	auth_errors "github.com/contiv/auth_proxy/common/errors"
+	"github.com/contiv/auth_proxy/common/types"
+	"github.com/contiv/auth_proxy/db"
 )
 
 // This file contains all utility methods to create and handle JWT tokens
@@ -44,7 +44,7 @@ func NewToken() *Token {
 
 	// provide any reserved claims here
 	authZ.AddClaim("exp", time.Now().Add(time.Hour*TokenValidityInHours).Unix()) // expiration time
-	authZ.AddClaim("iss", "ccn_proxy")                                           // issuer
+	authZ.AddClaim("iss", "auth_proxy")                                          // issuer
 
 	return authZ
 }
@@ -143,7 +143,7 @@ func (authZ *Token) AddRoleClaim(principal string) error {
 			} else {
 				msg := "malformed token, error:" + err.Error()
 				log.Error(msg)
-				return ccnerrors.NewError(ccnerrors.Internal, msg)
+				return auth_errors.NewError(auth_errors.Internal, msg)
 			}
 		} else {
 			// No role claim available, add
@@ -210,7 +210,7 @@ func GenerateClaimKey(object interface{}) (string, error) {
 
 	default:
 		log.Errorf("Unsupported object %#v for authorization claim", object)
-		return "", ccnerrors.ErrUnsupportedType
+		return "", auth_errors.ErrUnsupportedType
 	}
 }
 
@@ -342,7 +342,7 @@ func (authZ *Token) CheckClaims(objects ...interface{}) error {
 		default:
 			log.Errorf("Unsupported type for authorization claim; got: %#v"+
 				", expecting: types.RoleType or types.Tenant", v)
-			return ccnerrors.ErrUnauthorized
+			return auth_errors.ErrUnauthorized
 		}
 	}
 

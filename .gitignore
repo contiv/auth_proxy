@@ -1,6 +1,6 @@
 # binaries and binary directories
 build/output
-ccn_proxy
+auth_proxy
 
 # local development certificates and keys
 local_certs

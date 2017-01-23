@@ -11,10 +11,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/contiv/ccn_proxy/auth"
-	"github.com/contiv/ccn_proxy/common/types"
-	"github.com/contiv/ccn_proxy/proxy"
-	"github.com/contiv/ccn_proxy/state"
+	"github.com/contiv/auth_proxy/auth"
+	"github.com/contiv/auth_proxy/common/types"
+	"github.com/contiv/auth_proxy/proxy"
+	"github.com/contiv/auth_proxy/state"
 
 	. "gopkg.in/check.v1"
 
@@ -71,7 +71,7 @@ var _ = Suite(&systemtestSuite{})
 
 // runTest is a convenience function which calls the passed in function and
 // gives it a programmable MockServer as an argument.
-// the ccn_proxy:devbuild container which is started before any tests run is
+// the auth_proxy:devbuild container which is started before any tests run is
 // configured to use the MockServer as its "netmaster".
 // see basic_test.go for some examples of how to use it.
 func runTest(f func(*MockServer)) {

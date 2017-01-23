@@ -4,7 +4,7 @@ set -e
 
 export PATH="/go/bin:$PATH"
 
-dirs=$(go list ./... | sed -e 's!github.com/contiv/ccn_proxy!.!g' | grep -v ./vendor)
+dirs=$(go list ./... | sed -e 's!github.com/contiv/auth_proxy!.!g' | grep -v ./vendor)
 files=$(find . -type f -name '*.go' | grep -v ./vendor)
 
 echo "Running gofmt..."

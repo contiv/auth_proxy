@@ -5,21 +5,21 @@ import (
 
 	log "github.com/Sirupsen/logrus"
 
-	"github.com/contiv/ccn_proxy/common"
+	"github.com/contiv/auth_proxy/common"
 )
 
 // Consts that will be used across different packages
 const (
 
-	// CCNProxyDir is the directory in the KV store
+	// AuthProxyDir is the directory in the KV store
 	// where directories and keys used by
-	// CCN proxy will be stored
-	CCNProxyDir = "ccn_proxy"
+	// auth proxy will be stored
+	AuthProxyDir = "auth_proxy"
 
 	// AuthZDir is the directory under which all
 	// types.Authorizations state will be saved
 	// in the KV store
-	AuthZDir = CCNProxyDir + "/" + "authorizations"
+	AuthZDir = AuthProxyDir + "/" + "authorizations"
 )
 
 // DatastoreDirectories is a list of all the directories in the datastore that
@@ -27,8 +27,8 @@ const (
 // state driver is initialized.
 var DatastoreDirectories = []string{
 	AuthZDir,
-	CCNProxyDir + "/local_users",
-	CCNProxyDir + "/principals",
+	AuthProxyDir + "/local_users",
+	AuthProxyDir + "/principals",
 }
 
 //
@@ -83,7 +83,7 @@ type Authorization struct {
 //       Value: Authorization instance
 //
 //  e.g.
-//  /ccnproxy/authorizations/{11111111: {
+//  /authproxy/authorizations/{11111111: {
 // 	                                   CommonState
 //                                         UUID: "11111111"
 //                                         PrincipalName: "test"
@@ -92,10 +92,10 @@ type Authorization struct {
 //                                      }
 //                            }
 //
-//  /ccnproxy/authorizations/{22222222: {
+//  /authproxy/authorizations/{22222222: {
 // 	                                   CommonState
 //                                         UUID: "22222222"
-//                                         PrincipalName: "OU=ccn,DC=ccn,DC=example,DC=com"
+//                                         PrincipalName: "OU=auth,DC=auth,DC=example,DC=com"
 //                                         ClaimKey: "tenant:t2"
 //                                         ClaimValue: "devops"
 //                                      }

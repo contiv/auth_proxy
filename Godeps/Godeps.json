@@ -1,5 +1,5 @@
 {
-	"ImportPath": "github.com/contiv/ccn_proxy",
+	"ImportPath": "github.com/contiv/auth_proxy",
 	"GoVersion": "go1.7",
 	"GodepVersion": "v75",
 	"Packages": [

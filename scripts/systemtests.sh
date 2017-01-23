@@ -12,8 +12,8 @@
 #  3. starts an etcd container
 #  4. starts a consul container
 #  5. starts a systemtests container (does nothing by default)
-#  6. starts a ccn_proxy container on port 10000 linked to etcd
-#  7. starts a ccn_proxy container on port 10001 linked to consul
+#  6. starts a auth_proxy container on port 10000 linked to etcd
+#  7. starts a auth_proxy container on port 10001 linked to consul
 #  8. executes ./scripts/systemtests_in_container.sh which runs all the systemtests
 #     against the etcd proxy and consul proxy
 #  9. stops etcd proxy container
@@ -26,12 +26,12 @@
 
 set -euo pipefail
 
-IMAGE_NAME="ccn_proxy_systemtests"
-NETWORK_NAME="ccn_proxy_systemtests"
+IMAGE_NAME="auth_proxy_systemtests"
+NETWORK_NAME="auth_proxy_systemtests"
 PROXY_IMAGE="contiv/auth_proxy:devbuild"
 
 echo "Building systemtests image..."
-docker build -t "ccn_proxy_build_base" -f ./build/Dockerfile.base .
+docker build -t "auth_proxy_build_base" -f ./build/Dockerfile.base .
 docker build -t $IMAGE_NAME -f ./build/Dockerfile.systemtests .
 
 function ip_for_container {
@@ -46,7 +46,7 @@ docker network create $NETWORK_NAME
 
 
 echo "Starting etcd container..."
-ETCD_CONTAINER_NAME="etcd_ccn_proxy_systemtests"
+ETCD_CONTAINER_NAME="etcd_auth_proxy_systemtests"
 ETCD_CONTAINER_ID=$(
     docker run -d \
        -p 2379:2379 \
@@ -61,7 +61,7 @@ echo "etcd running @ $ETCD_CONTAINER_IP:2379"
 
 
 echo "Starting consul container..."
-CONSUL_CONTAINER_NAME="consul_ccn_proxy_systemtests"
+CONSUL_CONTAINER_NAME="consul_auth_proxy_systemtests"
 CONSUL_CONTAINER_ID=$(
     docker run -d \
 	   -p 8500:8500 \
@@ -90,7 +90,7 @@ SYSTEMTESTS_CONTAINER_ID=$(
 	-e DEBUG="${DEBUG-}" \
 	-e ETCD_CONTAINER_IP="$ETCD_CONTAINER_IP" \
 	-e CONSUL_CONTAINER_IP="$CONSUL_CONTAINER_IP" \
-        ccn_proxy_systemtests
+        auth_proxy_systemtests
 )
 SYSTEMTESTS_CONTAINER_IP=$(ip_for_container $SYSTEMTESTS_CONTAINER_ID)
 echo "systemtests container running @ $SYSTEMTESTS_CONTAINER_IP"
