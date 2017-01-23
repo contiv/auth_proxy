@@ -148,20 +148,26 @@ func (s *systemtestSuite) TestRequestProxying(c *C) {
 		c.Assert(resp.StatusCode, Equals, 200)
 		c.Assert(data, Equals, string(body))
 
-		// check that the Content-Type header was set properly.
-		// we need to add a custom charset to work around a Chrome bug:
-		// https://bugs.chromium.org/p/chromium/issues/detail?id=438464
-		headerFound := false
+		// make sure that the expected headers are present
+
+		contentTypeHeaderFound := false
+		hstsHeaderFound := false
+
 		for name, headers := range resp.Header {
-			if name == "Content-Type" {
+			switch name {
+			case "Content-Type":
 				c.Assert(len(headers), Equals, 1)
 				c.Assert(headers[0], Equals, "application/json; charset=utf-8")
-				headerFound = true
-				break
+				contentTypeHeaderFound = true
+			case "Strict-Transport-Security":
+				c.Assert(len(headers), Equals, 1)
+				c.Assert(headers[0], Equals, "max-age=15768000")
+				hstsHeaderFound = true
 			}
 		}
 
-		c.Assert(headerFound, Equals, true)
+		c.Assert(contentTypeHeaderFound, Equals, true)
+		c.Assert(hstsHeaderFound, Equals, true)
 	})
 }
 
