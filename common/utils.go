@@ -12,7 +12,7 @@ import (
 	auth_errors "github.com/contiv/auth_proxy/common/errors"
 )
 
-// GlobalMap is a map to hold variables(key:value pair) that can be accessed anywhere in ccc_proxy
+// GlobalMap is a map to hold variables(key:value pair) that can be accessed anywhere in auth_proxy
 type GlobalMap map[string]string
 
 var global GlobalMap
@@ -108,11 +108,15 @@ func Untrace(s string) {
 	log.Debug("Leaving: ", s)
 }
 
-// SetJSONContentType sets the Content-Type header to JSON.
-func SetJSONContentType(w http.ResponseWriter) {
+// SetDefaultResponseHeaders sets the default response headers.
+func SetDefaultResponseHeaders(w http.ResponseWriter) {
 	// the charset here is to work around a bug where Chrome does not parse JSON data properly:
 	// https://bugs.chromium.org/p/chromium/issues/detail?id=438464
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+
+	// enable HSTS for six months
+	// we don't actually serve a non-HTTPS site, so this header ultimately does nothing
+	w.Header().Set("Strict-Transport-Security", "max-age=15768000")
 }
 
 // GetNetmasterVersion reaches out to the specified netmaster and retrieves

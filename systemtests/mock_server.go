@@ -38,7 +38,7 @@ func (ms *MockServer) Init() {
 // AddHardcodedResponse registers a HTTP handler func for `path' that returns `body'.
 func (ms *MockServer) AddHardcodedResponse(path string, body []byte) {
 	ms.mux.HandleFunc(path, func(w http.ResponseWriter, req *http.Request) {
-		common.SetJSONContentType(w)
+		common.SetDefaultResponseHeaders(w)
 		w.Header().Set("Content-Type", "application/json")
 		w.Write(body)
 	})

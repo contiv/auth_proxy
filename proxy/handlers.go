@@ -36,7 +36,7 @@ func serverError(w http.ResponseWriter, err error) {
 //     401 (authorization failed)
 //     500 (something broke)
 func loginHandler(w http.ResponseWriter, req *http.Request) {
-	common.SetJSONContentType(w)
+	common.SetDefaultResponseHeaders(w)
 
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
@@ -116,7 +116,7 @@ func (hcr *HealthCheckResponse) MarkUnhealthy() {
 // healthCheckHandler handles /health requests
 func healthCheckHandler(config *Config) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, req *http.Request) {
-		common.SetJSONContentType(w)
+		common.SetDefaultResponseHeaders(w)
 
 		hcr := &HealthCheckResponse{
 			Status:  StatusHealthy, // default to being healthy
@@ -160,7 +160,7 @@ type VersionResponse struct {
 // versionHandler handles /version requests and returns the proxy version
 func versionHandler(version string) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, req *http.Request) {
-		common.SetJSONContentType(w)
+		common.SetDefaultResponseHeaders(w)
 
 		vr := &VersionResponse{Version: version}
 

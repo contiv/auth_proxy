@@ -84,7 +84,7 @@ func enforceRBAC(s *Server) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, req *http.Request) {
 		vars := mux.Vars(req)
 
-		common.SetJSONContentType(w)
+		common.SetDefaultResponseHeaders(w)
 
 		isValid, token := isTokenValid(req.Header.Get("X-Auth-Token"), w)
 		if !isValid {

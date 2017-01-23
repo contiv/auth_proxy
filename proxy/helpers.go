@@ -445,7 +445,7 @@ func isTokenValid(tokenStr string, w http.ResponseWriter) (bool, *auth.Token) {
 //  w: http response writer
 //
 func processStatusCodes(statusCode int, resp []byte, w http.ResponseWriter) {
-	common.SetJSONContentType(w)
+	common.SetDefaultResponseHeaders(w)
 	switch statusCode {
 	case http.StatusCreated, http.StatusOK:
 		w.WriteHeader(statusCode)
