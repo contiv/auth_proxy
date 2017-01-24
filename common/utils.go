@@ -108,15 +108,25 @@ func Untrace(s string) {
 	log.Debug("Leaving: ", s)
 }
 
+// HSTSValue is the value of the Strict-Transport-Security header we set.
+// 15768000 = 6 months
+const HSTSValue = "max-age=15768000"
+
+// EnableHSTS adds the Strict-Transport-Security header.
+// it's a separate function because it's called from two different places.
+func EnableHSTS(w http.ResponseWriter) {
+	// enable HSTS for six months
+	// we don't actually serve a non-HTTPS site, so this header ultimately does nothing
+	w.Header().Set("Strict-Transport-Security", HSTSValue)
+}
+
 // SetDefaultResponseHeaders sets the default response headers.
 func SetDefaultResponseHeaders(w http.ResponseWriter) {
 	// the charset here is to work around a bug where Chrome does not parse JSON data properly:
 	// https://bugs.chromium.org/p/chromium/issues/detail?id=438464
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 
-	// enable HSTS for six months
-	// we don't actually serve a non-HTTPS site, so this header ultimately does nothing
-	w.Header().Set("Strict-Transport-Security", "max-age=15768000")
+	EnableHSTS(w)
 }
 
 // GetNetmasterVersion reaches out to the specified netmaster and retrieves
