@@ -34,8 +34,8 @@ release-test-kubeadm: release
 
 release-test-swarm: release 
 	# Test swarm (centos by default)
-	UCN_CONFIG='cluster_defs_ansible.json' make cluster
-	UCN_CONFIG='cluster_defs_ansible.json' make install-test-swarm
+	CLUSTER_CONFIG='cluster_defs_ansible.json' make cluster
+	CLUSTER_CONFIG='cluster_defs_ansible.json' make install-test-swarm
 
 release-test-kubelegacy: release 
 	# Test k8s ansible (centos by default)

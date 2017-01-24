@@ -1,5 +1,5 @@
 ---
-# This playbook performs service cleanup for ucn_proxy.
+# This playbook performs service cleanup for auth_proxy.
 #
 # Note: cleanup is not expected to fail, so we set ignore_errors to yes here
 
@@ -15,9 +15,9 @@
         - "ucp"
         - "docker"
         - "etcd"
-        - "ucn_proxy"
+        - "auth_proxy"
     - include: roles/{{ item }}/tasks/cleanup.yml
       with_items:
-        - ucn_proxy
+        - auth_proxy
       static: no
       ignore_errors: yes

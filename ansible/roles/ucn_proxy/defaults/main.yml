@@ -1,7 +1,0 @@
-ucn_image: "contiv/auth_proxy:__API_PROXY_VERSION__"
-ucn_port: 10000
-contiv_certs: "/var/contiv/certs"
-ucn_cert: "{{ contiv_certs }}/ucn_cert.pem"
-ucn_key: "{{ contiv_certs }}/ucn_key.pem"
-ucn_datastore: "{{ cluster_store }}"
-

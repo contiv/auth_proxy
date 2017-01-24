@@ -87,15 +87,15 @@ sed -i.bak "s/__NETMASTER_IP__/$netmaster/g" $env_file
 sed -i.bak "s#__CLUSTER_STORE__#$cluster#g" $env_file
 
 # Copy certs
-cp /var/contiv/cert.pem /ansible/roles/ucn_proxy/files/
-cp /var/contiv/key.pem /ansible/roles/ucn_proxy/files/
+cp /var/contiv/cert.pem /ansible/roles/auth_proxy/files/
+cp /var/contiv/key.pem /ansible/roles/auth_proxy/files/
 
-# Copy UCN proxy image, if it exists - for dev builds
-if [ -f /var/contiv/ucn-proxy-image.tar ]; then
-  cp /var/contiv/ucn-proxy-image.tar /ansible/roles/ucn_proxy/files/
+# Copy auth proxy image, if it exists - for dev builds
+if [ -f /var/contiv/auth-proxy-image.tar ]; then
+  cp /var/contiv/auth-proxy-image.tar /ansible/roles/auth_proxy/files/
 fi
 
-echo "Installing Cisco Universal Container Networking"
+echo "Installing Contiv"
 # TODO: rather than running them separately - merge the playbooks, that makes error tracking simpler
 # Always install the base, install the scheduler stack/etcd if required
 echo "Installing base packages"
@@ -111,7 +111,7 @@ else
     ansible-playbook $ans_opts -i $host_inventory -e "`cat $env_file`" $ansible_path/install_etcd.yml
   fi
 fi
-echo "Installing contiv & UCN"
+echo "Installing contiv & auth proxy"
 # Install contiv & API Proxy
 ansible-playbook $ans_opts -i $host_inventory -e "`cat $env_file`" $ansible_path/install_contiv.yml
-ansible-playbook $ans_opts -i $host_inventory -e "`cat $env_file`" $ansible_path/install_ucn.yml
+ansible-playbook $ans_opts -i $host_inventory -e "`cat $env_file`" $ansible_path/install_auth_proxy.yml

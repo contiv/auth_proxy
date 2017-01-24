@@ -2,4 +2,4 @@
 - hosts: netplugin-master
   become: true
   roles:
-    - { role: ucn_proxy }
+    - { role: auth_proxy }

@@ -118,7 +118,7 @@ fi
 
 # Add other param validation
 
-echo "Installing Cisco Universal Container Networking for Kubernetes"
+echo "Installing Contiv for Kubernetes"
 # Cleanup any older config files
 contiv_yaml="./.contiv.yaml"
 rm -f $contiv_yaml
@@ -127,7 +127,7 @@ rm -f $contiv_yaml
 contiv_config_yaml_template="./install/k8s/contiv_config.yaml"
 contiv_yaml_template="./install/k8s/contiv.yaml"
 contiv_etcd_template="./install/k8s/etcd.yaml"
-contiv_ucn_proxy_template="./install/k8s/ucn_proxy.yaml"
+contiv_auth_proxy_template="./install/k8s/auth_proxy.yaml"
 contiv_aci_gw_template="./install/k8s/aci_gw.yaml"
 
 cat $contiv_config_yaml_template >> $contiv_yaml
@@ -153,10 +153,10 @@ fi
 
 kubectl create secret generic aci.key --from-file=$aci_key -n kube-system
 
-cat $contiv_ucn_proxy_template >> $contiv_yaml
+cat $contiv_auth_proxy_template >> $contiv_yaml
 
 if [ "$tls_cert" = "" ]; then
-  echo "Generating local certs for UCN Proxy"
+  echo "Generating local certs for Contiv Proxy"
   mkdir -p /var/contiv
   mkdir -p ./local_certs
   
@@ -165,8 +165,8 @@ if [ "$tls_cert" = "" ]; then
   tls_cert=./local_certs/cert.pem
   tls_key=./local_certs/local.key
 fi
-cp $tls_cert /var/contiv/ucn_cert.pem
-cp $tls_key /var/contiv/ucn_key.pem
+cp $tls_cert /var/contiv/auth_proxy_cert.pem
+cp $tls_key /var/contiv/auth_proxy_key.pem
 
 echo "Setting installation parameters"
 sed -i.bak "s/__NETMASTER_IP__/$netmaster/g" $contiv_yaml
