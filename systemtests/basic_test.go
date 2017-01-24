@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	"github.com/contiv/auth_proxy/common"
 	"github.com/contiv/auth_proxy/proxy"
 
 	. "gopkg.in/check.v1"
@@ -161,12 +162,34 @@ func (s *systemtestSuite) TestRequestProxying(c *C) {
 				contentTypeHeaderFound = true
 			case "Strict-Transport-Security":
 				c.Assert(len(headers), Equals, 1)
-				c.Assert(headers[0], Equals, "max-age=15768000")
+				c.Assert(headers[0], Equals, common.HSTSValue)
 				hstsHeaderFound = true
 			}
 		}
 
 		c.Assert(contentTypeHeaderFound, Equals, true)
+		c.Assert(hstsHeaderFound, Equals, true)
+	})
+}
+
+// TestUIResponseHeaders tests that the UI is sending back the expected headers.
+// TODO: test that assets are gzipped properly
+func (s *systemtestSuite) TestUIResponseHeaders(c *C) {
+	runTest(func(ms *MockServer) {
+		resp, _ := proxyGet(c, noToken, "/")
+		c.Assert(resp.StatusCode, Equals, 200)
+
+		hstsHeaderFound := false
+
+		for name, headers := range resp.Header {
+			switch name {
+			case "Strict-Transport-Security":
+				c.Assert(len(headers), Equals, 1)
+				c.Assert(headers[0], Equals, common.HSTSValue)
+				hstsHeaderFound = true
+			}
+		}
+
 		c.Assert(hstsHeaderFound, Equals, true)
 	})
 }

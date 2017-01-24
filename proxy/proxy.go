@@ -10,6 +10,7 @@ import (
 	"sync"
 
 	log "github.com/Sirupsen/logrus"
+	"github.com/contiv/auth_proxy/common"
 	"github.com/gorilla/mux"
 )
 
@@ -183,6 +184,30 @@ func (s *Server) Stop() {
 	s.wg.Wait()
 }
 
+//
+// staticFileServer returns a staticFileHandler which serves the UI and its assets.
+// this is necessary so that we can set response headers.
+//
+func staticFileServer(root http.FileSystem) http.Handler {
+	return &staticFileHandler{
+		fileServer: http.FileServer(root),
+	}
+}
+
+type staticFileHandler struct {
+	fileServer http.Handler
+}
+
+func (sfh *staticFileHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	common.EnableHSTS(w)
+
+	// TODO: here is a good spot to look for asset requests (.js, .css, etc.)
+	//       and append .gz and serve a gzipped version instead by rewriting
+	//       the requested path.
+
+	sfh.fileServer.ServeHTTP(w, r)
+}
+
 func addRoutes(s *Server, router *mux.Router) {
 
 	//
@@ -223,7 +248,9 @@ func addRoutes(s *Server, router *mux.Router) {
 	// UI: static files which are served from the root
 	//
 	root := "/"
-	router.PathPrefix(root).Handler(http.StripPrefix(root, http.FileServer(http.Dir(uiDirectory))))
+	staticHandler := staticFileServer(http.Dir(uiDirectory))
+
+	router.PathPrefix(root).Handler(http.StripPrefix(root, staticHandler))
 }
 
 // addNetmasterRoutes adds all netmaster routes to mux.Router
