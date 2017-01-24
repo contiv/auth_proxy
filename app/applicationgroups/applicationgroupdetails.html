@@ -1,32 +1,14 @@
 <div class="ui sixteen column grid">
-    <div class="ui row">
-        <div class="left aligned eight wide column pageHeader" [ngSwitch]="mode">
-            <div *ngSwitchCase="'details'" class="content pageTitle">{{applicationGroup.groupName}}</div>
-            <div *ngSwitchCase="'edit'" class="content pageTitle">{{applicationGroup.groupName}}</div>
+    <div class="ui row" [ngSwitch]="mode">
+        <div class="left aligned eight wide column pageHeader">
+            <div class="content pageTitle">{{applicationGroup.groupName}}</div>
         </div>
-
-        <div [ngSwitch]="mode" class="right aligned eight wide column">
-            <div id="delete-group-modal" class="ui small modal">
-                <div class="header">Delete</div>
-                <div class="content">
-                    <p>Are you sure you want to delete the application group <q>{{applicationGroup.groupName}}</q>?</p>
-                </div>
-                <div class="actions">
-                    <div class="ui basic deny button modalBtn">Cancel</div>
-                    <div class="ui primary approve button modalBtn" (click)="deleteApplicationGroup()">
-                        Delete
-                    </div>
-                </div>
-            </div>
-            <button *ngSwitchCase="'details'" type="button" class="ui basic button"
+        <div *ngSwitchCase="'details'" class="right aligned eight wide column">
+            <button type="button" class="ui basic button"
                     (click)="cancelDetails()">
                 Close
             </button>
-            <button *ngSwitchCase="'edit'" type="button" class="ui basic button"
-                    (click)="cancelEditing()">
-                Cancel
-            </button>
-            <button *ngSwitchCase="'details'" class="ui secondary button"
+            <button  class="ui secondary button"
                     (click)="editApplicationGroup()">
                 Edit
             </button>
@@ -36,6 +18,19 @@
             </button>
         </div>
 
+    </div>
+
+    <div id="delete-group-modal" class="ui small modal">
+        <div class="header">Delete</div>
+        <div class="content">
+            <p>Are you sure you want to delete the application group <q>{{applicationGroup.groupName}}</q>?</p>
+        </div>
+        <div class="actions">
+            <div class="ui basic deny button modalBtn">Cancel</div>
+            <div class="ui primary approve button modalBtn" (click)="deleteApplicationGroup()">
+                Delete
+            </div>
+        </div>
     </div>
 
     <div class="ui row breadcrumbRow">

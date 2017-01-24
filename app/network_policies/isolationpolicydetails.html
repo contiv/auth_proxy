@@ -31,7 +31,7 @@
                         (click)="editPolicy()">
                     Edit
                 </button>
-                <button class="ui secondary button" onclick="$('#delete-policy-modal').modal('show')">
+                <button *ngSwitchCase="'details'" class="ui secondary button" onclick="$('#delete-policy-modal').modal('show')">
                     <i class="trash icon"></i>
                     Remove
                 </button>

@@ -1,33 +1,14 @@
 <div [ngSwitch]="mode" class="ui sixteen column grid">
     <div class="ui row pageHeader">
         <div class="left aligned eight wide column">
-            <div *ngSwitchCase="'details'" class="content pageTitle">{{appProfile.appProfileName}}</div>
-            <div *ngSwitchCase="'edit'" class="content pageTitle">{{appProfile.appProfileName}}</div>
+            <div class="content pageTitle">{{appProfile.appProfileName}}</div>
         </div>
-        <div class="right aligned eight wide column">
-
-            <div id="delete-appProfile-modal" class="ui small modal">
-                <div class="header">Delete</div>
-                <div class="content">
-                    <p>Are you sure you want to delete the application profile <q>{{appProfile.appProfileName}}</q>?</p>
-                </div>
-                <div class="actions">
-                    <div class="ui basic deny button modalBtn">Cancel</div>
-                    <div class="ui primary approve button modalBtn" (click)="deleteAppProfile()">
-                        Delete
-                    </div>
-                </div>
-            </div>
-
-            <button *ngSwitchCase="'details'" class="ui basic button"
+        <div class="right aligned eight wide column" *ngSwitchCase="'details'">
+            <button class="ui basic button"
                     (click)="returnToAppProfile()">
                 Close
             </button>
-            <button *ngSwitchCase="'edit'" class="ui basic button"
-                    (click)="cancelEditing()">
-                Cancel
-            </button>
-            <button *ngSwitchCase="'details'" class="ui secondary button"
+            <button class="ui secondary button"
                     (click)="editAppProfile()">
                 Edit
             </button>
@@ -36,6 +17,19 @@
                 Remove
             </button>
 
+        </div>
+    </div>
+
+    <div id="delete-appProfile-modal" class="ui small modal">
+        <div class="header">Delete</div>
+        <div class="content">
+            <p>Are you sure you want to delete the application profile <q>{{appProfile.appProfileName}}</q>?</p>
+        </div>
+        <div class="actions">
+            <div class="ui basic deny button modalBtn">Cancel</div>
+            <div class="ui primary approve button modalBtn" (click)="deleteAppProfile()">
+                Delete
+            </div>
         </div>
     </div>
 

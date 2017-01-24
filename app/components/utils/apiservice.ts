@@ -1,18 +1,15 @@
-/**
- * Created by cshampur on 11/8/16.
- */
-
-
-import {Injectable} from "@angular/core";
-import {Http, Headers, RequestOptions, Response} from "@angular/http";
-import {Observable} from "rxjs";
-import {AuthService} from "./authservice";
+import { Injectable } from "@angular/core";
+import { Http, Headers, RequestOptions, Response } from "@angular/http";
+import { Observable } from "rxjs";
+import { AuthService } from "./authservice";
 @Injectable()
 
 export class ApiService{
     private headers: Headers;
+    public authServiceRef: AuthService;
     constructor(private http: Http,
                 private authService: AuthService){
+        this.authServiceRef = authService;
     }
 
     get(url: string): Observable<any>{

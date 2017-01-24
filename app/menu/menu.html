@@ -1,7 +1,7 @@
 <div class="page header">
     <div class="ui top attached menu mainMenu" align="right">
         <h1 class="header" style="margin-top: 2px; float: left; white-space: nowrap; ">
-            <img class="ui image" src="images/cisco_logo.svg" height="30" style="display: inline; margin-right: 20px;"><span class="productname">{{product_name}}</span>
+            <img class="ui image" src="images/Contiv-logo.svg" height="30" style="display: inline; margin-right: 20px;"><span class="productname">{{product_name}}</span>
         </h1>
         <div class="utilnav">
             <button type="button" class="circular ui mini icon button"
@@ -9,25 +9,34 @@
                 <i class="large help icon"></i>
             </button>
             <button type="button" class="circular ui mini icon button"
-                    (click)="logout()">
-                <i class="large logout icon"></i>
-            </button>
-            <button type="button" class="circular ui mini icon button"
                     (click)="account()">
                 <i class="large user icon"></i>
             </button>
-            <div class="ui dropdown">
-                <div class="text">{{username}}</div>
-                <i class="large dropdown icon"></i>
-                <div class="menu">
+
+            <span class="text">{{username}}</span>
+            <div class="ui floating labeled icon dropdown">
+                <i class="dropdown icon"></i>
+                <div class="menu profile">
+                    <div class="item" onclick="$('#user-profile-modal').modal('show')">
+                        <span class="text">Update Profile</span></div>
+                    <div class="item" (click)="logout()">
+                        <span class="text">Logout</span></div>
                 </div>
             </div>
+
         </div>
 
     </div>
 </div>
 
 <notification></notification>
+
+<div id="user-profile-modal" class="ui small modal">
+    <div class="header">Update Profile</div>
+    <div class="content">
+        <userprofileedit [username]="username" (close)="closeProfile()" [displayType]="ProfileDisplayType.modal"></userprofileedit>
+    </div>
+</div>
 
 <div id="sidebar" class="ui visible left vertical sidebar icon labeled menu mainNav">
     <span *ngIf="!firstRun">
@@ -48,7 +57,7 @@
             Application Groups
         </a>
 
-        <a class="item" [routerLink]="['appprofiles']" routerLinkActive="active">
+        <a class="item" [routerLink]="['appprofiles']" routerLinkActive="active" *verifydom="'aci'">
             ACI Application Profiles
         </a>
 
@@ -56,7 +65,7 @@
             Network Policies
         </a>
 
-        <a class="item" [routerLink]="['settings']" routerLinkActive="active" *auth="'admin'">
+        <a class="item" [routerLink]="['settings']" routerLinkActive="active" *verifydom="'admin'">
             Settings
         </a>
     </span>

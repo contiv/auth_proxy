@@ -79,13 +79,10 @@ export class AuthService {
                 observer.next(false);
             else{
                 var res = '';
-
                 if (user.username == "devops" && user.password == "devops")
                     var res = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6dHJ1ZSwiZXhwIjoxNDgxODAwNDc0LCJpc3MiOiJjY25fcHJveHkiLCJyb2xlIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIn0.U9-yhzl-Q7BKYIROdNf-BwtvXVukTpJL-_Z0Jsddfmc";
-
                 if (user.username == "admin" && user.password == "admin")
                     var res = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6dHJ1ZSwiZXhwIjoxNDgxODAwNDc0LCJpc3MiOiJjY25fcHJveHkiLCJyb2xlIjoib3BzIiwidXNlcm5hbWUiOiJvcHMifQ==.U9-yhzl-Q7BKYIROdNf-BwtvXVukTpJL-_Z0Jsddfmc";
-
                 if (res == ''){
                     observer.next(false);
                 }
@@ -98,9 +95,6 @@ export class AuthService {
                     observer.next(true);
                 }
             }
-
-
-
         });
         */
     }

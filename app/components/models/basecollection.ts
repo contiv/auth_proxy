@@ -6,7 +6,9 @@ import { Observable } from 'rxjs/Rx';
 
 import 'rxjs/add/operator/map';
 import * as _ from 'lodash';
-import {ApiService} from "../utils/apiservice";
+import { ApiService } from "../utils/apiservice";
+import {isArray} from "util";
+import {isString} from "util";
 
 /**
  * BaseCollection class that does just fetch of the objects.
@@ -35,11 +37,12 @@ export class BaseCollection {
         return (!reload && collection.models.length > 0) ?
             new Promise(function (resolve) {
                 resolve(collection.models);
-            }) : collection.apiService.get(collection.url).map((res: Response) => res.json()).toPromise()
-            .then(function (result) {
-                collection.models = result;
-                return collection.models;
-            });
+            }) : collection.apiService.get(collection.url)
+                .map((res: Response) => collection.filterAsyncReq(res)).toPromise()
+                .then(function (result) {
+                    collection.models = result;
+                    return collection.models;
+                });
     };
 
     /**
@@ -101,5 +104,23 @@ export class BaseCollection {
 
         return promise;
     };
+
+    clearModel(){
+        var collection = this;
+        collection.models = [];
+    }
+
+    filterAsyncReq(res: Response): any{
+        var data = res.json();
+        if(this.apiService.authServiceRef.isLoggedIn)
+            return data;
+        else
+            if(isArray(data))
+                return [];
+            else if(isString(data))
+                return '';
+            else
+                return {};
+    }
 
 }

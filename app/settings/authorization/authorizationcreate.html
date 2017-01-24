@@ -9,19 +9,6 @@
 
         <div class="ui row">
             <div class="ui sixteen wide column">
-                <div class="breadcrumbs">
-                   <span class="crumb">
-                        <a [routerLink]="['../../list']">
-                            Authorizations
-                        </a>
-                    </span>
-                    <span class="crumb">Create</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="ui row">
-            <div class="ui sixteen wide column">
 
                 <form class="ui form" role="form"
                       (submit)="createAuthorization(formRef.valid)" novalidate #formRef="ngForm">
@@ -31,7 +18,7 @@
                             <div class="ui six wide column">
                                 <div class="field">
                                     <label for="usertype">This is authorizing a</label>
-                                    <select class="ui dropdown" id="usertype" name="usertype" [(ngModel)]='usertype' (change)="changeAuthType()" >
+                                    <select class="ui dropdown" id="usertype" name="usertype" [(ngModel)]='usertype'>
                                         <option value="local">Local User</option>
                                         <option value="ldap">LDAP Group</option>
                                     </select>

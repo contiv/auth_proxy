@@ -1,33 +1,15 @@
 <div class="ui sixteen column grid">
     <div [ngSwitch]="mode" class="ui row pageHeader">
         <div class="left aligned eight wide column">
-            <div *ngSwitchCase="'details'" class="content pageTitle">{{policy.profileName}}</div>
-            <div *ngSwitchCase="'edit'" class="content pageTitle">{{policy.profileName}}</div>
+            <div class="content pageTitle">{{policy.profileName}}</div>
         </div>
-        <div class="right aligned eight wide column">
-
+        <div class="right aligned eight wide column" *ngSwitchCase="'details'">
             <div class="right aligned five wide column">
-                <div id="delete-policy-modal" class="ui small modal">
-                    <div class="header">Delete</div>
-                    <div class="content">
-                        <p>Are you sure you want to delete the policy <q>{{policy.profileName}}</q>?</p>
-                    </div>
-                    <div class="actions">
-                        <div class="ui basic deny button modalBtn">Cancel</div>
-                        <div class="ui primary approve button modalBtn" (click)="deletePolicy()">
-                            Delete
-                        </div>
-                    </div>
-                </div>
-                <button *ngSwitchCase="'details'" type="button" class="ui basic button"
+                <button type="button" class="ui basic button"
                         (click)="cancelDetails()">
                     Close
                 </button>
-                 <button *ngSwitchCase="'edit'" type="button" class="ui basic button"
-                        (click)="cancelEditing()">
-                    Cancel
-                </button>
-                <button *ngSwitchCase="'details'" class="ui secondary button"
+                <button class="ui secondary button"
                         (click)="editPolicy()">
                     Edit
                 </button>
@@ -36,9 +18,22 @@
                     Remove
                 </button>
             </div>
-
         </div>
     </div>
+
+    <div id="delete-policy-modal" class="ui small modal">
+        <div class="header">Delete</div>
+        <div class="content">
+            <p>Are you sure you want to delete the policy <q>{{policy.profileName}}</q>?</p>
+        </div>
+        <div class="actions">
+            <div class="ui basic deny button modalBtn">Cancel</div>
+            <div class="ui primary approve button modalBtn" (click)="deletePolicy()">
+                Delete
+            </div>
+        </div>
+    </div>
+
     <div class="ui row breadcrumbRow">
         <div class="ui sixteen wide column">
             <div class="breadcrumbs">
@@ -158,25 +153,22 @@
 
                                 </div>
                             </div>
-                        </div>
+                            <div class="ui row" style="margin-top: 35px;">
+                                <div class="right aligned six wide column buttonRow">
+                                    <button type="button" class="ui basic button"
+                                            (click)="cancelEditing()">
+                                        Cancel
+                                    </button>
 
-                        <div class="ui grid">
-                            <div class="right aligned six wide column buttonRow">
-                                <button type="button" class="ui basic button"
-                                        (click)="cancelEditing()">
-                                    Cancel
-                                </button>
-
-                                <button type="submit" class="ui primary button">
-                                    Save
-                                </button>
+                                    <button type="submit" class="ui primary button">
+                                        Save
+                                    </button>
+                                </div>
                             </div>
                         </div>
-
                     </form>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

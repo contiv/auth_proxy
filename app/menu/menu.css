@@ -1,0 +1,11 @@
+.utilnav{
+    position: absolute !important;
+    right: 1% !important;;
+    top: 9px !important;;
+}
+
+.menu.profile{
+    width: 180px !important;
+    top: 27px !important;
+    left: -130px !important;
+}

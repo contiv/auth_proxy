@@ -39,7 +39,6 @@ menu { margin: 0; padding: 0; z-index: 2000; }
     z-index: 3000;
     top: -1px;
     width: 110%; }
-.utilnav { height: 50px; width: 100%; padding-top: 9px; }
 #sidebar { top: 48px; width: 180px; background-color: #efefef; z-index: 1000; box-shadow: none; border: 0; }
 #sidebar {
     box-shadow: 0px 50px 50px -40px #efefef inset,

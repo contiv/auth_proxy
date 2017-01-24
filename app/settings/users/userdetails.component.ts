@@ -6,6 +6,7 @@ import { OrganizationsModel } from "../../components/models/organizationsmodel";
 import { User } from "./usercreate.component";
 import { ContivGlobals } from "../../components/models/contivglobals";
 import { AuthService } from "../../components/utils/authservice";
+import { ProfileDisplayType } from "../../components/directives/settings/userprofileedit";
 
 @Component({
     selector: 'userdetails',
@@ -17,6 +18,10 @@ export class UserDetailsComponent {
     mode:string = 'details';
     isRootAdmin: boolean = false;
     isLoggedInUser: boolean = false;
+    public userDetailsCtrl:any = {}
+    public username: string = ''
+    public ProfileDisplayType = ProfileDisplayType;
+    public showLoader: boolean = true;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private router: Router,
@@ -27,27 +32,24 @@ export class UserDetailsComponent {
         var component = this;
         this.user = {username: '', first_name: '', last_name: '', disable: false};
 
-        /**
-         * To show edit or details screen based on the route
-         */
-        function setMode() {
-            if (activatedRoute.routeConfig.path.includes('edit')) {
-                component.mode = 'edit';
-            } else {
-                component.mode = 'details';
-            }
+        component.username = activatedRoute.snapshot.params['key'];
+
+        if(component.mode == 'details'){
+            component.getUserDetails();
         }
+    }
 
-        component.crudHelperService.stopLoader(component);
-
-        component.usersModel.getModelByKey(activatedRoute.snapshot.params['key'], false, 'username')
+    getUserDetails(){
+        var component = this;
+        component.usersModel.getModelByKey(component.username, false, 'username')
             .then(function (user) {
                 component.user = user;
                 component.isRootAdmin = (user.username === 'admin');
                 component.isLoggedInUser = (component.authService.authTokenPayload['username'] === user.username);
+                component.crudHelperService.stopLoader(component);
+            }, function(error){
+                component.crudHelperService.stopLoader(component);
             });
-
-        setMode();
     }
 
     returnToUser() {
@@ -55,11 +57,12 @@ export class UserDetailsComponent {
     }
 
     returnToUserDetails() {
-        this.router.navigate(['../../details', this.user.username], { relativeTo: this.activatedRoute });
+        this.getUserDetails();
+        this.mode = 'details';
     }
 
     editUser() {
-        this.router.navigate(['../../edit', this.user.username], { relativeTo: this.activatedRoute });
+        this.mode = 'edit';
     }
 
     cancelEditing() {
@@ -88,26 +91,5 @@ export class UserDetailsComponent {
                 });
                 component.crudHelperService.showServerError("User: Delete failed", result);
             });
-    }
-
-    saveUser(formvalid: boolean) {
-        var component = this;
-        if (formvalid) {
-            component.crudHelperService.startLoader(component);
-
-            component.usersModel.save(component.user).then(
-                function successCallback(result) {
-                    component.ngZone.run(() => {
-                        component.crudHelperService.stopLoader(component);
-                    });
-                    component.crudHelperService.showNotification("User: Updated", result.username.toString());
-                    component.returnToUserDetails();
-                }, function errorCallback(result) {
-                    component.ngZone.run(() => {
-                        component.crudHelperService.stopLoader(component);
-                    });
-                    component.crudHelperService.showServerError("User: Update failed", result);
-                });
-        }
     }
 }

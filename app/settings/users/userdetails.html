@@ -1,33 +1,16 @@
-<div class="ui sixteen column grid pageHeader">
-    <div [ngSwitch]="mode" class="ui row">
+<div class="ui sixteen column grid pageHeader" [ngSwitch]="mode">
+
+    <div class="ui row">
         <div class="left aligned eight wide column">
-            <div *ngSwitchCase="'details'" class="content pageTitle">{{user.username}}</div>
-            <div *ngSwitchCase="'edit'" class="content pageTitle">{{user.username}}</div>
+            <div class="content pageTitle">{{username}}</div>
         </div>
-        <div class="right aligned eight wide column">
+        <div class="right aligned eight wide column" *ngSwitchCase="'details'">
 
-            <div id="delete-user-modal" class="ui small modal">
-                <div class="header">Delete</div>
-                <div class="content">
-                    <p>Are you sure you want to delete the user <q>{{user.username}}</q>?</p>
-                </div>
-                <div class="actions">
-                    <div class="ui basic deny button modalBtn">Cancel</div>
-                    <div class="ui primary approve button modalBtn" (click)="deleteUser()">
-                        Delete
-                    </div>
-                </div>
-            </div>
-
-            <button *ngSwitchCase="'edit'" class="ui basic button"
-                    (click)="cancelEditing()">
-                Cancel
-            </button>
             <button *ngSwitchCase="'details'" class="ui basic button"
                     (click)="cancelDetails()">
                 Close
             </button>
-            <button *ngSwitchCase="'details'" class="ui secondary button"
+            <button  class="ui secondary button"
                     (click)="editUser()">
                 Edit
             </button>
@@ -42,117 +25,51 @@
         </div>
     </div>
 
-    <div class="ui row breadcrumbRow">
-        <div class="ui sixteen wide column">
-            <div class="breadcrumbs">
-                <span class="crumb">
-                    <a [routerLink]="['../../list']">
-                        User Management
-                    </a>
-                </span>
-                <span class="crumb">
-                    {{user.username}}
-                </span>
+    <div id="delete-user-modal" class="ui small modal" *ngSwitchCase="'details'">
+        <div class="header">Remove User: {{username}}
+        </div>
+        <div class="content">
+            <p>Are you sure you want to remove this user?</p>
+        </div>
+        <div class="actions">
+            <div class="ui negative button">No</div>
+            <div class="ui positive button" (click)="deleteUser()">
+                Yes
             </div>
         </div>
     </div>
 
-    <div class="ui row"  [ngSwitch]="mode">
+    <div class="ui row">
         <div class="ui sixteen wide column">
 
-            <div class="ui basic segment">
+            <div class="ui basic segment" *ngSwitchCase="'details'">
                 <div class="ui active inverted dimmer" *ngIf="showLoader">
                     <div class="ui loader"></div>
                 </div>
                 <div *ngIf="isRootAdmin" class="description">Built-in admin user record cannot be deleted.</div>
                 <table>
                     <tbody>
-                        <tr>
-                            <td class="ctv-header">Username</td>
-                            <td class="ctv-value">{{user.username}}</td>
-                        </tr>
-                        <tr *ngSwitchCase="'details'">
-                            <td class="ctv-header">Firstname</td>
-                            <td class="ctv-value">{{user.first_name}}</td>
-                        </tr>
-                        <tr *ngSwitchCase="'details'">
-                            <td class="ctv-header">Lastname</td>
-                            <td class="ctv-value">{{user.last_name}}</td>
-                        </tr>
-                        <tr *ngSwitchCase="'details'">
-                            <td class="ctv-header">Disabled</td>
-                            <td class="ctv-value">{{user.disable?'Yes':'No'}}</td>
-                        </tr>
+                    <tr>
+                        <td class="ctv-header">Username</td>
+                        <td class="ctv-value">{{user.username}}</td>
+                    </tr>
+                    <tr>
+                        <td class="ctv-header">Firstname</td>
+                        <td class="ctv-value">{{user.first_name}}</td>
+                    </tr>
+                    <tr>
+                        <td class="ctv-header">Lastname</td>
+                        <td class="ctv-value">{{user.last_name}}</td>
+                    </tr>
+                    <tr>
+                        <td class="ctv-header">Disabled</td>
+                        <td class="ctv-value">{{user.disable?'Yes':'No'}}</td>
+                    </tr>
                     </tbody>
                 </table>
-
-                <div *ngSwitchCase="'edit'">
-                    <form class="ui form"
-                          role="form"
-                          (submit)="saveUser(formRef.valid)" novalidate #formRef="ngForm">
-
-                        <div class="ui sixteen column grid">
-                            <div class="ui row">
-                                <div class="ui six wide column">
-                                    <div class="field">
-                                        <label for="firstname">First Name</label>
-                                        <input type="text" id="firstname" name="firstname"
-                                               [(ngModel)]="user.first_name"
-                                               placeholder="Enter First Name" #firstname="ngModel">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="ui row">
-                                <div class="ui six wide column">
-                                    <div class="field">
-                                        <label for="lastname">Last Name</label>
-                                        <input type="text" id="lastname" name="lastname"
-                                               [(ngModel)]="user.last_name"
-                                               placeholder="Enter Last Name" #lastname="ngModel">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="ui row">
-                                <div class="ui six wide column">
-                                    <div class="field">
-                                        <label for="password">Password</label>
-                                        <input type="password" id="password" name="password"
-                                               [(ngModel)]="user.password"
-                                               placeholder="Reset Password" #password="ngModel">
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="ui row">
-
-                                <div class="ui six wide column">
-                                    <div class="field" [ngClass]="{disabled: isLoggedInUser}">
-                                    <label>&nbsp;<br>
-                                        <input type="checkbox" name="userdisabled" tabindex="0" class="alignLabel"
-                                                   [(ngModel)]="user.disable">
-                                            Disabled
-                                    </label>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="ui row">
-
-                                <div class="right aligned six wide column buttonRow">
-                                    <button type="button" class="ui basic button" (click)="cancelEditing()">
-                                        Cancel
-                                    </button>
-                                    <button type="submit" class="ui primary button">
-                                        Save
-                                    </button>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </form>
-                </div>
-
+            </div>
+            <div *ngSwitchCase="'edit'">
+                <userprofileedit [username]="username" (close)="returnToUserDetails()" [displayType]="ProfileDisplayType.component"></userprofileedit>
             </div>
         </div>
     </div>

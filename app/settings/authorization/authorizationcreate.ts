@@ -88,6 +88,7 @@ export class AuthorizationCreateComponent implements OnInit{
         var authCreateComp = this;
         if(formvalid){
             this.crudHelperService.startLoader(this);
+            this.changeAuthType();
             this.authorizationModel.create(this.authorization)
                 .then((result) => {
                     authCreateComp.crudHelperService.stopLoader(authCreateComp);

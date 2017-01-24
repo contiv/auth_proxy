@@ -7,19 +7,10 @@
             <tooltip [data]="'Tenants are the highest level of organization in UCN. Create tenants and then assign the appropriate users and create networks. Users are authorized to view and use only the resources within their tenant, but can be assigned to multiple tenants.'"></tooltip>
         </div>
         <div class="right aligned seven wide column">
-            <button class="ui primary button" (click)="create()" *auth="'admin'">
+            <button class="ui primary button" (click)="create()" *verifydom="'admin'">
                 <i class="add icon"></i>
                 Create Tenant
             </button>
-        </div>
-    </div>
-    <div class="ui row breadcrumbRow">
-        <div class="ui sixteen wide column">
-            <div class="breadcrumbs">
-                <span class="crumb">
-                    Tenants
-                </span>
-            </div>
         </div>
     </div>
 

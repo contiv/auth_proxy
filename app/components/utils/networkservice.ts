@@ -3,10 +3,12 @@ import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { ContivGlobals } from "../models/contivglobals";
 import { ApiService } from "./apiservice";
+import {noop} from "rxjs/util/noop";
 
 @Injectable()
 export class NetworkService {
 
+    public aciMode: boolean = false;
     constructor(private http: Http, private apiService: ApiService) {}
 
     getSettings(): Promise<any> {
@@ -50,6 +52,8 @@ export class NetworkService {
                             }
                         ]
                     }
+                    else
+                        networkservice.aciMode = true;
                     resolve(result[0]);
                 }, function errorCallback(result) {
                     reject(result);

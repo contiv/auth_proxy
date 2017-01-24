@@ -64,6 +64,6 @@ export const ContivGlobals = {
     'NUMBER_REGEX' : '^[0-9]*$',
 
     // System strings
-    'PRODUCT_NAME': 'Unified Container Networking',
+    'PRODUCT_NAME': 'Container Networking',
     'PRODUCT_VERSION': 'TP_1.0.0'
 };

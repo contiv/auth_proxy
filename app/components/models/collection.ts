@@ -34,7 +34,7 @@ export class Collection extends BaseCollection {
         var promise = new Promise(function (resolve, reject) {
             if (url === undefined) url = collection.url + model.key + '/';
             collection.cudOperationFlag = true;
-            collection.apiService.post(url, model).map((res: Response) => res.json()).toPromise()
+            collection.apiService.post(url, model).map((res: Response) => collection.filterAsyncReq(res)).toPromise()
                 .then(function successCallback(response) {
                     var responseData = response;
                     //For rest endpoints that do not return created json object in response
@@ -69,7 +69,7 @@ export class Collection extends BaseCollection {
         var promise = new Promise(function (resolve, reject) {
             var url = collection.url + model.key + '/';
             collection.cudOperationFlag = true;
-            collection.apiService.put(url, model).map((res: Response) => res.json()).toPromise()
+            collection.apiService.put(url, model).map((res: Response) => collection.filterAsyncReq(res)).toPromise()
                 .then(function successCallback(response) {
                     _.remove(collection.models, function (n) {
                         return n['key'] == model['key'];
@@ -96,7 +96,7 @@ export class Collection extends BaseCollection {
         var promise = new Promise(function (resolve, reject) {
             var url = collection.url + model.key + '/';
             collection.cudOperationFlag = true;
-            collection.apiService.delete(url).map((res: Response) => res.json()).toPromise()
+            collection.apiService.delete(url).map((res: Response) => collection.filterAsyncReq(res)).toPromise()
                 .then(function successCallback(response) {
                     _.remove(collection.models, function (n) {
                         return n['key'] == model['key'];
@@ -128,7 +128,7 @@ export class Collection extends BaseCollection {
                 if (res.statusText==='No Content')
                     return key;
                 else
-                    return res.json();
+                    return collection.filterAsyncReq(res);
             }).toPromise()
                 .then(function successCallback(response) {
                     _.remove(collection.models, function (n) {
@@ -152,7 +152,7 @@ export class Collection extends BaseCollection {
                 resolve(collection.inspectStats[key]);
             }
             else {
-                collection.apiService.get(url + key + '/').map((res: Response) => res.json()).toPromise()
+                collection.apiService.get(url + key + '/').map((res: Response) => collection.filterAsyncReq(res)).toPromise()
                     .then(function successCallback(response) {
                             var responseStats = response;
                             collection.inspectStats[key] = responseStats;

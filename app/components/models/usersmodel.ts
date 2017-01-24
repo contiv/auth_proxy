@@ -7,6 +7,7 @@ import { Collection } from "./collection";
 import { ContivGlobals } from "./contivglobals";
 import { ApiService } from "../utils/apiservice";
 import * as _ from 'lodash';
+import { isUndefined } from "util";
 
 @Injectable()
 export class UsersModel extends Collection {
@@ -25,5 +26,13 @@ export class UsersModel extends Collection {
                 collection.models.push(result);
                 return result;
             });
+    }
+
+    getModelByKey(key, reload, keyname, url?): Promise<any>{
+        var collection = this;
+        if((!isUndefined(url)) && (collection.models.length==0))
+            return this.apiService.get(url).map((res:Response) => res.json()).toPromise()
+        else
+            return super.getModelByKey(key, reload, keyname);
     }
 }
