@@ -9,7 +9,7 @@ def_ans_opts="--private-key $def_ans_key -u vagrant"
 check_for_prereqs() {
   echo "Checking for pre-requisites"
   success=True
-  docker_version=${DOCKER_VERSION:-"1.11.1"}
+  docker_version=${DOCKER_VERSION:-"1.12.6"}
   echo "Check that docker $docker_version is installed"
   docker_status=`docker --version | grep "Docker version $docker_version" -o`
   if [ "$docker_status" != "Docker version $docker_version" ]; then

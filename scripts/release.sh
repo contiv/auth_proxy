@@ -10,7 +10,7 @@ auth_proxy_version=$VERSION
 aci_gw_image="contiv\/aci-gw"
 contiv_version=${CONTIV_VERSION:-v0.1-11-30-2016.20-08-20.UTC}
 etcd_version=${CONTIV_ETCD_VERSION:-2.3.7}
-docker_version=${CONTIV_DOCKER_VERSION:-1.11.1}
+docker_version=${CONTIV_DOCKER_VERSION:-1.12.6}
 
 function usage {
   echo "Usage:"
