@@ -1,0 +1,4 @@
+---
+
+- name: stop auth-proxy container
+  service: name=auth-proxy state=stopped
