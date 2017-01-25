@@ -3,13 +3,19 @@ import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { ContivGlobals } from "../models/contivglobals";
 import { ApiService } from "./apiservice";
-import {noop} from "rxjs/util/noop";
+import { Subject, Observable } from "rxjs";
 
 @Injectable()
 export class NetworkService {
 
     public aciMode: boolean = false;
-    constructor(private http: Http, private apiService: ApiService) {}
+    private aciModeSubject: Subject<any>;
+    public aciModeObservable: Observable<any>;
+    constructor(private http: Http, private apiService: ApiService) {
+        this.aciModeSubject = new Subject<any>();
+        this.aciModeObservable = this.aciModeSubject.asObservable();
+        this.getSettings().then();
+    }
 
     getSettings(): Promise<any> {
         var networkservice = this;
@@ -22,6 +28,7 @@ export class NetworkService {
                     } else {
                         networkservice.aciMode = false;
                     }
+                    networkservice.aciModeSubject.next(networkservice.aciMode);
                     resolve(result[0]);
                 }, function errorCallback(result) {
                     reject(result);
@@ -86,5 +93,10 @@ export class NetworkService {
         });
 
         return promise;
+    }
+
+    setAciMode(mode: boolean){
+        this.aciMode = mode;
+        this.aciModeSubject.next(this.aciMode);
     }
 }

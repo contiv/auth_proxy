@@ -32,7 +32,8 @@ export class BandwidthPolicyCreateComponent implements OnInit {
                 tenantName: '',
                 bandwidth: '',
                 bandwidthUnit: 'mbps',
-                DSCP: ''
+                DSCP: '',
+                burst: 0
             };
         }
         resetForm();

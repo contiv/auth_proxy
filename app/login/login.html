@@ -23,13 +23,13 @@
                     <input type="password" id="password" name="password" [(ngModel)]="loginCtrl.password"
                            placeholder="Password" required>
                 </div>
-                <div class="field">
+                <div class="field" class="inlineError">
                     <div align="center">
                         <span *ngIf="showServerError">Incorrect user name or password. Please try again.</span>
                     </div>
                 </div>
 
-                <div align="center">
+                <div align="center" style="margin-top: 10px">
                     <button *ngIf="loginForm.valid" class="ui fluid primary button">
                         Log In
                     </button>
@@ -40,7 +40,7 @@
 
                 <div class="center">
                     <div class="copyright">
-                        Copyright (c) 2016 Cisco Systems, Inc. All rights reserved.
+                        Copyright (c) 2017 Cisco Systems, Inc. All rights reserved.
                     </div>
                 </div>
 

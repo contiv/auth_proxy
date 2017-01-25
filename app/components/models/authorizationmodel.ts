@@ -8,6 +8,7 @@ import {ContivGlobals} from "./contivglobals";
 import {Http, Response} from "@angular/http";
 import {ApiService} from "../utils/apiservice";
 import {Collection} from "./collection";
+import {Authorization} from "../../settings/authorization/authorizationcreate";
 @Injectable()
 
 export class AuthorizationModel extends Collection{
@@ -47,5 +48,25 @@ export class AuthorizationModel extends Collection{
                 collection.models.push(result);
                 return result;
             });
+    }
+
+    get(reload: boolean): Promise<any>{
+        var collection = this;
+        return super.get(reload).then((res) => {
+            return collection.filterResult(res);
+        });
+    }
+
+    filterResult(result): Array<Authorization>{
+        var filterItems: Array<Authorization> = [];
+        for(var item of result){
+            if(item.PrincipalName==='admin' && item.Role === 'admin')
+                filterItems.push(item);
+            else{
+                if(item.TenantName!=='')
+                    filterItems.push(item);
+            }
+        }
+        return filterItems;
     }
 }

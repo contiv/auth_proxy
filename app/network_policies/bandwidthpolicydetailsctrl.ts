@@ -37,6 +37,9 @@ export class BandwidthPolicyDetailsComponent {
         bandwidthPolicyDetailsCtrl.netprofilesModel.getModelByKey(activatedRoute.snapshot.params['key'],false,undefined)
             .then(function (policy) {
                 bandwidthPolicyDetailsCtrl.policy = policy;
+                var bandwidth  = policy.bandwidth.split(' ');
+                bandwidthPolicyDetailsCtrl.policy['bandwidthNumber'] = bandwidth[0];
+                bandwidthPolicyDetailsCtrl.policy['bandwidthUnit'] = bandwidth[1];
             });
         bandwidthPolicyDetailsCtrl.crudHelperService.stopLoader(bandwidthPolicyDetailsCtrl);
 

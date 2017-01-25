@@ -55,6 +55,9 @@ export class MenuComponent implements AfterViewInit{
 
     ngAfterViewInit(){
         jQuery('.ui.dropdown').dropdown({action: 'hide', duration: 100});
+        this.authService.firstrunObservable.subscribe((res) => {
+            this.firstRun = res;
+        })
     }
 
     logout() {

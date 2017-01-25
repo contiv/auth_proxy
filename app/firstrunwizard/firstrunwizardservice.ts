@@ -40,8 +40,13 @@ export class FirstRunWizardService {
     }
 
     updateSettings():Promise<any> {
+        var component = this;
         this.networkService.updateSettings(this.setting)
             .then((result) => {
+                if(result['networkInfraType'] === 'aci')
+                    component.networkService.setAciMode(true);
+                else
+                    component.networkService.setAciMode(false);
             });
         return this.networkService.updateAciSettings(this.aciSetting);
     }

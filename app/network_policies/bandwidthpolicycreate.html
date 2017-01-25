@@ -103,8 +103,16 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field">
+                                    <label for="burst">Burst</label>
+                                    <input #burstRef="ngModel" type="number" id="burst" name="burst"
+                                           [(ngModel)]="newPolicy.burst" placeholder="Enter Burst size" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
                     <div class="ui grid">
                         <div class="right aligned six wide column">
                             <div class="buttonRow">

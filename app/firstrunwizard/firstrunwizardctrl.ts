@@ -43,7 +43,7 @@ export class FirstrunWizardComponent implements OnInit{
     }
 
     skip() {
-        localStorage.setItem('firstRun','skip')
+        this.authService.setFirstRun('skip');
         this.router.navigate(['/m/dashboard'],{relativeTo: this.activatedRoute});
     }
 

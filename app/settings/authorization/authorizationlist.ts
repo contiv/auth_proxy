@@ -27,7 +27,7 @@ export class AuthorizationListComponent implements  OnInit{
 
         this.refresh = Observable.interval(5000).subscribe(() => {
             this.getAuthorization(true);
-        })
+        });
     }
 
     ngOnInit(){

@@ -6,6 +6,7 @@
 import {Component, OnInit, Output, EventEmitter, Inject} from "@angular/core";
 import {Router, ActivatedRoute} from "@angular/router";
 import {FirstRunWizardService} from "./firstrunwizardservice";
+import {AuthService} from "../components/utils/authservice";
 declare var jQuery:any;
 
 @Component({
@@ -20,7 +21,8 @@ export class FirstrunConfirmComponent implements OnInit{
     @Output('cancelPage') cancelPage: EventEmitter<any>;
     constructor(wizardservice: FirstRunWizardService,
                 private router: Router,
-                private activatedRoute: ActivatedRoute){
+                private activatedRoute: ActivatedRoute,
+                private authService: AuthService){
         this.wizardService = wizardservice;
         this.updatePage = new EventEmitter<any>();
         this.cancelPage = new EventEmitter<any>();
@@ -50,7 +52,7 @@ export class FirstrunConfirmComponent implements OnInit{
     loadDashboard(){
         this.showLoader = false;
         jQuery(".ui.fullscreen.modal").modal('hide');
-        localStorage.setItem('firstRun', '');
+        this.authService.setFirstRun('completed');
         this.router.navigate(['/m/dashboard']);
     }
 

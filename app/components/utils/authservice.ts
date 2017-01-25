@@ -5,13 +5,11 @@
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/delay';
-import {Http, Headers, RequestOptions, Response} from "@angular/http";
-import {AuthMatrix} from "./authMatrix";
-import {isNull} from "util";
-import {ContivGlobals} from "../models/contivglobals";
+import { Http, Headers, RequestOptions, Response } from "@angular/http";
+import { AuthMatrix } from "./authMatrix";
+import { isNull } from "util";
+import { ContivGlobals } from "../models/contivglobals";
+import { Subject } from "rxjs";
 
 interface User{
     username: string;
@@ -29,6 +27,8 @@ export class AuthService {
     accessMatrix:any;
     authToken:string;
     firstRun:boolean;
+    private firstrunSubject: Subject<any>;
+    public firstrunObservable: Observable<any>;
 
     constructor(private http: Http){
         this.isLoggedIn = false;
@@ -37,6 +37,8 @@ export class AuthService {
         this.authTokenPayload = {};
         this.authToken='';
         this.firstRun = false;
+        this.firstrunSubject = new Subject<any>();
+        this.firstrunObservable = this.firstrunSubject.asObservable();
     }
 
     checkAccess(url: string): boolean{
@@ -118,7 +120,7 @@ export class AuthService {
     }
 
     extractToken(res: Response): boolean {
-        /* CCN_Proxy is now sending the token as part of the body */
+        /* auth_proxy is now sending the token as part of the body */
 
         var xAuthToken = res.json()['token'];
         if (xAuthToken.length > 0) {
@@ -143,6 +145,13 @@ export class AuthService {
             this.firstRun = true;
         else
             this.firstRun = false;
+        this.firstrunSubject.next(this.firstRun);
+    }
+
+    setFirstRun(status:string){
+        localStorage.setItem("firstRun", status);
+        this.firstRun = false;
+        this.firstrunSubject.next(this.firstRun);
     }
 
     validateExpiry(): boolean{
