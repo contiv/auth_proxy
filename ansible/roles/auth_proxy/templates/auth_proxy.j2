@@ -11,7 +11,7 @@ init)
     set -e
 
     /usr/bin/docker run --rm \
-      {{ auth_proxy_image }} \
+      --net=host {{ auth_proxy_image }} \
       --data-store-address={{ auth_proxy_datastore }} \
       --initial-setup
     ;;
@@ -21,7 +21,7 @@ start)
 
     /usr/bin/docker run --rm \
       -p 10000:{{ auth_proxy_port }} \
-      --name=auth-proxy \
+      --net=host --name=auth-proxy \
       -v /var/contiv:/var/contiv \
       {{ auth_proxy_image }} \
       --tls-key-file={{ auth_proxy_key }} \

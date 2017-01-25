@@ -21,7 +21,7 @@ spec:
       containers:
         # Runs aci-gw container on each Kubernetes node. 
         - name: contiv-aci-gw
-          image: contiv/aci-gw
+          image: contiv/aci-gw:__ACI_GW_VERSION__
           env:
             - name: APIC_URL
               value: "__APIC_URL__"
