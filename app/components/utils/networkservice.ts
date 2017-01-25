@@ -19,6 +19,8 @@ export class NetworkService {
                 .then(function successCallback(result) {
                     if (result[0].networkInfraType === 'aci') {
                         networkservice.aciMode = true;
+                    } else {
+                        networkservice.aciMode = false;
                     }
                     resolve(result[0]);
                 }, function errorCallback(result) {
