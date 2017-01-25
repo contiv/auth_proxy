@@ -17,6 +17,9 @@ export class NetworkService {
             let url = ContivGlobals.NETWORK_SETTINGS_ENDPOINT;
             networkservice.apiService.get(url).map((res: Response) => res.json()).toPromise()
                 .then(function successCallback(result) {
+                    if (result[0].networkInfraType === 'aci') {
+                        networkservice.aciMode = true;
+                    }
                     resolve(result[0]);
                 }, function errorCallback(result) {
                     reject(result);
@@ -52,8 +55,6 @@ export class NetworkService {
                             }
                         ]
                     }
-                    else
-                        networkservice.aciMode = true;
                     resolve(result[0]);
                 }, function errorCallback(result) {
                     reject(result);

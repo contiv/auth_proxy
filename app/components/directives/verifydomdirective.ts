@@ -38,7 +38,7 @@ export class VerifydomDirective implements AfterViewInit{
                                 this.display = true;
                             this.render();
                             break;
-            case 'aci':     this.networkService.getAciSettings().then(() => {
+            case 'aci':     this.networkService.getSettings().then(() => {
                                 if(directive.networkService.aciMode)
                                     directive.display = true;
                                 directive.render();

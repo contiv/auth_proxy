@@ -33,7 +33,7 @@
         <networksettingcomp [firstRunWiz]="false" (updateNetDef)="updateNetworkSettings($event)" [setting]="setting"></networksettingcomp>
     </ctv-collapsible>
 
-    <ctv-collapsible [title]="'ACI Settings'">
+    <ctv-collapsible [title]="'ACI Settings'" *verifydom="'aci'">
         <acisettingcomp [firstRunWiz]="false" (updateAciDef)="updateAciSetting($event)" [setting]="aciSetting"></acisettingcomp>
     </ctv-collapsible>
 

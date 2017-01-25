@@ -7,6 +7,7 @@ import { NetworksModel } from "../components/models/networksmodel";
 import { ApplicationGroupsModel } from "../components/models/applicationgroupsmodel";
 import { CRUDHelperService } from "../components/utils/crudhelperservice";
 import { OrganizationsModel } from "../components/models/organizationsmodel";
+import { NetworkService } from "../components/utils/networkservice";
 
 @Component({
     selector: 'applicationgroupcreate',
@@ -23,7 +24,8 @@ export class ApplicationGroupCreateComponent {
                 private organizationsModel:OrganizationsModel,
                 private networksModel:NetworksModel,
                 private applicationGroupsModel:ApplicationGroupsModel,
-                private crudHelperService:CRUDHelperService) {
+                private crudHelperService:CRUDHelperService,
+                private networkService:NetworkService) {
 
         var applicationGroupCreateCtrl = this;
 
@@ -112,10 +114,14 @@ export class ApplicationGroupCreateComponent {
                  isolationPolicyComponent:any,
                  bandwidthPolicyComponent:any,
                  contractGroupComponent:any) {
-        this.applicationGroup.tenantName = tenantName;
-        this.getNetworks(tenantName);
+        var component = this;
+        component.applicationGroup.tenantName = tenantName;
+        component.getNetworks(tenantName);
         isolationPolicyComponent.getIsolationPolicies();
         bandwidthPolicyComponent.getNetprofiles();
-        contractGroupComponent.getContractGroups();
+        //contractGroupComponent might be undefined if ACI is not configured
+        if ((contractGroupComponent !== undefined) && (contractGroupComponent !== null)) {
+            contractGroupComponent.getContractGroups();
+        }
     }
 }
