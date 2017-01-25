@@ -76,11 +76,6 @@ godep:
 	[ -n "`which godep`" ] || go get -u github.com/tools/godep
 	godep save ./...
 
-# run builds the auth_proxy image, generates a certificate if necessary, and runs
-# the proxy using the local certificate.
-run: build generate-certificate
-	@bash ./scripts/run.sh
-
 # systemtests runs the system tests suite.
 systemtests:
 	@bash ./scripts/systemtests.sh
@@ -92,4 +87,4 @@ unit-tests:
 # test runs ALL the test suites.
 test: systemtests unit-tests
 
-.PHONY: all build checks ci generate-certificate godep run systemtests test unit-tests release cluster cluster-destroy release-test-swarm release-test-kubeadm release-test-kubelegacy
+.PHONY: all build checks ci generate-certificate godep systemtests test unit-tests release cluster cluster-destroy release-test-swarm release-test-kubeadm release-test-kubelegacy
