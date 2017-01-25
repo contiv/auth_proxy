@@ -3,6 +3,7 @@
 
 # Ignore ansible ssh host key checking by default
 export ANSIBLE_HOST_KEY_CHECKING=False
+src_conf_path=""
 
 # Scheduler provider can be in kubernetes or swarm mode
 scheduler_provider=${CONTIV_SCHEDULER_PROVIDER:-"native-swarm"}
