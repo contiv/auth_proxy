@@ -53,8 +53,8 @@ func (s *systemtestSuite) TestLogin(c *C) {
 		// add LDAP configuration
 		ldapConfig := `{"server":"` + ldapServer + `",` +
 			`"port":5678,` +
-			`"base_dn":"DC=auth,DC=example,DC=com",` +
-			`"service_account_dn":"CN=Service Account,CN=Users,DC=auth,DC=example,DC=com",` +
+			`"base_dn":"DC=ccn,DC=example,DC=com",` +
+			`"service_account_dn":"CN=Service Account,CN=Users,DC=ccn,DC=example,DC=com",` +
 			`"service_account_password":"` + ldapPassword + `",` +
 			`"StartTLS":false,` +
 			`"InsecureSkipVerify":true}`
