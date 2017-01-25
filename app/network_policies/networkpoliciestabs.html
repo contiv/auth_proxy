@@ -19,7 +19,7 @@
                   </a></span>
                 <span *ngSwitchCase="'isolation'" class="crumb">Isolation Policies</span>
                 <span *ngSwitchCase="'bandwidth'" class="crumb">Bandwidth Policies</span>
-                <span *ngSwitchCase="'contractgroup'" class="crumb">External Contract Groups</span>
+                <span *ngSwitchCase="'contractgroup'" class="crumb">ACI External Contract Groups</span>
             </div>
         </div>
     </div>
@@ -42,7 +42,7 @@
                  [ngClass]="{active: contractGroupSelected}"
                  (click)="selectPolicyTab(policyTab.contractGroup)"
                   *verifydom="'aci'">
-                  External Contract Groups (ACI)
+                  ACI External Contract Groups
               </a>
           </div>
 

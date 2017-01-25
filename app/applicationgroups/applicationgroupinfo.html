@@ -33,7 +33,7 @@
 
         <div class="ui row ">
             <div class="ui sixteen wide column">
-                <ctv-collapsible title="Bandwidth Policies Applied" class="policySelection">
+                <ctv-collapsible title="Bandwidth Policy Applied" class="policySelection">
                     <ctv-bandwidthpolicy [mode]="mode" [applicationgroup]="applicationGroup"></ctv-bandwidthpolicy>
                 </ctv-collapsible>
             </div>
@@ -41,7 +41,7 @@
 
         <div class="ui row " *verifydom="'aci'">
             <div class="ui sixteen wide column">
-                <ctv-collapsible title="External Contract Groups (ACI)">
+                <ctv-collapsible title="ACI External Contract Groups Applied">
                     <ctv-contractgroup [mode]="mode" [applicationgroup]="applicationGroup"></ctv-contractgroup>
                 </ctv-collapsible>
             </div>
