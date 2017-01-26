@@ -2,6 +2,7 @@ package systemtests
 
 import (
 	"github.com/contiv/auth_proxy/common/types"
+	"github.com/contiv/auth_proxy/proxy"
 	. "gopkg.in/check.v1"
 )
 
@@ -27,7 +28,7 @@ func (s *systemtestSuite) TestLocalUserEndpoints(c *C) {
 		token := adminToken(c)
 
 		for _, username := range newUsers {
-			endpoint := "/api/v1/auth_proxy/local_users"
+			endpoint := proxy.V1Prefix + "/local_users"
 			resp, body := proxyGet(c, token, endpoint)
 			c.Assert(resp.StatusCode, Equals, 200)
 			c.Assert(len(body), Not(Equals), 0)
@@ -38,7 +39,7 @@ func (s *systemtestSuite) TestLocalUserEndpoints(c *C) {
 			s.addLocalUser(c, data, respBody, token)
 
 			// get `username`
-			endpoint = "/api/v1/auth_proxy/local_users/" + username
+			endpoint = proxy.V1Prefix + "/local_users/" + username
 			resp, body = proxyGet(c, token, endpoint)
 			c.Assert(resp.StatusCode, Equals, 200)
 			c.Assert(string(body), DeepEquals, respBody)
@@ -156,7 +157,7 @@ func (s *systemtestSuite) TestLocalUserDeleteEndpoint(c *C) {
 			respBody := `{"username":"` + username + `","first_name":"","last_name":"","disable":false}`
 			s.addLocalUser(c, data, respBody, token)
 
-			endpoint := "/api/v1/auth_proxy/local_users/" + username
+			endpoint := proxy.V1Prefix + "/local_users/" + username
 
 			// delete `username`
 			resp, body := proxyDelete(c, token, endpoint)
@@ -171,7 +172,7 @@ func (s *systemtestSuite) TestLocalUserDeleteEndpoint(c *C) {
 
 		// delete built-in users
 		for _, username := range builtInUsers {
-			endpoint := "/api/v1/auth_proxy/local_users/" + username
+			endpoint := proxy.V1Prefix + "/local_users/" + username
 
 			// delete `username`
 			resp, body := proxyDelete(c, token, endpoint)
@@ -188,7 +189,7 @@ func (s *systemtestSuite) TestLocalUserDeleteEndpoint(c *C) {
 
 // addLocalUser helper function for the tests
 func (s *systemtestSuite) addLocalUser(c *C, data, expectedRespBody, token string) {
-	endpoint := "/api/v1/auth_proxy/local_users"
+	endpoint := proxy.V1Prefix + "/local_users"
 
 	resp, body := proxyPost(c, token, endpoint, []byte(data))
 	c.Assert(resp.StatusCode, Equals, 201)
@@ -197,7 +198,7 @@ func (s *systemtestSuite) addLocalUser(c *C, data, expectedRespBody, token strin
 
 // updateLocalUser helper function for the tests
 func (s *systemtestSuite) updateLocalUser(c *C, username, data, expectedRespBody, token string) {
-	endpoint := "/api/v1/auth_proxy/local_users/" + username
+	endpoint := proxy.V1Prefix + "/local_users/" + username
 
 	resp, body := proxyPatch(c, token, endpoint, []byte(data))
 	c.Assert(resp.StatusCode, Equals, 200)
