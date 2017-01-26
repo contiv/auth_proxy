@@ -15,14 +15,17 @@ import (
 )
 
 const (
+	// V1Prefix is the API prefix for the v1 API
+	V1Prefix = "/api/v1/auth_proxy"
+
 	// LoginPath is the authentication endpoint on the proxy
-	LoginPath = "/api/v1/auth_proxy/login"
+	LoginPath = V1Prefix + "/login"
 
 	// HealthCheckPath is the health check endpoint on the proxy
-	HealthCheckPath = "/health"
+	HealthCheckPath = V1Prefix + "/health"
 
 	// VersionPath is the version endpoint on the proxy
-	VersionPath = "/version"
+	VersionPath = V1Prefix + "/version"
 
 	// uiDirectory is the location in the container where the baked-in UI lives
 	// and where an external UI directory can be bindmounted over using -v
@@ -263,26 +266,26 @@ func addNetmasterRoutes(s *Server, router *mux.Router) {
 // addUserMgmtRoutes adds user management routes to the mux.Router.
 // All user management routes are admin-only.
 func addUserMgmtRoutes(router *mux.Router) {
-	router.Path("/api/v1/auth_proxy/local_users").Methods("POST").HandlerFunc(adminOnly(addLocalUser))
-	router.Path("/api/v1/auth_proxy/local_users/{username}").Methods("DELETE").HandlerFunc(adminOnly(deleteLocalUser))
-	router.Path("/api/v1/auth_proxy/local_users/{username}").Methods("PATCH").HandlerFunc(adminOnly(updateLocalUser))
-	router.Path("/api/v1/auth_proxy/local_users/{username}").Methods("GET").HandlerFunc(adminOnly(getLocalUser))
-	router.Path("/api/v1/auth_proxy/local_users").Methods("GET").HandlerFunc(adminOnly(getLocalUsers))
+	router.Path(V1Prefix + "/local_users").Methods("POST").HandlerFunc(adminOnly(addLocalUser))
+	router.Path(V1Prefix + "/local_users/{username}").Methods("DELETE").HandlerFunc(adminOnly(deleteLocalUser))
+	router.Path(V1Prefix + "/local_users/{username}").Methods("PATCH").HandlerFunc(adminOnly(updateLocalUser))
+	router.Path(V1Prefix + "/local_users/{username}").Methods("GET").HandlerFunc(adminOnly(getLocalUser))
+	router.Path(V1Prefix + "/local_users").Methods("GET").HandlerFunc(adminOnly(getLocalUsers))
 }
 
 // addAuthorizationRoutes adds authorization routes to the mux.Router
 // All authorization management routes are admin-only.
 func addAuthorizationRoutes(router *mux.Router) {
-	router.Path("/api/v1/auth_proxy/authorizations").Methods("POST").HandlerFunc(adminOnly(addAuthorization))
-	router.Path("/api/v1/auth_proxy/authorizations/{authzUUID}").Methods("DELETE").HandlerFunc(adminOnly(deleteAuthorization))
-	router.Path("/api/v1/auth_proxy/authorizations/{authzUUID}").Methods("GET").HandlerFunc(adminOnly(getAuthorization))
-	router.Path("/api/v1/auth_proxy/authorizations").Methods("GET").HandlerFunc(adminOnly(listAuthorizations))
+	router.Path(V1Prefix + "/authorizations").Methods("POST").HandlerFunc(adminOnly(addAuthorization))
+	router.Path(V1Prefix + "/authorizations/{authzUUID}").Methods("DELETE").HandlerFunc(adminOnly(deleteAuthorization))
+	router.Path(V1Prefix + "/authorizations/{authzUUID}").Methods("GET").HandlerFunc(adminOnly(getAuthorization))
+	router.Path(V1Prefix + "/authorizations").Methods("GET").HandlerFunc(adminOnly(listAuthorizations))
 }
 
 // addLdapConfigurationMgmtRoutes adds LDAP configuration management routes to mux.Router.
 func addLdapConfigurationMgmtRoutes(router *mux.Router) {
-	router.Path("/api/v1/auth_proxy/ldap_configuration").Methods("POST").HandlerFunc(adminOnly(addLdapConfiguration))
-	router.Path("/api/v1/auth_proxy/ldap_configuration").Methods("GET").HandlerFunc(adminOnly(getLdapConfiguration))
-	router.Path("/api/v1/auth_proxy/ldap_configuration").Methods("DELETE").HandlerFunc(adminOnly(deleteLdapConfiguration))
-	router.Path("/api/v1/auth_proxy/ldap_configuration").Methods("PATCH").HandlerFunc(adminOnly(updateLdapConfiguration))
+	router.Path(V1Prefix + "/ldap_configuration").Methods("POST").HandlerFunc(adminOnly(addLdapConfiguration))
+	router.Path(V1Prefix + "/ldap_configuration").Methods("GET").HandlerFunc(adminOnly(getLdapConfiguration))
+	router.Path(V1Prefix + "/ldap_configuration").Methods("DELETE").HandlerFunc(adminOnly(deleteLdapConfiguration))
+	router.Path(V1Prefix + "/ldap_configuration").Methods("PATCH").HandlerFunc(adminOnly(updateLdapConfiguration))
 }
