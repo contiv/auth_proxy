@@ -19,10 +19,10 @@ const (
 	LoginPath = "/api/v1/auth_proxy/login"
 
 	// HealthCheckPath is the health check endpoint on the proxy
-	HealthCheckPath = "/health"
+	HealthCheckPath = "/api/v1/auth_proxy/health"
 
 	// VersionPath is the version endpoint on the proxy
-	VersionPath = "/version"
+	VersionPath = "/api/v1/auth_proxy/version"
 
 	// uiDirectory is the location in the container where the baked-in UI lives
 	// and where an external UI directory can be bindmounted over using -v
