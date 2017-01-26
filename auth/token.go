@@ -25,6 +25,9 @@ const (
 
 	// This claim is only added to the token, and is not part of authorization db
 	principalsClaimKey = "principals"
+
+	// UsernameClaimKey is only added to the token, and is not part of authorization db
+	UsernameClaimKey = "username"
 )
 
 // Token represents the JSON Web Token which carries the authorization details
@@ -249,6 +252,27 @@ func ParseToken(tokenStr string) (*Token, error) {
 	}
 }
 
+// GetClaim returns the value of the given claim key
+// params:
+//  claimKey: string representing the claim key
+// return values:
+//  string: claim value string obtained from the token
+func (authZ *Token) GetClaim(claimKey string) string {
+	v, found := authZ.tkn.Claims.(jwt.MapClaims)[claimKey]
+	if !found {
+		log.Warnf("Illegal token, no %q claim present", claimKey)
+		return ""
+	}
+
+	claimVal, ok := v.(string)
+	if !ok {
+		log.Errorf("Illegal token, no %q present", claimKey)
+		return ""
+	}
+
+	return claimVal
+}
+
 // IsSuperuser checks if the token belongs to a superuser (i.e. `admin` in our
 // system). It queries the authorization database to obtain this information.
 // params:
@@ -257,20 +281,9 @@ func ParseToken(tokenStr string) (*Token, error) {
 // return values:
 //  true if the token belongs to superuser else false
 func (authZ *Token) IsSuperuser() bool {
-	v, found := authZ.tkn.Claims.(jwt.MapClaims)[principalsClaimKey]
-	if !found {
-		log.Warn("Illegal token, no principals claim present")
-		return false
-	}
-
-	principalsStr, ok := v.(string)
-	if !ok {
-		log.Error("Illegal token, no principals present")
-		return false
-	}
 
 	// Deserialize principals as a slice
-	principals := strings.Split(principalsStr, ",")
+	principals := strings.Split(authZ.GetClaim(principalsClaimKey), ",")
 
 	for _, p := range principals {
 		// Get role claim for the principal

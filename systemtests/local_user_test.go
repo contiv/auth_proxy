@@ -103,6 +103,17 @@ func (s *systemtestSuite) userUpdate(c *C) {
 
 			// try login again using new password
 			_ = loginAs(c, username, "test")
+
+			// userUpdateEndpoint is not adminOnly any more. It can be accessed by user himself.
+			// test updating the user details using the user's token
+			userToken := loginAs(c, username, "test")
+			data = `{"first_name":"Test", "last_name": "User"}`
+			respBody = `{"username":"` + username + `","first_name":"Test","last_name":"User","disable":false}`
+			s.updateLocalUser(c, username, data, respBody, userToken)
+
+			// update `username`'s password using his/her token
+			data = `{"password":"test!"}`
+			s.updateLocalUser(c, username, data, respBody, userToken)
 		}
 	})
 }
