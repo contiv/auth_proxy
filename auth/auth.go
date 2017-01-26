@@ -52,7 +52,7 @@ func generateToken(principals []string, username string) (string, error) {
 	}
 
 	// finally, add username to the token
-	authZ.AddClaim("username", username)
+	authZ.AddClaim(UsernameClaimKey, username)
 
 	return authZ.Stringify()
 }

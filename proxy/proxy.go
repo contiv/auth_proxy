@@ -268,8 +268,8 @@ func addNetmasterRoutes(s *Server, router *mux.Router) {
 func addUserMgmtRoutes(router *mux.Router) {
 	router.Path(V1Prefix + "/local_users").Methods("POST").HandlerFunc(adminOnly(addLocalUser))
 	router.Path(V1Prefix + "/local_users/{username}").Methods("DELETE").HandlerFunc(adminOnly(deleteLocalUser))
-	router.Path(V1Prefix + "/local_users/{username}").Methods("PATCH").HandlerFunc(adminOnly(updateLocalUser))
-	router.Path(V1Prefix + "/local_users/{username}").Methods("GET").HandlerFunc(adminOnly(getLocalUser))
+	router.Path(V1Prefix + "/local_users/{username}").Methods("PATCH").HandlerFunc(authorizedUserOnly(updateLocalUser))
+	router.Path(V1Prefix + "/local_users/{username}").Methods("GET").HandlerFunc(authorizedUserOnly(getLocalUser))
 	router.Path(V1Prefix + "/local_users").Methods("GET").HandlerFunc(adminOnly(getLocalUsers))
 }
 
