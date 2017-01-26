@@ -50,7 +50,7 @@ if [ ! -f "$last_commit_file" ] || [ $(cat $last_commit_file) != "$newest_commit
     echo "Running 'npm install' for commit ${newest_commit}..."
 
     docker run --rm \
-	   -u "$(id -u):$(id -g)" \
+	   -u "$(id -u)" \
 	   -v $(pwd):/contiv-ui \
 	   -w /contiv-ui \
 	   -it \
