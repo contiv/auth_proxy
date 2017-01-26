@@ -24,7 +24,6 @@ export class UserProfileEditComponent implements OnInit {
     @Input('username') username: string = '';
     @Input('displayType') displayType: ProfileDisplayType = ProfileDisplayType.component;
     @Output('close') close: EventEmitter<any>;
-    public buttonAlignArrCss: Array<string> = [];
 
     constructor(private ngZone: NgZone,
                 private usersModel:UsersModel,
@@ -45,10 +44,6 @@ export class UserProfileEditComponent implements OnInit {
             }, (error) => {
                 component.crudHelperService.stopLoader(component);
             });
-        if (this.displayType == ProfileDisplayType.component)
-            this.buttonAlignArrCss = ['six', 'wide', 'column'];
-        else
-            this.buttonAlignArrCss = ['sixteen', 'wide', 'column'];
     }
 
     closeEdit(){

@@ -34,7 +34,13 @@
 <div id="user-profile-modal" class="ui small modal">
     <div class="header">Update Profile</div>
     <div class="content">
-        <userprofileedit [username]="username" (close)="closeProfile()" [displayType]="ProfileDisplayType.modal"></userprofileedit>
+        <userprofileedit #userprofile (close)="closeProfile()" [username]="username" [displayType]="ProfileDisplayType.modal"></userprofileedit>
+    </div>
+    <div class="actions">
+        <div class="ui basic deny button modalBtn">Cancel</div>
+        <div class="ui primary button modalBtn" (click)="userprofile.saveUser(true)">
+            Save
+        </div>
     </div>
 </div>
 

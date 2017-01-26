@@ -60,11 +60,8 @@ export class AuthorizationModel extends Collection{
     filterResult(result): Array<Authorization>{
         var filterItems: Array<Authorization> = [];
         for(var item of result){
-            if(item.PrincipalName==='admin' && item.Role === 'admin')
+            if((item.Role!=='ops') || (item.TenantName !=='')) {
                 filterItems.push(item);
-            else{
-                if(item.TenantName!=='')
-                    filterItems.push(item);
             }
         }
         return filterItems;

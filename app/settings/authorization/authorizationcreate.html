@@ -61,6 +61,20 @@
                         </div>
                         <div class="ui row">
                             <div class="ui six wide column">
+                                <div class="field" [ngClass]="{error:role.errors?.required && formRef.submitted}">
+                                    <label for="role">Role</label>
+                                    <select class="ui dropdown" id="role" name="role" [(ngModel)]="authorization.Role" required #role="ngModel" (change)="checkRole()">
+                                        <option value="admin">Admin</option>
+                                        <option value="ops">DevOps</option>
+                                    </select>
+                                    <span class="inlineError" *ngIf="role.errors?.required && formRef.submitted">
+                                        Please select user role.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row" *ngIf="authorization.Role==='ops'">
+                            <div class="ui six wide column">
                                 <div class="field" [ngClass]="{error:tenant.errors?.required && formRef.submitted}">
                                     <label for="tenant">Tenant</label>
                                     <select class="ui dropdown" id="tenant" name="tenant" [(ngModel)]="authorization.TenantName" required #tenant="ngModel">
@@ -68,20 +82,6 @@
                                     </select>
                                     <span class="inlineError" *ngIf="tenant.errors?.required && formRef.submitted">
                                         Please select tenant.
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="ui row">
-                            <div class="ui six wide column">
-                                <div class="field" [ngClass]="{error:role.errors?.required && formRef.submitted}">
-                                    <label for="role">Role</label>
-                                    <select class="ui dropdown" id="role" name="role" [(ngModel)]="authorization.Role" required #role="ngModel">
-                                        <option value="admin">Admin</option>
-                                        <option value="ops">DevOps</option>
-                                    </select>
-                                    <span class="inlineError" *ngIf="role.errors?.required && formRef.submitted">
-                                        Please select user role.
                                     </span>
                                 </div>
                             </div>

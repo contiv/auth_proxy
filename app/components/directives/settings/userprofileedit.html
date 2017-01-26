@@ -55,10 +55,10 @@
                 </div>
     
             </div>
-            <div class="ui row">
+            <div class="ui row" *ngIf="displayType===ProfileDisplayType.component">
     
-                <div class="right aligned buttonRow" [ngClass]="buttonAlignArrCss">
-                    <button type="button" class="ui basic button" [ngClass]="{deny: displayType===ProfileDisplayType.modal}"(click)="closeEdit()">
+                <div class="right aligned six wide column buttonRow">
+                    <button type="button" class="ui basic button" (click)="closeEdit()">
                         Cancel
                     </button>
                     <button type="submit" class="ui primary button">

@@ -84,6 +84,11 @@ export class AuthorizationCreateComponent implements OnInit{
         }
     }
 
+    checkRole(){
+        if(this.authorization.Role === 'admin')
+            this.authorization.TenantName = '';
+    }
+
     createAuthorization(formvalid: boolean){
         var authCreateComp = this;
         if(formvalid){
