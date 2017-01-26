@@ -1,0 +1,18 @@
+# A simple compose file to start auth proxy and etcd without netmaster
+auth_proxy:
+    image: contiv/auth_proxy:devbuild
+    ports:
+        - "10000:10000"
+    links:
+        - etcd
+    environment:
+        - NO_NETMASTER_STARTUP_CHECK=true
+    volumes:
+        - ./local_certs:/local_certs/
+    command: "--data-store-address=\"etcd://0.0.0.0:2379\" --tls-certificate=/local_certs/cert.pem --tls-key-file=/local_certs/local.key --listen-address=0.0.0.0:10000 --netmaster-address=0.0.0.0:9999"
+
+etcd:
+    image: quay.io/coreos/etcd:v2.3.7
+    ports:
+        - 2379:2379
+    command: "--listen-client-urls http://0.0.0.0:2379 --advertise-client-urls http://0.0.0.0:2379"
