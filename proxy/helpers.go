@@ -168,7 +168,8 @@ func getLdapConfigurationHelper() (int, []byte) {
 //  []byte: http response message; this goes along with status code
 //          this could be an error message or JSON response based on the execution flow
 func addLdapConfigurationHelper(ldapConfiguration *types.LdapConfiguration) (int, []byte) {
-	if common.IsEmpty(ldapConfiguration.Server) || (ldapConfiguration.Port == 0 || ldapConfiguration.Port > 65535) {
+	// NOTE: Range checking 0-65535 is not needed for the port as it's of type uint16
+	if common.IsEmpty(ldapConfiguration.Server) || ldapConfiguration.Port == 0 {
 		return http.StatusBadRequest, []byte("Invalid Server/Port details")
 	}
 

@@ -284,7 +284,7 @@ func addAuthorizationRoutes(router *mux.Router) {
 
 // addLdapConfigurationMgmtRoutes adds LDAP configuration management routes to mux.Router.
 func addLdapConfigurationMgmtRoutes(router *mux.Router) {
-	router.Path(V1Prefix + "/ldap_configuration").Methods("POST").HandlerFunc(adminOnly(addLdapConfiguration))
+	router.Path(V1Prefix + "/ldap_configuration").Methods("PUT").HandlerFunc(adminOnly(addLdapConfiguration))
 	router.Path(V1Prefix + "/ldap_configuration").Methods("GET").HandlerFunc(adminOnly(getLdapConfiguration))
 	router.Path(V1Prefix + "/ldap_configuration").Methods("DELETE").HandlerFunc(adminOnly(deleteLdapConfiguration))
 	router.Path(V1Prefix + "/ldap_configuration").Methods("PATCH").HandlerFunc(adminOnly(updateLdapConfiguration))

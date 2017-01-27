@@ -56,8 +56,8 @@ func (s *systemtestSuite) TestLogin(c *C) {
 			`"base_dn":"DC=ccn,DC=example,DC=com",` +
 			`"service_account_dn":"CN=Service Account,CN=Users,DC=ccn,DC=example,DC=com",` +
 			`"service_account_password":"` + ldapPassword + `",` +
-			`"StartTLS":false,` +
-			`"InsecureSkipVerify":true}`
+			`"start_tls":false,` +
+			`"insecure_skip_verify":true}`
 
 		s.addLdapConfiguration(c, adToken, ldapConfig)
 
