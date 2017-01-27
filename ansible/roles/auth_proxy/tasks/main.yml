@@ -32,4 +32,4 @@
   shell: /usr/bin/auth_proxy.sh init
 
 - name: start auth-proxy container
-  service: name=auth-proxy state=started
+  service: name=auth-proxy daemon_reload=yes state=started enabled=yes

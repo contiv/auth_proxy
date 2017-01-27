@@ -7,8 +7,8 @@ IMAGE_NAME="contiv/auth_proxy"
 VERSION=${BUILD_VERSION-$DEV_IMAGE_NAME}
 
 auth_proxy_version=$VERSION
-aci_gw_image="contiv\/aci-gw"
-contiv_version=${CONTIV_VERSION:-v0.1-11-30-2016.20-08-20.UTC}
+aci_gw_version=${CONTIV_ACI_GW_VERSION:-"latest"}
+contiv_version=${CONTIV_VERSION:-"v1.0.0-alpha-01-21-2017.20-19-23.UTC"}
 etcd_version=${CONTIV_ETCD_VERSION:-2.3.7}
 docker_version=${CONTIV_DOCKER_VERSION:-1.12.6}
 
@@ -24,10 +24,10 @@ function error_ret {
   exit 1
 }
 
-while getopts ":a:p:" opt; do
+while getopts ":a:p:c:e:" opt; do
     case $opt in
        a)
-          aci_gw_image=$OPTARG
+          aci_gw_version=$OPTARG
           ;;
        c)
           contiv_version=$OPTARG
@@ -85,12 +85,12 @@ ansible_proxy_spec=$output_dir/ansible/roles/auth_proxy/defaults/main.yml
 
 sed -i.bak "s/__CONTIV_VERSION__/$contiv_version/g" $contiv_yaml
 sed -i.bak "s/__API_PROXY_VERSION__/$auth_proxy_version/g" $auth_proxy_yaml
-sed -i.bak "s/__ACI_GW_IMAGE__/$aci_gw_image/g" $aci_gw_yaml
+sed -i.bak "s/__ACI_GW_VERSION__/$aci_gw_version/g" $aci_gw_yaml
 sed -i.bak "s/__ETCD_VERSION__/$etcd_version/g" $etcd_yaml
 
 sed -i.bak "s/__DOCKER_VERSION__/$docker_version/g" $ansible_env
 sed -i.bak "s/__CONTIV_VERSION__/$contiv_version/g" $ansible_env
-sed -i.bak "s/__ACI_GW_IMAGE__/$aci_gw_image/g" $ansible_env
+sed -i.bak "s/__ACI_GW_VERSION__/$aci_gw_version/g" $ansible_env
 sed -i.bak "s/__API_PROXY_VERSION__/$auth_proxy_version/g" $ansible_env
 sed -i.bak "s/__ETCD_VERSION__/$etcd_version/g" $ansible_env
 
@@ -111,7 +111,7 @@ cp -rf ansible $output_dir/
 cp -rf scripts $output_dir/
 echo sed -i.bak "s/__API_PROXY_VERSION__/$auth_proxy_version/g" $ansible_proxy_spec
 sed -i.bak "s/__API_PROXY_VERSION__/$auth_proxy_version/g" $ansible_proxy_spec
-docker build -t contiv/install:$auth_proxy_version -f $ansible_spec $output_dir
+docker build --no-cache -t contiv/install:$auth_proxy_version -f $ansible_spec $output_dir
 rm -rf $output_dir/ansible
 rm -rf $output_dir/scripts
 if [ "$DEV_IMAGE_NAME" = "$VERSION" ]; then
