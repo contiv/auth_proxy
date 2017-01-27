@@ -1,0 +1,107 @@
+#%RAML 1.0
+title: Contiv
+description: Contiv API Specification
+version: v1
+baseUri:
+  value: http://{serverfqdn}:10000/{version}
+  (rediractable): true
+baseUriParameters:
+  serverfqdn:
+    type: string
+protocols: [  HTTPS ]
+mediaType: [ application/json ]
+documentation:
+  - title: Contiv API Specification
+    content: ''
+
+uses:
+  local_user: contiv/libraries/local_user.raml
+
+resourceTypes:
+  collection:
+    description: A collection of <<resourcePathName>>
+    get:
+      description: returns a list of <<resourcePathName|!singularize>>.
+      responses:
+        200:
+          body:
+            application/json:
+              type: <<resourcePathName|!singularize>>.<<resourcePathName>>
+    post:
+      description: | 
+        Add a new <<resourcePathName|!singularize>>.
+      body:
+        application/json:
+          type: <<resourcePathName|!singularize>>.<<resourcePathName|!singularize>>
+      responses:
+        201:
+        404:
+  collection-item:
+    description: Entity representing a <<resourcePathName|!singularize>>
+    get:
+      description: returns a <<resourcePathName|!singularize>>.
+      responses:
+        200:
+          body:
+            application/json:
+              type: <<resourcePathName|!singularize>>.<<resourcePathName|!singularize>>
+        404:
+          body:
+            application/json: |
+              {"message": "<<resourcePathName|!singularize>> not found" }
+    patch:
+      description: updates a <<resourcePathName|!singularize>>.
+      body:
+        application/json: 
+          type: <<resourcePathName|!singularize>>.upd_<<resourcePathName|!singularize>>
+      responses:
+        200:
+          body:
+            application/json:
+              type: <<resourcePathName|!singularize>>.<<resourcePathName|!singularize>>
+        404:
+          body:
+            application/json: |
+              {"message": "<<resourcePathName|!singularize>> not found" }
+    delete:
+      description: deletes a <<resourcePathName|!singularize>>.
+      responses:
+        204:
+
+annotationTypes:
+  info:
+    properties:
+      license:
+        type: string
+        enum: [ "Apache 2.0" ]
+    allowedTargets: API
+  rediractable: boolean
+
+securitySchemes:
+  custom_scheme:
+    description: |
+      A custom security scheme for authenticating requests.
+    type: x-custom
+    describedBy:
+      headers:
+        X-Auth-Token:
+          description: |
+            Used to send a custom token.
+          type: string
+      responses:
+        401:
+          description: |
+            Bad Token.
+        403:
+          description: | 
+            Forbidden.
+
+securedBy: custom_scheme
+
+/local_users:
+  type: collection
+  displayName: Local Users
+
+  /{username}:
+    type: collection-item
+    displayName: Local User
