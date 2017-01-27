@@ -480,18 +480,25 @@ func (s *systemtestSuite) TestAdminRoleRequired(c *C) {
 		// login as username, should succeed
 		testuserToken := loginAs(c, username, username)
 
-		// try calling an admin api (e.g., update user) using test user token
-		// This should fail with forbidden since user doesn't have admin access
+		// update user is no longer adminOnly. so update using the user's token should pass
+		// Only ADD and DELETE is adminOnly now.
 		data := `{"first_name":"Temp", "last_name": "User"}`
 		endpoint := proxy.V1Prefix + "/local_users/" + username
 		resp, _ := proxyPatch(c, testuserToken, endpoint, []byte(data))
+		// StatusCode is no longer 403 as the user is allowed to update his/her details
+		c.Assert(resp.StatusCode, Equals, 200)
+
+		// try updating other user details
+		endpoint = proxy.V1Prefix + "/local_users/unknown"
+		resp, _ = proxyPatch(c, testuserToken, endpoint, []byte(data))
+		// user is not allowed to update other user details
 		c.Assert(resp.StatusCode, Equals, 403)
 
 		// grant admin access to username
 		data = `{"PrincipalName":"` + username + `","local":true,"role":"admin","tenantName":""}`
 		authz := s.addAuthorization(c, data, adToken)
 
-		// retry calling the admin api, it should succeed now
+		// retry calling the update api, it should succeed even now
 		data = `{"first_name":"Temp", "last_name": "User"}`
 		respBody := `{"username":"` + username + `","first_name":"Temp","last_name":"User","disable":false}`
 		s.updateLocalUser(c, username, data, respBody, testuserToken)
@@ -499,10 +506,41 @@ func (s *systemtestSuite) TestAdminRoleRequired(c *C) {
 		// delete authorization
 		s.deleteAuthorization(c, authz.AuthzUUID, adToken)
 
-		// calling admin api should fail again withouth requiring new token (since cached value
-		// of role authz in token isn't used)
+		// update user is no longer adminOnly. so update using the user token should pass
 		endpoint = proxy.V1Prefix + "/local_users/" + username
 		resp, _ = proxyPatch(c, testuserToken, endpoint, []byte(data))
-		c.Assert(resp.StatusCode, Equals, 403)
+		c.Assert(resp.StatusCode, Equals, 200)
+
+		// Below tests the adminOnly api
+		s.testAdminOnlyAPI(c)
 	})
+}
+
+// testAdminOnlyAPI helper function TestAdminRoleRequired
+func (s *systemtestSuite) testAdminOnlyAPI(c *C) {
+	testuserToken := loginAs(c, username, username)
+
+	// try calling an admin api (e.g., add user) using test user token
+	// This should fail with forbidden since user doesn't have admin access
+	data := `{"username":"test_xyz", "password":"test", "first_name":"Temp", "last_name": "User"}`
+	endpoint := proxy.V1Prefix + "/local_users"
+	resp, _ := proxyPost(c, testuserToken, endpoint, []byte(data))
+	c.Assert(resp.StatusCode, Equals, 403)
+
+	// grant admin access to username
+	data = `{"PrincipalName":"` + username + `","local":true,"role":"admin","tenantName":""}`
+	authz := s.addAuthorization(c, data, adToken)
+
+	// retry calling the admin api, it should succeed now
+	data = `{"username":"test_xyz", "password":"test", "first_name":"Temp", "last_name": "User"}`
+	respBody := `{"username":"test_xyz","first_name":"Temp","last_name":"User","disable":false}`
+	s.addLocalUser(c, data, respBody, testuserToken)
+
+	// delete authorization
+	s.deleteAuthorization(c, authz.AuthzUUID, adToken)
+
+	// calling admin api should fail again without requiring new token (since cached value
+	// of role authz in token isn't used)
+	resp, _ = proxyPost(c, testuserToken, endpoint, []byte(data))
+	c.Assert(resp.StatusCode, Equals, 403)
 }
