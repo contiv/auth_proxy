@@ -213,6 +213,11 @@ func authorizedUserOnly(handler func(http.ResponseWriter, *http.Request)) func(h
 		if token != nil {
 			vars := mux.Vars(req)
 			// Check that caller has admin privileges or the caller is user himself
+
+			// NOTE: We only support updates to local user. Updates to LDAP user can be done through AD.
+			// There is a possibility that the same username can exists in both local and LDAP systems.
+			// In such case, it's possible that one user(LDAP) can update/attempt to update the details of the other(local).
+			// To avoid such scenarios, LDAP users are represented by AD domain name (as username), this distinguishes local users from LDAP users.
 			if token.IsSuperuser() || vars["username"] == token.GetClaim(auth.UsernameClaimKey) {
 				handler(w, req)
 				return
