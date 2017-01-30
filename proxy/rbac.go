@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strings"
 
 	"github.com/contiv/auth_proxy/auth"
 	"github.com/contiv/auth_proxy/common"
@@ -99,7 +100,16 @@ func enforceRBAC(s *Server) func(http.ResponseWriter, *http.Request) {
 		resource := vars["resource"]
 		switch resource {
 		// admin-only netmaster resources
-		case "aciGws", "Bgps", "globals":
+		case "aciGws", "Bgps":
+			authError(w, http.StatusForbidden, "Insufficient privileges")
+		case "globals":
+			rName := vars["name"]
+			// allow GET access on /inspect/globals/global to everyone
+			if strings.Contains(req.RequestURI, "/inspect/") && req.Method == "GET" && !common.IsEmpty(rName) && rName == "global" {
+				proxyRequest(s, req, w, token, auth.NullFilter)
+				return
+			}
+
 			authError(w, http.StatusForbidden, "Insufficient privileges")
 		case "tenants":
 			if req.Method == "GET" {
