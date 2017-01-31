@@ -581,7 +581,7 @@ func addLdapConfiguration(w http.ResponseWriter, req *http.Request) {
 
 	ls := &types.LdapConfiguration{}
 	if err := json.Unmarshal(body, ls); err != nil {
-		serverError(w, errors.New("Failed to unmarshal user info. from request body: "+err.Error()))
+		serverError(w, errors.New("Failed to unmarshal LDAP info. from request body: "+err.Error()))
 		return
 	}
 

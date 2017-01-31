@@ -240,6 +240,15 @@ func proxyPost(c *C, token, path string, body []byte) (*http.Response, []byte) {
 	return resp, body
 }
 
+// proxyPut is a convenience function which sends an insecure HTTPS PUT
+// request with the specified body to the proxy.
+func proxyPut(c *C, token, path string, body []byte) (*http.Response, []byte) {
+	resp, body, err := insecureJSONBody(token, path, "PUT", body)
+	c.Assert(err, IsNil)
+
+	return resp, body
+}
+
 // insecureJSONBody sends an insecure HTTPS POST request with the specified
 // JSON payload as the body.
 func insecureJSONBody(token, path, requestType string, body []byte) (*http.Response, []byte, error) {
