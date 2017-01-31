@@ -2,6 +2,7 @@ package systemtests
 
 import (
 	"encoding/json"
+	"net/http"
 
 	"github.com/contiv/auth_proxy/common/types"
 	"github.com/contiv/auth_proxy/db"
@@ -106,6 +107,175 @@ func (s *systemtestSuite) TestBuiltInAdminAuthorizationImmortality(c *C) {
 	c.Assert(resp.StatusCode, Equals, 400)
 }
 
+// TestAuthorizationAddEndpoint tests add authorization endpoints
+func (s *systemtestSuite) TestAuthorizationAddEndpoint(c *C) {
+	// this also sets adToken
+	s.addUser(c, username)
+
+	runTest(func(ms *MockServer) {
+		userToken := loginAs(c, username, username)
+		endpoint := proxy.V1Prefix + "/authorizations"
+
+		// add authorization for the built-in admin user; it's an illegal operation
+		data := `{"PrincipalName":"admin","local":true,"role":"admin","tenantName":""}`
+		resp, body := proxyPost(c, adToken, endpoint, []byte(data))
+		c.Assert(resp.StatusCode, Equals, http.StatusBadRequest)
+		c.Assert(string(body), Matches, ".*illegal operation.*")
+
+		// add authorization with empty principal name; bad request
+		data = `{"PrincipalName":"","local":true,"role":"admin","tenantName":""}`
+		resp, body = proxyPost(c, adToken, endpoint, []byte(data))
+		c.Assert(resp.StatusCode, Equals, http.StatusBadRequest)
+		c.Assert(string(body), Matches, ".*principal name is missing.*")
+
+		// add authorization with invalid role; bad request
+		data = `{"PrincipalName":"` + username + `","local":true,"role":"xxxx","tenantName":""}`
+		resp, body = proxyPost(c, adToken, endpoint, []byte(data))
+		c.Assert(resp.StatusCode, Equals, http.StatusBadRequest)
+		c.Assert(string(body), Matches, ".*illegal role specified.*")
+
+		// add ops authz with empty tenant name
+		data = `{"PrincipalName":"` + username + `","local":true,"role":"ops","tenantName":""}`
+		resp, body = proxyPost(c, adToken, endpoint, []byte(data))
+		// bad request; tenantName can't be empty for ops role
+		c.Assert(resp.StatusCode, Equals, http.StatusBadRequest)
+		c.Assert(string(body), Matches, ".*ops role requires a tenant to be specified.*")
+		// add authorization using user token
+		resp, body = proxyPost(c, userToken, endpoint, []byte(data))
+		c.Assert(resp.StatusCode, Equals, http.StatusForbidden)
+		c.Assert(string(body), Matches, ".*access denied.*")
+
+		data = `{"PrincipalName":"ops","local":true,"role":"admin","tenantName":""}`
+		// add authorization for built-in ops user using admin token
+		s.addAuthorization(c, data, adToken)
+
+		// add authorization for `username`
+		data = `{"PrincipalName":"` + username + `","local":true,"role":"ops","tenantName":"default"}`
+		// add authorization for `username` using admin token
+		s.addAuthorization(c, data, adToken)
+
+		// add admin authorization for `username`
+		data = `{"PrincipalName":"` + username + `","local":true,"role":"admin","tenantName":""}`
+		authz := s.addAuthorization(c, data, adToken)
+
+		// `username` now became admin; so user is allowed to perform CRUD on authZ
+		// add authZ for ldap group
+		data = `{"PrincipalName":"cn=test,cn=Users,dc=contiv,dc=local","local":false,"role":"ops","tenantName":"defult"}`
+		s.addAuthorization(c, data, userToken)
+
+		// delete user's admin authorization
+		s.deleteAuthorization(c, authz.AuthzUUID, adToken)
+
+		data = `{"PrincipalName":"cn=test,cn=Users,dc=contiv,dc=local","local":false,"role":"ops","tenantName":"defult"}`
+		// user doesn't hold admin privileges anymore, so the following request will be denied
+		resp, body = proxyPost(c, userToken, endpoint, []byte(data))
+		c.Assert(resp.StatusCode, Equals, http.StatusForbidden)
+		c.Assert(string(body), Matches, ".*access denied.*")
+
+	})
+}
+
+// TestAuthorizationDeleteEndpoint tests authorization delete endpoint
+func (s *systemtestSuite) TestAuthorizationDeleteEndpoint(c *C) {
+	s.addUser(c, username)
+
+	runTest(func(ms *MockServer) {
+		userToken := loginAs(c, username, username)
+		endpoint := proxy.V1Prefix + "/authorizations"
+
+		// add authorization for built-in ops user using admin token
+		data := `{"PrincipalName":"ops","local":true,"role":"admin","tenantName":""}`
+		opsAuthz := s.addAuthorization(c, data, adToken)
+
+		opsToken := loginAs(c, "ops", "ops")
+
+		// add, delete and get the authz
+		data = `{"PrincipalName":"` + username + `","local":true,"role":"ops","tenantName":"default"}`
+		// add authorization for `username` using ops token
+		authz := s.addAuthorization(c, data, opsToken)
+		s.deleteAuthorization(c, authz.AuthzUUID, opsToken)
+		resp, body := proxyGet(c, opsToken, endpoint+"/"+authz.AuthzUUID)
+		c.Assert(resp.StatusCode, Equals, http.StatusNotFound)
+		c.Assert(len(body), Equals, 0)
+
+		// delete authz of built-in ops user
+		s.deleteAuthorization(c, opsAuthz.AuthzUUID, adToken)
+		resp, body = proxyGet(c, adToken, endpoint+"/"+authz.AuthzUUID)
+		c.Assert(resp.StatusCode, Equals, http.StatusNotFound)
+		c.Assert(len(body), Equals, 0)
+
+		// non-admins cannot access this endpoint
+		resp, _ = proxyDelete(c, userToken, endpoint+"/xxx")
+		c.Assert(resp.StatusCode, Equals, http.StatusForbidden)
+
+		// test 404
+		resp, _ = proxyDelete(c, adToken, endpoint+"/xxx")
+		c.Assert(resp.StatusCode, Equals, http.StatusNotFound)
+
+	})
+}
+
+// TestAuthorizationGetEndpoints tests authorization get endpoints (/authorizations, /authorizations/{ID})
+func (s *systemtestSuite) TestAuthorizationGetEndpoints(c *C) {
+	s.addUser(c, username)
+
+	runTest(func(ms *MockServer) {
+		userToken := loginAs(c, username, username)
+		endpoint := proxy.V1Prefix + "/authorizations"
+
+		// built-in admin user is always associated with a authz
+		c.Assert(len(s.getAuthorizations(c, adToken)) >= 1, Equals, true)
+
+		data := `{"PrincipalName":"` + username + `","local":true,"role":"ops","tenantName":"default"}`
+		// add authorization for `username` using admin token
+		authz := s.addAuthorization(c, data, adToken)
+		c.Assert(authz, DeepEquals, s.getAuthorization(c, authz.AuthzUUID, adToken))
+
+		// non-admins cannot access this endpoint
+		resp, _ := proxyGet(c, userToken, endpoint)
+		c.Assert(resp.StatusCode, Equals, http.StatusForbidden)
+
+		// add admin authz for `username`
+		data = `{"PrincipalName":"` + username + `","local":true,"role":"admin","tenantName":"default"}`
+		authz = s.addAuthorization(c, data, adToken)
+		c.Assert(authz.Role, Equals, "admin")
+		// tenantName gets ignored for admin authzs
+		c.Assert(authz.TenantName, Equals, "")
+		c.Assert(authz, DeepEquals, s.getAuthorization(c, authz.AuthzUUID, adToken))
+
+		// since `username` is an admin after the earlier update, he can access admin APIs now
+		data = `{"PrincipalName":"ops","local":true,"role":"admin","tenantName":""}`
+		s.addAuthorization(c, data, userToken)
+
+		// admin API accessed using user token
+		c.Assert(len(s.getAuthorizations(c, userToken)) >= 4, Equals, true)
+
+		// NOTE: there is no straight forward to demote a user from admin to ops.
+		// rather the same can be achieved using DELETE + ADD
+		s.deleteAuthorization(c, authz.AuthzUUID, userToken)
+		resp, _ = proxyGet(c, adToken, endpoint+"/"+authz.AuthzUUID)
+		c.Assert(resp.StatusCode, Equals, http.StatusNotFound)
+
+		// non-admins cannot access this endpoint
+		resp, _ = proxyGet(c, userToken, endpoint)
+		c.Assert(resp.StatusCode, Equals, http.StatusForbidden)
+
+		// non-admins cannot access `*/authzUUID` endpoint
+		resp, _ = proxyGet(c, userToken, endpoint+"/"+authz.AuthzUUID)
+		c.Assert(resp.StatusCode, Equals, http.StatusForbidden)
+
+		// delete all authorizations and try get
+		// NOTE: Built-in admin authorizations cannot be deleted
+		for _, authz := range s.getAuthorizations(c, adToken) {
+			resp, _ = proxyDelete(c, adToken, endpoint+"/"+authz.AuthzUUID)
+			c.Assert(resp.StatusCode == http.StatusNoContent || resp.StatusCode == http.StatusBadRequest, Equals, true)
+		}
+
+		c.Assert(len(s.getAuthorizations(c, adToken)), Equals, 1)
+
+	})
+}
+
 // addAuthorization helper function for the tests
 func (s *systemtestSuite) addAuthorization(c *C, data, token string) proxy.GetAuthorizationReply {
 	endpoint := proxy.V1Prefix + "/authorizations"
@@ -128,6 +298,18 @@ func (s *systemtestSuite) getAuthorization(c *C, authzUUID, token string) proxy.
 	authz := proxy.GetAuthorizationReply{}
 	c.Assert(json.Unmarshal(body, &authz), IsNil)
 	return authz
+}
+
+// getAuthorizations helper function for the tests
+func (s *systemtestSuite) getAuthorizations(c *C, token string) []proxy.GetAuthorizationReply {
+	endpoint := proxy.V1Prefix + "/authorizations"
+
+	resp, body := proxyGet(c, token, endpoint)
+	c.Assert(resp.StatusCode, Equals, 200)
+
+	authzs := []proxy.GetAuthorizationReply{}
+	c.Assert(json.Unmarshal(body, &authzs), IsNil)
+	return authzs
 }
 
 // deleteAuthorization helper function for the tests
