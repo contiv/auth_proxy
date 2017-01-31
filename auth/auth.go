@@ -29,9 +29,10 @@ func Authenticate(username, password string) (string, error) {
 	// Same username can be there in both local setup and LDAP.
 	// So, we try LDAP if `access is denied` from local authentication; coz, the same user(name) could also be part of LDAP.
 	if err == auth_errors.ErrUserNotFound || err == auth_errors.ErrAccessDenied {
-		userPrincipals, err = ldap.Authenticate(username, password)
+		fqdn, userPrincipals, err := ldap.Authenticate(username, password)
+		// fqdn represents fully qualified domain name of the given `username`
 		if err == nil {
-			return generateToken(userPrincipals, username) // ldap authentication succeeded!
+			return generateToken(userPrincipals, fqdn) // ldap authentication succeeded!
 		}
 	}
 	return "", err // error from authentication
@@ -52,7 +53,7 @@ func generateToken(principals []string, username string) (string, error) {
 	}
 
 	// finally, add username to the token
-	authZ.AddClaim("username", username)
+	authZ.AddClaim(UsernameClaimKey, username)
 
 	return authZ.Stringify()
 }

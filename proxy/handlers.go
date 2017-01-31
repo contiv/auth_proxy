@@ -174,6 +174,64 @@ func versionHandler(version string) func(http.ResponseWriter, *http.Request) {
 	}
 }
 
+// parseReqToken parses the token (from HTTP request)
+// params:
+//  w: http.ResponseWriter object
+//  req: *http.Request object
+// return values:
+//  *auth.Token: parsed token or nill
+func parseReqToken(w http.ResponseWriter, req *http.Request) *auth.Token {
+	// retrieve token from request header
+	tokenStr, err := getTokenFromHeader(req)
+	if err != nil {
+		// token cannot be retrieved from header
+		httpStatus := http.StatusInternalServerError
+		httpResponse := []byte(auth_errors.ErrUnauthorized.Error())
+		processStatusCodes(httpStatus, httpResponse, w)
+		return nil
+	}
+
+	// convert token from string to Token type
+	token, err := auth.ParseToken(tokenStr)
+	if err != nil {
+		httpStatus := http.StatusInternalServerError
+		httpResponse := []byte(auth_errors.ErrParsingToken.Error())
+		processStatusCodes(httpStatus, httpResponse, w)
+		return nil
+	}
+
+	return token
+}
+
+// authorizedUserOnly takes a HTTP handler and ensures that the client's token has
+// enough privileges before handling the request.
+// if the client is not an admin or the user himself, the request attempt is logged and a 403 is returned.
+func authorizedUserOnly(handler func(http.ResponseWriter, *http.Request)) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, req *http.Request) {
+
+		token := parseReqToken(w, req)
+		if token != nil {
+			vars := mux.Vars(req)
+			// Check that caller has admin privileges or the caller is user himself
+
+			// NOTE: We only support updates to local user. Updates to LDAP user can be done through AD.
+			// There is a possibility that the same username can exists in both local and LDAP systems.
+			// In such case, it's possible that one user(LDAP) can update/attempt to update the details of the other(local).
+			// To avoid such scenarios, LDAP users are represented by AD domain name (as username), this distinguishes local users from LDAP users.
+			if token.IsSuperuser() || vars["username"] == token.GetClaim(auth.UsernameClaimKey) {
+				handler(w, req)
+				return
+			}
+
+			log.Error("unauthorized: caller doesn't have enough privileges")
+
+			httpStatus := http.StatusForbidden
+			httpResponse := []byte("access denied")
+			processStatusCodes(httpStatus, httpResponse, w)
+		}
+	}
+}
+
 // adminOnly takes a HTTP handler and ensures that the client's token has admin
 // privileges before allowing the handler to run its code.
 // if the client is not an admin, the request attempt is logged and a 403 is returned.
@@ -181,39 +239,24 @@ func versionHandler(version string) func(http.ResponseWriter, *http.Request) {
 func adminOnly(handler func(http.ResponseWriter, *http.Request)) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, req *http.Request) {
 
-		// retrieve token from request header
-		tokenStr, err := getTokenFromHeader(req)
-		if err != nil {
-			// token cannot be retrieved from header
-			httpStatus := http.StatusInternalServerError
-			httpResponse := []byte(auth_errors.ErrUnauthorized.Error())
-			processStatusCodes(httpStatus, httpResponse, w)
-			return
+		token := parseReqToken(w, req)
+		if token != nil {
+			// Check that caller has admin privileges
+			if !token.IsSuperuser() {
+				// TODO: log the violator's details here
+				// TODO: consider having a separate security logger which
+				//       goes to a separate file for auditing purposes
+				log.Error("unauthorized: caller doesn't have admin privileges")
+
+				httpStatus := http.StatusForbidden
+				httpResponse := []byte("access denied")
+				processStatusCodes(httpStatus, httpResponse, w)
+				return
+			}
+
+			// if there were no errors, call the handler we wrapped
+			handler(w, req)
 		}
-
-		// convert token from string to Token type
-		token, err := auth.ParseToken(tokenStr)
-		if err != nil {
-			httpStatus := http.StatusInternalServerError
-			httpResponse := []byte(auth_errors.ErrParsingToken.Error())
-			processStatusCodes(httpStatus, httpResponse, w)
-			return
-		}
-
-		// Check that caller has admin privileges
-		if !token.IsSuperuser() {
-			// TODO: log the violator's details here
-			// TODO: consider having a separate security logger which
-			//       goes to a separate file for auditing purposes
-			log.Error("unauthorized: caller doesn't have admin privileges")
-
-			httpStatus := http.StatusForbidden
-			httpResponse := []byte("access denied")
-			processStatusCodes(httpStatus, httpResponse, w)
-		}
-
-		// if there were no errors, call the handler we wrapped
-		handler(w, req)
 	}
 }
 

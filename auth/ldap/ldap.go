@@ -51,17 +51,18 @@ type Manager struct {
 //  username: username to authenticate
 //  password: password of the user
 // return values:
+//  string: active directory DN; fully qualified domain name of the given user
 //  []string: list of principals (LDAP group names that the user belongs)
 //  ErrLDAPConfigurationNotFound if the config is not found or as returned by ldapManager.Authenticate
-func Authenticate(username, password string) ([]string, error) {
+func Authenticate(username, password string) (string, []string, error) {
 	cfg, err := db.GetLdapConfiguration()
 	if err != nil {
-		return nil, err
+		return "", nil, err
 	}
 
 	cfg.ServiceAccountPassword, err = common.Decrypt(cfg.ServiceAccountPassword)
 	if err != nil {
-		return nil, err
+		return "", nil, err
 	}
 
 	if cfg != nil {
@@ -70,7 +71,7 @@ func Authenticate(username, password string) ([]string, error) {
 	}
 
 	log.Errorf("LDAP/AD configuration not found")
-	return nil, auth_errors.ErrLDAPConfigurationNotFound
+	return "", nil, auth_errors.ErrLDAPConfigurationNotFound
 }
 
 // Authenticate authenticates the given username and password against `AD` using LDAP client
@@ -78,9 +79,10 @@ func Authenticate(username, password string) ([]string, error) {
 //  username: username to authenticate
 //  password: password of the user
 // return values:
+//  string: active directory DN; fully qualified domain name of the given user
 //  []string containing LDAP group names of the user on successful authentication else nil
 //  error: nil on successful authentication otherwise ErrLDAPAccessDenied, ErrUserNotFound, etc.
-func (lm *Manager) Authenticate(username, password string) ([]string, error) {
+func (lm *Manager) Authenticate(username, password string) (string, []string, error) {
 	// list of attributes to be fetched from the matching records
 	var attributes = []string{
 		"memberof",
@@ -89,7 +91,7 @@ func (lm *Manager) Authenticate(username, password string) ([]string, error) {
 	// establish a connection with AD server
 	ldapConn, err := lm.connect()
 	if err != nil {
-		return nil, err
+		return "", nil, err
 	}
 
 	defer ldapConn.Close()
@@ -97,7 +99,7 @@ func (lm *Manager) Authenticate(username, password string) ([]string, error) {
 	// bind AD service account to perform search using the connection established above
 	if err := ldapConn.Bind(lm.Config.ServiceAccountDN, lm.Config.ServiceAccountPassword); err != nil {
 		log.Errorf("LDAP bind operation failed for AD service account %q: %v", lm.Config.ServiceAccountDN, err)
-		return nil, auth_errors.ErrLDAPAccessDenied
+		return "", nil, auth_errors.ErrLDAPAccessDenied
 	}
 
 	searchRequest := ldap.NewSearchRequest(
@@ -111,32 +113,32 @@ func (lm *Manager) Authenticate(username, password string) ([]string, error) {
 	searchRes, err := ldapConn.Search(searchRequest)
 	if err != nil {
 		log.Errorf("LDAP search operation failed for %q: %v", username, err)
-		return nil, auth_errors.ErrLDAPAccessDenied
+		return "", nil, auth_errors.ErrLDAPAccessDenied
 	} else if len(searchRes.Entries) == 0 { // none matched the search criteria
 		log.Errorf("User %q not found in AD server", username)
-		return nil, auth_errors.ErrUserNotFound
+		return "", nil, auth_errors.ErrUserNotFound
 	} else if len(searchRes.Entries) > 1 { // > 1 user found with the given search criteria
 		log.Errorf("Found %q entries while searching for %q", len(searchRes.Entries), username)
-		return nil, auth_errors.ErrLDAPMultipleEntries
+		return "", nil, auth_errors.ErrLDAPMultipleEntries
 	}
 
 	// validate user `password`
 	adUsername := searchRes.Entries[0].DN                       // this need not be specified in attribute list; results will always carry DN
 	if err := ldapConn.Bind(adUsername, password); err != nil { // bind using the given username and password
 		log.Errorf("LDAP bind operation failed for AD user account: %v", err)
-		return nil, auth_errors.ErrLDAPAccessDenied
+		return "", nil, auth_errors.ErrLDAPAccessDenied
 	}
 
 	// get user AD groups
 	groups, err := lm.getUserGroups(ldapConn, searchRes.Entries[0].GetAttributeValues("memberOf"))
 	if err != nil {
-		return nil, err
+		return "", nil, err
 	}
 
 	log.Debugf("Authorized groups:%#v", groups)
 	log.Info("AD authentication successful")
 
-	return groups, nil
+	return adUsername, groups, nil
 }
 
 // getUserGroups performs a nested search on the given first-level user groups to uncover all the groups that the user is part of.
