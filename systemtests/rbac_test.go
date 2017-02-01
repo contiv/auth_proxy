@@ -403,6 +403,32 @@ func (s *systemtestSuite) TestRBACOnPOSTRequest(c *C) {
 
 }
 
+// test /globals/global endpoint
+func (s *systemtestSuite) TestRBACOnGlobalEndpoint(c *C) {
+	testUsr := "test_global"
+	s.addUser(c, testUsr)
+
+	runTest(func(ms *MockServer) {
+		userToken := loginAs(c, testUsr, testUsr)
+
+		// test /inspect/globals/global/
+		endpoint := "/api/v1/inspect/globals/global/"
+		respData := `{"foo":"bar"}`
+		ms.AddHardcodedResponse(endpoint, []byte(respData))
+
+		// test using admin token
+		resp, body := proxyGet(c, adToken, endpoint)
+		c.Assert(resp.StatusCode, Equals, 200)
+		c.Assert(string(body), DeepEquals, string(respData))
+
+		// test using `testUsr` token
+		resp, body = proxyGet(c, userToken, endpoint)
+		c.Assert(resp.StatusCode, Equals, 200)
+		c.Assert(string(body), DeepEquals, string(respData))
+
+	})
+}
+
 // addUser helper function that adds a new local user to the system
 func (s *systemtestSuite) addUser(c *C, username string) {
 	// add new local user
