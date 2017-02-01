@@ -15,7 +15,7 @@ const (
 	// XXX: Yuva's dev server
 	ldapServer        = "10.193.231.158"
 	ldapPassword      = "C1ntainer$"
-	ldapAdminPassword = "C1ntainer$!"
+	ldapAdminPassword = "C1ntainer$~"
 
 	// use this when testing unauthenticated endpoints instead of ""
 	noToken = ""
@@ -74,8 +74,27 @@ func (s *systemtestSuite) TestLogin(c *C) {
 		// try logging in using `admin` account
 		loginAs(c, "Administrator", ldapAdminPassword)
 
+		// test login using SSL/TLS
+		ldapConfig = `{"port":5678, "start_tls":true, "insecure_skip_verify":true}`
+		s.updateLdapConfiguration(c, adToken, ldapConfig)
+
+		// try logging in using `service` account
+		loginAs(c, "saccount", ldapPassword)
+
+		// try logging in using `temp` account; this fails as the user is only associated with primary group
+		// more details can be found here: auth/ldap/ldap.go
+		token, resp, err = login("temp", ldapPassword)
+		c.Assert(token, Equals, "")
+		c.Assert(resp.StatusCode, Equals, 401)
+		c.Assert(err, IsNil)
+
+		// try logging in using `admin` account
+		loginAs(c, "Administrator", ldapAdminPassword)
+
 		s.deleteLdapConfiguration(c, adToken)
+
 	})
+
 }
 
 // TestVersion tests that /version endpoint responds with something sane.

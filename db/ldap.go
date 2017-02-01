@@ -38,18 +38,39 @@ func getLdapConfiguration(stateDrv types.StateDriver) (*types.LdapConfiguration,
 // UpdateLdapConfiguration updates the existing LDAP configuration with the new configuration given.
 // params:
 //  ldapConfiguration: representation of the LDAP configuration to be updated to data store
+//  existingPassword: existing LDAP password (encrypted) from the data store
 // return values:
 //  error: nil on successful update, otherwise anything as returned
 //         by the consecutive function calls or any relevant custom error
-func UpdateLdapConfiguration(ldapConfiguration *types.LdapConfiguration) error {
-	err := DeleteLdapConfiguration()
+func UpdateLdapConfiguration(ldapConfiguration *types.LdapConfiguration, existingPassword string) error {
+	stateDrv, err := state.GetStateDriver()
+	if err != nil {
+		return err
+	}
+
+	_, err = getLdapConfiguration(stateDrv)
 	switch err {
 	case nil:
-		return AddLdapConfiguration(ldapConfiguration)
-	case auth_errors.ErrKeyNotFound:
-		return err
+		// update password
+		if ldapConfiguration.ServiceAccountPassword != existingPassword {
+			ldapConfiguration.ServiceAccountPassword, err = common.Encrypt(ldapConfiguration.ServiceAccountPassword)
+			if err != nil {
+				return fmt.Errorf("Failed to encrypt LDAP service account password: %#v", err)
+			}
+		}
+
+		val, err := json.Marshal(ldapConfiguration)
+		if err != nil {
+			return fmt.Errorf("Failed to marshal LDAP configuration %#v, %#v", ldapConfiguration, err)
+		}
+
+		if err := stateDrv.Write(GetPath(RootLdapConfiguration), val); err != nil {
+			return fmt.Errorf("Failed to update LDAP setting to data store: %#v", err)
+		}
+
+		return nil
 	default:
-		return fmt.Errorf("Failed to delete LDAP configuration from data store : %#v", err)
+		return err
 	}
 
 }

@@ -72,7 +72,7 @@ func updateLdapConfigurationInfo(ldapConfiguration *types.LdapConfiguration, act
 		ldapConfigurationUpdateObj.InsecureSkipVerify = ldapConfiguration.InsecureSkipVerify
 	}
 
-	err := db.UpdateLdapConfiguration(ldapConfigurationUpdateObj)
+	err := db.UpdateLdapConfiguration(ldapConfigurationUpdateObj, actual.ServiceAccountPassword)
 
 	switch err {
 	case nil:
@@ -86,8 +86,8 @@ func updateLdapConfigurationInfo(ldapConfiguration *types.LdapConfiguration, act
 	case auth_errors.ErrKeyNotFound:
 		return http.StatusNotFound, nil
 	default:
-		log.Debugf("Failed to delete LDAP configuration: %#v", err)
-		return http.StatusInternalServerError, []byte("Failed to delete LDAP setting from the data store")
+		log.Debugf("Failed to update LDAP configuration: %#v", err)
+		return http.StatusInternalServerError, []byte("Failed to update LDAP settings to the data store")
 	}
 
 }
@@ -109,7 +109,7 @@ func updateLdapConfigurationHelper(ldapConfiguration *types.LdapConfiguration) (
 		return http.StatusNotFound, nil
 	default:
 		log.Debugf("Failed to retrieve LDAP configuration: %#v", err)
-		return http.StatusInternalServerError, []byte("Failed to retrieve LDAP setting from the data store")
+		return http.StatusInternalServerError, []byte("Failed to update LDAP settings to the data store")
 	}
 
 }
