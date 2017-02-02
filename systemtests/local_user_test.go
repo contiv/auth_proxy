@@ -1,14 +1,17 @@
 package systemtests
 
 import (
+	"net/http"
+
 	"github.com/contiv/auth_proxy/common/types"
 	"github.com/contiv/auth_proxy/proxy"
 	. "gopkg.in/check.v1"
 )
 
 var (
-	builtInUsers = []string{types.Admin.String(), types.Ops.String()}
-	newUsers     = []string{"xxx", "yyy", "zzz"}
+	builtInUsers     = []string{types.Admin.String(), types.Ops.String()}
+	newUsers         = []string{"xxx", "yyy-4", "zzz_@"}
+	invalidUsernames = []string{"test$!", "%6ADF7*)(", "docstest6^$)_$#", "~123$sdsdf"}
 )
 
 // TestBuiltinLocalUsers tests that builtInUsers are pre-defined in the system
@@ -59,6 +62,15 @@ func (s *systemtestSuite) TestLocalUserEndpoints(c *C) {
 			c.Assert(len(body), Equals, 0)
 		}
 
+		endpoint := proxy.V1Prefix + "/local_users"
+
+		// test usernames with special characters
+		for _, username := range invalidUsernames {
+			data := `{"username": "` + username + `", "password":"test"}`
+			resp, body := proxyPost(c, token, endpoint, []byte(data))
+			c.Assert(resp.StatusCode, Equals, http.StatusBadRequest)
+			c.Assert(string(body), Matches, ".*Invalid username.*")
+		}
 	})
 }
 
