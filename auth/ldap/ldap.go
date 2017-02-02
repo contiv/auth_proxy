@@ -218,8 +218,9 @@ func (lm *Manager) connect() (*ldap.Conn, error) {
 	}
 
 	// switch to TLS if specified; this needs to have certs in place
-	// TODO: yet to be tested
 	if lm.Config.StartTLS {
+		log.Info("Upgrading to TLS mode")
+		// NOTE: InsecureSkipVerify should be used only for testing
 		err = ldapConn.StartTLS(&tls.Config{InsecureSkipVerify: lm.Config.InsecureSkipVerify})
 		if err != nil {
 			log.Errorf("Failed to initiate TLS with AD server: %v", err)
