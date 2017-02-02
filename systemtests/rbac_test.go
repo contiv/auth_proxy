@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/contiv/auth_proxy/common/types"
 	"github.com/contiv/auth_proxy/proxy"
 
 	. "gopkg.in/check.v1"
@@ -42,6 +43,8 @@ var (
 		"aciGws":  "aciGw1",
 		"Bgps":    "bgp1",
 	}
+
+	ldapGroupDN = "CN=Domain Admins,CN=Users,DC=ccn,DC=example,DC=com"
 )
 
 // TestRBACFilters tests all the netmaster filter(list) endpoints
@@ -66,47 +69,21 @@ func (s *systemtestSuite) TestRBACFilters(c *C) {
 			c.Assert(resp.StatusCode, Equals, 200)
 			c.Assert(string(body), DeepEquals, tenantList)
 
-			// test using `username` token
-			userToken := loginAs(c, username, username)
-			resp, body = proxyGet(c, userToken, endpoint)
-			c.Assert(resp.StatusCode, Equals, 200)
-			c.Assert(string(body), Equals, "[]")
+			// test using local user
+			s.testRBACFiltersHelper(c, loginAs(c, username, username), username, resource, true)
 
-			// grant tenant `t1` access to `username`
-			authzRequest := `{"PrincipalName":"` + username + `","local":true,"role":"ops","tenantName":"t1"}`
-			authz1 := s.addAuthorization(c, authzRequest, adToken)
-
-			// test again using `username` token
-			userToken = loginAs(c, username, username)
-			resp, body = proxyGet(c, userToken, endpoint)
-			c.Assert(resp.StatusCode, Equals, 200)
-
-			s.processListResponse(c, resource, string(body), []string{"t1"})
-
-			// grant tenant `t3` access to `username`
-			authzRequest = `{"PrincipalName":"` + username + `","local":true,"role":"ops","tenantName":"t3"}`
-			authz2 := s.addAuthorization(c, authzRequest, adToken)
-
-			// test again using `username` token; new tenant `t3` should also be listed
-			userToken = loginAs(c, username, username)
-			resp, body = proxyGet(c, userToken, endpoint)
-			c.Assert(resp.StatusCode, Equals, 200)
-			s.processListResponse(c, resource, string(body), []string{"t1", "t3"})
-
-			s.deleteAuthorization(c, authz1.AuthzUUID, adToken)
-			s.deleteAuthorization(c, authz2.AuthzUUID, adToken)
-
-			// test using `username` token; all authzs removed
-			userToken = loginAs(c, username, username)
-			resp, body = proxyGet(c, userToken, endpoint)
-			c.Assert(resp.StatusCode, Equals, 200)
-			c.Assert(string(body), Equals, "[]")
-
+			// test using ldap user
+			s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig())
+			s.testRBACFiltersHelper(c, loginAs(c, ldapTestUsername, ldapPassword), ldapGroupDN, resource, false)
+			s.deleteLdapConfiguration(c, adToken)
 		}
+
 	})
 
 	// test adminOnly list endpoints
 	runTest(func(ms *MockServer) {
+
+		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig())
 
 		for resource := range adminEpSuffixes {
 			endpoint := "/api/v1/" + resource + "/"
@@ -118,11 +95,14 @@ func (s *systemtestSuite) TestRBACFilters(c *C) {
 			c.Assert(resp.StatusCode, Equals, 200)
 			c.Assert(string(body), DeepEquals, string(respData))
 
-			// test using `username` token
-			userToken := loginAs(c, username, username)
-			resp, body = proxyGet(c, userToken, endpoint)
-			s.assertInsufficientPrivileges(c, resp, body)
+			// test using local user
+			s.testAdminOnlyHelper(c, loginAs(c, username, username), username, endpoint, respData, true)
+
+			// test using ldap user
+			s.testAdminOnlyHelper(c, loginAs(c, ldapTestUsername, ldapPassword), ldapGroupDN, endpoint, respData, false)
 		}
+
+		s.deleteLdapConfiguration(c, adToken)
 
 	})
 }
@@ -142,58 +122,45 @@ func (s *systemtestSuite) TestRBACOnDELETERequest(c *C) {
 		c.Assert(resp.StatusCode, Equals, 200)
 		c.Assert(string(body), DeepEquals, respData)
 
-		// test using `username` token
-		userToken := loginAs(c, username, username)
-		resp, body = proxyDelete(c, userToken, endpoint)
-		s.assertInsufficientPrivileges(c, resp, body)
+		// test using local user
+		s.testRBACHelper(c, loginAs(c, username, username), username, endpoint, respData, "DELETE", true)
 
-		// grant tenant access to `username`
-		authzRequest := `{"PrincipalName":"` + username + `","local":true,"role":"ops","tenantName":"` + tenantName + `"}`
-		authz := s.addAuthorization(c, authzRequest, adToken)
-
-		// tenant delete is a adminOnly API
-		// test using `username` token
-		userToken = loginAs(c, username, username)
-		resp, body = proxyDelete(c, userToken, endpoint)
-		s.assertInsufficientPrivileges(c, resp, body)
-
-		s.deleteAuthorization(c, authz.AuthzUUID, adToken)
+		// test using ldap user
+		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig())
+		s.testRBACHelper(c, loginAs(c, ldapTestUsername, ldapPassword), ldapGroupDN, endpoint, respData, "DELETE", false)
+		s.deleteLdapConfiguration(c, adToken)
 
 	})
 
 	// test all other endpoints
 	runTest(func(ms *MockServer) {
 
+		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig())
+
 		for resource, rName := range epSuffixes {
 			endpoint := "/api/v1/" + resource + "/" + rName + "/"
-			ms.AddHardcodedResponse(endpoint, []byte(`{"tenantName": "`+tenantName+`"}`))
+			respData := `{"tenantName":"` + tenantName + `"}`
+			ms.AddHardcodedResponse(endpoint, []byte(respData))
 
 			// test using `admin` token
 			resp, _ := proxyDelete(c, adToken, endpoint)
 			c.Assert(resp.StatusCode, Equals, 200)
 
-			// test using `username` token
-			userToken := loginAs(c, username, username)
-			resp, body := proxyDelete(c, userToken, endpoint)
-			s.assertInsufficientPrivileges(c, resp, body)
+			// test using local user
+			s.testRBACWithinTenantHelper(c, loginAs(c, username, username), username, endpoint, respData, "DELETE", true)
 
-			// grant tenant access to `username`
-			authzRequest := `{"PrincipalName":"` + username + `","local":true,"role":"ops","tenantName":"` + tenantName + `"}`
-			authz := s.addAuthorization(c, authzRequest, adToken)
-
-			// user is authorized for this tenant so, he/she should be able to delete the resource
-			// normal users cannot delete `tenant`
-			userToken = loginAs(c, username, username)
-			resp, _ = proxyDelete(c, userToken, endpoint)
-			c.Assert(resp.StatusCode, Equals, 200)
-
-			s.deleteAuthorization(c, authz.AuthzUUID, adToken)
-
+			// test using ldap user
+			s.testRBACWithinTenantHelper(c, loginAs(c, ldapTestUsername, ldapPassword), ldapGroupDN, endpoint, respData, "DELETE", false)
 		}
+
+		s.deleteLdapConfiguration(c, adToken)
+
 	})
 
 	// test adminOnly list endpoints
 	runTest(func(ms *MockServer) {
+
+		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig())
 
 		for resource, rName := range adminEpSuffixes {
 			endpoint := "/api/v1/" + resource + "/" + rName + "/"
@@ -205,11 +172,14 @@ func (s *systemtestSuite) TestRBACOnDELETERequest(c *C) {
 			c.Assert(resp.StatusCode, Equals, 200)
 			c.Assert(string(body), DeepEquals, string(respData))
 
-			// test using `username` token
-			userToken := loginAs(c, username, username)
-			resp, body = proxyDelete(c, userToken, endpoint)
-			s.assertInsufficientPrivileges(c, resp, body)
+			// test using local user
+			s.testAdminOnlyHelper(c, loginAs(c, username, username), username, endpoint, respData, true)
+
+			// test using ldap user
+			s.testAdminOnlyHelper(c, loginAs(c, ldapTestUsername, ldapPassword), ldapGroupDN, endpoint, respData, false)
 		}
+
+		s.deleteLdapConfiguration(c, adToken)
 
 	})
 
@@ -231,63 +201,54 @@ func (s *systemtestSuite) TestRBACOnGETRequest(c *C) {
 		c.Assert(resp.StatusCode, Equals, 200)
 		c.Assert(string(body), DeepEquals, respData)
 
-		// test using `username` token
-		userToken := loginAs(c, username, username)
-		resp, body = proxyGet(c, userToken, endpoint)
-		s.assertInsufficientPrivileges(c, resp, body)
+		// test using local user
+		s.testRBACHelper(c, loginAs(c, username, username), username, endpoint, respData, "GET", true)
 
-		// grant tenant access to `username`
-		authzRequest := `{"PrincipalName":"` + username + `","local":true,"role":"ops","tenantName":"` + tenantName + `"}`
-		authz := s.addAuthorization(c, authzRequest, adToken)
+		// test using ldap user
+		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig())
+		s.testRBACHelper(c, loginAs(c, ldapTestUsername, ldapPassword), ldapGroupDN, endpoint, respData, "GET", false)
 
-		// user is authorized for this tenant so, he/she should be able to get the tenant details
-		userToken = loginAs(c, username, username)
-		resp, body = proxyGet(c, userToken, endpoint)
-		c.Assert(resp.StatusCode, Equals, 200)
-		c.Assert(string(body), DeepEquals, respData)
-
-		// GET on unautorized tenant
+		// GET on unauthorized tenant
 		endpoint = "/api/v1/tenants/test/"
-		userToken = loginAs(c, username, username)
-		resp, body = proxyGet(c, userToken, endpoint)
+		resp, body = proxyGet(c, loginAs(c, username, username), endpoint)
 		s.assertInsufficientPrivileges(c, resp, body)
 
-		s.deleteAuthorization(c, authz.AuthzUUID, adToken)
+		resp, body = proxyGet(c, loginAs(c, ldapTestUsername, ldapPassword), endpoint)
+		s.assertInsufficientPrivileges(c, resp, body)
+
+		s.deleteLdapConfiguration(c, adToken)
 
 	})
 
 	// test all other netmaster endpoints
 	runTest(func(ms *MockServer) {
 
+		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig())
+
 		for resource, rName := range epSuffixes {
 			endpoint := "/api/v1/" + resource + "/" + rName + "/"
-			ms.AddHardcodedResponse(endpoint, []byte(`{"tenantName": "`+tenantName+`"}`))
+			respData := `{"tenantName": "` + tenantName + `"}`
+			ms.AddHardcodedResponse(endpoint, []byte(respData))
 
 			// test using `admin` token
 			resp, _ := proxyGet(c, adToken, endpoint)
 			c.Assert(resp.StatusCode, Equals, 200)
 
-			// test using `username` token
-			userToken := loginAs(c, username, username)
-			resp, body := proxyGet(c, userToken, endpoint)
-			s.assertInsufficientPrivileges(c, resp, body)
+			// test using local user
+			s.testRBACWithinTenantHelper(c, loginAs(c, username, username), username, endpoint, respData, "GET", true)
 
-			// grant tenant access to `username`
-			authzRequest := `{"PrincipalName":"` + username + `","local":true,"role":"ops","tenantName":"` + tenantName + `"}`
-			authz := s.addAuthorization(c, authzRequest, adToken)
-
-			// user is authorized for this tenant so, he/she should be able to get the tenant details
-			userToken = loginAs(c, username, username)
-			resp, _ = proxyGet(c, userToken, endpoint)
-			c.Assert(resp.StatusCode, Equals, 200)
-
-			s.deleteAuthorization(c, authz.AuthzUUID, adToken)
+			// test using ldap user
+			s.testRBACWithinTenantHelper(c, loginAs(c, ldapTestUsername, ldapPassword), ldapGroupDN, endpoint, respData, "GET", false)
 		}
+
+		s.deleteLdapConfiguration(c, adToken)
 
 	})
 
 	// test adminOnly list endpoints
 	runTest(func(ms *MockServer) {
+
+		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig())
 
 		for resource, rName := range adminEpSuffixes {
 			endpoint := "/api/v1/" + resource + "/" + rName + "/"
@@ -299,11 +260,14 @@ func (s *systemtestSuite) TestRBACOnGETRequest(c *C) {
 			c.Assert(resp.StatusCode, Equals, 200)
 			c.Assert(string(body), DeepEquals, string(respData))
 
-			// test using `username` token
-			userToken := loginAs(c, username, username)
-			resp, body = proxyGet(c, userToken, endpoint)
-			s.assertInsufficientPrivileges(c, resp, body)
+			// test using local user
+			s.testAdminOnlyHelper(c, loginAs(c, username, username), username, endpoint, respData, true)
+
+			// test using ldap user
+			s.testAdminOnlyHelper(c, loginAs(c, ldapTestUsername, ldapPassword), ldapGroupDN, endpoint, respData, false)
 		}
+
+		s.deleteLdapConfiguration(c, adToken)
 
 	})
 }
@@ -332,15 +296,21 @@ func (s *systemtestSuite) TestRBACOnPOSTRequest(c *C) {
 		c.Assert(resp.StatusCode, Equals, 200)
 		c.Assert(string(body), Equals, tenantCreateReq)
 
-		// tenant POST is adminOnly API
-		userToken := loginAs(c, username, username)
-		resp, body = proxyPost(c, userToken, endpoint, []byte(tenantCreateReq))
-		s.assertInsufficientPrivileges(c, resp, body)
+		// test using local user
+		s.testRBACHelper(c, loginAs(c, username, username), username, endpoint, tenantCreateReq, "POST", true)
+
+		// test using ldap user
+		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig())
+		s.testRBACHelper(c, loginAs(c, ldapTestUsername, ldapPassword), ldapGroupDN, endpoint, tenantCreateReq, "POST", false)
+		s.deleteLdapConfiguration(c, adToken)
 
 	})
 
 	// test all other netmaster endpoints
 	runTest(func(ms *MockServer) {
+
+		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig())
+
 		for resource, rName := range epSuffixes {
 			endpoint := "/api/v1/" + resource + "/" + rName + "/"
 			createReq := `{"tenantName": "` + tenantName + `"}`
@@ -359,29 +329,21 @@ func (s *systemtestSuite) TestRBACOnPOSTRequest(c *C) {
 			c.Assert(resp.StatusCode, Equals, 200)
 			c.Assert(string(body), Equals, createReq)
 
-			// POST using `username` token
-			userToken := loginAs(c, username, username)
-			resp, body = proxyPost(c, userToken, endpoint, []byte(createReq))
-			s.assertInsufficientPrivileges(c, resp, body)
+			// test using local user
+			s.testRBACWithinTenantHelper(c, loginAs(c, username, username), username, endpoint, createReq, "POST", true)
 
-			// grant tenant access to `username`
-			authzRequest := `{"PrincipalName":"` + username + `","local":true,"role":"ops","tenantName":"` + tenantName + `"}`
-			authz := s.addAuthorization(c, authzRequest, adToken)
-
-			// POST the request again with the updated token
-			userToken = loginAs(c, username, username)
-			resp, body = proxyPost(c, userToken, endpoint, []byte(createReq))
-			c.Assert(resp.StatusCode, Equals, 200)
-			c.Assert(string(body), Equals, createReq)
-
-			// Remove authorization
-			s.deleteAuthorization(c, authz.AuthzUUID, adToken)
+			// test using ldap user
+			s.testRBACWithinTenantHelper(c, loginAs(c, ldapTestUsername, ldapPassword), ldapGroupDN, endpoint, createReq, "POST", false)
 		}
+
+		s.deleteLdapConfiguration(c, adToken)
 
 	})
 
 	// test adminOnly list endpoints
 	runTest(func(ms *MockServer) {
+
+		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig())
 
 		for resource, rName := range adminEpSuffixes {
 			endpoint := "/api/v1/" + resource + "/" + rName + "/"
@@ -393,11 +355,14 @@ func (s *systemtestSuite) TestRBACOnPOSTRequest(c *C) {
 			c.Assert(resp.StatusCode, Equals, 200)
 			c.Assert(string(body), DeepEquals, string(respData))
 
-			// test using `username` token
-			userToken := loginAs(c, username, username)
-			resp, body = proxyPost(c, userToken, endpoint, []byte(respData))
-			s.assertInsufficientPrivileges(c, resp, body)
+			// test using local user
+			s.testAdminOnlyHelper(c, loginAs(c, username, username), username, endpoint, respData, true)
+
+			// test using ldap user
+			s.testAdminOnlyHelper(c, loginAs(c, ldapTestUsername, ldapPassword), ldapGroupDN, endpoint, respData, false)
 		}
+
+		s.deleteLdapConfiguration(c, adToken)
 
 	})
 
@@ -421,12 +386,184 @@ func (s *systemtestSuite) TestRBACOnGlobalEndpoint(c *C) {
 		c.Assert(resp.StatusCode, Equals, 200)
 		c.Assert(string(body), DeepEquals, string(respData))
 
-		// test using `testUsr` token
+		// test using local `testUsr` token
 		resp, body = proxyGet(c, userToken, endpoint)
 		c.Assert(resp.StatusCode, Equals, 200)
 		c.Assert(string(body), DeepEquals, string(respData))
 
+		// test using ldap user
+		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig())
+		resp, body = proxyGet(c, loginAs(c, ldapTestUsername, ldapPassword), endpoint)
+		c.Assert(resp.StatusCode, Equals, 200)
+		c.Assert(string(body), DeepEquals, string(respData))
+		s.deleteLdapConfiguration(c, adToken)
+
 	})
+}
+
+// helper function to test RBAC filters
+func (s *systemtestSuite) testRBACFiltersHelper(c *C, userToken, principalName, resource string, isLocal bool) {
+	endpoint := "/api/v1/" + resource + "/"
+
+	// test using user token
+	resp, body := proxyGet(c, userToken, endpoint)
+	c.Assert(resp.StatusCode, Equals, 200)
+	c.Assert(string(body), Equals, "[]")
+
+	var authzRequest string
+	if isLocal {
+		authzRequest = `{"PrincipalName":"` + principalName + `","local":true,"role":"ops","tenantName":"t1"}`
+	} else {
+		authzRequest = `{"PrincipalName":"` + principalName + `","local":false,"role":"ops","tenantName":"t1"}`
+	}
+
+	// grant tenant `t1` access to `principalName`
+	authz1 := s.addAuthorization(c, authzRequest, adToken)
+
+	// test again using user token
+	resp, body = proxyGet(c, userToken, endpoint)
+	c.Assert(resp.StatusCode, Equals, 200)
+	s.processListResponse(c, resource, string(body), []string{"t1"})
+
+	if isLocal {
+		authzRequest = `{"PrincipalName":"` + principalName + `","local":true,"role":"ops","tenantName":"t3"}`
+	} else {
+		authzRequest = `{"PrincipalName":"` + principalName + `","local":false,"role":"ops","tenantName":"t3"}`
+	}
+
+	// grant tenant `t3` access to `principalName`
+	authz2 := s.addAuthorization(c, authzRequest, adToken)
+
+	// test again using user token; new tenant `t3` should also be listed
+	resp, body = proxyGet(c, userToken, endpoint)
+	c.Assert(resp.StatusCode, Equals, 200)
+	s.processListResponse(c, resource, string(body), []string{"t1", "t3"})
+
+	s.deleteAuthorization(c, authz1.AuthzUUID, adToken)
+	s.deleteAuthorization(c, authz2.AuthzUUID, adToken)
+
+	// test using user token; all authzs removed
+	resp, body = proxyGet(c, userToken, endpoint)
+	c.Assert(resp.StatusCode, Equals, 200)
+	c.Assert(string(body), Equals, "[]")
+}
+
+// helper function to test adminOnly endpoints
+func (s *systemtestSuite) testAdminOnlyHelper(c *C, userToken, principalName, endpoint, respData string, isLocal bool) {
+	// test using user token
+	resp, body := proxyGet(c, userToken, endpoint)
+	s.assertInsufficientPrivileges(c, resp, body)
+
+	var ldapConfig string
+	if isLocal {
+		ldapConfig = `{"PrincipalName":"` + principalName + `","local":true,"role":"` + types.Admin.String() + `"}`
+	} else {
+		ldapConfig = `{"PrincipalName":"` + principalName + `","local":false,"role":"` + types.Admin.String() + `"}`
+	}
+
+	// add admin authz for `principalName`
+	authz := s.addAuthorization(c, ldapConfig, adToken)
+
+	// test again using user token
+	resp, body = proxyGet(c, userToken, endpoint)
+	c.Assert(resp.StatusCode, Equals, 200)
+	c.Assert(string(body), DeepEquals, respData)
+
+	s.deleteAuthorization(c, authz.AuthzUUID, userToken)
+}
+
+// helper function to test RBAC within the tenant (network, epg, etc.)
+func (s *systemtestSuite) testRBACWithinTenantHelper(c *C, userToken, principalName, endpoint, data, method string, isLocal bool) {
+	var resp *http.Response
+	var body []byte
+
+	// test using user token
+	switch method {
+	case "GET":
+		resp, body = proxyGet(c, userToken, endpoint)
+	case "DELETE":
+		resp, body = proxyDelete(c, userToken, endpoint)
+	case "POST":
+		resp, body = proxyPost(c, userToken, endpoint, []byte(data))
+	}
+
+	// user does not have access to the tenant `tenantName`
+	s.assertInsufficientPrivileges(c, resp, body)
+
+	var authzRequest string
+	if isLocal {
+		authzRequest = `{"PrincipalName":"` + principalName + `","local":true,"role":"ops","tenantName":"` + tenantName + `"}`
+	} else {
+		authzRequest = `{"PrincipalName":"` + principalName + `","local":false,"role":"ops","tenantName":"` + tenantName + `"}`
+	}
+
+	// add tenant authorization
+	authz := s.addAuthorization(c, authzRequest, adToken)
+
+	// test after adding tenant authorization
+	// user can create/delete/get on any object within the authorized tenant
+	switch method {
+	case "GET":
+		resp, body = proxyGet(c, userToken, endpoint)
+		c.Assert(resp.StatusCode, Equals, 200)
+		c.Assert(string(body), DeepEquals, data)
+	case "DELETE":
+		resp, body = proxyDelete(c, userToken, endpoint)
+		c.Assert(resp.StatusCode, Equals, 200)
+		c.Assert(string(body), Equals, data)
+	case "POST":
+		resp, body = proxyPost(c, userToken, endpoint, []byte(data))
+		c.Assert(resp.StatusCode, Equals, 200)
+		c.Assert(string(body), DeepEquals, data)
+	}
+
+	s.deleteAuthorization(c, authz.AuthzUUID, adToken)
+}
+
+// helper function to test tenant operations (create/delete/get)
+func (s *systemtestSuite) testRBACHelper(c *C, userToken, principalName, endpoint, data, method string, isLocal bool) {
+	var resp *http.Response
+	var body []byte
+
+	// test using user token
+	switch method {
+	case "GET":
+		resp, body = proxyGet(c, userToken, endpoint)
+	case "DELETE":
+		resp, body = proxyDelete(c, userToken, endpoint)
+	case "POST":
+		resp, body = proxyPost(c, userToken, endpoint, []byte(data))
+	}
+
+	// user does not have access to the tenant `tenantName`
+	s.assertInsufficientPrivileges(c, resp, body)
+
+	var authzRequest string
+	if isLocal {
+		authzRequest = `{"PrincipalName":"` + principalName + `","local":true,"role":"ops","tenantName":"` + tenantName + `"}`
+	} else {
+		authzRequest = `{"PrincipalName":"` + principalName + `","local":false,"role":"ops","tenantName":"` + tenantName + `"}`
+	}
+
+	// add tenant authorization
+	authz := s.addAuthorization(c, authzRequest, adToken)
+
+	// test after adding tenant authorization
+	// Only admin can create/delete tenants; but the authorized user can view (GET) the tenant
+	switch method {
+	case "GET":
+		resp, body = proxyGet(c, userToken, endpoint)
+		c.Assert(resp.StatusCode, Equals, 200)
+		c.Assert(string(body), DeepEquals, data)
+	case "DELETE":
+		resp, body = proxyDelete(c, userToken, endpoint)
+		s.assertInsufficientPrivileges(c, resp, body)
+	case "POST":
+		resp, body = proxyPost(c, userToken, endpoint, []byte(data))
+		s.assertInsufficientPrivileges(c, resp, body)
+	}
+
+	s.deleteAuthorization(c, authz.AuthzUUID, adToken)
 }
 
 // addUser helper function that adds a new local user to the system

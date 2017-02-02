@@ -32,7 +32,27 @@ func (s *systemtestSuite) TestAdminAuthorizationResponse(c *C) {
 
 		// We must delete the authorization explicitly right now, as
 		// deleting users doesn't automatically deletes it.
-		// TODO: Remove authorizations with delete user
+		s.deleteAuthorization(c, authz.AuthzUUID, adToken)
+
+		endpoint := proxy.V1Prefix + "/authorizations/" + authz.AuthzUUID
+		resp, _ := proxyGet(c, adToken, endpoint)
+		c.Assert(resp.StatusCode, Equals, 404)
+	})
+
+	// ldap user
+	runTest(func(ms *MockServer) {
+		// grant admin access to ldap group (which implies admin aceess to the members belonging to this group
+		// tenant name is redundant and should be ignored
+		ldapGroupDN := "CN=Domain Admins,CN=Users,DC=ccn,DC=example,DC=com"
+		data := `{"PrincipalName":"` + ldapGroupDN + `","local":false,"role":"` + types.Admin.String() + `","tenantName":"XXX"}`
+		authz := s.addAuthorization(c, data, adToken)
+		c.Assert(authz.TenantName, DeepEquals, "")
+		c.Assert(authz.PrincipalName, DeepEquals, ldapGroupDN)
+		c.Assert(authz.Local, Equals, false)
+		c.Assert(authz.Role, DeepEquals, types.Admin.String())
+
+		c.Assert(authz, DeepEquals, s.getAuthorization(c, authz.AuthzUUID, adToken))
+
 		s.deleteAuthorization(c, authz.AuthzUUID, adToken)
 
 		endpoint := proxy.V1Prefix + "/authorizations/" + authz.AuthzUUID
