@@ -90,7 +90,7 @@ func NewTokenWithClaims(principals []string) (*Token, error) {
 //  error: nil if successful, else relevant error if claim is malformed.
 func (authZ *Token) AddPrincipalsClaim(principals []string) error {
 	// Serialize principals slice as a single string
-	authZ.AddClaim(principalsClaimKey, strings.Join(principals, ","))
+	authZ.AddClaim(principalsClaimKey, strings.Join(principals, ";"))
 	return nil
 }
 
@@ -283,7 +283,7 @@ func (authZ *Token) GetClaim(claimKey string) string {
 func (authZ *Token) IsSuperuser() bool {
 
 	// Deserialize principals as a slice
-	principals := strings.Split(authZ.GetClaim(principalsClaimKey), ",")
+	principals := strings.Split(authZ.GetClaim(principalsClaimKey), ";")
 
 	for _, p := range principals {
 		// Get role claim for the principal
