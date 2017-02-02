@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"regexp"
 	"strings"
 
 	log "github.com/Sirupsen/logrus"
@@ -385,6 +386,11 @@ func deleteLocalUserHelper(username string) (int, []byte) {
 func addLocalUserHelper(userCreateReq *types.LocalUser) (int, []byte) {
 	if common.IsEmpty(userCreateReq.Username) || common.IsEmpty(userCreateReq.Password) {
 		return http.StatusBadRequest, []byte("Username/Password is empty")
+	}
+
+	usernamePattern := regexp.MustCompile(`^[A-Za-z0-9\_\-\.\@]+$`)
+	if !usernamePattern.MatchString(userCreateReq.Username) {
+		return http.StatusBadRequest, []byte("Invalid username. Only aplha-numeric and [-_.@] are allowed")
 	}
 
 	err := db.AddLocalUser(userCreateReq)
