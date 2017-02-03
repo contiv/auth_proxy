@@ -16,6 +16,7 @@ const (
 	ldapServer        = "10.193.231.158"
 	ldapPassword      = "C1ntainer$"
 	ldapAdminPassword = "C1ntainer$~"
+	ldapTestUsername  = "test_user"
 
 	// use this when testing unauthenticated endpoints instead of ""
 	noToken = ""
@@ -51,15 +52,7 @@ func (s *systemtestSuite) TestLogin(c *C) {
 		adToken := adminToken(c)
 
 		// add LDAP configuration
-		ldapConfig := `{"server":"` + ldapServer + `",` +
-			`"port":5678,` +
-			`"base_dn":"DC=ccn,DC=example,DC=com",` +
-			`"service_account_dn":"CN=Service Account,CN=Users,DC=ccn,DC=example,DC=com",` +
-			`"service_account_password":"` + ldapPassword + `",` +
-			`"start_tls":false,` +
-			`"insecure_skip_verify":true}`
-
-		s.addLdapConfiguration(c, adToken, ldapConfig)
+		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig())
 
 		// try logging in using `service` account
 		loginAs(c, "saccount", ldapPassword)
@@ -75,7 +68,7 @@ func (s *systemtestSuite) TestLogin(c *C) {
 		loginAs(c, "Administrator", ldapAdminPassword)
 
 		// test login using SSL/TLS
-		ldapConfig = `{"port":5678, "start_tls":true, "insecure_skip_verify":true}`
+		ldapConfig := `{"port":5678, "start_tls":true, "insecure_skip_verify":true}`
 		s.updateLdapConfiguration(c, adToken, ldapConfig)
 
 		// try logging in using `service` account
@@ -231,4 +224,14 @@ func (s *systemtestSuite) TestPOSTBody(c *C) {
 		_, responseBody := proxyPost(c, token, endpoint, []byte(data))
 		c.Assert(string(responseBody), Equals, data)
 	})
+}
+
+func (s *systemtestSuite) getRunningLdapConfig() string {
+	return `{"server":"` + ldapServer + `",` +
+		`"port":5678,` +
+		`"base_dn":"DC=ccn,DC=example,DC=com",` +
+		`"service_account_dn":"CN=Service Account,CN=Users,DC=ccn,DC=example,DC=com",` +
+		`"service_account_password":"` + ldapPassword + `",` +
+		`"start_tls":false,` +
+		`"insecure_skip_verify":true}`
 }

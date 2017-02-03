@@ -33,7 +33,7 @@ func (authZ *Token) getPrincipals() ([]string, error) {
 	}
 
 	// Deserialize principals as a slice
-	principals := strings.Split(principalsStr, ",")
+	principals := strings.Split(principalsStr, ";")
 	return principals, nil
 }
 
