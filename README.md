@@ -1,6 +1,6 @@
 # Auth Proxy
 
-`auth_proxy`  provides authentication via Active Directory and authorization via
+`auth_proxy`  provides authentication and authorization via
 RBAC before forwarding requests to an upstream `netmaster`. It is TLS-only,
 and it will only talk to a non-TLS `netmaster`.  Future versions will allow
 or potentially require TLS-only communication with `netmaster`.
@@ -42,18 +42,13 @@ returns some expected JSON response) without the burden of actually compiling
 and running a full `netmaster` binary and all of its dependencies plus creating
 the necessary networks, tenants, etc. to get realistic responses from it.
 
-Future end-to-end testing will cover a real `auth_proxy` binary talking to
-a real `netmaster` binary so there's no point duplicating that here in our own
-testing.
+For a complete e2e setup involving proxy+UI+netmaster, see contiv/install.
 
 ## Local Development
 
 You will need a local cert and key to start `auth_proxy`.  You can run
-`make generate-certificate` to generate them if you don't already have them.
-
-To simplify the networking around all the cross-container
-communication, we are discouraging the use of `docker-machine`.  Please run
-Docker natively on your Linux system or use Docker for Mac.
+`make generate-certificate` to generate them if you don't already have them. To test proxy
+only functionality, try `make run`.
 
 ## Architecture Overview
 

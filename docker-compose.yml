@@ -11,6 +11,16 @@ auth_proxy:
         - ./local_certs:/local_certs/
     command: "--data-store-address=\"etcd://0.0.0.0:2379\" --tls-certificate=/local_certs/cert.pem --tls-key-file=/local_certs/local.key --listen-address=0.0.0.0:10000 --netmaster-address=0.0.0.0:9999"
 
+auth_proxy_temp:
+    image: contiv/auth_proxy:devbuild
+    links:
+        - etcd
+    environment:
+        - NO_NETMASTER_STARTUP_CHECK=true
+    volumes:
+        - ./local_certs:/local_certs/
+    command: "--initial-setup --data-store-address=\"etcd://0.0.0.0:2379\" --tls-certificate=/local_certs/cert.pem --tls-key-file=/local_certs/local.key --listen-address=0.0.0.0:10000 --netmaster-address=0.0.0.0:9999"
+
 etcd:
     image: quay.io/coreos/etcd:v2.3.7
     ports:
