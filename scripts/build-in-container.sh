@@ -14,5 +14,3 @@ go build \
    github.com/contiv/auth_proxy
 
 strip ./build/output/auth_proxy
-
-docker build -t $IMAGE_NAME:$VERSION -f ./build/Dockerfile.release .

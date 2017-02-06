@@ -99,17 +99,18 @@ fi
 #
 cd $START_DIR
 
-# ensure base has been built
-docker build -t "auth_proxy_build_base" -f ./build/Dockerfile.base .
-
 # create a local build image
 docker build -t $BUILD_IMAGE_NAME -f ./build/Dockerfile.build .
 
-# use the build image to compile a static binary and build an image using it
-docker run --rm \
-       -e IMAGE_NAME="$IMAGE_NAME" \
+# use the build image to compile a static binary
+docker run \
        -e VERSION="$VERSION" \
-       -v /var/run/docker.sock:/var/run/docker.sock \
+       --name build_cntr \
        $BUILD_IMAGE_NAME
 
+# copy out the binaries
+docker cp build_cntr:/go/src/github.com/contiv/auth_proxy/build/output/auth_proxy ./build/output/
+docker rm -f build_cntr
+
+docker build -t $IMAGE_NAME:$VERSION -f ./build/Dockerfile.release .
 echo "Created image: $IMAGE_NAME:$VERSION"
