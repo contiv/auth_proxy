@@ -49,52 +49,6 @@ else
 fi
 
 #
-# run `npm install` to prepare the UI if it's changed since the last time we ran it
-#
-newest_commit=$(git rev-parse HEAD)
-last_commit_file="../.last_npm_installed_ui_commit"
-
-if [ ! -f "$last_commit_file" ] || [ $(cat $last_commit_file) != "$newest_commit" ]; then
-    echo "Running 'npm install' for commit ${newest_commit}..."
-
-    set -x
-
-    # when `npm install` runs inside the container for the first time, it will
-    # create a directory called node_modules.  subsequent runs can create subdirs
-    # inside that directory.  these will all be owned by root:root (on linux) since
-    # that's the user the container runs as.  this causes issues when checking out
-    # different tags and during other git operations.
-    #
-    # in order to get around this issue without resorting to `sudo` on the local
-    # machine to change ownership, we do the following:
-    #
-    # 1. start a npm container with a tty + bash entrypoint so it doesn't auto-exit
-    # 2. run the `npm install` command inside the container
-    # 3. chown everything in the bindmounted contiv-ui folder to have the same (linux only)
-    #    user/group as the user invoking this script
-    # 4. destroy the container
-    #
-    # TODO: come up with a better solution for this
-    #
-    npm_container_id=$(docker run -d -v $(pwd):/contiv-ui -w /contiv-ui -t --entrypoint bash node:$NODE_VERSION)
-    docker exec $npm_container_id npm install
-
-    # only need to run chown on linux systems
-    if [ "`uname`" == "Linux" ]; then
-	docker exec $npm_container_id chown -R "$(id -u):$(id -g)" .
-    fi
-
-    docker rm -f -v $npm_container_id
-
-    set +x
-
-    echo "Updating $last_commit_file with $newest_commit"
-    echo "$newest_commit" > $last_commit_file
-else
-    echo "No need to run npm for this commit ($newest_commit)"
-fi
-
-#
 # build the final image
 #
 cd $START_DIR

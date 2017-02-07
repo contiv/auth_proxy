@@ -1,9 +1,10 @@
-FROM auth_proxy_build_base
+FROM golang:1.7.5
 
 # go-check must be installed to run systemtests
 RUN go get gopkg.in/check.v1
 
 COPY ./ /go/src/github.com/contiv/auth_proxy
 
+WORKDIR /go/src/github.com/contiv/auth_proxy
+
 ENTRYPOINT ["/bin/bash"]
-#, "./scripts/systemtests_in_container.sh"]
