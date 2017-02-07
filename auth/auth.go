@@ -416,26 +416,30 @@ func addRoleAuthorization(principalName string,
 // these users is same as that of role type (admin or ops). Also adds admin role
 // authorization for admin user.
 func AddDefaultUsers() error {
-	for _, userR := range []types.RoleType{types.Admin, types.Ops} {
-		log.Infof("Adding local user %q to the system", userR.String())
+	for _, user := range []types.RoleType{types.Admin, types.Ops} {
+		log.Infof("Adding local user %q to the system", user.String())
 
 		localUser := types.LocalUser{
-			Username: userR.String(),
+			Username: user.String(),
 			Disable:  false,
-			Password: userR.String(),
+			Password: user.String(),
 			// FirstName, LastName = "" for built-in users
 		}
 
 		err := db.AddLocalUser(&localUser)
-		if err == nil || err == auth_errors.ErrKeyExists {
+		if err == auth_errors.ErrKeyExists {
+			continue
+		} else if err == nil {
+			if user.String() == types.Admin.String() {
+				// Add admin role claim for admin user.
+				addRoleAuthorization(types.Admin.String(), true, types.Admin)
+			}
+
 			continue
 		}
 
 		return err
 	}
-
-	// Add admin role claim for admin user.
-	addRoleAuthorization(types.Admin.String(), true, types.Admin)
 
 	return nil
 }
