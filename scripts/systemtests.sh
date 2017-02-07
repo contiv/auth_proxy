@@ -31,7 +31,6 @@ NETWORK_NAME="auth_proxy_systemtests"
 PROXY_IMAGE="contiv/auth_proxy:devbuild"
 
 echo "Building systemtests image..."
-docker build -t "auth_proxy_build_base" -f ./build/Dockerfile.base .
 docker build -t $IMAGE_NAME -f ./build/Dockerfile.systemtests .
 
 function ip_for_container {
