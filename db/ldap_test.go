@@ -70,11 +70,11 @@ func (s *dbSuite) TestDeleteLdapConfiguration(c *C) {
 
 // TestUpdateLdapConfiguration tests `UpdateLdapConfiguration`
 func (s *dbSuite) TestUpdateLdapConfiguration(c *C) {
-	err := UpdateLdapConfiguration(nil)
+	err := UpdateLdapConfiguration(nil, "")
 	c.Assert(err, NotNil)
 
 	for _, configuration := range newLdapConfiguration {
-		err = UpdateLdapConfiguration(&configuration)
+		err = UpdateLdapConfiguration(&configuration, "")
 		c.Assert(err, Equals, auth_errors.ErrKeyNotFound)
 
 		oldPwd := configuration.ServiceAccountPassword
@@ -90,11 +90,12 @@ func (s *dbSuite) TestUpdateLdapConfiguration(c *C) {
 		c.Assert(obtained, DeepEquals, &configuration)
 
 		// update the configuration
+		oldPassword := configuration.ServiceAccountPassword
 		configuration.BaseDN = "10.10.10.10"
 		configuration.ServiceAccountDN = "temp"
 		configuration.ServiceAccountPassword = "temp"
 
-		err = UpdateLdapConfiguration(&configuration)
+		err = UpdateLdapConfiguration(&configuration, oldPassword)
 		c.Assert(err, IsNil)
 		configuration.ServiceAccountPassword = "temp"
 
