@@ -24,7 +24,7 @@ export class NetworkSettingComponent {
         this.cancel = new EventEmitter<any>();
         this.skip = new EventEmitter<any>();
         this.firstRunWiz = false;
-        this.setting = {networkInfraType: '', vlans: '', vxlans: '', fwdMode: ''};
+        this.setting = {networkInfraType: '', vlans: '', vxlans: '', fwdMode: '', arpMode: ''};
     }
 
     updateNetworkSettings(formvalid: boolean){

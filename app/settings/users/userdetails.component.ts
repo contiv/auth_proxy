@@ -45,7 +45,7 @@ export class UserDetailsComponent {
             .then(function (user) {
                 component.user = user;
                 component.isRootAdmin = (user.username === 'admin');
-                component.isLoggedInUser = (component.authService.authTokenPayload['username'] === user.username);
+                component.isLoggedInUser = (component.authService.username === user.username);
                 component.crudHelperService.stopLoader(component);
             }, function(error){
                 component.crudHelperService.stopLoader(component);

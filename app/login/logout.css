@@ -3,3 +3,14 @@
     margin-top: 100px;
 }
 
+.productname{
+    font-size: 33px;
+    font-weight: bold;
+    color: #1c4f81;
+}
+
+.logo {
+    width:80px !important;
+    height: 80px !important;
+    display:inline !important;
+}

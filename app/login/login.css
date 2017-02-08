@@ -5,3 +5,16 @@
 .login-seg {
     margin-top: 600px;
 }
+
+.logo {
+    width:80px !important;
+    height: 80px !important;
+    display:inline !important;
+}
+
+.productname{
+    font-size: 33px;
+    font-weight: bold;
+    color: #1c4f81;
+}
+

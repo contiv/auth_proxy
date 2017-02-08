@@ -65,7 +65,24 @@
                     <option value="routing">routing</option>
                 </select>
                 <span class="inlineError" *ngIf="forwardingmodeRef.errors?.required && formRef.submitted">
-                    Please enter forwarding mode
+                    Please select forwarding mode
+                </span>
+            </div>
+        </div>
+        <div class="ui row">
+            <div class="ui six wide column field" [ngClass]="{error: arpmodeRef.errors?.required && formRef.submitted}">
+                <label for="arpmode">Arp mode</label>
+                <select #arpmodeRef="ngModel"
+                        id="arpmode"
+                        name="arpmode"
+                        class="ui dropdown"
+                        [(ngModel)]="setting['arpMode']" required>
+                    <option value="">-- Please select the network arp mode --</option>
+                    <option value="proxy">proxy</option>
+                    <option value="flood">flood</option>
+                </select>
+                <span class="inlineError" *ngIf="arpmodeRef.errors?.required && formRef.submitted">
+                    Please select arp mode
                 </span>
             </div>
         </div>

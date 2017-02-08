@@ -19,7 +19,6 @@ export class VerifydomDirective{
                 private templateRef: TemplateRef<any>,
                 private viewContainer: ViewContainerRef,
                 private networkService: NetworkService){
-        this.verifydom = '';
 
     }
 
@@ -39,7 +38,19 @@ export class VerifydomDirective{
                                 directive.display = res;
                                 directive.render();
                             });
+                            break;
+            case 'docker':  directive.verifyClusterMode(directive.networkService.clusterMode);
+                            directive.networkService.clusterModeObservable.subscribe((res) => {
+                                directive.verifyClusterMode(res);
+                            });
         }
+    }
+
+    verifyClusterMode(clusterMode: string){
+        var directive  = this;
+        if(clusterMode === 'docker')
+            directive.display = true;
+        directive.render();
     }
 
     render(){

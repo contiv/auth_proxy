@@ -14,8 +14,8 @@ export interface LdapConfig{
     base_dn: string;
     service_account_dn: string;
     service_account_password: string;
-    StartTLS: boolean;
-    InsecureSkipVerify: boolean;
+    start_tls: boolean;
+    insecure_skip_verify: boolean;
 }
 
 @Component({
@@ -24,7 +24,7 @@ export interface LdapConfig{
 })
 
 export class LdapSettingsComponent{
-    public ldapConfig: LdapConfig = {server: '', port: 0, base_dn: '', service_account_dn: '', service_account_password: '',StartTLS: false, InsecureSkipVerify: false};
+    public ldapConfig: LdapConfig = {server: '', port: 0, base_dn: '', service_account_dn: '', service_account_password: '',start_tls: false, insecure_skip_verify: false};
     public startLoader: boolean;
     private ldapConfigExists: boolean = true;
     constructor(private apiService: ApiService,
@@ -72,7 +72,7 @@ export class LdapSettingsComponent{
             return this.apiService.patch(ContivGlobals.LDAP_ENDPOINT, this.ldapConfig);
         }
         else{
-            return this.apiService.post(ContivGlobals.LDAP_ENDPOINT, this.ldapConfig);
+            return this.apiService.put(ContivGlobals.LDAP_ENDPOINT, this.ldapConfig);
         }
     }
 }

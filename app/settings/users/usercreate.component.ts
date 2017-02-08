@@ -19,8 +19,9 @@ export interface User{
 })
 
 export class UserCreateComponent{
-    newUser: User = {username: '', password: '', first_name: '', last_name: '', disable: false};
-    organizations:any[] = [];
+    public newUser: User = {username: '', password: '', first_name: '', last_name: '', disable: false};
+    public username_regex = ContivGlobals.USERNAME_REGEX;
+    public organizations:any[] = [];
 
     constructor(private activatedRoute: ActivatedRoute,
                 private router: Router,

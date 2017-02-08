@@ -27,6 +27,8 @@ export class AuthService {
     accessMatrix:any;
     authToken:string;
     firstRun:boolean;
+    username: string;
+    public localUser: boolean = true;
     private firstrunSubject: Subject<any>;
     public firstrunObservable: Observable<any>;
 
@@ -56,6 +58,7 @@ export class AuthService {
 
     login(user: User): Observable<any> {
         this.headers = new Headers();
+        this.username = user.username;
         this.headers.append('Content-Type', 'application/json');
         var options = new RequestOptions({headers: this.headers});
 
@@ -127,6 +130,7 @@ export class AuthService {
             localStorage.setItem("authToken", xAuthToken);
             localStorage.setItem("loginTime", new Date().toLocaleString());
             localStorage.setItem("lastAccessTime", new Date().toLocaleString());
+            localStorage.setItem("username", this.username);
             this.extractBody();
             return true;
         }
@@ -141,6 +145,9 @@ export class AuthService {
         var bodyEncoded = token.split('.')[1];
         var bodyString = atob(bodyEncoded);
         this.authTokenPayload = JSON.parse(bodyString);
+        if(!isNull(this.authTokenPayload['username'].match(ContivGlobals.LDAPGROUP_REGEX)))
+            this.localUser = false;
+        this.username = localStorage.getItem("username");
         if(isNull(localStorage.getItem('firstRun')))
             this.firstRun = true;
         else

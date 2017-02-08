@@ -1,7 +1,7 @@
 <div class="page header">
     <div class="ui top attached menu mainMenu" align="right">
         <h1 class="header" style="margin-top: 2px; float: left; white-space: nowrap; ">
-            <img class="ui image" src="images/Contiv-logo.svg" height="30" style="display: inline; margin-right: 20px;"><span class="productname">{{product_name}}</span>
+            <img class="ui image logo" src="images/contiv.png" height="30" style="display: inline; margin-right: 20px;"><span class="productname">{{product_name}}</span>
         </h1>
         <div class="utilnav">
             <button type="button" class="circular ui mini icon button"
@@ -17,7 +17,7 @@
             <div class="ui floating labeled icon dropdown">
                 <i class="dropdown icon"></i>
                 <div class="menu profile">
-                    <div class="item" onclick="$('#user-profile-modal').modal('show')">
+                    <div class="item" onclick="$('#user-profile-modal').modal('show')" *ngIf="localuser">
                         <span class="text">Update Profile</span></div>
                     <div class="item" (click)="logout()">
                         <span class="text">Logout</span></div>
@@ -55,7 +55,7 @@
             Networks
         </a>
 
-        <a class="item" [routerLink]="['servicelbs']" routerLinkActive="active">
+        <a class="item" [routerLink]="['servicelbs']" routerLinkActive="active" *verifydom="'docker'">
             Service Load Balancers
         </a>
 

@@ -109,7 +109,7 @@
                                 <div class="field">
                                     <label>&nbsp;<br>
                                         <input type="checkbox" name="StartTLS" tabindex="0" class="alignLabel"
-                                               [(ngModel)]="ldapConfig.StartTLS">
+                                               #starttls [ngModel]="ldapConfig.start_tls" (ngModelChange)="ldapConfig.start_tls = starttls.checked">
                                         Start TLS
                                     </label>
                                 </div>
@@ -120,7 +120,8 @@
                                 <div class="field">
                                     <label>&nbsp;<br>
                                         <input type="checkbox" name="InsecureSkipVerify" tabindex="0" class="alignLabel"
-                                               [(ngModel)]="ldapConfig.InsecureSkipVerify">
+                                               #insecueverify [ngModel]="ldapConfig.insecure_skip_verify"
+                                               (ngModelChange)="ldapConfig.insecure_skip_verify = insecueverify.checked">
                                         Accept certs as-is, skipping validation
                                     </label>
                                 </div>

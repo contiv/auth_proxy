@@ -12,7 +12,7 @@ export class FirstRunWizardService {
     public aciSetting:any;
 
     constructor(private networkService:NetworkService) {
-        this.setting = {networkInfraType: '', vlans: '', vxlans: '', fwdMode: ''};
+        this.setting = {networkInfraType: '', vlans: '', vxlans: '', fwdMode: '', arpMode: ''};
         this.aciSetting = {
             key: '',
             enforcePolicies: 'yes',
