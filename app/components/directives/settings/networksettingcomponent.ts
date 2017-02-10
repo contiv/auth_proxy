@@ -19,12 +19,14 @@ export class NetworkSettingComponent {
     @Output('skip') skip: EventEmitter<any>;
     vlanPattern:string = ContivGlobals.VLAN_REGEX;
     vxlanPattern:string = ContivGlobals.VXLAN_REGEX;
+    pvtSubnetPattern:string  = ContivGlobals.PVTSUBNET_REGEX;
+
     constructor(){
         this.updateNetDef = new EventEmitter<any>();
         this.cancel = new EventEmitter<any>();
         this.skip = new EventEmitter<any>();
         this.firstRunWiz = false;
-        this.setting = {networkInfraType: '', vlans: '', vxlans: '', fwdMode: '', arpMode: ''};
+        this.setting = {networkInfraType: '', vlans: '', vxlans: '', fwdMode: '', arpMode: '', pvtSubnet: ''};
     }
 
     updateNetworkSettings(formvalid: boolean){

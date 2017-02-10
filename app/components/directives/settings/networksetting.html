@@ -86,6 +86,20 @@
                 </span>
             </div>
         </div>
+        <div class="ui row">
+            <div class="ui six wide column field" [ngClass]="{error: pvtSubnetRef.errors?.pattern && formRef.submitted}">
+                <label for="pvtSubnet">Private subnet</label>
+                <input #pvtSubnetRef="ngModel"
+                       type="text"
+                       id="pvtSubnet"
+                       name="pvtSubnet"
+                       [(ngModel)]="setting['pvtSubnet']" placeholder="CIDR notation, for example: 20.3.0.0/16" [pattern]="pvtSubnetPattern">
+
+                <span class="inlineError" *ngIf="pvtSubnetRef.errors?.pattern && formRef.submitted">
+                    Please enter private subnet in CIDR notation ending with /16
+                </span>
+            </div>
+        </div>
         <div *ngIf="!firstRunWiz" class="ui row">
             <div class="right aligned six wide column">
                 <div style="margin-top: 20px">
