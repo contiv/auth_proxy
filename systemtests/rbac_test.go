@@ -73,7 +73,7 @@ func (s *systemtestSuite) TestRBACFilters(c *C) {
 			s.testRBACFiltersHelper(c, loginAs(c, username, username), username, resource, true)
 
 			// test using ldap user
-			s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig())
+			s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig(true))
 			s.testRBACFiltersHelper(c, loginAs(c, ldapTestUsername, ldapPassword), ldapGroupDN, resource, false)
 			s.deleteLdapConfiguration(c, adToken)
 		}
@@ -83,7 +83,7 @@ func (s *systemtestSuite) TestRBACFilters(c *C) {
 	// test adminOnly list endpoints
 	runTest(func(ms *MockServer) {
 
-		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig())
+		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig(true))
 
 		for resource := range adminEpSuffixes {
 			endpoint := "/api/v1/" + resource + "/"
@@ -126,7 +126,7 @@ func (s *systemtestSuite) TestRBACOnDELETERequest(c *C) {
 		s.testRBACHelper(c, loginAs(c, username, username), username, endpoint, respData, "DELETE", true)
 
 		// test using ldap user
-		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig())
+		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig(true))
 		s.testRBACHelper(c, loginAs(c, ldapTestUsername, ldapPassword), ldapGroupDN, endpoint, respData, "DELETE", false)
 		s.deleteLdapConfiguration(c, adToken)
 
@@ -135,7 +135,7 @@ func (s *systemtestSuite) TestRBACOnDELETERequest(c *C) {
 	// test all other endpoints
 	runTest(func(ms *MockServer) {
 
-		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig())
+		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig(true))
 
 		for resource, rName := range epSuffixes {
 			endpoint := "/api/v1/" + resource + "/" + rName + "/"
@@ -160,7 +160,7 @@ func (s *systemtestSuite) TestRBACOnDELETERequest(c *C) {
 	// test adminOnly list endpoints
 	runTest(func(ms *MockServer) {
 
-		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig())
+		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig(true))
 
 		for resource, rName := range adminEpSuffixes {
 			endpoint := "/api/v1/" + resource + "/" + rName + "/"
@@ -205,7 +205,7 @@ func (s *systemtestSuite) TestRBACOnGETRequest(c *C) {
 		s.testRBACHelper(c, loginAs(c, username, username), username, endpoint, respData, "GET", true)
 
 		// test using ldap user
-		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig())
+		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig(true))
 		s.testRBACHelper(c, loginAs(c, ldapTestUsername, ldapPassword), ldapGroupDN, endpoint, respData, "GET", false)
 
 		// GET on unauthorized tenant
@@ -223,7 +223,7 @@ func (s *systemtestSuite) TestRBACOnGETRequest(c *C) {
 	// test all other netmaster endpoints
 	runTest(func(ms *MockServer) {
 
-		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig())
+		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig(true))
 
 		for resource, rName := range epSuffixes {
 			endpoint := "/api/v1/" + resource + "/" + rName + "/"
@@ -248,7 +248,7 @@ func (s *systemtestSuite) TestRBACOnGETRequest(c *C) {
 	// test adminOnly list endpoints
 	runTest(func(ms *MockServer) {
 
-		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig())
+		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig(true))
 
 		for resource, rName := range adminEpSuffixes {
 			endpoint := "/api/v1/" + resource + "/" + rName + "/"
@@ -300,7 +300,7 @@ func (s *systemtestSuite) TestRBACOnPOSTRequest(c *C) {
 		s.testRBACHelper(c, loginAs(c, username, username), username, endpoint, tenantCreateReq, "POST", true)
 
 		// test using ldap user
-		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig())
+		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig(true))
 		s.testRBACHelper(c, loginAs(c, ldapTestUsername, ldapPassword), ldapGroupDN, endpoint, tenantCreateReq, "POST", false)
 		s.deleteLdapConfiguration(c, adToken)
 
@@ -309,7 +309,7 @@ func (s *systemtestSuite) TestRBACOnPOSTRequest(c *C) {
 	// test all other netmaster endpoints
 	runTest(func(ms *MockServer) {
 
-		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig())
+		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig(true))
 
 		for resource, rName := range epSuffixes {
 			endpoint := "/api/v1/" + resource + "/" + rName + "/"
@@ -343,7 +343,7 @@ func (s *systemtestSuite) TestRBACOnPOSTRequest(c *C) {
 	// test adminOnly list endpoints
 	runTest(func(ms *MockServer) {
 
-		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig())
+		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig(true))
 
 		for resource, rName := range adminEpSuffixes {
 			endpoint := "/api/v1/" + resource + "/" + rName + "/"
@@ -392,7 +392,7 @@ func (s *systemtestSuite) TestRBACOnGlobalEndpoint(c *C) {
 		c.Assert(string(body), DeepEquals, string(respData))
 
 		// test using ldap user
-		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig())
+		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig(true))
 		resp, body = proxyGet(c, loginAs(c, ldapTestUsername, ldapPassword), endpoint)
 		c.Assert(resp.StatusCode, Equals, 200)
 		c.Assert(string(body), DeepEquals, string(respData))

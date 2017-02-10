@@ -7,16 +7,6 @@ import (
 	. "gopkg.in/check.v1"
 )
 
-var (
-	ldapConfig = `{"server":"localhost", 
-              "port":4563, 
-              "base_dn":"DC=contiv,DC=example,DC=com", 
-              "service_account_dn":"CN=Service Account,CN=Users,DC=contiv,DC=example,DC=com", 
-              "service_account_password":"C1ntainer$", 
-              "start_tls":false, 
-              "insecure_skip_verify":true}`
-)
-
 // addLdapConfiguration helper function for the tests
 func (s *systemtestSuite) addLdapConfiguration(c *C, token, data string) {
 	endpoint := proxy.V1Prefix + "/ldap_configuration"
@@ -64,6 +54,7 @@ func (s *systemtestSuite) TestLdapAddEndpoint(c *C) {
 		endpoint := proxy.V1Prefix + "/ldap_configuration"
 
 		// test with corrupted json data
+		ldapConfig := s.getRunningLdapConfig(false)
 		data := ldapConfig + "xxx"
 		resp, body := proxyPut(c, adToken, endpoint, []byte(data))
 		c.Assert(resp.StatusCode, Equals, http.StatusInternalServerError)
@@ -135,6 +126,7 @@ func (s *systemtestSuite) TestLdapDeleteEndpoint(c *C) {
 	runTest(func(ms *MockServer) {
 		endpoint := proxy.V1Prefix + "/ldap_configuration"
 		userToken := loginAs(c, username, username)
+		ldapConfig := s.getRunningLdapConfig(false)
 
 		// add ldap config using admin token
 		s.addLdapConfiguration(c, adToken, ldapConfig)
@@ -156,21 +148,22 @@ func (s *systemtestSuite) TestLdapUpdateEndpoint(c *C) {
 	runTest(func(ms *MockServer) {
 		endpoint := proxy.V1Prefix + "/ldap_configuration"
 		userToken := loginAs(c, username, username)
+		ldapConfig := s.getRunningLdapConfig(false)
 
 		// add ldap config using admin token
 		s.addLdapConfiguration(c, adToken, ldapConfig)
 
 		// this also tests GET
-		data := `{"server":"localhost","port":4563,"base_dn":"DC=contiv,DC=example,DC=com","service_account_dn":"CN=Service Account,CN=Users,DC=contiv,DC=example,DC=com","start_tls":false,"insecure_skip_verify":true}`
+		data := `{"server":"` + ldapServer + `","port":5678,"base_dn":"DC=ccn,DC=example,DC=com","service_account_dn":"CN=Service Account,CN=Users,DC=ccn,DC=example,DC=com","start_tls":false,"insecure_skip_verify":false,"tls_cert_issued_to":""}`
 		c.Assert(string(s.getLdapConfiguration(c, adToken)), DeepEquals, data)
 
 		// update the existing ldap config
-		data = `{"server":"localhost-contiv", "port":45631, "base_dn":"DC=contiv,DC=local", 
+		data = `{"server":"` + ldapServer + `", "port":45631, "base_dn":"DC=contiv,DC=local", 
               "service_account_dn":"CN=Service Account,CN=Users,DC=contiv,DC=local", "service_account_password": "xxx", 
-              "start_tls":false, "insecure_skip_verify":true}`
+              "start_tls":false}`
 		s.updateLdapConfiguration(c, adToken, data)
 
-		data = `{"server":"localhost-contiv","port":45631,"base_dn":"DC=contiv,DC=local","service_account_dn":"CN=Service Account,CN=Users,DC=contiv,DC=local","start_tls":false,"insecure_skip_verify":true}`
+		data = `{"server":"` + ldapServer + `","port":45631,"base_dn":"DC=contiv,DC=local","service_account_dn":"CN=Service Account,CN=Users,DC=contiv,DC=local","start_tls":false,"insecure_skip_verify":false,"tls_cert_issued_to":""}`
 		c.Assert(string(s.getLdapConfiguration(c, adToken)), DeepEquals, data)
 
 		// non-admins cannot access this endpoint
@@ -181,6 +174,20 @@ func (s *systemtestSuite) TestLdapUpdateEndpoint(c *C) {
 		resp, body = proxyGet(c, userToken, endpoint)
 		c.Assert(resp.StatusCode, Equals, http.StatusForbidden)
 		c.Assert(string(body), Matches, ".*access denied.*")
+
+		// update using admin token
+		data = `{"start_tls":true}`
+		resp, body = proxyPatch(c, adToken, endpoint, []byte(data))
+		c.Assert(resp.StatusCode, Equals, 400)
+		c.Assert(string(body), Matches, ".*InsecureSkipVerify or TLSCertIssuedTo must be provided.*")
+
+		data = `{"server":"ccn.example.com", "start_tls":true}`
+		s.updateLdapConfiguration(c, adToken, data)
+		c.Assert(string(s.getLdapConfiguration(c, adToken)), Matches, ".*\"tls_cert_issued_to\":\"ccn.example.com\".*")
+
+		data = `{"start_tls":false}`
+		resp, _ = proxyPatch(c, adToken, endpoint, []byte(data))
+		c.Assert(resp.StatusCode, Equals, 200)
 
 		s.deleteLdapConfiguration(c, adToken)
 
