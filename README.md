@@ -20,10 +20,10 @@ $ make demo
 $ git clone https://github.com/contiv/contiv-ui.git
 ```
 
-#### Step 3: Deploy Contiv UI as a CCN Proxy container.
+#### Step 3: Deploy Contiv UI as a Auth Proxy container.
 
-* Checkout 'contiv/ccn_proxy'
-  * Inside the 'ccn_proxy' checkout:
+* Checkout 'contiv/auth_proxy'
+  * Inside the 'auth_proxy' checkout:
 ```
 	git pull <-- if you need to refresh the checkout
 	make
@@ -39,7 +39,7 @@ $ git clone https://github.com/contiv/contiv-ui.git
 docker run -it \
 -v $PWD/local_certs:/local_certs:ro \
 -v $UI_DIR:/ui:ro \
--p 10000:10000 ccn_proxy:devbuild --listen-address=0.0.0.0:10000  \
+-p 10000:10000 auth_proxy:devbuild --listen-address=0.0.0.0:10000  \
 --netmaster-address=<netmaster>:9999 \
 --data-store-address=etcd://<netmaster>:2379 \
 --tls-certificate=/local_certs/cert.pem --tls-key-file=/local_certs/local.key

@@ -95,13 +95,13 @@ For Production
 $ npm run build
 ```
 
-####Run CCN Proxy
-Contiv UI needs CCN Proxy for user authentication and authorization. CCN Proxy also acts as a web server for contiv UI.
+####Run AUTH Proxy
+Contiv UI needs AUTH Proxy for user authentication and authorization. AUTH Proxy also acts as a web server for contiv UI.
 To run contiv UI inside a docker container from contiv source.
 
 * Install Docker for Mac
-* Checkout 'contiv/ccn_proxy'
-  * Inside the 'ccn_proxy' checkout:
+* Checkout 'contiv/auth_proxy'
+  * Inside the 'auth_proxy' checkout:
 ```
 	git pull <-- if you need to refresh the checkout
 	make
@@ -117,7 +117,7 @@ To run contiv UI inside a docker container from contiv source.
 docker run -it \
 -v $PWD/local_certs:/local_certs:ro \
 -v $UI_DIR:/ui:ro \
--p 10000:10000 ccn_proxy:devbuild --listen-address=0.0.0.0:10000  \
+-p 10000:10000 auth_proxy:devbuild --listen-address=0.0.0.0:10000  \
 --netmaster-address=<netmaster>:9999 \
 --data-store-address=etcd://<etcd-server>:2379 \
 --tls-certificate=/local_certs/cert.pem --tls-key-file=/local_certs/local.key
@@ -125,7 +125,7 @@ docker run -it \
 * From your browser:
 	https://localhost:10000/
 
-####Install nginx (This is no longer needed if you use CCN Proxy)
+####Install nginx (This is no longer needed if you use AUTH Proxy)
 * install brew and nginx:
 ```
 $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" 

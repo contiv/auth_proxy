@@ -3,6 +3,7 @@
  */
 import { Component, OnInit, EventEmitter, Output } from "@angular/core";
 import { FirstRunWizardService } from "./firstrunwizardservice";
+declare var jQuery:any;
 
 @Component({
     selector: 'firstrunacisettings',
@@ -11,6 +12,7 @@ import { FirstRunWizardService } from "./firstrunwizardservice";
 export class FirstrunACISettingsComponent implements OnInit {
     private wizardService:FirstRunWizardService;
     public setting:any;
+    public disabled: boolean = false;
     @Output('updatePage') updatePage:EventEmitter<any>;
     @Output('cancelPage') cancelPage:EventEmitter<any>;
 
@@ -19,6 +21,8 @@ export class FirstrunACISettingsComponent implements OnInit {
         this.setting = this.wizardService.aciSetting;
         this.updatePage = new EventEmitter<any>();
         this.cancelPage = new EventEmitter<any>();
+        if(this.wizardService.setting.networkInfraType !== 'aci')
+            this.disabled = true;
     }
 
     ngOnInit() {
@@ -26,6 +30,7 @@ export class FirstrunACISettingsComponent implements OnInit {
     }
 
     updateAciSettings(setting:any) {
+        this.wizardService.skipArray[1] = false;
         this.wizardService.aciSetting = setting;
         this.updatePage.emit(2);
     }
@@ -35,7 +40,10 @@ export class FirstrunACISettingsComponent implements OnInit {
     }
 
     skip() {
+        this.wizardService.skipArray[1] = true;
+        Object.assign(this.wizardService.aciSetting, this.wizardService.defaults['aciSetting']);
         this.updatePage.emit(2);
+
     }
 
     cancel() {

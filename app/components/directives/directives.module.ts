@@ -18,6 +18,7 @@ import { LdapSettingsComponent } from "./settings/ldapsettingcomponent";
 import { TooltipComponent } from "./tooltip";
 import { UserProfileEditComponent } from "./settings/userprofileedit";
 import { VerifydomDirective } from "./verifydomdirective";
+import { NetworkCreateformComponent } from "./settings/networkcreateform";
 @NgModule({
     imports: [
         CommonModule, FormsModule, ChartsModule
@@ -38,7 +39,8 @@ import { VerifydomDirective } from "./verifydomdirective";
         NotificationComponent,
         LdapSettingsComponent,
         TooltipComponent,
-        UserProfileEditComponent
+        UserProfileEditComponent,
+        NetworkCreateformComponent
     ],
     exports: [
         ErrorMessageComponent,
@@ -56,7 +58,8 @@ import { VerifydomDirective } from "./verifydomdirective";
         NotificationComponent,
         LdapSettingsComponent,
         TooltipComponent,
-        UserProfileEditComponent
+        UserProfileEditComponent,
+        NetworkCreateformComponent
     ]
 })
 export class DirectivesModule {}

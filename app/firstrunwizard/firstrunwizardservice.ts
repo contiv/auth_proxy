@@ -5,49 +5,104 @@
 
 import { Injectable } from "@angular/core";
 import { NetworkService } from "../components/utils/networkservice";
+import { NetworksModel } from "../components/models/networksmodel";
 
 @Injectable()
 export class FirstRunWizardService {
     public setting:any;
     public aciSetting:any;
+    public newNetwork: any;
+    public globalInspect:any = {};
+    public clusterMode:string = '';
+    public skipArray: Array<boolean> = [false, false, false];
+    public defaults: any = {};
+    public showLoader: boolean = true;
 
-    constructor(private networkService:NetworkService) {
-        this.setting = {networkInfraType: '', vlans: '', vxlans: '', fwdMode: '', arpMode: ''};
+    constructor(private networkService:NetworkService,
+                private networksModel: NetworksModel) {
+        this.setting = {
+            networkInfraType: '',
+            vlans: '',
+            vxlans: '',
+            fwdMode: '',
+            arpMode: ''
+        };
         this.aciSetting = {
             key: '',
-            enforcePolicies: 'yes',
+            enforcePolicies: 'no',
             includeCommonTenant: 'no',
             name: '',
             nodeBindings: '',
             pathBindings: '',
             physicalDomain: ''
         };
+        this.newNetwork = {
+            networkName: '',
+            encap: 'vxlan',
+            subnet: '',
+            gateway: '',
+            tenantName: '',
+            key: ''
+        }
     }
 
     getNetworkSettings() {
+        var wizardservice = this;
+        this.showLoader = true;
         this.networkService.getSettings()
             .then((result) => {
-                    this.setting = result;
+                wizardservice.showLoader = false;
+                wizardservice.setting = result;
+                wizardservice.defaults['setting'] = Object.assign({}, wizardservice.setting);
                 }
             )
     }
 
     getAciSettings() {
+        var wizardservice = this;
         this.networkService.getAciSettings()
             .then((result) => {
-                this.aciSetting = result
+                wizardservice.aciSetting = result
+                wizardservice.defaults['aciSetting'] = Object.assign({}, wizardservice.aciSetting);
+            })
+    }
+
+    getGlobalInspect(){
+        var wizardservice = this;
+        this.networkService.getGlobalInspect()
+            .then((result) => {
+                wizardservice.globalInspect = result['Oper'];
+                wizardservice.clusterMode = wizardservice.globalInspect['clusterMode'];
             })
     }
 
     updateSettings():Promise<any> {
-        var component = this;
-        this.networkService.updateSettings(this.setting)
-            .then((result) => {
-                if(result['networkInfraType'] === 'aci')
-                    component.networkService.setAciMode(true);
-                else
-                    component.networkService.setAciMode(false);
-            });
-        return this.networkService.updateAciSettings(this.aciSetting);
+        var wizardservice = this;
+
+        if(wizardservice.setting.networkInfraType === 'aci')
+            wizardservice.networkService.setAciMode(true);
+        else
+            wizardservice.networkService.setAciMode(false);
+
+        var p1 = new Promise((resolve, reject) => {
+            if(wizardservice.skipArray[0] == true)
+                resolve("skip")
+            else
+                resolve(wizardservice.networkService.updateSettings(wizardservice.setting));
+        });
+
+        return p1.then((res) => {
+            if(wizardservice.skipArray[1] == true)
+                return "skip";
+            else
+                return wizardservice.networkService.updateAciSettings(wizardservice.aciSetting);
+        }).then((res) => {
+            if(wizardservice.skipArray[2] == true)
+                return "skip";
+            else{
+                wizardservice.newNetwork.key = wizardservice.newNetwork.tenantName + ':' + wizardservice.newNetwork.networkName;
+                return wizardservice.networksModel.create(wizardservice.newNetwork, undefined)
+            }
+        });
     }
 }

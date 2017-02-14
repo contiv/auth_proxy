@@ -112,6 +112,7 @@ export class AuthService {
         localStorage.removeItem("authToken");
         localStorage.removeItem("loginTime");
         localStorage.removeItem("lastAccessTime");
+        localStorage.removeItem("username");
         this.isLoggedIn = false;
     }
 

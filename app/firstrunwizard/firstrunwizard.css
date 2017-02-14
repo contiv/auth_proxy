@@ -3,8 +3,8 @@
 }
 
 .steps-container{
-    width: 138%;
-    margin-left: -21%;
+    width: 122%;
+    margin-left: -12%;
 }
 
 .progressbar{
@@ -14,7 +14,7 @@
 .progressbar li{
     list-style-type: none;
     float: left;
-    width:33.33%;
+    width:25%;
     position: relative;
     text-align: center;
 }

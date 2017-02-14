@@ -28,6 +28,7 @@ export class FirstrunWizardComponent implements OnInit{
         this.welcomeActive = true;
         wizardService.getNetworkSettings();
         wizardService.getAciSettings();
+        wizardService.getGlobalInspect();
     }
 
     ngOnInit(){

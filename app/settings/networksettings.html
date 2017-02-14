@@ -34,7 +34,7 @@
     </ctv-collapsible>
 
     <ctv-collapsible [title]="'ACI Settings'" *verifydom="'aci'">
-        <acisettingcomp [firstRunWiz]="false" (updateAciDef)="updateAciSetting($event)" [setting]="aciSetting"></acisettingcomp>
+        <acisettingcomp [firstRunWiz]="false" (updateAciDef)="updateAciSetting($event)" [setting]="aciSetting" [disabled]="false"></acisettingcomp>
     </ctv-collapsible>
 
 </div>

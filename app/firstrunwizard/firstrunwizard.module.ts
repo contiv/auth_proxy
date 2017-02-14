@@ -15,6 +15,7 @@ import {FirstrunWizardComponent} from "./firstrunwizardctrl";
 import {FirstrunNetworkDefaultComponent} from "./firstrunnetworkdefaults";
 import {FirstrunACISettingsComponent} from "./firstrunacisettings";
 import {FirstrunConfirmComponent} from "./firstrunwizardconfirmpage";
+import {FirstrunNetworkCreateComponent} from "./firstrunnetworkcreate";
 
 
 @NgModule({
@@ -28,13 +29,15 @@ import {FirstrunConfirmComponent} from "./firstrunwizardconfirmpage";
         FirstrunWizardComponent,
         FirstrunNetworkDefaultComponent,
         FirstrunACISettingsComponent,
-        FirstrunConfirmComponent
+        FirstrunConfirmComponent,
+        FirstrunNetworkCreateComponent
     ],
     exports: [
         FirstrunWizardComponent,
         FirstrunNetworkDefaultComponent,
         FirstrunACISettingsComponent,
-        FirstrunConfirmComponent
+        FirstrunConfirmComponent,
+        FirstrunNetworkCreateComponent
     ],
     providers: [FirstRunWizardService]
 })
