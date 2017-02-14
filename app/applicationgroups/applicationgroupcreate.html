@@ -53,7 +53,7 @@
                                     <select id="newApplicationGroupTenant" class="ui dropdown"
                                             name="newApplicationGroupTenant"
                                             ngModel
-                                            (change)="updateTenant($event.target.value, isolationPolicyRef, bandwidthPolicyRef, contractGroupRef)"
+                                            (change)="updateTenant($event.target.value)"
                                             required #newApplicationGroupTenantRef="ngModel">
                                         <option value="">-- Select a tenant --</option>
                                         <option *ngFor="let tenant of tenants" [value]="tenant.tenantName">{{tenant.tenantName}}</option>
@@ -90,7 +90,7 @@
                         <div class="ui row" >
                             <div class="left aligned sixteen wide column">
                                 <ctv-collapsible title="Isolation Policies To Apply" class="policySelection">
-                                    <ctv-isolationpolicy mode="edit" [applicationgroup]="applicationGroup" #isolationPolicyRef></ctv-isolationpolicy>
+                                    <ctv-isolationpolicy mode="edit" [applicationgroup]="applicationGroup"></ctv-isolationpolicy>
                                 </ctv-collapsible>
                             </div>
                         </div>
@@ -99,7 +99,7 @@
                             <div class="left aligned sixteen wide column">
 
                                 <ctv-collapsible title="Bandwidth Policy To Apply" class="policySelection">
-                                    <ctv-bandwidthpolicy mode="edit" [applicationgroup]="applicationGroup" #bandwidthPolicyRef></ctv-bandwidthpolicy>
+                                    <ctv-bandwidthpolicy mode="edit" [applicationgroup]="applicationGroup"></ctv-bandwidthpolicy>
                                 </ctv-collapsible>
 
                             </div>
@@ -109,7 +109,7 @@
                             <div class="left aligned sixteen wide column">
 
                                 <ctv-collapsible title="ACI External Contract Groups To Apply" class="policySelection">
-                                    <ctv-contractgroup mode="edit" [applicationgroup]="applicationGroup" #contractGroupRef></ctv-contractgroup>
+                                    <ctv-contractgroup mode="edit" [applicationgroup]="applicationGroup"></ctv-contractgroup>
                                 </ctv-collapsible>
 
                             </div>

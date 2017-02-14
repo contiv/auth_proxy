@@ -1,13 +1,16 @@
 /**
  * Created by vjain3 on 3/11/16.
  */
-import { Component, Inject, NgZone } from '@angular/core';
+import { Component, Inject, ViewChild, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { NetworksModel } from "../components/models/networksmodel";
 import { ApplicationGroupsModel } from "../components/models/applicationgroupsmodel";
 import { CRUDHelperService } from "../components/utils/crudhelperservice";
 import { OrganizationsModel } from "../components/models/organizationsmodel";
 import { NetworkService } from "../components/utils/networkservice";
+import { ContractGroupSelectionComponent } from "./contractgroup.component";
+import { IsolationPolicySelectionComponent } from "./isolationpolicydirective";
+import { BandwidthPolicySelectionComponent } from "./bandwidthpolicydirective";
 
 @Component({
     selector: 'applicationgroupcreate',
@@ -17,6 +20,10 @@ export class ApplicationGroupCreateComponent {
     networks:any[] = [];
     tenants:any[] = [];
     applicationGroup:any = {};
+
+    @ViewChild(BandwidthPolicySelectionComponent) bandwidthPolicyComponent: BandwidthPolicySelectionComponent;
+    @ViewChild(IsolationPolicySelectionComponent) isolationPolicyComponent: IsolationPolicySelectionComponent;
+    @ViewChild(ContractGroupSelectionComponent) contractGroupComponent: ContractGroupSelectionComponent;
 
     constructor(private activatedRoute:ActivatedRoute,
                 private router:Router,
@@ -110,18 +117,15 @@ export class ApplicationGroupCreateComponent {
         });
     }
 
-    updateTenant(tenantName:string,
-                 isolationPolicyComponent:any,
-                 bandwidthPolicyComponent:any,
-                 contractGroupComponent:any) {
+    updateTenant(tenantName:string) {
         var component = this;
         component.applicationGroup.tenantName = tenantName;
         component.getNetworks(tenantName);
-        isolationPolicyComponent.getIsolationPolicies();
-        bandwidthPolicyComponent.getNetprofiles();
+        component.isolationPolicyComponent.getIsolationPolicies();
+        component.bandwidthPolicyComponent.getNetprofiles();
         //contractGroupComponent might be undefined if ACI is not configured
-        if ((contractGroupComponent !== undefined) && (contractGroupComponent !== null)) {
-            contractGroupComponent.getContractGroups();
+        if ((component.contractGroupComponent !== undefined) && (component.contractGroupComponent !== null)) {
+            component.contractGroupComponent.getContractGroups();
         }
     }
 }
