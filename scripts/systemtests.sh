@@ -26,11 +26,13 @@
 
 set -euo pipefail
 
+
 IMAGE_NAME="auth_proxy_systemtests"
 NETWORK_NAME="auth_proxy_systemtests"
 PROXY_IMAGE="contiv/auth_proxy:devbuild"
 
 echo "Building systemtests image..."
+docker build -t "auth_proxy_build_base" -f ./build/Dockerfile.base .
 docker build -t $IMAGE_NAME -f ./build/Dockerfile.systemtests .
 
 function ip_for_container {
@@ -85,20 +87,21 @@ echo "Starting systemtests container..."
 # run with a tty so that bash (entrypoint) doesn't immediately exit
 SYSTEMTESTS_CONTAINER_ID=$(
     docker run -d -t \
-        --network $NETWORK_NAME \
-	-e DEBUG="${DEBUG-}" \
-	-e ETCD_CONTAINER_IP="$ETCD_CONTAINER_IP" \
-	-e CONSUL_CONTAINER_IP="$CONSUL_CONTAINER_IP" \
-        auth_proxy_systemtests
+      -e DEBUG="${DEBUG-}" \
+      -e ETCD_CONTAINER_IP="$ETCD_CONTAINER_IP" \
+      -e CONSUL_CONTAINER_IP="$CONSUL_CONTAINER_IP" \
+      --network $NETWORK_NAME \
+      auth_proxy_systemtests
 )
+
 SYSTEMTESTS_CONTAINER_IP=$(ip_for_container $SYSTEMTESTS_CONTAINER_ID)
 echo "systemtests container running @ $SYSTEMTESTS_CONTAINER_IP"
-
 
 echo "Starting etcd proxy container..."
 ETCD_PROXY_CONTAINER_ID=$(
     docker run -d \
 	   -p 10000:10000 \
+     -v $(pwd)/test/active_directory/ca.crt:/etc/ssl/certs/ca-certificate.crt \
 	   -v $(pwd)/local_certs:/local_certs:ro \
 	   -e NO_NETMASTER_STARTUP_CHECK=true \
 	   --network $NETWORK_NAME \
@@ -118,6 +121,7 @@ echo "Starting consul proxy container..."
 CONSUL_PROXY_CONTAINER_ID=$(
     docker run -d \
 	   -p 10001:10001 \
+     -v $(pwd)/test/active_directory/ca.crt:/etc/ssl/certs/ca-certificate.crt \
 	   -v $(pwd)/local_certs:/local_certs:ro \
 	   --network $NETWORK_NAME \
 	   -e NO_NETMASTER_STARTUP_CHECK=true \

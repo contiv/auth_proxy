@@ -18,6 +18,11 @@ import (
 
 // This file contains all the HTTP handler helper functions.
 
+var (
+	ipAddrPattern = "^(([01]?[0-9][0-9]?|2[0-4][0-9]|25[0-5])(.|$)){4}"
+	re            = regexp.MustCompile(ipAddrPattern)
+)
+
 // updateLdapConfigurationInfo helper function for `updateLdapConfigurationHelper`.
 // params:
 //  ldapConfiguration: configuration to be updated in the data store
@@ -34,7 +39,7 @@ func updateLdapConfigurationInfo(ldapConfiguration *types.LdapConfiguration, act
 		ServiceAccountDN:       actual.ServiceAccountDN,
 		ServiceAccountPassword: actual.ServiceAccountPassword,
 		StartTLS:               actual.StartTLS,
-		InsecureSkipVerify:     actual.InsecureSkipVerify,
+		TLSCertIssuedTo:        actual.TLSCertIssuedTo,
 	}
 
 	// update `Server`
@@ -70,6 +75,20 @@ func updateLdapConfigurationInfo(ldapConfiguration *types.LdapConfiguration, act
 	// update `InsecureSkipVerify`
 	if actual.InsecureSkipVerify != ldapConfiguration.InsecureSkipVerify {
 		ldapConfigurationUpdateObj.InsecureSkipVerify = ldapConfiguration.InsecureSkipVerify
+	}
+
+	// update `CertTLSIssuedTo`
+	if !common.IsEmpty(ldapConfiguration.TLSCertIssuedTo) {
+		ldapConfigurationUpdateObj.TLSCertIssuedTo = ldapConfiguration.TLSCertIssuedTo
+	}
+
+	if !ldapConfigurationUpdateObj.StartTLS {
+		ldapConfigurationUpdateObj.InsecureSkipVerify = false
+		ldapConfigurationUpdateObj.TLSCertIssuedTo = ""
+	}
+
+	if err := validateTLSParams(ldapConfigurationUpdateObj); err != nil {
+		return http.StatusBadRequest, err
 	}
 
 	err := db.UpdateLdapConfiguration(ldapConfigurationUpdateObj, actual.ServiceAccountPassword)
@@ -180,6 +199,15 @@ func addLdapConfigurationHelper(ldapConfiguration *types.LdapConfiguration) (int
 
 	if common.IsEmpty(ldapConfiguration.BaseDN) {
 		return http.StatusBadRequest, []byte("Empty base DN")
+	}
+
+	if !ldapConfiguration.StartTLS {
+		ldapConfiguration.InsecureSkipVerify = false
+		ldapConfiguration.TLSCertIssuedTo = ""
+	}
+
+	if err := validateTLSParams(ldapConfiguration); err != nil {
+		return http.StatusBadRequest, err
 	}
 
 	err := db.AddLdapConfiguration(ldapConfiguration)
@@ -413,6 +441,27 @@ func addLocalUserHelper(userCreateReq *types.LocalUser) (int, []byte) {
 		return http.StatusInternalServerError, []byte(fmt.Sprintf("Failed to add local user %q to the system", userCreateReq.Username))
 	}
 
+}
+
+// validateTLSParams validates TLS config parameters
+// params:
+//  ldapConfig: config to be validated
+// return values:
+//  error if validation fails, otherwise nil
+func validateTLSParams(ldapConfig *types.LdapConfiguration) []byte {
+	// if ldapConfig.TLSCertIssuedTo is not empty, then it will be honored
+	if ldapConfig.StartTLS && common.IsEmpty(ldapConfig.TLSCertIssuedTo) {
+		if !ldapConfig.InsecureSkipVerify {
+			if re.MatchString(ldapConfig.Server) {
+				return []byte("InsecureSkipVerify or TLSCertIssuedTo must be provided for TLS/SSL connection")
+			}
+
+			// ldapConfigurationUpdateObj.Server is FQDN
+			ldapConfig.TLSCertIssuedTo = ldapConfig.Server
+		}
+	}
+
+	return nil
 }
 
 // isTokenValid checks if the given token string is valid(correctness, expiry, etc.) and writes

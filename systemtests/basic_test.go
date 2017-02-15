@@ -17,6 +17,7 @@ const (
 	ldapPassword      = "C1ntainer$"
 	ldapAdminPassword = "C1ntainer$~"
 	ldapTestUsername  = "test_user"
+	tlsCertIssuedTo   = "WIN-LFAT1NFQ98T.ccn.example.com"
 
 	// use this when testing unauthenticated endpoints instead of ""
 	noToken = ""
@@ -51,8 +52,36 @@ func (s *systemtestSuite) TestLogin(c *C) {
 	runTest(func(ms *MockServer) {
 		adToken := adminToken(c)
 
+		// test both TLS and non-TLS modes
+		for _, startTLS := range []bool{false, true} {
+			// add LDAP configuration
+			s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig(startTLS))
+
+			// try logging in using `service` account
+			loginAs(c, "saccount", ldapPassword)
+
+			// try logging in using `temp` account; this fails as the user is only associated with primary group
+			// more details can be found here: auth/ldap/ldap.go
+			token, resp, err := login("temp", ldapPassword)
+			c.Assert(token, Equals, "")
+			c.Assert(resp.StatusCode, Equals, 401)
+			c.Assert(err, IsNil)
+
+			// try logging in using `admin` account
+			loginAs(c, "Administrator", ldapAdminPassword)
+
+			s.deleteLdapConfiguration(c, adToken)
+		}
+
+		// test login with `InsecureSkipVerify`
 		// add LDAP configuration
-		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig())
+		s.addLdapConfiguration(c, adToken, s.getRunningLdapConfig(false))
+
+		// test login using SSL/TLS
+		// connection will be upgraded to SSL/TLS but the certs will not be verified as `TLSCertIssuedTo` is empty
+		// `InsecureSkipVerify` will be enabled
+		ldapConfig := `{"port":5678, "start_tls":true, "insecure_skip_verify":true}`
+		s.updateLdapConfiguration(c, adToken, ldapConfig)
 
 		// try logging in using `service` account
 		loginAs(c, "saccount", ldapPassword)
@@ -67,25 +96,7 @@ func (s *systemtestSuite) TestLogin(c *C) {
 		// try logging in using `admin` account
 		loginAs(c, "Administrator", ldapAdminPassword)
 
-		// test login using SSL/TLS
-		ldapConfig := `{"port":5678, "start_tls":true, "insecure_skip_verify":true}`
-		s.updateLdapConfiguration(c, adToken, ldapConfig)
-
-		// try logging in using `service` account
-		loginAs(c, "saccount", ldapPassword)
-
-		// try logging in using `temp` account; this fails as the user is only associated with primary group
-		// more details can be found here: auth/ldap/ldap.go
-		token, resp, err = login("temp", ldapPassword)
-		c.Assert(token, Equals, "")
-		c.Assert(resp.StatusCode, Equals, 401)
-		c.Assert(err, IsNil)
-
-		// try logging in using `admin` account
-		loginAs(c, "Administrator", ldapAdminPassword)
-
 		s.deleteLdapConfiguration(c, adToken)
-
 	})
 
 }
@@ -226,12 +237,22 @@ func (s *systemtestSuite) TestPOSTBody(c *C) {
 	})
 }
 
-func (s *systemtestSuite) getRunningLdapConfig() string {
-	return `{"server":"` + ldapServer + `",` +
+func (s *systemtestSuite) getRunningLdapConfig(startTLS bool) string {
+	ldapConfig := `"server":"` + ldapServer + `",` +
 		`"port":5678,` +
 		`"base_dn":"DC=ccn,DC=example,DC=com",` +
 		`"service_account_dn":"CN=Service Account,CN=Users,DC=ccn,DC=example,DC=com",` +
-		`"service_account_password":"` + ldapPassword + `",` +
+		`"service_account_password":"` + ldapPassword + `"`
+
+	if startTLS {
+		return `{` + ldapConfig + `,` +
+			`"start_tls":true,` +
+			`"insecure_skip_verify":false,` +
+			`"tls_cert_issued_to":"` + tlsCertIssuedTo + `"}`
+	}
+
+	return `{` + ldapConfig + `,` +
 		`"start_tls":false,` +
-		`"insecure_skip_verify":true}`
+		`"insecure_skip_verify":false,` +
+		`"tls_cert_issued_to":""}`
 }

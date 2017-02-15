@@ -87,6 +87,13 @@ type LocalUser struct {
 //                    account to communicate with LDAP/AD. Hence this account
 //                    must have appropriate privileges, specifically for lookup.
 //  ServiceAccountPassword: of the service account
+//  StartTLS: if set, the connection will be upgrated to SSL/TLS mode
+//  InsecureSkipVerify: if set, the certificate verification is skipped;
+//                      used only when `StartTLS` is enabled.
+//  TLSCertIssuedTo: Servername for which the TLS/SSL certificate was issued.
+//                   This is used only when `StartTLS` is enabled.
+//                   The connection is prone to man-in-the-middle attacks,
+//                   if empty(TLSCertIssuedTo) and InsecureSkipVerify == false.
 type LdapConfiguration struct {
 	Server                 string `json:"server"`
 	Port                   uint16 `json:"port"`
@@ -95,6 +102,7 @@ type LdapConfiguration struct {
 	ServiceAccountPassword string `json:"service_account_password,omitempty"`
 	StartTLS               bool   `json:"start_tls"`
 	InsecureSkipVerify     bool   `json:"insecure_skip_verify"`
+	TLSCertIssuedTo        string `json:"tls_cert_issued_to"`
 }
 
 //
