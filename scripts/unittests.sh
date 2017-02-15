@@ -23,6 +23,7 @@ IMAGE_NAME="auth_proxy_unittests"
 NETWORK_NAME="$IMAGE_NAME"
 
 echo "Building unittests image..."
+docker build -t "auth_proxy_build_base" -f ./build/Dockerfile.base .
 docker build -t $IMAGE_NAME -f ./build/Dockerfile.unittests .
 
 function ip_for_container {

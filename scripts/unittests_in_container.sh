@@ -9,14 +9,14 @@ echo ""
 echo "===== DB TESTS ============================================================"
 echo ""
 
-echo "consul:"
-echo ""
-DATASTORE_ADDRESS=$CONSUL_ADDRESS go test -v -timeout 1m ./db -check.v
-echo ""
-
 echo "etcd:"
 echo ""
 DATASTORE_ADDRESS=$ETCD_ADDRESS go test -v -timeout 1m ./db -check.v
+echo ""
+
+echo "consul:"
+echo ""
+DATASTORE_ADDRESS=$CONSUL_ADDRESS go test -v -timeout 1m ./db -check.v
 echo ""
 
 echo ""
