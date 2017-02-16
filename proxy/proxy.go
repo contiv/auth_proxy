@@ -164,8 +164,7 @@ func (s *Server) Serve() {
 
 	s.wg.Add(1)
 	go func() {
-		err := server.Serve(s.listener)
-		if err != nil {
+		if err := server.Serve(s.listener); err != nil {
 			// this will usually be a "use of closed network socket"
 			// error when Stop() is called, but log it anyways.
 			log.Debug("Error serving: ", err)

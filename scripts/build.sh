@@ -20,7 +20,6 @@ VERSION=${BUILD_VERSION-$DEV_IMAGE_NAME}
 #
 START_DIR=$(pwd)
 UI_DIR="$PWD/build/dependencies/contiv-ui"
-NODE_VERSION="7.4.0"
 
 mkdir -p $UI_DIR
 
