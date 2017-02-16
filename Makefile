@@ -22,7 +22,7 @@ ci: generate-certificate build test
 # if an existing certificate and key exist, it will do nothing.
 # if either of them do not exist, they will both be recreated.
 generate-certificate:
-	@bash ./scripts/generate-certificate.sh
+	@bash ./scripts/generate_certificate.sh
 
 # godep rebuilds Godeps/Godeps.json
 # you will only need to run this if you add a new external dependency.
