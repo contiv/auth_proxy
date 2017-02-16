@@ -23,6 +23,8 @@ You can also specify a version, e.g., `BUILD_VERSION=0.1 make`.  This will
 generate a `auth_proxy:0.1` image using current code you have checked out and
 whatever commit is tagged as `0.1` in the `contiv-ui` repo.
 
+## Version Checking
+
 `auth_proxy` will check the version of the `netmaster` it's pointed to at startup.
 We require that the major versions are the same and that the minor version of
 `netmaster` is >= the minor version of `auth_proxy`.
@@ -83,19 +85,3 @@ request w. token ---> auth_proxy ---> authorization ----> request forwarded to n
                                                                                         /
 <----- results filtered based on token and returned to client <----- auth_proxy --------
 ```
-
-### Tips
-
-To start an etcd v2 datastore (highest version supported by `netmaster` and `netplugin`):
-
-```sh
-docker run -d --name etcd -p 2379:2379 quay.io/coreos/etcd:v2.3.7 --listen-client-urls http://0.0.0.0:2379 --advertise-client-urls http://0.0.0.0:2379
-```
-
-To start a Consul datastore:
-
-```sh
-docker run -d --name consul -p 8500:8500  consul
-```
-
-The Consul UI also runs on port 8500.

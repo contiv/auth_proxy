@@ -20,7 +20,6 @@ VERSION=${BUILD_VERSION-$DEV_IMAGE_NAME}
 #
 START_DIR=$(pwd)
 UI_DIR="$PWD/build/dependencies/contiv-ui"
-NODE_VERSION="7.4.0"
 
 mkdir -p $UI_DIR
 
@@ -30,7 +29,7 @@ echo "Checking to see if $UI_DIR/.git exists"
 if [ ! -d "$UI_DIR/.git" ]; then
     echo "contiv-ui dependency directory does not exist, creating..."
     echo "Performing clone of contiv-ui repo into $UI_DIR"
-    git clone https://github.com/contiv/contiv-ui.git $UI_DIR
+    git clone --depth 1 https://github.com/contiv/contiv-ui.git $UI_DIR
 fi
 
 cd $UI_DIR
