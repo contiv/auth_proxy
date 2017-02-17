@@ -30,6 +30,14 @@ godep:
 	[ -n "`which godep`" ] || go get -u github.com/tools/godep
 	godep save ./...
 
+# run target runs an auth proxy setup without a netmaster
+# It's handy to test proxy only changes w/o requiring a full
+# e2e setup.  Run generate-certificate and build before this,
+# or put certs in appropriate folder. See docker-compose.yaml
+# for more details.
+run:
+	docker-compose up -d
+
 # systemtests runs the system tests suite.
 systemtests:
 	@bash ./scripts/systemtests.sh
@@ -41,12 +49,4 @@ unit-tests:
 # test runs ALL the test suites.
 test: systemtests unit-tests
 
-# run target runs an auth proxy setup without a netmaster
-# It's handy to test proxy only changes w/o requiring a full
-# e2e setup.  Run generate-certificate and build before this,
-# or put certs in appropriate folder. See docker-compose.yaml
-# for more details.
-run:
-	docker-compose up -d
-
-.PHONY: all build checks ci generate-certificate godep systemtests test unit-tests release cluster cluster-destroy release-test-swarm release-test-kubeadm release-test-kubelegacy run
+.PHONY: all build checks ci generate-certificate godep run systemtests unit-tests test
