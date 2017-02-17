@@ -1,4 +1,11 @@
 #!/bin/bash
+
+if [ -z "`which github-release`" ]; then
+    echo "Please install github-release before running this script"
+    echo "You may download a release from https://github.com/aktau/github-release/releases or run 'go get github.com/aktau/github-release' if you have Go installed"
+    exit 1
+fi
+
 if [ -z "$OLD_VERSION" ]; then
     echo "A release requires OLD_VERSION to be defined"
     exit 1
