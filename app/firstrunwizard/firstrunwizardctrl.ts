@@ -39,8 +39,7 @@ export class FirstrunWizardComponent implements OnInit{
     }
 
     logout() {
-        this.authService.logout();
-        this.router.navigate(['/logout'],{relativeTo: this.activatedRoute});
+        this.authService.isLoggedIn = false;
     }
 
     skip() {

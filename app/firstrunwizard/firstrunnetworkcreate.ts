@@ -16,6 +16,7 @@ export class FirstrunNetworkCreateComponent{
     @Output('cancelPage') cancelPage:EventEmitter<any>;
     public clusterMode: string = '';
     public newNetwork: any;
+    public networkPresent: boolean;
     constructor(private wizardService: FirstRunWizardService){
         this.updatePage = new EventEmitter<any>();
         this.cancelPage = new EventEmitter<any>();

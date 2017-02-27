@@ -14,27 +14,47 @@ export class ApiService{
 
     get(url: string): Observable<any>{
         var options = this.prepareHeader('get');
-        return this.http.get(url,options);
+        return this.http.get(url,options)
+            .catch((error: any) => {
+                this.checkUnauthorized(error);
+                return Observable.throw(error);
+            });
     }
 
     put(url:string, body:any): Observable<any>{
         var options = this.prepareHeader('put');
-        return this.http.put(url,body,options);
+        return this.http.put(url,body,options)
+            .catch((error: any) => {
+                this.checkUnauthorized(error);
+                return Observable.throw(error);
+            });
     }
 
     post(url:string, body:any): Observable<any>{
         var options = this.prepareHeader('post');
-        return this.http.post(url,body,options);
+        return this.http.post(url,body,options)
+            .catch((error: any) => {
+                this.checkUnauthorized(error);
+                return Observable.throw(error);
+            });
     }
 
     delete(url:string): Observable<any>{
         var options = this.prepareHeader('delete');
-        return this.http.delete(url,options);
+        return this.http.delete(url,options)
+            .catch((error: any) => {
+                this.checkUnauthorized(error);
+                return Observable.throw(error);
+            });
     }
 
     patch(url:string, body:any): Observable<any>{
         var options = this.prepareHeader('patch')
-        return this.http.patch(url, body, options);
+        return this.http.patch(url, body, options)
+            .catch((error: any) => {
+                this.checkUnauthorized(error);
+                return Observable.throw(error);
+            });
     }
 
     prepareHeader(method: string): RequestOptions{
@@ -45,5 +65,12 @@ export class ApiService{
             this.headers.append('X-Auth-Token', this.authService.authToken);
         var options = new RequestOptions({headers: this.headers});
         return options;
+    }
+
+    checkUnauthorized(error: any){
+        if(this.authService.isLoggedIn){
+            if((error.status===401) || (error.status===403))
+                this.authService.isLoggedIn = false;
+        }
     }
 }

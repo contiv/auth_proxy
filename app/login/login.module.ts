@@ -9,12 +9,14 @@ import { RouterModule } from "@angular/router";
 import { LoginComponent } from "./loginctrl";
 import { UnauthorizedComponent } from "./unauthorized";
 import { LogoutComponent } from "./logoutctrl";
+import { DirectivesModule } from "../components/directives/directives.module";
 
 @NgModule({
     imports: [
         FormsModule,
         CommonModule,
-        RouterModule
+        RouterModule,
+        DirectivesModule
     ],
     declarations: [
         LoginComponent,

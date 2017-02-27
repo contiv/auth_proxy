@@ -18,3 +18,12 @@
     color: #1c4f81;
 }
 
+.supportTooltipText{
+    color:black;
+}
+
+.supportTooltip{
+    top: 10px;
+    display: inline-block;
+    position: relative;
+}

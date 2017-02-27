@@ -19,7 +19,6 @@ i.toast_info{
 }
 
 .tooltipInfo{
-    width:400px;
     left:36px;
     top:-42px;
     background-color:#008FCE;
@@ -29,7 +28,6 @@ i.toast_info{
     z-index: 5000;
     color: white;
     font-size: 12px;
-    padding: 20px 20px 20px 20px;
     border-radius: 8px;
     visibility: hidden;
 }
@@ -39,7 +37,7 @@ i.toast_info{
     content: "";
     position: absolute;
     top: 31px;
-    left: -6%;
+    left: -22px;
     border-width: 12px;
     border-style: solid;
     border-color: transparent #008FCE transparent transparent;

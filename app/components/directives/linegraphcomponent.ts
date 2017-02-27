@@ -121,22 +121,30 @@ export class LineGraphComponent implements OnInit, DoCheck, OnDestroy{
         this.lineChartOptions = {
             animation: false,
             responsive: true,
-            scales: {
+        }
+        if(max < 7){
+            this.lineChartOptions['scales'] = {
                 yAxes: [{
                     type: 'linear',
                     ticks: {
                         beginAtZero: true,
-                        suggestedMax: max * 1.5
+                        suggestedMax: 8,
                     }
                 }]
-            },
-            elements: {
-                line:{
-                    borderWidth: 2
-                    },
-                point:{
-                    radius: 4
+            }
+        }
+        else{
+            this.lineChartOptions['scales'] = {
+                yAxes: [{
+                    type: 'linear',
+                    ticks: {
+                        beginAtZero: true,
+                        suggestedMax: Math.round(max * 3),
+                        callback: function(value, index, values){
+                            return Math.round(value);
+                        }
                     }
+                }]
             }
         }
     }

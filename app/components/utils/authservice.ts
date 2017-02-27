@@ -104,18 +104,6 @@ export class AuthService {
         */
     }
 
-    logout(): void {
-        this.cleanuplocalstorage();
-    }
-
-    cleanuplocalstorage(): void{
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("loginTime");
-        localStorage.removeItem("lastAccessTime");
-        localStorage.removeItem("username");
-        this.isLoggedIn = false;
-    }
-
     encodeUrlData(body: any) :string{
         var str = Object.keys(body).map(function(key){
             return encodeURIComponent(key) + '=' + encodeURIComponent(body[key]);
@@ -171,9 +159,7 @@ export class AuthService {
         }
         lastAcessTime = new Date(lastAcessTime);
         var durationEloped = (currentDate.getTime() - lastAcessTime.getTime()) / 60000;
-        if((durationEloped > 0) && (durationEloped < 10)){
-            if(currentDate.getTime() > (this.authTokenPayload['exp'] * 1000))
-                return false;
+        if((durationEloped > 0) && (durationEloped < 60)){
             localStorage.setItem("lastAccessTime", currentDate.toLocaleString());
             return true;
         }

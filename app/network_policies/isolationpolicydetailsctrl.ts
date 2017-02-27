@@ -70,7 +70,7 @@ export class IsolationPolicyDetailsComponent {
                 isolationPolicyDetailsCtrl.networks = _.filter(result, {
                     'tenantName': isolationPolicyDetailsCtrl['policy'].tenantName
                 });
-            });
+            },(err)=>{});
         }
 
         /**

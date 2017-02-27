@@ -27,12 +27,13 @@ declare var jQuery:any;
     styleUrls: ['./menu.css']
 })
 
-export class MenuComponent implements AfterViewInit{
+export class MenuComponent implements AfterViewInit, DoCheck{
     public username: string;
     public localuser: boolean;
     public product_name:string = ContivGlobals.PRODUCT_NAME;
     public firstRun: boolean;
     public ProfileDisplayType = ProfileDisplayType;
+    public loggedOut: boolean = false;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private router: Router,
@@ -53,13 +54,28 @@ export class MenuComponent implements AfterViewInit{
         this.username = authService.username;
         this.firstRun = this.authService.firstRun;
         this.localuser = this.authService.localUser;
+
+    }
+
+    ngDoCheck(){
+        if(!this.loggedOut){
+            if(!this.authService.isLoggedIn){
+                this.loggedOut = true;
+                this.logout();
+            }
+        }
     }
 
     ngAfterViewInit(){
         jQuery('.ui.dropdown').dropdown({action: 'hide', duration: 100});
         this.authService.firstrunObservable.subscribe((res) => {
             this.firstRun = res;
-        })
+        });
+    }
+
+    help(){
+        var win = window.open("http://contiv.github.io/", '_blank');
+        win.focus();
     }
 
     logout() {
@@ -67,7 +83,7 @@ export class MenuComponent implements AfterViewInit{
         component['timerId'] =  window.setInterval(() => {
            if(jQuery('.ui.dropdown').dropdown('is hidden')){
                clearInterval(component['timerId']);
-               component.authService.logout();
+               component.cleanuplocalstorage();
                component.chartService.cleanBuffer();
                component.networksModel.clearModel();
                component.applicationgroupsModel.clearModel();
@@ -84,6 +100,14 @@ export class MenuComponent implements AfterViewInit{
                component.router.navigate(['/logout'],{relativeTo: this.activatedRoute});
            }
         },10)
+    }
+
+    cleanuplocalstorage(): void{
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("loginTime");
+        localStorage.removeItem("lastAccessTime");
+        localStorage.removeItem("username");
+        this.authService.isLoggedIn = false;
     }
 
     closeProfile(){

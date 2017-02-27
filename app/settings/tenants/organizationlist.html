@@ -4,7 +4,7 @@
             <div class="content pageTitle" style="display: inline-block">
                 Tenants
             </div>
-            <tooltip [data]="'Tenants are the highest level of organization in Contiv. Create tenants and then assign the appropriate users and create networks. Users are authorized to view and use only the resources within their tenant, but can be assigned to multiple tenants.'"></tooltip>
+            <tooltip>Tenants are the highest level of organization in Contiv. Create tenants and then assign the appropriate users and create networks. Users are authorized to view and use only the resources within their tenant, but can be assigned to multiple tenants.</tooltip>
         </div>
         <div class="right aligned seven wide column">
             <button class="ui primary button" (click)="create()" *verifydom="'admin'">

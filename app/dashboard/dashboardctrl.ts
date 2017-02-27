@@ -48,20 +48,20 @@ export class DashboardComponent implements OnDestroy {
                     .then(function (result) {
                         dashboardComponent.networks = result.length;
                         dashboardComponent.networkList = result;
-                    });
+                    }, (err)=>{});
                 applicationGroupsModel.get(reload)
                     .then(function (result) {
                         dashboardComponent.groups = result.length;
                         dashboardComponent.applicationGroupList = result;
-                    });
+                    }, (err)=>{});
                 policiesModel.get(reload)
                     .then(function (result) {
                         dashboardComponent.networkpolicies = result.length;
-                    });
+                    }, (err)=>{});
                 servicelbsModel.get(reload)
                     .then( function (result) {
                         dashboardComponent.servicelbs = result.length;
-                    })
+                    }, (err)=>{});
             })
         }
 

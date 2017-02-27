@@ -114,7 +114,7 @@ export class ApplicationGroupCreateComponent {
             component.networks = _.filter(result, {
                 'tenantName': tenantName
             });
-        });
+        },(err) => {});
     }
 
     updateTenant(tenantName:string) {

@@ -18,11 +18,11 @@ export class NetworkService {
         this.aciModeSubject = new Subject<any>();
         this.aciModeObservable = this.aciModeSubject.asObservable();
         var networkservice = this;
-        this.getSettings().then();
+        this.getSettings().then((res)=>{},(err)=>{});
         this.getGlobalInspect().then((res) => {
             networkservice.clusterMode = res.Oper.clusterMode;
             networkservice.clusterModeSubject.next(networkservice.clusterMode);
-        });
+        }, (error) => {});
     }
 
     getSettings(): Promise<any> {

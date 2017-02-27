@@ -8,6 +8,7 @@
                     <label for="newNetworkName">Network name</label>
                     <input type="text" id="newNetworkName" name="newNetworkName"
                            [(ngModel)]="networkCreateCtrl.newNetwork.networkName"
+                           [disabled]="firstRunWiz && (clusterMode === 'kubernetes') && (!networkPresent)"
                            placeholder="Enter name" required #newNetworkName="ngModel">
                     <span class="inlineError" *ngIf="newNetworkName.errors?.required && networkCreateForm.submitted">
                                     Please enter network name
@@ -84,7 +85,7 @@
                     <button type="button" class="ui secondary button" (click)="goback.emit()"><i
                             class="arrow left icon"></i>Go back
                     </button>
-                    <button type="button" class="ui secondary button" (click)="skip.emit()" *ngIf="clusterMode=='docker'">Skip this step</button>
+                    <button type="button" class="ui secondary button" (click)="skip.emit()" *ngIf="(clusterMode!=='kubernetes') || ((clusterMode==='kubernetes') && (networkPresent))">Skip this step</button>
                     <button type="submit" class="ui primary button">Continue<i class="arrow right icon"></i></button>
                 </div>
             </div>

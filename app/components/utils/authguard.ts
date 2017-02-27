@@ -15,13 +15,10 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
     constructor(private authService: AuthService, private router: Router) {
         this.accessMatrix = AuthMatrix;
-        this.unguardedUrls = ['/unauthorized', '/login', '/logout'];
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         let url: string = state.url;
-        if (this.unguardedUrls.indexOf(url) > -1)
-            return true;
         return this.checkLogin(url);
     }
 
@@ -31,15 +28,10 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
     checkLogin(url: string): boolean {
 
-        if(this.checkFirstRun()){
-            this.router.navigate(['/unauthorized'])
-            return false;
-        }
-
         if (this.authService.isLoggedIn) {
             if (this.checkAccess(url))
                 if (this.authService.validateExpiry())
-                    return true;
+                    return this.performFirstrunCheck(url);
                 else{
                     this.loadLogin(url);
                     return false;
@@ -55,8 +47,9 @@ export class AuthGuard implements CanActivate, CanActivateChild {
             this.authService.extractBody();
             if(this.authService.validateExpiry()){
                 this.authService.isLoggedIn = true;
-                if(this.checkAccess(url))
-                    return true;
+                if(this.checkAccess(url)){
+                    return this.performFirstrunCheck(url);
+                }
                 else{
                     this.router.navigate(['/unauthorized']);
                     return false;
@@ -69,8 +62,6 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     }
 
     loadLogin(url: string): void{
-        // Clean the local storage
-        this.authService.cleanuplocalstorage();
         // Store the attempted URL for redirecting
         this.authService.redirectUrl = url;
         // Navigate to the login page
@@ -81,17 +72,36 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         return this.authService.checkAccess(url);
     }
 
-    checkFirstRun():boolean{
+    isFirstRun():boolean{
         if(isNull(localStorage.getItem('firstRun')))
             this.authService.firstRun = true;
         else
             this.authService.firstRun = false;
-        if(this.authService.firstRun && (this.authService.authTokenPayload['role'] == 'DevOps'))
-            return true;
-        else
-            return false;
+        return this.authService.firstRun;
     }
 
-
+    performFirstrunCheck(url: string){
+        if(this.isFirstRun()){
+            if(/firstrun/.test(url)){
+                if(this.authService.authTokenPayload['role'] !== 'admin'){
+                    this.router.navigate(['/unauthorized']);
+                    return false;
+                }
+                else{
+                    return true;
+                }
+            }
+            this.router.navigate(['/m/firstrun']);
+        }
+        else{
+            if(/firstrun/.test(url)){
+                this.router.navigate(['/m/dashboard']);
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+    }
 
 }

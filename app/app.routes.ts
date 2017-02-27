@@ -45,9 +45,9 @@ import { OrganizationDetailsComponent } from "./settings/tenants/organizationdet
 import { LdapConfigComponent } from "./settings/ldapconfiguration";
 
 const routes = [
-    {path: 'login', component: LoginComponent, canActivate: [AuthGuard]},
-    {path: 'logout', component: LogoutComponent, canActivate: [AuthGuard]},
-    {path: 'unauthorized', component: UnauthorizedComponent, canActivate: [AuthGuard]},
+    {path: 'login', component: LoginComponent},
+    {path: 'logout', component: LogoutComponent},
+    {path: 'unauthorized', component: UnauthorizedComponent},
     {path: '', redirectTo: 'login', pathMatch: 'full'},
     {
         path: 'm',

@@ -5,6 +5,7 @@
 import {Component, Input, Output, EventEmitter, OnInit, NgZone} from "@angular/core";
 import {OrganizationsModel} from "../../models/organizationsmodel";
 import {CRUDHelperService} from "../../utils/crudhelperservice";
+import {NetworksModel} from "../../models/networksmodel";
 @Component({
     selector: 'networkcreateform',
     templateUrl: './networkcreateform.html'
@@ -21,7 +22,9 @@ export class NetworkCreateformComponent implements OnInit{
     public networkCreateCtrl: any;
     public showLoader: boolean = true;
     public tenants: any = [];
+    public networkPresent: boolean = false;
     constructor(private organizationsModel: OrganizationsModel,
+                private networksModel: NetworksModel,
                 private crudHelperService: CRUDHelperService,
                 private ngZone: NgZone){
         this.createnetwork = new EventEmitter<any>();
@@ -39,6 +42,25 @@ export class NetworkCreateformComponent implements OnInit{
             component.organizationsModel.get(reload)
                 .then((result) => {
                     component.tenants = result;
+                    var p1 = new Promise((resolve, reject) => {
+                        if(component.firstRunWiz){
+                            component.networksModel.get(false)
+                                .then((res) => {
+                                    if(res.length > 0){
+                                        component.networkPresent = true;
+                                        if(component.clusterMode === 'kubernetes' && component.firstRunWiz)
+                                            component.newNetwork['networkName'] = 'default-net';
+                                    }
+                                    resolve(true);
+                                },(err)=>{})
+                        }
+                        else{
+                            resolve(true);
+                        }
+                    })
+                    return p1;
+                })
+                .then((result) => {
                     component.ngZone.run(() => {
                         component.crudHelperService.stopLoader(component);
                     });
@@ -50,8 +72,7 @@ export class NetworkCreateformComponent implements OnInit{
         }
 
         getTenants(false);
-        if(this.clusterMode === 'kubernetes' && this.firstRunWiz)
-            this.newNetwork['networkName'] = 'default-net';
+
     }
 
     createNetwork(formvalid: boolean){

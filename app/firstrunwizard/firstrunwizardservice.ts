@@ -20,6 +20,10 @@ export class FirstRunWizardService {
 
     constructor(private networkService:NetworkService,
                 private networksModel: NetworksModel) {
+        this.initialize();
+    }
+
+    initialize(){
         this.setting = {
             networkInfraType: '',
             vlans: '',
@@ -54,7 +58,7 @@ export class FirstRunWizardService {
                 wizardservice.showLoader = false;
                 wizardservice.setting = result;
                 wizardservice.defaults['setting'] = Object.assign({}, wizardservice.setting);
-                }
+                }, (error) => {}
             )
     }
 
@@ -64,7 +68,7 @@ export class FirstRunWizardService {
             .then((result) => {
                 wizardservice.aciSetting = result
                 wizardservice.defaults['aciSetting'] = Object.assign({}, wizardservice.aciSetting);
-            })
+            },(error) => {})
     }
 
     getGlobalInspect(){
@@ -73,7 +77,7 @@ export class FirstRunWizardService {
             .then((result) => {
                 wizardservice.globalInspect = result['Oper'];
                 wizardservice.clusterMode = wizardservice.globalInspect['clusterMode'];
-            })
+            }, (error) => {})
     }
 
     updateSettings():Promise<any> {

@@ -51,6 +51,7 @@ export class FirstrunConfirmComponent {
     loadDashboard(){
         this.showLoader = false;
         this.authService.setFirstRun('completed');
+        this.wizardService.initialize();
         this.router.navigate(['/m/dashboard']);
     }
 
