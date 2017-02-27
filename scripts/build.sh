@@ -63,7 +63,7 @@ docker run \
 
 # copy out the binaries
 docker cp build_cntr:/go/src/github.com/contiv/auth_proxy/build/output/auth_proxy ./build/output/
-docker rm -f build_cntr
+docker rm -fv build_cntr
 
 docker build -t $IMAGE_NAME:$VERSION -f ./build/Dockerfile.release .
 echo "Created image: $IMAGE_NAME:$VERSION"
