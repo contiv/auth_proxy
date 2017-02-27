@@ -67,3 +67,5 @@ docker rm -f build_cntr
 
 docker build -t $IMAGE_NAME:$VERSION -f ./build/Dockerfile.release .
 echo "Created image: $IMAGE_NAME:$VERSION"
+
+rm -f ./build/output/auth_proxy
