@@ -4,13 +4,19 @@
 }
 
 .productname{
-    font-size: 33px;
-    font-weight: bold;
-    color: #1c4f81;
+    font-size: 2.0rem !important;
+    font-weight: 300;
+    color: #0c5093;
 }
 
 .logo {
-    width:80px !important;
-    height: 80px !important;
+    width:36px !important;
+    height: 36px !important;
     display:inline !important;
+}
+
+.column.text{
+    font-weight: 300 !important;
+    padding-top: 15px !important;
+    font-size: 14px !important;
 }

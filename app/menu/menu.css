@@ -13,14 +13,14 @@
 .logo{
     display: inline !important;
     margin-right: 20px !important;
-    width: 50px !important;
-    height: 47px !important;
+    width: 36px !important;
+    height: 36px !important;
 }
 
 .productname {
-    font-weight: bold !important;
-    font-size: 2.6rem !important;
-    color: #1c4f81 !important;
+    font-weight: 300 !important;
+    font-size: 2.0rem !important;
+    color: #0c5093 !important;
     left: -15px !important;
     position: relative !important;
     top: 5px !important;
