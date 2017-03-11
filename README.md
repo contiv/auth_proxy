@@ -44,7 +44,7 @@ returns some expected JSON response) without the burden of actually compiling
 and running a full `netmaster` binary and all of its dependencies plus creating
 the necessary networks, tenants, etc. to get realistic responses from it.
 
-For a complete e2e setup involving proxy+UI+netmaster, see contiv/install.
+For a complete e2e setup involving auth_proxy + UI + netmaster, please see [contiv/install](https://github.com/contiv/install).
 
 ## Local Development
 
