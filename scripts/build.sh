@@ -2,14 +2,6 @@
 
 set -euo pipefail
 
-if [[ -x "$(command -v getenforce)" && "$(getenforce)" == "Enforcing" ]]; then
-    echo >&2  "SELinux is currently in enforcing mode.  This build script will not successfully execute."
-    echo >&2 "You can temporarily disable SELinux via \`setenforce 0\` and reenable it with \`setenforce 1\`."
-    echo >&2 "Exiting."
-
-    exit 1
-fi
-
 DEV_IMAGE_NAME="devbuild"
 IMAGE_NAME="contiv/auth_proxy"
 BUILD_IMAGE_NAME="${IMAGE_NAME}_build"
