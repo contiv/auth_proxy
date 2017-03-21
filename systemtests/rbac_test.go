@@ -572,7 +572,7 @@ func (s *systemtestSuite) addUser(c *C, username string) {
 	runTest(func(ms *MockServer) {
 		adToken = adminToken(c)
 
-		endpoint := proxy.V1Prefix + "/local_users/" + username
+		endpoint := proxy.V1Prefix + "/local_users/" + username + "/"
 		resp, _ := proxyGet(c, adToken, endpoint)
 		if resp.StatusCode == 200 {
 			resp, body := proxyDelete(c, adToken, endpoint)
@@ -646,12 +646,12 @@ func (s *systemtestSuite) TestAdminRoleRequired(c *C) {
 		// update user details using his/her token
 		data := `{"first_name":"Temp", "last_name": "User"}`
 		endpoint := proxy.V1Prefix + "/local_users/" + username
-		resp, _ := proxyPatch(c, testuserToken, endpoint, []byte(data))
+		resp, _ := proxyPatch(c, testuserToken, endpoint+"/", []byte(data))
 		c.Assert(resp.StatusCode, Equals, 200)
 
 		// try updating other user details
 		endpoint = proxy.V1Prefix + "/local_users/unknown"
-		resp, _ = proxyPatch(c, testuserToken, endpoint, []byte(data))
+		resp, _ = proxyPatch(c, testuserToken, endpoint+"/", []byte(data))
 		// user is not allowed to update other user details
 		c.Assert(resp.StatusCode, Equals, 403)
 
@@ -669,7 +669,7 @@ func (s *systemtestSuite) TestAdminRoleRequired(c *C) {
 
 		// update using user's token
 		endpoint = proxy.V1Prefix + "/local_users/" + username
-		resp, _ = proxyPatch(c, testuserToken, endpoint, []byte(data))
+		resp, _ = proxyPatch(c, testuserToken, endpoint+"/", []byte(data))
 		c.Assert(resp.StatusCode, Equals, 200)
 
 		// Below tests the adminOnly api
@@ -685,7 +685,7 @@ func (s *systemtestSuite) testAdminOnlyAPI(c *C) {
 	// This should fail with forbidden since user doesn't have admin access
 	data := `{"username":"test_xyz", "password":"test", "first_name":"Temp", "last_name": "User"}`
 	endpoint := proxy.V1Prefix + "/local_users"
-	resp, _ := proxyPost(c, testuserToken, endpoint, []byte(data))
+	resp, _ := proxyPost(c, testuserToken, endpoint+"/", []byte(data))
 	c.Assert(resp.StatusCode, Equals, 403)
 
 	// grant admin access to username
@@ -702,6 +702,6 @@ func (s *systemtestSuite) testAdminOnlyAPI(c *C) {
 
 	// calling admin api should fail again without requiring new token (since cached value
 	// of role authz in token isn't used)
-	resp, _ = proxyPost(c, testuserToken, endpoint, []byte(data))
+	resp, _ = proxyPost(c, testuserToken, endpoint+"/", []byte(data))
 	c.Assert(resp.StatusCode, Equals, 403)
 }
