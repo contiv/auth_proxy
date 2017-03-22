@@ -73,7 +73,6 @@ CONSUL_CONTAINER_ID=$(
 CONSUL_CONTAINER_IP=$(ip_for_container $CONSUL_CONTAINER_ID)
 echo "consul running @ $CONSUL_CONTAINER_IP:8500"
 
-
 #
 # NOTE: we start the systemtests container and then later use `docker exec` to
 #       run the tests against etcd and consul.  The reason for starting it like

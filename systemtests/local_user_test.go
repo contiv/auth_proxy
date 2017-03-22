@@ -32,7 +32,7 @@ func (s *systemtestSuite) TestLocalUserEndpoints(c *C) {
 
 		for _, username := range newUsers {
 			endpoint := proxy.V1Prefix + "/local_users"
-			resp, body := proxyGet(c, token, endpoint)
+			resp, body := proxyGet(c, token, endpoint+"/")
 			c.Assert(resp.StatusCode, Equals, 200)
 			c.Assert(len(body), Not(Equals), 0)
 
@@ -43,7 +43,7 @@ func (s *systemtestSuite) TestLocalUserEndpoints(c *C) {
 
 			// get `username`
 			endpoint = proxy.V1Prefix + "/local_users/" + username
-			resp, body = proxyGet(c, token, endpoint)
+			resp, body = proxyGet(c, token, endpoint+"/")
 			c.Assert(resp.StatusCode, Equals, 200)
 			c.Assert(string(body), DeepEquals, respBody)
 
@@ -52,12 +52,12 @@ func (s *systemtestSuite) TestLocalUserEndpoints(c *C) {
 			c.Assert(len(testuserToken), Not(Equals), 0)
 
 			// delete `username`
-			resp, body = proxyDelete(c, token, endpoint)
+			resp, body = proxyDelete(c, token, endpoint+"/")
 			c.Assert(resp.StatusCode, Equals, 204)
 			c.Assert(len(body), Equals, 0)
 
 			// get `username`
-			resp, body = proxyGet(c, token, endpoint)
+			resp, body = proxyGet(c, token, endpoint+"/")
 			c.Assert(resp.StatusCode, Equals, 404)
 			c.Assert(len(body), Equals, 0)
 		}
@@ -67,7 +67,7 @@ func (s *systemtestSuite) TestLocalUserEndpoints(c *C) {
 		// test usernames with special characters
 		for _, username := range invalidUsernames {
 			data := `{"username": "` + username + `", "password":"test"}`
-			resp, body := proxyPost(c, token, endpoint, []byte(data))
+			resp, body := proxyPost(c, token, endpoint+"/", []byte(data))
 			c.Assert(resp.StatusCode, Equals, http.StatusBadRequest)
 			c.Assert(string(body), Matches, ".*Invalid username.*")
 		}
@@ -182,12 +182,12 @@ func (s *systemtestSuite) TestLocalUserDeleteEndpoint(c *C) {
 			endpoint := proxy.V1Prefix + "/local_users/" + username
 
 			// delete `username`
-			resp, body := proxyDelete(c, token, endpoint)
+			resp, body := proxyDelete(c, token, endpoint+"/")
 			c.Assert(resp.StatusCode, Equals, 204)
 			c.Assert(len(body), Equals, 0)
 
 			// get `username`
-			resp, body = proxyGet(c, token, endpoint)
+			resp, body = proxyGet(c, token, endpoint+"/")
 			c.Assert(resp.StatusCode, Equals, 404)
 			c.Assert(len(body), Equals, 0)
 		}
@@ -197,12 +197,12 @@ func (s *systemtestSuite) TestLocalUserDeleteEndpoint(c *C) {
 			endpoint := proxy.V1Prefix + "/local_users/" + username
 
 			// delete `username`
-			resp, body := proxyDelete(c, token, endpoint)
+			resp, body := proxyDelete(c, token, endpoint+"/")
 			c.Assert(resp.StatusCode, Equals, 400)
 			c.Assert(len(body), Not(Equals), 0)
 
 			// get `username`
-			resp, body = proxyGet(c, token, endpoint)
+			resp, body = proxyGet(c, token, endpoint+"/")
 			c.Assert(resp.StatusCode, Equals, 200)
 			c.Assert(len(body), Not(Equals), 0)
 		}
@@ -213,7 +213,7 @@ func (s *systemtestSuite) TestLocalUserDeleteEndpoint(c *C) {
 func (s *systemtestSuite) addLocalUser(c *C, data, expectedRespBody, token string) {
 	endpoint := proxy.V1Prefix + "/local_users"
 
-	resp, body := proxyPost(c, token, endpoint, []byte(data))
+	resp, body := proxyPost(c, token, endpoint+"/", []byte(data))
 	c.Assert(resp.StatusCode, Equals, 201)
 	c.Assert(string(body), DeepEquals, expectedRespBody)
 }
@@ -222,7 +222,7 @@ func (s *systemtestSuite) addLocalUser(c *C, data, expectedRespBody, token strin
 func (s *systemtestSuite) updateLocalUser(c *C, username, data, expectedRespBody, token string) {
 	endpoint := proxy.V1Prefix + "/local_users/" + username
 
-	resp, body := proxyPatch(c, token, endpoint, []byte(data))
+	resp, body := proxyPatch(c, token, endpoint+"/", []byte(data))
 	c.Assert(resp.StatusCode, Equals, 200)
 	c.Assert(string(body), DeepEquals, expectedRespBody)
 }

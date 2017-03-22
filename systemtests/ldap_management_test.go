@@ -7,18 +7,16 @@ import (
 	. "gopkg.in/check.v1"
 )
 
+var endpoint = proxy.V1Prefix + "/ldap_configuration" + "/"
+
 // addLdapConfiguration helper function for the tests
 func (s *systemtestSuite) addLdapConfiguration(c *C, token, data string) {
-	endpoint := proxy.V1Prefix + "/ldap_configuration"
-
 	resp, _ := proxyPut(c, token, endpoint, []byte(data))
 	c.Assert(resp.StatusCode, Equals, 201)
 }
 
 // deleteLdapConfiguration helper function for the tests
 func (s *systemtestSuite) deleteLdapConfiguration(c *C, token string) {
-	endpoint := proxy.V1Prefix + "/ldap_configuration"
-
 	resp, body := proxyDelete(c, token, endpoint)
 	c.Assert(resp.StatusCode, Equals, 204)
 	c.Assert(body, DeepEquals, []byte{})
@@ -26,8 +24,6 @@ func (s *systemtestSuite) deleteLdapConfiguration(c *C, token string) {
 
 // getLdapConfiguration helper function for the tests
 func (s *systemtestSuite) getLdapConfiguration(c *C, token string) []byte {
-	endpoint := proxy.V1Prefix + "/ldap_configuration"
-
 	resp, body := proxyGet(c, token, endpoint)
 	c.Assert(resp.StatusCode, Equals, 200)
 
@@ -36,8 +32,6 @@ func (s *systemtestSuite) getLdapConfiguration(c *C, token string) []byte {
 
 // updateLdapConfiguration helper function for the tests
 func (s *systemtestSuite) updateLdapConfiguration(c *C, token, data string) {
-	endpoint := proxy.V1Prefix + "/ldap_configuration"
-
 	resp, _ := proxyPatch(c, token, endpoint, []byte(data))
 	c.Assert(resp.StatusCode, Equals, 200)
 }
@@ -51,7 +45,6 @@ func (s *systemtestSuite) TestLdapAddEndpoint(c *C) {
 
 	runTest(func(ms *MockServer) {
 		userToken := loginAs(c, username, username)
-		endpoint := proxy.V1Prefix + "/ldap_configuration"
 
 		// test with corrupted json data
 		ldapConfig := s.getRunningLdapConfig(false)
@@ -124,7 +117,6 @@ func (s *systemtestSuite) TestLdapDeleteEndpoint(c *C) {
 	s.addUser(c, username)
 
 	runTest(func(ms *MockServer) {
-		endpoint := proxy.V1Prefix + "/ldap_configuration"
 		userToken := loginAs(c, username, username)
 		ldapConfig := s.getRunningLdapConfig(false)
 
@@ -137,7 +129,6 @@ func (s *systemtestSuite) TestLdapDeleteEndpoint(c *C) {
 		c.Assert(string(body), Matches, ".*access denied.*")
 
 		s.deleteLdapConfiguration(c, adToken)
-
 	})
 }
 
@@ -146,7 +137,6 @@ func (s *systemtestSuite) TestLdapUpdateEndpoint(c *C) {
 	s.addUser(c, username)
 
 	runTest(func(ms *MockServer) {
-		endpoint := proxy.V1Prefix + "/ldap_configuration"
 		userToken := loginAs(c, username, username)
 		ldapConfig := s.getRunningLdapConfig(false)
 
@@ -190,6 +180,5 @@ func (s *systemtestSuite) TestLdapUpdateEndpoint(c *C) {
 		c.Assert(resp.StatusCode, Equals, 200)
 
 		s.deleteLdapConfiguration(c, adToken)
-
 	})
 }
