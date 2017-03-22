@@ -36,7 +36,7 @@ export class UserProfileEditComponent implements OnInit {
 
     ngOnInit(){
         var component = this;
-        var url = ContivGlobals.USERS_ENDPOINT + '/' + this.username;
+        var url = ContivGlobals.USERS_ENDPOINT + this.username + '/';
         this.usersModel.getModelByKey(this.username, false, 'username', url)
             .then((user) => {
                 component.user = user;

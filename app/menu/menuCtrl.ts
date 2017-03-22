@@ -104,7 +104,6 @@ export class MenuComponent implements AfterViewInit, DoCheck{
 
     cleanuplocalstorage(): void{
         localStorage.removeItem("authToken");
-        localStorage.removeItem("loginTime");
         localStorage.removeItem("lastAccessTime");
         localStorage.removeItem("username");
         this.authService.isLoggedIn = false;

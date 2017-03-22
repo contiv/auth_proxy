@@ -18,13 +18,13 @@ export class AuthorizationModel extends Collection{
 
     delete(authId): Promise<any>{
         var collection = this;
-        var url = collection.url + '/' + authId;
+        var url = collection.url + authId + '/';
         return super.deleteUsingKey(authId, 'AuthzUUID', url);
     }
 
     save(model):Promise<any> {
         var collection = this;
-        var url = ContivGlobals.AUTHORIZATION_ENDPOINT + '/' +model['AuthzUUID'];
+        var url = ContivGlobals.AUTHORIZATION_ENDPOINT + model['AuthzUUID'] + '/';
         return this.apiService.patch(url, model).map((res:Response) => res.json()).toPromise()
             .then((result) => {
                 _.remove(collection.models, function (n) {

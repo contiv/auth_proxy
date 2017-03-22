@@ -76,32 +76,6 @@ export class AuthService {
                 }
             })
             .catch((error:any) => Observable.throw(error));
-
-
-        /* This is just a mock. Use the below code if you are calling netmaster apis directly
-        return new Observable((observer) => {
-            if (user.username != "devops" && user.username != "admin")
-                observer.next(false);
-            else{
-                var res = '';
-                if (user.username == "devops" && user.password == "devops")
-                    var res = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6dHJ1ZSwiZXhwIjoxNDgxODAwNDc0LCJpc3MiOiJjY25fcHJveHkiLCJyb2xlIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIn0.U9-yhzl-Q7BKYIROdNf-BwtvXVukTpJL-_Z0Jsddfmc";
-                if (user.username == "admin" && user.password == "admin")
-                    var res = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6dHJ1ZSwiZXhwIjoxNDgxODAwNDc0LCJpc3MiOiJjY25fcHJveHkiLCJyb2xlIjoib3BzIiwidXNlcm5hbWUiOiJvcHMifQ==.U9-yhzl-Q7BKYIROdNf-BwtvXVukTpJL-_Z0Jsddfmc";
-                if (res == ''){
-                    observer.next(false);
-                }
-                else{
-                    this.isLoggedIn = true;
-                    localStorage.setItem("authToken", res);
-                    localStorage.setItem("loginTime", new Date().toLocaleString());
-                    localStorage.setItem("lastAccessTime", new Date().toLocaleString());
-                    this.extractBody();
-                    observer.next(true);
-                }
-            }
-        });
-        */
     }
 
     encodeUrlData(body: any) :string{
@@ -117,8 +91,7 @@ export class AuthService {
         var xAuthToken = res.json()['token'];
         if (xAuthToken.length > 0) {
             localStorage.setItem("authToken", xAuthToken);
-            localStorage.setItem("loginTime", new Date().toLocaleString());
-            localStorage.setItem("lastAccessTime", new Date().toLocaleString());
+            localStorage.setItem("lastAccessTime", new Date().getTime().toString());
             localStorage.setItem("username", this.username);
             this.extractBody();
             return true;
@@ -151,16 +124,14 @@ export class AuthService {
     }
 
     validateExpiry(): boolean{
-        var lastAcessTime: any;
-        var currentDate = new Date();
-        lastAcessTime = localStorage.getItem("lastAccessTime");
-        if(isNull(lastAcessTime)){
+        let currentDate: Date = new Date();
+        let lastAccessTime: string = localStorage.getItem("lastAccessTime");
+        if(isNull(lastAccessTime)){
             return false;
         }
-        lastAcessTime = new Date(lastAcessTime);
-        var durationEloped = (currentDate.getTime() - lastAcessTime.getTime()) / 60000;
-        if((durationEloped > 0) && (durationEloped < 60)){
-            localStorage.setItem("lastAccessTime", currentDate.toLocaleString());
+        let durationEloped = (currentDate.getTime() - parseInt(lastAccessTime)) / 60000;
+        if((durationEloped >= 0) && (durationEloped < 60)){
+            localStorage.setItem("lastAccessTime", currentDate.getTime().toString());
             return true;
         }
         return false;

@@ -17,7 +17,7 @@ export class UsersModel extends Collection {
 
     save(model):Promise<any> {
         var collection = this;
-        var url = ContivGlobals.USERS_ENDPOINT + '/' +model['username'];
+        var url = ContivGlobals.USERS_ENDPOINT + model['username'] + '/';
         return this.apiService.patch(url, model).map((res:Response) => res.json()).toPromise()
             .then((result) => {
                 _.remove(collection.models, function (n) {

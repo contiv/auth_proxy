@@ -77,7 +77,7 @@ export class UserDetailsComponent {
         var component = this;
         component.crudHelperService.startLoader(component);
         var username = component.user['username'];
-        var url = ContivGlobals.USERS_ENDPOINT + '/' + username
+        var url = ContivGlobals.USERS_ENDPOINT + username + '/';
         component.usersModel.deleteUsingKey(username, 'username', url).then(
             function successCallback(result) {
                 component.ngZone.run(() => {
