@@ -170,11 +170,16 @@ func (s *systemtestSuite) TestRequestProxying(c *C) {
 
 		// make sure that the expected headers are present
 
+		cacheControlHeaderFound := false
 		contentTypeHeaderFound := false
 		hstsHeaderFound := false
 
 		for name, headers := range resp.Header {
 			switch name {
+			case "Cache-Control":
+				c.Assert(len(headers), Equals, 1)
+				c.Assert(headers[0], Equals, "no-store")
+				cacheControlHeaderFound = true
 			case "Content-Type":
 				c.Assert(len(headers), Equals, 1)
 				c.Assert(headers[0], Equals, "application/json; charset=utf-8")
@@ -186,6 +191,7 @@ func (s *systemtestSuite) TestRequestProxying(c *C) {
 			}
 		}
 
+		c.Assert(cacheControlHeaderFound, Equals, true)
 		c.Assert(contentTypeHeaderFound, Equals, true)
 		c.Assert(hstsHeaderFound, Equals, true)
 	})

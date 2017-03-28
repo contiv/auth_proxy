@@ -137,7 +137,7 @@ func enforceRBAC(s *Server) func(http.ResponseWriter, *http.Request) {
 //    1. Only `list` (can be accessed by anyone but the response is limited) responses are filtered,
 //       others do not require filtering as those requests are proxied only after authorization.
 //    2. If the rName(resource name) is empty, then the request is considered as `list` request. (/networks/, /tenants/, etc.)
-//       otherwise the requests (GET, POST, etc. on one of the resource's member. e.g /networks/n1) are proxied after authZ.
+//       otherwise the requests (GET, POST, etc. on one of the collection's members. e.g., /networks/n1/) are proxied after authZ.
 func rbacUsingTenant(s *Server, req *http.Request, w http.ResponseWriter, token *auth.Token, vars map[string]string) {
 	resource := vars["resource"]
 	rName := vars["name"]
@@ -154,7 +154,7 @@ func rbacUsingTenant(s *Server, req *http.Request, w http.ResponseWriter, token 
 		}
 	case "endpoints":
 		// XXX: This is one of the inspect endpoints; different than normal inspect on the object.
-		//      /api/v1/inspect/endpoints/{epg_name} -> returns the list of containers attached to this EPG
+		//      /api/v1/inspect/endpoints/{epg_name}/ -> returns the list of containers attached to this EPG
 		if common.IsEmpty(rName) {
 			// there is no such endpoint as /api/v1/inspect/endpoints/ -> 404
 			proxyRequest(s, req, w, token, auth.NullFilter)

@@ -126,6 +126,9 @@ func SetDefaultResponseHeaders(w http.ResponseWriter) {
 	// https://bugs.chromium.org/p/chromium/issues/detail?id=438464
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 
+	// don't allow browsers to cache responses of any requests forwarded to netmaster
+	w.Header().Set("Cache-Control", "no-store")
+
 	EnableHSTS(w)
 }
 
