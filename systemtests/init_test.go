@@ -155,19 +155,13 @@ func opsToken(c *C) string {
 
 var insecureTestClient *http.Client
 
-// insecureClient returns an insecure HTTPS client for talking to the proxy
-// during testing.  this function is memoized and only incurs overhead on the
-// first call.
-func insecureClient() *http.Client {
-	if nil == insecureTestClient {
-		insecureTestClient = &http.Client{
-			Transport: &http.Transport{
-				TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-			},
-		}
+func init() {
+	insecureTestClient = &http.Client{
+		Transport: &http.Transport{
+			// skip verification because MockServer uses a self-signed cert
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+		},
 	}
-
-	return insecureTestClient
 }
 
 // proxyGet is a convenience function which sends an insecure HTTPS GET
@@ -185,7 +179,7 @@ func proxyGet(c *C, token, path string) (*http.Response, []byte) {
 		req.Header.Set("X-Auth-Token", token)
 	}
 
-	resp, err := insecureClient().Do(req)
+	resp, err := insecureTestClient.Do(req)
 	c.Assert(err, IsNil)
 
 	defer resp.Body.Close()
@@ -211,7 +205,7 @@ func proxyDelete(c *C, token, path string) (*http.Response, []byte) {
 		req.Header.Set("X-Auth-Token", token)
 	}
 
-	resp, err := insecureClient().Do(req)
+	resp, err := insecureTestClient.Do(req)
 	c.Assert(err, IsNil)
 
 	defer resp.Body.Close()
@@ -269,7 +263,7 @@ func insecureJSONBody(token, path, requestType string, body []byte) (*http.Respo
 		req.Header.Set("X-Auth-Token", token)
 	}
 
-	resp, err := insecureClient().Do(req)
+	resp, err := insecureTestClient.Do(req)
 	if err != nil {
 		log.Debugf("%v request failed: %s", requestType, err)
 		return nil, nil, err

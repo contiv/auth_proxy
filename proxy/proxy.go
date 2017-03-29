@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/url"
 	"sync"
+	"time"
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/contiv/auth_proxy/common"
@@ -30,6 +31,15 @@ const (
 	// uiDirectory is the location in the container where the baked-in UI lives
 	// and where an external UI directory can be bindmounted over using -v
 	uiDirectory = "/ui"
+
+	// DefaultNetmasterRequestTimeout is the default value for proxy.Config's NetmasterRequestTimeout
+	DefaultNetmasterRequestTimeout = 10
+
+	// DefaultClientReadTimeout is the default value for proxy.Config's ClientReadTimeout
+	DefaultClientReadTimeout = 5
+
+	// DefaultClientWriteTimeout is the default value for proxy.Config's ClientWriteTimeout
+	DefaultClientWriteTimeout = 11 // DefaultNetmasterRequestTimeout + 1
 )
 
 // NewServer returns a new server with the specified config
@@ -54,21 +64,60 @@ type Config struct {
 	// TLSCertificate and TLSKeyFile are the cert and key we use to expose the HTTPS server
 	TLSCertificate string
 	TLSKeyFile     string
+
+	// NetmasterRequestTimeout is how long we allow for the whole request cycle when talking to
+	// out upstream netmaster.
+	NetmasterRequestTimeout int64
+
+	// ClientReadTimeout is how long we allow for the client to send its request to us.
+	// Increase this if you want to support clients on extremely slow/flaky connections.
+	ClientReadTimeout int64
+
+	// ClientWriteTimeout is how long we allow for us to send a request to netmaster, get the
+	// response, and write it back to the client socket.  This must be longer than the
+	// NetmasterRequestTimeout (default is 1 second longer).
+	ClientWriteTimeout int64
 }
 
 // Server represents a proxy server which can be running.
 type Server struct {
-	config        *Config        // holds all the configuration for the proxy server
-	listener      net.Listener   // the actual HTTPS server
-	stopChan      chan bool      // used to shut down the server
-	useKeepalives bool           // controls whether the HTTPS server supports keepalives
-	wg            sync.WaitGroup // used to avoid a race condition when shutting down
+	config          *Config        // holds all the configuration for the proxy server
+	listener        net.Listener   // the actual HTTPS server
+	stopChan        chan bool      // used to shut down the server
+	useKeepalives   bool           // controls whether the HTTPS server supports keepalives
+	wg              sync.WaitGroup // used to avoid a race condition when shutting down
+	netmasterClient *http.Client   // used when talking to the upstream netmaster
 }
 
 // Init initializes anything the server requires before it can be used.
 func (s *Server) Init() {
 	s.stopChan = make(chan bool, 1)
 	s.useKeepalives = true // we should only really need to turn these off in testing
+
+	if s.config.NetmasterRequestTimeout <= 0 {
+		log.Fatalf("NetmasterRequestTimeout must be > 0 (got: %d)", s.config.NetmasterRequestTimeout)
+	}
+
+	if s.config.ClientReadTimeout <= 0 {
+		log.Fatalf("ClientReadTimeout must be > 0 (got: %d)", s.config.ClientReadTimeout)
+	}
+
+	if s.config.ClientWriteTimeout <= 0 {
+		log.Fatalf("ClientWriteTimeout must be > 0 (got: %d)", s.config.ClientWriteTimeout)
+	}
+
+	s.netmasterClient = &http.Client{
+		Timeout: time.Duration(s.config.NetmasterRequestTimeout) * time.Second,
+	}
+
+	if s.config.ClientWriteTimeout <= s.config.NetmasterRequestTimeout {
+		log.Fatalf(
+			"ClientWriteTimeout (%d) must be > NetmasterRequestTimeout (%d)",
+			s.config.ClientWriteTimeout,
+			s.config.NetmasterRequestTimeout,
+		)
+	}
+
 }
 
 // ProxyRequest takes a HTTP request we've received, duplicates it, adds a few
@@ -99,7 +148,7 @@ func (s *Server) ProxyRequest(w http.ResponseWriter, req *http.Request) (*http.R
 
 	log.Debugf("Proxying request upstream to %s%s", copy.URL.Host, copy.URL.Path)
 
-	resp, err := http.DefaultClient.Do(copy)
+	resp, err := s.netmasterClient.Do(copy)
 	if err != nil {
 		return nil, []byte{}, errors.New("Failed to perform duplicate request: " + err.Error())
 	}
@@ -136,7 +185,11 @@ func (s *Server) Serve() {
 
 	addRoutes(s, router)
 
-	server := &http.Server{Handler: router}
+	server := &http.Server{
+		Handler:      router,
+		ReadTimeout:  time.Duration(s.config.ClientReadTimeout) * time.Second,
+		WriteTimeout: time.Duration(s.config.ClientWriteTimeout) * time.Second,
+	}
 
 	if !s.useKeepalives {
 		server.SetKeepAlivesEnabled(false)

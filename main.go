@@ -35,10 +35,36 @@ var (
 	// ProgramVersion is used in logging output and the X-Forwarded-By header.
 	// it is overridden at compile time via -ldflags
 	ProgramVersion = DefaultVersion
+
+	// the three timeouts we support.  See proxy.Config for comments
+	netmasterRequestTimeout int64
+	clientReadTimeout       int64
+	clientWriteTimeout      int64
 )
 
 func processFlags() {
 	// TODO: add a flag for LDAP host + port
+
+	flag.Int64Var(
+		&netmasterRequestTimeout,
+		"netmaster-timeout",
+		proxy.DefaultNetmasterRequestTimeout,
+		"time (in seconds) to allow auth_proxy to spend forwarding a request to netmaster",
+	)
+
+	flag.Int64Var(
+		&clientReadTimeout,
+		"client-read-timeout",
+		proxy.DefaultClientReadTimeout,
+		"time (in seconds) to allow a client to send its complete request to auth_proxy",
+	)
+
+	flag.Int64Var(
+		&clientWriteTimeout,
+		"client-write-timeout",
+		proxy.DefaultClientWriteTimeout,
+		"time (in seconds) to allow for auth_proxy to send a response after receiving a request from a client",
+	)
 
 	flag.StringVar(
 		&listenAddress,
@@ -46,36 +72,42 @@ func processFlags() {
 		":10000",
 		"address to listen to HTTP requests on",
 	)
+
 	flag.StringVar(
 		&netmasterAddress,
 		"netmaster-address",
 		"localhost:9999",
 		"address of the upstream netmaster",
 	)
+
 	flag.StringVar(
 		&tlsKeyFile,
 		"tls-key-file",
 		"local.key",
 		"path to TLS key",
 	)
+
 	flag.StringVar(
 		&tlsCertificate,
 		"tls-certificate",
 		"cert.pem",
 		"path to TLS certificate",
 	)
+
 	flag.BoolVar(
 		&debug,
 		"debug",
 		false,
 		"if set, log level is set to debug",
 	)
+
 	flag.StringVar(
 		&dataStoreAddress,
 		"data-store-address",
 		"",
 		"address of the state store used by netmaster",
 	)
+
 	flag.Parse()
 }
 
@@ -193,12 +225,15 @@ func main() {
 	}
 
 	p := proxy.NewServer(&proxy.Config{
-		Name:             ProgramName,
-		Version:          ProgramVersion,
-		NetmasterAddress: netmasterAddress,
-		ListenAddress:    listenAddress,
-		TLSCertificate:   tlsCertificate,
-		TLSKeyFile:       tlsKeyFile,
+		Name:                    ProgramName,
+		Version:                 ProgramVersion,
+		NetmasterAddress:        netmasterAddress,
+		ListenAddress:           listenAddress,
+		TLSCertificate:          tlsCertificate,
+		TLSKeyFile:              tlsKeyFile,
+		NetmasterRequestTimeout: netmasterRequestTimeout,
+		ClientReadTimeout:       clientReadTimeout,
+		ClientWriteTimeout:      clientWriteTimeout,
 	})
 
 	go p.Serve()
