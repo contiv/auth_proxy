@@ -52,7 +52,7 @@ ETCD_CONTAINER_ID=$(
        -p 2379:2379 \
        --name $ETCD_CONTAINER_NAME \
        --network $NETWORK_NAME \
-       quay.io/coreos/etcd:v2.3.7 \
+       quay.io/coreos/etcd:v2.3.8 \
        --listen-client-urls http://0.0.0.0:2379 \
        --advertise-client-urls http://0.0.0.0:2379
 )
