@@ -39,6 +39,7 @@ import { ApplicationGroupsModule } from "./applicationgroups/applicationgroups.m
 import   appRoutes  from "./app.routes";
 import { AuthorizationModule } from "./settings/authorization/authorization.module";
 import { OrganizationModule } from "./settings/tenants/organization.module";
+import { FirstRunService } from "./components/utils/firstrunservice";
 
 
 @NgModule({
@@ -83,6 +84,7 @@ import { OrganizationModule } from "./settings/tenants/organization.module";
         AuthGuard,
         ApiService,
         ChartService,
+        FirstRunService,
         { provide: APP_BASE_HREF, useValue: '' },
         { provide: LocationStrategy, useClass: HashLocationStrategy }
     ],

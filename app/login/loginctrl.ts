@@ -1,9 +1,11 @@
-import {Component, Inject, OnInit, ViewEncapsulation} from "@angular/core";
-import {CRUDHelperService} from "../components/utils/crudhelperservice";
-import {Router, ActivatedRoute} from "@angular/router";
-import {AuthService} from "../components/utils/authservice";
+import { Component, Inject, OnInit, ViewEncapsulation } from "@angular/core";
+import { CRUDHelperService } from "../components/utils/crudhelperservice";
+import { Router } from "@angular/router";
+import { AuthService } from "../components/utils/authservice";
 import { ContivGlobals } from "../components/models/contivglobals";
-import {ChartService} from "../components/utils/chartservice";
+import { ChartService } from "../components/utils/chartservice";
+import { FirstRunService } from "../components/utils/firstrunservice";
+
 declare var jQuery:any;
 
 @Component({
@@ -16,20 +18,18 @@ export class LoginComponent implements OnInit{
     public showLoader: boolean;
     public showServerError: boolean;
     public serverErrorMessage: string;
-    private crudHelperService: CRUDHelperService;
     public loginCtrl: any;
     public username: string;
     public password: string;
     public product_name:string = ContivGlobals.PRODUCT_NAME;
     
     constructor(private router: Router,
-                private activatedRoute: ActivatedRoute,
-                crudHelperService: CRUDHelperService,
+                private crudHelperService: CRUDHelperService,
                 private authService: AuthService,
+                private firstRunService: FirstRunService,
                 private chartService: ChartService){
         this.showLoader = true;
         this.showServerError = false;
-        this.crudHelperService = crudHelperService;
         this.username = '';
         this.password = '';
         this.loginCtrl = this;
@@ -50,21 +50,24 @@ export class LoginComponent implements OnInit{
             .subscribe((result) => {
                 if(result){
                     this.showServerError = false;
-                    this.crudHelperService.stopLoader(this);
+                    this.firstRunService.setFirstRun()
+                        .then(isFirstRun => {
+                            this.crudHelperService.stopLoader(this);
+                            if (isFirstRun) {
+                                this.router.navigate(['/m/firstrun']);
+                            }
+                            else {
+                                if (this.authService.redirectUrl.length > 0) {
+                                    var redirectUrl = this.authService.redirectUrl;
+                                    this.authService.redirectUrl = '';
+                                    this.router.navigate([redirectUrl]);
+                                }
+                                else{
+                                    this.router.navigate(['/m/dashboard']);
+                                }
+                            }
+                        });
                     this.chartService.startpolling();
-                    if(this.authService.firstRun){
-                        this.router.navigate(['/m/firstrun']);
-                    }
-                    else{
-                        if (this.authService.redirectUrl.length > 0) {
-                            var redirectUrl = this.authService.redirectUrl;
-                            this.authService.redirectUrl = '';
-                            this.router.navigate([redirectUrl]);
-                        }
-                        else{
-                            this.router.navigate(['/m/dashboard']);
-                        }
-                    }
                 }
                 else{
                     this.crudHelperService.stopLoader(this);

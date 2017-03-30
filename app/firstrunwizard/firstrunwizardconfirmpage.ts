@@ -3,11 +3,11 @@
  */
 
 
-import {Component, OnInit, Output, EventEmitter, Inject, AfterViewInit} from "@angular/core";
-import {Router, ActivatedRoute} from "@angular/router";
-import {FirstRunWizardService} from "./firstrunwizardservice";
-import {AuthService} from "../components/utils/authservice";
-import {CRUDHelperService} from "../components/utils/crudhelperservice";
+import { Component, OnInit, Output, EventEmitter, Inject, AfterViewInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { FirstRunWizardService } from "./firstrunwizardservice";
+import { CRUDHelperService } from "../components/utils/crudhelperservice";
+import { FirstRunService } from "../components/utils/firstrunservice";
 
 @Component({
     selector: 'firstrunwizardconfirmpage',
@@ -15,14 +15,13 @@ import {CRUDHelperService} from "../components/utils/crudhelperservice";
 })
 
 export class FirstrunConfirmComponent {
-    public showLoader: boolean
+    public showLoader: boolean;
     public skipArray: Array<boolean>;
     @Output('updatePage') updatePage: EventEmitter<any>;
     @Output('cancelPage') cancelPage: EventEmitter<any>;
     constructor(private wizardService: FirstRunWizardService,
                 private router: Router,
-                private activatedRoute: ActivatedRoute,
-                private authService: AuthService,
+                private firstRunService: FirstRunService,
                 private crudHelperService: CRUDHelperService){
         this.updatePage = new EventEmitter<any>();
         this.cancelPage = new EventEmitter<any>();
@@ -50,7 +49,7 @@ export class FirstrunConfirmComponent {
 
     loadDashboard(){
         this.showLoader = false;
-        this.authService.setFirstRun('completed');
+        this.firstRunService.setFirstRun();
         this.wizardService.initialize();
         this.router.navigate(['/m/dashboard']);
     }

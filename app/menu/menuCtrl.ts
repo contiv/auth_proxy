@@ -1,7 +1,7 @@
 /**
  * Created by vjain3 on 5/19/16.
  */
-import {Component, Inject, ViewEncapsulation, OnInit, OnChanges, DoCheck, AfterViewInit} from '@angular/core';
+import { Component, Inject, ViewEncapsulation, OnInit, OnChanges, DoCheck, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthService } from "../components/utils/authservice";
 import { ContivGlobals } from "../components/models/contivglobals";
@@ -19,6 +19,8 @@ import { PoliciesModel } from "../components/models/policiesmodel";
 import { RulesModel } from "../components/models/rulesmodel";
 import { ServicelbsModel } from "../components/models/servicelbsmodel";
 import { UsersModel } from "../components/models/usersmodel";
+import { FirstRunService } from "../components/utils/firstrunservice";
+
 declare var jQuery:any;
 
 @Component({
@@ -38,6 +40,7 @@ export class MenuComponent implements AfterViewInit, DoCheck{
     constructor(private activatedRoute: ActivatedRoute,
                 private router: Router,
                 private authService: AuthService,
+                private firstRunService: FirstRunService,
                 private chartService: ChartService,
                 private networksModel: NetworksModel,
                 private applicationgroupsModel: ApplicationGroupsModel,
@@ -52,7 +55,7 @@ export class MenuComponent implements AfterViewInit, DoCheck{
                 private servicelbsModel: ServicelbsModel,
                 private usersModel: UsersModel) {
         this.username = authService.username;
-        this.firstRun = this.authService.firstRun;
+        this.firstRun = this.firstRunService.firstRun;
         this.localuser = this.authService.localUser;
 
     }
@@ -68,7 +71,7 @@ export class MenuComponent implements AfterViewInit, DoCheck{
 
     ngAfterViewInit(){
         jQuery('.ui.dropdown').dropdown({action: 'hide', duration: 100});
-        this.authService.firstrunObservable.subscribe((res) => {
+        this.firstRunService.firstrunObservable.subscribe((res) => {
             this.firstRun = res;
         });
     }

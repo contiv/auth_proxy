@@ -2,10 +2,13 @@
  * Created by cshampur on 11/4/16.
  */
 import { Injectable }       from '@angular/core';
-import {CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot, CanActivateChild} from '@angular/router';
-import {AuthService} from "./authservice";
-import {AuthMatrix} from "./authMatrix";
-import {isNull} from "util";
+import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot, CanActivateChild } from '@angular/router';
+import { Subject } from "rxjs";
+import { Observable } from 'rxjs/Observable';
+import { AuthService } from "./authservice";
+import { AuthMatrix } from "./authMatrix";
+import { isNull } from "util";
+import { FirstRunService } from "./firstrunservice";
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild {
@@ -13,7 +16,9 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     accessMatrix:any;
     unguardedUrls: string[];
 
-    constructor(private authService: AuthService, private router: Router) {
+    constructor(private authService: AuthService,
+                private firstRunService: FirstRunService,
+                private router: Router) {
         this.accessMatrix = AuthMatrix;
     }
 
@@ -73,35 +78,18 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     }
 
     isFirstRun():boolean{
-        if(isNull(localStorage.getItem('firstRun')))
-            this.authService.firstRun = true;
-        else
-            this.authService.firstRun = false;
-        return this.authService.firstRun;
+        return this.firstRunService.firstRun;
     }
 
     performFirstrunCheck(url: string){
-        if(this.isFirstRun()){
-            if(/firstrun/.test(url)){
-                if(this.authService.authTokenPayload['role'] !== 'admin'){
-                    this.router.navigate(['/unauthorized']);
-                    return false;
-                }
-                else{
-                    return true;
-                }
-            }
-            this.router.navigate(['/m/firstrun']);
-        }
-        else{
-            if(/firstrun/.test(url)){
-                this.router.navigate(['/m/dashboard']);
-                return false;
-            }
-            else{
+        if (/firstrun/.test(url)) {
+            if (this.isFirstRun()) {
                 return true;
             }
+            this.router.navigate(['/m/dashboard']);
+            return false;
         }
+        return true;
     }
 
 }

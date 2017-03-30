@@ -2,8 +2,6 @@
  * Created by cshampur on 10/29/16.
  */
 
-
-
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthService } from "../components/utils/authservice";
@@ -43,7 +41,6 @@ export class FirstrunWizardComponent implements OnInit{
     }
 
     skip() {
-        this.authService.setFirstRun('skip');
         this.router.navigate(['/m/dashboard'],{relativeTo: this.activatedRoute});
     }
 

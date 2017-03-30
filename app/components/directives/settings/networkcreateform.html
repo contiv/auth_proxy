@@ -8,11 +8,11 @@
                     <label for="newNetworkName">Network name</label>
                     <input type="text" id="newNetworkName" name="newNetworkName"
                            [(ngModel)]="networkCreateCtrl.newNetwork.networkName"
-                           [disabled]="firstRunWiz && (clusterMode === 'kubernetes') && (!networkPresent)"
+                           [disabled]="firstRunWiz && (clusterMode === 'kubernetes')"
                            placeholder="Enter name" required #newNetworkName="ngModel">
                     <span class="inlineError" *ngIf="newNetworkName.errors?.required && networkCreateForm.submitted">
                                     Please enter network name
-                                </span>
+                    </span>
                 </div>
             </div>
             <div class="ui row" style="margin-top: 15px;">
@@ -28,7 +28,7 @@
                         </select>
                         <span class="inlineError" *ngIf="newNetworkTenant.errors?.required && networkCreateForm.submitted">
                                         Please select tenant
-                                    </span>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -50,10 +50,10 @@
                            [pattern]="networkCreateCtrl.cidrPattern" #newNetworkSubnet="ngModel">
                     <span class="inlineError" *ngIf="newNetworkSubnet.errors?.required && networkCreateForm.submitted">
                                     Please enter subnet
-                                </span>
+                    </span>
                     <span class="inlineError" *ngIf="newNetworkSubnet.errors?.pattern && networkCreateForm.submitted">
                                     Please enter subnet in CIDR notation
-                                </span>
+                    </span>
                 </div>
             </div>
             <div class="ui row" style="margin-top: 15px;">
@@ -85,7 +85,6 @@
                     <button type="button" class="ui secondary button" (click)="goback.emit()"><i
                             class="arrow left icon"></i>Go back
                     </button>
-                    <button type="button" class="ui secondary button" (click)="skip.emit()" *ngIf="(clusterMode!=='kubernetes') || ((clusterMode==='kubernetes') && (networkPresent))">Skip this step</button>
                     <button type="submit" class="ui primary button">Continue<i class="arrow right icon"></i></button>
                 </div>
             </div>

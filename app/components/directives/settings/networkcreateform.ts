@@ -42,32 +42,15 @@ export class NetworkCreateformComponent implements OnInit{
             component.organizationsModel.get(reload)
                 .then((result) => {
                     component.tenants = result;
-                    var p1 = new Promise((resolve, reject) => {
-                        if(component.firstRunWiz){
-                            component.networksModel.get(false)
-                                .then((res) => {
-                                    if(res.length > 0){
-                                        component.networkPresent = true;
-                                        if(component.clusterMode === 'kubernetes' && component.firstRunWiz)
-                                            component.newNetwork['networkName'] = 'default-net';
-                                    }
-                                    resolve(true);
-                                },(err)=>{})
-                        }
-                        else{
-                            resolve(true);
-                        }
-                    })
-                    return p1;
-                })
-                .then((result) => {
+                    if(component.clusterMode === 'kubernetes' && component.firstRunWiz)
+                        component.newNetwork['networkName'] = 'default-net';
                     component.ngZone.run(() => {
                         component.crudHelperService.stopLoader(component);
-                    });
+                    })
                 }, (error) => {
                     component.ngZone.run(() => {
                         component.crudHelperService.stopLoader(component);
-                    });
+                    })
                 });
         }
 

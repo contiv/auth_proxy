@@ -26,11 +26,8 @@ export class AuthService {
     authTokenPayload: any;
     accessMatrix:any;
     authToken:string;
-    firstRun:boolean;
     username: string;
     public localUser: boolean = true;
-    private firstrunSubject: Subject<any>;
-    public firstrunObservable: Observable<any>;
 
     constructor(private http: Http){
         this.isLoggedIn = false;
@@ -38,9 +35,6 @@ export class AuthService {
         this.accessMatrix = AuthMatrix;
         this.authTokenPayload = {};
         this.authToken='';
-        this.firstRun = false;
-        this.firstrunSubject = new Subject<any>();
-        this.firstrunObservable = this.firstrunSubject.asObservable();
     }
 
     checkAccess(url: string): boolean{
@@ -48,7 +42,7 @@ export class AuthService {
         if(searchUrl.indexOf('details') > -1 || searchUrl.indexOf('edit') > -1)
             searchUrl = searchUrl.replace(/\/[^\/]*$/,'');
         if(searchUrl.indexOf('policyTab') > -1)
-            searchUrl = searchUrl.replace(/;[^\/]*$/,'')
+            searchUrl = searchUrl.replace(/;[^\/]*$/,'');
         var role = this.authTokenPayload['role'];
         if (this.accessMatrix[searchUrl][role]=='y')
             return true;
@@ -110,17 +104,6 @@ export class AuthService {
         if(!isNull(this.authTokenPayload['username'].match(ContivGlobals.LDAPGROUP_REGEX)))
             this.localUser = false;
         this.username = localStorage.getItem("username");
-        if(isNull(localStorage.getItem('firstRun')))
-            this.firstRun = true;
-        else
-            this.firstRun = false;
-        this.firstrunSubject.next(this.firstRun);
-    }
-
-    setFirstRun(status:string){
-        localStorage.setItem("firstRun", status);
-        this.firstRun = false;
-        this.firstrunSubject.next(this.firstRun);
     }
 
     validateExpiry(): boolean{
