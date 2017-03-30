@@ -23,9 +23,9 @@ EXIT_CODES+=($?)
 set +x
 
 for exit_code in $EXIT_CODES; do
-    if [[ "$exit_code" != "0" ]]; then
-	exit 1
-    fi
+	if [[ "$exit_code" != "0" ]]; then
+		exit 1
+	fi
 done
 
 exit 0
