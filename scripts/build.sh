@@ -19,24 +19,24 @@ mkdir -p $UI_DIR
 echo "Checking to see if $UI_DIR/.git exists"
 
 if [ ! -d "$UI_DIR/.git" ]; then
-    echo "contiv-ui dependency directory does not exist, creating..."
-    echo "Performing clone of contiv-ui repo into $UI_DIR"
-    git clone --depth 1 https://github.com/contiv/contiv-ui.git $UI_DIR
+	echo "contiv-ui dependency directory does not exist, creating..."
+	echo "Performing clone of contiv-ui repo into $UI_DIR"
+	git clone --depth 1 https://github.com/contiv/contiv-ui.git $UI_DIR
 fi
 
 cd $UI_DIR
 
 # this is a fancy way to check if the var is set without tripping the unbound variable check
 if [ ! -z "${BUILD_VERSION-}" ]; then
-    echo "BUILD_VERSION is set ($BUILD_VERSION), checking it out as a tag..."
+	echo "BUILD_VERSION is set ($BUILD_VERSION), checking it out as a tag..."
 
-    git checkout master # make sure we have the latest master + all tags
-    git pull --ff-only # no merge commits, please
-    git checkout $BUILD_VERSION # BUILD_VERSION is expected to be a valid tag
+	git checkout master         # make sure we have the latest master + all tags
+	git pull --ff-only          # no merge commits, please
+	git checkout $BUILD_VERSION # BUILD_VERSION is expected to be a valid tag
 else
-    echo "No BUILD_VERSION set, skipping checkout/update of contiv-ui repo"
-    echo "Whatever version is currently checked out in $UI_DIR directory will be baked in"
-    echo "Current version: $(git rev-parse HEAD)"
+	echo "No BUILD_VERSION set, skipping checkout/update of contiv-ui repo"
+	echo "Whatever version is currently checked out in $UI_DIR directory will be baked in"
+	echo "Current version: $(git rev-parse HEAD)"
 fi
 
 #
@@ -49,9 +49,9 @@ docker build -t $BUILD_IMAGE_NAME -f ./build/Dockerfile.build .
 
 # use the build image to compile a static binary
 docker run \
-       -e VERSION="$VERSION" \
-       --name build_cntr \
-       $BUILD_IMAGE_NAME
+	-e VERSION="$VERSION" \
+	--name build_cntr \
+	$BUILD_IMAGE_NAME
 
 # copy out the binaries
 docker cp build_cntr:/go/src/github.com/contiv/auth_proxy/build/output/auth_proxy ./build/output/

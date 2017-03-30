@@ -29,9 +29,9 @@ echo ""
 
 echo "etcd:"
 echo ""
-DATASTORE_ADDRESS=$ETCD_ADDRESS go test -run TestAuthZ*  -v -timeout 1m ./state -check.v
+DATASTORE_ADDRESS=$ETCD_ADDRESS go test -run TestAuthZ* -v -timeout 1m ./state -check.v
 EXIT_CODES+=($?)
-DATASTORE_ADDRESS=$ETCD_ADDRESS go test -run TestEtcd*   -v -timeout 1m ./state -check.v
+DATASTORE_ADDRESS=$ETCD_ADDRESS go test -run TestEtcd* -v -timeout 1m ./state -check.v
 EXIT_CODES+=($?)
 echo ""
 
@@ -41,11 +41,10 @@ DATASTORE_ADDRESS=$CONSUL_ADDRESS go test -run TestConsul* -v -timeout 1m ./stat
 EXIT_CODES+=($?)
 echo ""
 
-
 for exit_code in $EXIT_CODES; do
-    if [[ "$exit_code" != "0" ]]; then
-	exit 1
-    fi
+	if [[ "$exit_code" != "0" ]]; then
+		exit 1
+	fi
 done
 
 exit 0

@@ -26,7 +26,6 @@
 
 set -euo pipefail
 
-
 IMAGE_NAME="auth_proxy_systemtests"
 NETWORK_NAME="auth_proxy_systemtests"
 PROXY_IMAGE="contiv/auth_proxy:devbuild"
@@ -34,8 +33,8 @@ PROXY_IMAGE="contiv/auth_proxy:devbuild"
 echo "Building systemtests image..."
 docker build -t $IMAGE_NAME -f ./build/Dockerfile.systemtests .
 
-function ip_for_container {
-    docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $1
+function ip_for_container() {
+	docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $1
 }
 
 # ----- SETUP -------------------------------------------------------------------
@@ -44,30 +43,28 @@ echo "Creating docker network $NETWORK_NAME"
 docker network rm $NETWORK_NAME 2>/dev/null || true
 docker network create $NETWORK_NAME
 
-
 echo "Starting etcd container..."
 ETCD_CONTAINER_NAME="etcd_auth_proxy_systemtests"
 ETCD_CONTAINER_ID=$(
-    docker run -d \
-       -p 2379:2379 \
-       --name $ETCD_CONTAINER_NAME \
-       --network $NETWORK_NAME \
-       quay.io/coreos/etcd:v2.3.8 \
-       --listen-client-urls http://0.0.0.0:2379 \
-       --advertise-client-urls http://0.0.0.0:2379
+	docker run -d \
+		-p 2379:2379 \
+		--name $ETCD_CONTAINER_NAME \
+		--network $NETWORK_NAME \
+		quay.io/coreos/etcd:v2.3.8 \
+		--listen-client-urls http://0.0.0.0:2379 \
+		--advertise-client-urls http://0.0.0.0:2379
 )
 ETCD_CONTAINER_IP=$(ip_for_container $ETCD_CONTAINER_ID)
 echo "etcd running @ $ETCD_CONTAINER_IP:2379"
 
-
 echo "Starting consul container..."
 CONSUL_CONTAINER_NAME="consul_auth_proxy_systemtests"
 CONSUL_CONTAINER_ID=$(
-    docker run -d \
-	   -p 8500:8500 \
-	   --name $CONSUL_CONTAINER_NAME \
-	   --network $NETWORK_NAME \
-	   consul
+	docker run -d \
+		-p 8500:8500 \
+		--name $CONSUL_CONTAINER_NAME \
+		--network $NETWORK_NAME \
+		consul
 )
 
 CONSUL_CONTAINER_IP=$(ip_for_container $CONSUL_CONTAINER_ID)
@@ -84,12 +81,12 @@ echo "consul running @ $CONSUL_CONTAINER_IP:8500"
 echo "Starting systemtests container..."
 # run with a tty so that bash (entrypoint) doesn't immediately exit
 SYSTEMTESTS_CONTAINER_ID=$(
-    docker run -d -t \
-      -e DEBUG="${DEBUG-}" \
-      -e ETCD_CONTAINER_IP="$ETCD_CONTAINER_IP" \
-      -e CONSUL_CONTAINER_IP="$CONSUL_CONTAINER_IP" \
-      --network $NETWORK_NAME \
-      auth_proxy_systemtests
+	docker run -d -t \
+		-e DEBUG="${DEBUG-}" \
+		-e ETCD_CONTAINER_IP="$ETCD_CONTAINER_IP" \
+		-e CONSUL_CONTAINER_IP="$CONSUL_CONTAINER_IP" \
+		--network $NETWORK_NAME \
+		auth_proxy_systemtests
 )
 
 SYSTEMTESTS_CONTAINER_IP=$(ip_for_container $SYSTEMTESTS_CONTAINER_ID)
@@ -97,38 +94,37 @@ echo "systemtests container running @ $SYSTEMTESTS_CONTAINER_IP"
 
 echo "Starting etcd proxy container..."
 ETCD_PROXY_CONTAINER_ID=$(
-    docker run -d \
-	   -p 10000:10000 \
-     -v $(pwd)/test/active_directory/ca.crt:/etc/ssl/certs/ca-certificate.crt \
-	   -v $(pwd)/local_certs:/local_certs:ro \
-	   -e NO_NETMASTER_STARTUP_CHECK=true \
-	   --network $NETWORK_NAME \
-	   $PROXY_IMAGE \
-	   --data-store-address="etcd://$ETCD_CONTAINER_IP:2379" \
-	   --tls-certificate=/local_certs/cert.pem \
-	   --tls-key-file=/local_certs/local.key \
-	   --listen-address=0.0.0.0:10000 \
-	   --netmaster-address="$SYSTEMTESTS_CONTAINER_IP:9999"
+	docker run -d \
+		-p 10000:10000 \
+		-v $(pwd)/test/active_directory/ca.crt:/etc/ssl/certs/ca-certificate.crt \
+		-v $(pwd)/local_certs:/local_certs:ro \
+		-e NO_NETMASTER_STARTUP_CHECK=true \
+		--network $NETWORK_NAME \
+		$PROXY_IMAGE \
+		--data-store-address="etcd://$ETCD_CONTAINER_IP:2379" \
+		--tls-certificate=/local_certs/cert.pem \
+		--tls-key-file=/local_certs/local.key \
+		--listen-address=0.0.0.0:10000 \
+		--netmaster-address="$SYSTEMTESTS_CONTAINER_IP:9999"
 )
 ETCD_PROXY_CONTAINER_IP=$(ip_for_container $ETCD_PROXY_CONTAINER_ID)
 ETCD_PROXY_ADDRESS="$ETCD_PROXY_CONTAINER_IP:10000"
 echo "etcd proxy container running @ $ETCD_PROXY_CONTAINER_IP:10000"
 
-
 echo "Starting consul proxy container..."
 CONSUL_PROXY_CONTAINER_ID=$(
-    docker run -d \
-	   -p 10001:10001 \
-     -v $(pwd)/test/active_directory/ca.crt:/etc/ssl/certs/ca-certificate.crt \
-	   -v $(pwd)/local_certs:/local_certs:ro \
-	   --network $NETWORK_NAME \
-	   -e NO_NETMASTER_STARTUP_CHECK=true \
-	   $PROXY_IMAGE \
-	   --data-store-address="consul://$CONSUL_CONTAINER_IP:8500" \
-	   --tls-certificate=/local_certs/cert.pem \
-	   --tls-key-file=/local_certs/local.key \
-	   --listen-address=0.0.0.0:10001 \
-	   --netmaster-address="$SYSTEMTESTS_CONTAINER_IP:9999"
+	docker run -d \
+		-p 10001:10001 \
+		-v $(pwd)/test/active_directory/ca.crt:/etc/ssl/certs/ca-certificate.crt \
+		-v $(pwd)/local_certs:/local_certs:ro \
+		--network $NETWORK_NAME \
+		-e NO_NETMASTER_STARTUP_CHECK=true \
+		$PROXY_IMAGE \
+		--data-store-address="consul://$CONSUL_CONTAINER_IP:8500" \
+		--tls-certificate=/local_certs/cert.pem \
+		--tls-key-file=/local_certs/local.key \
+		--listen-address=0.0.0.0:10001 \
+		--netmaster-address="$SYSTEMTESTS_CONTAINER_IP:9999"
 )
 CONSUL_PROXY_CONTAINER_IP=$(ip_for_container $CONSUL_PROXY_CONTAINER_ID)
 CONSUL_PROXY_ADDRESS="$CONSUL_PROXY_CONTAINER_IP:10001"
@@ -168,6 +164,6 @@ echo "Destroying docker network $NETWORK_NAME"
 docker network rm $NETWORK_NAME
 
 if [[ "$test_exit_code" != "0" ]]; then
-    echo "Tests failed with exit code: $test_exit_code"
-    exit 1
+	echo "Tests failed with exit code: $test_exit_code"
+	exit 1
 fi

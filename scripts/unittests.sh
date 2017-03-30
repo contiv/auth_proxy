@@ -26,8 +26,8 @@ echo "Building unittests image..."
 docker build -t "auth_proxy_build_base" -f ./build/Dockerfile.base .
 docker build -t $IMAGE_NAME -f ./build/Dockerfile.unittests .
 
-function ip_for_container {
-    docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $1
+function ip_for_container() {
+	docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $1
 }
 
 # ----- SETUP -------------------------------------------------------------------
@@ -39,13 +39,13 @@ docker network create $NETWORK_NAME
 echo "Starting etcd container..."
 ETCD_CONTAINER_NAME="etcd_auth_proxy_unittests"
 ETCD_CONTAINER_ID=$(
-    docker run -d \
-       -p 2379:2379 \
-       --name $ETCD_CONTAINER_NAME \
-       --network $NETWORK_NAME \
-       quay.io/coreos/etcd:v2.3.8 \
-       --listen-client-urls http://0.0.0.0:2379 \
-       --advertise-client-urls http://0.0.0.0:2379
+	docker run -d \
+		-p 2379:2379 \
+		--name $ETCD_CONTAINER_NAME \
+		--network $NETWORK_NAME \
+		quay.io/coreos/etcd:v2.3.8 \
+		--listen-client-urls http://0.0.0.0:2379 \
+		--advertise-client-urls http://0.0.0.0:2379
 )
 ETCD_CONTAINER_IP=$(ip_for_container $ETCD_CONTAINER_ID)
 echo "etcd running @ $ETCD_CONTAINER_IP:2379"
@@ -53,11 +53,11 @@ echo "etcd running @ $ETCD_CONTAINER_IP:2379"
 echo "Starting consul container..."
 CONSUL_CONTAINER_NAME="consul_auth_proxy_unittests"
 CONSUL_CONTAINER_ID=$(
-    docker run -d \
-	   -p 8500:8500 \
-	   --name $CONSUL_CONTAINER_NAME \
-	   --network $NETWORK_NAME \
-	   consul
+	docker run -d \
+		-p 8500:8500 \
+		--name $CONSUL_CONTAINER_NAME \
+		--network $NETWORK_NAME \
+		consul
 )
 CONSUL_CONTAINER_IP=$(ip_for_container $CONSUL_CONTAINER_ID)
 echo "consul running @ $CONSUL_CONTAINER_IP:8500"
@@ -69,14 +69,14 @@ echo "Running unit tests"
 set +e
 
 docker run --rm \
-        --network $NETWORK_NAME \
-        --name $IMAGE_NAME \
-        -v /var/run/docker.sock:/var/run/docker.sock \
-        -e CONSUL_CONTAINER_IP="$CONSUL_CONTAINER_IP" \
-        -e CONSUL_CONTAINER_NAME="$CONSUL_CONTAINER_NAME" \
-        -e ETCD_CONTAINER_IP="$ETCD_CONTAINER_IP" \
-        -e ETCD_CONTAINER_NAME="$ETCD_CONTAINER_NAME" \
-        $IMAGE_NAME
+	--network $NETWORK_NAME \
+	--name $IMAGE_NAME \
+	-v /var/run/docker.sock:/var/run/docker.sock \
+	-e CONSUL_CONTAINER_IP="$CONSUL_CONTAINER_IP" \
+	-e CONSUL_CONTAINER_NAME="$CONSUL_CONTAINER_NAME" \
+	-e ETCD_CONTAINER_IP="$ETCD_CONTAINER_IP" \
+	-e ETCD_CONTAINER_NAME="$ETCD_CONTAINER_NAME" \
+	$IMAGE_NAME
 test_exit_code=$?
 
 set -e
@@ -93,6 +93,6 @@ echo "Destroying docker network $NETWORK_NAME"
 docker network rm $NETWORK_NAME
 
 if [[ "$test_exit_code" != "0" ]]; then
-    echo "Tests failed with exit code: $test_exit_code"
-    exit 1
+	echo "Tests failed with exit code: $test_exit_code"
+	exit 1
 fi

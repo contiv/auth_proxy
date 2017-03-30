@@ -21,9 +21,8 @@ if [ "${#out}" -gt 0 ]; then
 fi
 
 echo "Running ineffassign..."
-for i in ${dirs}
-do
-  ineffassign $i
+for i in ${dirs}; do
+	ineffassign $i
 done
 
 echo "Running golint..."
