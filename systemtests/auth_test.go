@@ -87,9 +87,6 @@ func (s *systemtestSuite) TestTenantAuthorizationResponse(c *C) {
 		c.Assert(authz.Local, Equals, authz2.Local)
 		c.Assert(authz.Role, DeepEquals, authz2.Role)
 
-		// We must delete the authorization explicitly right now, as
-		// deleting users doesn't automatically deletes it.
-		// TODO: Remove authorizations with delete user
 		s.deleteAuthorization(c, authz.AuthzUUID, adToken)
 
 		endpoint = proxy.V1Prefix + "/authorizations/" + authz.AuthzUUID + "/"
