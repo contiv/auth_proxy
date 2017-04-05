@@ -136,10 +136,7 @@
                                     <div class="field">
                                         <label for="DSCP">DSCP</label>
                                         <input #DSCPRef="ngModel" type="number" id="DSCP" name="DSCP"
-                                               [(ngModel)]="policy.DSCP" placeholder="Enter DSCP" required/>
-                                        <span class="inlineError" *ngIf="DSCPRef.errors?.required && formRef.submitted">
-                                                Please enter DSCP
-                                        </span>
+                                               [(ngModel)]="policy.DSCP" placeholder="Enter DSCP"/>
                                     </div>
                                 </div>
                             </div>
@@ -148,10 +145,7 @@
                                     <div class="field">
                                         <label for="burst">Burst</label>
                                         <input #burstRef="ngModel" type="number" id="burst" name="burst"
-                                               [(ngModel)]="policy.burst" placeholder="Enter Burst" required/>
-                                        <span class="inlineError" *ngIf="burstRef.errors?.required && formRef.submitted">
-                                                Please enter Burst
-                                        </span>
+                                               [(ngModel)]="policy.burst" placeholder="Enter Burst"/>
                                     </div>
                                 </div>
                             </div>

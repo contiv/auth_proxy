@@ -96,10 +96,7 @@
                                 <div class="field" [ngClass]="{error: DSCPRef.errors?.required && formRef.submitted}">
                                     <label for="newDSCP">DSCP</label>
                                     <input #DSCPRef="ngModel" type="number" id="newDSCP" name="newDSCP"
-                                           [(ngModel)]="newPolicy.DSCP" placeholder="Enter DSCP" required/>
-                                    <span class="inlineError" *ngIf="DSCPRef.errors?.required && formRef.submitted">
-                                        Please enter DSCP
-                                    </span>
+                                           [(ngModel)]="newPolicy.DSCP" placeholder="Enter DSCP"/>
                                 </div>
                             </div>
                         </div>
