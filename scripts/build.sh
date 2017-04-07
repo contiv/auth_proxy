@@ -10,7 +10,6 @@ VERSION=${BUILD_VERSION-$DEV_IMAGE_NAME}
 #
 # bake in the UI assets
 #
-START_DIR=$(pwd)
 UI_DIR="$PWD/build/dependencies/contiv-ui"
 
 mkdir -p $UI_DIR
@@ -24,7 +23,7 @@ if [ ! -d "$UI_DIR/.git" ]; then
 	git clone --depth 1 https://github.com/contiv/contiv-ui.git $UI_DIR
 fi
 
-cd $UI_DIR
+pushd $UI_DIR
 
 # this is a fancy way to check if the var is set without tripping the unbound variable check
 if [ ! -z "${BUILD_VERSION-}" ]; then
@@ -42,7 +41,7 @@ fi
 #
 # build the final image
 #
-cd $START_DIR
+popd
 
 # create a local build image
 docker build -t $BUILD_IMAGE_NAME -f ./build/Dockerfile.build .
