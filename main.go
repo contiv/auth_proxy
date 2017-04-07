@@ -150,6 +150,13 @@ func netmasterStartupCheck() error {
 		return nil
 	}
 
+	// this envvar is useful for running systemtests against an arbitrary
+	// version of netmaster while still ensuring netmaster is up.
+	if len(os.Getenv("NO_NETMASTER_SEMVER_CHECK")) != 0 {
+		log.Println("Skipping netmaster semver check")
+		return nil
+	}
+
 	// compare the semvers of the proxy and netmaster
 	// (only major and minor, we will allow patch level differences)
 	proxyVer, err := semver.Make(ProgramVersion)
