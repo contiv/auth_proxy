@@ -1,27 +1,27 @@
 # Auth Proxy
 
-`auth_proxy`  provides authentication and authorization via
-RBAC before forwarding requests to an upstream `netmaster`. It is TLS-only,
+`auth_proxy` provides authentication (local users/LDAP/AD) and authorization
+(RBAC) before forwarding requests to an upstream `netmaster`. It is TLS-only,
 and it will only talk to a non-TLS `netmaster`.  Future versions will allow
 or potentially require TLS-only communication with `netmaster`.
 
-`auth_proxy` also hosts the UI (see the [contiv-ui repo](https://github.com/contiv/contiv-ui)).
+`auth_proxy` also hosts the Contiv UI (see the [contiv-ui repo](https://github.com/contiv/contiv-ui)).
 The UI is baked into the container and lives at the `/ui` directory. It is served
 from the root of the proxy, e.g., if you run with `--listen-address=localhost:10000`,
 you can see the UI at https://localhost:10000
 
 A custom version of the UI can be bindmounted over the baked-in version. Note that
 you need to bind in the `/app` directory under the `contiv-ui` repo, not the base
-directory: `-v /your/contiv-ui/repo/app:/ui:ro`
+directory (e.g., `-v /your/contiv-ui/repo/app:/ui:ro`)
 
 ## Building
 
-Running `make` will generate a `auth_proxy:devbuild` image using the current code
-you have checked out and `HEAD` from the `master` branch in the `contiv-ui` repo.
+Running `make` will generate a `contiv/auth_proxy:devbuild` image using the current
+code you have checked out and `HEAD` from the `master` branch in the `contiv-ui` repo.
 
 You can also specify a version, e.g., `BUILD_VERSION=0.1 make`.  This will
-generate a `auth_proxy:0.1` image using current code you have checked out and
-whatever commit is tagged as `0.1` in the `contiv-ui` repo.
+generate a `contiv/auth_proxy:0.1` image using current code you have checked out
+and whatever commit is tagged as `0.1` in the `contiv-ui` repo.
 
 ## Version Checking
 
@@ -34,29 +34,37 @@ version of `1.x.y` where `x` is >= 2 and `y` can be anything.
 
 ## Running Tests
 
+Tests currently run against the `contiv/auth_proxy:devbuild` image.  Make sure you
+have built this image before running tests.
+
 Just run `make test` to run the systemtests and unit tests.  The tests are fully
-containerized and will spawn anything they require as part of the test run
-(note that this does NOT currently include an AD server and we are still using a
-hardcoded one).  There is also a `MockServer` available in the `systemtests`
+containerized and will spawn everything they require as part of the test run
+(note that this does NOT currently include an AD server, and we are still using a
+hardcoded one).
+
+There is also a `MockServer` available in the `systemtests`
 directory which can pretend to be `netmaster` for the purposes of testing.  This
 allows us to mock the parts of `netmaster` we need (mainly that a given endpoint
 returns some expected JSON response) without the burden of actually compiling
 and running a full `netmaster` binary and all of its dependencies plus creating
 the necessary networks, tenants, etc. to get realistic responses from it.
 
-For a complete e2e setup involving auth_proxy + UI + netmaster, please see [contiv/install](https://github.com/contiv/install).
+For a complete e2e setup involving auth_proxy + UI + netmaster, please see
+[contiv/install](https://github.com/contiv/install).
 
 ## Local Development
 
-You will need a local cert and key to start `auth_proxy`.  You can run
-`make generate-certificate` to generate them if you don't already have them. To test proxy
-only functionality, try `make run`.
+You will need a certificate and key to start `auth_proxy`.  You can run
+`make generate-certificate` to generate a self-signed certificate and key under
+`./local_certs` if you don't already have them.
+
+To test auth_proxy in isolation, use `make run` to start it using the compose file.
 
 ## Architecture Overview
 
 Before anything else, a prospective user must authenticate and get a token.
 Authentication requires passing a username and password to the
-`/api/v1/auth_proxy/login` endpoint:
+`/api/v1/auth_proxy/login/` endpoint:
 
 ```
 login request ---> auth_proxy ---> authentication
