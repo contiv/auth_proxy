@@ -80,6 +80,101 @@ func (s *systemtestSuite) TestLocalUserUpdateEndpoint(c *C) {
 	s.builtInUserUpdate(c)
 }
 
+// TestInvalidUserTokens tests tokens that are either deleted/disabled
+func (s *systemtestSuite) TestInvalidUserTokens(c *C) {
+
+	runTest(func(ms *MockServer) {
+		token := adminToken(c)
+
+		for _, username := range newUsers {
+			data := `{"username":"` + username + `","password":"` + username + `", "disable":false}`
+			respBody := `{"username":"` + username + `","first_name":"","last_name":"","disable":false}`
+			s.addLocalUser(c, data, respBody, token)
+		}
+
+		// test login using disabled account
+		for _, username := range append(newUsers, types.Ops.String()) {
+			// try login using `username`
+			userToken := loginAs(c, username, username)
+
+			// disable user accounts
+			data := `{"disable":true}`
+			respBody := `{"username":"` + username + `","first_name":"","last_name":"","disable":true}`
+			s.updateLocalUser(c, username, data, respBody, token)
+
+			// try login using the disabled account
+			testuserToken, resp, err := login(username, username)
+			c.Assert(err, IsNil)
+			c.Assert(resp.StatusCode, Equals, http.StatusUnauthorized)
+			c.Assert(len(testuserToken), Equals, 0)
+
+			// revert the settings using disabled user token
+			data = `{"disable":false}`
+			endpoint := proxy.V1Prefix + "/local_users/" + username + "/"
+			resp, body := proxyPatch(c, userToken, endpoint, []byte(data))
+			c.Assert(resp.StatusCode, Equals, http.StatusUnauthorized)
+			c.Assert(string(body), Matches, ".*User account disabled.*")
+
+			// revert back; enable the account
+			respBody = `{"username":"` + username + `","first_name":"","last_name":"","disable":false}`
+			s.updateLocalUser(c, username, data, respBody, token)
+		}
+
+		// test login using deleted user account
+		for _, username := range newUsers {
+			// try login using `username`
+			userToken := loginAs(c, username, username)
+
+			// delete user account
+			endpoint := proxy.V1Prefix + "/local_users/" + username + "/"
+			resp, body := proxyDelete(c, token, endpoint)
+			c.Assert(resp.StatusCode, Equals, http.StatusNoContent)
+			c.Assert(len(body), Equals, 0)
+
+			// try login using the deleted account
+			testuserToken, resp, err := login(username, username)
+			c.Assert(err, IsNil)
+			c.Assert(resp.StatusCode, Equals, http.StatusUnauthorized)
+			c.Assert(len(testuserToken), Equals, 0)
+
+			// access resources using `userToken` (not valid anymore)
+			resp, body = proxyGet(c, userToken, endpoint)
+			c.Assert(resp.StatusCode, Equals, http.StatusUnauthorized)
+			c.Assert(string(body), Matches, ".*Invalid user.*")
+		}
+
+		// test accessing resources using disabled built-in `ops` account
+		username := types.Ops.String()
+		// try login using `username`
+		userToken := loginAs(c, username, username)
+
+		// add admin authz for `username`
+		data := `{"PrincipalName":"` + username + `","local":true,"role":"` + types.Admin.String() + `"}`
+		_ = s.addAuthorization(c, data, token)
+
+		// access resources
+		for _, resource := range []string{"networks", "rules"} {
+			endpoint := "/api/v1/" + resource + "/"
+			ms.AddHardcodedResponse(endpoint, []byte("test"))
+			resp, _ := proxyGet(c, userToken, endpoint)
+			c.Assert(resp.StatusCode, Equals, http.StatusOK)
+		}
+
+		// disable user accounts
+		data = `{"disable":true}`
+		respBody := `{"username":"` + username + `","first_name":"","last_name":"","disable":true}`
+		s.updateLocalUser(c, username, data, respBody, token)
+
+		// access resources
+		for _, resource := range []string{"networks", "rules"} {
+			endpoint := "/api/v1/" + resource + "/"
+			resp, body := proxyGet(c, userToken, endpoint)
+			c.Assert(resp.StatusCode, Equals, http.StatusUnauthorized)
+			c.Assert(string(body), Matches, ".*User account disabled.*")
+		}
+	})
+}
+
 // userUpdateEndpoint tests update on local user
 func (s *systemtestSuite) userUpdate(c *C) {
 

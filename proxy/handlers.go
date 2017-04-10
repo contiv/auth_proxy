@@ -174,43 +174,13 @@ func versionHandler(version string) func(http.ResponseWriter, *http.Request) {
 	}
 }
 
-// parseReqToken parses the token (from HTTP request)
-// params:
-//  w: http.ResponseWriter object
-//  req: *http.Request object
-// return values:
-//  *auth.Token: parsed token or nill
-func parseReqToken(w http.ResponseWriter, req *http.Request) *auth.Token {
-	// retrieve token from request header
-	tokenStr, err := getTokenFromHeader(req)
-	if err != nil {
-		// token cannot be retrieved from header
-		httpStatus := http.StatusInternalServerError
-		httpResponse := []byte(auth_errors.ErrUnauthorized.Error())
-		processStatusCodes(httpStatus, httpResponse, w)
-		return nil
-	}
-
-	// convert token from string to Token type
-	token, err := auth.ParseToken(tokenStr)
-	if err != nil {
-		httpStatus := http.StatusInternalServerError
-		httpResponse := []byte(auth_errors.ErrParsingToken.Error())
-		processStatusCodes(httpStatus, httpResponse, w)
-		return nil
-	}
-
-	return token
-}
-
 // authorizedUserOnly takes a HTTP handler and ensures that the client's token has
 // enough privileges before handling the request.
 // if the client is not an admin or the user himself, the request attempt is logged and a 403 is returned.
 func authorizedUserOnly(handler func(http.ResponseWriter, *http.Request)) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, req *http.Request) {
 
-		token := parseReqToken(w, req)
-		if token != nil {
+		if token, valid := validateToken(w, req); valid {
 			vars := mux.Vars(req)
 			// Check that caller has admin privileges or the caller is user himself
 
@@ -239,8 +209,7 @@ func authorizedUserOnly(handler func(http.ResponseWriter, *http.Request)) func(h
 func adminOnly(handler func(http.ResponseWriter, *http.Request)) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, req *http.Request) {
 
-		token := parseReqToken(w, req)
-		if token != nil {
+		if token, valid := validateToken(w, req); valid {
 			// Check that caller has admin privileges
 			if !token.IsSuperuser() {
 				// TODO: log the violator's details here

@@ -87,8 +87,8 @@ func enforceRBAC(s *Server) func(http.ResponseWriter, *http.Request) {
 
 		common.SetDefaultResponseHeaders(w)
 
-		isValid, token := isTokenValid(req.Header.Get("X-Auth-Token"), w)
-		if !isValid {
+		token, valid := validateToken(w, req)
+		if !valid {
 			return
 		}
 
