@@ -17,7 +17,7 @@ const (
 	ldapPassword      = "C1ntainer$"
 	ldapAdminPassword = "C1ntainer$~"
 	ldapTestUsername  = "test_user"
-	tlsCertIssuedTo   = "WIN-LFAT1NFQ98T.ccn.example.com"
+	tlsCertIssuedTo   = "WIN-EDME78NSVJO.contiv.ad.local"
 
 	// use this when testing unauthenticated endpoints instead of ""
 	noToken = ""
@@ -246,8 +246,8 @@ func (s *systemtestSuite) TestPOSTBody(c *C) {
 func (s *systemtestSuite) getRunningLdapConfig(startTLS bool) string {
 	ldapConfig := `"server":"` + ldapServer + `",` +
 		`"port":5678,` +
-		`"base_dn":"DC=ccn,DC=example,DC=com",` +
-		`"service_account_dn":"CN=Service Account,CN=Users,DC=ccn,DC=example,DC=com",` +
+		`"base_dn":"DC=contiv,DC=ad,DC=local",` +
+		`"service_account_dn":"CN=Service Account,CN=Users,DC=contiv,DC=ad,DC=local",` +
 		`"service_account_password":"` + ldapPassword + `"`
 
 	if startTLS {
