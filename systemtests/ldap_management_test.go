@@ -144,7 +144,7 @@ func (s *systemtestSuite) TestLdapUpdateEndpoint(c *C) {
 		s.addLdapConfiguration(c, adToken, ldapConfig)
 
 		// this also tests GET
-		data := `{"server":"` + ldapServer + `","port":5678,"base_dn":"DC=ccn,DC=example,DC=com","service_account_dn":"CN=Service Account,CN=Users,DC=ccn,DC=example,DC=com","start_tls":false,"insecure_skip_verify":false,"tls_cert_issued_to":""}`
+		data := `{"server":"` + ldapServer + `","port":5678,"base_dn":"DC=contiv,DC=ad,DC=local","service_account_dn":"CN=Service Account,CN=Users,DC=contiv,DC=ad,DC=local","start_tls":false,"insecure_skip_verify":false,"tls_cert_issued_to":""}`
 		c.Assert(string(s.getLdapConfiguration(c, adToken)), DeepEquals, data)
 
 		// update the existing ldap config

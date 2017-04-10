@@ -44,7 +44,7 @@ var (
 		"Bgps":    "bgp1",
 	}
 
-	ldapGroupDN = "CN=Domain Admins,CN=Users,DC=ccn,DC=example,DC=com"
+	ldapGroupDN = "CN=Domain Admins,CN=Users,DC=contiv,DC=ad,DC=local"
 )
 
 // TestRBACFilters tests all the netmaster filter(list) endpoints

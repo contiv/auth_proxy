@@ -96,7 +96,7 @@ echo "Starting etcd proxy container..."
 ETCD_PROXY_CONTAINER_ID=$(
 	docker run -d \
 		-p 10000:10000 \
-		-v $(pwd)/test/active_directory/ca.crt:/etc/ssl/certs/ca-certificate.crt \
+		-v $(pwd)/test/active_directory/win2008R2_ROOT_CA.crt:/etc/ssl/certs/ca-certificate.crt \
 		-v $(pwd)/local_certs:/local_certs:ro \
 		-e NO_NETMASTER_STARTUP_CHECK=true \
 		--network $NETWORK_NAME \
@@ -115,7 +115,7 @@ echo "Starting consul proxy container..."
 CONSUL_PROXY_CONTAINER_ID=$(
 	docker run -d \
 		-p 10001:10001 \
-		-v $(pwd)/test/active_directory/ca.crt:/etc/ssl/certs/ca-certificate.crt \
+		-v $(pwd)/test/active_directory/win2008R2_ROOT_CA.crt:/etc/ssl/certs/ca-certificate.crt \
 		-v $(pwd)/local_certs:/local_certs:ro \
 		--network $NETWORK_NAME \
 		-e NO_NETMASTER_STARTUP_CHECK=true \
