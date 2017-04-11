@@ -84,11 +84,6 @@ func updateLdapConfigurationInfo(ldapConfiguration *types.LdapConfiguration, act
 		ldapConfigurationUpdateObj.TLSCertIssuedTo = ldapConfiguration.TLSCertIssuedTo
 	}
 
-	if !ldapConfigurationUpdateObj.StartTLS {
-		ldapConfigurationUpdateObj.InsecureSkipVerify = false
-		ldapConfigurationUpdateObj.TLSCertIssuedTo = ""
-	}
-
 	if err := validateTLSParams(ldapConfigurationUpdateObj); err != nil {
 		return http.StatusBadRequest, err
 	}
@@ -450,6 +445,15 @@ func addLocalUserHelper(userCreateReq *types.LocalUser) (int, []byte) {
 // return values:
 //  error if validation fails, otherwise nil
 func validateTLSParams(ldapConfig *types.LdapConfiguration) []byte {
+	if !ldapConfig.StartTLS {
+		ldapConfig.InsecureSkipVerify = false
+		ldapConfig.TLSCertIssuedTo = ""
+	}
+
+	if ldapConfig.InsecureSkipVerify {
+		ldapConfig.TLSCertIssuedTo = ""
+	}
+
 	// if ldapConfig.TLSCertIssuedTo is not empty, then it will be honored
 	if ldapConfig.StartTLS && common.IsEmpty(ldapConfig.TLSCertIssuedTo) {
 		if !ldapConfig.InsecureSkipVerify {
