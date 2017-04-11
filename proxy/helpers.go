@@ -84,11 +84,6 @@ func updateLdapConfigurationInfo(ldapConfiguration *types.LdapConfiguration, act
 		ldapConfigurationUpdateObj.TLSCertIssuedTo = ldapConfiguration.TLSCertIssuedTo
 	}
 
-	if !ldapConfigurationUpdateObj.StartTLS {
-		ldapConfigurationUpdateObj.InsecureSkipVerify = false
-		ldapConfigurationUpdateObj.TLSCertIssuedTo = ""
-	}
-
 	if err := validateTLSParams(ldapConfigurationUpdateObj); err != nil {
 		return http.StatusBadRequest, err
 	}
@@ -223,7 +218,7 @@ func addLdapConfigurationHelper(ldapConfiguration *types.LdapConfiguration) (int
 			return http.StatusInternalServerError, []byte(err.Error())
 		}
 
-		return http.StatusCreated, jData
+		return http.StatusOK, jData
 	case auth_errors.ErrKeyExists:
 		return http.StatusBadRequest, []byte("LDAP setttings exists already. Request `update` if some config needs change")
 	default:
@@ -450,6 +445,15 @@ func addLocalUserHelper(userCreateReq *types.LocalUser) (int, []byte) {
 // return values:
 //  error if validation fails, otherwise nil
 func validateTLSParams(ldapConfig *types.LdapConfiguration) []byte {
+	if !ldapConfig.StartTLS { // if StartTLS == false, then the below attrs are ignored
+		ldapConfig.InsecureSkipVerify = false
+		ldapConfig.TLSCertIssuedTo = ""
+	}
+
+	if ldapConfig.InsecureSkipVerify { // either InsecureSkipVerify or TLSCertIssuedTo is required
+		ldapConfig.TLSCertIssuedTo = ""
+	}
+
 	// if ldapConfig.TLSCertIssuedTo is not empty, then it will be honored
 	if ldapConfig.StartTLS && common.IsEmpty(ldapConfig.TLSCertIssuedTo) {
 		if !ldapConfig.InsecureSkipVerify {
