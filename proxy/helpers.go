@@ -21,6 +21,8 @@ import (
 var (
 	ipAddrPattern = "^(([01]?[0-9][0-9]?|2[0-4][0-9]|25[0-5])(.|$)){4}"
 	re            = regexp.MustCompile(ipAddrPattern)
+
+	usernamePattern = regexp.MustCompile(`^[A-Za-z0-9\_\-\.\@]+$`)
 )
 
 // updateLdapConfigurationInfo helper function for `updateLdapConfigurationHelper`.
@@ -416,7 +418,6 @@ func addLocalUserHelper(userCreateReq *types.LocalUser) (int, []byte) {
 		return http.StatusBadRequest, []byte("Username/Password is empty")
 	}
 
-	usernamePattern := regexp.MustCompile(`^[A-Za-z0-9\_\-\.\@]+$`)
 	if !usernamePattern.MatchString(userCreateReq.Username) {
 		return http.StatusBadRequest, []byte("Invalid username. Only aplha-numeric and [-_.@] are allowed")
 	}
@@ -464,18 +465,20 @@ func validateTLSParams(ldapConfig *types.LdapConfiguration) []byte {
 	return nil
 }
 
-// isTokenValid checks if the given token string is valid(correctness, expiry, etc.) and writes
+// validateToken checks if the token from given HTTP request is valid + correct and writes
 // the respective http response based on the validation.
 // params:
-//  tokenStr: token string obtained from the http request
 //  w: http response writer
+//  req: http request
 // return values:
-//  bool: boolean representing the token validatity
 //  *auth.Token: token object parsed from the tokenStr
-func isTokenValid(tokenStr string, w http.ResponseWriter) (bool, *auth.Token) {
+//  bool: boolean representing the token validatity
+func validateToken(w http.ResponseWriter, req *http.Request) (*auth.Token, bool) {
+	tokenStr := req.Header.Get("X-Auth-Token")
+
 	if common.IsEmpty(tokenStr) {
-		authError(w, http.StatusUnauthorized, "Empty auth token")
-		return false, nil
+		authError(w, http.StatusBadRequest, "Empty auth token")
+		return nil, false
 	}
 
 	// NOTE: our current implementation focuses on just two local users admin(superuser) and ops(only network operations).
@@ -485,11 +488,30 @@ func isTokenValid(tokenStr string, w http.ResponseWriter) (bool, *auth.Token) {
 	token, err := auth.ParseToken(tokenStr)
 	if err != nil {
 		authError(w, http.StatusBadRequest, "Bad token")
-		return false, nil
+		return nil, false
 	}
 
-	// TODO: Check if the user is still active (~disable/~delete)
-	return true, token
+	username := token.GetClaim("username")
+	if common.IsEmpty(username) {
+		authError(w, http.StatusBadRequest, "Bad token")
+		return nil, false
+	}
+
+	if usernamePattern.MatchString(username) { // Local user
+		// when the user is deleted, after the token is issued
+		if user, err := db.GetLocalUser(username); err != nil {
+			if err == auth_errors.ErrKeyNotFound { // User not found (i.e, deleted)
+				authError(w, http.StatusUnauthorized, "Invalid user")
+				return nil, false
+			}
+			serverError(w, err)
+		} else if user.Disable {
+			authError(w, http.StatusUnauthorized, "User account disabled")
+			return nil, false
+		}
+	}
+
+	return token, true
 }
 
 //
@@ -514,30 +536,6 @@ func processStatusCodes(statusCode int, resp []byte, w http.ResponseWriter) {
 		w.WriteHeader(statusCode)
 		writeJSONResponse(w, errorResponse{Error: respStr})
 	}
-}
-
-//
-// getTokenFromHeader retrieves the token from an HTTP request
-// header
-//
-// Parameters:
-//   req: HTTP request from whose header the authz token needs to be
-//        retrieved
-//
-// Return values:
-//   string: token as a string
-//   err:    auth_errors.ErrParsingToken
-//           nil if token is retrieved successfully
-//
-func getTokenFromHeader(req *http.Request) (string, error) {
-
-	defer common.Untrace(common.Trace())
-	var err error
-	tokenStr := req.Header.Get("X-Auth-Token")
-	if common.IsEmpty(tokenStr) {
-		err = auth_errors.ErrParsingToken
-	}
-	return tokenStr, err
 }
 
 // writeJSONResponse writes the given data in JSON format.
