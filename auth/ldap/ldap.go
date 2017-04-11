@@ -225,7 +225,7 @@ func (lm *Manager) connect() (*ldap.Conn, error) {
 			log.Info("Upgrading to TLS mode")
 			err = ldapConn.StartTLS(&tls.Config{ServerName: lm.Config.TLSCertIssuedTo})
 		} else if lm.Config.InsecureSkipVerify {
-			log.Warnf("Upgrading to TLS mode with `InsecureSkipVerify=%v`", lm.Config.InsecureSkipVerify)
+			log.Infof("Upgrading to TLS mode with `InsecureSkipVerify=%v`", lm.Config.InsecureSkipVerify)
 			err = ldapConn.StartTLS(&tls.Config{InsecureSkipVerify: lm.Config.InsecureSkipVerify})
 		} else {
 			log.Infof(lm.Config.TLSCertIssuedTo, lm.Config.InsecureSkipVerify)
