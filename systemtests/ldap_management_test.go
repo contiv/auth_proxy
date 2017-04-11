@@ -12,7 +12,7 @@ var endpoint = proxy.V1Prefix + "/ldap_configuration" + "/"
 // addLdapConfiguration helper function for the tests
 func (s *systemtestSuite) addLdapConfiguration(c *C, token, data string) {
 	resp, _ := proxyPut(c, token, endpoint, []byte(data))
-	c.Assert(resp.StatusCode, Equals, 201)
+	c.Assert(resp.StatusCode, Equals, 200)
 }
 
 // deleteLdapConfiguration helper function for the tests
@@ -92,9 +92,8 @@ func (s *systemtestSuite) TestLdapAddEndpoint(c *C) {
 		s.addLdapConfiguration(c, adToken, ldapConfig)
 
 		// add the same config again
-		resp, body = proxyPut(c, adToken, endpoint, []byte(ldapConfig))
-		c.Assert(resp.StatusCode, Equals, http.StatusBadRequest)
-		c.Assert(string(body), Matches, ".*LDAP setttings exists already.*")
+		resp, _ = proxyPut(c, adToken, endpoint, []byte(ldapConfig))
+		c.Assert(resp.StatusCode, Equals, http.StatusOK)
 
 		// upgrade `username` to admin and try adding the config
 		data = `{"PrincipalName":"` + username + `","local":true,"role":"admin","tenantName":""}`
@@ -109,6 +108,21 @@ func (s *systemtestSuite) TestLdapAddEndpoint(c *C) {
 
 		s.deleteAuthorization(c, authz.AuthzUUID, userToken)
 
+	})
+}
+
+// TestLdapPutEndpoint tests PUT endpoint; ensures that it accepts mutiple add requests
+func (s *systemtestSuite) TestLdapPutEndpoint(c *C) {
+	s.addUser(c, username)
+
+	runTest(func(ms *MockServer) {
+		ldapConfig := s.getRunningLdapConfig(false)
+
+		// add ldap config using admin token
+		s.addLdapConfiguration(c, adToken, ldapConfig)
+
+		// add ldap config using admin token; overwrites the existing values
+		s.addLdapConfiguration(c, adToken, ldapConfig)
 	})
 }
 

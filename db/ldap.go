@@ -121,28 +121,18 @@ func AddLdapConfiguration(ldapConfiguration *types.LdapConfiguration) error {
 		return err
 	}
 
-	_, err = getLdapConfiguration(stateDrv)
-	switch err {
-	case nil:
-		return auth_errors.ErrKeyExists
-	case auth_errors.ErrKeyNotFound:
-		ldapConfiguration.ServiceAccountPassword, err = common.Encrypt(ldapConfiguration.ServiceAccountPassword)
-		if err != nil {
-			return fmt.Errorf("Failed to encrypt LDAP service account password: %#v", err)
-		}
-
-		val, err := json.Marshal(ldapConfiguration)
-		if err != nil {
-			return fmt.Errorf("Failed to marshal LDAP configuration %#v, %#v", ldapConfiguration, err)
-		}
-
-		if err := stateDrv.Write(GetPath(RootLdapConfiguration), val); err != nil {
-			return fmt.Errorf("Failed to write LDAP setting to data store: %#v", err)
-		}
-
-		return nil
-	default:
-		return err
+	if ldapConfiguration.ServiceAccountPassword, err = common.Encrypt(ldapConfiguration.ServiceAccountPassword); err != nil {
+		return fmt.Errorf("Failed to encrypt LDAP service account password: %#v", err)
 	}
 
+	val, err := json.Marshal(ldapConfiguration)
+	if err != nil {
+		return fmt.Errorf("Failed to marshal LDAP configuration %#v, %#v", ldapConfiguration, err)
+	}
+
+	if err := stateDrv.Write(GetPath(RootLdapConfiguration), val); err != nil {
+		return fmt.Errorf("Failed to write LDAP setting to data store: %#v", err)
+	}
+
+	return nil
 }
