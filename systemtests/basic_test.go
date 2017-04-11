@@ -113,6 +113,18 @@ func (s *systemtestSuite) TestVersion(c *C) {
 	})
 }
 
+// TestNoDirectoryIndex tests that /assets returns 404 and that /
+// returns a 200 status.
+func (s *systemtestSuite) TestNoDirectoryIndex(c *C) {
+	runTest(func(ms *MockServer) {
+		resp, _ := proxyGet(c, noToken, "/")
+		c.Assert(resp.StatusCode, Equals, 200)
+
+		resp, _ = proxyGet(c, noToken, "/assets")
+		c.Assert(resp.StatusCode, Equals, 404)
+	})
+}
+
 // TestHealthCheck tests that /health endpoint responds properly.
 func (s *systemtestSuite) TestHealthCheck(c *C) {
 	runTest(func(ms *MockServer) {

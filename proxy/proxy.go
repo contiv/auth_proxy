@@ -7,6 +7,7 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"os"
 	"sync"
 	"time"
 
@@ -239,6 +240,33 @@ func (s *Server) Stop() {
 	s.wg.Wait()
 }
 
+type dirWithoutIndex struct {
+	fs http.FileSystem
+}
+
+func (d dirWithoutIndex) Open(name string) (http.File, error) {
+	f, err := d.fs.Open(name)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if name == "/" {
+		return f, nil
+	}
+
+	stat, _ := f.Stat()
+	if stat.IsDir() {
+		return nil, os.ErrNotExist
+	}
+
+	return f, nil
+}
+
+func newDirWithoutIndexes(dir string) dirWithoutIndex {
+	return dirWithoutIndex{fs: http.Dir(dir)}
+}
+
 //
 // staticFileServer returns a staticFileHandler which serves the UI and its assets.
 // this is necessary so that we can set response headers.
@@ -303,7 +331,7 @@ func addRoutes(s *Server, router *mux.Router) {
 	// UI: static files which are served from the root
 	//
 	root := "/"
-	staticHandler := staticFileServer(http.Dir(uiDirectory))
+	staticHandler := staticFileServer(newDirWithoutIndexes(uiDirectory))
 
 	router.PathPrefix(root).Handler(http.StripPrefix(root, staticHandler))
 }
