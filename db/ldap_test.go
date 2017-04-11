@@ -43,7 +43,8 @@ func (s *dbSuite) TestAddLdapConfiguration(c *C) {
 		configuration.ServiceAccountPassword = oldPwd
 
 		err = AddLdapConfiguration(&configuration)
-		c.Assert(err, Equals, auth_errors.ErrKeyExists)
+		c.Assert(err, IsNil)
+		configuration.ServiceAccountPassword = oldPwd
 
 		obtained, err := GetLdapConfiguration()
 		c.Assert(err, IsNil)
