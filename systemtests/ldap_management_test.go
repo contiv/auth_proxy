@@ -171,9 +171,9 @@ func (s *systemtestSuite) TestLdapUpdateEndpoint(c *C) {
 		c.Assert(resp.StatusCode, Equals, 400)
 		c.Assert(string(body), Matches, ".*InsecureSkipVerify or TLSCertIssuedTo must be provided.*")
 
-		data = `{"server":"ccn.example.com", "start_tls":true}`
+		data = `{"server":"contiv.ad.local", "start_tls":true}`
 		s.updateLdapConfiguration(c, adToken, data)
-		c.Assert(string(s.getLdapConfiguration(c, adToken)), Matches, ".*\"tls_cert_issued_to\":\"ccn.example.com\".*")
+		c.Assert(string(s.getLdapConfiguration(c, adToken)), Matches, ".*\"tls_cert_issued_to\":\"contiv.ad.local\".*")
 
 		data = `{"start_tls":false}`
 		resp, _ = proxyPatch(c, adToken, endpoint, []byte(data))

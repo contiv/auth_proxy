@@ -43,7 +43,7 @@ func (s *systemtestSuite) TestAdminAuthorizationResponse(c *C) {
 	runTest(func(ms *MockServer) {
 		// grant admin access to ldap group (which implies admin aceess to the members belonging to this group
 		// tenant name is redundant and should be ignored
-		ldapGroupDN := "CN=Domain Admins,CN=Users,DC=ccn,DC=example,DC=com"
+		ldapGroupDN := "CN=Domain Admins,CN=Users,DC=contiv,DC=ad,DC=local"
 		data := `{"PrincipalName":"` + ldapGroupDN + `","local":false,"role":"` + types.Admin.String() + `","tenantName":"XXX"}`
 		authz := s.addAuthorization(c, data, adToken)
 		c.Assert(authz.TenantName, DeepEquals, "")
