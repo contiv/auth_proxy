@@ -26,7 +26,6 @@ export class ChartService{
         this.graphData = {0: {}, 1: {}};
         this.source = new Subject<any>();
         this.stream = this.source.asObservable();
-        this.startpolling();
     }
 
     private getInspectData(listEndPoint:string, inspectEndpoint:string, endpointtype:EndpointType){

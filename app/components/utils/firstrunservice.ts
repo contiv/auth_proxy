@@ -43,6 +43,6 @@ export class FirstRunService {
                         }
                         return false;
                     });
-            });
+            }, (error) => {});
     }
 }

@@ -16,6 +16,7 @@ export interface LdapConfig{
     service_account_password: string;
     start_tls: boolean;
     insecure_skip_verify: boolean;
+    tls_cert_issued_to: string;
 }
 
 @Component({
@@ -24,7 +25,7 @@ export interface LdapConfig{
 })
 
 export class LdapSettingsComponent{
-    public ldapConfig: LdapConfig = {server: '', port: 0, base_dn: '', service_account_dn: '', service_account_password: '',start_tls: false, insecure_skip_verify: false};
+    public ldapConfig: LdapConfig = {server: '', port: 0, base_dn: '', service_account_dn: '', service_account_password: '',start_tls: false, insecure_skip_verify: false, tls_cert_issued_to: ''};
     public startLoader: boolean;
     private ldapConfigExists: boolean = true;
     constructor(private apiService: ApiService,
@@ -54,15 +55,20 @@ export class LdapSettingsComponent{
     }
 
     updateLdapConfig(formValid: boolean){
-        var ldapComponeent = this;
+        var ldapComponent = this;
         if(formValid){
+            if(ldapComponent.ldapConfig.insecure_skip_verify)
+                ldapComponent.ldapConfig.tls_cert_issued_to = '';
+            if(!ldapComponent.ldapConfig.start_tls)
+                ldapComponent.ldapConfig.insecure_skip_verify = false;
             this.crudHelperService.startLoader(this);
             this.update().subscribe((result) => {
-                ldapComponeent.crudHelperService.stopLoader(ldapComponeent);
-                ldapComponeent.crudHelperService.showNotification("LDAP: Configuration Updated", ldapComponeent.ldapConfig.server);
+                ldapComponent.ldapConfigExists = true;
+                ldapComponent.crudHelperService.stopLoader(ldapComponent);
+                ldapComponent.crudHelperService.showNotification("LDAP: Configuration Updated", ldapComponent.ldapConfig.server);
             }, (error) => {
-                ldapComponeent.crudHelperService.stopLoader(ldapComponeent);
-                ldapComponeent.crudHelperService.showServerError("LDAP: Update Failed", error);
+                ldapComponent.crudHelperService.stopLoader(ldapComponent);
+                ldapComponent.crudHelperService.showServerError("LDAP: Update Failed", error);
             });
         }
     }

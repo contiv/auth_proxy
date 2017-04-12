@@ -74,6 +74,7 @@ export class MenuComponent implements AfterViewInit, DoCheck{
         this.firstRunService.firstrunObservable.subscribe((res) => {
             this.firstRun = res;
         });
+        this.chartService.startpolling();
     }
 
     help(){
