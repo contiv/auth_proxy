@@ -12,6 +12,7 @@ import (
 var (
 	RootLocalUsers        = "local_users"
 	RootLdapConfiguration = "ldap_configuration"
+	RootTokenSigningKey   = "token_signing_key"
 )
 
 // GetPath joins the given list of strings using path separator with `root` data store path.

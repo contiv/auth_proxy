@@ -4,11 +4,66 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/contiv/auth_proxy/common"
 	"github.com/contiv/auth_proxy/common/types"
 	"github.com/contiv/auth_proxy/db"
 	"github.com/contiv/auth_proxy/proxy"
+	"github.com/contiv/auth_proxy/state"
 	. "gopkg.in/check.v1"
 )
+
+// TestTokenSigningKeyRegeneration checks that token signing key generation happens on demand
+// (if one doesn't exist) and that previously issued tokens are invalidated if the key is
+// deleted and regenerated.
+func (s *systemtestSuite) TestTokenSigningKeyRegeneration(c *C) {
+	stateDrv, err := state.GetStateDriver()
+	c.Assert(err, IsNil)
+
+	endpoint := proxy.V1Prefix + "/authorizations/"
+	keyPath := db.GetPath(db.RootTokenSigningKey)
+
+	// delete any existing signing key
+	err = stateDrv.Clear(keyPath)
+	c.Assert(err, IsNil)
+
+	// login, make sure a signing key was created, and save the value
+	firstToken := adminToken(c)
+	data, err := stateDrv.Read(keyPath)
+	c.Assert(err, IsNil)
+	firstSigningKey := string(data)
+
+	// make sure the token works
+	resp, _ := proxyGet(c, firstToken, endpoint)
+	c.Assert(resp.StatusCode, Equals, 200)
+
+	// delete the signing key
+	err = stateDrv.Clear(keyPath)
+	c.Assert(err, IsNil)
+
+	// login again, make sure a key was created, and save the value
+	secondToken := adminToken(c)
+	data, err = stateDrv.Read(keyPath)
+	c.Assert(err, IsNil)
+	secondSigningKey := string(data)
+
+	// make sure the token works
+	resp, _ = proxyGet(c, secondToken, endpoint)
+	c.Assert(resp.StatusCode, Equals, 200)
+
+	// make sure the old token does not work
+	resp, body := proxyGet(c, firstToken, endpoint)
+	c.Assert(resp.StatusCode, Equals, 400)
+	c.Assert(string(body), Matches, ".*Bad token.*")
+
+	// make sure the keys are different
+	decryptedFirstKey, err := common.Decrypt(firstSigningKey)
+	c.Assert(err, IsNil)
+
+	decryptedSecondKey, err := common.Decrypt(secondSigningKey)
+	c.Assert(err, IsNil)
+
+	c.Assert(decryptedFirstKey != decryptedSecondKey, Equals, true)
+}
 
 // TestAdminAuthorizationResponse checks that add/get of admin response ignores
 // tenant name.
