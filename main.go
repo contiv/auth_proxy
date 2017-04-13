@@ -43,8 +43,6 @@ var (
 )
 
 func processFlags() {
-	// TODO: add a flag for LDAP host + port
-
 	flag.Int64Var(
 		&netmasterRequestTimeout,
 		"netmaster-timeout",

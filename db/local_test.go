@@ -2,7 +2,6 @@ package db
 
 import (
 	"os"
-	"os/exec"
 	"sort"
 	"strings"
 	"testing"
@@ -65,7 +64,6 @@ func (s *dbSuite) SetUpSuite(c *C) {
 	}
 
 	// set `tls_key_file` in Globals
-	exec.Command("/bin/sh", "-c", "make generate-certificate")
 	common.Global().Set("tls_key_file", "../local_certs/local.key")
 
 	// set state driver for authZ objects

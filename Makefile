@@ -39,11 +39,11 @@ run:
 	docker-compose up -d
 
 # systemtests runs the system tests suite.
-systemtests:
+systemtests: generate-certificate
 	@bash ./scripts/systemtests.sh
 
 # unittests runs all the unit tests
-unit-tests:
+unit-tests: generate-certificate
 	@bash ./scripts/unittests.sh
 
 # test runs ALL the test suites.

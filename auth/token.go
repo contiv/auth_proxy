@@ -2,15 +2,18 @@ package auth
 
 import (
 	"fmt"
+	"math/rand"
 	"strings"
 	"time"
 
 	log "github.com/Sirupsen/logrus"
 	jwt "github.com/dgrijalva/jwt-go"
 
+	"github.com/contiv/auth_proxy/common"
 	auth_errors "github.com/contiv/auth_proxy/common/errors"
 	"github.com/contiv/auth_proxy/common/types"
 	"github.com/contiv/auth_proxy/db"
+	"github.com/contiv/auth_proxy/state"
 )
 
 // This file contains all utility methods to create and handle JWT tokens
@@ -19,9 +22,8 @@ const (
 	// TokenValidityInHours represents the token validity; used to set token expiry
 	TokenValidityInHours = 10
 
-	// TokenSigningKey is used for signing the token
-	// FIXME: this should be fetched from store
-	TokenSigningKey = "ccn$!~56"
+	// our randomly generated token signing key will be 128 characters before encryption
+	tokenSigningKeyLength = 128
 
 	// This claim is only added to the token, and is not part of authorization db
 	principalsClaimKey = "principals"
@@ -29,6 +31,61 @@ const (
 	// UsernameClaimKey is only added to the token, and is not part of authorization db
 	UsernameClaimKey = "username"
 )
+
+func init() {
+	// ensures we don't generate predictable token signing keys
+	rand.Seed(time.Now().UnixNano())
+}
+
+// generateTokenSigningKey generates, encrypts, stores, and returns a new token signing key
+func generateTokenSigningKey(stateDrv types.StateDriver) (string, error) {
+	characters := []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890")
+	length := len(characters)
+
+	key := make([]rune, tokenSigningKeyLength)
+
+	for i := range key {
+		key[i] = characters[rand.Intn(length)]
+	}
+
+	encryptedKey, err := common.Encrypt(string(key))
+	if err != nil {
+		return "", err
+	}
+
+	if err := stateDrv.Write(db.GetPath(db.RootTokenSigningKey), []byte(encryptedKey)); err != nil {
+		return "", err
+	}
+
+	return string(key), nil
+}
+
+// getTokenSigningKey decrypts and returns the existing token signing key or generates, encrypts,
+// stores, and returns a brand new one.
+func getTokenSigningKey() (string, error) {
+	stateDrv, err := state.GetStateDriver()
+	if err != nil {
+		return "", err
+	}
+
+	// check for an existing existing key
+	existingKey, err := stateDrv.Read(db.GetPath(db.RootTokenSigningKey))
+	switch err {
+	case auth_errors.ErrKeyNotFound:
+		// generate, encrypt, store, and return a new key
+		return generateTokenSigningKey(stateDrv)
+	case nil:
+		// decrypt and return existing key
+		decryptedKey, err := common.Decrypt(string(existingKey))
+		if err != nil {
+			return "", err
+		}
+
+		return decryptedKey, nil
+	default:
+		return "", err
+	}
+}
 
 // Token represents the JSON Web Token which carries the authorization details
 type Token struct {
@@ -181,7 +238,13 @@ func (authZ *Token) AddClaim(key string, value interface{}) {
 func (authZ *Token) Stringify() (string, error) {
 	// Retrieve signed string encoded representation of underlying JWT token object.
 	log.Debugf("Claims %#v", authZ.tkn.Claims.(jwt.MapClaims))
-	tokenString, err := authZ.tkn.SignedString([]byte(TokenSigningKey))
+
+	key, err := getTokenSigningKey()
+	if err != nil {
+		return "", err
+	}
+
+	tokenString, err := authZ.tkn.SignedString([]byte(key))
 	if err != nil {
 		log.Errorf("Failed to sign token %#v", err)
 		return "", err
@@ -230,7 +293,13 @@ func ParseToken(tokenStr string) (*Token, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 		}
-		return []byte(TokenSigningKey), nil
+
+		key, err := getTokenSigningKey()
+		if err != nil {
+			return nil, err
+		}
+
+		return []byte(key), nil
 	})
 
 	switch err.(type) {

@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/contiv/auth_proxy/auth"
+	"github.com/contiv/auth_proxy/common"
 	"github.com/contiv/auth_proxy/common/types"
 	"github.com/contiv/auth_proxy/proxy"
 	"github.com/contiv/auth_proxy/state"
@@ -58,6 +59,9 @@ func Test(t *testing.T) {
 	if err := auth.AddDefaultUsers(); err != nil {
 		log.Fatalln(err)
 	}
+
+	// set `tls_key_file` in Globals
+	common.Global().Set("tls_key_file", "../local_certs/local.key")
 
 	// execute the systemtests
 	TestingT(t)
