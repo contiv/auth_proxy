@@ -7,7 +7,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	"os/exec"
 	"strings"
 	"testing"
 	"time"
@@ -62,7 +61,6 @@ func Test(t *testing.T) {
 	}
 
 	// set `tls_key_file` in Globals
-	exec.Command("/bin/sh", "-c", "make generate-certificate")
 	common.Global().Set("tls_key_file", "../local_certs/local.key")
 
 	// execute the systemtests
