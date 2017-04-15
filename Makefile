@@ -2,19 +2,12 @@
 # run when `make` is invoked with no specific target.
 all: build
 
-# this variable tracks whether a build has been completed during this invocation
-# of make.
-BUILD_COMPLETED := 0
-
 # build uses a build container to build a minimalist image which is suitable
 # for releases. you can specify a BUILD_VERSION here, e.g., BUILD_VERSION=foo
 # will build 'auth_proxy:foo'. if you omit the BUILD_VERSION, it defaults to
 # "devbuild".
 build: checks
-	@if [ "$BUILD_COMPLETED" = "0" ]; then \
-		@bash ./scripts/build.sh; \
-	fi
-	$(eval BUILD_COMPLETED = 1)
+	@bash ./scripts/build.sh
 
 # checks runs a script which runs gofmt, go vet, and other code quality tools.
 checks:
@@ -46,14 +39,14 @@ run:
 	docker-compose up -d
 
 # systemtests runs the system tests suite.
-systemtests: generate-certificate build
+systemtests: generate-certificate
 	@bash ./scripts/systemtests.sh
 
 # unittests runs all the unit tests
-unit-tests: generate-certificate build
+unit-tests: generate-certificate
 	@bash ./scripts/unittests.sh
 
 # test runs ALL the test suites.
-test: build systemtests unit-tests
+test: systemtests unit-tests
 
 .PHONY: all build checks ci generate-certificate godep run systemtests unit-tests test
