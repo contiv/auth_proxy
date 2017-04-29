@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"syscall"
 	"time"
 
 	"github.com/blang/semver"
@@ -191,6 +192,9 @@ func netmasterStartupCheck() error {
 }
 
 func main() {
+
+	// prevent this process from being swapped out to disk
+	syscall.Mlockall(syscall.MCL_CURRENT | syscall.MCL_FUTURE)
 
 	log.Println(ProgramName, ProgramVersion, "starting up...")
 
