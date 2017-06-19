@@ -2,6 +2,7 @@ FROM scratch
 
 COPY ./build/dependencies/contiv-ui/app /ui
 COPY ./build/output/auth_proxy /auth_proxy
+COPY ./build/output/reset_local_user_password /reset_local_user_password
 
 WORKDIR /
 

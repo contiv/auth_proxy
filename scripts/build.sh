@@ -53,7 +53,10 @@ docker run \
 	$BUILD_IMAGE_NAME
 
 # copy out the binaries
-docker cp build_cntr:/go/src/github.com/contiv/auth_proxy/build/output/auth_proxy ./build/output/
+output_path="/go/src/github.com/contiv/auth_proxy/build/output"
+docker cp build_cntr:$output_path/auth_proxy ./build/output/
+docker cp build_cntr:$output_path/reset_local_user_password ./build/output/
+
 docker rm -fv build_cntr
 
 docker build -t $IMAGE_NAME:$VERSION -f ./build/Dockerfile.release .
