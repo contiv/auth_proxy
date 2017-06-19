@@ -30,9 +30,6 @@ IMAGE_NAME="auth_proxy_systemtests"
 NETWORK_NAME="auth_proxy_systemtests"
 PROXY_IMAGE="contiv/auth_proxy:devbuild"
 
-echo "Building systemtests image..."
-docker build -t $IMAGE_NAME -f ./build/Dockerfile.systemtests .
-
 function ip_for_container() {
 	docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $1
 }
@@ -69,6 +66,26 @@ CONSUL_CONTAINER_ID=$(
 
 CONSUL_CONTAINER_IP=$(ip_for_container $CONSUL_CONTAINER_ID)
 echo "consul running @ $CONSUL_CONTAINER_IP:8500"
+
+# start an auth_proxy container we can copy the 'reset_local_user_password'
+# binary out of.
+copy_container=$(
+	docker run -d -t \
+		-entrypoint /reset_local_user_password \
+		contiv/auth_proxy:devbuild \
+		--data-store-address=etcd://$ETCD_CONTAINER_IP:2379
+)
+
+# copy the binary out
+rm -f ./reset_local_user_password # just in case
+docker cp $copy_container:/reset_local_user_password ./reset_local_user_password
+
+echo "Building systemtests image..."
+docker build -t $IMAGE_NAME -f ./build/Dockerfile.systemtests .
+
+# cleanup
+docker rm -fv $copy_container
+rm ./reset_local_user_password
 
 #
 # NOTE: we start the systemtests container and then later use `docker exec` to
