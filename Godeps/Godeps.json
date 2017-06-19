@@ -1,7 +1,7 @@
 {
 	"ImportPath": "github.com/contiv/auth_proxy",
 	"GoVersion": "go1.7",
-	"GodepVersion": "v75",
+	"GodepVersion": "v79",
 	"Packages": [
 		"./..."
 	],
@@ -79,6 +79,10 @@
 		},
 		{
 			"ImportPath": "golang.org/x/crypto/blowfish",
+			"Rev": "ede567c8e044a5913dad1d1af3696d9da953104c"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/ssh/terminal",
 			"Rev": "ede567c8e044a5913dad1d1af3696d9da953104c"
 		},
 		{
