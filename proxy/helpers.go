@@ -478,6 +478,12 @@ func validateTLSParams(ldapConfig *types.LdapConfiguration) []byte {
 //  *auth.Token: token object parsed from the tokenStr
 //  bool: boolean representing the token validatity
 func validateToken(w http.ResponseWriter, req *http.Request) (*auth.Token, bool) {
+
+	if _, ok := req.Header["X-Auth-Token"]; !ok {
+		authError(w, http.StatusBadRequest, "X-Auth-Token header is missing")
+		return nil, false
+	}
+
 	tokenStr := req.Header.Get("X-Auth-Token")
 
 	if common.IsEmpty(tokenStr) {
