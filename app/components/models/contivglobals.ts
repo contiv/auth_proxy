@@ -44,6 +44,7 @@ export const ContivGlobals = {
     'NUMBER_REGEX' : '^[0-9]*$',
     'USERNAME_REGEX': /^([a-zA-Z0-9\_\-\.\@])+$/,
     'LDAPGROUP_REGEX': /([\=])+/g,
+    'NETWORK_NAME_REGEX': /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/,
 
     // System strings
     'PRODUCT_NAME': 'Contiv',

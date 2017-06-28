@@ -14,6 +14,10 @@
             <td class="ctv-value">{{networkStatsCtrl.networkInspectStats.allocatedIPAddresses}}</td>
         </tr>
         <tr>
+            <td class="ctv-header">Available IP-Addresses</td>
+            <td class="ctv-value">{{networkStatsCtrl.networkInspectStats.availableIPAddresses}}</td>
+        </tr>
+        <tr>
             <td class="ctv-header">DNS Server-IP</td>
             <td class="ctv-value">{{networkStatsCtrl.networkInspectStats.dnsServerIP}}</td>
         </tr>
@@ -26,8 +30,12 @@
             <td class="ctv-value">{{networkStatsCtrl.networkInspectStats.numEndpoints}}</td>
         </tr>
         <tr>
-            <td class="ctv-header">Packet Tag</td>
+            <td class="ctv-header">Internal Packet Tag</td>
             <td class="ctv-value">{{networkStatsCtrl.networkInspectStats.pktTag}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header">Network Tag</td>
+            <td class="ctv-value">{{networkStatsCtrl.networkInspectStats.networkTag}}</td>
         </tr>
         </tbody>
     </table>

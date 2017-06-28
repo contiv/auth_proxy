@@ -46,7 +46,10 @@ export class FirstRunWizardService {
             subnet: '',
             gateway: '',
             tenantName: '',
-            key: ''
+            key: '',
+            nwType: '',
+            pktTag: null,
+            cfgdTag: ''
         }
     }
 

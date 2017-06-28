@@ -17,7 +17,7 @@
               role="form"
               (submit)="saveNode(formRef.valid)" novalidate #formRef="ngForm">
 
-            <ctv-collapsible title="Node BGP Settings">
+            <ctv-collapsible title="Node BGP Settings" [collapsed]="false">
 
                 <div *ngSwitchCase="'edit'">
                     <div class="ui sixteen column grid">

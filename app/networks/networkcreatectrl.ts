@@ -25,7 +25,7 @@ export class NetworkCreateComponent {
                 private crudHelperService: CRUDHelperService){
         this['showLoader']=false;
         this['cidrPattern'] = ContivGlobals.CIDR_REGEX;
-        this.newNetwork = {networkName: '', encap: 'vxlan', subnet:'', gateway:'', tenantName: '', key:''};
+        this.newNetwork = {networkName: '', encap: 'vxlan', subnet:'', gateway:'', tenantName: '', key:'', nwType: '', pktTag: null, cfgdTag: ''};
         this.networkCreateCtrl = this;
     }
 

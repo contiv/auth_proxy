@@ -45,7 +45,8 @@ export class ApplicationGroupCreateComponent {
                 policies: [],           // For Isolation policies
                 netProfile: '',         // For Bandwidth policy Name
                 extContractsGrps: [],   // For External contract groups
-                tenantName: ''
+                tenantName: '',
+                cfgdTag: ''
             };
         }
 
@@ -88,9 +89,11 @@ export class ApplicationGroupCreateComponent {
 
             applicationGroupCreateCtrl.applicationGroup.key =
                 applicationGroupCreateCtrl.applicationGroupsModel.generateKey(applicationGroupCreateCtrl.applicationGroup);
-
+            if (applicationGroupCreateCtrl.applicationGroup.cfgdTag === '') {
+                delete applicationGroupCreateCtrl.applicationGroup.cfgdTag;
+            }
             /**
-             * applicationGroup consist of Group Name, Network Name, Isolation Policies, Bandwidth Policy
+             * applicationGroup consist of Group Name, Network Name, Isolation Policies, Bandwidth Policy, cfgdtag
              */
 
             applicationGroupCreateCtrl.applicationGroupsModel.create(applicationGroupCreateCtrl.applicationGroup, undefined).then(

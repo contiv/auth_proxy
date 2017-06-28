@@ -6,6 +6,8 @@ import {Component, Input, Output, EventEmitter, OnInit, NgZone} from "@angular/c
 import {OrganizationsModel} from "../../models/organizationsmodel";
 import {CRUDHelperService} from "../../utils/crudhelperservice";
 import {NetworksModel} from "../../models/networksmodel";
+import {isNull} from "util";
+import {ContivGlobals} from "../../models/contivglobals";
 @Component({
     selector: 'networkcreateform',
     templateUrl: './networkcreateform.html'
@@ -23,6 +25,7 @@ export class NetworkCreateformComponent implements OnInit{
     public showLoader: boolean = true;
     public tenants: any = [];
     public networkPresent: boolean = false;
+    public networkNamePattern = ContivGlobals.NETWORK_NAME_REGEX;
     constructor(private organizationsModel: OrganizationsModel,
                 private networksModel: NetworksModel,
                 private crudHelperService: CRUDHelperService,
@@ -32,6 +35,7 @@ export class NetworkCreateformComponent implements OnInit{
         this.goback = new EventEmitter<any>();
         this.skip = new EventEmitter<any>();
         this.networkCreateCtrl = this;
+
 
     }
 
@@ -60,6 +64,15 @@ export class NetworkCreateformComponent implements OnInit{
 
     createNetwork(formvalid: boolean){
         if(formvalid){
+            if (isNull(this.newNetwork.pktTag)) {
+                delete this.newNetwork.pktTag;
+            }
+            if (this.newNetwork.cfgdTag === '') {
+                delete this.newNetwork.cfgdTag;
+            }
+            if (this.newNetwork.nwType === '') {
+                delete this.newNetwork.nwType;
+            }
             this.createnetwork.emit(this.newNetwork);
         }
     }

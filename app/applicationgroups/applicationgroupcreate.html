@@ -87,7 +87,20 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="ui row" >
+                        <div class="ui row">
+                            <div class="left aligned six wide column">
+                                <div class="field">
+                                    <label for="newApplicationGroupCfgdtag">Group Tag</label>
+                                    <input #newApplicationGroupCfgdtagRef="ngModel"
+                                           type="text"
+                                           id="newApplicationGroupCfgdtag"
+                                           name="newApplicationGroupCfgdtag"
+                                           [(ngModel)]="applicationGroup.cfgdTag"
+                                           placeholder="Enter group tag">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row">
                             <div class="left aligned sixteen wide column">
                                 <ctv-collapsible title="Isolation Policies To Apply" class="policySelection">
                                     <ctv-isolationpolicy mode="edit" [applicationgroup]="applicationGroup"></ctv-isolationpolicy>

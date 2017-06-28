@@ -36,15 +36,17 @@ export class NetworkStatComponent implements OnInit, OnDestroy{
         this.networkInspectStats= {
                     allocatedAddressesCount: '',
                     allocatedIPAddresses: '',
+                    availableIPAddresses: '',
                     dnsServerIP: '',
                     externalPktTag: '',
                     numEndpoints: '',
-                    pktTag: ''
-        }
-        this.config = {networkName: '',}
-        this.endpoints = []
-        this.filteredendpoints = []
-        this.containerDetails= {}
+                    pktTag: '',
+                    networkTag: ''
+        };
+        this.config = {networkName: '',};
+        this.endpoints = [];
+        this.filteredendpoints = [];
+        this.containerDetails= {};
         this.networkStatsCtrl = this;
     }
 
