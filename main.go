@@ -4,8 +4,8 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"runtime"
 	"syscall"
-	"time"
 
 	"github.com/blang/semver"
 	"github.com/contiv/auth_proxy/auth"
@@ -247,6 +247,5 @@ func main() {
 
 	go p.Serve()
 
-	for range time.Tick(time.Second) {
-	}
+	runtime.Goexit()
 }

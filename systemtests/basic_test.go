@@ -27,9 +27,32 @@ const (
 //       having a package/datastore for doing local user management.
 //       See Test() in init_test.go for where that would be done.
 
+// TestTokens tests omitting the X-Auth-Token header entirely and also sending
+// in bad values.
+func (s *systemtestSuite) TestTokens(c *C) {
+
+	// test omitting token header and sending in an invalid token
+	runTest(func(ms *MockServer) {
+		endpoint := "/api/v1/networks/"
+
+		// no token
+		resp, data := proxyGet(c, noToken, endpoint)
+		c.Assert(resp.StatusCode, Equals, 400)
+		c.Assert(string(data), Matches, ".*header is missing.*")
+
+		// invalid token
+		resp, data = proxyGet(c, "asdf", endpoint)
+		c.Assert(resp.StatusCode, Equals, 400)
+		c.Assert(string(data), Matches, ".*Bad token.*")
+	})
+
+}
+
 // TestLogin tests that valid credentials successfully authenticate and that
 // invalid credentials result in failed authentication.
 func (s *systemtestSuite) TestLogin(c *C) {
+
+	// test logging in with valid and invalid credentials
 	runTest(func(ms *MockServer) {
 		//
 		// valid credentials
