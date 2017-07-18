@@ -31,6 +31,7 @@ if [ ! -z "${BUILD_VERSION-}" ]; then
 
 	git checkout master         # make sure we have the latest master + all tags
 	git pull --ff-only          # no merge commits, please
+	git fetch --tags            # shallow clones do not include tags, so doublecheck
 	git checkout $BUILD_VERSION # BUILD_VERSION is expected to be a valid tag
 else
 	echo "No BUILD_VERSION set, skipping checkout/update of contiv-ui repo"
