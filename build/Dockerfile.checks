@@ -5,7 +5,7 @@ RUN go get github.com/golang/lint/golint
 RUN go get github.com/fzipp/gocyclo
 RUN go get github.com/client9/misspell/...
 RUN go get github.com/remyoudompheng/go-misc/deadcode/...
-RUN go get github.com/mvdan/sh/cmd/shfmt
+RUN go get github.com/contiv-experimental/sh/cmd/shfmt
 
 COPY ./ /go/src/github.com/contiv/auth_proxy
 
