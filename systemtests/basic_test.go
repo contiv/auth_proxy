@@ -15,7 +15,7 @@ const (
 	// XXX: Yuva's dev server
 	ldapServer        = "10.193.231.158"
 	ldapPassword      = "C1ntainer$"
-	ldapAdminPassword = "C1ntainer$~"
+	ldapAdminPassword = "C1ntainer$!"
 	ldapTestUsername  = "test_user"
 	tlsCertIssuedTo   = "WIN-EDME78NSVJO.contiv.ad.local"
 
