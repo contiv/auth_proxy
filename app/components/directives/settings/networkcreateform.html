@@ -1,4 +1,16 @@
 <div class="ui basic segment" [ngClass]="{loading: showLoader}">
+    <div id="tenant-create-modal" class="ui small modal">
+        <div class="header">Create Tenant</div>
+        <div class="content">
+            <tenantcreate #tenantCreate [displayType]="DisplayType.modal" (created)="closeTenantCreate(); showLoader = true; getTenants(true);"></tenantcreate>
+        </div>
+        <div class="actions">
+            <div class="ui basic deny button modalBtn">Cancel</div>
+            <button class="ui primary button modalBtn" [disabled]="!tenantCreate.tenantCreateForm.valid" (click)="tenantCreate.create()">
+                Create
+            </button>
+        </div>
+    </div>
     <form id="networkCreationForm" name="networkCreateForm" class="ui form" role="form"
           (submit)="networkCreateCtrl.createNetwork(networkCreateForm.valid)" novalidate #networkCreateForm="ngForm">
 
@@ -19,18 +31,25 @@
                     </span>
                 </div>
                 <div class="ui six wide column field">
-                    <div class="field" [ngClass]="{error: newNetworkTenant.errors?.required && networkCreateForm.submitted}">
-                        <label for="newNetworkTenant">Tenant</label>
-                        <select id="newNetworkTenant" class="ui dropdown"
-                                name="newNetworkTenant"
-                                [(ngModel)]="networkCreateCtrl.newNetwork.tenantName"
-                                required #newNetworkTenant="ngModel">
-                            <option value="">-- Please select tenant --</option>
-                            <option *ngFor="let tenant of networkCreateCtrl.tenants" [ngValue]="tenant.tenantName">{{tenant.tenantName}}</option>
-                        </select>
-                        <span class="inlineError" *ngIf="newNetworkTenant.errors?.required && networkCreateForm.submitted">
+                    <div class="fields">
+                        <div class="thirteen wide field" [ngClass]="{error: newNetworkTenant.errors?.required && networkCreateForm.submitted}">
+                            <label for="newNetworkTenant">Tenant</label>
+                            <select id="newNetworkTenant" class="ui dropdown"
+                                    name="newNetworkTenant"
+                                    [(ngModel)]="networkCreateCtrl.newNetwork.tenantName"
+                                    required #newNetworkTenant="ngModel">
+                                <option value="">-- Please select tenant --</option>
+                                <option *ngFor="let tenant of networkCreateCtrl.tenants" [ngValue]="tenant.tenantName">{{tenant.tenantName}}</option>
+                            </select>
+                            <span class="inlineError" *ngIf="newNetworkTenant.errors?.required && networkCreateForm.submitted">
                                         Please select tenant
-                        </span>
+                            </span>
+                        </div>
+                        <div class="three wide field">
+                            <button type="button" class="ui icon button iconBtn primaryIconBtn addModal" (click)="showTenantModal()">
+                                <i class="add icon"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

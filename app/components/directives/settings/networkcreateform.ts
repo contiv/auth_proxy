@@ -8,6 +8,9 @@ import {CRUDHelperService} from "../../utils/crudhelperservice";
 import {NetworksModel} from "../../models/networksmodel";
 import {isNull} from "util";
 import {ContivGlobals} from "../../models/contivglobals";
+import {DisplayType} from "./tenantcreate";
+declare var $:any;
+
 @Component({
     selector: 'networkcreateform',
     templateUrl: './networkcreateform.html'
@@ -26,8 +29,8 @@ export class NetworkCreateformComponent implements OnInit{
     public tenants: any = [];
     public networkPresent: boolean = false;
     public networkNamePattern = ContivGlobals.NETWORK_NAME_REGEX;
+    public DisplayType = DisplayType;
     constructor(private organizationsModel: OrganizationsModel,
-                private networksModel: NetworksModel,
                 private crudHelperService: CRUDHelperService,
                 private ngZone: NgZone){
         this.createnetwork = new EventEmitter<any>();
@@ -35,31 +38,37 @@ export class NetworkCreateformComponent implements OnInit{
         this.goback = new EventEmitter<any>();
         this.skip = new EventEmitter<any>();
         this.networkCreateCtrl = this;
+    }
 
-
+    getTenants(reload: boolean) {
+        var component = this;
+        component.organizationsModel.get(reload)
+            .then((result) => {
+                component.tenants = result;
+                if(component.clusterMode === 'kubernetes' && component.firstRunWiz)
+                    component.newNetwork['networkName'] = 'default-net';
+                component.ngZone.run(() => {
+                    component.crudHelperService.stopLoader(component);
+                })
+            }, (error) => {
+                component.ngZone.run(() => {
+                    component.crudHelperService.stopLoader(component);
+                })
+            });
     }
 
     ngOnInit(){
         var component = this;
         this.crudHelperService.startLoader(this);
-        function getTenants(reload: boolean) {
-            component.organizationsModel.get(reload)
-                .then((result) => {
-                    component.tenants = result;
-                    if(component.clusterMode === 'kubernetes' && component.firstRunWiz)
-                        component.newNetwork['networkName'] = 'default-net';
-                    component.ngZone.run(() => {
-                        component.crudHelperService.stopLoader(component);
-                    })
-                }, (error) => {
-                    component.ngZone.run(() => {
-                        component.crudHelperService.stopLoader(component);
-                    })
-                });
-        }
+        this.getTenants(false);
+    }
 
-        getTenants(false);
+    closeTenantCreate() {
+        $('#tenant-create-modal').modal('hide');
+    }
 
+    showTenantModal() {
+        $('#tenant-create-modal').modal('show');
     }
 
     createNetwork(formvalid: boolean){
