@@ -1,0 +1,24 @@
+#!groovy
+pipeline {
+  agent { label 'public' }
+  options {
+    timeout(time: 30, unit: 'MINUTES')
+  }
+  stages {
+    stage('Release') {
+      steps {
+        sh '''
+          set -euo pipefail
+          export BUILD_VERSION=$(git describe --tags --always)
+
+          mkdir -p gopath
+          export GOPATH="$PWD/gopath"
+          export PATH="$PWD/gopath/bin:$PATH"
+          go get github.com/aktau/github-release
+          
+          ./scripts/release.sh
+        '''
+      }
+    }
+  }
+}
