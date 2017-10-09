@@ -42,6 +42,7 @@
                         <th><ctv-th [sortfield]="'encap'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Encapsulation</ctv-th></th>
                         <th><ctv-th [sortfield]="'subnet'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Subnet</ctv-th></th>
                         <th><ctv-th [sortfield]="'gateway'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Gateway</ctv-th></th>
+                        <th><ctv-th [sortfield]="'cfgdTag'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Tag</ctv-th></th>
                     </tr>
                     </thead>
 
@@ -52,6 +53,7 @@
                         <td>{{network.encap}}</td>
                         <td>{{network.subnet}}</td>
                         <td>{{network.gateway}}</td>
+                        <td>{{network.cfgdTag}}</td>
                     </tr>
                     </tbody>
 
