@@ -40,6 +40,7 @@
                         <th><ctv-th [sortfield]="'tenantName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Tenant</ctv-th></th>
                         <th><ctv-th [sortfield]="'networkName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Network</ctv-th></th>
                         <th><ctv-th [sortfield]="'policies'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Policies</ctv-th></th>
+                        <th><ctv-th [sortfield]="'cfgdTag'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Group Tag</ctv-th></th>
                     </tr>
                 </thead>
 
@@ -49,6 +50,7 @@
                     <td>{{group.tenantName}}</td>
                     <td>{{group.networkName}}</td>
                     <td>{{group.policies.join(", ")}}</td>
+                    <td>{{group.cfgdTag}}</td>
                     </tr>
                 </tbody>
 
