@@ -3,7 +3,7 @@
  */
 
 
-import { Component, OnInit, Output, EventEmitter, Inject, AfterViewInit } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { Router } from "@angular/router";
 import { FirstRunWizardService } from "./firstrunwizardservice";
 import { CRUDHelperService } from "../components/utils/crudhelperservice";
@@ -34,11 +34,11 @@ export class FirstrunConfirmComponent {
         // Will be calling the update settings funciton of wizard service,
         // A loader will be shown until all the updates are completed.
         var component = this;
-        this.crudHelperService.startLoader(this);
+        //this.crudHelperService.startLoader(this);
+        this.showLoader = true;
 
         this.wizardService.updateSettings()
             .then((result) => {
-                component.crudHelperService.stopLoader(component);
                 this.loadDashboard();
             }, (error) => {
                 component.crudHelperService.stopLoader(component);
@@ -48,10 +48,14 @@ export class FirstrunConfirmComponent {
     }
 
     loadDashboard(){
-        this.showLoader = false;
-        this.firstRunService.setFirstRun();
-        this.wizardService.initialize();
-        this.router.navigate(['/m/dashboard']);
+        this.firstRunService.setFirstRun(true)
+            .then((firstrun: boolean) => {
+                if (!firstrun) {
+                    this.wizardService.initialize();
+                    this.showLoader = false;
+                    this.router.navigate(['/m/dashboard']);
+                }
+            });
     }
 
     goBack(){

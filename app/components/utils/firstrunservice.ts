@@ -13,6 +13,7 @@ export class FirstRunService {
     private firstrunSubject: Subject<any> =new Subject<any>();
     firstrunObservable: Observable<any> = this.firstrunSubject.asObservable();
     firstRun:boolean = false;
+    public firstRunCompleted: boolean = false;
 
     constructor(private networksModel: NetworksModel,
                 private organizationsModel: OrganizationsModel){
@@ -21,12 +22,18 @@ export class FirstRunService {
     /**
      * Should only be called after the user has been logged in.
      */
-    setFirstRun(): Promise<any> {
-        return this.checkFirstRun().then(isFirstRun => {
-            this.firstRun = isFirstRun;
-            this.firstrunSubject.next(this.firstRun);
-            return this.firstRun;
-        });
+    setFirstRun(check?: boolean): Promise<any> {
+        if (!this.firstRunCompleted || check) {
+            return this.checkFirstRun().then(isFirstRun => {
+                this.firstRun = isFirstRun;
+                this.firstrunSubject.next(this.firstRun);
+                this.firstRunCompleted = true;
+                return this.firstRun;
+            });
+        } else {
+            return new Promise((resolve, reject) => {resolve(this.firstRun)});
+        }
+
     }
 
     private checkFirstRun(): Promise<any> {
@@ -44,5 +51,9 @@ export class FirstRunService {
                         return false;
                     });
             }, (error) => {});
+    }
+
+    public resetCheck() {
+        this.firstRunCompleted = false;
     }
 }

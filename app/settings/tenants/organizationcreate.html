@@ -1,5 +1,5 @@
 <div class="ui sixteen column grid">
-    <div class="ui row pageHeader">
+    <div class="ui row pageHeader" *ngIf="displayType === DisplayType.component">
         <div class="left aligned eight wide column">
             <div class="content pageTitle">Create Tenant</div>
         </div>
@@ -8,42 +8,13 @@
 
     <div class="ui row">
         <div class="ui sixteen wide column">
-
             <div class="description">Create a tenant by name. You can assign users into tenancies under Settings > Authorizations. </div>
+        </div>
+    </div>
 
-            <form id="organizationCreationForm" name="organizationCreateCtrl.form" class="ui form" role="form"
-                  (submit)="organizationCreateCtrl.createOrganization(organizationCreateFrom.valid)" novalidate #organizationCreateFrom="ngForm">
-
-                <div class="ui active inverted dimmer" *ngIf="organizationCreateCtrl.showLoader">
-                    <div class="ui loader"></div>
-                </div>
-
-                <div class="ui basic segment">
-                    <div class="ui six wide column field" [ngClass]="{error: newOrganizationName.errors?.required && organizationCreateFrom.submitted}">
-                        <label for="newOrganizationName">Tenant name</label>
-                        <input type="text" id="newOrganizationName" name="newOrganizationName"
-                               [(ngModel)]="organizationCreateCtrl.newOrganization.tenantName"
-                               placeholder="Enter name" required #newOrganizationName="ngModel">
-                        <span class="inlineError" *ngIf="newOrganizationName.errors?.required && organizationCreateFrom.submitted">
-                            Please enter a tenant name
-                        </span>
-                    </div>
-
-                    <div class="ui grid">
-                        <div class="right aligned six wide column buttonRow">
-                            <button type="button" class="ui basic button" (click)="organizationCreateCtrl.cancelCreating()">
-                                Cancel
-                            </button>
-                            <button type="submit" class="ui primary button">
-                                Create
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-
-            </form>
-
+    <div class="ui row">
+        <div class="ui left aligned sixteen wide column">
+            <tenantcreate [displayType]="DisplayType.component" (created)="returnToOrganizations()" (canceled)="cancelCreating()"></tenantcreate>
         </div>
     </div>
 </div>

@@ -101,6 +101,7 @@ export class MenuComponent implements AfterViewInit, DoCheck{
                component.rulesModel.clearModel();
                component.servicelbsModel.clearModel();
                component.usersModel.clearModel();
+               component.firstRunService.resetCheck();
                component.router.navigate(['/logout'],{relativeTo: this.activatedRoute});
            }
         },10)

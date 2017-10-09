@@ -31,7 +31,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         return this.canActivate(route, state);
     }
 
-    checkLogin(url: string): boolean {
+    checkLogin(url: string):any {
 
         if (this.authService.isLoggedIn) {
             if (this.checkAccess(url))
@@ -77,19 +77,27 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         return this.authService.checkAccess(url);
     }
 
-    isFirstRun():boolean{
-        return this.firstRunService.firstRun;
+    isFirstRun():Promise<boolean>{
+        return this.firstRunService.setFirstRun();
     }
 
-    performFirstrunCheck(url: string){
-        if (/firstrun/.test(url)) {
-            if (this.isFirstRun()) {
-                return true;
-            }
-            this.router.navigate(['/m/dashboard']);
-            return false;
-        }
-        return true;
+
+    performFirstrunCheck(url: string): Promise<any>{
+        return this.isFirstRun()
+            .then((firstrun: boolean) => {
+                if (((!/firstrun/.test(url)) && !firstrun) || ((/firstrun/.test(url) && (firstrun)))) {
+                    return true;
+                } else {
+                    if(firstrun) {
+                        this.router.navigate(['/m/firstrun']);
+                        return false
+                    } else {
+                        this.router.navigate(['/m/dashboard']);
+                        return false;
+                    }
+                }
+
+            });
     }
 
 }

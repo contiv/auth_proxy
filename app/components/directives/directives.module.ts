@@ -5,7 +5,7 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ErrorMessageComponent } from "./errormessagedirective";
 import { CtvTableComponent, CtvThComponent, CtvSearchComponent, CtvTpaginationComponent} from "./tabledirective";
-import { FormsModule } from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { CtvAccordionComponent } from "./accordiondirective";
 import { CtvCollapsibleComponent } from "./collapsibledirective";
 import { CtvNamevalueComponent } from "./namevaluedirective";
@@ -19,9 +19,11 @@ import { TooltipComponent } from "./tooltip";
 import { UserProfileEditComponent } from "./settings/userprofileedit";
 import { VerifydomDirective } from "./verifydomdirective";
 import { NetworkCreateformComponent } from "./settings/networkcreateform";
+import {OrganizationModule} from "../../settings/tenants/organization.module";
+import {TenantCreateComponent} from "./settings/tenantcreate";
 @NgModule({
     imports: [
-        CommonModule, FormsModule, ChartsModule
+        CommonModule, FormsModule, ChartsModule, ReactiveFormsModule
     ],
     declarations: [
         ErrorMessageComponent,
@@ -40,7 +42,8 @@ import { NetworkCreateformComponent } from "./settings/networkcreateform";
         LdapSettingsComponent,
         TooltipComponent,
         UserProfileEditComponent,
-        NetworkCreateformComponent
+        NetworkCreateformComponent,
+        TenantCreateComponent
     ],
     exports: [
         ErrorMessageComponent,
@@ -59,7 +62,8 @@ import { NetworkCreateformComponent } from "./settings/networkcreateform";
         LdapSettingsComponent,
         TooltipComponent,
         UserProfileEditComponent,
-        NetworkCreateformComponent
+        NetworkCreateformComponent,
+        TenantCreateComponent
     ]
 })
 export class DirectivesModule {}
