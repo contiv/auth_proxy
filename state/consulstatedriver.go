@@ -6,7 +6,6 @@ import (
 	"strings"
 	"time"
 
-	log "github.com/Sirupsen/logrus"
 	"github.com/hashicorp/consul/api"
 
 	auth_errors "github.com/contiv/auth_proxy/common/errors"
@@ -228,150 +227,6 @@ func (d *ConsulStateDriver) ReadAll(baseKey string) ([][]byte, error) {
 }
 
 //
-// channelConsulEvents
-//
-// Parameters:
-//   baseKey:        Key for which any state changes are to be notified
-//   kvCache:        map of already seen keys
-//   chKVPairs:      channel on which change notifications are received
-//   chValueChanges: channel using which any value changes are communicated
-//                   to the caller
-//   chErr:          channel using which any errors are communicated to the
-//                   caller
-//   chStop:         channel using which waiting for events can be stopped
-//
-func (d *ConsulStateDriver) channelConsulEvents(baseKey string, kvCache map[string]*api.KVPair,
-	chKVPairs chan api.KVPairs, chValueChanges chan [2][]byte, chErr chan error, chStop chan bool) {
-	for {
-		select {
-		// block on change notifications
-		case kvs := <-chKVPairs:
-			kvsRcvd := map[string]*api.KVPair{}
-			// Generate Create/Modifiy events for the keys recvd
-			for _, kv := range kvs {
-				// XXX: The logic below assumes that the node returned is always a node
-				// of interest. Eg: If we set a watch on /a/b/c, then we are mostly
-				// interested in changes in that directory i.e. changes to /a/b/c/d1..d2
-				kvsRcvd[kv.Key] = kv
-				valueChange := [2][]byte{nil, nil}
-				valueChange[0] = kv.Value
-				if kvSeen, ok := kvCache[kv.Key]; !ok {
-					log.Debugf("Received create for key: %q, kv: %+v", kv.Key, kv)
-				} else if kvSeen.ModifyIndex != kv.ModifyIndex {
-					log.Debugf("Received modify for key: %q, kv: %+v", kv.Key, kv)
-					valueChange[1] = kvSeen.Value
-				} else {
-					// no changes to the key, skipping
-					log.Debugf("Skipping key with no changes: %s", kv.Key)
-					continue
-				}
-				//update the map of seen keys
-				kvCache[kv.Key] = kv
-
-				//channel the translated response
-				chValueChanges <- valueChange
-			}
-
-			// Generate Delete events for missing keys
-			for key, kv := range kvCache {
-				if _, ok := kvsRcvd[key]; !ok {
-					log.Debugf("Received delete for key: %q, Pair: %+v", kv.Key, kv)
-					chValueChanges <- [2][]byte{nil, kv.Value}
-					// remove this key from the map of seen keys
-					delete(kvCache, key)
-				}
-			}
-
-		case <-chStop:
-			log.Infof("Stop request received")
-			return
-		}
-	}
-}
-
-//
-// WatchAll watches value changes for a key in consul
-//
-// Parameters:
-//   baseKey:         key for which changes are to be watched
-//   chValueChanges:  channel that will be used to communicate
-//                    any changes to values of a key
-//
-// Return values:
-//   error: Any error when watching for a value change for a key,
-//          nil if successful
-//
-func (d *ConsulStateDriver) WatchAll(baseKey string, chValueChanges chan [2][]byte) error {
-
-	// trim leading '/' of a key
-	baseKey = processKey(baseKey)
-
-	chKVPairs := make(chan api.KVPairs, 1)
-
-	// channel that will be used to stop watching for state-change events
-	chStop := make(chan bool, 1)
-
-	// channel that will be used to receive errors
-	chErr := make(chan error, 2)
-
-	// Consul returns all the keys as return value of List(). The following map helps
-	// track of state that has been seen and used to appropriately generate
-	// create, modify and delete events
-	kvCache := map[string]*api.KVPair{}
-
-	// read with index=0 to fetch all existing keys
-	var waitIndex uint64
-	kvs, qm, err := d.Client.KV().List(baseKey, &api.QueryOptions{WaitIndex: waitIndex})
-	if err != nil {
-		log.Errorf("consul read failed for key %q. Error: %s", baseKey, err)
-		return err
-	}
-
-	// Consul returns success and a nil kv when a key is not found.
-	// Treat this as starting with no state.
-	// XXX: shall we fail the watch in this case?
-	if kvs == nil {
-		kvs = api.KVPairs{}
-	}
-	for _, kv := range kvs {
-		kvCache[kv.Key] = kv
-	}
-	waitIndex = qm.LastIndex
-
-	go d.channelConsulEvents(baseKey, kvCache, chKVPairs, chValueChanges, chErr, chStop)
-
-	for {
-		select {
-		case err := <-chErr:
-			return err
-		default:
-			kvs, qm, err := d.Client.KV().List(baseKey, &api.QueryOptions{WaitIndex: waitIndex})
-			if err != nil {
-				if api.IsServerError(err) || strings.Contains(err.Error(), "EOF") || strings.Contains(err.Error(), "connection refused") {
-					log.Warnf("Consul watch: server error: %v for %s. Retrying..", err, baseKey)
-					time.Sleep(5 * time.Second)
-					continue
-				} else {
-					log.Errorf("consul watch failed for key %q. Error: %s. stopping watch..", baseKey, err)
-					chStop <- true
-					return err
-				}
-			}
-			// Consul returns success and a nil kv when a key is not found.
-			// This shall translate into appropriate 'Delete' events or
-			// no events (depending on whether some keys were seen before)
-			// XXX: shall we stop the watch in this case?
-			if kvs == nil {
-				kvs = api.KVPairs{}
-			}
-
-			waitIndex = qm.LastIndex
-			chKVPairs <- kvs
-		}
-	}
-}
-
-//
 // Clear clears the value for a key in consul
 //
 // Parameters:
@@ -442,42 +297,6 @@ func (d *ConsulStateDriver) ReadAllState(baseKey string, sType types.State,
 	unmarshal func([]byte, interface{}) error) ([]types.State, error) {
 	baseKey = processKey(baseKey)
 	return readAllStateCommon(d, baseKey, sType, unmarshal)
-}
-
-//
-// WatchAllState watches all state changes for a key
-//
-// Parameters:
-//    baseKey:   key to be watched
-//    sType:     types.State to convert values to/from
-//    unmarshal: function used to convert values to types.State
-//    chStateChanges:      channel of types.WatchState
-//
-// Return values:
-//    error: Any error when watching all state
-//
-func (d *ConsulStateDriver) WatchAllState(baseKey string, sType types.State,
-	unmarshal func([]byte, interface{}) error, chStateChanges chan types.WatchState) error {
-
-	// trim leading '/' in key
-	baseKey = processKey(baseKey)
-
-	// channel that will be used to communicate value changes
-	chValueChanges := make(chan [2][]byte, 1)
-
-	// channel used to communicate errors
-	chErr := make(chan error, 1)
-
-	go channelStateEvents(d, sType, unmarshal, chValueChanges, chStateChanges, chErr)
-
-	err := d.WatchAll(baseKey, chValueChanges)
-	if err != nil {
-		return err
-	}
-
-	err = <-chErr
-	return err
-
 }
 
 //

@@ -89,21 +89,3 @@ func TestConsulStateDriverReadStateAfterClear(t *testing.T) {
 	driver := setupConsulDriver(t)
 	commonTestStateDriverReadStateAfterClear(t, driver)
 }
-
-// Test to watch all 'created' state in KV store
-func TestConsulStateDriverWatchAllStateCreate(t *testing.T) {
-	driver := setupConsulDriver(t)
-	commonTestStateDriverWatchAllStateCreate(t, driver)
-}
-
-// Test to watch all 'modified' state in KV store
-func TestConsulStateDriverWatchAllStateModify(t *testing.T) {
-	driver := setupConsulDriver(t)
-	commonTestStateDriverWatchAllStateModify(t, driver)
-}
-
-// Test to watch all 'deleted' state in KV store
-func TestConsulStateDriverWatchAllStateDelete(t *testing.T) {
-	driver := setupConsulDriver(t)
-	commonTestStateDriverWatchAllStateDelete(t, driver)
-}
