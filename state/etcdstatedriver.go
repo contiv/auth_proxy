@@ -2,13 +2,12 @@ package state
 
 import (
 	"errors"
-	"fmt"
 	"reflect"
 	"strings"
 	"time"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/coreos/etcd/client"
+	client "github.com/coreos/etcd/clientv3"
 	"golang.org/x/net/context"
 
 	auth_errors "github.com/contiv/auth_proxy/common/errors"
@@ -30,11 +29,7 @@ const (
 type EtcdStateDriver struct {
 
 	// Client to access etcd
-	Client client.Client
-
-	// KeysAPI is used to interact with etcd's key-value
-	// API over HTTP
-	KeysAPI client.KeysAPI
+	Client *client.Client
 }
 
 //
@@ -65,9 +60,6 @@ func (d *EtcdStateDriver) Init(config *types.KVStoreConfig) error {
 		log.Fatalf("failed to create etcd client, err: %v", err)
 	}
 
-	// create keys api
-	d.KeysAPI = client.NewKeysAPI(d.Client)
-
 	for _, dir := range types.DatastoreDirectories {
 		// etcd paths begin with a slash
 		d.Mkdir("/" + dir)
@@ -89,34 +81,8 @@ func (d *EtcdStateDriver) Deinit() {}
 //   nil:   successfully created directory
 //
 func (d *EtcdStateDriver) Mkdir(key string) error {
-	ctx, cancel := context.WithTimeout(context.Background(), ctxTimeout)
-	defer cancel()
-
-	// sanity test
-	if !strings.HasPrefix(key, "/") {
-		return fmt.Errorf(
-			"etcd keys must begin with a slash (got '%s')",
-			key,
-		)
-	}
-
-	for i := 0; ; i++ {
-		_, err := d.KeysAPI.Set(ctx, key, "", &client.SetOptions{Dir: true})
-		if err == nil {
-			return nil
-		}
-
-		// Retry few times if cluster is unavailable
-		if err.Error() == client.ErrClusterUnavailable.Error() {
-			if i < maxEtcdRetries {
-				// Retry after a delay
-				time.Sleep(time.Second)
-				continue
-			}
-		}
-
-		return err
-	}
+	// etcd 3 does not have directories
+	return nil
 }
 
 //
@@ -135,12 +101,12 @@ func (d *EtcdStateDriver) Write(key string, value []byte) error {
 	ctx, cancel := context.WithTimeout(context.Background(), ctxTimeout)
 	defer cancel()
 
-	_, err := d.KeysAPI.Set(ctx, key, string(value[:]), nil)
+	_, err := d.Client.KV.Put(ctx, key, string(value[:]))
 	if err != nil {
 		// Retry few times if cluster is unavailable
-		if err.Error() == client.ErrClusterUnavailable.Error() {
+		if err == client.ErrNoAvailableEndpoints {
 			for i := 0; i < maxEtcdRetries; i++ {
-				_, err = d.KeysAPI.Set(ctx, key, string(value[:]), nil)
+				_, err = d.Client.KV.Put(ctx, key, string(value[:]))
 				if err == nil {
 					break
 				}
@@ -170,22 +136,26 @@ func (d *EtcdStateDriver) Read(key string) ([]byte, error) {
 	defer cancel()
 
 	var err error
-	var resp *client.Response
+	var resp *client.GetResponse
 
 	// i <= maxEtcdRetries to ensure that the initial `GET` call is also incorporated along with retries
 	for i := 0; i <= maxEtcdRetries; i++ {
-		resp, err = d.KeysAPI.Get(ctx, key, &client.GetOptions{Quorum: true})
+		resp, err = d.Client.KV.Get(ctx, key)
+		if err != nil {
+			if err == client.ErrNoAvailableEndpoints {
+				// retry after a delay
+				time.Sleep(time.Second)
+			}
 
-		if err == nil {
-			// on successful read
-			return []byte(resp.Node.Value), nil
-		} else if client.IsKeyNotFound(err) {
-			return nil, auth_errors.ErrKeyNotFound
-		} else if err.Error() == client.ErrClusterUnavailable.Error() {
-			// retry after a delay
-			time.Sleep(time.Second)
 			continue
 		}
+
+		if resp.Count == 0 {
+			return nil, auth_errors.ErrKeyNotFound
+		}
+
+		// on successful read
+		return resp.Kvs[0].Value, nil
 
 	}
 
@@ -208,28 +178,31 @@ func (d *EtcdStateDriver) ReadAll(baseKey string) ([][]byte, error) {
 	defer cancel()
 
 	var err error
-	var resp *client.Response
+	var resp *client.GetResponse
 
 	// i <= maxEtcdRetries to ensure that the initial `GET` call is also incorporated along with retries
 	for i := 0; i <= maxEtcdRetries; i++ {
-		resp, err = d.KeysAPI.Get(ctx, baseKey, &client.GetOptions{Recursive: true, Quorum: true})
-
-		if err == nil {
-			// on successful read
-			values := [][]byte{}
-			for _, node := range resp.Node.Nodes {
-				values = append(values, []byte(node.Value))
+		resp, err = d.Client.KV.Get(ctx, baseKey, client.WithPrefix())
+		if err != nil {
+			if err == client.ErrNoAvailableEndpoints {
+				// retry after a delay
+				time.Sleep(time.Second)
 			}
 
-			return values, nil
-		} else if client.IsKeyNotFound(err) {
-			return nil, auth_errors.ErrKeyNotFound
-		} else if err.Error() == client.ErrClusterUnavailable.Error() {
-			// retry after a delay
-			time.Sleep(time.Second)
 			continue
 		}
 
+		if resp.Count == 0 {
+			return nil, auth_errors.ErrKeyNotFound
+		}
+
+		// on successful read
+		values := [][]byte{}
+		for _, node := range resp.Kvs {
+			values = append(values, node.Value)
+		}
+
+		return values, nil
 	}
 
 	return [][]byte{}, err
@@ -248,10 +221,11 @@ func (d *EtcdStateDriver) Clear(key string) error {
 	ctx, cancel := context.WithTimeout(context.Background(), ctxTimeout)
 	defer cancel()
 
-	_, err := d.KeysAPI.Delete(ctx, key, nil)
+	var resp *client.DeleteResponse
 
-	if client.IsKeyNotFound(err) {
-		return nil
+	resp, err := d.Client.KV.Delete(ctx, key)
+	if resp.Deleted == 0 {
+		return auth_errors.ErrKeyNotFound
 	}
 
 	return err
