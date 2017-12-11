@@ -19,7 +19,8 @@ var (
 func TestAuthZInit(t *testing.T) {
 	// create config for KV store
 	config = types.KVStoreConfig{
-		StoreURL: os.Getenv("DATASTORE_ADDRESS"),
+		StoreURL:    os.Getenv("DATASTORE_ADDRESS"),
+		StoreDriver: os.Getenv("DATASTORE_Driver"),
 	}
 
 	// create a state driver

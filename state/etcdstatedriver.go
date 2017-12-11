@@ -3,6 +3,7 @@ package state
 import (
 	"errors"
 	"fmt"
+	"net/url"
 	"reflect"
 	"strings"
 	"time"
@@ -48,15 +49,24 @@ type EtcdStateDriver struct {
 //
 func (d *EtcdStateDriver) Init(config *types.KVStoreConfig) error {
 	var err error
+	var endpoint *url.URL
 
-	if config == nil || !strings.Contains(config.StoreURL, "etcd://") {
+	if config == nil {
 		return errors.New("Invalid etcd config")
 	}
 
-	// configure etcd endpoints
-	etcdURL := strings.Replace(config.StoreURL, "etcd://", "http://", 1)
+	endpoint, err = url.Parse(config.StoreURL)
+	if err != nil {
+		return err
+	}
+	if endpoint.Scheme == "etcd" {
+		endpoint.Scheme = "http"
+	} else if endpoint.Scheme != "http" && endpoint.Scheme != "https" {
+		return fmt.Errorf("invalid etcd URL scheme %q", endpoint.Scheme)
+	}
+
 	etcdConfig := client.Config{
-		Endpoints: []string{etcdURL},
+		Endpoints: []string{endpoint.String()},
 	}
 
 	// create etcd client

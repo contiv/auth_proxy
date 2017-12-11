@@ -49,9 +49,10 @@ func Test(t *testing.T) {
 
 	// DATASTORE_ADDRESS is set in ./scripts/systemtests_in_container.sh
 	datastoreAddress := strings.TrimSpace(os.Getenv("DATASTORE_ADDRESS"))
+	datastoreDriver := strings.TrimSpace(os.Getenv("DATASTORE_DRIVER"))
 
 	log.Info("Initializing datastore")
-	if err := state.InitializeStateDriver(datastoreAddress); err != nil {
+	if err := state.InitializeStateDriver(datastoreDriver, datastoreAddress); err != nil {
 		log.Fatalln(err)
 	}
 

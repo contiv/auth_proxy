@@ -23,6 +23,7 @@ const (
 
 var (
 	// flags
+	dataStoreDriver  string // driver of the data store used by netmaster
 	dataStoreAddress string // address of the data store used by netmaster
 	debug            bool   // if set, log level is set to `debug`
 	listenAddress    string // address we listen on
@@ -105,6 +106,13 @@ func processFlags() {
 		"data-store-address",
 		"",
 		"address of the state store used by netmaster",
+	)
+
+	flag.StringVar(
+		&dataStoreDriver,
+		"data-store-driver",
+		"",
+		"driver of the state store used by netmaster",
 	)
 
 	flag.Parse()
@@ -211,7 +219,7 @@ func main() {
 	}
 
 	// Initialize data store
-	if err := state.InitializeStateDriver(dataStoreAddress); err != nil {
+	if err := state.InitializeStateDriver(dataStoreDriver, dataStoreAddress); err != nil {
 		log.Fatalln(err)
 		return
 	}
