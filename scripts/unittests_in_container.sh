@@ -2,8 +2,8 @@
 
 set -uo pipefail
 
-ETCD_ADDRESS="etcd://$ETCD_CONTAINER_IP:2379"
-CONSUL_ADDRESS="consul://$CONSUL_CONTAINER_IP:8500"
+ETCD_ADDRESS="http://$ETCD_CONTAINER_IP:2379"
+CONSUL_ADDRESS="http://$CONSUL_CONTAINER_IP:8500"
 
 EXIT_CODES=()
 
@@ -13,13 +13,13 @@ echo ""
 
 echo "consul:"
 echo ""
-DATASTORE_ADDRESS=$CONSUL_ADDRESS go test -v -timeout 1m ./db -check.v
+DATASTORE_DRIVER=consul DATASTORE_ADDRESS=$CONSUL_ADDRESS go test -v -timeout 1m ./db -check.v
 EXIT_CODES+=($?)
 echo ""
 
 echo "etcd:"
 echo ""
-DATASTORE_ADDRESS=$ETCD_ADDRESS go test -v -timeout 1m ./db -check.v
+DATASTORE_DRIVER=etcd DATASTORE_ADDRESS=$ETCD_ADDRESS go test -v -timeout 1m ./db -check.v
 EXIT_CODES+=($?)
 echo ""
 
@@ -29,15 +29,15 @@ echo ""
 
 echo "etcd:"
 echo ""
-DATASTORE_ADDRESS=$ETCD_ADDRESS go test -run TestAuthZ* -v -timeout 1m ./state -check.v
+DATASTORE_DRIVER=etcd DATASTORE_ADDRESS=$ETCD_ADDRESS go test -run TestAuthZ* -v -timeout 1m ./state -check.v
 EXIT_CODES+=($?)
-DATASTORE_ADDRESS=$ETCD_ADDRESS go test -run TestEtcd* -v -timeout 1m ./state -check.v
+DATASTORE_DRIVER=etcd DATASTORE_ADDRESS=$ETCD_ADDRESS go test -run TestEtcd* -v -timeout 1m ./state -check.v
 EXIT_CODES+=($?)
 echo ""
 
 echo "consul:"
 echo ""
-DATASTORE_ADDRESS=$CONSUL_ADDRESS go test -run TestConsul* -v -timeout 1m ./state -check.v
+DATASTORE_DRIVER=consul DATASTORE_ADDRESS=$CONSUL_ADDRESS go test -run TestConsul* -v -timeout 1m ./state -check.v
 EXIT_CODES+=($?)
 echo ""
 

@@ -101,7 +101,8 @@ ETCD_PROXY_CONTAINER_ID=$(
 		-e NO_NETMASTER_STARTUP_CHECK=true \
 		--network $NETWORK_NAME \
 		$PROXY_IMAGE \
-		--data-store-address="etcd://$ETCD_CONTAINER_IP:2379" \
+		--data-store-driver="etcd" \
+		--data-store-address="http://$ETCD_CONTAINER_IP:2379" \
 		--tls-certificate=/local_certs/cert.pem \
 		--tls-key-file=/local_certs/local.key \
 		--listen-address=0.0.0.0:10000 \
@@ -120,7 +121,8 @@ CONSUL_PROXY_CONTAINER_ID=$(
 		--network $NETWORK_NAME \
 		-e NO_NETMASTER_STARTUP_CHECK=true \
 		$PROXY_IMAGE \
-		--data-store-address="consul://$CONSUL_CONTAINER_IP:8500" \
+		--data-store-driver="consul" \
+		--data-store-address="http://$CONSUL_CONTAINER_IP:8500" \
 		--tls-certificate=/local_certs/cert.pem \
 		--tls-key-file=/local_certs/local.key \
 		--listen-address=0.0.0.0:10001 \

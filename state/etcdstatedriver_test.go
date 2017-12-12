@@ -23,7 +23,10 @@ func Test(t *testing.T) {
 
 // Setup configuration needed to access local etcd
 func setupEtcdDriver(t *testing.T) *EtcdStateDriver {
-	config := types.KVStoreConfig{StoreURL: os.Getenv("DATASTORE_ADDRESS")}
+	config := types.KVStoreConfig{
+		StoreURL:    os.Getenv("DATASTORE_ADDRESS"),
+		StoreDriver: os.Getenv("DATASTORE_DRIVER"),
+	}
 
 	driver := &EtcdStateDriver{}
 

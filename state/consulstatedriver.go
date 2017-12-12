@@ -3,6 +3,7 @@ package state
 import (
 	"errors"
 	"fmt"
+	"net/url"
 	"strings"
 	"time"
 
@@ -36,13 +37,23 @@ type ConsulStateDriver struct {
 //
 func (d *ConsulStateDriver) Init(config *types.KVStoreConfig) error {
 	var err error
+	var endpoint *url.URL
 
-	if config == nil || !strings.Contains(config.StoreURL, "consul://") {
+	if config == nil {
 		return errors.New("Invalid consul config")
 	}
 
+	endpoint, err = url.Parse(config.StoreURL)
+	if err != nil {
+		return err
+	}
+	if endpoint.Scheme == "consul" {
+		endpoint.Scheme = "http"
+	} else if endpoint.Scheme != "http" && endpoint.Scheme != "https" {
+		return fmt.Errorf("invalid consul URL scheme %q", endpoint.Scheme)
+	}
 	cfg := api.Config{
-		Address: strings.TrimPrefix(config.StoreURL, "consul://"),
+		Address: endpoint.Host,
 	}
 
 	// create a consul client

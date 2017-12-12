@@ -8,7 +8,10 @@ import (
 )
 
 func setupConsulDriver(t *testing.T) *ConsulStateDriver {
-	config := types.KVStoreConfig{StoreURL: os.Getenv("DATASTORE_ADDRESS")}
+	config := types.KVStoreConfig{
+		StoreURL:    os.Getenv("DATASTORE_ADDRESS"),
+		StoreDriver: os.Getenv("DATASTORE_DRIVER"),
+	}
 
 	driver := &ConsulStateDriver{}
 

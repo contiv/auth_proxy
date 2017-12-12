@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
-	"strings"
 
 	"github.com/contiv/auth_proxy/common"
 	auth_errors "github.com/contiv/auth_proxy/common/errors"
@@ -99,18 +98,14 @@ func GetStateDriver() (types.StateDriver, error) {
 //  dataStoreAddress: address of the data store
 // return values:
 //  returns any error as NewStateDriver() + validation errors
-func InitializeStateDriver(dataStoreAddress string) error {
+func InitializeStateDriver(dataStoreDriver, dataStoreAddress string) error {
+	if dataStoreDriver != EtcdName && dataStoreDriver != ConsulName {
+		return errors.New("Invalid data store driver, please set --data-store-driver (options: [etcd, consul])")
+	}
 	if common.IsEmpty(dataStoreAddress) {
 		return errors.New("Empty data store address, please set --data-store-address")
 	}
+	_, err := NewStateDriver(dataStoreDriver, &types.KVStoreConfig{StoreURL: dataStoreAddress})
+	return err
 
-	if strings.HasPrefix(dataStoreAddress, EtcdName+"://") {
-		_, err := NewStateDriver(EtcdName, &types.KVStoreConfig{StoreURL: dataStoreAddress})
-		return err
-	} else if strings.HasPrefix(dataStoreAddress, ConsulName+"://") {
-		_, err := NewStateDriver(ConsulName, &types.KVStoreConfig{StoreURL: dataStoreAddress})
-		return err
-	}
-
-	return errors.New("Invalid data store address")
 }

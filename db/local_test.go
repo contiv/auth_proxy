@@ -42,24 +42,30 @@ var (
 		},
 	}
 
-	invalidUsers     = []string{"xxx", "yyy", "zzz"}
-	builtInUsers     = []string{types.Admin.String(), types.Ops.String()}
-	datastoreAddress = ""
+	invalidUsers    = []string{"xxx", "yyy", "zzz"}
+	builtInUsers    = []string{types.Admin.String(), types.Ops.String()}
+	datastoreDriver = ""
 )
 
 // This runs before each test and guarantees the datastore is emptied out.
 func (s *dbSuite) SetUpTest(c *C) {
-	test.EmptyDatastore(datastoreAddress)
+	test.EmptyDatastore(datastoreDriver)
 }
 
 // SetUpSuite sets up the environment for tests.
 func (s *dbSuite) SetUpSuite(c *C) {
-	datastoreAddress = strings.TrimSpace(os.Getenv("DATASTORE_ADDRESS"))
+	datastoreAddress := strings.TrimSpace(os.Getenv("DATASTORE_ADDRESS"))
+	datastoreDriver = strings.TrimSpace(os.Getenv("DATASTORE_DRIVER"))
+
+	if datastoreDriver != state.EtcdName && datastoreDriver != state.ConsulName {
+		log.Fatalln("you must provide a DATASTORE_DRIVER (options: [etcd, consul])")
+	}
+
 	if common.IsEmpty(datastoreAddress) {
 		log.Fatalln("you must provide a DATASTORE_ADDRESS")
 	}
 
-	if err := state.InitializeStateDriver(datastoreAddress); err != nil {
+	if err := state.InitializeStateDriver(datastoreDriver, datastoreAddress); err != nil {
 		log.Fatalln(err)
 	}
 
