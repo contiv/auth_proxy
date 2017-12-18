@@ -4,3 +4,5 @@
 # actual site and compiled assets live.
 build/dependencies/contiv-ui
 !build/dependencies/contiv-ui/app
+build/dependencies/contiv-ui/app/assets
+build/dependencies/contiv-ui/app/bower_components/semantic-ui

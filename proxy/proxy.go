@@ -3,11 +3,13 @@ package proxy
 import (
 	"crypto/tls"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"net"
 	"net/http"
 	"net/url"
 	"os"
+	"strings"
 	"sync"
 	"time"
 
@@ -283,10 +285,37 @@ type staticFileHandler struct {
 
 func (sfh *staticFileHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	common.EnableHSTS(w)
+	var (
+		serveCompressed = false
+		currentURL      = ""
+		err             error
+	)
+	if !strings.Contains(r.Header.Get("Accept-Encoding"), "gzip") {
+		sfh.fileServer.ServeHTTP(w, r)
+	}
+	isCSSFile := strings.HasSuffix(currentURL, ".css")
+	isJSFile := strings.HasSuffix(currentURL, ".js")
+	if isCSSFile || isJSFile {
+		currentURL = r.URL.String()
+		newURL := fmt.Sprintf("%v.gz", currentURL)
+		r.URL, err = url.Parse(newURL)
+		if err != nil {
+			err = fmt.Errorf("failed to parse URL: %v", err)
+			serverError(w, err)
+		}
+		serveCompressed = true
+	}
+	if isCSSFile {
+		w.Header().Set("Content-Type", "text/css")
+	}
 
-	// TODO: here is a good spot to look for asset requests (.js, .css, etc.)
-	//       and append .gz and serve a gzipped version instead by rewriting
-	//       the requested path.
+	if isJSFile {
+		w.Header().Set("Content-Type", "application/x-javascript")
+	}
+
+	if serveCompressed {
+		w.Header().Set("Content-Encoding", "gzip")
+	}
 
 	sfh.fileServer.ServeHTTP(w, r)
 }
