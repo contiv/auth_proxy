@@ -38,6 +38,11 @@ godep:
 run:
 	docker-compose up -d
 
+# shfmt formats all shell scripts in a standardized way
+shfmt:
+	go get github.com/contiv-experimental/sh/cmd/shfmt || :
+	find . -type f -name "*.sh" -and -not -path "./vendor/*" -print0 | xargs -0 shfmt -w
+
 # systemtests runs the system tests suite.
 systemtests: generate-certificate
 	@bash ./scripts/systemtests.sh

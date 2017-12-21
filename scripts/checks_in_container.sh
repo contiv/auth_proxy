@@ -4,9 +4,6 @@ set -e
 
 export PATH="/go/bin:$PATH"
 
-echo "Formatting all shell scripts..."
-find . -type f -name "*.sh" -and -not -path "./vendor/*" -and -not -path "./build/dependencies/*" -print0 | xargs -0 shfmt -w
-
 dirs=$(go list ./... | sed -e 's!github.com/contiv/auth_proxy!.!g' | grep -v ./vendor)
 files=$(find . -type f -name '*.go' | grep -v ./vendor)
 
