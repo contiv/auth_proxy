@@ -1,0 +1,99 @@
+<form class="ui form" role="form" #aciForm="ngForm" name="aciForm" (submit)="updateAciSetting(aciForm.valid)"
+      novalidate>
+    <div class="ui basic segment">
+        <div class="ui inverted dimmer aci">
+            <div class="content">
+                <div class="center">
+                    <span style="font-weight: normal; font-size: 24px">
+                        Applicable if Network infrastructure is of type ACI
+                    </span>
+                    <br><br>
+                    <span style="font-size: medium">You can change the Network infrastructure type in the previous screen</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui grid">
+            <div class="ui row">
+                <div class="ui six wide column">
+                    <div class="field" [ngClass]="{error: apicPhysicalDomain.errors?.required && aciForm.submitted}">
+                        <label for="apicPhysicalDomain">Physical domain</label>
+                        <input type="text" id="apicPhysicalDomain" name="apicPhysicalDomain"
+                               [(ngModel)]="setting.physicalDomain" [disabled]="disabled"
+                               placeholder="Enter physical domain name" required #apicPhysicalDomain="ngModel">
+                        <span class="inlineError" *ngIf="apicPhysicalDomain.errors?.required && aciForm.submitted">
+                            Please enter physical domain
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="ui row">
+                <div class="ui six wide column">
+                    <div class="field">
+                        <label for="apicLeafNodes">Node bindings</label>
+                        <input type="text" id="apicLeafNodes" name="apicLeafNodes"
+                               [(ngModel)]="setting.nodeBindings" [disabled]="disabled"
+                               placeholder="Enter comma separated nodes of the form topology/pod-1/node-101">
+                    </div>
+                </div>
+            </div>
+            <div class="ui row">
+                <div class="ui six wide column">
+                    <div class="field">
+                        <label for="apicPathBindings">Path bindings</label>
+                        <input type="text" id="apicPathBindings" name="apicPathBindings"
+                               [(ngModel)]="setting.pathBindings" [disabled]="disabled"
+                               placeholder="Enter comma separated paths of the form topology/pod-1/paths-101/pathep-[eth1/14]">
+                    </div>
+                </div>
+            </div>
+            <div class="ui row">
+                <div class="ui six wide column">
+                    <div class="field">
+                        <label>
+                            <input type="checkbox" name="apicEnforcePolicies" tabindex="0"
+                                   [checked]="setting.enforcePolicies == 'yes'" [disabled]="disabled"
+                                   (change)="$event.target.checked?setting.enforcePolicies='yes':setting.enforcePolicies='no'"
+                                   class="alignLabel">
+                            Enforce security policies
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="ui row">
+                <div class="ui six wide column">
+                    <div class="field">
+                        <label>
+                            <input type="checkbox" name="apicIncludeCommonTenant" tabindex="0"
+                                   [checked]="setting.includeCommonTenant == 'yes'" [disabled]="disabled"
+                                   (change)="$event.target.checked?setting.includeCommonTenant='yes':setting.includeCommonTenant='no'"
+                                   class="alignLabel">
+                            Lookup objects in common tenant
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="!firstRunWiz" class="ui row">
+                <div class="right aligned six wide column">
+                    <button type="submit" class="ui primary button">
+                        Update ACI Settings
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="firstRunWiz">
+        <div class="ui section divider" style="margin-top: 60px"></div>
+        <div class="ui grid">
+            <div class="right floated right aligned sixteen wide column">
+                <button type="button" class="ui basic button" (click)="cancel.emit()">Cancel</button>
+                <button type="button" class="ui secondary button" (click)="goback.emit()"><i
+                        class="arrow left icon"></i>Go back
+                </button>
+                <button type="button" class="ui secondary button" (click)="skip.emit()" *ngIf="disabled">Skip this step</button>
+                <button type="submit" class="ui primary button" *ngIf="!disabled">Continue<i class="arrow right icon"></i></button>
+            </div>
+        </div>
+    </div>
+</form>

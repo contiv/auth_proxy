@@ -1,0 +1,22 @@
+.logout {
+    width:50%;
+    margin-top: 100px;
+}
+
+.productname{
+    font-size: 2.0rem !important;
+    font-weight: 300;
+    color: #0c5093;
+}
+
+.logo {
+    width:36px !important;
+    height: 36px !important;
+    display:inline !important;
+}
+
+.column.text{
+    font-weight: 300 !important;
+    padding-top: 15px !important;
+    font-size: 14px !important;
+}

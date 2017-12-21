@@ -1,0 +1,6 @@
+<div (click)="sortColumn()">
+    <ng-content></ng-content>
+    <i  class="angle icon"[ngClass]="sortobject.iconDirection"
+        *ngIf="sortobject.field==sortfield && sortfield!=''">
+    </i>
+</div>

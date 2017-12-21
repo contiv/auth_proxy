@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html lang="en" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html lang="en" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Contiv Admin Console</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="images/contiv_36x36.png">
+    <link rel="stylesheet" href="bower_components/semantic-ui/dist/semantic.min.css">
+    <link rel="stylesheet" href="app.css">
+</head>
+<body>
+<ccn-app></ccn-app>
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="polyfills.bundle.js"></script>
+<script src="vendor.bundle.js"></script>
+<script src="main.bundle.js"></script>
+</body>
+</html>
+
+<style>
+.ui.grid>.row { padding: 1rem; padding-bottom: 0; }
+.ui.grid>.row.breadcrumbRow { padding: .2rem inherit; }
+.ui.grid>.row.searchRow { padding: 0; }
+
+
+.description {
+	font-size: 12px;
+	font-weight: 400;
+	font-style: italic;
+    color: #999;
+	margin: 20px;
+}
+
+.noDataFound { font-style: italic; opacity: .5; user-select: none; }
+.ui.very.basic.table tbody tr.noDataFound td { user-select: none; }
+
+form { margin-top: 15px; }
+label { cursor: pointer; }
+.ui.form input[type=checkbox].alignLabel { margin-right: 5px; vertical-align: middle; }
+
+.policyOutput h4.ui.header {
+	font-weight: 700;
+    font-size: 13px;
+    color: rgba(0,0,0,.87);
+    user-select: none;
+}
+
+.policyOutput h5.ui.header {
+	font-weight: 700;
+    font-size: 12px;
+    color: #5d5d5d;
+    font-style: italic;
+    user-select: none;
+}
+
+ctv-collapsible,
+.ctv-collapsible { display: block; margin-top: 30px; }
+
+ctv-collapsible h4.ui.header,
+h4.ui.header.ctv-collapsible-label {
+    font-weight: 700;
+    font-size: 13px;
+    color: rgba(0, 0, 0, .87);
+    cursor: pointer;
+    user-select: none;
+}
+
+ctv-collapsible .ui.header>.icon,
+.ctv-collapsible .ui.header>.icon {
+	font-size: 15px;
+	color: rgba(0,0,0,.87);
+	margin-top: -2px;
+	margin-right: 0 !important;
+	user-select: none;
+}
+
+.ctv-collapsible-content { padding-left: 30px; padding-top: 12px; }
+
+.ui.basic.table td.key {
+    color: #5d5d5d;
+    white-space: nowrap;
+    text-transform: capitalize;
+}
+.ui.basic.table td.value {  }
+
+.buttonRow { margin-top: 20px; }
+
+</style>

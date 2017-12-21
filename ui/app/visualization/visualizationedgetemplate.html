@@ -1,0 +1,32 @@
+ <style>
+        .graph .axis {
+            stroke-width: 1;
+        }
+
+        .graph .axis .tick line {
+            stroke: black;
+        }
+
+        .graph .axis .tick text {
+            fill: black;
+            font-size: 0.7em;
+        }
+
+        .graph .axis .domain {
+            fill: none;
+            stroke: black;
+        }
+
+        .graph .group {
+            fill: none;
+            stroke: black;
+            stroke-width: 1.5;
+        }
+</style>
+<div id="backButton-div"  class="one float wide column">
+            <a ui-sref="contiv.menu.visualization.list()">
+                <i class="large arrow left icon"></i>
+            </a>
+            <h3>{{sourceName}} to {{targetName}}</h3>
+</div>
+<div class='graph'></div>

@@ -1,0 +1,76 @@
+<div class="ui sixteen column grid pageHeader" [ngSwitch]="mode">
+
+    <div class="ui row">
+        <div class="left aligned eight wide column">
+            <div class="content pageTitle">{{username}}</div>
+        </div>
+        <div class="right aligned eight wide column" *ngSwitchCase="'details'">
+
+            <button *ngSwitchCase="'details'" class="ui basic button"
+                    (click)="cancelDetails()">
+                Close
+            </button>
+            <button  class="ui secondary button"
+                    (click)="editUser()">
+                Edit
+            </button>
+            <button class="ui button"
+                    [ngClass]="{disabled: isRootAdmin || isLoggedInUser, secondary: !isRootAdmin && !isLoggedInUser}"
+                    style="height: 30px; font-size: 13px; padding: 0 24px;"
+                    onclick="$('#delete-user-modal').modal('show')">
+                <i class="trash icon"></i>
+                Remove
+            </button>
+
+        </div>
+    </div>
+
+    <div id="delete-user-modal" class="ui small modal" *ngSwitchCase="'details'">
+        <div class="header">Remove User: {{username}}
+        </div>
+        <div class="content">
+            <p>Are you sure you want to remove this user?</p>
+        </div>
+        <div class="actions">
+            <div class="ui negative button">No</div>
+            <div class="ui positive button" (click)="deleteUser()">
+                Yes
+            </div>
+        </div>
+    </div>
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+
+            <div class="ui basic segment" *ngSwitchCase="'details'">
+                <div class="ui active inverted dimmer" *ngIf="showLoader">
+                    <div class="ui loader"></div>
+                </div>
+                <div *ngIf="isRootAdmin" class="description">Built-in admin user record cannot be deleted.</div>
+                <table>
+                    <tbody>
+                    <tr>
+                        <td class="ctv-header">Username</td>
+                        <td class="ctv-value">{{user.username}}</td>
+                    </tr>
+                    <tr>
+                        <td class="ctv-header">Firstname</td>
+                        <td class="ctv-value">{{user.first_name}}</td>
+                    </tr>
+                    <tr>
+                        <td class="ctv-header">Lastname</td>
+                        <td class="ctv-value">{{user.last_name}}</td>
+                    </tr>
+                    <tr>
+                        <td class="ctv-header">Disabled</td>
+                        <td class="ctv-value">{{user.disable?'Yes':'No'}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div *ngSwitchCase="'edit'">
+                <userprofileedit [username]="username" (close)="returnToUserDetails()" [displayType]="ProfileDisplayType.component"></userprofileedit>
+            </div>
+        </div>
+    </div>
+</div>

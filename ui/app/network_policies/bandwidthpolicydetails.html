@@ -1,0 +1,170 @@
+<div class="ui sixteen column grid">
+    <div [ngSwitch]="mode" class="ui row pageHeader">
+        <div class="left aligned eight wide column">
+            <div class="content pageTitle">{{policy.profileName}}</div>
+        </div>
+        <div class="right aligned eight wide column" *ngSwitchCase="'details'">
+            <div class="right aligned five wide column">
+                <button type="button" class="ui basic button"
+                        (click)="cancelDetails()">
+                    Close
+                </button>
+                <button class="ui secondary button"
+                        (click)="editPolicy()">
+                    Edit
+                </button>
+                <button class="ui secondary button" onclick="$('#delete-policy-modal').modal('show')">
+                    <i class="trash icon"></i>
+                    Remove
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="delete-policy-modal" class="ui small modal">
+        <div class="header">Delete</div>
+        <div class="content">
+            <p>Are you sure you want to delete the policy <q>{{policy.profileName}}</q>?</p>
+        </div>
+        <div class="actions">
+            <div class="ui basic deny button modalBtn">Cancel</div>
+            <div class="ui primary approve button modalBtn" (click)="deletePolicy()">
+                Delete
+            </div>
+        </div>
+    </div>
+
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div class="breadcrumbs">
+                <span class="crumb">
+                    <a href="/#/m/networkpolicies/list">
+                        Network Policies
+                    </a>
+                </span>
+                <span class="crumb">
+                    <a (click)="returnToPolicies()">
+                        Bandwidth Policies
+                    </a>
+                </span>
+                <span class="crumb">{{policy.profileName}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+
+            <div [ngSwitch]="mode" class="ui basic segment">
+                <div class="ui active inverted dimmer" *ngIf="showLoader">
+                    <div class="ui loader"></div>
+                </div>
+
+                <div *ngSwitchCase="'details'">
+
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td class="ctv-header">Profile Name</td>
+                            <td class="ctv-value">{{policy.profileName}}</td>
+                        </tr>
+                        <tr>
+                            <td class="ctv-header">Tenant</td>
+                            <td class="ctv-value">{{policy.tenantName}}</td>
+                        </tr>
+                        <tr>
+                            <td class="ctv-header">Bandwidth</td>
+                            <td class="ctv-value">{{policy.bandwidth}}</td>
+                        </tr>
+                        <tr>
+                            <td class="ctv-header">DSCP</td>
+                            <td class="ctv-value">{{policy.DSCP}}</td>
+                        </tr>
+                        <tr>
+                            <td class="ctv-header">Burst</td>
+                            <td class="ctv-value">{{policy.burst}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div *ngSwitchCase="'edit'">
+                    <form class="ui form" role="form" #formRef="ngForm"
+                          (ngSubmit)="savePolicy(formRef.valid)" novalidate>
+
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td class="ctv-header">Profile Name</td>
+                                <td class="ctv-value">{{policy.profileName}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="ui sixteen column grid" style="margin-top: 30px;">
+                            <div class="ui row">
+                                <div class="ui six wide column">
+
+                                    <div class="fields">
+                                        <div class="eight wide field" [ngClass]="{error: bandwidthNumberRef.errors?.required && formRef.submitted}">
+                                            <label for="bandwidthNumber">Bandwidth Value</label>
+                                            <input #bandwidthNumberRef="ngModel" type="number" id="bandwidthNumber" name="bandwidthNumber"
+                                                   [(ngModel)]="policy.bandwidthNumber" placeholder="Enter bandwidth value" required>
+                                            <span class="inlineError" *ngIf="bandwidthNumberRef.errors?.required && formRef.submitted">
+                                                Please enter bandwidth
+                                            </span>
+                                        </div>
+                                        <div class="eight wide field" [ngClass]="{error: bandwidthUnitRef.errors?.required && formRef.submitted}">
+                                            <label for="bandwidthUnit">Bandwidth Unit</label>
+                                            <select #bandwidthUnitRef="ngModel" name="bandwidthUnit" id="bandwidthUnit" class="ui dropdown"
+                                                    [(ngModel)]="policy.bandwidthUnit" required>
+                                                <option value="">-- Select bandwidth unit --</option>
+                                                <option value="kbps">kbps</option>
+                                                <option value="mbps">mbps</option>
+                                                <option value="gbps">gbps</option>
+                                            </select>
+                                            <span class="inlineError" *ngIf="bandwidthUnitRef.errors?.required && formRef.submitted">
+                                                Please select bandwidth Unit
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                </div>
+                            <div class="ui row">
+                                <div class="ui six wide column" [ngClass]="{error: DSCPRef.errors?.required && formRef.submitted}">
+                                    <div class="field">
+                                        <label for="DSCP">DSCP</label>
+                                        <input #DSCPRef="ngModel" type="number" id="DSCP" name="DSCP"
+                                               [(ngModel)]="policy.DSCP" placeholder="Enter DSCP"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ui row" [ngClass]="{error: burstRef.errors?.required && formRef.submitted}">
+                                <div class="ui six wide column">
+                                    <div class="field">
+                                        <label for="burst">Burst</label>
+                                        <input #burstRef="ngModel" type="number" id="burst" name="burst"
+                                               [(ngModel)]="policy.burst" placeholder="Enter Burst"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ui row" style="margin-top: 35px;">
+                                <div class="right aligned six wide column buttonRow">
+                                    <button type="button" class="ui basic button"
+                                            (click)="cancelEditing()">
+                                        Cancel
+                                    </button>
+
+                                    <button type="submit" class="ui primary button">
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

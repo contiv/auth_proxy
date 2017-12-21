@@ -1,0 +1,8 @@
+<div class="ui grid" style="margin-bottom: -30px">
+    <div class="left floated sixteen wide column">
+        <div class="content">
+            <span>Create a network</span>
+        </div>
+    </div>
+</div>
+<networkcreateform [firstRunWiz]="true" (createnetwork)="createNetwork($event)" [newNetwork]="newNetwork" (goback)="goBack()" (skip)="skip()" (cancel)="cancel()" [clusterMode]="clusterMode"></networkcreateform>

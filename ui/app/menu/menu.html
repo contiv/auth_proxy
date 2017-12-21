@@ -1,0 +1,81 @@
+<div class="page header">
+    <div class="ui top attached menu mainMenu" align="right">
+        <h1 class="header" style="margin-top: 2px; float: left; white-space: nowrap; ">
+            <img class="ui image logo" src="images/contiv_36x36.png"><span class="productname">{{product_name}}</span>
+        </h1>
+        <div class="utilnav">
+            <button type="button" class="circular ui mini icon button"
+                    (click)="help()">
+                <i class="large help icon"></i>
+            </button>
+            <button type="button" class="circular ui mini icon button">
+                <i class="large user icon"></i>
+            </button>
+
+            <span class="text">{{username}}</span>
+            <div class="ui floating labeled icon dropdown">
+                <i class="dropdown icon"></i>
+                <div class="menu profile">
+                    <div class="item" onclick="$('#user-profile-modal').modal('show')" *ngIf="localuser">
+                        <span class="text">Update Profile</span></div>
+                    <div class="item" (click)="logout()">
+                        <span class="text">Logout</span></div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<notification></notification>
+
+<div id="user-profile-modal" class="ui small modal">
+    <div class="header">Update Profile</div>
+    <div class="content">
+        <userprofileedit #userprofile (close)="closeProfile()" [username]="username" [displayType]="ProfileDisplayType.modal"></userprofileedit>
+    </div>
+    <div class="actions">
+        <div class="ui basic deny button modalBtn">Cancel</div>
+        <div class="ui primary button modalBtn" (click)="userprofile.saveUser(true)">
+            Save
+        </div>
+    </div>
+</div>
+
+<div id="sidebar" class="ui visible left vertical sidebar icon labeled menu mainNav">
+    <span *ngIf="!firstRun">
+
+        <a class="item" [routerLink]="['dashboard']" routerLinkActive="active">
+            Dashboard
+        </a>
+
+        <a class="item" [routerLink]="['networks']" routerLinkActive="active">
+            Networks
+        </a>
+
+        <a class="item" [routerLink]="['servicelbs']" routerLinkActive="active" *verifydom="'docker'">
+            Service Load Balancers
+        </a>
+
+        <a class="item" [routerLink]="['applicationgroups']" routerLinkActive="active">
+            Application Groups
+        </a>
+
+        <a class="item" [routerLink]="['appprofiles']" routerLinkActive="active" *verifydom="'aci'">
+            ACI Application Profiles
+        </a>
+
+        <a class="item" [routerLink]="['networkpolicies']" routerLinkActive="active">
+            Network Policies
+        </a>
+
+        <a class="item" [routerLink]="['settings']" routerLinkActive="active" *verifydom="'admin'">
+            Settings
+        </a>
+    </span>
+</div>
+
+<div id="pageContent">
+    <router-outlet></router-outlet>
+</div>

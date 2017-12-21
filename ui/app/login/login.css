@@ -1,0 +1,29 @@
+.copyright {
+    max-width: 450px;
+}
+
+.login-seg {
+    margin-top: 600px;
+}
+
+.logo {
+    width:36px !important;
+    height: 36px !important;
+    display:inline !important;
+}
+
+.productname{
+    font-size: 2.0rem !important;
+    font-weight: 300;
+    color: #0c5093;
+}
+
+.supportTooltipText{
+    color:black;
+}
+
+.supportTooltip{
+    top: 10px;
+    display: inline-block;
+    position: relative;
+}

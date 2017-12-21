@@ -1,0 +1,20 @@
+<div class="ui sixteen column grid">
+    <div class="ui row pageHeader" *ngIf="displayType === DisplayType.component">
+        <div class="left aligned eight wide column">
+            <div class="content pageTitle">Create Tenant</div>
+        </div>
+        <div class="right aligned eight wide column">&nbsp;</div>
+    </div>
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+            <div class="description">Create a tenant by name. You can assign users into tenancies under Settings > Authorizations. </div>
+        </div>
+    </div>
+
+    <div class="ui row">
+        <div class="ui left aligned sixteen wide column">
+            <tenantcreate [displayType]="DisplayType.component" (created)="returnToOrganizations()" (canceled)="cancelCreating()"></tenantcreate>
+        </div>
+    </div>
+</div>

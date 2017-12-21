@@ -1,0 +1,19 @@
+<div class="ui accordion">
+    <div class="title">
+        <i class="dropdown icon"></i>
+        <ng-content></ng-content>
+    </div>
+    <div class="content">
+        <table class="ui very basic table" style="margin-left:20px">
+            <tbody style="border-style: hidden">
+            <tr *ngFor="let item of items">
+                <td class="ctv-header three column wide key">{{item.name}}</td>
+                <td *ngIf="item.format=='label'" class="twelve column wide value">
+                    <div class = "ui label tiny" *ngFor="let selector of item.value" style="margin-top: 2px;">{{selector}}</div>
+                </td>
+                <td *ngIf="item.format!='label'" class="twelve column wide value">{{item.value}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

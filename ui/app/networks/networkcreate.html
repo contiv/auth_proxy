@@ -1,0 +1,30 @@
+<div class="ui basic segment" [ngClass]="{loading: networkCreateCtrl.showLoader}">
+    <div class="ui sixteen column grid">
+        <div class="ui row pageHeader">
+            <div class="left aligned eight wide column">
+                <div class="content pageTitle">Create Network</div>
+            </div>
+
+            <div class="right aligned eight wide column">&nbsp;</div>
+        </div>
+
+        <div class="ui row breadcrumbRow">
+            <div class="ui sixteen wide column">
+                <div class="breadcrumbs">
+                    <span class="crumb">
+                        <a href="/#/m/networks/list">
+                            Networks
+                        </a>
+                    </span>
+                    <span class="crumb">Create</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui row">
+            <div class="ui sixteen wide column">
+                <networkcreateform [newNetwork]="newNetwork" [firstRunWiz]="false" (createnetwork)="createNetwork($event)" (cancel)="cancelCreating()"></networkcreateform>
+            </div>
+        </div>
+    </div>
+</div>

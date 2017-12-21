@@ -1,0 +1,54 @@
+<ctv-search *ngIf="isolationPolicyListCtrl['policies']" (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [count]="tableRef.count"></ctv-search>
+
+<div class="ui basic segment ctvTable" [ngClass]="{loading: showLoader}">
+    <ctv-table #tableRef [defaultSortColumn]="'policyName'"
+               [items]="isolationPolicyListCtrl['policies']"
+               (filtereditems)="isolationPolicyListCtrl['filteredPolicies']=$event"
+               [size]="12">
+        <thead>
+        <tr>
+            <th>
+                <ctv-th [sortfield]="'policyName'" (sortdata)="tableRef.applysort($event)"
+                        [sortobject]="tableRef.sortObj">Name
+                </ctv-th>
+            </th>
+            <th>
+                <ctv-th [sortfield]="'tenantName'" (sortdata)="tableRef.applysort($event)"
+                        [sortobject]="tableRef.sortObj">Tenant
+                </ctv-th>
+            </th>
+        </tr>
+        </thead>
+
+        <tbody *ngIf="isolationPolicyListCtrl['policies']">
+        <tr *ngFor="let policy of isolationPolicyListCtrl['filteredPolicies']">
+            <td><a [routerLink]="['../isolation/details', policy.key]">{{policy.policyName}}</a></td>
+            <td>{{policy.tenantName}}</td>
+        </tr>
+        </tbody>
+
+        <tbody *ngIf="!isolationPolicyListCtrl['policies']">
+            <tr class="noDataFound">
+                <td colspan="2">No isolation policies found.</td>
+            </tr>
+        </tbody>
+
+        <tbody *ngIf="isolationPolicyListCtrl['policies'] && !tableRef.count">
+            <tr class="noDataFound">
+                <td colspan="2">No records matched your filter criteria.</td>
+            </tr>
+        </tbody>
+
+        <tfoot>
+        <tr class="pagination">
+            <td colspan="2">
+                <ctv-tpagination [chunks]="tableRef.pageChunks"
+                                 (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
+                                 (prevChunk)="tableRef.showPrevChunk()"
+                                 (nextChunk)="tableRef.showNextChunk()">
+                </ctv-tpagination>
+            </td>
+        </tr>
+        </tfoot>
+    </ctv-table>
+</div>
