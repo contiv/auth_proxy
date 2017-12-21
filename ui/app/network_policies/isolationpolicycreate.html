@@ -1,0 +1,91 @@
+<div class="ui sixteen column grid">
+    <div class="ui row pageHeader">
+        <div class="left aligned eight wide column">
+            <div class="content pageTitle">Create Isolation Policy</div>
+        </div>
+        <div class="right aligned eight wide column">&nbsp;</div>
+    </div>
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div class="breadcrumbs">
+                <span class="crumb">
+                    <a href="/#/m/networkpolicies/list">
+                        Network Policies
+                    </a>
+                </span>
+                <span class="crumb">
+                    <a href="/#/m/networkpolicies/list">
+                        Isolation Policies
+                    </a>
+                </span>
+                <span class="crumb current">Create</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+
+            <form class="ui form" role="form" #formRef="ngForm"
+                  (ngSubmit)="createPolicy(formRef.valid)" novalidate>
+
+                <div class="ui active inverted dimmer" *ngIf="showLoader">
+                    <div class="ui loader"></div>
+                </div>
+
+                <div class="ui basic segment">
+                    <div class="description">
+                        <em>Name and create the policy now, after it is created you will edit it to define policy rules.</em>
+                    </div>
+
+                    <div class="ui sixteen column grid">
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field" [ngClass]="{error: policyNameRef.errors?.required && formRef.submitted}">
+                                    <label for="newPolicyName">Policy name</label>
+                                    <input #policyNameRef="ngModel" type="text" id="newPolicyName" name="newPolicyName"
+                                           [(ngModel)]="newPolicy.policyName" placeholder="Enter name" required>
+                                    <span class="inlineError" *ngIf="policyNameRef.errors?.required && formRef.submitted">
+                                        Please enter policy name
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field" [ngClass]="{error: policyTenantRef.errors?.required && formRef.submitted}">
+                                    <label for="newPolicyTenant">Tenant</label>
+                                    <select id="newPolicyTenant" class="ui dropdown"
+                                            name="newPolicyTenant"
+                                            [(ngModel)]="newPolicy.tenantName"
+                                            required #policyTenantRef="ngModel">
+                                        <option value="">-- Select a tenant --</option>
+                                        <option *ngFor="let tenant of tenants" [ngValue]="tenant.tenantName">{{tenant.tenantName}}</option>
+                                    </select>
+                                    <span class="inlineError" *ngIf="policyTenantRef.errors?.required && formRef.submitted">
+                                        Please select tenant
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui grid">
+                        <div class="right aligned six wide column">
+                            <div class="buttonRow">
+
+                                <button type="button" class="ui basic button" (click)="cancelCreating()">
+                                    Cancel
+                                </button>
+                                <button type="submit" class="ui primary button">
+                                    Create
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

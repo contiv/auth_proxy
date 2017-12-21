@@ -1,0 +1,151 @@
+<div class="ui sixteen column grid">
+    <div class="ui row pageHeader">
+        <div class="left aligned eight wide column">
+            <div class="content pageTitle">Create Application Group</div>
+        </div>
+        <div class="right aligned eight wide column">&nbsp;</div>
+    </div>
+
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div class="breadcrumbs">
+                <span class="crumb">
+                    <a href="/#/m/applicationgroups/list">
+                        Application Groups
+                    </a>
+                </span>
+                <span class="crumb current">Create</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+
+            <form class="ui form" role="form" #formRef="ngForm"
+                  (ngSubmit)="createApplicationGroup(formRef.valid)"
+                  novalidate>
+                <div class="ui active inverted dimmer" *ngIf="showLoader">
+                    <div class="ui loader"></div>
+                </div>
+                <div class="ui basic segment">
+                    <div class="ui sixteen column grid">
+                        <div class="ui row">
+                            <div class="left aligned six wide column">
+                                <div class="field" [ngClass]="{error: newApplicationGroupNameRef.errors?.required && formRef.submitted}">
+                                    <label for="newApplicationGroupName">Application group name</label>
+                                    <input #newApplicationGroupNameRef="ngModel"
+                                           type="text"
+                                           id="newApplicationGroupName"
+                                           name="newApplicationGroupName"
+                                           [(ngModel)]="applicationGroup.groupName"
+                                           placeholder="Enter name" required>
+                                    <span class="inlineError" *ngIf="newApplicationGroupNameRef.errors?.required && formRef.submitted">
+                                        Please enter application group name
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="left aligned six wide column">
+                                <div class="field" [ngClass]="{error: newApplicationGroupTenantRef.errors?.required && formRef.submitted}">
+                                    <label for="newApplicationGroupTenant">Tenant</label>
+                                    <select id="newApplicationGroupTenant" class="ui dropdown"
+                                            name="newApplicationGroupTenant"
+                                            ngModel
+                                            (change)="updateTenant($event.target.value)"
+                                            required #newApplicationGroupTenantRef="ngModel">
+                                        <option value="">-- Select a tenant --</option>
+                                        <option *ngFor="let tenant of tenants" [value]="tenant.tenantName">{{tenant.tenantName}}</option>
+                                    </select>
+                                    <span class="inlineError" *ngIf="newApplicationGroupTenantRef.errors?.required && formRef.submitted">
+                                        Please select tenant
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="left aligned six wide column">
+                                <div class="field" [hidden]="!applicationGroup.tenantName.length" [ngClass]="{error: newApplicationGroupNetworkRef.errors?.required && formRef.submitted}">
+                                    <label for="newApplicationGroupNetwork">Network</label>
+                                    <select id="newApplicationGroupNetwork"
+                                            class="ui dropdown"
+                                            #newApplicationGroupNetworkRef="ngModel"
+                                            name="newApplicationGroupNetwork"
+                                            [(ngModel)]="applicationGroup.networkName"
+                                            required>
+                                        <option *ngIf="networks.length" value="">-- Select a network --</option>
+                                        <option *ngIf="!networks.length" value="">-- The tenant has no networks --</option>
+                                        <option *ngFor="let network of networks"
+                                                [ngValue]="network.networkName">
+                                            {{network.networkName}}
+                                        </option>
+                                    </select>
+                                    <span class="inlineError" *ngIf="newApplicationGroupNetworkRef.errors?.required && formRef.submitted">
+                                        Please select network
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="left aligned six wide column">
+                                <div class="field">
+                                    <label for="newApplicationGroupCfgdtag">Group Tag</label>
+                                    <input #newApplicationGroupCfgdtagRef="ngModel"
+                                           type="text"
+                                           id="newApplicationGroupCfgdtag"
+                                           name="newApplicationGroupCfgdtag"
+                                           [(ngModel)]="applicationGroup.cfgdTag"
+                                           placeholder="Enter group tag">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="left aligned sixteen wide column">
+                                <ctv-collapsible title="Isolation Policies To Apply" class="policySelection">
+                                    <ctv-isolationpolicy mode="edit" [applicationgroup]="applicationGroup"></ctv-isolationpolicy>
+                                </ctv-collapsible>
+                            </div>
+                        </div>
+
+                        <div class="ui row">
+                            <div class="left aligned sixteen wide column">
+
+                                <ctv-collapsible title="Bandwidth Policy To Apply" class="policySelection">
+                                    <ctv-bandwidthpolicy mode="edit" [applicationgroup]="applicationGroup"></ctv-bandwidthpolicy>
+                                </ctv-collapsible>
+
+                            </div>
+                        </div>
+
+                        <div class="ui row" *verifydom="'aci'">
+                            <div class="left aligned sixteen wide column">
+
+                                <ctv-collapsible title="ACI External Contract Groups To Apply" class="policySelection">
+                                    <ctv-contractgroup mode="edit" [applicationgroup]="applicationGroup"></ctv-contractgroup>
+                                </ctv-collapsible>
+
+                            </div>
+                        </div>
+
+                        <div class="ui row">
+                            <div class="right aligned sixteen wide column">
+
+                                <div class="buttonRow">
+                                    <button type="button" class="ui basic button" (click)="cancelCreating()">
+                                        Cancel
+                                    </button>
+                                    <button type="submit" class="ui primary button">
+                                        Create
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,5 @@
+<div class="ui left icon input searchField">
+    <input type="text" [ngModel]="searchText" (ngModelChange)="showChunk($event)"
+           size='{{size}}' [placeholder]=" 'filter string' " class="ctvSearch">
+    <i class="search icon"></i>
+</div>

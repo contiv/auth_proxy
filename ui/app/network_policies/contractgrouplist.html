@@ -1,0 +1,66 @@
+<ctv-search *ngIf="contractGroups" (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [count]="tableRef.count"></ctv-search>
+
+<div class="ui basic segment ctvTable" [ngClass]="{loading: showLoader}">
+    <ctv-table #tableRef [defaultSortColumn]="'contractsGroupName'"
+               [items]="contractGroups"
+               (filtereditems)="filteredContractGroups=$event"
+               [size]="12">
+        <thead>
+        <tr>
+            <th>
+                <ctv-th [sortfield]="'contractsGroupName'" (sortdata)="tableRef.applysort($event)"
+                        [sortobject]="tableRef.sortObj">Name
+                </ctv-th>
+            </th>
+            <th>
+                <ctv-th [sortfield]="'tenantName'" (sortdata)="tableRef.applysort($event)"
+                        [sortobject]="tableRef.sortObj">Tenant
+                </ctv-th>
+            </th>
+            <th>
+                <ctv-th [sortfield]="'contractsType'" (sortdata)="tableRef.applysort($event)"
+                        [sortobject]="tableRef.sortObj">Type
+                </ctv-th>
+            </th>
+            <th>
+                <ctv-th [sortfield]="'contracts'" (sortdata)="tableRef.applysort($event)"
+                        [sortobject]="tableRef.sortObj">Contracts
+                </ctv-th>
+            </th>
+        </tr>
+        </thead>
+
+        <tbody *ngIf="contractGroups && contractGroups.length">
+        <tr *ngFor="let contractGroup of filteredContractGroups">
+            <td><a [routerLink]="['../contractgroup/details', contractGroup.key]">{{contractGroup.contractsGroupName}}</a></td>
+            <td>{{contractGroup.tenantName}}</td>
+            <td>{{contractGroup.contractsType}}</td>
+            <td>{{contractGroup.contracts?.join(", ")}}</td>
+        </tr>
+        </tbody>
+
+        <tbody *ngIf="contractGroups && !contractGroups.length">
+        <tr class="noDataFound">
+            <td colspan="4">No external contract groups found.</td>
+        </tr>
+        </tbody>
+
+        <tbody *ngIf="contractGroups && contractGroups.length && !tableRef.count">
+        <tr class="noDataFound">
+            <td colspan="4">No records matched your filter criteria.</td>
+        </tr>
+        </tbody>
+
+        <tfoot>
+        <tr class="pagination">
+            <td colspan="4">
+                <ctv-tpagination [chunks]="tableRef.pageChunks"
+                                 (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
+                                 (prevChunk)="tableRef.showPrevChunk()"
+                                 (nextChunk)="tableRef.showNextChunk()">
+                </ctv-tpagination>
+            </td>
+        </tr>
+        </tfoot>
+    </ctv-table>
+</div>

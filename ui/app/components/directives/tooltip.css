@@ -1,0 +1,45 @@
+.tooltip{
+    display: inline;
+    position: relative;
+    top: -6px;
+    left: 8px;
+}
+
+.tooltip:hover span{
+    opacity: 1;
+    visibility: visible;
+}
+
+i.toast_info{
+    color:#008FCE;
+    font-size: 1.5em;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.tooltipInfo{
+    left:36px;
+    top:-42px;
+    background-color:#008FCE;
+    opacity:0;
+    transition: opacity 450ms ease-in-out;
+    position:absolute;
+    z-index: 5000;
+    color: white;
+    font-size: 12px;
+    border-radius: 8px;
+    visibility: hidden;
+}
+
+
+.tooltipInfo:after {
+    content: "";
+    position: absolute;
+    top: 31px;
+    left: -22px;
+    border-width: 12px;
+    border-style: solid;
+    border-color: transparent #008FCE transparent transparent;
+    z-index: 5000;
+}

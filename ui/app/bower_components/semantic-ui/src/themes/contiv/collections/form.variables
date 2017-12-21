@@ -1,0 +1,12 @@
+/*******************************
+             Form
+*******************************/
+
+/* Errored Input */
+@formErrorColor: #5C5D61;
+
+
+/* Focused Error */
+@inputErrorFocusColor: #5C5D61;
+
+

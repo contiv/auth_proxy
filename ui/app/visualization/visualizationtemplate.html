@@ -1,0 +1,146 @@
+<style>
+.node {
+    stroke: #fff;
+    stroke-width: 1.5px;
+}
+.link {
+    stroke-opacity: .6;
+}
+#graph-title{
+    display: inline;
+    margin-left: 40%;
+}
+
+text {
+    font: 14px sans-serif;
+    pointer-events: none;
+}
+body{
+    margin: 0;
+    padding: 0;
+    overflow:hidden;
+}
+
+p{ 
+    text-align: center; 
+    overflow: overlay;
+    position: relative;
+}
+
+body{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: rgb(248, 248, 248)
+}
+
+#toolbox{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-bottom: 0.5em;
+    margin-left: 1em;
+    border: 2px solid #EEEEEE;
+    border-radius: 5px;
+    padding: 1em;
+    z-index: 5;
+}
+
+
+.conceptG text{
+    pointer-events: none;
+}
+
+marker{
+    fill: #333;
+}
+
+rect.selection {
+    stroke          : gray;
+    stroke-dasharray: 4px;
+    stroke-opacity  : 0.5;
+    fill            : transparent;
+}
+
+svg *::selection {
+    background : transparent;
+}
+
+svg *::-moz-selection {
+    background:transparent;
+}
+
+svg *::-webkit-selection {
+    background:transparent;
+}
+
+g.conceptG circle{
+    fill: #F6FBFF;
+    stroke: #333;
+    stroke-width: 2px;
+}
+
+g.conceptG:hover circle{
+    fill: rgb(200, 238, 241);
+}
+
+
+g.selected:hover circle{
+    fill: rgb(250, 232, 255);
+}
+
+path.link {
+    fill: none;
+    stroke-width: 6px;
+    cursor: default;
+}
+
+path.link:hover{
+    stroke: rgb(94, 196, 204);
+}
+
+g.connect-node circle{
+    fill: #BEFFFF;
+}
+
+path.link.hidden{
+    stroke-width: 0;
+}
+
+path.link.selected {
+    stroke: rgb(229, 172, 247);
+}
+
+g.container circle{
+    fill: rgb(230, 255, 249)
+}
+
+g.focus circle{
+    fill: rgb(230, 230, 255);
+}
+
+g.selected circle{
+    fill: rgb(250, 232, 255);
+}
+
+#backButton-div {
+    margin-top: 15px
+}
+.qtip-content{
+    font-size: 16px;
+    line-height: 20px;
+}
+</style>
+<div id="backButton-div"  class="one float wide column">
+    <a style="opacity:0" id='backButton' ng-click= "visualizationGraph.state.SplitJoinViewPolicy.backButton()">
+        <i class="large arrow left icon"></i>
+    </a>
+    <h3 id='graph-title' class= 'ui header'></h3>
+</div>
+<div class="left floated eight wide column" id='graphContainer'>
+    <svg></svg>
+</div>
+

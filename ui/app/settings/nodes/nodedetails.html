@@ -1,0 +1,52 @@
+<div [ngSwitch]="mode" class="ui sixteen column grid">
+    <div class="left aligned eight wide column">
+        <div class="content pageTitle">
+            <span>{{node.hostname}}</span>
+        </div>
+    </div>
+    <div class="right aligned eight wide column" *ngSwitchCase="'details'">
+        <button class="ui basic button"
+                (click)="cancelDetails()">
+            Close
+        </button>
+        <button class="ui secondary button"
+                (click)="editNode()">
+            Edit
+        </button>
+        <button class="ui secondary button" onclick="$('#delete-node-modal').modal('show')">
+            <i class="trash icon"></i>
+            Remove
+        </button>
+    </div>
+
+    <div id="delete-node-modal" class="ui small modal">
+        <div class="header">Delete</div>
+        <div class="content">
+            <p>Are you sure you want to delete the node <q>{{node.hostname}}</q>?</p>
+        </div>
+        <div class="actions">
+            <div class="ui basic deny button modalBtn">Cancel</div>
+            <div class="ui primary approve button modalBtn" (click)="deleteNode()">
+                Delete
+            </div>
+        </div>
+    </div>
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+
+            <div class="ui tabular menu" *ngIf="mode=='details'">
+                <a class="item" [ngClass]="{active: infoselected}" (click)="infoselected=true">
+                    Details
+                </a>
+                <a class="item" [ngClass]="{active: !infoselected}" (click)="infoselected=false">
+                    Stats
+                </a>
+            </div>
+
+            <nodeinfo *ngIf="infoselected" [mode]="mode"></nodeinfo>
+
+            <nodestats *ngIf="!infoselected" [statkey]="statskey"></nodestats>
+        </div>
+    </div>
+</div>

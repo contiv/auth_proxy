@@ -1,0 +1,3 @@
+.ui.modal > .content {
+    color: #5c5d61;
+}

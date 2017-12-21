@@ -1,0 +1,6 @@
+node_modules
+app/bower_components/jquery
+.idea
+app/**/*.map
+app/**/*.js
+**/.DS_Store

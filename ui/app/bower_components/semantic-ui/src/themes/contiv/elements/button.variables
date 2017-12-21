@@ -1,0 +1,40 @@
+/*******************************
+    User Variable Overrides
+*******************************/
+/* Button */
+@backgroundColor: #E0E0E0;
+
+/* Text */
+@fontWeight: 400;
+@borderRadius: 2px;
+@textColor: #BABABA;
+
+@negativeColor: #FFFFFF;
+@positiveColor: @blue;
+
+@primaryTextColor: #FFFFFF;
+@secondaryTextColor: #036e97;
+
+/* States */
+
+/* Pressed Down */
+@downBackgroundColor: #626469;
+
+@downColor: #ffffff;
+
+/* Basic */
+@basicTextColor: #5d5d5d;
+
+/* Basic Hover */
+@basicHoverBackground: #cfcfcf;
+@basicHoverTextColor: #48494d;
+
+/* Basic Focus */
+@basicFocusBackground: @basicBackground;
+@basicFocusTextColor: @basicTextColor;
+
+/* Basic Down */
+@basicDownBackground: @downBackgroundColor;
+@basicDownTextColor: @downColor;
+
+

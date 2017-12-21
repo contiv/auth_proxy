@@ -1,0 +1,73 @@
+<div class="ui sixteen column grid ">
+    <div class="ui row pageHeader">
+        <div class="left floated left aligned eight wide column">
+            <div class="content pageTitle">Authorizations</div>
+        </div>
+        <div class="right aligned eight wide column">
+
+            <button class="ui primary button" (click)="create()">
+                <i class="add icon"></i>
+                Create Authorization
+            </button>
+
+        </div>
+    </div>
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+
+            <div class="ui basic segment" [ngClass]="{loading: showLoader}">
+
+                <ctv-search *ngIf="authorizations.length > 0" (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [count]="tableRef.count"></ctv-search>
+
+                <ctv-table #tableRef [defaultSortColumn]="'PrincipalName'"
+                           [items]="authorizations"
+                           (filtereditems)="filteredauth=$event;"
+                           [size]="12">
+                    <thead>
+                    <tr>
+                        <th><ctv-th [sortfield]="'PrincipalName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Username</ctv-th></th>
+                        <th><ctv-th [sortfield]="'Role'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Role</ctv-th></th>
+                        <th><ctv-th [sortfield]="'TenantName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Tenant Name</ctv-th></th>
+                        <th><ctv-th [sortfield]="'Local'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Local</ctv-th></th>
+                    </tr>
+                    </thead>
+
+                    <tbody *ngIf="authorizations.length > 0">
+                    <tr *ngFor="let auth of filteredauth">
+                        <td><a [routerLink]="['../details',auth.AuthzUUID]">{{auth.PrincipalName}}</a></td>
+                        <td>{{auth.Role}}</td>
+                        <td>{{auth.TenantName}}</td>
+                        <td>{{(auth.Local?'yes':'no')}}</td>
+                    </tr>
+                    </tbody>
+
+                    <tbody *ngIf="authorizations.length == 0">
+                    <tr class="noDataFound">
+                        <td colspan="4">No authorizations found. Would you like to <a href="javascript: void(0);" (click)="create()">create one?</a></td>
+                    </tr>
+                    </tbody>
+
+                    <tbody *ngIf="(authorizations.length > 0) && !tableRef.count">
+                    <tr class="noDataFound">
+                        <td colspan="4">No records matched your filter criteria.</td>
+                    </tr>
+                    </tbody>
+
+                    <tfoot>
+                    <tr class="pagination">
+                        <td colspan="4">
+                            <ctv-tpagination [chunks]="tableRef.pageChunks"
+                                             (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
+                                             (prevChunk)="tableRef.showPrevChunk()"
+                                             (nextChunk)="tableRef.showNextChunk()">
+                            </ctv-tpagination>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </ctv-table>
+            </div>
+
+        </div>
+    </div>
+</div>

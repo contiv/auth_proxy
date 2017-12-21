@@ -1,0 +1,25 @@
+<div style="display: block;">
+    <canvas id="canvas1"
+            baseChart width="900" height="300"
+            [datasets]="lineChartData"
+            [labels]="lineChartLabels"
+            [options]="lineChartOptions"
+            [colors]="lineChartColors"
+            [legend]="lineChartLegend"
+            [chartType]="lineChartType">
+    </canvas>
+</div>
+<div class="ui grid">
+    <div class="ui one column centered row">
+        <div class="ui center aligned twelve wide column">
+            <h5>Time Series</h5>
+        </div>
+    </div>
+    <div class="ui one column centered row">
+        <div class="ui center aligned twelve wide column">
+            <span>0</span>
+            <input type="range" #slider [min]="'14'" [max]="scaleEnd" id="slider"  [value]="end" (change)="slide(slider.value)">
+            <span>{{scaleEnd}}</span>
+        </div>
+    </div>
+</div>

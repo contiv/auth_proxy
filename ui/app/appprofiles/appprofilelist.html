@@ -1,0 +1,79 @@
+<div class="ui sixteen column grid">
+    <div class="ui row pageHeader">
+        <div class="left aligned eight wide column">
+            <div class="content pageTitle">ACI Application Profiles</div>
+        </div>
+        <div class="right aligned eight wide column">
+            <button class="ui primary button" (click)="create()">
+                <i class="add icon"></i>
+                Create ACI Application Profile
+            </button>
+        </div>
+    </div>
+
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div class="breadcrumbs">
+                <span class="crumb">ACI Application Profiles</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui row searchRow">
+        <div class="ui sixteen wide column">
+            <ctv-search  *ngIf="appProfiles" (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [count]="tableRef.count"></ctv-search>
+        </div>
+    </div>
+
+    <div class="ui row ctvTable">
+        <div class="ui sixteen wide column">
+            <div class="ui active inverted dimmer" *ngIf="showLoader">
+                <div class="ui loader"></div>
+            </div>
+            <ctv-table #tableRef [defaultSortColumn]="'appProfileName'"
+                       [items]="appProfiles"
+                       (filtereditems)="filteredAppProfiles=$event"
+                       [size]="12">
+                <thead>
+                    <tr>
+                        <th><ctv-th [sortfield]="'appProfileName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Name</ctv-th></th>
+                        <th><ctv-th [sortfield]="'tenantName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Tenant</ctv-th></th>
+                        <th><ctv-th [sortfield]="'endpointGroups'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Application groups</ctv-th></th>
+                    </tr>
+                </thead>
+
+                <tbody *ngIf="appProfiles && appProfiles.length">
+                    <tr *ngFor="let appProfile of filteredAppProfiles">
+                        <td><a [routerLink]="['../details', appProfile.key]">{{appProfile.appProfileName}}</a></td>
+                        <td>{{appProfile.tenantName}}</td>
+                        <td>{{appProfile.endpointGroups?.join(", ")}}</td>
+                    </tr>
+                </tbody>
+
+                <tbody *ngIf="appProfiles && !appProfiles.length">
+                    <tr class="noDataFound">
+                        <td colspan="2">No application profiles found. Would you like to <a href="javascript: void(0);" (click)="create()">create one?</a></td>
+                    </tr>
+                </tbody>
+
+                <tbody *ngIf="appProfiles && appProfiles.length && !tableRef.count">
+                    <tr class="noDataFound">
+                        <td colspan="2">No records matched your filter criteria.</td>
+                    </tr>
+                </tbody>
+
+                <tfoot>
+                    <tr class="pagination">
+                        <td colspan="2">
+                            <ctv-tpagination [chunks]="tableRef.pageChunks"
+                                             (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
+                                             (prevChunk)="tableRef.showPrevChunk()"
+                                             (nextChunk)="tableRef.showNextChunk()">
+                            </ctv-tpagination>
+                        </td>
+                    </tr>
+                </tfoot>
+            </ctv-table>
+        </div>
+    </div>
+</div>

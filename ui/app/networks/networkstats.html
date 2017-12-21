@@ -1,0 +1,99 @@
+<div class="ui basic segment" [ngClass]="{loading: networkStatsCtrl.showLoader}">
+    <table>
+        <tbody>
+        <tr>
+            <td class="ctv-header">Name</td>
+            <td class="ctv-value">{{networkStatsCtrl['config']['networkName']}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header">Allocated Addresses Count</td>
+            <td class="ctv-value">{{networkStatsCtrl.networkInspectStats.allocatedAddressesCount}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header">Allocated IP-Addresses</td>
+            <td class="ctv-value">{{networkStatsCtrl.networkInspectStats.allocatedIPAddresses}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header">Available IP-Addresses</td>
+            <td class="ctv-value">{{networkStatsCtrl.networkInspectStats.availableIPAddresses}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header">DNS Server-IP</td>
+            <td class="ctv-value">{{networkStatsCtrl.networkInspectStats.dnsServerIP}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header">External Packet Tag</td>
+            <td class="ctv-value">{{networkStatsCtrl.networkInspectStats.externalPktTag}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header">Number of Endpoints</td>
+            <td class="ctv-value">{{networkStatsCtrl.networkInspectStats.numEndpoints}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header">Internal Packet Tag</td>
+            <td class="ctv-value">{{networkStatsCtrl.networkInspectStats.pktTag}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header">Network Tag</td>
+            <td class="ctv-value">{{networkStatsCtrl.networkInspectStats.networkTag}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="ui section divider"></div>
+
+    <ctv-collapsible title="End Points">
+
+        <ctv-search *ngIf="networkStatsCtrl.endpoints.length" (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [placeholder]=""></ctv-search>
+
+        <ctv-table #tableRef [defaultSortColumn]="'containerName'"
+                   [items]="networkStatsCtrl['endpoints']"
+                   (filtereditems)="networkStatsCtrl['filteredendpoints']=$event;"
+                   [size]="12">
+            <thead>
+                <tr>
+                    <th class="four wide column"><ctv-th [sortfield]="'containerName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj"> Container Name </ctv-th></th>
+                    <th class="five wide column" style="padding-left: 55px !important;"><ctv-th [sortfield]="'ipAddress'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj"> IP Address </ctv-th></th>
+                    <th class="five wide column" style="padding-left: 30px !important;"><ctv-th [sortfield]="'homingHost'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj"> Host </ctv-th></th>
+                </tr>
+            </thead>
+
+            <tbody *ngIf="networkStatsCtrl.endpoints.length">
+                <tr *ngFor="let endpoint of networkStatsCtrl['filteredendpoints']">
+                    <td colspan="3" style="padding-left: 0 !important;">
+                        <ctv-accordion [items]="networkStatsCtrl['containerDetails'][endpoint.containerID]">
+                            <div class="ui grid" style="margin-top: -33px; margin-left: 20px;">
+                                <div class="five wide column">{{endpoint.containerName.substr(1)}}</div>
+                                <div class="five wide column">{{endpoint.ipAddress.join(' ')}}</div>
+                                <div class="five wide column">{{endpoint.homingHost}}</div>
+                            </div>
+                        </ctv-accordion>
+                    </td>
+                </tr>
+            </tbody>
+
+            <tbody *ngIf="!networkStatsCtrl.endpoints.length">
+                <tr class="noDataFound"><td colspan="3">No container endpoints found.</td></tr>
+            </tbody>
+
+            <tbody *ngIf="networkStatsCtrl.endpoints && networkStatsCtrl.endpoints.length && !tableRef.count">
+                <tr class="noDataFound">
+                    <td colspan="3">No records matched your filter criteria.
+                </tr>
+            </tbody>
+
+            <tfoot>
+                <tr class="pagination">
+                    <td colspan="3">
+                        <ctv-tpagination [chunks]="tableRef.pageChunks"
+                                         (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
+                                         (prevChunk)="tableRef.showPrevChunk()"
+                                         (nextChunk)="tableRef.showNextChunk()">
+
+                        </ctv-tpagination>
+                    </td>
+                </tr>
+            </tfoot>
+        </ctv-table>
+    </ctv-collapsible>
+</div>

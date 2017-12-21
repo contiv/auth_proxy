@@ -1,0 +1,38 @@
+<div *ngIf="welcomeActive">
+    <div class="ui grid">
+        <div class="ui sixteen wide column">
+            <h2>Welcome to Contiv</h2>
+        </div>
+        <div class="ui sixteen wide column">
+            <p style="font-size:18px">Contiv offers the quickest, easiest way to manage and scale your container infrastructure. A ready-to-go networking platform designed to be centrally managed by enterprise IT, with developer self-service, Contiv provides a higher level of networking abstraction for microservices. Contiv secures your application using a rich policy framework. It provides built-in service discovery and service routing for scale out services. </p>
+        </div>
+        <div class="ui sixteen wide column">
+            <h4>Click below to step through the Contiv global configuration. After configuring Contiv you can later edit these settings via the <em>Global Settings</em> screen.</h4>
+        </div>
+        <div class="ui sixteen wide column">
+            <button class="ui basic button" (click)="logout()">Logout</button>
+            <button class="ui primary button" (click)="runwizard()">Run Wizard</button>
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="!welcomeActive">
+    <div class="ui grid">
+        <div class="ui sixteen wide column">
+            <div class="steps-container">
+                <ul class="progressbar">
+                    <li class="active" [ngClass]="{active: pageNo==1, completed: pageNo > 1}"><span>Configure Network</span></li>
+                    <li [ngClass]="{active: pageNo==2, completed: pageNo > 2}"><span>ACI Settings</span></li>
+                    <li [ngClass]="{active: pageNo==3, completed: pageNo > 3}"><span>Create Network</span></li>
+                    <li [ngClass]="{active: pageNo==4, completed: pageNo > 4}"><span>Confirm Details</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <firstrunnetworkdefault *ngIf="pageNo==1" (updatePage)="updatePage($event);" (cancelPage)="welcomeActive=true"></firstrunnetworkdefault>
+    <firstrunacisettings *ngIf="pageNo==2" (updatePage)="updatePage($event); " (cancelPage)="welcomeActive=true"></firstrunacisettings>
+    <firstrunnetworkcreate *ngIf="pageNo==3" (updatePage)="updatePage($event);" (cancelPage)="welcomeActive=true;"></firstrunnetworkcreate>
+    <firstrunwizardconfirmpage *ngIf="pageNo==4" (updatePage)="updatePage($event);" (cancelPage)="welcomeActive=true"></firstrunwizardconfirmpage>
+</div>
+
