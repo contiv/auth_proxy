@@ -1,0 +1,63 @@
+<div class="ui basic segment" [ngClass]="{loading: showLoader}">
+    <div class="ui grid">
+        <div class="ui row ">
+            <div class="ui sixteen wide column">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td class="ctv-header"><strong>Name</strong></td>
+                        <td class="ctv-value">{{applicationGroup.groupName}}</td>
+                    </tr>
+                    <tr>
+                        <td class="ctv-header">Tenant</td>
+                        <td class="ctv-value">{{applicationGroup.tenantName}}</td>
+                    </tr>
+                    <tr>
+                        <td class="ctv-header"><strong>Network</strong></td>
+                        <td class="ctv-value">{{applicationGroup.networkName}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+
+        <div class="ui row ">
+            <div class="ui sixteen wide column">
+                <ctv-collapsible title="Isolation Policies Applied" class="policySelection">
+                    <ctv-isolationpolicy [mode]="mode" [applicationgroup]="applicationGroup"></ctv-isolationpolicy>
+                </ctv-collapsible>
+            </div>
+        </div>
+
+        <div class="ui row ">
+            <div class="ui sixteen wide column">
+                <ctv-collapsible title="Bandwidth Policy Applied" class="policySelection">
+                    <ctv-bandwidthpolicy [mode]="mode" [applicationgroup]="applicationGroup"></ctv-bandwidthpolicy>
+                </ctv-collapsible>
+            </div>
+        </div>
+
+        <div class="ui row " *verifydom="'aci'">
+            <div class="ui sixteen wide column">
+                <ctv-collapsible title="ACI External Contract Groups Applied">
+                    <ctv-contractgroup [mode]="mode" [applicationgroup]="applicationGroup"></ctv-contractgroup>
+                </ctv-collapsible>
+            </div>
+        </div>
+        <div class="ui row" [ngSwitch]="mode" style="margin-top: 40px">
+
+            <div class="right aligned sixteen wide column">
+                <button *ngSwitchCase="'edit'" type="button" class="ui basic button"
+                        (click)="cancelEditing()">
+                    Cancel
+                </button>
+                <button *ngSwitchCase="'edit'" type="button" class="ui primary button"
+                        (click)="saveApplicationGroup()">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

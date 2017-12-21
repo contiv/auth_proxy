@@ -1,0 +1,55 @@
+<div class="ui sixteen column grid">
+    <div class="ui row pageHeader">
+        <div class="left aligned eight wide column">
+            <div class="content pageTitle">Network Policies</div>
+        </div>
+        <div class="right aligned eight wide column">
+          <button class="ui primary button" (click)="createNetworkPolicy()">
+              <i class="add icon"></i>
+              Create Policy
+          </button>
+        </div>
+    </div>
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div [ngSwitch]="policyMode" class="breadcrumbs">
+                <span class="crumb">
+                  <a href="/#/m/networkpolicies/list">
+                      Network Policies
+                  </a></span>
+                <span *ngSwitchCase="'isolation'" class="crumb">Isolation Policies</span>
+                <span *ngSwitchCase="'bandwidth'" class="crumb">Bandwidth Policies</span>
+                <span *ngSwitchCase="'contractgroup'" class="crumb">ACI External Contract Groups</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+
+          <div class="ui tabular menu">
+              <a class="item"
+                 [ngClass]="{active: isolationPolicySelected}"
+                 (click)="selectPolicyTab(policyTab.isolation)">
+                  Isolation Policies
+              </a>
+              <a class="item"
+                 [ngClass]="{active: bandwidthPolicySelected}"
+                 (click)="selectPolicyTab(policyTab.bandwidth)">
+                  Bandwidth Policies
+              </a>
+              <a class="item"
+                 [ngClass]="{active: contractGroupSelected}"
+                 (click)="selectPolicyTab(policyTab.contractGroup)"
+                  *verifydom="'aci'">
+                  ACI External Contract Groups
+              </a>
+          </div>
+
+          <isolationpolicylist *ngIf="isolationPolicySelected"></isolationpolicylist>
+          <bandwidthpolicylist *ngIf="bandwidthPolicySelected"></bandwidthpolicylist>
+          <contractgrouplist *ngIf="contractGroupSelected"></contractgrouplist>
+
+        </div>
+    </div>
+</div>

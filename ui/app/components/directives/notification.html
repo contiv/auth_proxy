@@ -1,0 +1,25 @@
+<div class="ui small message notify"
+     [ngClass]="{   ready: notificationType==NotificationType.confirm,
+                    minor: notificationType==NotificationType.alert,
+                    info: notificationType==NotificationType.info}">
+    <i class="close icon" (click)="close()"></i>
+    <div class="ui container">
+        <div class="ui grid">
+            <div class="ui right aligned two wide column">
+                <i id="notifyIcon" class="icon inverted notifyIcon" [ngClass]="{toast_confirm: notificationType==NotificationType.confirm,
+                                                            toast_warning: notificationType==NotificationType.alert,
+                                                            toast_info: notificationType==NotificationType.info}">
+                    <span class="backgroundIcon"></span>
+                </i>
+            </div>
+            <div class="ui left aligned fourteen wide column">
+                    <span class="notificationHeader" *ngIf="notificationType==NotificationType.confirm">Confirmation: </span>
+                    <span class="notificationHeader" *ngIf="notificationType==NotificationType.info">Information: </span>
+                    <span class="notificationHeader" *ngIf="notificationType==NotificationType.alert">Alert: </span>
+                    <span class="notificationText">{{message}}</span><br>
+                    <span class="notificationText">{{item}}</span><br>
+                    <span class="notificationText" *ngIf="notificationType==NotificationType.info">Will notify when operation is complete</span>
+            </div>
+        </div>
+    </div>
+</div>

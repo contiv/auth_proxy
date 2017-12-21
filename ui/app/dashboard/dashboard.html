@@ -1,0 +1,142 @@
+<div class="ui grid" style="margin-top: 15px">
+    <div class="row">
+        <div class="ui four wide column kpi">
+            <a class="ui fluid card" [routerLink]="['../servicelbs/list']">
+                <div class="content">
+                    <div class="kpiHeader">Service Load Balancers</div>
+                    <div class="kpiValue">
+                        <p class="center aligned">{{servicelbs}}</p>
+                    </div>
+
+                </div>
+            </a>
+        </div>
+        <div class="ui four wide column kpi">
+            <a class="ui fluid card" [routerLink]="['../applicationgroups/list']">
+                <div class="content">
+                    <div class="kpiHeader">Application Groups</div>
+                    <div class="kpiValue">
+                        <p class="center aligned">{{groups}}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="ui four wide column kpi">
+            <a class="ui fluid card" [routerLink]="['../networkpolicies/list']">
+                <div class="content">
+                    <div class="kpiHeader">Network Policies</div>
+                    <div class="kpiValue">
+                        <p class="center aligned">{{networkpolicies}}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="ui four wide column kpi">
+            <a class="ui fluid card" [routerLink]="['../networks/list']">
+                <div class="content">
+                    <div class="kpiHeader">Networks</div>
+                    <div class="kpiValue">
+                        <p class="center aligned">{{networks}}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<div class="ui grid" style="margin-top: 15px">
+    <div class="row">
+        <div class="ui sixteen wide column">
+            <div class="ui tabular menu">
+                <a class="active item" [ngClass]="{active: endpointType==EndpointType.Network}" (click)="switch(EndpointType.Network)">Networks</a>
+                <a class="item" [ngClass]="{active: endpointType==EndpointType.ApplicationGroup}" (click)="switch(EndpointType.ApplicationGroup)">Application Groups</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui one column centered row" style="margin-top: 20px;">
+        <div class="ui fourteen wide column">
+            <linegraph [key]="key" [endpointType]="endpointType"></linegraph>
+        </div>
+    </div>
+
+
+    <div class="ui one column centered row" style="margin-top: 30px;" *ngIf="endpointType===EndpointType.Network">
+        <div class="ui fourteen wide column">
+            <ctv-table #tableRef [defaultSortColumn]="'networkName'" [items]="networkList" (filtereditems)="filterednetworks=$event; setKey($event)" [size]="4">
+            <thead>
+            <tr>
+                <th><ctv-th [sortfield]="'networkName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Name</ctv-th></th>
+                <th><ctv-th [sortfield]="'tenantName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Tenant</ctv-th></th>
+                <th><ctv-th [sortfield]="'encap'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Encapsulation</ctv-th></th>
+                <th><ctv-th [sortfield]="'subnet'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Subnet</ctv-th></th>
+            </tr>
+            </thead>
+            <tbody *ngIf="networkList">
+            <tr class="selectable" *ngFor="let network of filterednetworks" [ngClass]="{selected: key==network.key, notSelected: key!=network.key}" (click)="key=network.key">
+                <td>{{network.networkName}}</td>
+                <td>{{network.tenantName}}</td>
+                <td>{{network.encap}}</td>
+                <td>{{network.subnet}}</td>
+            </tr>
+            </tbody>
+            <tbody *ngIf="!networkList">
+            <tr>
+                <td colspan="2">No rows found.</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="4">
+                    <ctv-tpagination [chunks]="tableRef.pageChunks"
+                                     (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
+                                     (prevChunk)="tableRef.showPrevChunk()"
+                                     (nextChunk)="tableRef.showNextChunk()">
+                    </ctv-tpagination>
+                </td>
+            </tr>
+            </tfoot>
+        </ctv-table>
+        </div>
+    </div>
+    <div class="ui one column centered row" style="margin-top: 30px;" *ngIf="endpointType===EndpointType.ApplicationGroup">
+        <div class="ui fourteen wide column">
+            <ctv-table #tableRef1 [defaultSortColumn]="'groupName'" [items]="applicationGroupList" (filtereditems)="filteredgroups=$event; setKey($event)" [size]="4">
+            <thead>
+            <tr>
+                <th><ctv-th [sortfield]="'groupName'" (sortdata)="tableRef1.applysort($event)" [sortobject]="tableRef1.sortObj">Name</ctv-th></th>
+                <th><ctv-th [sortfield]="'tenantName'" (sortdata)="tableRef1.applysort($event)" [sortobject]="tableRef1.sortObj">Tenant</ctv-th></th>
+                <th><ctv-th [sortfield]="'networkName'" (sortdata)="tableRef1.applysort($event)" [sortobject]="tableRef1.sortObj">Network</ctv-th></th>
+                <th><ctv-th [sortfield]="'policies'" (sortdata)="tableRef1.applysort($event)" [sortobject]="tableRef1.sortObj">Policies</ctv-th></th>
+            </tr>
+            </thead>
+            <tbody *ngIf="applicationGroupList">
+            <tr *ngFor="let group of filteredgroups" [ngClass]="{selected: key==group.key, notSelected: key!=group.key}" (click)="key=group.key">
+                <td>{{group.groupName}}</td>
+                <td>{{group.tenantName}}</td>
+                <td>{{group.networkName}}</td>
+                <td>{{group.policies.join(", ")}}</td>
+            </tr>
+            </tbody>
+            <tbody *ngIf="!applicationGroupList">
+            <tr>
+                <td colspan="2">No rows found.</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="4">
+                    <ctv-tpagination [chunks]="tableRef1.pageChunks"
+                                     (showPage)="tableRef1.showChunk($event, tableRef1.table.searchText)"
+                                     (prevChunk)="tableRef1.showPrevChunk()"
+                                     (nextChunk)="tableRef1.showNextChunk()">
+                    </ctv-tpagination>
+                </td>
+            </tr>
+            </tfoot>
+        </ctv-table>
+
+        </div>
+    </div>
+</div>

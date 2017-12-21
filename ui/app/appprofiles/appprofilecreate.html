@@ -1,0 +1,87 @@
+<div class="ui sixteen column grid">
+    <div class="ui row pageHeader">
+        <div class="left aligned eight wide column">
+            <div class="content pageTitle">Create ACI Application Profile</div>
+        </div>
+        <div class="right aligned eight wide column">&nbsp;</div>
+    </div>
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div class="breadcrumbs">
+                <span class="crumb">
+                    <a href="/#/m/appprofiles">
+                        ACI Application Profiles
+                    </a>
+                </span>
+                <span class="crumb">Create</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+            <form class="ui form" role="form"
+                  (submit)="createAppProfile(formRef.valid)" novalidate #formRef="ngForm">
+
+                <div class="ui active inverted dimmer" *ngIf="showLoader">
+                    <div class="ui loader"></div>
+                </div>
+
+                <div class="ui basic segment">
+                    <div class="ui grid">
+                        <div class="ui row">
+                            <div class="left aligned six wide column">
+                                <div class="field" [ngClass]="{error: newAppProfileName.errors?.required && formRef.submitted}">
+                                    <label for="newAppProfileName">Application profile name</label>
+                                    <input type="text" id="newAppProfileName" name="newAppProfileName"
+                                           [(ngModel)]="newAppProfile.appProfileName"
+                                           placeholder="Enter name" required #newAppProfileName="ngModel">
+                                    <span class="inlineError" *ngIf="newAppProfileName.errors?.required && formRef.submitted">
+                                        Please enter application profile name
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="left aligned six wide column">
+                                <div class="field" [ngClass]="{error: newAppProfileTenantRef.errors?.required && formRef.submitted}">
+                                    <label for="newAppProfileTenant">Tenant</label>
+                                    <select id="newAppProfileTenant" class="ui dropdown"
+                                            name="newAppProfileTenant"
+                                            ngModel
+                                            (change)="updateTenant($event.target.value, appGroupSelRef)"
+                                            required #newAppProfileTenantRef="ngModel">
+                                        <option value="">-- Select a tenant --</option>
+                                        <option *ngFor="let tenant of tenants" [value]="tenant.tenantName">
+                                            {{tenant.tenantName}}
+                                        </option>
+                                    </select>
+                                    <span class="inlineError" *ngIf="newAppProfileTenantRef.errors?.required && formRef.submitted">
+                                        Please select tenant
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ctv-appgroupselection mode="edit" [appProfile]="newAppProfile"
+                                           #appGroupSelRef></ctv-appgroupselection>
+
+                    <div class="ui grid">
+                        <div class="right aligned sixteen wide column buttonRow">
+
+                            <button type="button" class="ui basic button" (click)="cancelCreating()">
+                                Cancel
+                            </button>
+                            <button type="submit" class="ui primary button">
+                                Create Profile
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

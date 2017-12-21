@@ -1,0 +1,27 @@
+.utilnav{
+    position: absolute !important;
+    right: 1% !important;;
+    top: 9px !important;;
+}
+
+.menu.profile{
+    width: 180px !important;
+    top: 27px !important;
+    left: -130px !important;
+}
+
+.logo{
+    display: inline !important;
+    margin-right: 20px !important;
+    width: 36px !important;
+    height: 36px !important;
+}
+
+.productname {
+    font-weight: 300 !important;
+    font-size: 2.0rem !important;
+    color: #0c5093 !important;
+    left: -15px !important;
+    position: relative !important;
+    top: 5px !important;
+}

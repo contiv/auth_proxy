@@ -1,0 +1,58 @@
+<div class="ui middle aligned center aligned grid container">
+    <div class="column copyright">
+
+        <form id="loginForm" name="loginForm" class="ui form" role="form"
+              (submit)="login()" novalidate #loginForm="ngForm">
+            <div class="ui active inverted dimmer" *ngIf="loginCtrl.showLoader">
+                <div class="ui loader"></div>
+            </div>
+
+            <div class="login-seg" style="margin-top: 180px; background-color: white; padding: 20px; ">
+                <h1 class="header" style="margin-left:6px; margin-right:auto;">
+                    <img class="ui image logo" src="images/contiv_36x36.png">
+                    <br>
+                    <span class="productname">{{product_name}}</span>
+                </h1>
+
+
+                <div class="field" [ngClass]="{'error': showServerError}">
+                    <input type="text" id="username" name="username" [(ngModel)]="loginCtrl.username"
+                           placeholder="User Name" required>
+                </div>
+                <div class="field" [ngClass]="{'error': showServerError}">
+                    <input type="password" id="password" name="password" [(ngModel)]="loginCtrl.password"
+                           placeholder="Password" required>
+                </div>
+                <div class="field" class="inlineError">
+                    <div align="center">
+                        <span *ngIf="showServerError">Incorrect user name or password. Please try again.</span>
+                    </div>
+                </div>
+
+                <div align="center" style="margin-top: 10px">
+                    <button *ngIf="loginForm.valid" class="ui fluid primary button" type="submit">
+                        Log In
+                    </button>
+                    <button *ngIf="!loginForm.valid" class="ui fluid disabled button" type="submit">
+                        Log In
+                    </button>
+                </div>
+
+                <div class="center">
+                    <div class="copyright">
+                        Copyright (c) 2017 Cisco Systems, Inc. All rights reserved.
+                    </div>
+                </div>
+
+                <div class="center" style="margin-top: 5px;">
+                    <span class="supportTooltipText">Supported Browsers</span>
+                    <span class="supportTooltip">
+                        <tooltip [width]="200">Google Chrome<br/>Mozilla Firefox<br/>Safari 10 and above<br/></tooltip>
+                    </span>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+</div>

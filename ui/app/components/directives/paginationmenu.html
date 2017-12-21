@@ -1,0 +1,13 @@
+<div *ngIf="chunks.length > 1">
+    <div class="ui right floated pagination borderless menu" style="margin-top: 10px">
+        <a class="icon item" (click)="showPrevChunk()">
+            <i class="chevron left icon"></i>
+        </a>
+        <a *ngFor="let chunk of chunks" class="item"
+           [ngClass]="{'active': chunk.selected}" (click)="showClickedPage(chunk.pageNo)">{{chunk.pageNo + 1}}
+        </a>
+        <a class="icon item" (click)="showNextChunk()">
+            <i class="chevron right icon"></i>
+        </a>
+    </div>
+</div>

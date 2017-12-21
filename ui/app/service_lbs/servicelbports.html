@@ -1,0 +1,53 @@
+<table class="ui very basic unstackable table" style="margin-top: 10px">
+    <thead>
+    <th>Service Port</th>
+    <th>Provider Port</th>
+    <th>Protocol</th>
+    <th>&nbsp;</th>
+    </thead>
+
+    <tbody>
+    <tr class="noHover">
+        <td class="ui three wide column">
+            <div class="ui input">
+                <input type="number" [(ngModel)]="newItem.servicePort" placeholder="0-65535">
+            </div>
+        </td>
+        <td class="ui three wide column">
+            <div class="ui input">
+                <input type="number" [(ngModel)]="newItem.providerPort" placeholder="0-65535">
+            </div>
+        </td>
+        <td class="ui three wide column">
+            <select class="ui dropdown" [(ngModel)]="newItem.protocol">
+                <option value="TCP">TCP</option>
+                <option value="UDP">UDP</option>
+            </select>
+        </td>
+        <td>
+            <button type="button" class="ui icon button iconBtn primaryIconBtn" (click)="add()">
+                <i class="add icon"></i>
+            </button>
+        </td>
+    </tr>
+    </tbody>
+
+    <tbody *ngIf="items.length">
+    <tr *ngFor="let item of items">
+        <td>{{item.split(':')[0]}}</td>
+        <td>{{item.split(':')[1]}}</td>
+        <td>{{item.split(':')[2]}}</td>
+        <td>
+            <button type="button" class="ui icon button iconBtn secondaryIconBtn"
+                    (click)="remove(item)">
+                <i class="trash icon"></i>
+            </button>
+        </td>
+    </tr>
+    </tbody>
+
+    <tbody *ngIf="!items.length">
+    <tr class="noDataFound"><td colspan="3">No ports have been defined.</td></tr>
+    </tbody>
+
+</table>

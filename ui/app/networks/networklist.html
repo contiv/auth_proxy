@@ -1,0 +1,86 @@
+<div class="ui sixteen column grid">
+    <div class="ui row pageHeader">
+        <div class="left aligned eight wide column">
+            <div class="content pageTitle">Networks</div>
+        </div>
+
+        <div class="right aligned eight wide column">
+            <button class="ui primary button" (click)="create()">
+                <i class="add icon"></i>
+                Create Network
+            </button>
+        </div>
+    </div>
+
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div class="breadcrumbs">
+                <span class="crumb">Networks</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+
+            <ctv-search *ngIf="networkListComp['networks']" (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [count]="tableRef.count"></ctv-search>
+
+            <div class="ui basic segment ctvTable">
+
+                <div class="ui active inverted dimmer" *ngIf="networkListComp.showLoader">
+                    <div class="ui loader"></div>
+                </div>
+
+                <ctv-table #tableRef [defaultSortColumn]="'networkName'"
+                           [items]="networkListComp['networks']"
+                           (filtereditems)="networkListComp['filterednetworks']=$event;"
+                           [size]="12">
+                    <thead>
+                    <tr>
+                        <th><ctv-th [sortfield]="'networkName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Name</ctv-th></th>
+                        <th><ctv-th [sortfield]="'tenantName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Tenant</ctv-th></th>
+                        <th><ctv-th [sortfield]="'encap'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Encapsulation</ctv-th></th>
+                        <th><ctv-th [sortfield]="'subnet'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Subnet</ctv-th></th>
+                        <th><ctv-th [sortfield]="'gateway'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Gateway</ctv-th></th>
+                        <th><ctv-th [sortfield]="'cfgdTag'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Tag</ctv-th></th>
+                    </tr>
+                    </thead>
+
+                    <tbody *ngIf="networkListComp['networks'] && networkListComp['networks'].length">
+                    <tr *ngFor="let network of networkListComp['filterednetworks']">
+                        <td><a [routerLink]="['../details',network.key]">{{network.networkName}}</a></td>
+                        <td>{{network.tenantName}}</td>
+                        <td>{{network.encap}}</td>
+                        <td>{{network.subnet}}</td>
+                        <td>{{network.gateway}}</td>
+                        <td>{{network.cfgdTag}}</td>
+                    </tr>
+                    </tbody>
+
+                    <tbody *ngIf="networkListComp['networks'] && !networkListComp['networks'].length">
+                        <tr class="noDataFound">
+                            <td colspan="5">No networks found. Would you like to <a href="javascript: void(0);" (click)="create()">create one?</a></td>
+                        </tr>
+                    </tbody>
+
+                    <tbody *ngIf="networkListComp['networks'] && networkListComp['networks'].length && !tableRef.count">
+                        <tr class="noDataFound"><td colspan="5">No records matched your filter criteria.</td></tr>
+                    </tbody>
+
+                    <tfoot>
+                    <tr class="pagination">
+                        <td colspan="5">
+                            <ctv-tpagination [chunks]="tableRef.pageChunks"
+                                             (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
+                                             (prevChunk)="tableRef.showPrevChunk()"
+                                             (nextChunk)="tableRef.showNextChunk()">
+                            </ctv-tpagination>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </ctv-table>
+            </div>
+
+        </div>
+    </div>
+</div>

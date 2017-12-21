@@ -1,0 +1,40 @@
+<div class="ui basic segment">
+    <div class="ui active inverted dimmer" *ngIf="showLoader">
+        <div class="ui loader"></div>
+    </div>
+
+    <div><h4 class="ui header">Global Operational State</h4></div>
+    <table>
+        <tbody>
+        <tr>
+            <td class="ctv-header">Number of Networks</td>
+            <td class="ctv-value">{{globalInspectStats.numNetworks}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header">vlans in use</td>
+            <td class="ctv-value">{{globalInspectStats.vlansInUse}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header">vxlans in use</td>
+            <td class="ctv-value">{{globalInspectStats.vxlansInUse}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header">Free vxlans start</td>
+            <td class="ctv-value">{{globalInspectStats.freeVXLANsStart}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header">Default Network</td>
+            <td class="ctv-value">{{globalInspectStats.defaultNetwork}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <ctv-collapsible [title]="'Network Defaults'">
+        <networksettingcomp [firstRunWiz]="false" (updateNetDef)="updateNetworkSettings($event)" [setting]="setting"></networksettingcomp>
+    </ctv-collapsible>
+
+    <ctv-collapsible [title]="'ACI Settings'" *verifydom="'aci'">
+        <acisettingcomp [firstRunWiz]="false" (updateAciDef)="updateAciSetting($event)" [setting]="aciSetting" [disabled]="false"></acisettingcomp>
+    </ctv-collapsible>
+
+</div>

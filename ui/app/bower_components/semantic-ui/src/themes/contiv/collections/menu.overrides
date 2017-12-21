@@ -1,0 +1,56 @@
+/*******************************
+         Contiv Menu Overrides
+*******************************/
+/*--------------
+    Icon Only
+---------------*/
+
+/* Vertical Menu */
+.ui.vertical.icon.menu {
+  display: inline-block;
+  width: auto;
+  background-color: #049fd9;
+}
+/* Item */
+.ui.icon.menu .item {
+  height: auto;
+  text-align: center;
+  color: #1B1C1D;
+}
+/* Icon */
+.ui.icon.menu .item > .icon:not(.dropdown) {
+  margin: 0;
+  opacity: 1;
+}
+
+/*--------------
+      Hover
+---------------*/
+
+.ui.link.menu .item:hover,
+.ui.menu .dropdown.item:hover,
+.ui.menu .link.item:hover,
+.ui.menu a.item:hover {
+  cursor: pointer;
+  background: #64bbe3;
+  color: rgba(0, 0, 0, 0.95);
+}
+
+/*--------------
+     Pressed
+---------------*/
+
+.ui.link.menu .item:active,
+.ui.menu .link.item:active,
+.ui.menu a.item:active {
+  background: rgba(0, 0, 0, 0.03);
+  color: rgba(0, 0, 0, 0.95);
+}
+
+/*----------------------
+   Vertical Menu Active
+------------------------*/
+
+.ui.vertical.menu .white.active  {
+   color: #FFFFFF!important;
+}

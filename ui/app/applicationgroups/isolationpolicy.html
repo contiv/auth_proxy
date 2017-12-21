@@ -1,0 +1,136 @@
+<div [ngSwitch]="mode" class="field policyOutput">
+    <table *ngSwitchCase="'edit'" class="ui very basic collapsing unstackable table noRowBorders">
+        <tbody>
+        <tr class="noHover">
+            <td>
+                <div class="ui left icon input">
+                    <input name="isolationPolicySearchText"
+                           type="text"
+                           [(ngModel)]="isolationPolicySearchText"
+                           placeholder="filter menu options">
+                    <i class="search icon"></i>
+                </div>
+            </td>
+            <td>
+                <select #selectIsolationPolicyRef
+                        name="selectIsolationPolicies"
+                        class="ui dropdown"
+                        [class.noDataFound]="!isolationPolicies.length"
+                        ngModel>
+                    <option *ngIf="isolationPolicies.length" value="">-- Select an isolation policy --</option>
+                    <option *ngIf="!isolationPolicies.length" value="">No policies defined</option>
+                    <option *ngFor="let policy of (isolationPolicies | filter:isolationPolicySearchText)"
+                            [value]="policy.policyName">
+                        {{policy.policyName}}
+                    </option>
+                </select>
+            </td>
+            <td>
+                <button type="button" class="ui icon button iconBtn primaryIconBtn"
+                        (click)="addIsolationPolicy(selectIsolationPolicyRef.value)">
+                    <i class="add icon"></i>
+                </button>
+            </td>
+        </tr>
+        <tr *ngFor="let policy of applicationgroup.policies">
+            <td>Will apply: "{{policy}}"</td>
+            <td></td>
+            <td>
+                <button type="button" class="ui icon button iconBtn secondaryIconBtn"
+                        (click)="removeIsolationPolicy(policy)">
+                    <i class="trash icon"></i>
+                </button>
+            </td>
+        </tr>
+        <tr *ngIf="!applicationgroup.policies" class="noDataFound">
+            <td>select a policy or policies from the dropdown</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table *ngSwitchCase="'details'" class="ui very basic unstackable table">
+        <tbody *ngIf="applicationgroup.policies">
+        <tr *ngFor="let policy of applicationgroup.policies">
+            <td>Applying: "{{policy}}"</td>
+        </tr>
+        </tbody>
+
+        <tbody *ngIf="!applicationgroup.policies">
+        <tr class="noDataFound">
+            <td>No policies were selected</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h5 class="ui header">All Applicable Incoming Rules</h5>
+    <table class="ui very basic unstackable table">
+        <thead>
+        <tr>
+            <th>Policy Name</th>
+            <th>Priority</th>
+            <th>Action</th>
+            <th>From group</th>
+            <th>From network</th>
+            <th>From IP address</th>
+            <th>Protocol</th>
+            <th>Port</th>
+        </tr>
+        </thead>
+
+        <tbody *ngIf="incomingRules.length>0">
+        <tr *ngFor="let rule of incomingRules">
+            <td>{{rule.policyName}}</td>
+            <td>{{rule.priority}}</td>
+            <td>{{rule.action}}</td>
+            <td>{{rule.fromEndpointGroup}}</td>
+            <td>{{rule.fromNetwork}}</td>
+            <td>{{rule.fromIPAddress}}</td>
+            <td>{{rule.protocol}}</td>
+            <td>{{rule.port}}</td>
+        </tr>
+        </tbody>
+
+        <tbody *ngIf="incomingRules.length==0">
+        <tr class="noDataFound">
+            <td colspan="8">None applied</td>
+        </tr>
+        </tbody>
+
+    </table>
+
+    <h5 class="ui header" style="margin-top: 40px">All Applicable Outgoing Rules</h5>
+    <table class="ui very basic unstackable table" >
+        <thead>
+        <tr>
+            <th>Policy Name</th>
+            <th>Priority</th>
+            <th>Action</th>
+            <th>To group</th>
+            <th>To network</th>
+            <th>To IP address</th>
+            <th>Protocol</th>
+            <th>Port</th>
+        </tr>
+        </thead>
+
+        <tbody *ngIf="outgoingRules.length>0">
+        <tr *ngFor="let rule of outgoingRules">
+            <td>{{rule.policyName}}</td>
+            <td>{{rule.priority}}</td>
+            <td>{{rule.action}}</td>
+            <td>{{rule.toEndpointGroup}}</td>
+            <td>{{rule.toNetwork}}</td>
+            <td>{{rule.toIPAddress}}</td>
+            <td>{{rule.protocol}}</td>
+            <td>{{rule.port}}</td>
+        </tr>
+        </tbody>
+
+        <tbody *ngIf="outgoingRules.length==0">
+        <tr class="noDataFound">
+            <td colspan="8">None applied</td>
+        </tr>
+        </tbody>
+
+    </table>
+</div>

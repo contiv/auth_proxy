@@ -1,0 +1,131 @@
+<div class="ui basic segment" [ngClass]="{loading: showLoader}">
+    <div id="tenant-create-modal" class="ui small modal">
+        <div class="header">Create Tenant</div>
+        <div class="content">
+            <tenantcreate #tenantCreate [displayType]="DisplayType.modal" (created)="closeTenantCreate(); showLoader = true; getTenants(true);"></tenantcreate>
+        </div>
+        <div class="actions">
+            <div class="ui basic deny button modalBtn">Cancel</div>
+            <button class="ui primary button modalBtn" [disabled]="!tenantCreate.tenantCreateForm.valid" (click)="tenantCreate.create()">
+                Create
+            </button>
+        </div>
+    </div>
+    <form id="networkCreationForm" name="networkCreateForm" class="ui form" role="form"
+          (submit)="networkCreateCtrl.createNetwork(networkCreateForm.valid)" novalidate #networkCreateForm="ngForm">
+
+        <div class="ui sixteen column grid" style="margin: 0;">
+            <div class="ui row">
+                <div class="ui six wide column field" [ngClass]="{error: ((newNetworkName.errors?.required || newNetworkName.errors?.pattern) && networkCreateForm.submitted)}">
+                    <label for="newNetworkName">Network name</label>
+                    <input type="text" id="newNetworkName" name="newNetworkName"
+                           [(ngModel)]="networkCreateCtrl.newNetwork.networkName"
+                           [disabled]="firstRunWiz && (clusterMode === 'kubernetes')"
+                           placeholder="Enter name" required #newNetworkName="ngModel"
+                           [pattern]="networkNamePattern">
+                    <span class="inlineError" *ngIf="newNetworkName.errors?.required && networkCreateForm.submitted">
+                                    Please enter network name
+                    </span>
+                    <span class="inlineError" *ngIf="newNetworkName.errors?.pattern && networkCreateForm.submitted">
+                                    Please enter network name in correct notation
+                    </span>
+                </div>
+                <div class="ui six wide column field">
+                    <div class="fields">
+                        <div class="thirteen wide field" [ngClass]="{error: newNetworkTenant.errors?.required && networkCreateForm.submitted}">
+                            <label for="newNetworkTenant">Tenant</label>
+                            <select id="newNetworkTenant" class="ui dropdown"
+                                    name="newNetworkTenant"
+                                    [(ngModel)]="networkCreateCtrl.newNetwork.tenantName"
+                                    required #newNetworkTenant="ngModel">
+                                <option value="">-- Please select tenant --</option>
+                                <option *ngFor="let tenant of networkCreateCtrl.tenants" [ngValue]="tenant.tenantName">{{tenant.tenantName}}</option>
+                            </select>
+                            <span class="inlineError" *ngIf="newNetworkTenant.errors?.required && networkCreateForm.submitted">
+                                        Please select tenant
+                            </span>
+                        </div>
+                        <div class="three wide field">
+                            <button type="button" class="ui icon button iconBtn primaryIconBtn addModal" (click)="showTenantModal()">
+                                <i class="add icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui row" style="margin-top: 15px;">
+                <div class="ui six wide column field">
+                    <label for="newNetworkEncapsulation">Encapsulation</label>
+                    <select id="newNetworkEncapsulation" class="ui dropdown" [(ngModel)]="networkCreateCtrl.newNetwork.encap" name="newNetworkEncap">
+                        <option value="vxlan">vxlan</option>
+                        <option value="vlan">vlan</option>
+                    </select>
+                </div>
+                <div class="ui six wide column field" [ngClass]="{error: (newNetworkSubnet.errors?.required || newNetworkSubnet.errors?.pattern) && networkCreateForm.submitted}">
+                    <label for="newNetworkSubnet">Subnet</label>
+                    <input type="text" id="newNetworkSubnet" name="newNetworkSubnet"
+                           [(ngModel)]="networkCreateCtrl.newNetwork.subnet"
+                           placeholder="CIDR notation, for example: 20.1.1.0/24" required
+                           [pattern]="networkCreateCtrl.cidrPattern" #newNetworkSubnet="ngModel">
+                    <span class="inlineError" *ngIf="newNetworkSubnet.errors?.required && networkCreateForm.submitted">
+                                    Please enter subnet
+                    </span>
+                    <span class="inlineError" *ngIf="newNetworkSubnet.errors?.pattern && networkCreateForm.submitted">
+                                    Please enter subnet in CIDR notation
+                    </span>
+                </div>
+            </div>
+            <div class="ui row" style="margin-top: 15px;">
+                <div class="ui six wide column field">
+                    <label for="newNetworkGateway">Gateway</label>
+                    <input type="text" id="newNetworkGateway" [(ngModel)]="networkCreateCtrl.newNetwork.gateway"
+                           placeholder="Enter gateway" name="newNetworkGateway">
+                </div>
+                <div class="ui six wide column field">
+                    <label for="newNetworkType">Network Type</label>
+                    <select id="newNetworkType" class="ui dropdown" [(ngModel)]="networkCreateCtrl.newNetwork.nwType" name="newNetworkType">
+                        <option value="infra">infra</option>
+                        <option value="data">data</option>
+                    </select>
+                </div>
+            </div>
+            <div class="ui row" style="margin-top: 15px;">
+                <div class="ui six wide column field">
+                    <label for="newNetworkPackettag">Vlan/Vxlan Tag</label>
+                    <input type="number" id="newNetworkPackettag" [(ngModel)]="networkCreateCtrl.newNetwork.pktTag"
+                           placeholder="Enter Vlan/Vxlan Tag" name="newNetworkPackettag">
+                </div>
+                <div class="ui six wide column field">
+                    <label for="newNetworkCfgdtag">Network Tag</label>
+                    <input type="text" id="newNetworkCfgdtag" [(ngModel)]="networkCreateCtrl.newNetwork.cfgdTag"
+                           placeholder="Enter network tag" name="newNetworkCfgdtag">
+                </div>
+            </div>
+
+            <div *ngIf="!firstRunWiz" class="ui row">
+                <div class="right aligned twelve wide column">
+                    <div class="buttonRow">
+                        <button type="button" class="ui basic button" (click)="cancel.emit()">
+                            Cancel
+                        </button>
+                        <button type="submit" class="ui primary button">
+                            Create
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="firstRunWiz">
+            <div class="ui section divider" style="margin-top: 25px"></div>
+            <div class="ui grid">
+                <div class="right floated right aligned sixteen wide column">
+                    <button type="button" class="ui basic button" (click)="cancel.emit()">Cancel</button>
+                    <button type="button" class="ui secondary button" (click)="goback.emit()"><i
+                            class="arrow left icon"></i>Go back
+                    </button>
+                    <button type="submit" class="ui primary button">Continue<i class="arrow right icon"></i></button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
