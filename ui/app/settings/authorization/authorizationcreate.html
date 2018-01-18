@@ -1,0 +1,108 @@
+<div class="ui basic segment" [ngClass]="{loading: showLoader}">
+    <div class="ui sixteen column grid ">
+        <div class="ui row pageHeader">
+            <div class="left aligned sixteen wide column">
+                <div class="content pageTitle" style="display: inline-block">Create Authorization</div>
+                <tooltip>Authorize user roles for each tenant. Select the tenant and user and determine if the user needs administrator privileges on the tenant.</tooltip>
+            </div>
+        </div>
+
+        <div class="ui row">
+            <div class="ui sixteen wide column">
+
+                <form class="ui form" role="form"
+                      (submit)="createAuthorization(formRef.valid)" novalidate #formRef="ngForm">
+
+                    <div class="ui fifteen column grid">
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field">
+                                    <label for="usertype">This is authorizing a</label>
+                                    <select class="ui dropdown" id="usertype" name="usertype" [(ngModel)]='usertype'>
+                                        <option value="local">Local User</option>
+                                        <option value="ldap">LDAP Group</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui sixteen column grid">
+
+                        <!-- both these form elements point to the same model attribute 'authorization.PrincipalName',
+                            but one (local user) is a SELECT and the other (LDAP) a text input -->
+                        <div *ngIf="usertype=='local'" class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field" [ngClass]="{error: username.errors?.required && formRef.submitted}">
+                                    <label for="username">Username</label>
+                                    <select class="ui dropdown" id="username" name="username"
+                                            [(ngModel)]="authorization.PrincipalName"
+                                            required #username="ngModel">
+                                        <option [value]="user.username" *ngFor="let user of users">{{user.username}}</option>
+                                    </select>
+                                    <span class="inlineError" *ngIf="username.errors?.required && formRef.submitted">
+                                        Please select user name.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="usertype=='ldap'" class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field" [ngClass]="{error:ldapgroup.errors?.required && formRef.submitted}">
+                                    <label for="ldapgroup">LDAP Group</label>
+                                    <input type="text" id="ldapgroup" name="ldapgroup"
+                                           [(ngModel)]="authorization.PrincipalName"
+                                           placeholder="ex: cn=name,ou=group" required #ldapgroup="ngModel">
+                                    <span class="inlineError" *ngIf="ldapgroup.errors?.required && formRef.submitted">
+                                        Please enter LDAP group details.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field" [ngClass]="{error:role.errors?.required && formRef.submitted}">
+                                    <label for="role">Role</label>
+                                    <select class="ui dropdown" id="role" name="role" [(ngModel)]="authorization.Role" required #role="ngModel" (change)="checkRole()">
+                                        <option value="admin">Admin</option>
+                                        <option value="ops">DevOps</option>
+                                    </select>
+                                    <span class="inlineError" *ngIf="role.errors?.required && formRef.submitted">
+                                        Please select user role.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row" *ngIf="authorization.Role==='ops'">
+                            <div class="ui six wide column">
+                                <div class="field" [ngClass]="{error:tenant.errors?.required && formRef.submitted}">
+                                    <label for="tenant">Tenant</label>
+                                    <select class="ui dropdown" id="tenant" name="tenant" [(ngModel)]="authorization.TenantName" required #tenant="ngModel">
+                                        <option [value]="tenant.tenantName" *ngFor="let tenant of tenants">{{tenant.tenantName}}</option>
+                                    </select>
+                                    <span class="inlineError" *ngIf="tenant.errors?.required && formRef.submitted">
+                                        Please select tenant.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="ui right aligned six wide column">
+                                <div class="buttonRow">
+                                    <button type="button" class="ui basic button" (click)="cancelCreating()">
+                                        Cancel
+                                    </button>
+                                    <button type="submit" class="ui primary button">
+                                        Create
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

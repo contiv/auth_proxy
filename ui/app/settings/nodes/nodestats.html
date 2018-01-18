@@ -1,0 +1,120 @@
+
+    <div class="ui basic segment" [ngClass]="{loading: showLoader}">
+        <div>
+            <h4 class="ui header">BGP Neighbors</h4>
+            <table class="ui very basic table">
+                <thead>
+                <tr>
+                    <th>Neighbor IP</th>
+                    <th>Admin Status</th>
+                    <th>Neighbor Status</th>
+                    <th>Number of Routes</th>
+                </tr>
+                </thead>
+                <tbody *ngIf="inspect.Config['neighbor']">
+                <tr>
+                    <!-- neighbor -->
+                    <td>{{inspect.Config['neighbor']}}</td>
+
+                    <!-- admin status -->
+                    <td *ngIf="inspect.Oper.adminStatus ===
+                            'ADMIN_STATE_UP'"><i class="green up icon"></i>Up
+                    </td>
+                    <td *ngIf="inspect.Oper.adminStatus ===
+                            'ADMIN_STATE_DOWN'">Down
+                    </td>
+
+                    <!-- neighbor status -->
+                    <td *ngIf="inspect.Oper.neighborStatus === 'BGP_FSM_IDLE'">
+                        <i class="red ban icon"></i>Idle
+                    </td>
+                    <td *ngIf="inspect.Oper.neighborStatus === 'BGP_FSM_CONNECT'">
+                        <i class="red ban icon"></i>Connect
+                    </td>
+                    <td *ngIf="inspect.Oper.neighborStatus === 'BGP_FSM_ACTIVE'">
+                        <i class="red ban icon"></i>Active
+                    </td>
+                    <td *ngIf="inspect.Oper.neighborStatus === 'BGP_FSM_OPENSENT'">
+                        <i class="red ban icon"></i>Open sent
+                    </td>
+                    <td *ngIf="inspect.Oper.neighborStatus === 'BGP_FSM_OPENCONFIRM'">
+                        <i class="red ban icon"></i>Open confirm
+                    </td>
+                    <td *ngIf="inspect.Oper.neighborStatus ==='BGP_FSM_ESTABLISHED'">
+                        <i class="green check icon"></i>Established
+                    </td>
+
+                    <!-- number of routes -->
+                    <td>{{inspect.Oper.numRoutes}}</td>
+                </tr>
+                </tbody>
+
+                <tbody *ngIf="!inspect.Config['neighbor']">
+                <tr class="noDataFound"><td colspan="4">No BGP neighbors found.</td></tr>
+                </tbody>
+
+            </table>
+
+            <div style="float:right">
+                <ctv-search (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);"
+                                     placeholder="Search routes..." size="30"></ctv-search>
+            </div>
+
+            <h4 class="ui header">BGP Routes</h4>
+
+            <ctv-table #tableRef [defaultSortColumn]="'route'"
+                       [items]="routes"
+                       (filtereditems)="filteredroutes=$event">
+                <thead>
+                <tr>
+                    <th>
+                        <ctv-th [sortfield]="'routes'" (sortdata)="tableRef.applysort($event)"
+                                [sortobject]="tableRef.sortObj">IP
+                        </ctv-th>
+                    </th>
+                    <th>
+                        <ctv-th>Next Hop</ctv-th>
+                    </th>
+                    <th>
+                        <ctv-th>Age</ctv-th>
+                    </th>
+                    <th>
+                        <ctv-th>Attributes</ctv-th>
+                    </th>
+                </tr>
+                </thead>
+
+                <tbody *ngIf="routes.length">
+                    <tr *ngFor="let route of filteredroutes">
+                        <td>{{route}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+
+                <tbody *ngIf="!routes.length">
+                    <tr class="noDataFound">
+                        <td colspan="4">No routes found.</td>
+                    </tr>
+                </tbody>
+
+                <tbody *ngIf="routes.length && !filteredroutes.length">
+                    <tr class="noDataFound">
+                        <td colspan="4">No records matched your filter criteria.</td>
+                    </tr>
+                </tbody>
+
+                <tfoot>
+                <tr class="pagination">
+                    <td colspan="4">
+                        <ctv-tpagination colspan="5" [chunks]="tableRef.pageChunks"
+                                         (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
+                                         (prevChunk)="tableRef.showPrevChunk()"
+                                         (nextChunk)="tableRef.showNextChunk()"></ctv-tpagination>
+                    </td>
+                </tr>
+                </tfoot>
+            </ctv-table>
+        </div>
+    </div>

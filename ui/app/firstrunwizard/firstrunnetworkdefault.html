@@ -1,0 +1,10 @@
+<div class="ui basic segment" [ngClass]="{loading: showLoader}">
+    <div class="ui grid" style="margin-bottom: 30px">
+        <div class="left floated sixteen wide column">
+            <div class="content">
+                <span>Select Network Defaults</span>
+            </div>
+        </div>
+    </div>
+    <networksettingcomp [firstRunWiz]="true" (updateNetDef)="updateNetworkSettings($event)" [setting]="setting" (cancel)="cancel()" (skip)="skip()"></networksettingcomp>
+</div>

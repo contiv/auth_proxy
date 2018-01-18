@@ -1,0 +1,120 @@
+<div class="ui sixteen column grid">
+    <div class="ui row pageHeader">
+        <div class="left aligned eight wide column">
+            <div class="content pageTitle">Create External Contract Group</div>
+        </div>
+        <div class="right aligned eight wide column">&nbsp;</div>
+    </div>
+
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div class="breadcrumbs">
+                <span class="crumb">
+                    <a [routerLink]="['../list']">
+                        Network Policies
+                    </a>
+                </span>
+                <span class="crumb">
+                    <a (click)="returnToContractGroups()">
+                        ACI External Contract Groups
+                    </a>
+                </span>
+                <span class="crumb">Create</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+
+            <form class="ui form" role="form" #formRef="ngForm"
+                  (ngSubmit)="createContractGroup(formRef.valid)" novalidate>
+
+                <div class="ui active inverted dimmer" *ngIf="showLoader">
+                    <div class="ui loader"></div>
+                </div>
+
+                <div class="ui basic segment">
+                    <div class="ui sixteen column grid">
+                        <div class="ui row">
+
+                            <div class="ui six wide column">
+                                <div class="field" [ngClass]="{error: contractGroupNameRef.errors?.required && formRef.submitted}">
+                                    <label for="newContractGroupName">External contract group name</label>
+                                    <input #contractGroupNameRef="ngModel" type="text" id="newContractGroupName" name="newContractGroupName"
+                                           [(ngModel)]="newContractGroup.contractsGroupName" placeholder="Enter name" required>
+                                    <span class="inlineError" *ngIf="contractGroupNameRef.errors?.required && formRef.submitted">
+                                        Please enter external contract group name
+                                    </span>
+                                </div>
+                            </div>
+                            </div>
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field" [ngClass]="{error: contractGroupTenantRef.errors?.required && formRef.submitted}">
+                                    <label for="newContractGroupTenant">Tenant</label>
+                                    <select id="newContractGroupTenant" class="ui dropdown"
+                                            name="newContractGroupTenant"
+                                            [(ngModel)]="newContractGroup.tenantName"
+                                            required #contractGroupTenantRef="ngModel">
+                                        <option value="">-- Select a tenant --</option>
+                                        <option *ngFor="let tenant of tenants" [ngValue]="tenant.tenantName">{{tenant.tenantName}}</option>
+                                    </select>
+                                    <span class="inlineError" *ngIf="contractGroupTenantRef.errors?.required && formRef.submitted">
+                                        Please select a tenant
+                                    </span>
+                                </div>
+                            </div>
+                            </div>
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field" [ngClass]="{error: contractGroupTypeRef.errors?.required && formRef.submitted}">
+                                    <label for="newContractGroupType">External contract group type</label>
+                                    <select id="newContractGroupType" class="ui dropdown"
+                                            name="newContractGroupType"
+                                            [(ngModel)]="newContractGroup.contractsType"
+                                            required #contractGroupTypeRef="ngModel">
+                                        <option value="">-- Select group type --</option>
+                                        <option value="consumed">consumed</option>
+                                        <option value="provided">provided</option>
+                                    </select>
+                                    <span class="inlineError" *ngIf="contractGroupTypeRef.errors?.required && formRef.submitted">
+                                        Please select external contract group type
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field" [ngClass]="{error: contractGroupContractsRef.errors?.required && formRef.submitted}">
+                                    <label for="newContractGroupContracts">Contracts</label>
+                                    <input #contractGroupContractsRef="ngModel" type="text" id="newContractGroupContracts" name="newContractGroupContracts"
+                                           [(ngModel)]="contractsString" placeholder="Enter comma separated contract names" required>
+                                    <span class="inlineError" *ngIf="contractGroupContractsRef.errors?.required && formRef.submitted">
+                                        Please enter contracts
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui grid">
+                        <div class="right aligned six wide column">
+                            <div class="buttonRow">
+
+                                <button type="button" class="ui basic button" (click)="cancelCreating()">
+                                    Cancel
+                                </button>
+                                <button type="submit" class="ui primary button">
+                                    Create
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

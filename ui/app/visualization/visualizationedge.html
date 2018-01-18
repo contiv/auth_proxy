@@ -1,0 +1,58 @@
+<div ui-view class="ui container">
+    <div class="ui nine column grid">
+        <div class="fifteen wide column">
+            <div class="content" style="font-size: 24px">Application Connectivity Graph</div>
+            <div visualization-edge></div>
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+path { 
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+}
+
+#visualizationEdge {
+    margin-top: 30px;
+    margin-left: 30px;
+}
+
+#backButton-div {
+    margin-top: 15px
+}
+
+text {
+    font: 14px sans-serif;
+    pointer-events: none;
+}
+body{
+    margin: 0;
+    padding: 0;
+    overflow:hidden;
+}
+
+h3 {
+    text-align: center;
+}
+
+body{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: rgb(248, 248, 248)
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+</style>

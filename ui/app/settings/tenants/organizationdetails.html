@@ -1,0 +1,54 @@
+<div class="ui sixteen column grid">
+    <div class="ui row pageHeader">
+        <div class="left aligned eight wide column">
+            <div class="content pageTitle">{{organizationDetailsCtrl.organization.tenantName}}</div>
+        </div>
+        <div class="right aligned eight wide column">
+            <button class="ui basic button" (click)="close()">
+                Close
+            </button>
+            <button class="ui secondary button" onclick="$('#delete-organization-modal').modal('show')">
+                <i class="trash icon"></i>
+                Remove
+            </button>
+        </div>
+    </div>
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+
+            <div class="right aligned three wide column">
+                <div id="delete-organization-modal" class="ui small modal">
+                    <div class="header">Delete</div>
+                    <div class="content">
+                        <p>Are you sure you want to delete the tenant <q>{{organizationDetailsCtrl.organization.tenantName}}</q>?</p>
+                    </div>
+                    <div class="actions">
+                        <div class="ui basic deny button modalBtn">Cancel</div>
+                        <div class="ui primary approve button modalBtn" (click)="organizationDetailsCtrl.deleteOrganization()">
+                            Delete
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui basic segment">
+                <div class="ui active inverted dimmer" *ngIf="organizationDetailsCtrl.showLoader">
+                    <div class="ui loader"></div>
+                </div>
+
+                <div class="ctvTable">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td class="ctv-header">Name</td>
+                            <td class="ctv-value">{{organizationDetailsCtrl.organization.tenantName}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,126 @@
+<div class="ui sixteen column grid">
+    <div class="ui row pageHeader">
+        <div class="left aligned eight wide column">
+            <div class="content pageTitle">Create Service Load Balancer</div>
+        </div>
+        <div class="right aligned eight wide column">&nbsp;</div>
+    </div>
+
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div class="breadcrumbs">
+                <span class="crumb">
+                    <a  [routerLink]="['../list']">
+                        Service Load Balancers
+                    </a>
+                </span>
+                <span class="crumb">Create</span>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+
+            <form class="ui form" name="servicelbCreateForm" role="form" #servicelbCreateForm="ngForm"
+                  (submit)="createServicelb(servicelbCreateForm.valid)"
+                  novalidate>
+
+                <div class="ui basic segment">
+
+                    <div class="ui active inverted dimmer" *ngIf="servicelbCreateCtrl.showLoader">
+                        <div class="ui loader"></div>
+                    </div>
+                    <div class="ui sixteen column grid" style="margin-bottom: 20px;">
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field" [ngClass]="{error: servicelbName.errors?.required && servicelbCreateForm.submitted}">
+                                    <label for="servicelbName">Service load balancer name</label>
+                                    <input type="text" id="servicelbName" name="servicelbName"
+                                           [(ngModel)]="servicelbCreateCtrl.servicelb.serviceName" placeholder="Enter name" required #servicelbName="ngModel">
+                                    <span class="inlineError" *ngIf="servicelbName.errors?.required && servicelbCreateForm.submitted">
+                                        Please enter service load balancer name
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field" [ngClass]="{error: servicelbTenant.errors?.required && servicelbCreateForm.submitted}">
+                                    <label for="servicelbTenant">Tenant</label>
+                                    <select id="servicelbTenant" class="ui dropdown"
+                                            name="servicelbTenant"
+                                            ngModel
+                                            (change)="updateTenant($event.target.value)"
+                                            required #servicelbTenant="ngModel">
+                                        <option value="">-- Please select tenant --</option>
+                                        <option *ngFor="let tenant of tenants" [value]="tenant.tenantName">{{tenant.tenantName}}</option>
+                                    </select>
+                                    <span class="inlineError" *ngIf="servicelbTenant.errors?.required && servicelbCreateForm.submitted">
+                                        Please select tenant
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <div [hidden]="!servicelb.tenantName.length" class="field" [ngClass]="{error: servicelbNetwork.errors?.required && servicelbCreateForm.submitted}">
+                                    <label for="servicelbNetwork">Network</label>
+                                    <select id="servicelbNetwork" class="ui dropdown"
+                                            name="servicelbNetwork"
+                                            [(ngModel)]="servicelb.networkName"
+                                            required #servicelbNetwork="ngModel">
+                                        <option *ngIf="networks.length" value="">-- Select a network --</option>
+                                        <option *ngIf="!networks.length" value="">-- Tenant has no networks --</option>
+                                        <option *ngFor="let network of networks" [ngValue]="network.networkName">{{network.networkName}}</option>
+                                    </select>
+                                    <span class="inlineError" *ngIf="servicelbNetwork.errors?.required && servicelbCreateForm.submitted">
+                                        Please select network
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <div *ngIf="servicelb.tenantName" class="field">
+                                    <label for="servicelbIP">Service IP address</label>
+                                    <input type="text" id="servicelbIP" name="servicelbIP"
+                                           [(ngModel)]="servicelbCreateCtrl.servicelb.ipAddress" placeholder="Enter IP address" #servicelbIP="ngModel">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <ctv-collapsible [title]="'Label Selectors'" [collapsed]="false">
+                        <div class="field">
+                            <div class="description">
+                                Use this to add your selector name+value pairs.
+                            </div>
+                            <ctv-namevalue [items]="servicelbCreateCtrl.labelSelectors" (itemsChange)="servicelbCreateCtrl.labelSelectors=$event"></ctv-namevalue>
+                        </div>
+                    </ctv-collapsible>
+
+                    <ctv-collapsible [title]="'Ports'" [collapsed]="false">
+                        <div class="field">
+                            <ctv-servicelbports [items]="servicelbCreateCtrl.servicelb.ports" (itemsChange)="servicelbCreateCtrl.servicelb.ports=$event"></ctv-servicelbports>
+                        </div>
+                    </ctv-collapsible>
+
+                    <div class="ui grid">
+                        <div class="right aligned sixteen wide column buttonRow">
+                            <button type="button" class="ui basic button" (click)="servicelbCreateCtrl.cancelCreating()">
+                                Cancel
+                            </button>
+                            <button type="submit" class="ui primary button">
+                                Create
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

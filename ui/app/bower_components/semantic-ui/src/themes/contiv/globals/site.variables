@@ -1,0 +1,32 @@
+/*******************************
+     User Global Variables
+*******************************/
+
+/*-------------------
+       Fonts
+--------------------*/
+@googleFontSizes   : '100,300,400,700,400italic,700italic';
+
+/*---  Colors  ---*/
+@blue              : #049fd9;
+
+@primaryColor : @blue;
+@secondaryColor : #ffffff;
+
+
+@primaryColorHover : #036e97;
+@primaryColorFocus : @blue;
+@primaryColorDown : #626469;
+
+@secondaryColorHover : #036e97;
+@secondaryColorFocus : #ffffff;
+@secondaryColorDown : #626469;
+
+
+/*-------------------
+    Emotive Colors
+--------------------*/
+
+/* Negative */
+@negativeBackgroundColor : #FEDCD7;
+@negativeBorderColor     : #F96452;

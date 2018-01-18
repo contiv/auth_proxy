@@ -1,0 +1,79 @@
+<div class="ui sixteen column grid">
+    <div class="ui row pageHeader">
+        <div class="ui eight wide column">
+            <div class="content pageTitle">
+                {{contractGroup.contractsGroupName}}
+            </div>
+        </div>
+        <div class="right aligned eight wide column">
+
+            <div id="delete-contractgroup-modal" class="ui small modal">
+                <div class="header">Delete</div>
+                <div class="content">
+                    <p>Are you sure you want to delete the external contract group <q>{{contractGroup.contractsGroupName}}</q>?</p>
+                </div>
+                <div class="actions">
+                    <div class="ui basic deny button modalBtn">Cancel</div>
+                    <div class="ui primary approve button modalBtn" (click)="deleteContractGroup()">
+                        Delete
+                    </div>
+                </div>
+            </div>
+
+            <button class="ui basic button" (click)="returnToContractGroups()">
+                Close
+            </button>
+
+            <button class="ui secondary button" onclick="$('#delete-contractgroup-modal').modal('show')">
+                <i class="trash icon"></i>
+                Remove
+            </button>
+        </div>
+    </div>
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div class="breadcrumbs">
+                <span class="crumb">
+                    <a href="/#/m/networkpolicies/list">
+                        Network Policies
+                    </a>
+                </span>
+                <span class="crumb">
+                    <a (click)="returnToContractGroups()">
+                        ACI External Contract Groups
+                    </a>
+                </span>
+                <span class="crumb">{{contractGroup.contractsGroupName}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="ui row">
+        <div class="ui basic segment">
+            <div class="ui active inverted dimmer" *ngIf="showLoader">
+                <div class="ui loader"></div>
+            </div>
+
+            <table>
+                <tbody>
+                <tr>
+                    <td class="ctv-header">External Contract Group Name</td>
+                    <td class="ctv-value">{{contractGroup.contractsGroupName}}</td>
+                </tr>
+                <tr>
+                    <td class="ctv-header">Tenant</td>
+                    <td class="ctv-value">{{contractGroup.tenantName}}</td>
+                </tr>
+                <tr>
+                    <td class="ctv-header">External Contract Group Type</td>
+                    <td class="ctv-value">{{contractGroup.contractsType}}</td>
+                </tr>
+                <tr>
+                    <td class="ctv-header">Contracts</td>
+                    <td class="ctv-value">{{contractGroup.contracts?.join(", ")}}</td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

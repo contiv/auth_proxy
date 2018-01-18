@@ -1,0 +1,78 @@
+<div class="ui basic segment">
+    <div class="ui active inverted dimmer" *ngIf="networkDetailsCtrl.showLoader">
+        <div class="ui loader"></div>
+    </div>
+    <table>
+        <tbody>
+        <tr>
+            <td class="ctv-header">Name</td>
+            <td class="ctv-value">{{networkDetailsCtrl.network.networkName}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header">Tenant</td>
+            <td class="ctv-value">{{networkDetailsCtrl.network.tenantName}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header">Encapsulation</td>
+            <td class="ctv-value">{{networkDetailsCtrl.network.encap}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header">Subnet</td>
+            <td class="ctv-value">{{networkDetailsCtrl.network.subnet}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header">Gateway</td>
+            <td class="value">{{networkDetailsCtrl.network.gateway}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h4 class="ui header" style="margin-top: 30px">Application Groups</h4>
+
+    <div style="margin-top: 20px">
+
+        <ctv-search (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [placeholder]="'Search application groups...'"></ctv-search>
+
+        <ctv-table #tableRef
+                   [defaultSortColumn]="'groupName'"
+                   [items]="networkDetailsCtrl.applicationGroups"
+                   (filtereditems)="networkDetailsCtrl.filteredApplicationGroups=$event"
+                   [size]="5">
+            <thead>
+            <tr>
+                <th><ctv-th [sortfield]="'groupName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj"> Group name</ctv-th></th>
+                <th><ctv-th [sortfield]="'policies'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj"> Policies</ctv-th></th>
+            </tr>
+            </thead>
+
+            <tbody *ngIf="networkDetailsCtrl.applicationGroups">
+            <tr *ngFor="let group of networkDetailsCtrl.filteredApplicationGroups">
+                <td class="three wide column">
+                    <a [routerLink]="['/m/applicationgroups/details', group.key]">{{group.groupName}}</a>
+                </td>
+                <td>{{group.policies.join(", ")}}</td>
+            </tr>
+            </tbody>
+
+            <tbody *ngIf="!networkDetailsCtrl.applicationGroups || networkDetailsCtrl.applicationGroups.length==0">
+                <tr class="noDataFound"><td colspan="2">No application groups defined.</td></tr>
+            </tbody>
+
+            <tbody *ngIf="networkDetailsCtrl.applicationGroups && networkDetailsCtrl.applicationGroups.length>0 && networkDetailsCtrl.filteredApplicationGroups.length==0">
+                <tr class="noDataFound"><td colspan="2">No records matched your filter criteria.</td></tr>
+            </tbody>
+
+            <tfoot>
+            <tr class="pagination">
+                <td colspan="2">
+                    <ctv-tpagination [chunks]="tableRef.pageChunks"
+                                     (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
+                                     (prevChunk)="tableRef.showPrevChunk()"
+                                     (nextChunk)="tableRef.showNextChunk()">
+                    </ctv-tpagination>
+                </td>
+            </tr>
+            </tfoot>
+        </ctv-table>
+    </div>
+</div>

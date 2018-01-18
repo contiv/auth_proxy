@@ -1,0 +1,41 @@
+tbody tr{
+    cursor: pointer;
+}
+
+tbody tr.notSelected:hover{
+    background-color: aliceblue;
+}
+
+.selected:hover{
+    background-color: #4D7198;
+    color: white;
+}
+
+.selected{
+    background-color: #4D7198;
+    color: white;
+}
+
+.notSelected{
+    background: none;
+}
+
+.graphTable{
+    width:80%;
+}
+
+.kpi a.ui.fluid.card { background-color: #e0e0e0; border: 1px solid #e8e8e8; box-shadow: none; }
+.kpi a.ui.fluid.card:hover { transform: none; box-shadow: 0 0 12px rgba(32,32,32,0.2); }
+
+.kpiHeader {
+    font-size: 0.9rem;
+    color: #036e97;
+    text-align: center;
+    white-space: nowrap
+}
+.kpiValue {
+    font-weight: 300;
+    font-size: 40px;
+    color: #036e97;
+    margin: 20px
+}

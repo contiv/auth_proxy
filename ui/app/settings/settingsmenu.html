@@ -1,0 +1,48 @@
+<div class="ui sixteen column grid">
+    <div class="ui row pageHeader">
+        <div class="left aligned eight wide column">
+            <div class="content pageTitle">Settings</div>
+        </div>
+        <div class="right aligned eight wide column">&nbsp;</div>
+    </div>
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div class="breadcrumbs"></div>
+        </div>
+    </div>
+
+    <div class="ui row" style="margin-bottom: 30px;">
+        <div class="ui sixteen wide column">
+
+            <div class="ui tabular menu">
+                <a class="item" [routerLink]="['organizations']" routerLinkActive="active">
+                    Tenants
+                </a>
+                <a class="item" [routerLink]="['users']" routerLinkActive="active">
+                    User Management
+                </a>
+                <a class="item" [routerLink]="['authorization']" routerLinkActive="active">
+                    Authorizations
+                </a>
+                <a class="item" [routerLink]="['nodes']" routerLinkActive="active">
+                    Nodes (BGP)
+                </a>
+                <a class="item" [routerLink]="['networks']" routerLinkActive="active">
+                    Network Defaults
+                </a>
+                <a class="item" [routerLink]="['ldap']" routerLinkActive="active">
+                    LDAP Settings
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+
+            <router-outlet></router-outlet>
+
+        </div>
+    </div>
+</div>

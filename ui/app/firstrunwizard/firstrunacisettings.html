@@ -1,0 +1,8 @@
+<div class="ui grid" style="margin-bottom: 30px">
+    <div class="left floated sixteen wide column">
+        <div class="content">
+            <span>Configure ACI Settings</span>
+        </div>
+    </div>
+</div>
+<acisettingcomp [firstRunWiz]="true" (updateAciDef)="updateAciSettings($event)" [setting]="setting" (goback)="goBack()" (skip)="skip()" (cancel)="cancel()" [disabled]="disabled"></acisettingcomp>

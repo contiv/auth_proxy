@@ -1,0 +1,90 @@
+<div [ngSwitch]="mode" class="field policyOutput">
+    <table *ngSwitchCase="'edit'" class="ui very basic collapsing unstackable table noRowBorders">
+        <tbody>
+        <tr class="noHover">
+            <td>
+                <div class="ui left icon input">
+                    <input name="contractGroupSearchText"
+                           type="text"
+                           [(ngModel)]="contractGroupSearchText"
+                           placeholder="filter menu options">
+                    <i class="search icon"></i>
+                </div>
+            </td>
+            <td>
+                <select #selectContractGroupRef
+                        name="selectContractGroups"
+                        class="ui dropdown"
+                        [class.noDataFound]="!contractGroups.length"
+                        ngModel>
+                    <option *ngIf="contractGroups.length" value="">-- Select an external contract group --</option>
+                    <option *ngIf="!contractGroups.length" value="">No external contract groups defined</option>
+                    <option *ngFor="let contractGroup of (contractGroups | filter:contractGroupSearchText)"
+                            [value]="contractGroup.contractsGroupName">
+                        {{contractGroup.contractsGroupName}}
+                    </option>
+                </select>
+            </td>
+            <td>
+                <button type="button" class="ui icon button iconBtn primaryIconBtn"
+                        (click)="addContractGroup(selectContractGroupRef.value)">
+                    <i class="add icon"></i>
+                </button>
+            </td>
+        </tr>
+        <tr *ngFor="let contractGroupName of applicationgroup.extContractsGrps">
+            <td>Will apply: "{{contractGroupName}}"</td>
+            <td></td>
+            <td>
+                <button type="button" class="ui icon button iconBtn secondaryIconBtn"
+                        (click)="removeContractGroup(contractGroupName)">
+                    <i class="trash icon"></i>
+                </button>
+            </td>
+        </tr>
+        <tr *ngIf="!applicationgroup.extContractsGrps" class="noDataFound">
+            <td>select an external contract group or groups from the dropdown</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table *ngSwitchCase="'details'" class="ui very basic unstackable table">
+        <tbody *ngIf="applicationgroup.extContractsGrps">
+        <tr *ngFor="let contractGroupName of applicationgroup.extContractsGrps">
+            <td>Applying: "{{contractGroupName}}"</td>
+        </tr>
+        </tbody>
+        <tbody *ngIf="!applicationgroup.extContractsGrps">
+        <tr class="noDataFound">
+            <td>No external contract groups were selected</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h5 class="ui header">All Applicable External Contract Groups</h5>
+    <table class="ui very basic unstackable table" style="margin-top: 40px">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Tenant</th>
+            <th>Type</th>
+            <th>Contracts</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let contractGroup of selectedContractGroups">
+            <td>{{contractGroup.contractsGroupName}}</td>
+            <td>{{contractGroup.tenantName}}</td>
+            <td>{{contractGroup.contractsType}}</td>
+            <td>{{contractGroup.contracts?.join(", ")}}</td>
+        </tr>
+
+        </tbody>
+        <tbody *ngIf="selectedContractGroups.length==0">
+        <tr class="noDataFound">
+            <td colspan="4">None applied</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

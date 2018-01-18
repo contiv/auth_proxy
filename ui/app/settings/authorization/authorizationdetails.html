@@ -1,0 +1,85 @@
+<div [ngSwitch]="mode" class="ui sixteen column grid ">
+    <div class="ui row pageHeader">
+        <div class="left aligned eight wide column">
+            <div *ngSwitchCase="'details'" class="content pageTitle">{{authorization.PrincipalName}}</div>
+            <div *ngSwitchCase="'edit'" class="content pageTitle">{{authorization.PrincipalName}}</div>
+        </div>
+        <div class="right aligned eight wide column">
+
+            <div id="delete-auth-modal" class="ui small modal">
+                <div class="header">Delete
+                </div>
+                <div class="content">
+                    <p *ngIf="authorization.Role!=='admin'">Are you sure you want to delete the authorization for <q>{{authorization.PrincipalName}}</q>
+                        for Tenant <q>{{authorization.TenantName}}</q>?</p>
+                    <p *ngIf="authorization.Role==='admin'">Are you sure you want to delete the authorization for <q>{{authorization.PrincipalName}}</q>
+                        who has an admin role?</p>
+                </div>
+                <div class="actions">
+                    <div class="ui basic deny button modalBtn">Cancel</div>
+                    <div class="ui primary approve button modalBtn" (click)="deleteAuthorization()">
+                        Delete
+                    </div>
+                </div>
+            </div>
+
+            <button *ngSwitchCase="'details'" class="ui basic button"
+                    (click)="returnToList()">
+                Close
+            </button>
+            <button class="ui button"
+                    [ngClass]="{disabled: isRootAdmin, secondary: !isRootAdmin}"
+                    style="height: 30px; font-size: 13px; padding: 0 24px;"
+                    onclick="$('#delete-auth-modal').modal('show')">
+                <i class="trash icon"></i>
+                Remove
+            </button>
+
+        </div>
+    </div>
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+
+            <div class="ui basic segment" [ngClass]="{loading: showLoader}">
+
+                <div class="ui row">
+                    <div class="ui sixteen wide column">
+
+                        <div *ngIf="!isRootAdmin" class="description">Authorization records cannot be edited. Remove this record and recreate it if what you see here is not what you want.</div>
+                        <div *ngIf="isRootAdmin" class="description">Authorization records cannot be edited or deleted for built-in admin user.</div>
+
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td class="ctv-header">Username</td>
+                                    <td class="ctv-value">{{authorization.PrincipalName}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="ctv-header">Local</td>
+                                    <td class="ctv-value">{{(authorization.Local?'yes':'no')}}</td>
+                                </tr>
+                                <tr *ngSwitchCase="'details'">
+                                    <td class="ctv-header">Role</td>
+                                    <td class="ctv-value">{{authorization.Role}}</td>
+                                </tr>
+                                <tr *ngSwitchCase="'details'">
+                                    <td class="ctv-header">Tenant Authorization</td>
+                                    <td class="ctv-value">{{authorization.TenantName}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="ctv-header">Authorization UUID</td>
+                                    <td class="ctv-value">{{authorization.AuthzUUID}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+

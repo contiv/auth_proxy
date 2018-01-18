@@ -1,6 +1,4 @@
-.git
-
 # don't import anything from the UI except the /app folder where the
 # actual site and compiled assets live.
-build/dependencies/contiv-ui
-!build/dependencies/contiv-ui/app
+ui
+!ui/app

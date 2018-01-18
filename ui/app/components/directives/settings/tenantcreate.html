@@ -1,0 +1,20 @@
+<div clas="ui basic segment" [ngClass]="{loading: showLoader}">
+    <form id="tenantCreateForm" class="ui form" novalidate
+          [formGroup]="tenantCreateForm" (submit)="create()">
+        <div class="required seven wide field">
+            <label>Name</label>
+            <input type="text" name="tenantName" formControlName="tenantName" placeholder="Tenant Name">
+            <span class="inlineError" [hidden]="!(tenantCreateForm.get('tenantName').hasError('required') && tenantCreateForm.get('tenantName').dirty)">
+                Please enter a Tenant name
+            </span>
+        </div>
+        <div class="required right floated seven wide field" *ngIf="displayType === DisplayType.component">
+            <button type="submit" class="ui primary button" style="float: right">
+                Create
+            </button>
+            <button type="button" class="ui basic button" (click)="cancel()" style="float: right">
+                Cancel
+            </button>
+        </div>
+    </form>
+</div>

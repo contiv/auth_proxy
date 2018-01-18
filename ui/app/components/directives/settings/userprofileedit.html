@@ -1,0 +1,72 @@
+<div class="ui basic segment" [ngClass]="{loading: showLoader}">
+    <form class="ui form"
+          role="form"
+          (submit)="saveUser(formRef.valid)" novalidate #formRef="ngForm">
+    
+        <div class="ui sixteen column grid">
+            <div class="ui row" *ngIf="displayType==ProfileDisplayType.modal">
+                <div class="ui six wide column">
+                    <div class="field">
+                        <label for="firstname">Username</label>
+                        <input type="text" id="username" name="username" [disabled]="true"
+                               [(ngModel)]="user.username" #username="ngModel">
+                    </div>
+                </div>
+            </div>
+            <div class="ui row">
+                <div class="ui six wide column">
+                    <div class="field">
+                        <label for="firstname">First Name</label>
+                        <input type="text" id="firstname" name="firstname"
+                               [(ngModel)]="user.first_name"
+                               placeholder="Enter First Name" #firstname="ngModel">
+                    </div>
+                </div>
+            </div>
+            <div class="ui row">
+                <div class="ui six wide column">
+                    <div class="field">
+                        <label for="lastname">Last Name</label>
+                        <input type="text" id="lastname" name="lastname"
+                               [(ngModel)]="user.last_name"
+                               placeholder="Enter Last Name" #lastname="ngModel">
+                    </div>
+                </div>
+            </div>
+            <div class="ui row">
+                <div class="ui six wide column">
+                    <div class="field">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password"
+                               [(ngModel)]="user.password"
+                               placeholder="Reset Password" #password="ngModel">
+                    </div>
+                </div>
+    
+            </div>
+            <div class="ui row">
+    
+                <div class="ui six wide column">
+                    <label>&nbsp;<br>
+                        <input type="checkbox" name="userdisabled" tabindex="0" class="alignLabel"
+                               [(ngModel)]="user.disable">
+                        Disabled
+                    </label>
+                </div>
+    
+            </div>
+            <div class="ui row" *ngIf="displayType===ProfileDisplayType.component">
+    
+                <div class="right aligned six wide column buttonRow">
+                    <button type="button" class="ui basic button" (click)="closeEdit()">
+                        Cancel
+                    </button>
+                    <button type="submit" class="ui primary button">
+                        Save
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>

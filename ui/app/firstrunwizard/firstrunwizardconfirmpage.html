@@ -1,0 +1,122 @@
+<div class="ui basic segment" style="margin-top: -22px;">
+    <div class="ui active inverted dimmer" *ngIf="showLoader">
+        <div class="ui large text loader">
+            <span style="font-size: 25px; font-weight: 300">Setting up Contiv</span>
+        </div>
+    </div>
+    <div class="ui grid" *ngIf="skipArray.indexOf(false) < 0" style="margin-top: 10%; margin-bottom: 15%">
+        <div class="ui row">
+            <div class="ui center aligned sixteen wide column">
+                <span style="font-size: 20px">No Configuration has been set, Click finish to load Contiv with default setup.</span>
+            </div>
+        </div>
+    </div>
+    <div class="ui grid" *ngIf="skipArray.indexOf(false) >= 0">
+        <div class="ui row">
+            <div class="left floated sixteen wide column">
+                <div class="content" style="font-size: 20px">
+                    <span>Verify all the configuration</span>
+                </div>
+            </div>
+        </div>
+        <div class="ui row" style="margin-top: 10px;">
+            <div class="ui eight wide column" *ngIf="skipArray[0]===false">
+                <h4 class="ui header">Network Defaults</h4>
+                <table class="ui very basic selectable table">
+                    <tbody>
+                    <tr>
+                        <td class="ctv-header eight wide column">Network infrastructure type</td>
+                        <td>{{wizardService.setting.networkInfraType}}</td>
+                    </tr>
+                    <tr>
+                        <td class="ctv-header eight wide column">Allowed vlan range</td>
+                        <td>{{wizardService.setting.vlans}}</td>
+                    </tr>
+                    <tr>
+                        <td class="ctv-header eight wide column">Allowed vxlan range</td>
+                        <td>{{wizardService.setting.vxlans}}</td>
+                    </tr>
+                    <tr>
+                        <td class="ctv-header eight wide column">Forwarding mode</td>
+                        <td>{{wizardService.setting.fwdMode}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="ui eight wide column" *ngIf="skipArray[1]===false">
+                <h4 class="ui header">ACI Settings</h4>
+                <table class="ui very basic selectable table">
+                    <tbody>
+                    <tr>
+                        <td class="ctv-header eight wide column">Physical domain</td>
+                        <td>{{wizardService.aciSetting.physicalDomain}}</td>
+                    </tr>
+                    <tr>
+                        <td class="ctv-header eight wide column">Node bindings</td>
+                        <td>{{wizardService.aciSetting.nodeBindings}}</td>
+                    </tr>
+                    <tr>
+                        <td class="ctv-header eight wide column">Path bindings</td>
+                        <td>{{wizardService.aciSetting.pathBindings}}</td>
+                    </tr>
+                    <tr>
+                        <td class="ctv-header eight wide column">Enforce security policies</td>
+                        <td>{{wizardService.aciSetting.enforcePolicies}}</td>
+                    </tr>
+                    <tr>
+                        <td class="ctv-header eight wide column">Lookup objects in common tenant</td>
+                        <td>{{wizardService.aciSetting.includeCommonTenant}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="ui eight wide column" *ngIf="skipArray[2]===false">
+                <h4 class="ui header">Network</h4>
+                <table class="ui very basic selectable table">
+                    <tbody>
+                    <tr>
+                        <td class="ctv-header eight wide column">Name</td>
+                        <td>{{wizardService.newNetwork.networkName}}</td>
+                    </tr>
+                    <tr>
+                        <td class="ctv-header eight wide column">Tenant name</td>
+                        <td>{{wizardService.newNetwork.tenantName}}</td>
+                    </tr>
+                    <tr>
+                        <td class="ctv-header eight wide column">Encap</td>
+                        <td>{{wizardService.newNetwork.encap}}</td>
+                    </tr>
+                    <tr>
+                        <td class="ctv-header eight wide column">Subnet</td>
+                        <td>{{wizardService.newNetwork.subnet}}</td>
+                    </tr>
+                    <tr>
+                        <td class="ctv-header eight wide column">Gateway</td>
+                        <td>{{wizardService.newNetwork.gateway}}</td>
+                    </tr>
+                    <tr>
+                        <td class="ctv-header eight wide column">Network type</td>
+                        <td>{{wizardService.newNetwork.nwType}}</td>
+                    </tr>
+                    <tr>
+                        <td class="ctv-header eight wide column">Packet tag</td>
+                        <td>{{wizardService.newNetwork.pktTag}}</td>
+                    </tr>
+                    <tr>
+                        <td class="ctv-header eight wide column">Configured Network Tag</td>
+                        <td>{{wizardService.newNetwork.cfgdTag}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="ui section divider" style="margin-top: 50px"></div>
+    <div class="ui grid" style="margin-top: -26px">
+        <div class="right floated right aligned sixteen wide column">
+            <button type="button" class="ui basic button" (click)="cancel()">Cancel</button>
+            <button type="button" class="ui secondary button" (click)="goBack()"><i class="arrow left icon"></i>Go back</button>
+            <button type="button" class="ui primary button" (click)="process()">Finish</button>
+        </div>
+    </div>
+</div>

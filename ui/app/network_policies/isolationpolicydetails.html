@@ -1,0 +1,319 @@
+<div class="ui sixteen column grid">
+    <div [ngSwitch]="mode" class="ui row pageHeader">
+        <div class="left aligned eight wide column">
+            <div *ngSwitchCase="'details'" class="content pageTitle">{{policy.policyName}}</div>
+            <div *ngSwitchCase="'edit'" class="content pageTitle">{{policy.policyName}}</div>
+        </div>
+        <div class="right aligned eight wide column">
+
+            <div class="right aligned five wide column">
+                <div id="delete-policy-modal" class="ui small modal">
+                    <div class="header">Delete</div>
+                    <div class="content">
+                        <p>Are you sure you want to delete the policy <q>{{policy.policyName}}</q>?</p>
+                    </div>
+                    <div class="actions">
+                        <div class="ui basic deny button modalBtn">Cancel</div>
+                        <div class="ui primary approve button modalBtn" (click)="deletePolicy()">
+                            Delete
+                        </div>
+                    </div>
+                </div>
+                <button *ngSwitchCase="'details'" type="button" class="ui basic button"
+                        (click)="cancelDetails()">
+                    Close
+                </button>
+                <button *ngSwitchCase="'edit'" type="button" class="ui basic button"
+                        (click)="cancelEditing()">
+                    Close
+                </button>
+                <button *ngSwitchCase="'details'" class="ui secondary button"
+                        (click)="editPolicy()">
+                    Edit
+                </button>
+                <button *ngSwitchCase="'details'" class="ui secondary button" onclick="$('#delete-policy-modal').modal('show')">
+                    <i class="trash icon"></i>
+                    Remove
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div class="breadcrumbs">
+                <span class="crumb">
+                    <a href="/#/m/networkpolicies/list">
+                        Network Policies
+                    </a>
+                </span>
+                <span class="crumb">
+                    <a href="/#/m/networkpolicies/list">
+                        Isolation Policies
+                    </a>
+                </span>
+                <span class="crumb">{{policy.policyName}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+            <div class="ui tabular menu" *ngIf="mode == 'details'">
+                <a class="item" [ngClass]="{active: infoselected}" (click)="infoselected=true">
+                    Details
+                </a>
+                <a class="item" [ngClass]="{active: !infoselected}" (click)="infoselected=false">
+                    Stats
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+
+            <div class="ui basic segment" *ngIf="infoselected">
+                <div class="ui active inverted dimmer" *ngIf="showLoader">
+                    <div class="ui loader"></div>
+                </div>
+
+                <table>
+                    <tbody>
+                    <tr>
+                        <td class="ctv-header">Name</td>
+                        <td class="ctv-value">{{policy.policyName}}</td>
+                    </tr>
+                    <tr>
+                        <td class="ctv-header">Tenant</td>
+                        <td class="ctv-value">{{policy.tenantName}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <form class="ui form policyOutput" role="form">
+                    <h4 class="ui header">Incoming rules</h4>
+
+                    <div class="field">
+                        <div *ngIf="incorrectCIDR" class="ui negative message">
+                            <ul class="list">
+                                <li>Please enter the IP address in CIDR notation</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <table class="ui very basic unstackable table">
+                        <thead>
+                        <tr>
+                            <th class="two wide">Priority</th>
+                            <th class="two wide">Action</th>
+                            <th class="three wide">From group</th>
+                            <th class="two wide">From network</th>
+                            <th class="two wide">From IP address</th>
+                            <th class="two wide">Protocol</th>
+                            <th class="two wide">Port</th>
+                            <th class="one wide">&nbsp;</th>
+                        </tr>
+                        </thead>
+
+                        <tbody *ngIf="mode=='edit'">
+                            <tr class="noHover">
+                                <td>
+                                    <div class="ui input">
+                                        <input name="incomingRulePriority" [(ngModel)]="newIncomingRule.priority" type="number">
+                                    </div>
+                                </td>
+                                <td>
+                                    <select class="ui dropdown" name="incomingRuleAction" [(ngModel)]="newIncomingRule.action">
+                                        <option value="allow">allow</option>
+                                        <option value="deny">deny</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="ui dropdown"
+                                            #incomingSelectedApplicationGroup
+                                            name="incomingSelectedApplicationGroup"
+                                            ngModel
+                                            (change)="onChangeIncomingApplicationGroupSelection(incomingSelectedApplicationGroup.value)"
+                                            [disabled]="disableIncomingApplicationGroupSelection">
+                                        <option selected value="">none</option>
+                                        <option *ngFor="let group of applicationGroups">{{group.groupName}}</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="ui dropdown"
+                                            #incomingSelectedNetwork
+                                            name="incomingSelectedNetwork"
+                                            ngModel
+                                            (change)="onChangeIncomingNetworkSelection(incomingSelectedNetwork.value)"
+                                            [disabled]="disableIncomingNetworkSelection">
+                                        <option selected value="">none</option>
+                                        <option *ngFor="let network of networks">{{network.networkName}}</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="ui input">
+                                        <input name="incomingRuleFromIpAddress"
+                                               [(ngModel)]="newIncomingRule.fromIpAddress"
+                                               [disabled]="disableIncomingIPAddressSelection"
+                                               (change)="onChangeIncomingIPAddress()"
+                                               placeholder="0.0.0.0/0">
+                                    </div>
+                                </td>
+                                <td>
+                                    <select class="ui dropdown" name="incomingRuleProtocol" [(ngModel)]="newIncomingRule.protocol">
+                                        <option value="tcp">tcp</option>
+                                        <option value="udp">udp</option>
+                                        <option value="icmp">icmp</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="ui input">
+                                        <input name="incomingRulePort"
+                                               [(ngModel)]="newIncomingRule.port"
+                                               type="number"
+                                               placeholder="0-65535">
+                                    </div>
+                                </td>
+                                <td>
+                                    <button class="ui icon button iconBtn primaryIconBtn" (click)="addIncomingRule()">
+                                        <i class="add icon"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody *ngIf="incomingRules.length">
+                            <tr *ngFor="let rule of incomingRules">
+                                <td>{{rule.priority}}</td>
+                                <td>{{rule.action}}</td>
+                                <td>{{rule.fromEndpointGroup}}</td>
+                                <td>{{rule.fromNetwork}}</td>
+                                <td>{{rule.fromIpAddress}}</td>
+                                <td>{{rule.protocol}}</td>
+                                <td>{{rule.port}}</td>
+                                <td *ngIf="mode == 'edit'">
+                                    <button class="ui icon button iconBtn secondaryIconBtn" (click)="deleteIncomingRule(rule.key)">
+                                        <i class="trash icon"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody *ngIf="!incomingRules.length">
+                            <tr class="noDataFound">
+                                <td colspan="8">None applied</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h4 class="ui header" style="margin-top: 40px">Outgoing rules</h4>
+                    <table class="ui very basic unstackable table" style="margin-top: 40px">
+                        <thead>
+                        <tr>
+                            <th class="two wide">Priority</th>
+                            <th class="two wide">Action</th>
+                            <th class="three wide">To group</th>
+                            <th class="two wide">To network</th>
+                            <th class="two wide">To IP address</th>
+                            <th class="two wide">Protocol</th>
+                            <th class="two wide">Port</th>
+                            <th class="one wide">&nbsp;</th>
+                        </tr>
+                        </thead>
+
+                        <tbody *ngIf="mode=='edit'">
+                        <tr class="noHover">
+
+                            <td>
+                                <div class="ui input">
+                                    <input name="outgoingRulePriority" [(ngModel)]="newOutgoingRule.priority" type="number">
+                                </div>
+                            </td>
+                            <td>
+                                <select class="ui dropdown" name="outgoingRuleAction" [(ngModel)]="newOutgoingRule.action">
+                                    <option value="allow">allow</option>
+                                    <option value="deny">deny</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="ui dropdown"
+                                        #outgoingSelectedApplicationGroup
+                                        name="outgoingSelectedApplicationGroup"
+                                        ngModel
+                                        (change)="onChangeOutgoingApplicationGroupSelection(outgoingSelectedApplicationGroup.value)"
+                                        [disabled]="disableOutgoingApplicationGroupSelection">
+                                    <option value="">none</option>
+                                    <option *ngFor="let group of applicationGroups">{{group.groupName}}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="ui dropdown"
+                                        #outgoingSelectedNetwork
+                                        name="outgoingSelectedNetwork"
+                                        ngModel
+                                        (change)="onChangeOutgoingNetworkSelection(outgoingSelectedNetwork.value)"
+                                        [disabled]="disableOutgoingNetworkSelection">
+                                    <option value="">none</option>
+                                    <option *ngFor="let network of networks">{{network.networkName}}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <div class="ui input">
+                                    <input name="outgoingRuleToIpAddress"
+                                           [(ngModel)]="newOutgoingRule.toIpAddress"
+                                           [disabled]="disableOutgoingIPAddressSelection"
+                                           (change)="onChangeOutgoingIPAddress()"
+                                           placeholder="0.0.0.0/0">
+                                </div>
+                            </td>
+                            <td>
+                                <select class="ui dropdown" name="outgoingRuleProtocol" [(ngModel)]="newOutgoingRule.protocol">
+                                    <option value="tcp">tcp</option>
+                                    <option value="udp">udp</option>
+                                    <option value="icmp">icmp</option>
+                                </select>
+                            </td>
+                            <td>
+                                <div class="ui input">
+                                    <input name="outgoingRulePort"
+                                           [(ngModel)]="newOutgoingRule.port"
+                                           type="number"
+                                           placeholder="0-65535">
+                                </div>
+                            </td>
+
+                            <td>
+                                <button class="ui icon button iconBtn primaryIconBtn" (click)="addOutgoingRule()">
+                                    <i class="add icon"></i>
+                                </button>
+                            </td>
+
+                        </tr>
+                        <tbody *ngIf="outgoingRules.length">
+                            <tr *ngFor="let rule of outgoingRules">
+                                <td>{{rule.priority}}</td>
+                                <td>{{rule.action}}</td>
+                                <td>{{rule.toEndpointGroup}}</td>
+                                <td>{{rule.toNetwork}}</td>
+                                <td>{{rule.toIpAddress}}</td>
+                                <td>{{rule.protocol}}</td>
+                                <td>{{rule.port}}</td>
+                                <td *ngIf="mode == 'edit'">
+                                    <button class="ui icon button iconBtn secondaryIconBtn" (click)="deleteOutgoingRule(rule.key)">
+                                        <i class="trash icon"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody *ngIf="!outgoingRules.length">
+                            <tr class="noDataFound">
+                                <td colspan="8">None applied</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <isolationpolicystats [statKey]="statskey" *ngIf="!infoselected"></isolationpolicystats>
+        </div>
+    </div>
+
+</div>
