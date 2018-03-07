@@ -1,0 +1,97 @@
+<div [ngSwitch]="mode" class="ui sixteen column grid">
+    <div class="ui row pageHeader">
+        <div class="left aligned eight wide column">
+            <div class="content pageTitle">{{appProfile.appProfileName}}</div>
+        </div>
+        <div class="right aligned eight wide column" *ngSwitchCase="'details'">
+            <button class="ui basic button"
+                    (click)="returnToAppProfile()">
+                Close
+            </button>
+            <button class="ui secondary button"
+                    (click)="editAppProfile()">
+                Edit
+            </button>
+            <button class="ui secondary button" onclick="$('#delete-appProfile-modal').modal('show')">
+                <i class="trash icon"></i>
+                Remove
+            </button>
+
+        </div>
+    </div>
+
+    <div id="delete-appProfile-modal" class="ui small modal">
+        <div class="header">Delete</div>
+        <div class="content">
+            <p>Are you sure you want to delete the application profile <q>{{appProfile.appProfileName}}</q>?</p>
+        </div>
+        <div class="actions">
+            <div class="ui basic deny button modalBtn">Cancel</div>
+            <div class="ui primary approve button modalBtn" (click)="deleteAppProfile()">
+                Delete
+            </div>
+        </div>
+    </div>
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+            <div class="breadcrumbs">
+                <span class="crumb">
+                    <a href="/#/m/appprofiles">
+                        ACI Application Profiles
+                    </a>
+                </span>
+                <span class="crumb">{{appProfile.appProfileName}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui row" style="margin-top: 30px">
+        <div class="ui sixteen wide column">
+
+            <div class="ui basic segment ctvTable">
+                <div class="ui active inverted dimmer" *ngIf="showLoader">
+                    <div class="ui loader"></div>
+                </div>
+
+                <table>
+                    <tbody>
+                    <tr>
+                        <td class="ctv-header">Application Profile Name</td>
+                        <td class="ctv-value">{{appProfile.appProfileName}}</td>
+                    </tr>
+                    <tr>
+                        <td class="ctv-header">Tenant</td>
+                        <td class="ctv-value">{{appProfile.tenantName}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h4 class="ui header" style="margin-top: 40px">Application Groups</h4>
+
+                <div [ngSwitch]="mode">
+                    <form class="ui form"
+                          role="form"
+                          (submit)="saveAppProfile(formRef.valid)" novalidate #formRef="ngForm">
+
+                        <ctv-appgroupselection [mode]="mode" [appProfile]="appProfile"></ctv-appgroupselection>
+
+                        <div class="ui grid" style="margin-top: 40px">
+                            <div class="right aligned sixteen wide column">
+                                <button *ngSwitchCase="'edit'" type="button" class="ui basic button"
+                                        (click)="cancelEditing()">
+                                    Cancel
+                                </button>
+                                <button *ngSwitchCase="'edit'" type="submit" class="ui primary button">
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

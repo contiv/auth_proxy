@@ -1,0 +1,84 @@
+<div class="ui sixteen column grid">
+    <div class="ui row pageHeader">
+        <div class="left aligned eight wide column">
+            <div class="content pageTitle">Service Load Balancers</div>
+        </div>
+        <div class="right aligned eight wide column">
+          <button class="ui primary button" (click)="create()">
+              <i class="add icon"></i>
+              Create Service Load Balancer
+          </button>
+        </div>
+    </div>
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div class="breadcrumbs">
+                <span class="crumb">Service Load Balancers</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+
+            <ctv-search *ngIf="servicelbListCtrl.servicelbs" (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [count]="tableRef.count"></ctv-search>
+
+            <div class="ui basic segment ctvTable">
+                <div class="ui active inverted dimmer" *ngIf="servicelbListCtrl.showLoader">
+                    <div class="ui loader"></div>
+                </div>
+                <ctv-table #tableRef [defaultSortColumn]="'serviceName'"
+                           [items]="servicelbListCtrl.servicelbs"
+                           (filtereditems)="servicelbListCtrl.filteredservicelbs=$event"
+                           [size]="12">
+                    <thead>
+                        <tr>
+                            <th><ctv-th [sortfield]="'serviceName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Name</ctv-th></th>
+                            <th><ctv-th [sortfield]="'tenantName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Tenant</ctv-th></th>
+                            <th><ctv-th [sortfield]="'networkName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Network</ctv-th></th>
+                            <th><ctv-th [sortfield]="'ipAddress'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">IP Address</ctv-th></th>
+                            <th><ctv-th [sortfield]="'selectors'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Label Selectors</ctv-th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody *ngIf="servicelbListCtrl.servicelbs && servicelbListCtrl.servicelbs.length">
+                        <tr *ngFor="let servicelb of servicelbListCtrl.filteredservicelbs">
+                            <td><a [routerLink]="['../details', servicelb.key]">{{servicelb.serviceName}}</a></td>
+                            <td>{{servicelb.tenantName}}</td>
+                            <td>{{servicelb.networkName}}</td>
+                            <td>{{servicelb.ipAddress}}</td>
+                            <td>
+                                <div class="ui label tiny" *ngFor="let selector of servicelb.selectors">{{selector}}</div>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                    <tbody *ngIf="servicelbListCtrl.servicelbs && !servicelbListCtrl.servicelbs.length">
+                        <tr class="noDataFound">
+                            <td colspan="2">No service load balancers found. Would you like to <a href="javascript: void(0);" (click)="create()">create one?</a></td>
+                        </tr>
+                    </tbody>
+
+                    <tbody *ngIf="servicelbListCtrl.servicelbs && servicelbListCtrl.servicelbs.length && !tableRef.count">
+                        <tr class="noDataFound">
+                            <td colspan="2">No records matched your filter criteria.</td>
+                        </tr>
+                    </tbody>
+
+                    <tfoot>
+                        <tr class="pagination">
+                            <td colspan="4">
+                                <ctv-tpagination  [chunks]="tableRef.pageChunks"
+                                                  (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
+                                                  (prevChunk)="tableRef.showPrevChunk()"
+                                                  (nextChunk)="tableRef.showNextChunk()">
+                                </ctv-tpagination>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </ctv-table>
+            </div>
+
+        </div>
+    </div>
+</div>

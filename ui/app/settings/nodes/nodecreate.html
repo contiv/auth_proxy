@@ -1,0 +1,106 @@
+<div class="ui sixteen column grid">
+    <div class="ui row pageHeader">
+        <div class="left aligned eight wide column">
+            <div class="content pageTitle">Create Node</div>
+        </div>
+        <div class="right aligned eight wide column">&nbsp;</div>
+    </div>
+
+    <div class="ui row">
+        <div class="ui sixteen wide column">
+
+            <form class="ui form" role="form"
+                  (submit)="createNode(formRef.valid)" novalidate #formRef="ngForm">
+
+                <div class="ui active inverted dimmer" *ngIf="showLoader">
+                    <div class="ui loader"></div>
+                </div>
+
+                <div class="ui basic segment">
+                    <div class="ui sixteen column grid">
+                        <div class="ui row" style="margin-bottom: 20px;">
+                            <div class="ui six wide column">
+                                <div class="field" [ngClass]="{error: newHostname.errors?.required && formRef.submitted}">
+                                    <label for="newHostname">Host name</label>
+                                    <input type="text" id="newHostname" name="newHostname"
+                                           [(ngModel)]="newNode['hostname']"
+                                           placeholder="Enter host name" required #newHostname="ngModel">
+                                    <span class="inlineError" *ngIf="newHostname.errors?.required && formRef.submitted">
+                                        <i>Host name</i> is required.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="ui header">BGP Settings</h4>
+
+                    <div class="ui sixteen column grid">
+                        <div class="ui row">
+
+                            <div class="ui six wide column">
+                                <div class="field" [ngClass]="{error: newRouterIP.errors?.required && formRef.submitted}">
+                                    <label for="newRouterIP">Router IP</label>
+                                    <input type="text" id="newRouterIP" name="newRouterIP"
+                                           [(ngModel)]="newNode['routerip']"
+                                           placeholder="Enter router IP" required #newRouterIP="ngModel">
+                                    <span class="inlineError" *ngIf="newRouterIP.errors?.required && formRef.submitted">
+                                        <i>Router IP</i> is required.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field" [ngClass]="{error: newAS.errors?.required && formRef.submitted}">
+                                    <label for="newAS">Autonomous system</label>
+                                    <input type="text" id="newAS" name="newAS"
+                                           [(ngModel)]="newNode['as']"
+                                           placeholder="Enter autonomous system"
+                                           required
+                                           #newAS="ngModel">
+                                    <span class="inlineError" *ngIf="newAS.errors?.required && formRef.submitted">
+                                        <i>Autonomous system</i> value is required.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field">
+                                    <label for="newNeighborIP">Neighbor IP</label>
+                                    <input type="text" id="newNeighborIP" name="newNeighborIP"
+                                           [(ngModel)]="newNode['neighbor']"
+                                           placeholder="Enter neighbor IP">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field">
+                                    <label for="newNeighborAS">Neighbor autonomous system</label>
+                                    <input type="text" id="newNeighborAS" name="newNeighborAS"
+                                           [(ngModel)]="newNode['neighbor-as']"
+                                           placeholder="Enter neighbor autonomous system">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="right aligned six wide column">
+                                <div class="buttonRow">
+                                    <button type="button" class="ui basic button" (click)="cancelCreating()">
+                                        Cancel
+                                    </button>
+                                    <button type="submit" class="ui primary button">
+                                        Create
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

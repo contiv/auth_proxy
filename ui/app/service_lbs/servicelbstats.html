@@ -1,0 +1,74 @@
+<div class="ui basic segment" [ngClass]="{loading: servicelbStatsCtrl.showLoader}">
+    <table>
+        <tbody>
+        <tr>
+            <td class="ctv-header">Name</td>
+            <td class="ctv-value">{{servicelbStatsCtrl.config.serviceName}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header">Number of Providers</td>
+            <td class="ctv-value">{{servicelbStatsCtrl.servicelbInspectStats.numProviders}}</td>
+        </tr>
+        <tr>
+            <td class="ctv-header">Service Vip</td>
+            <td class="ctv-value">{{servicelbStatsCtrl.servicelbInspectStats.serviceVip}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="ui section divider"></div>
+
+    <ctv-collapsible title="Providers">
+
+        <ctv-search *ngIf="!servicelbStatsCtrl.providers.length" (searchTextChange)="tableRef.showChunk(tableRef.table.pageNo,$event);" [count]="tableRef.count"></ctv-search>
+
+        <ctv-table #tableRef [defaultSortColumn]="'containerName'"
+                   [items]="servicelbStatsCtrl.providers"
+                   (filtereditems)="servicelbStatsCtrl.filteredproviders=$event"
+                   [size]="12">
+            <thead>
+                <tr>
+                    <th class="four wide column"><ctv-th [sortfield]="'containerName'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Container Name</ctv-th></th>
+                    <th class="five wide column" style="padding-left: 55px !important;"><ctv-th [sortfield]="'ipAddress'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">IP Address</ctv-th></th>
+                    <th class="five wide column" style="padding-left: 30px !important;"><ctv-th [sortfield]="'homingHost'" (sortdata)="tableRef.applysort($event)" [sortobject]="tableRef.sortObj">Host</ctv-th></th>
+                </tr>
+            </thead>
+
+            <tbody *ngIf="servicelbStatsCtrl.providers.length">
+                <tr *ngFor="let provider of servicelbStatsCtrl.filteredproviders">
+                    <td colspan="3" style="padding-left: 0 !important;">
+                        <ctv-accordion [items]="servicelbStatsCtrl.providerDetails[provider.containerID]">
+                            <div class="ui grid" style="margin-top: -33px; margin-left: 20px;">
+                                <div class="five wide column">{{provider.containerName.substr(1)}}</div>
+                                <div class="five wide column">{{provider.ipAddress.join(' ')}}</div>
+                                <div class="five wide column">{{provider.homingHost}}</div>
+                            </div>
+                        </ctv-accordion>
+                    </td>
+                </tr>
+            </tbody>
+
+            <tbody *ngIf="!servicelbStatsCtrl.providers.length">
+                <tr class="noDataFound"><td colspan="3">No container endpoints found.</td></tr>
+            </tbody>
+
+            <tbody *ngIf="servicelbStatsCtrl.providers && servicelbStatsCtrl.providers.length && !tableRef.count">
+                <tr class="noDataFound">
+                    <td colspan="3">No records matched your filter criteria.
+                </tr>
+            </tbody>
+
+            <tfoot>
+                <tr class="pagination">
+                    <td colspan="3">
+                        <ctv-tpagination [chunks]="tableRef.pageChunks"
+                                         (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
+                                         (prevChunk)="tableRef.showPrevChunk()"
+                                         (nextChunk)="tableRef.showNextChunk()">
+                        </ctv-tpagination>
+                    </td>
+                </tr>
+            </tfoot>
+        </ctv-table>
+    </ctv-collapsible>
+</div>

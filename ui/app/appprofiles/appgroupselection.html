@@ -1,0 +1,100 @@
+<div [ngSwitch]="mode" class="field" style="margin-top: 20px;">
+
+    <div *ngSwitchCase="'details'" class="description">Application groups associated with this profile.</div>
+    <div *ngSwitchCase="'edit'" class="description">Add application groups to associate with this profile.</div>
+
+    <table *ngSwitchCase="'edit'" class="ui very basic collapsing unstackable table noRowBorders" style="margin-top:0; ">
+        <tbody>
+        <tr class="noHover">
+            <td>
+                <div class="ui left icon input">
+                    <input name="applicationGroupSearchText"
+                           type="text"
+                           [(ngModel)]="applicationGroupSearchText"
+                           placeholder="filter menu options"
+                           size="30">
+                    <i class="search icon"></i>
+                </div>
+            </td>
+            <td>
+                <select #selectApplicationGroupRef
+                        name="selectApplicationGroups"
+                        class="ui dropdown"
+                        ngModel>
+                    <option value="">-- Select an application group --</option>
+                    <option *ngFor="let group of (applicationGroups | filter:applicationGroupSearchText)"
+                            [value]="group.groupName">
+                        {{group.groupName}}
+                    </option>
+                </select>
+            </td>
+            <td>
+                <button type="button" class="ui icon button iconBtn primaryIconBtn"
+                        (click)="addApplicationGroup(selectApplicationGroupRef.value)">
+                    <i class="add icon"></i>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <ctv-table #tableRef
+               [defaultSortColumn]="'groupName'"
+               [items]="selectedApplicationGroups"
+               (filtereditems)="filteredSelectedApplicationGroups=$event"
+               [size]="5">
+        <thead>
+        <tr>
+            <th>
+                <ctv-th [sortfield]="'groupName'" (sortdata)="tableRef.applysort($event)"
+                        [sortobject]="tableRef.sortObj"> Application group name
+                </ctv-th>
+            </th>
+            <th>
+                <ctv-th [sortfield]="'policies'" (sortdata)="tableRef.applysort($event)"
+                        [sortobject]="tableRef.sortObj"> Policies
+                </ctv-th>
+            </th>
+            <th class="right floated three wide column">&nbsp;</th>
+        </tr>
+        </thead>
+
+        <tbody *ngIf="selectedApplicationGroups">
+        <tr *ngFor="let group of filteredSelectedApplicationGroups">
+            <td>
+                <a [routerLink]="['/m/applicationgroups/details', group.key]">{{group.groupName}}</a>
+            </td>
+            <td>{{group.policies.join(", ")}}</td>
+            <td style="text-align: right;">
+                <button *ngSwitchCase="'edit'"
+                        type="button"
+                        class="ui icon button iconBtn secondaryIconBtn"
+                        (click)="removeApplicationGroup(group.groupName)">
+                    <i class="trash icon"></i>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+
+        <tbody *ngIf="selectedApplicationGroups.length==0">
+        <tr class="noDataFound">
+            <td colspan="3">
+                No application groups have been added to this profile.
+            </td>
+        </tr>
+        </tbody>
+
+        <tfoot>
+        <tr class="pagination">
+            <td colspan="3">
+                <ctv-tpagination [chunks]="tableRef.pageChunks"
+                                 (showPage)="tableRef.showChunk($event, tableRef.table.searchText)"
+                                 (prevChunk)="tableRef.showPrevChunk()"
+                                 (nextChunk)="tableRef.showNextChunk()">
+                </ctv-tpagination>
+            </td>
+        </tr>
+        </tfoot>
+    </ctv-table>
+
+</div>

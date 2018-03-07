@@ -1,0 +1,6 @@
+/*******************************
+    User Variable Overrides
+*******************************/
+@fontPath: '../../themes/contiv/assets/fonts';
+@fontName: 'contiv';
+@fallbackSRC: '';

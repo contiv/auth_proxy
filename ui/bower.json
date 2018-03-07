@@ -1,0 +1,11 @@
+{
+  "name": "contiv-ui",
+  "description": "UI for Project Contiv",
+  "version": "0.0.0",
+  "homepage": "https://github.com/contiv/contiv-ui",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "semantic-ui": "^2.1.8"
+  }
+}

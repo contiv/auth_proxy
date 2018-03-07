@@ -1,0 +1,12 @@
+<div (click)="collapsed = !collapsed" class="ctv-collapsible-label">
+    <h4 class="ui header">
+        <i *ngIf="!collapsed" class="grey minus circle outline icon"></i>
+        <i *ngIf="collapsed" class="grey plus circle outline icon"></i>
+        {{title}}
+    </h4>
+</div>
+
+
+<div class="ctv-collapsible-content" [hidden]="collapsed">
+    <ng-content></ng-content>
+</div>

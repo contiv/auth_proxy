@@ -1,0 +1,70 @@
+<div class="ui sixteen column grid">
+    <div class="ui row" [ngSwitch]="mode">
+        <div class="left aligned eight wide column pageHeader">
+            <div class="content pageTitle">{{applicationGroup.groupName}}</div>
+        </div>
+        <div *ngSwitchCase="'details'" class="right aligned eight wide column">
+            <button type="button" class="ui basic button"
+                    (click)="cancelDetails()">
+                Close
+            </button>
+            <button  class="ui secondary button"
+                    (click)="editApplicationGroup()">
+                Edit
+            </button>
+            <button class="ui secondary button" onclick="$('#delete-group-modal').modal('show')">
+                <i class="trash icon"></i>
+                Remove
+            </button>
+        </div>
+
+    </div>
+
+    <div id="delete-group-modal" class="ui small modal">
+        <div class="header">Delete</div>
+        <div class="content">
+            <p>Are you sure you want to delete the application group <q>{{applicationGroup.groupName}}</q>?</p>
+        </div>
+        <div class="actions">
+            <div class="ui basic deny button modalBtn">Cancel</div>
+            <div class="ui primary approve button modalBtn" (click)="deleteApplicationGroup()">
+                Delete
+            </div>
+        </div>
+    </div>
+
+    <div class="ui row breadcrumbRow">
+        <div class="ui sixteen wide column">
+            <div class="breadcrumbs">
+                <span class="crumb">
+                    <a href="/#/m/applicationgroups/list">
+                        Application Groups
+                    </a>
+                </span>
+                <span class="crumb">{{applicationGroup.groupName}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui row tabs">
+        <div class="aligned left ui sixteen wide column">
+            <div class="ui tabular menu" *ngIf="mode=='details'">
+                <a class="item" [ngClass]="{active: infoselected}" (click)="infoselected=true">
+                    Details
+                </a>
+                <a class="item" [ngClass]="{active: !infoselected}" (click)="infoselected=false">
+                    Stats
+                </a>
+            </div>
+            <div *ngIf="infoselected || mode == 'edit'">
+
+                <applicationgroupinfo [applicationGroup]="applicationGroup"
+                                      [mode]="mode" [showLoader]="showLoader"></applicationgroupinfo>
+            </div>
+
+            <applicationgroupstats [statkey]="statskey"
+                                   *ngIf="!infoselected && mode != 'edit'"></applicationgroupstats>
+        </div>
+    </div>
+
+</div>

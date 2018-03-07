@@ -1,0 +1,50 @@
+/*******************************
+         Site Overrides
+*******************************/
+	.ui.negative.buttons .button,
+.ui.negative.button {
+  color: #DB2828;
+  border: 1px solid #DB2828;
+  text-shadow: none;
+  background-image: none;
+}
+
+.ui.primary.button {
+    font-size: 13px;
+    padding: 0 24px;
+    height: 30px;
+    white-space: nowrap;
+}
+.ui.button:focus {
+    outline: #036e97 solid 1px;
+}
+
+.ui.basic.button {
+    font-size: 13px;
+    padding: 0 24px;
+    height: 30px;
+    width: auto;
+    white-space: nowrap;
+    border: 1px solid #c6c6c6;
+}
+.ui.basic.button:hover {
+    border: none;
+    outline: none;
+}
+
+.ui.secondary.button {
+    font-size: 13px;
+    padding: 0 24px;
+    height: 30px;
+    width: auto;
+    white-space: nowrap;
+    border: 1px solid #049fd9;
+}
+.ui.secondary.button:hover {
+    color: #ffffff;
+}
+
+.ui.button:active {
+    border: none;
+    outline: none;
+}

@@ -1,0 +1,168 @@
+<div class="ui basic segment" [ngClass]="{loading: showLoader}">
+    <div class="ui sixteen column grid">
+        <div class="ui row pageHeader">
+            <div class="left aligned eight wide column">
+                <div class="content pageTitle">LDAP Settings</div>
+            </div>
+            <div class="right aligned eight wide column">&nbsp;</div>
+        </div>
+
+        <div class="ui row breadcrumbRow">
+            <div class="ui sixteen wide column">
+                <div class="breadcrumbs">
+                <span class="crumb">
+                        LDAP Settings
+                </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui row">
+            <div class="ui sixteen wide column">
+
+                <form class="ui form" role="form" #formRef="ngForm"
+                      (ngSubmit)="updateLdapConfig(formRef.valid)" novalidate>
+                    <div class="ui sixteen column grid">
+                        <div class="ui row">
+
+                            <div class="ui six wide column">
+
+                                <div class="field" [ngClass]="{error: server.errors?.required && formRef.submitted}">
+                                    <label for="server">Server Address</label>
+                                    <input #server="ngModel"
+                                           type="text"
+                                           id="server"
+                                           name="server"
+                                           [(ngModel)]="ldapConfig.server" placeholder="Server address" required>
+                                    <span class="inlineError" *ngIf="server.errors?.required && formRef.submitted">
+                                        Please enter ldap server address
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field" [ngClass]="{error: port.errors?.required && formRef.submitted}">
+                                    <label for="port">Server Port</label>
+                                    <input #port="ngModel"
+                                           type="number"
+                                           id="port"
+                                           name="port"
+                                           [(ngModel)]="ldapConfig.port" placeholder="Server port" required>
+                                    <span class="inlineError" *ngIf="port.errors?.required && formRef.submitted">
+                                        Please enter ldap server port number
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field" [ngClass]="{error: base_dn.errors?.required && formRef.submitted}">
+                                    <label for="base_dn">Base DN</label>
+                                    <input #base_dn="ngModel"
+                                           type="text"
+                                           id="base_dn"
+                                           name="base_dn"
+                                           [(ngModel)]="ldapConfig.base_dn" placeholder="Enter base DN" required>
+                                    <span class="inlineError" *ngIf="base_dn.errors?.required && formRef.submitted">
+                                        Please enter ldap base dn
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field" [ngClass]="{error: service_account_dn.errors?.required && formRef.submitted}">
+                                    <label for="service_account_dn">Service Account DN</label>
+                                    <input #service_account_dn="ngModel"
+                                           type="text"
+                                           id="service_account_dn"
+                                           name="service_account_dn"
+                                           [(ngModel)]="ldapConfig.service_account_dn"
+                                           placeholder="Enter service account DN" required>
+                                    <span class="inlineError" *ngIf="service_account_dn.errors?.required && formRef.submitted">
+                                        Please enter ladap service account dn
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field">
+                                    <label for="service_account_password">Service Account Password</label>
+                                    <input #service_account_password="ngModel"
+                                           type="password"
+                                           id="service_account_password"
+                                           name="service_account_password"
+                                           [(ngModel)]="ldapConfig.service_account_password"
+                                           placeholder="Enter password">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <div class="field">
+                                    <label>&nbsp;<br>
+                                        <input type="checkbox" name="StartTLS" tabindex="0" class="alignLabel"
+                                               #starttls [ngModel]="ldapConfig.start_tls" (ngModelChange)="ldapConfig.start_tls = starttls.checked">
+                                        Start TLS
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row" *ngIf="ldapConfig.start_tls">
+                            <div class="ui six wide column">
+                                <div class="field">
+                                    <label>
+                                        <input type="radio" name="tls_group" tabindex="0" class="alignLabel"
+                                               #insecueverifySelected [checked]="true" [value]="true"
+                                               [(ngModel)]="ldapConfig.insecure_skip_verify">
+                                        <span style="position:relative; top:-10px; left:10px">Accept certs as-is, skipping validation</span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="tls_group" tabindex="0" class="alignLabel"
+                                               [checked]="false" [value]="false"
+                                               [(ngModel)]="ldapConfig.insecure_skip_verify">
+                                        <span style="position:relative; top:-10px; left:10px">Server FQDN</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row" *ngIf="!ldapConfig.insecure_skip_verify && ldapConfig.start_tls">
+                            <div class="ui six wide column">
+                                <div class="field" [ngClass]="{error: tls_cert_issued_to.errors?.required && formRef.submitted}">
+                                    <input #tls_cert_issued_to="ngModel"
+                                           type="text"
+                                           id="tls_cert_issued_to"
+                                           name="tls_cert_issued_to"
+                                           [(ngModel)]="ldapConfig.tls_cert_issued_to"
+                                           placeholder="Enter Server FQDN"
+                                           required>
+                                    <span class="inlineError" *ngIf="tls_cert_issued_to.errors?.required && formRef.submitted">
+                                        Please enter Server FQDN
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui row">
+                            <div class="ui six wide column">
+                                <div class="ui grid">
+                                    <div class="right floated right aligned sixteen wide column">
+                                        <div class="buttonRow">
+                                            <button type="submit" class="ui primary button">
+                                                Save
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

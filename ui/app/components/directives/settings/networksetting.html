@@ -1,0 +1,125 @@
+<form class="ui form" role="form" #formRef="ngForm"
+      (ngSubmit)="updateNetworkSettings(formRef.valid)" novalidate>
+
+    <div class="ui grid">
+        <div class="ui row">
+            <div class="ui six wide column field" [ngClass]="{error: networkInfrastructureRef.errors?.required && formRef.submitted}">
+                <label for="networkInfrastructure">Network infrastructure type</label>
+                <select #networkInfrastructureRef="ngModel"
+                        id="networkInfrastructure"
+                        name="networkInfrastructure"
+                        class="ui dropdown"
+                        [(ngModel)]="setting['networkInfraType']" required>
+                    <option value="">-- Please select network infrastructure type --</option>
+                    <option value="default">default</option>
+                    <option value="aci">aci</option>
+                </select>
+                <span class="inlineError" *ngIf="networkInfrastructureRef.errors?.required && formRef.submitted">
+                    Please enter network infrastructure type
+                </span>
+            </div>
+
+        </div>
+        <div class="ui row">
+            <div class="ui six wide column field" [ngClass]="{error: (allowedVlanRangeRef.errors?.required || allowedVlanRangeRef.errors?.pattern) && formRef.submitted}">
+                <label for="allowedVlanRange">Allowed vlan range</label>
+                <input #allowedVlanRangeRef="ngModel"
+                       type="text"
+                       id="allowedVlanRange"
+                       name="allowedVlanRange"
+                       [(ngModel)]="setting['vlans']" placeholder="1-4094" required [pattern]="vlanPattern">
+                <span class="inlineError" *ngIf="allowedVlanRangeRef.errors?.required && formRef.submitted">
+                    Please enter allowed vlan range
+                </span>
+                <span class="inlineError" *ngIf="allowedVlanRangeRef.errors?.pattern && formRef.submitted">
+                    Please enter vlan in range in the correct notation
+                </span>
+            </div>
+        </div>
+        <div class="ui row">
+            <div class="ui six wide column field" [ngClass]="{error: (allowedVxlanRangeRef.errors?.required || allowedVxlanRangeRef.errors?.pattern) && formRef.submitted}">
+                <label for="allowedVxlanRange">Allowed vxlan range</label>
+                <input #allowedVxlanRangeRef="ngModel"
+                       type="text"
+                       id="allowedVxlanRange"
+                       name="allowedVxlanRange"
+                       [(ngModel)]="setting['vxlans']" placeholder="1-10000" required [pattern]="vxlanPattern">
+                <span class="inlineError" *ngIf="allowedVxlanRangeRef.errors?.required && formRef.submitted">
+                    Please enter allowed vxlan range
+                </span>
+                <span class="inlineError" *ngIf="allowedVxlanRangeRef.errors?.pattern && formRef.submitted">
+                    Please enter vxlan in range in the correct notation
+                </span>
+            </div>
+        </div>
+        <div class="ui row">
+            <div class="ui six wide column field" [ngClass]="{error: forwardingmodeRef.errors?.required && formRef.submitted}">
+                <label for="forwardingmode">Forwarding mode</label>
+                <select #forwardingmodeRef="ngModel"
+                        id="forwardingmode"
+                        name="forwardingmode"
+                        class="ui dropdown"
+                        [(ngModel)]="setting['fwdMode']" required>
+                    <option value="">-- Please select the network forwarding mode --</option>
+                    <option value="bridge">bridge</option>
+                    <option value="routing">routing</option>
+                </select>
+                <span class="inlineError" *ngIf="forwardingmodeRef.errors?.required && formRef.submitted">
+                    Please select forwarding mode
+                </span>
+            </div>
+        </div>
+        <div class="ui row">
+            <div class="ui six wide column field" [ngClass]="{error: arpmodeRef.errors?.required && formRef.submitted}">
+                <label for="arpmode">Arp mode</label>
+                <select #arpmodeRef="ngModel"
+                        id="arpmode"
+                        name="arpmode"
+                        class="ui dropdown"
+                        [(ngModel)]="setting['arpMode']" required>
+                    <option value="">-- Please select the network arp mode --</option>
+                    <option value="proxy">proxy</option>
+                    <option value="flood">flood</option>
+                </select>
+                <span class="inlineError" *ngIf="arpmodeRef.errors?.required && formRef.submitted">
+                    Please select arp mode
+                </span>
+            </div>
+        </div>
+        <div class="ui row">
+            <div class="ui six wide column field" [ngClass]="{error: pvtSubnetRef.errors?.pattern && formRef.submitted}">
+                <label for="pvtSubnet">Private subnet</label>
+                <input #pvtSubnetRef="ngModel"
+                       type="text"
+                       id="pvtSubnet"
+                       name="pvtSubnet"
+                       [(ngModel)]="setting['pvtSubnet']" placeholder="CIDR notation, for example: 20.3.0.0/16" [pattern]="pvtSubnetPattern">
+
+                <span class="inlineError" *ngIf="pvtSubnetRef.errors?.pattern && formRef.submitted">
+                    Please enter private subnet in CIDR notation ending with /16
+                </span>
+            </div>
+        </div>
+        <div *ngIf="!firstRunWiz" class="ui row">
+            <div class="right aligned six wide column">
+                <div style="margin-top: 20px">
+                    <button type="submit" class="ui primary button">
+                        Update Network Settings
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="firstRunWiz">
+        <div class="ui section divider" style="margin-top: 60px"></div>
+        <div class="ui grid">
+            <div class="right floated right aligned sixteen wide column">
+                <button type="button" class="ui basic button" (click)="cancel.emit()">Cancel</button>
+                <button type="button" class="ui secondary button" (click)="skip.emit()">Skip this step</button>
+                <button type="submit" class="ui primary button">Continue<i class="arrow right icon"></i></button>
+            </div>
+        </div>
+    </div>
+
+</form>

@@ -1,0 +1,347 @@
+/*******************************
+         Cisco Icons
+*******************************/
+
+.icon.ban:before {
+    content: "\e94e";
+}
+.icon.cleared:before {
+    content: "\e939";
+}
+.icon.condition:before {
+    content: "\e93a";
+}
+.icon.critical .path1:before {
+    content: "\e93b";
+    color: rgb(235, 35, 0);
+}
+.icon.critical .path2:before {
+    content: "\e93c";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.icon.flapping:before {
+    content: "\e93d";
+}
+.icon.info .path1:before {
+    content: "\e93e";
+    color: rgb(0, 155, 209);
+}
+.icon.info .path2:before {
+    content: "\e93f";
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    color: rgb(255, 255, 255);
+}
+.icon.info .path3:before {
+    content: "\e940";
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    color: rgb(255, 255, 255);
+}
+.icon.major .path1:before {
+    content: "\e941";
+    color: rgb(255, 115, 0);
+}
+.icon.major .path2:before {
+    content: "\e942";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.icon.major .path3:before {
+    content: "\e943";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.icon.minor .path1:before {
+    content: "\e944";
+    color: rgb(255, 194, 0);
+}
+.icon.minor .path2:before {
+    content: "\e945";
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    color: rgb(255, 255, 255);
+}
+.icon.minor .path3:before {
+    content: "\e946";
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    color: rgb(255, 255, 255);
+}
+.icon.pending .path1:before {
+    content: "\e947";
+    color: rgb(51, 52, 57);
+}
+.icon.pending .path2:before {
+    content: "\e948";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.icon.pending .path3:before {
+    content: "\e949";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.icon.pending .path4:before {
+    content: "\e94a";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.icon.ready .path1:before {
+    content: "\e94b";
+    color: rgb(0, 201, 5);
+}
+.icon.ready .path2:before {
+    content: "\e94c";
+    position: absolute;
+    right: 3px;
+    top: 4px;
+    color: rgb(255, 255, 255);
+}
+.icon.soaking:before {
+    content: "\e94d";
+}
+.icon.spinner .path1:before {
+    content: "\e95c";
+    color: rgb(207, 208, 208);
+}
+.icon.spinner .path2:before {
+    content: "\e95d";
+    margin-left: -1em;
+    color: rgb(12, 158, 217);
+}
+.icon.unassociated:before {
+    content: "\e94f";
+}
+.icon.up:before {
+    content: "\e950";
+}
+.icon.upgrading:before {
+    content: "\e951";
+}
+.icon.warning .path1:before {
+    content: "\e952";
+    color: rgb(20, 167, 146);
+}
+.icon.warning .path2:before {
+    content: "\e953";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.icon.warning .path3:before {
+    content: "\e954";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.icon.check:before {
+    content: "\e92c";
+}
+.icon.add:before {
+    content: "\e928";
+}
+.icon.area.chart:before {
+    content: "\e929";
+}
+.icon.arrow.left:before {
+    content: "\e92a";
+}
+.icon.arrow.right:before {
+    content: "\e92b";
+}
+.icon.angle.down:before {
+    content: "\e95e";
+}
+.icon.angle.up:before {
+    content: "\e95f";
+}
+.icon.snapshot:before {
+    content: "\e959"
+}
+.icon.copysnapshot:before {
+    content: "\e960"
+}
+.icon.checkmark:before {
+    content: "\e92d";
+}
+.icon.chevron.left:before {
+    content: "\e955";
+}
+.icon.chevron.right:before {
+    content: "\e956";
+}
+.icon.close:before {
+    content: "\e92f";
+}
+.icon.delete:before {
+    content: "\e92f";
+}
+.icon.edit:before {
+    content: "\e930";
+}
+.icon.file.text:before {
+    content: "\e932";
+}
+.icon.minus:before {
+    content: "\e933";
+}
+.icon.minus.circle.outline:before {
+    content: "\e92e";
+}
+.icon.plus.circle.outline:before {
+    content: "\e931";
+}
+.icon.refresh:before {
+    content: "\e934";
+}
+.icon.search:before {
+    content: "\e935";
+}
+.icon.details:before {
+    content: "\e936";
+}
+.icon.trash:before {
+    content: "\e937";
+}
+.icon.faultsummary_critical:before {
+    content: "\e918";
+}
+.icon.faultsummary_major:before {
+    content: "\e919";
+}
+.icon.faultsummary_minor:before {
+    content: "\e91a";
+}
+.icon.faultsummary_notification:before {
+    content: "\e91b";
+}
+.icon.faultsummary_warning:before {
+    content: "\e91c";
+}
+.icon.user:before {
+    content: "\e91d";
+}
+.icon.global_bootserver:before {
+    content: "\e91e";
+}
+.icon.help:before {
+    content: "\e91f";
+}
+.icon.logout:before {
+    content: "\e920";
+}
+.icon.global_notification:before {
+    content: "\e921";
+}
+.icon.global_quickpick:before {
+    content: "\e922";
+}
+.icon.global_reset:before {
+    content: "\e923";
+}
+.icon.global_search:before {
+    content: "\e924";
+}
+.icon.global_settings:before {
+    content: "\e925";
+}
+.icon.global_shutdownserver:before {
+    content: "\e926";
+}
+.icon.global_tools:before {
+    content: "\e927";
+}
+.icon.toolbar_advancedfilter:before {
+    content: "\e906";
+}
+.icon.toolbar_back:before {
+    content: "\e907";
+}
+.icon.toolbar_backuplogs:before {
+    content: "\e908";
+}
+.icon.toolbar_clearalllogs:before {
+    content: "\e909";
+}
+.icon.toolbar_close:before {
+    content: "\e90a";
+}
+.icon.toolbar_collapseall:before {
+    content: "\e90b";
+}
+.icon.toolbar_delete:before {
+    content: "\e90c";
+}
+.icon.toolbar_edit:before {
+    content: "\e90d";
+}
+.icon.toolbar_expandall:before {
+    content: "\e90e";
+}
+.icon.toolbar_export:before {
+    content: "\e90f";
+}
+.icon.toolbar_filter:before {
+    content: "\e910";
+}
+.icon.toolbar_hide:before {
+    content: "\e911";
+}
+.icon.toolbar_info:before {
+    content: "\e912";
+}
+.icon.toolbar_next:before {
+    content: "\e913";
+}
+.icon.toolbar_print:before {
+    content: "\e914";
+}
+.icon.toolbar_refreshnow:before {
+    content: "\e915";
+}
+.icon.toolbar_settings:before {
+    content: "\e916";
+}
+.icon.toolbar_show:before {
+    content: "\e917";
+}
+.icon.appgroup:before {
+    content: "\e900";
+}
+.icon.dashboard:before {
+    content: "\e901";
+}
+.icon.loadbalancer:before {
+    content: "\e957";
+}
+.icon.networkpolicies:before {
+    content: "\e902";
+}
+.icon.networks:before {
+    content: "\e903";
+}
+.icon.nodes:before {
+    content: "\e938";
+}
+.icon.organizations:before {
+    content: "\e95a";
+}
+.icon.storagepolicies:before {
+    content: "\e904";
+}
+.icon.volumes:before {
+    content: "\e905";
+}
+.icon.toast_confirm:before {
+    content: "\ea82";
+}
+.icon.toast_info:before {
+    content: "\ea83";
+}
+.icon.toast_warning:before {
+    content: "\ea84";
+}

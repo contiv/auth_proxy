@@ -1,6 +1,6 @@
 FROM scratch
 
-COPY ./build/dependencies/contiv-ui/app /ui
+COPY ./ui/app /ui
 COPY ./build/output/auth_proxy /auth_proxy
 
 WORKDIR /
