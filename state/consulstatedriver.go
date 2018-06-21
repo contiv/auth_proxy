@@ -39,21 +39,27 @@ func (d *ConsulStateDriver) Init(config *types.KVStoreConfig) error {
 	var err error
 	var endpoint *url.URL
 
-	if config == nil {
-		return errors.New("Invalid consul config")
+	if config == nil || len(config.StoreURL) == 0 {
+		return errors.New("no etcd config found")
 	}
 
-	endpoint, err = url.Parse(config.StoreURL)
-	if err != nil {
-		return err
+	for  _,dburl :=  range config.StoreURL {
+
+		endpoint, err = url.Parse(dburl)
+		if err != nil {
+			return err
+		}
+
+		if endpoint.Scheme == "etcd" {
+			endpoint.Scheme = "http"
+		} else if endpoint.Scheme != "http" && endpoint.Scheme != "https" {
+			return fmt.Errorf("invalid etcd URL scheme %q", endpoint.Scheme)
+		}
+
 	}
-	if endpoint.Scheme == "consul" {
-		endpoint.Scheme = "http"
-	} else if endpoint.Scheme != "http" && endpoint.Scheme != "https" {
-		return fmt.Errorf("invalid consul URL scheme %q", endpoint.Scheme)
-	}
+
 	cfg := api.Config{
-		Address: endpoint.Host,
+		Address: config.StoreURL[0],
 	}
 
 	// create a consul client

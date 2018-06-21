@@ -113,7 +113,7 @@ type LdapConfiguration struct {
 //   StoreURL: URL of the key-value store
 //
 type KVStoreConfig struct {
-	StoreURL    string `json:"kvstore-url"`
+	StoreURL    []string `json:"kvstore-url"`
 	StoreDriver string `json:"kvstore-driver"`
 }
 

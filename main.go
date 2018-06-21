@@ -6,7 +6,7 @@ import (
 	"os"
 	"runtime"
 	"syscall"
-
+	"strings"
 	"github.com/blang/semver"
 	"github.com/contiv/auth_proxy/auth"
 	"github.com/contiv/auth_proxy/common"
@@ -14,6 +14,7 @@ import (
 	"github.com/contiv/auth_proxy/state"
 
 	log "github.com/Sirupsen/logrus"
+	"net/url"
 )
 
 const (
@@ -218,8 +219,20 @@ func main() {
 		log.SetLevel(log.DebugLevel)
 	}
 
+	storeURL := []string{}
+	for _, endpoint := range common.FilterEmpty(strings.Split(dataStoreAddress, ",")) {
+		_, err := url.Parse(endpoint)
+		if err != nil {
+			log.Println("invalid %s endpoint: %v", dataStoreAddress, endpoint)
+			return
+		}
+		storeURL = append(storeURL,endpoint)
+		log.Println("Using state db endpoints: %v", storeURL)
+
+	}
+
 	// Initialize data store
-	if err := state.InitializeStateDriver(dataStoreDriver, dataStoreAddress); err != nil {
+	if err := state.InitializeStateDriver(dataStoreDriver, storeURL); err != nil {
 		log.Fatalln(err)
 		return
 	}

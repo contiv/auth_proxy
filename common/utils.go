@@ -172,3 +172,15 @@ func GetNetmasterVersion(address string) (string, error) {
 
 	return nvr.Version, nil
 }
+
+
+// FilterEmpty filters empty string from string slices
+func FilterEmpty(stringSlice []string) []string {
+	var result []string
+	for _, str := range stringSlice {
+		if str != "" {
+			result = append(result, str)
+		}
+	}
+	return result
+}
