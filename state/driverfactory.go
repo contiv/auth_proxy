@@ -98,11 +98,11 @@ func GetStateDriver() (types.StateDriver, error) {
 //  dataStoreAddress: address of the data store
 // return values:
 //  returns any error as NewStateDriver() + validation errors
-func InitializeStateDriver(dataStoreDriver, dataStoreAddress string) error {
+func InitializeStateDriver(dataStoreDriver string, dataStoreAddress []string) error {
 	if dataStoreDriver != EtcdName && dataStoreDriver != ConsulName {
 		return errors.New("Invalid data store driver, please set --data-store-driver (options: [etcd, consul])")
 	}
-	if common.IsEmpty(dataStoreAddress) {
+	if len(dataStoreAddress) == 0 {
 		return errors.New("Empty data store address, please set --data-store-address")
 	}
 	_, err := NewStateDriver(dataStoreDriver, &types.KVStoreConfig{StoreURL: dataStoreAddress})
